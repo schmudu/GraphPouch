@@ -15,6 +15,8 @@
 		CD47113815BA1647008AACC3 /* EDDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD47113615BA1647008AACC3 /* EDDocument.xib */; };
 		CD47113B15BA1647008AACC3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD47113915BA1647008AACC3 /* MainMenu.xib */; };
 		CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */; };
+		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
+		CD47114915BA1E04008AACC3 /* EDFormatterTickMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114815BA1E04008AACC3 /* EDFormatterTickMarks.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,10 @@
 		CD47113715BA1647008AACC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/EDDocument.xib; sourceTree = "<group>"; };
 		CD47113A15BA1647008AACC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CD47113D15BA1647008AACC3 /* EDDocument.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EDDocument.xcdatamodel; sourceTree = "<group>"; };
+		CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphArrayController.h; sourceTree = "<group>"; };
+		CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphArrayController.m; sourceTree = "<group>"; };
+		CD47114715BA1E04008AACC3 /* EDFormatterTickMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterTickMarks.h; sourceTree = "<group>"; };
+		CD47114815BA1E04008AACC3 /* EDFormatterTickMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterTickMarks.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +95,10 @@
 				CD47113315BA1647008AACC3 /* EDDocument.h */,
 				CD47113415BA1647008AACC3 /* EDDocument.m */,
 				CD47113615BA1647008AACC3 /* EDDocument.xib */,
+				CD47114715BA1E04008AACC3 /* EDFormatterTickMarks.h */,
+				CD47114815BA1E04008AACC3 /* EDFormatterTickMarks.m */,
+				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
+				CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */,
 				CD47113915BA1647008AACC3 /* MainMenu.xib */,
 				CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */,
 				CD47112815BA1647008AACC3 /* Supporting Files */,
@@ -177,6 +187,8 @@
 				CD47112E15BA1647008AACC3 /* main.m in Sources */,
 				CD47113515BA1647008AACC3 /* EDDocument.m in Sources */,
 				CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */,
+				CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */,
+				CD47114915BA1E04008AACC3 /* EDFormatterTickMarks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
