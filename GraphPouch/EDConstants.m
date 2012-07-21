@@ -1,0 +1,16 @@
+//
+//  EDConstants.m
+//  GraphPouch
+//
+//  Created by PATRICK LEE on 7/21/12.
+//  Copyright (c) 2012 Patrick Lee. All rights reserved.
+//
+
+#import "EDConstants.h"
+int const GRAPH_INIT_TICK_MARKS = FALSE; 
+
+/*
+@implementation EDConstants
+
+@end
+ */

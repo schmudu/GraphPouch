@@ -10,22 +10,9 @@
 
 @implementation EDFormatterTickMarks
 
-/*
-- (NSString *)stringForObjectValue:(id)obj{
-    NSLog(@"object in column: %@", obj);
-    NSString *returnStr = [[NSString alloc] initWithFormat:@"hello"];
-    return returnStr;
-}*/
 -(NSString *) stringForObjectValue:(id)object {
     NSNumber *value = (NSNumber *)object;
-    //NSLog(@"object: %@", object);
-    //NSLog(@"equal: %d bool: %d object:%@", (value == FALSE), [value boolValue], object);
-    //NSLog(@"number: %@ value: %d equal?:%d", object, [value boolValue], ([value boolValue] == TRUE));
-    /*
-    if(![object isKindOfClass: [ NSString class ] ] ) {
-    	return nil;
-    }*/
-    //return [NSString stringWithFormat:@"hello"];
+    
     if([value boolValue] == FALSE){
         NSLog(@"return false");
         return @"false";
@@ -34,7 +21,6 @@
         NSLog(@"return true");
         return @"true";
     }
-    //return returnStr;
 }
 
 -(BOOL)getObjectValue: (id*)object forString:string errorDescription:(NSString**)error {

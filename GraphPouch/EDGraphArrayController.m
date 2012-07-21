@@ -7,16 +7,17 @@
 //
 
 #import "EDGraphArrayController.h"
+#import "EDConstants.h"
 
 @implementation EDGraphArrayController
 
 - (id)newObject{
-    NSLog(@"creating new object...");
     id newObj = [super newObject];
-    NSNumber *value = [[NSNumber alloc] initWithInt:FALSE];
+    
+    // Init ticks marks to default
+    //NSNumber *value = [[NSNumber alloc] initWithInt:FALSE];
+    NSNumber *value = [[NSNumber alloc] initWithInt:GRAPH_INIT_TICK_MARKS];
     [newObj setValue:value forKey:@"hasTickMarks"];
-    //[newObj setValue:@"something" forKey:@"hasTickMarks"];
-    //NSLog(@"value for tick mark:%d", (NSNumber *)[newObj valueForKey:@"hasTickMarks"]);
     return newObj;
 }
 
