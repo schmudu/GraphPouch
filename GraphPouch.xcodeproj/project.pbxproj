@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CD015FCE15BA66CA0096CDF9 /* EDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CD015FCD15BA66CA0096CDF9 /* EDConstants.m */; };
+		CD41B54D15BB024C00640E73 /* EDWorksheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD41B54C15BB024C00640E73 /* EDWorksheetView.m */; };
+		CD41B55015BB046B00640E73 /* EDWorksheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD41B54F15BB046B00640E73 /* EDWorksheetViewController.m */; };
 		CD47112215BA1647008AACC3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD47112115BA1647008AACC3 /* Cocoa.framework */; };
 		CD47112C15BA1647008AACC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CD47112A15BA1647008AACC3 /* InfoPlist.strings */; };
 		CD47112E15BA1647008AACC3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47112D15BA1647008AACC3 /* main.m */; };
@@ -23,6 +25,10 @@
 /* Begin PBXFileReference section */
 		CD015FCC15BA66CA0096CDF9 /* EDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDConstants.h; sourceTree = "<group>"; };
 		CD015FCD15BA66CA0096CDF9 /* EDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDConstants.m; sourceTree = "<group>"; };
+		CD41B54B15BB024C00640E73 /* EDWorksheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDWorksheetView.h; sourceTree = "<group>"; };
+		CD41B54C15BB024C00640E73 /* EDWorksheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDWorksheetView.m; sourceTree = "<group>"; };
+		CD41B54E15BB046B00640E73 /* EDWorksheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDWorksheetViewController.h; sourceTree = "<group>"; };
+		CD41B54F15BB046B00640E73 /* EDWorksheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDWorksheetViewController.m; sourceTree = "<group>"; };
 		CD47111D15BA1647008AACC3 /* GraphPouch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphPouch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD47112115BA1647008AACC3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		CD47112415BA1647008AACC3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -97,7 +103,11 @@
 			children = (
 				CD47113315BA1647008AACC3 /* EDDocument.h */,
 				CD47113415BA1647008AACC3 /* EDDocument.m */,
+				CD41B54E15BB046B00640E73 /* EDWorksheetViewController.h */,
+				CD41B54F15BB046B00640E73 /* EDWorksheetViewController.m */,
 				CD47113615BA1647008AACC3 /* EDDocument.xib */,
+				CD41B54B15BB024C00640E73 /* EDWorksheetView.h */,
+				CD41B54C15BB024C00640E73 /* EDWorksheetView.m */,
 				CD47114715BA1E04008AACC3 /* EDFormatterTickMarks.h */,
 				CD47114815BA1E04008AACC3 /* EDFormatterTickMarks.m */,
 				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
@@ -195,6 +205,8 @@
 				CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */,
 				CD47114915BA1E04008AACC3 /* EDFormatterTickMarks.m in Sources */,
 				CD015FCE15BA66CA0096CDF9 /* EDConstants.m in Sources */,
+				CD41B54D15BB024C00640E73 /* EDWorksheetView.m in Sources */,
+				CD41B55015BB046B00640E73 /* EDWorksheetViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

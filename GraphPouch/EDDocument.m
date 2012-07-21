@@ -7,6 +7,7 @@
 //
 
 #import "EDDocument.h"
+#import "EDWorksheetViewController.h"
 
 @implementation EDDocument
 
@@ -14,7 +15,7 @@
 {
     self = [super init];
     if (self) {
-        // Add your subclass-specific initialization here.
+        //Init code
     }
     return self;
 }
