@@ -1,25 +1,24 @@
 //
-//  EDWorksheetControllerViewController.m
+//  EDGraphViewController.m
 //  GraphPouch
 //
-//  Created by PATRICK LEE on 7/21/12.
+//  Created by PATRICK LEE on 7/22/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDWorksheetViewController.h"
-#import "EDWorksheetView.h"
+#import "EDGraphViewController.h"
 
-@interface EDWorksheetViewController ()
+@interface EDGraphViewController ()
 
 @end
 
-@implementation EDWorksheetViewController
+@implementation EDGraphViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Init code
+        // Initialization code here.
     }
     
     return self;

@@ -19,7 +19,9 @@
 		CD47113B15BA1647008AACC3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD47113915BA1647008AACC3 /* MainMenu.xib */; };
 		CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */; };
 		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
-		CD47114915BA1E04008AACC3 /* EDFormatterTickMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114815BA1E04008AACC3 /* EDFormatterTickMarks.m */; };
+		CD84979715BC75E600090E6E /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = CD84979615BC75E600090E6E /* Graph.m */; };
+		CD8497A515BC89D600090E6E /* EDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD8497A415BC89D600090E6E /* EDGraphView.m */; };
+		CD8497A815BC89EA00090E6E /* EDGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD8497A715BC89EA00090E6E /* EDGraphViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,8 +48,12 @@
 		CD47113D15BA1647008AACC3 /* EDDocument.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EDDocument.xcdatamodel; sourceTree = "<group>"; };
 		CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphArrayController.h; sourceTree = "<group>"; };
 		CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphArrayController.m; sourceTree = "<group>"; };
-		CD47114715BA1E04008AACC3 /* EDFormatterTickMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterTickMarks.h; sourceTree = "<group>"; };
-		CD47114815BA1E04008AACC3 /* EDFormatterTickMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterTickMarks.m; sourceTree = "<group>"; };
+		CD84979515BC75E600090E6E /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
+		CD84979615BC75E600090E6E /* Graph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph.m; sourceTree = "<group>"; };
+		CD8497A315BC89D600090E6E /* EDGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EDGraphView.h; path = ../EDGraphView.h; sourceTree = "<group>"; };
+		CD8497A415BC89D600090E6E /* EDGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EDGraphView.m; path = ../EDGraphView.m; sourceTree = "<group>"; };
+		CD8497A615BC89EA00090E6E /* EDGraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EDGraphViewController.h; path = ../EDGraphViewController.h; sourceTree = "<group>"; };
+		CD8497A715BC89EA00090E6E /* EDGraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EDGraphViewController.m; path = ../EDGraphViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,21 +107,25 @@
 		CD47112715BA1647008AACC3 /* GraphPouch */ = {
 			isa = PBXGroup;
 			children = (
-				CD47113315BA1647008AACC3 /* EDDocument.h */,
-				CD47113415BA1647008AACC3 /* EDDocument.m */,
-				CD41B54E15BB046B00640E73 /* EDWorksheetViewController.h */,
-				CD41B54F15BB046B00640E73 /* EDWorksheetViewController.m */,
-				CD47113615BA1647008AACC3 /* EDDocument.xib */,
-				CD41B54B15BB024C00640E73 /* EDWorksheetView.h */,
-				CD41B54C15BB024C00640E73 /* EDWorksheetView.m */,
-				CD47114715BA1E04008AACC3 /* EDFormatterTickMarks.h */,
-				CD47114815BA1E04008AACC3 /* EDFormatterTickMarks.m */,
-				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
-				CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */,
 				CD015FCC15BA66CA0096CDF9 /* EDConstants.h */,
 				CD015FCD15BA66CA0096CDF9 /* EDConstants.m */,
+				CD47113315BA1647008AACC3 /* EDDocument.h */,
+				CD47113415BA1647008AACC3 /* EDDocument.m */,
+				CD47113615BA1647008AACC3 /* EDDocument.xib */,
+				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
+				CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */,
+				CD8497A315BC89D600090E6E /* EDGraphView.h */,
+				CD8497A415BC89D600090E6E /* EDGraphView.m */,
+				CD8497A615BC89EA00090E6E /* EDGraphViewController.h */,
+				CD8497A715BC89EA00090E6E /* EDGraphViewController.m */,
+				CD41B54B15BB024C00640E73 /* EDWorksheetView.h */,
+				CD41B54C15BB024C00640E73 /* EDWorksheetView.m */,
+				CD41B54E15BB046B00640E73 /* EDWorksheetViewController.h */,
+				CD41B54F15BB046B00640E73 /* EDWorksheetViewController.m */,
 				CD47113915BA1647008AACC3 /* MainMenu.xib */,
 				CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */,
+				CD84979515BC75E600090E6E /* Graph.h */,
+				CD84979615BC75E600090E6E /* Graph.m */,
 				CD47112815BA1647008AACC3 /* Supporting Files */,
 			);
 			path = GraphPouch;
@@ -203,10 +213,12 @@
 				CD47113515BA1647008AACC3 /* EDDocument.m in Sources */,
 				CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */,
 				CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */,
-				CD47114915BA1E04008AACC3 /* EDFormatterTickMarks.m in Sources */,
 				CD015FCE15BA66CA0096CDF9 /* EDConstants.m in Sources */,
 				CD41B54D15BB024C00640E73 /* EDWorksheetView.m in Sources */,
 				CD41B55015BB046B00640E73 /* EDWorksheetViewController.m in Sources */,
+				CD84979715BC75E600090E6E /* Graph.m in Sources */,
+				CD8497A515BC89D600090E6E /* EDGraphView.m in Sources */,
+				CD8497A815BC89EA00090E6E /* EDGraphViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Graph" syncable="YES">
+    <entity name="Graph" representedClassName="Graph" syncable="YES">
         <attribute name="hasGridLines" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="hasTickMarks" optional="YES" attributeType="Decimal" syncable="YES"/>
     </entity>
