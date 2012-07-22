@@ -7,10 +7,9 @@
 //
 FOUNDATION_EXPORT int const GRAPH_INIT_TICK_MARKS;
 
-/*
 #import <Foundation/Foundation.h>
 
 @interface EDConstants : NSObject
+    extern NSString *const EDNotificationGraphAdded;
 
 @end
- */

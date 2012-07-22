@@ -9,8 +9,6 @@
 #import "EDConstants.h"
 int const GRAPH_INIT_TICK_MARKS = FALSE; 
 
-/*
 @implementation EDConstants
-
+    NSString * const EDNotificationGraphAdded = @"EDGraphAdded";
 @end
- */

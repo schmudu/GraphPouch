@@ -19,9 +19,9 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        NSLog(@"init controller.");
-        // TODO
-        //worksheetView = [EDWorksheetView alloc] init
+        // Init code
+        // Need to set background color
+        NSLog(@"init worksheet view controller.");
     }
     
     return self;

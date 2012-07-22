@@ -7,6 +7,7 @@
 //
 
 #import "EDWorksheetView.h"
+#import "EDConstants.h"
 
 @implementation EDWorksheetView
 
@@ -14,15 +15,30 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        NSLog(@"init worksheet view");
+        // listen
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(handleNewGraphAdded:) name:EDNotificationGraphAdded object:nil];
     }
     
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
-    // Drawing code here.
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)drawRect:(NSRect)dirtyRect
+{
+    NSRect bounds = [self bounds];
+    [[NSColor whiteColor] set];
+    [NSBezierPath fillRect:bounds];
+}
+
+#pragma mark -
+#pragma mark Listeners
+- (void)handleNewGraphAdded:(NSNotification *)note{
+    // draw new graph view
+    
+    NSLog(@"Received notification %@", note);
+}
 @end

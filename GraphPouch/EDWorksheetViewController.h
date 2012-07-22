@@ -9,8 +9,6 @@
 #import <Cocoa/Cocoa.h>
 @class EDWorksheetView;
 
-@interface EDWorksheetViewController : NSViewController{
-    IBOutlet EDWorksheetView *worksheetView;
-}
+@interface EDWorksheetViewController : NSViewController
 
 @end

@@ -14,10 +14,15 @@
 - (id)newObject{
     id newObj = [super newObject];
     
-    // Init ticks marks to default
-    //NSNumber *value = [[NSNumber alloc] initWithInt:FALSE];
+    // default values
     NSNumber *value = [[NSNumber alloc] initWithInt:GRAPH_INIT_TICK_MARKS];
     [newObj setValue:value forKey:@"hasTickMarks"];
+    
+    // send notification
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    NSLog(@"sending notification");
+    [nc postNotificationName:EDNotificationGraphAdded object:newObj];
+    
     return newObj;
 }
 
