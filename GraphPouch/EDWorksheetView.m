@@ -36,14 +36,14 @@
     [NSBezierPath fillRect:bounds];
     
     //make subviews redraw
-    NSLog(@"redrawing worksheet: array?%@", [self subviews]);
+    //NSLog(@"redrawing worksheet: array?%@", [self subviews]);
     /*
     if([self subviews])
         NSLog(@"redrawing worksheet: array count: %@", [[self subviews] count]);
     */
     
     for(EDGraphView *graph in [self subviews]){
-        NSLog(@"calling setNeedsDisplay on subview.");
+        //NSLog(@"calling setNeedsDisplay on subview.");
         [graph setNeedsDisplay:TRUE];
         //[graph test];
     }
