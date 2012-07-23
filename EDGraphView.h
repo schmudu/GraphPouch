@@ -7,7 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+@class Graph;
 
-@interface EDGraphView : NSView
-
+@interface EDGraphView : NSView{
+    __weak Graph *graph;
+    NSPoint lastDragLocation;
+}
+- (id)initWithFrame:(NSRect)frame graphModel:(Graph *)myGraph;
 @end

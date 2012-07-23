@@ -9,6 +9,7 @@
 #import "EDConstants.h"
 #import "EDWorksheetView.h"
 #import "EDGraphView.h"
+#import "Graph.h"
 
 @implementation EDWorksheetView
 
@@ -52,10 +53,11 @@
 #pragma mark Listeners
 - (void)handleNewGraphAdded:(NSNotification *)note{
     // draw new graph view
-    EDGraphView *graph = [[EDGraphView alloc] initWithFrame:[self bounds]];
+    Graph *myGraph = [note object];
+    EDGraphView *graph = [[EDGraphView alloc] initWithFrame:[self bounds] graphModel:myGraph];
+
     [self addSubview:graph];
     [self setNeedsDisplay:TRUE];
-    
-    NSLog(@"Received notification %@", note);
+    //NSLog(@"Received notification %@", [myGraph hasGridLines]);
 }
 @end
