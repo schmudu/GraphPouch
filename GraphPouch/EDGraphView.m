@@ -36,23 +36,7 @@
     [super drawRect:dirtyRect];
 }
 
-- (BOOL)isFlipped{
-    return TRUE;
-}
 #pragma mark Events
-/*
-- (NSView *)hitTest:(NSPoint)aPoint{
-    NSPoint mousePoint = [self convertPoint:aPoint fromView:nil];
-    NSRect bounds = [self bounds];
-    if (NSPointInRect(aPoint, [self bounds])){
-        NSLog(@"point is in rect: bounds: x:%f y:%f width:%f height:%f", bounds.origin.x, bounds.origin.y, bounds.size.width , bounds.size.height);
-    }
-    else {
-        NSLog(@"point is outside rect: point x: %f y: %f bounds: x:%f y:%f width:%f height:%f", mousePoint.x, mousePoint.y, bounds.origin.x, bounds.origin.y, bounds.size.width , bounds.size.height);
-    }
-    
-    return [super hitTest:aPoint];
-}*/
 
 - (void)mouseDown:(NSEvent *)theEvent{
     NSInteger clicks = [theEvent clickCount];
