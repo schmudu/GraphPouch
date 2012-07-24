@@ -12,8 +12,8 @@
 @implementation EDGraphView
 
 - (id)initWithFrame:(NSRect)frame graphModel:(Graph *)myGraph{
-    //self = [super initWithFrame:frame];
-    self = [super initWithFrame:NSMakeRect(20, 20, 20, 20)];
+    self = [super initWithFrame:frame];
+    //self = [super initWithFrame:NSMakeRect(20, 20, 20, 20)];
     
     if (self){
         graph = myGraph;
@@ -25,13 +25,20 @@
 {
     //NSLog(@"frame: x:%f y:%f bounds: x: %f y:%f", [self frame].origin.x, [self frame].origin.y, [self bounds].origin.x, [self bounds].origin.y);
     //NSLog(@"redrawing graph view: hasTickMarks:%@", [graph hasTickMarks]);
-    NSRect bounds = [self bounds];
-    //NSRect bounds = NSMakeRect(20, 20, 20, 20);
+    //NSRect bounds = [self bounds];
+    [[NSColor greenColor] set];
+    [NSBezierPath fillRect:[self bounds]];
+    
+    NSRect bounds = NSMakeRect(10, 10, 20, 20);
     [[NSColor redColor] set];
     [NSBezierPath fillRect:bounds];
+    
     [super drawRect:dirtyRect];
 }
 
+- (BOOL)isFlipped{
+    return TRUE;
+}
 #pragma mark Events
 /*
 - (NSView *)hitTest:(NSPoint)aPoint{
@@ -48,17 +55,22 @@
 }*/
 
 - (void)mouseDown:(NSEvent *)theEvent{
-    lastDragLocation = [theEvent locationInWindow];
+    NSInteger clicks = [theEvent clickCount];
+    NSLog(@"mouseUp: %ld", clicks);
+    lastDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent{
-    NSPoint newDragLocation = [theEvent locationInWindow];
+    NSPoint newDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] fromView:nil];
+    
     NSPoint thisOrigin = [self frame].origin;
+    
+    // alter origin
     thisOrigin.x += (-lastDragLocation.x + newDragLocation.x);
     thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
+    
     [self setFrameOrigin:thisOrigin];
     lastDragLocation = newDragLocation;
-    //NSLog(@"mouseDragged");
 }
 
 - (void)mouseUp:(NSEvent *)theEvent{

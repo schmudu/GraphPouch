@@ -56,6 +56,7 @@
 							<string key="NSFrame">{{20, 624}, {48, 48}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="257841340"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="978794777">
@@ -91,6 +92,7 @@
 											<string key="NSFrameSize">{708, 605}</string>
 											<reference key="NSSuperview" ref="668718214"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView" ref="981661087"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<string key="NSClassName">EDWorksheetView</string>
 										</object>
@@ -118,6 +120,7 @@
 									<string key="NSFrame">{{709, 1}, {15, 605}}</string>
 									<reference key="NSSuperview" ref="257841340"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="739011583"/>
 									<string key="NSReuseIdentifierKey">_NS:26</string>
 									<reference key="NSTarget" ref="257841340"/>
 									<string key="NSAction">_doScroller:</string>
