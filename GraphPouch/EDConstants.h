@@ -12,5 +12,5 @@ FOUNDATION_EXPORT int const GRAPH_INIT_HAS_GRID_LINES;
 
 @interface EDConstants : NSObject
     extern NSString *const EDNotificationGraphAdded;
-
+    extern NSString *const EDNotificationGraphSelected;
 @end
