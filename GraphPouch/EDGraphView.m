@@ -64,6 +64,9 @@
     }
     
     // set variable for draggin
+    lastLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
+    
+    // set variable for draggin
     lastDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
 }
 
@@ -81,7 +84,13 @@
 }
 
 - (void)mouseUp:(NSEvent *)theEvent{
-    //NSLog(@"mouseUp");
+    // prepare undo
+    NSUndoManager *undo = [self undoManager];
+    [[undo prepareWithInvocationTarget:self] moveToSavedLocation];
+    
+    if (![undo isUndoing]) {
+        [undo setActionName:@"Move Graph"];
+    }
 }
 
 # pragma mark listeners - graphs
@@ -91,39 +100,59 @@
     if([note userInfo] == nil){
         // was this graph selected?
         if([note object] == self){
-            if(!selected){
-                selected = TRUE;
-                [self setNeedsDisplay:TRUE];
-            }
+            if(!selected) [self select];
+                
         }
         else {
             // deselect this graph
-            if(selected){
-                selected = FALSE;
-                [self setNeedsDisplay:TRUE];
-            }
+            if(selected) [self deselect];
         }
     }
     else{
         // multiple selection
         // was this graph selected?
         if([note object] == self){
-            if(!selected){
-                selected = TRUE;
-                [self setNeedsDisplay:TRUE];
-            }
+            if(!selected) [self select];
         }
-        
     }
-    NSLog(@"new graph selected: note: %d", [note userInfo] == nil);
+}
+
+#pragma mark selection
+- (void)select{
+    // prepare undo
+    NSUndoManager *undo = [self undoManager];
+    [[undo prepareWithInvocationTarget:self] deselect];
+    
+    if (![undo isUndoing]) {
+        [undo setActionName:@"Select Graph"];
+    }
+    
+    selected = TRUE;
+    [self setNeedsDisplay:TRUE]; 
+}
+
+- (void)deselect{
+    // prepare undo
+    NSUndoManager *undo = [self undoManager];
+    [[undo prepareWithInvocationTarget:self] select];
+    
+    if (![undo isUndoing]) {
+        [undo setActionName:@"Select Graph"];
+    }
+    selected = FALSE;
+    [self setNeedsDisplay:TRUE]; 
 }
 
 # pragma mark listeners - worksheet
 - (void)onWorksheetClicked:(NSNotification *)note{
     // deselect this graph
     if(selected){
-        selected = FALSE;
-        [self setNeedsDisplay:TRUE];
+        [self deselect];
     }
+}
+
+# pragma mark - movement
+- (void)moveToSavedLocation{
+    [self setFrameOrigin:lastLocation];
 }
 @end

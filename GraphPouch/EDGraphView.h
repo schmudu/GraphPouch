@@ -12,6 +12,9 @@
 @interface EDGraphView : NSView{
     __weak Graph *graph;
     NSPoint lastDragLocation;
+    
+    @private
+    NSPoint lastLocation;
     BOOL selected;
 }
 - (id)initWithFrame:(NSRect)frame graphModel:(Graph *)myGraph;
