@@ -12,5 +12,12 @@ int const GRAPH_INIT_HAS_GRID_LINES     = FALSE;
 
 @implementation EDConstants
     NSString * const EDNotificationGraphAdded           = @"EDGraphAdded";
-    NSString * const EDNotificationGraphSelected        = @"EDNotificationGraphSelected";
+
+    // graphs
+    NSString * const EDNotificationGraphSelected                    = @"EDNotificationGraphSelected";
+    NSString * const EDNotificationGraphSelectedWithComand          = @"EDNotificationGraphSelectedWithCommand";
+    NSString * const EDNotificationGraphSelectedWithShift           = @"EDNotificationGraphSelectedWithShift";
+
+    // worksheets
+    NSString * const EDNotificationWorksheetClicked                 = @"EDNotificationWorksheetClicked";
 @end

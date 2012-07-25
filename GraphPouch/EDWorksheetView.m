@@ -59,11 +59,16 @@
 - (void)handleNewGraphAdded:(NSNotification *)note{
     // draw new graph view
     Graph *myGraph = [note object];
-    //EDGraphView *graph = [[EDGraphView alloc] initWithFrame:[self bounds] graphModel:myGraph];
     EDGraphView *graph = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, 40, 40) graphModel:myGraph];
     
     [self addSubview:graph];
     [self setNeedsDisplay:TRUE];
-    //NSLog(@"Received notification %@", [myGraph hasGridLines]);
 }
+
+- (void)mouseDown:(NSEvent *)theEvent{
+    //post notification
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:EDNotificationWorksheetClicked object:self];
+}
+
 @end

@@ -20,6 +20,9 @@
         // listen
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(onNewGraphSelected:) name:EDNotificationGraphSelected object:nil];
+        [nc addObserver:self selector:@selector(onNewGraphSelected:) name:EDNotificationGraphSelectedWithShift object:nil];
+        [nc addObserver:self selector:@selector(onNewGraphSelected:) name:EDNotificationGraphSelectedWithComand object:nil];
+        [nc addObserver:self selector:@selector(onWorksheetClicked:) name:EDNotificationWorksheetClicked object:nil];
         
         // set model info
         graph = myGraph;
@@ -29,12 +32,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    //NSLog(@"frame: x:%f y:%f bounds: x: %f y:%f", [self frame].origin.x, [self frame].origin.y, [self bounds].origin.x, [self bounds].origin.y);
-    //NSLog(@"redrawing graph view: hasTickMarks:%@", [graph hasTickMarks]);
-    //NSRect bounds = [self bounds];
-    //[[NSColor greenColor] set];
-    //[NSBezierPath fillRect:[self bounds]];
-    
     NSRect bounds = NSMakeRect(10, 10, 20, 20);
     if(selected)
         [[NSColor redColor] set];
@@ -46,15 +43,25 @@
     [super drawRect:dirtyRect];
 }
 
-#pragma mark Events
-
+#pragma mark mouse events
 - (void)mouseDown:(NSEvent *)theEvent{
-    //NSInteger clicks = [theEvent clickCount];
-    //NSLog(@"mouseUp: %ld", clicks);
+    NSUInteger flags = [theEvent modifierFlags];
     
     //post notification
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:EDNotificationGraphSelected object:self];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    
+    if(flags & NSCommandKeyMask){
+        [dict setValue:@"command" forKey:@"key"];
+        [nc postNotificationName:EDNotificationGraphSelectedWithComand object:self userInfo:dict];
+    }
+    else if(flags & NSShiftKeyMask){
+        [dict setValue:@"shift" forKey:@"key"];
+        [nc postNotificationName:EDNotificationGraphSelectedWithShift object:self userInfo:dict];
+    }
+    else{
+        [nc postNotificationName:EDNotificationGraphSelected object:self];
+    }
     
     // set variable for draggin
     lastDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
@@ -77,21 +84,46 @@
     //NSLog(@"mouseUp");
 }
 
+# pragma mark listeners - graphs
 - (void)onNewGraphSelected:(NSNotification *)note{
-    NSLog(@"equal? %d", [note object] == self);
-    if([note object] == self){
-        if(!selected){
-            selected = TRUE;
-            [self setNeedsDisplay:TRUE];
+    //NSLog(@"equal? %d", [note object] == self);
+    // was there a modifier key?
+    if([note userInfo] == nil){
+        // was this graph selected?
+        if([note object] == self){
+            if(!selected){
+                selected = TRUE;
+                [self setNeedsDisplay:TRUE];
+            }
+        }
+        else {
+            // deselect this graph
+            if(selected){
+                selected = FALSE;
+                [self setNeedsDisplay:TRUE];
+            }
         }
     }
-    else {
-        if(selected){
-            NSLog(@"switching back to false.");
-            selected = FALSE;
-            [self setNeedsDisplay:TRUE];
+    else{
+        // multiple selection
+        // was this graph selected?
+        if([note object] == self){
+            if(!selected){
+                selected = TRUE;
+                [self setNeedsDisplay:TRUE];
+            }
         }
+        
     }
-    NSLog(@"new graph selected: note: %@", [note object]);
+    NSLog(@"new graph selected: note: %d", [note userInfo] == nil);
+}
+
+# pragma mark listeners - worksheet
+- (void)onWorksheetClicked:(NSNotification *)note{
+    // deselect this graph
+    if(selected){
+        selected = FALSE;
+        [self setNeedsDisplay:TRUE];
+    }
 }
 @end

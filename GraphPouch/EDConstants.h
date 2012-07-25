@@ -11,6 +11,12 @@ FOUNDATION_EXPORT int const GRAPH_INIT_HAS_GRID_LINES;
 #import <Foundation/Foundation.h>
 
 @interface EDConstants : NSObject
+    // graph
     extern NSString *const EDNotificationGraphAdded;
     extern NSString *const EDNotificationGraphSelected;
+    extern NSString *const EDNotificationGraphSelectedWithComand;
+    extern NSString *const EDNotificationGraphSelectedWithShift;
+
+    // worksheet
+    extern NSString *const EDNotificationWorksheetClicked;
 @end
