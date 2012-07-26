@@ -7,22 +7,38 @@
 //
 
 #import "EDGraphView.h"
+#import "EDWorksheetView.h"
 #import "EDConstants.h"
 #import "Graph.h"
 
 @implementation EDGraphView
+@synthesize viewID;
+
++ (NSString *)generateID{
+    NSDate *now = [[NSDate alloc] init];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyyMMDDHHmmssA"];
+    NSString *dateString = [format stringFromDate:now];
+    NSString *returnStr = [[[NSString alloc] initWithFormat:@"graph"] stringByAppendingString:dateString];
+    NSLog(@"creating id of: %@", returnStr);
+    return returnStr;
+}
 
 - (id)initWithFrame:(NSRect)frame graphModel:(Graph *)myGraph{
     self = [super initWithFrame:frame];
-    //self = [super initWithFrame:NSMakeRect(20, 20, 20, 20)];
     
     if (self){
+        //generate id
+        [self setViewID:[EDGraphView generateID]];
+        
         // listen
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(onNewGraphSelected:) name:EDNotificationGraphSelected object:nil];
-        [nc addObserver:self selector:@selector(onNewGraphSelected:) name:EDNotificationGraphSelectedWithShift object:nil];
-        [nc addObserver:self selector:@selector(onNewGraphSelected:) name:EDNotificationGraphSelectedWithComand object:nil];
-        [nc addObserver:self selector:@selector(onWorksheetClicked:) name:EDNotificationWorksheetClicked object:nil];
+        //[nc addObserver:self selector:@selector(onNewGraphSelected:) name:EDNotificationGraphSelected object:self];
+        //[nc addObserver:self selector:@selector(onNewGraphSelected:) name:EDNotificationGraphSelectedWithShift object:self];
+        //[nc addObserver:self selector:@selector(onNewGraphSelected:) name:EDNotificationGraphSelectedWithComand object:self];
+        //[nc addObserver:self selector:@selector(onWorksheetClicked:) name:EDNotificationWorksheetClicked object:self];
+        [nc addObserver:self selector:@selector(onWorksheetSelectedElementRemoved:) name:EDNotificationWorksheetElementRemoved object:nil];
+        [nc addObserver:self selector:@selector(onWorksheetSelectedElementAdded:) name:EDNotificationWorksheetElementAdded object:nil];
         
         // set model info
         graph = myGraph;
@@ -95,29 +111,29 @@
 
 # pragma mark listeners - graphs
 - (void)onNewGraphSelected:(NSNotification *)note{
-    //NSLog(@"equal? %d", [note object] == self);
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    NSLog(@"new graph selected. self:%@", self);
     // was there a modifier key?
     if([note userInfo] == nil){
         // was this graph selected?
         if([note object] == self){
-            if(!selected) [self select];
-                
+            [nc postNotificationName:EDNotificationGraphSelected object:self];
         }
         else {
-            // deselect this graph
-            if(selected) [self deselect];
+            [nc postNotificationName:EDNotificationGraphDeselected object:self];
         }
     }
     else{
         // multiple selection
         // was this graph selected?
         if([note object] == self){
-            if(!selected) [self select];
+            [nc postNotificationName:EDNotificationGraphSelected object:self];
         }
     }
 }
 
 #pragma mark selection
+/*
 - (void)select{
     // prepare undo
     NSUndoManager *undo = [self undoManager];
@@ -141,14 +157,33 @@
     }
     selected = FALSE;
     [self setNeedsDisplay:TRUE]; 
-}
+}*/
 
 # pragma mark listeners - worksheet
+/*
 - (void)onWorksheetClicked:(NSNotification *)note{
     // deselect this graph
     if(selected){
         [self deselect];
     }
+}*/
+
+- (void)onWorksheetSelectedElementAdded:(NSNotification *)note{
+    //selection was added
+    
+    //if in selection then show selected
+    NSLog(@"figure out if added: superview:%@", [self superview]);
+    if([(EDWorksheetView *)[self superview] elementSelected:self])
+        NSLog(@"element is selected.");
+    else
+        NSLog(@"element is not selected.");
+}
+
+- (void)onWorksheetSelectedElementRemoved:(NSNotification *)note{
+    //selection was added
+    
+    //if in selection then show selected
+    NSLog(@"figure out if removed");
 }
 
 # pragma mark - movement

@@ -8,6 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface EDWorksheetView : NSView
+@interface EDWorksheetView : NSView{
+    NSMutableDictionary *selectedElements;
+}
+
+- (void)onGraphSelected:(NSNotification *)note;
+- (BOOL)elementSelected:(id)element;
 
 @end

@@ -14,10 +14,13 @@ int const GRAPH_INIT_HAS_GRID_LINES     = FALSE;
     NSString * const EDNotificationGraphAdded           = @"EDGraphAdded";
 
     // graphs
+    NSString * const EDNotificationGraphDeselected                  = @"EDNotificationGraphDeselected";
     NSString * const EDNotificationGraphSelected                    = @"EDNotificationGraphSelected";
     NSString * const EDNotificationGraphSelectedWithComand          = @"EDNotificationGraphSelectedWithCommand";
     NSString * const EDNotificationGraphSelectedWithShift           = @"EDNotificationGraphSelectedWithShift";
 
     // worksheets
     NSString * const EDNotificationWorksheetClicked                 = @"EDNotificationWorksheetClicked";
+    NSString * const EDNotificationWorksheetElementAdded            = @"EDNotificationWorksheetElementAdded";
+    NSString * const EDNotificationWorksheetElementRemoved          = @"EDNotificationWorksheetElementRemoved";
 @end

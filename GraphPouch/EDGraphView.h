@@ -17,5 +17,8 @@
     NSPoint lastLocation;
     BOOL selected;
 }
+@property NSString *viewID;
+
++ (NSString *)generateID;
 - (id)initWithFrame:(NSRect)frame graphModel:(Graph *)myGraph;
 @end
