@@ -10,6 +10,7 @@
 
 @interface EDWorksheetView : NSView{
     NSMutableDictionary *selectedElements;
+    NSNotificationCenter *nc;
 }
 
 - (void)onGraphSelected:(NSNotification *)note;

@@ -25,7 +25,7 @@
     // send notification
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     NSLog(@"sending notification");
-    [nc postNotificationName:EDNotificationGraphAdded object:newObj];
+    [nc postNotificationName:EDEventGraphAdded object:newObj];
     
     return newObj;
 }

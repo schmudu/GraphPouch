@@ -8,21 +8,12 @@
 
 #import "EDGraphView.h"
 #import "EDWorksheetView.h"
+#import "EDWorksheetElementView.h"
 #import "EDConstants.h"
 #import "Graph.h"
 
 @implementation EDGraphView
-@synthesize viewID;
 
-+ (NSString *)generateID{
-    NSDate *now = [[NSDate alloc] init];
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateFormat:@"yyyyMMDDHHmmssA"];
-    NSString *dateString = [format stringFromDate:now];
-    NSString *returnStr = [[[NSString alloc] initWithFormat:@"graph"] stringByAppendingString:dateString];
-    NSLog(@"creating id of: %@", returnStr);
-    return returnStr;
-}
 
 - (id)initWithFrame:(NSRect)frame graphModel:(Graph *)myGraph{
     self = [super initWithFrame:frame];
@@ -32,13 +23,10 @@
         [self setViewID:[EDGraphView generateID]];
         
         // listen
-        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-        //[nc addObserver:self selector:@selector(onNewGraphSelected:) name:EDNotificationGraphSelected object:self];
-        //[nc addObserver:self selector:@selector(onNewGraphSelected:) name:EDNotificationGraphSelectedWithShift object:self];
-        //[nc addObserver:self selector:@selector(onNewGraphSelected:) name:EDNotificationGraphSelectedWithComand object:self];
-        //[nc addObserver:self selector:@selector(onWorksheetClicked:) name:EDNotificationWorksheetClicked object:self];
-        [nc addObserver:self selector:@selector(onWorksheetSelectedElementRemoved:) name:EDNotificationWorksheetElementRemoved object:nil];
-        [nc addObserver:self selector:@selector(onWorksheetSelectedElementAdded:) name:EDNotificationWorksheetElementAdded object:nil];
+        nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(onWorksheetSelectedElementRemoved:) name:EDEventWorksheetElementRemoved object:[self superview]];
+        [nc addObserver:self selector:@selector(onWorksheetSelectedElementAdded:) name:EDEventWorksheetElementAdded object:[self superview]];
+        //[nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelected object:nil];
         
         // set model info
         graph = myGraph;
@@ -46,10 +34,14 @@
     return self;
 }
 
+- (void) dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSRect bounds = NSMakeRect(10, 10, 20, 20);
-    if(selected)
+    if([(EDWorksheetView *)[self superview] elementSelected:self])
         [[NSColor redColor] set];
     else {
         [[NSColor greenColor] set];
@@ -64,23 +56,26 @@
     NSUInteger flags = [theEvent modifierFlags];
     
     //post notification
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     
     if(flags & NSCommandKeyMask){
         [dict setValue:@"command" forKey:@"key"];
-        [nc postNotificationName:EDNotificationGraphSelectedWithComand object:self userInfo:dict];
+        [nc postNotificationName:EDEventElementSelectedWithComand object:self userInfo:dict];
     }
     else if(flags & NSShiftKeyMask){
         [dict setValue:@"shift" forKey:@"key"];
-        [nc postNotificationName:EDNotificationGraphSelectedWithShift object:self userInfo:dict];
+        [nc postNotificationName:EDEventElementSelectedWithShift object:self userInfo:dict];
     }
     else{
-        [nc postNotificationName:EDNotificationGraphSelected object:self];
+        [nc postNotificationName:EDEventElementSelected object:self];
     }
     
-    // set variable for draggin
-    lastLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
+    //save variable for undo
+    savedFrameLocation = [self frame].origin;
+    
+    // set variable for dragging
+    lastCursorLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
     
     // set variable for draggin
     lastDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
@@ -100,34 +95,47 @@
 }
 
 - (void)mouseUp:(NSEvent *)theEvent{
-    // prepare undo
-    NSUndoManager *undo = [self undoManager];
-    [[undo prepareWithInvocationTarget:self] moveToSavedLocation];
+    // last location of mouseDown
+    //lastCursorLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
     
-    if (![undo isUndoing]) {
-        [undo setActionName:@"Move Graph"];
+    // current location
+    //lastDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
+    float diffY = fabsf(lastCursorLocation.y - lastDragLocation.y);
+    float diffX = fabsf(lastCursorLocation.x - lastDragLocation.x);
+    //NSLog(@"diff?: %f eq?%d", diffY, (diffY>0.1f));
+    
+    //if no diff in location than do not prepare an undo
+    if(fabsf(diffX>0.01) && fabsf(diffY>0.01)){
+        // prepare undo
+        NSUndoManager *undo = [self undoManager];
+        [[undo prepareWithInvocationTarget:self] moveToSavedLocation];
+        
+        if (![undo isUndoing]) {
+            [undo setActionName:@"Move Graph"];
+        }
     }
 }
 
 # pragma mark listeners - graphs
-- (void)onNewGraphSelected:(NSNotification *)note{
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    NSLog(@"new graph selected. self:%@", self);
+- (void)onGraphSelected:(NSNotification *)note{
+    //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    //NSLog(@"new graph selected. self:%@", self);
     // was there a modifier key?
     if([note userInfo] == nil){
         // was this graph selected?
         if([note object] == self){
-            [nc postNotificationName:EDNotificationGraphSelected object:self];
+            [nc postNotificationName:EDEventElementSelected object:self];
         }
         else {
-            [nc postNotificationName:EDNotificationGraphDeselected object:self];
+            NSLog(@"sending notification that graph was deselected.");
+            [nc postNotificationName:EDEventElementDeselected object:self];
         }
     }
     else{
         // multiple selection
         // was this graph selected?
         if([note object] == self){
-            [nc postNotificationName:EDNotificationGraphSelected object:self];
+            [nc postNotificationName:EDEventElementSelected object:self];
         }
     }
 }
@@ -171,23 +179,27 @@
 - (void)onWorksheetSelectedElementAdded:(NSNotification *)note{
     //selection was added
     
+    /*
     //if in selection then show selected
     NSLog(@"figure out if added: superview:%@", [self superview]);
     if([(EDWorksheetView *)[self superview] elementSelected:self])
         NSLog(@"element is selected.");
     else
         NSLog(@"element is not selected.");
+     */
+    [self setNeedsDisplay:TRUE];
 }
 
 - (void)onWorksheetSelectedElementRemoved:(NSNotification *)note{
     //selection was added
     
     //if in selection then show selected
-    NSLog(@"figure out if removed");
+    //NSLog(@"figure out if removed");
+    [self setNeedsDisplay:TRUE];
 }
 
 # pragma mark - movement
 - (void)moveToSavedLocation{
-    [self setFrameOrigin:lastLocation];
+    [self setFrameOrigin:savedFrameLocation];
 }
 @end

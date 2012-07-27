@@ -11,16 +11,16 @@ int const GRAPH_INIT_TICK_MARKS         = FALSE;
 int const GRAPH_INIT_HAS_GRID_LINES     = FALSE; 
 
 @implementation EDConstants
-    NSString * const EDNotificationGraphAdded           = @"EDGraphAdded";
+    NSString * const EDEventGraphAdded           = @"EDGraphAdded";
 
     // graphs
-    NSString * const EDNotificationGraphDeselected                  = @"EDNotificationGraphDeselected";
-    NSString * const EDNotificationGraphSelected                    = @"EDNotificationGraphSelected";
-    NSString * const EDNotificationGraphSelectedWithComand          = @"EDNotificationGraphSelectedWithCommand";
-    NSString * const EDNotificationGraphSelectedWithShift           = @"EDNotificationGraphSelectedWithShift";
+    NSString * const EDEventElementDeselected                  = @"EDEventElementDeselected";
+    NSString * const EDEventElementSelected                    = @"EDEventElementSelected";
+    NSString * const EDEventElementSelectedWithComand          = @"EDEventElementSelectedWithCommand";
+    NSString * const EDEventElementSelectedWithShift           = @"EDEventElementSelectedWithShift";
 
     // worksheets
-    NSString * const EDNotificationWorksheetClicked                 = @"EDNotificationWorksheetClicked";
-    NSString * const EDNotificationWorksheetElementAdded            = @"EDNotificationWorksheetElementAdded";
-    NSString * const EDNotificationWorksheetElementRemoved          = @"EDNotificationWorksheetElementRemoved";
+    NSString * const EDEventWorksheetClicked                 = @"EDEventWorksheetClicked";
+    NSString * const EDEventWorksheetElementAdded            = @"EDEventWorksheetElementAdded";
+    NSString * const EDEventWorksheetElementRemoved          = @"EDEventWorksheetElementRemoved";
 @end

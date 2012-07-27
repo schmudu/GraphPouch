@@ -7,18 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDWorksheetElementView.h"
 @class Graph;
 
-@interface EDGraphView : NSView{
-    __weak Graph *graph;
-    NSPoint lastDragLocation;
+@interface EDGraphView : EDWorksheetElementView{
+    __weak Graph            *graph;
     
     @private
-    NSPoint lastLocation;
-    BOOL selected;
+    NSPoint                 savedFrameLocation;
+    NSPoint                 lastDragLocation;
+    NSPoint                 lastCursorLocation;
+    BOOL                    selected;
 }
-@property NSString *viewID;
-
-+ (NSString *)generateID;
 - (id)initWithFrame:(NSRect)frame graphModel:(Graph *)myGraph;
 @end

@@ -11,6 +11,10 @@
 #import "EDGraphView.h"
 #import "Graph.h"
 
+@interface EDWorksheetView()
+- (void)removeSelectedElement:(NSString *)id andAddElements:(NSMutableDictionary *)undoElements;
+@end
+
 @implementation EDWorksheetView
 
 - (id)initWithFrame:(NSRect)frame
@@ -21,12 +25,12 @@
         selectedElements = [[NSMutableDictionary alloc] init];
         
         // listen
-        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDNotificationGraphSelectedWithShift object:nil];
-        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDNotificationGraphSelectedWithComand object:nil];
-        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDNotificationGraphSelected object:nil];
-        [nc addObserver:self selector:@selector(onGraphDeselected:) name:EDNotificationGraphDeselected object:nil];
-        [nc addObserver:self selector:@selector(handleNewGraphAdded:) name:EDNotificationGraphAdded object:nil];
+        nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithShift object:nil];
+        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithComand object:nil];
+        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelected object:nil];
+        [nc addObserver:self selector:@selector(onGraphDeselected:) name:EDEventElementDeselected object:nil];
+        [nc addObserver:self selector:@selector(handleNewGraphAdded:) name:EDEventGraphAdded object:nil];
     }
     
     return self;
@@ -55,8 +59,8 @@
 #pragma mark mouse behavior
 - (void)mouseDown:(NSEvent *)theEvent{
     //post notification
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:EDNotificationWorksheetClicked object:self];
+    //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:EDEventWorksheetClicked object:self];
 }
 
 #pragma mark Listeners
@@ -71,28 +75,57 @@
     /*
     // listen
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(onGraphSelected:) name:EDNotificationGraphSelectedWithShift object:nil];
-    [nc addObserver:self selector:@selector(onGraphSelected:) name:EDNotificationGraphSelectedWithComand object:nil];
-    [nc addObserver:self selector:@selector(onGraphSelected:) name:EDNotificationGraphSelected object:nil];
-    [nc addObserver:self selector:@selector(onGraphDeselected:) name:EDNotificationGraphDeselected object:nil];
+    [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithShift object:nil];
+    [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithComand object:nil];
+    [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelected object:nil];
+    [nc addObserver:self selector:@selector(onGraphDeselected:) name:EDEventElementDeselected object:nil];
      */
 }
 
 #pragma mark Graphs
 - (void)onGraphSelected:(NSNotification *)note{
-    NSLog(@"graph was selected.%@", [note object]);
-    //add graph to selected elements
-    EDGraphView *graph = (EDGraphView *)[note object];
-    
-    //add graph to selected elements
-    [self addSelectedElement:graph forKey:[graph viewID]];
-     
-    //undo
-    NSUndoManager *undo = [self undoManager];
-    [[undo prepareWithInvocationTarget:self] removeSelectedElement:[graph viewID]];
-    
-    if (![undo isUndoing]) {
-        [undo setActionName:@"Select Graph"];
+    // if the user pressed 'command' or 'shift' add this graph to selection
+    if(([note userInfo] != nil) && (([(NSString *)[[note userInfo] objectForKey:@"key"] isEqualToString:@"command"]) || ([(NSString *)[[note userInfo] objectForKey:@"key"] isEqualToString:@"shift"]))){
+        //NSLog(@"need to simply add another element to the selection.");
+        //add graph to selected elements
+        EDGraphView *graph = (EDGraphView *)[note object];
+        
+        //add graph to selected elements
+        [self addSelectedElement:graph forKey:[graph viewID]];
+         
+        //undo
+        NSUndoManager *undo = [self undoManager];
+        [[undo prepareWithInvocationTarget:self] removeSelectedElement:[graph viewID]];
+        
+        if (![undo isUndoing]) {
+            [undo setActionName:@"Select Graph"];
+        }
+    }
+    else{
+        // save all object for undo
+        NSMutableDictionary *undoElements = [[NSMutableDictionary alloc] init];
+        for (NSString *key in selectedElements){
+            //NSLog(@"key:%@ object:%@", key, [selectedElements objectForKey:key]);
+            [undoElements setObject:[selectedElements objectForKey:key] forKey:key];
+        }
+        NSLog(@"graph selected");
+        
+        //clear out graphs from selected elements
+        [selectedElements removeAllObjects];
+        
+        //add graph to selected elements
+        EDGraphView *graph = (EDGraphView *)[note object];
+        
+        //add graph to selected elements
+        [self addSelectedElement:graph forKey:[graph viewID]];
+         
+        //undo
+        NSUndoManager *undo = [self undoManager];
+        [[undo prepareWithInvocationTarget:self] removeSelectedElement:[graph viewID] andAddElements:undoElements];
+        
+        if (![undo isUndoing]) {
+            [undo setActionName:@"Select Graph"];
+        }
     }
 }
 
@@ -114,26 +147,38 @@
 }
 
 - (void)addSelectedElement:(id)element forKey:(NSString *)id{
+    //NSLog(@"adding:%@", element);
     [selectedElements setObject:element forKey:id];
     
     // post notification
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:EDNotificationWorksheetElementAdded object:self];
+    [nc postNotificationName:EDEventWorksheetElementAdded object:self];
 }
 
 - (void)removeSelectedElement:(NSString *)id{
     [selectedElements removeObjectForKey:id];
     
     // post notification
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:EDNotificationWorksheetElementRemoved object:self];
+    [nc postNotificationName:EDEventWorksheetElementRemoved object:self];
 }
 
+
+- (void)removeSelectedElement:(NSString *)id andAddElements:(NSMutableDictionary *)undoElements{
+NSLog(@"doing the undo part.");
+    // remove object
+    [selectedElements removeObjectForKey:id];
+    
+    // add elements back to array
+    [selectedElements addEntriesFromDictionary:undoElements];
+     
+    // post notification
+    [nc postNotificationName:EDEventWorksheetElementRemoved object:self];
+    
+}
 
 - (BOOL)elementSelected:(id)element{
     //return whether or not the element exists with the selection dictionary
     id result = [selectedElements objectForKey:[element viewID]];
-    NSLog(@"going to look for elem: count: %lu id:%@ result:%d", [selectedElements count], result, (result == nil));
+    //NSLog(@"going to look for elem: count: %lu id:%@ result:%d", [selectedElements count], result, (result == nil));
     if (result == nil)
         return FALSE;
     else 

@@ -10,6 +10,7 @@
 		CD015FCE15BA66CA0096CDF9 /* EDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CD015FCD15BA66CA0096CDF9 /* EDConstants.m */; };
 		CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9915BDF93400AB7567 /* EDGraphView.m */; };
 		CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */; };
+		CD3F0AC515C22F0B00AB7567 /* EDWorksheetElementView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0AC415C22F0B00AB7567 /* EDWorksheetElementView.m */; };
 		CD41B54D15BB024C00640E73 /* EDWorksheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD41B54C15BB024C00640E73 /* EDWorksheetView.m */; };
 		CD41B55015BB046B00640E73 /* EDWorksheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD41B54F15BB046B00640E73 /* EDWorksheetViewController.m */; };
 		CD47112215BA1647008AACC3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD47112115BA1647008AACC3 /* Cocoa.framework */; };
@@ -31,6 +32,8 @@
 		CD3F0A9915BDF93400AB7567 /* EDGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphView.m; sourceTree = "<group>"; };
 		CD3F0A9A15BDF93400AB7567 /* EDGraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphViewController.h; sourceTree = "<group>"; };
 		CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphViewController.m; sourceTree = "<group>"; };
+		CD3F0AC315C22F0B00AB7567 /* EDWorksheetElementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDWorksheetElementView.h; sourceTree = "<group>"; };
+		CD3F0AC415C22F0B00AB7567 /* EDWorksheetElementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDWorksheetElementView.m; sourceTree = "<group>"; };
 		CD41B54B15BB024C00640E73 /* EDWorksheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDWorksheetView.h; sourceTree = "<group>"; };
 		CD41B54C15BB024C00640E73 /* EDWorksheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDWorksheetView.m; sourceTree = "<group>"; };
 		CD41B54E15BB046B00640E73 /* EDWorksheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDWorksheetViewController.h; sourceTree = "<group>"; };
@@ -121,6 +124,8 @@
 				CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */,
 				CD41B54B15BB024C00640E73 /* EDWorksheetView.h */,
 				CD41B54C15BB024C00640E73 /* EDWorksheetView.m */,
+				CD3F0AC315C22F0B00AB7567 /* EDWorksheetElementView.h */,
+				CD3F0AC415C22F0B00AB7567 /* EDWorksheetElementView.m */,
 				CD41B54E15BB046B00640E73 /* EDWorksheetViewController.h */,
 				CD41B54F15BB046B00640E73 /* EDWorksheetViewController.m */,
 				CD84979515BC75E600090E6E /* Graph.h */,
@@ -219,6 +224,7 @@
 				CD84979715BC75E600090E6E /* Graph.m in Sources */,
 				CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */,
 				CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */,
+				CD3F0AC515C22F0B00AB7567 /* EDWorksheetElementView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
