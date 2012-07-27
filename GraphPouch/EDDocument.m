@@ -38,4 +38,10 @@
     return YES;
 }
 
+/*
+// Core Data uses this method to load the file
+- (id)initWithContentsOfFile:(NSString *)absolutePath ofType:(NSString *)typeName{
+    
+}
+*/
 @end

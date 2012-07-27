@@ -2,7 +2,7 @@
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Graph" representedClassName="Graph" syncable="YES">
         <attribute name="hasGridLines" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="hasTickMarks" optional="YES" attributeType="Decimal" syncable="YES"/>
+        <attribute name="hasTickMarks" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <elements>
         <element name="Graph" positionX="160" positionY="192" width="128" height="75"/>

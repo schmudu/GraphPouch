@@ -133,6 +133,7 @@
 									<string key="NSFrame">{{1, 606}, {708, 15}}</string>
 									<reference key="NSSuperview" ref="257841340"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:30</string>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="257841340"/>
@@ -203,11 +204,27 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">elementsController</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="439036319"/>
+					</object>
+					<int key="connectionID">100277</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="275939982"/>
 						<reference key="destination" ref="512844837"/>
 					</object>
 					<int key="connectionID">17</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">add:</string>
+						<reference key="source" ref="439036319"/>
+						<reference key="destination" ref="807704737"/>
+					</object>
+					<int key="connectionID">100093</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -223,15 +240,7 @@
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">100072</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">add:</string>
-						<reference key="source" ref="439036319"/>
-						<reference key="destination" ref="807704737"/>
-					</object>
-					<int key="connectionID">100093</int>
+					<int key="connectionID">100280</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -370,13 +379,24 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">100276</int>
+			<int key="maxID">100280</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">EDDocument</string>
 					<string key="superclassName">NSPersistentDocument</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">elementsController</string>
+						<string key="NS.object.0">NSArrayController</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">elementsController</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">elementsController</string>
+							<string key="candidateClassName">NSArrayController</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/EDDocument.h</string>

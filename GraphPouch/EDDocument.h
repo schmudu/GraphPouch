@@ -9,6 +9,10 @@
 #import <Cocoa/Cocoa.h>
 @class EDWorksheetViewController;
 
-@interface EDDocument : NSPersistentDocument
+@interface EDDocument : NSPersistentDocument{
+    IBOutlet NSArrayController *elementsController;
+}
+
+//- (void)setWorksheetElements:(NSArray *)elements;
 
 @end
