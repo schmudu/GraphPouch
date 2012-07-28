@@ -13,7 +13,7 @@
 #import "Graph.h"
 
 @implementation EDGraphView
-
+@synthesize graph;
 
 - (id)initWithFrame:(NSRect)frame graphModel:(Graph *)myGraph{
     self = [super initWithFrame:frame];
@@ -26,7 +26,6 @@
         nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(onWorksheetSelectedElementRemoved:) name:EDEventWorksheetElementRemoved object:[self superview]];
         [nc addObserver:self selector:@selector(onWorksheetSelectedElementAdded:) name:EDEventWorksheetElementAdded object:[self superview]];
-        //[nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelected object:nil];
         
         // set model info
         graph = myGraph;
@@ -92,6 +91,11 @@
     
     [self setFrameOrigin:thisOrigin];
     lastDragLocation = newDragLocation;
+    
+    // set data in the model
+    //NSLog(@"graph locationX:%f", [[self graph] locationX]);
+    [[self graph] setLocationX:newDragLocation.x];
+    [[self graph] setLocationY:newDragLocation.y];
 }
 
 - (void)mouseUp:(NSEvent *)theEvent{
@@ -118,8 +122,6 @@
 
 # pragma mark listeners - graphs
 - (void)onGraphSelected:(NSNotification *)note{
-    //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    //NSLog(@"new graph selected. self:%@", self);
     // was there a modifier key?
     if([note userInfo] == nil){
         // was this graph selected?
@@ -140,53 +142,8 @@
     }
 }
 
-#pragma mark selection
-/*
-- (void)select{
-    // prepare undo
-    NSUndoManager *undo = [self undoManager];
-    [[undo prepareWithInvocationTarget:self] deselect];
-    
-    if (![undo isUndoing]) {
-        [undo setActionName:@"Select Graph"];
-    }
-    
-    selected = TRUE;
-    [self setNeedsDisplay:TRUE]; 
-}
-
-- (void)deselect{
-    // prepare undo
-    NSUndoManager *undo = [self undoManager];
-    [[undo prepareWithInvocationTarget:self] select];
-    
-    if (![undo isUndoing]) {
-        [undo setActionName:@"Select Graph"];
-    }
-    selected = FALSE;
-    [self setNeedsDisplay:TRUE]; 
-}*/
-
-# pragma mark listeners - worksheet
-/*
-- (void)onWorksheetClicked:(NSNotification *)note{
-    // deselect this graph
-    if(selected){
-        [self deselect];
-    }
-}*/
-
+# pragma mark listeners - selection
 - (void)onWorksheetSelectedElementAdded:(NSNotification *)note{
-    //selection was added
-    
-    /*
-    //if in selection then show selected
-    NSLog(@"figure out if added: superview:%@", [self superview]);
-    if([(EDWorksheetView *)[self superview] elementSelected:self])
-        NSLog(@"element is selected.");
-    else
-        NSLog(@"element is not selected.");
-     */
     [self setNeedsDisplay:TRUE];
 }
 
@@ -200,6 +157,10 @@
 
 # pragma mark - movement
 - (void)moveToSavedLocation{
+    // set data in the model
+    [[self graph] setLocationX:savedFrameLocation.x];
+    [[self graph] setLocationY:savedFrameLocation.y];
+    
     [self setFrameOrigin:savedFrameLocation];
 }
 @end

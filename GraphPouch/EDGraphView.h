@@ -11,13 +11,13 @@
 @class Graph;
 
 @interface EDGraphView : EDWorksheetElementView{
-    __weak Graph            *graph;
-    
     @private
     NSPoint                 savedFrameLocation;
     NSPoint                 lastDragLocation;
     NSPoint                 lastCursorLocation;
     BOOL                    selected;
 }
+@property (nonatomic, assign) Graph *graph;
+
 - (id)initWithFrame:(NSRect)frame graphModel:(Graph *)myGraph;
 @end

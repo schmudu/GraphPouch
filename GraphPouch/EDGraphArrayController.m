@@ -25,9 +25,11 @@
     NSNumber *value_grid_lines = [[NSNumber alloc] initWithInt:GRAPH_INIT_HAS_GRID_LINES];
     [newObj setValue:value_grid_lines forKey:@"hasGridLines"];
     
+    [newObj setValue:0 forKey:@"locationX"];
+    [newObj setValue:0 forKey:@"locationY"];
+    
     // send notification
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    NSLog(@"sending notification");
     [nc postNotificationName:EDEventGraphAdded object:newObj];
     
     return newObj;

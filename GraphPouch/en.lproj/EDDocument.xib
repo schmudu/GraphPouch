@@ -191,6 +191,9 @@
 			<object class="NSCustomObject" id="578366961">
 				<string key="NSClassName">EDWorksheetViewController</string>
 			</object>
+			<object class="NSCustomObject" id="949190838">
+				<string key="NSClassName">EDWorksheetView</string>
+			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
@@ -209,6 +212,14 @@
 						<reference key="destination" ref="439036319"/>
 					</object>
 					<int key="connectionID">100277</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">worksheetController</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="578366961"/>
+					</object>
+					<int key="connectionID">100282</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -249,6 +260,14 @@
 						<reference key="destination" ref="1017139771"/>
 					</object>
 					<int key="connectionID">100261</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">elements</string>
+						<reference key="source" ref="949190838"/>
+						<reference key="destination" ref="439036319"/>
+					</object>
+					<int key="connectionID">100284</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -354,6 +373,11 @@
 						<reference key="object" ref="1017139771"/>
 						<reference key="parent" ref="257841340"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100283</int>
+						<reference key="object" ref="949190838"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -371,6 +395,7 @@
 				<string key="100273.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100275.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100276.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="100283.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBWindowTemplateEditedContentRect">{{133, 170}, {507, 413}}</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -379,24 +404,27 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">100280</int>
+			<int key="maxID">100284</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">EDDocument</string>
 					<string key="superclassName">NSPersistentDocument</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">elementsController</string>
-						<string key="NS.object.0">NSArrayController</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">elementsController</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="elementsController">NSArrayController</string>
+						<string key="worksheetController">EDWorksheetViewController</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="elementsController">
 							<string key="name">elementsController</string>
 							<string key="candidateClassName">NSArrayController</string>
 						</object>
-					</object>
+						<object class="IBToOneOutletInfo" key="worksheetController">
+							<string key="name">worksheetController</string>
+							<string key="candidateClassName">EDWorksheetViewController</string>
+						</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/EDDocument.h</string>
@@ -413,6 +441,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">EDWorksheetView</string>
 					<string key="superclassName">NSView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">elements</string>
+						<string key="NS.object.0">NSArrayController</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">elements</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">elements</string>
+							<string key="candidateClassName">NSArrayController</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/EDWorksheetView.h</string>

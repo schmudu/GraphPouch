@@ -4,8 +4,10 @@
         <attribute name="equation" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hasGridLines" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="hasTickMarks" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="locationX" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="locationY" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Graph" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Graph" positionX="160" positionY="192" width="128" height="120"/>
     </elements>
 </model>

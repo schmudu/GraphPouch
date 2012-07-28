@@ -8,6 +8,7 @@
 
 #import "EDDocument.h"
 #import "EDWorksheetViewController.h"
+#import "Graph.h"
 
 @implementation EDDocument
 
@@ -30,7 +31,15 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
-    // Add any code here that needs to be executed once the windowController has loaded the document's window.
+    
+    // observe when the arranged objects have been loaded
+    [elementsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:(void *)[self managedObjectContext]];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    // data has been loaded ask the worksheet to draw the graphs
+    NSLog(@"ao: %@", [elementsController arrangedObjects]);
+    [worksheetController loadDataFromManageObjectContext];
 }
 
 + (BOOL)autosavesInPlace

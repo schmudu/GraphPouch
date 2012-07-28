@@ -10,5 +10,6 @@
 @class EDWorksheetView;
 
 @interface EDWorksheetViewController : NSViewController
+- (void)loadDataFromManageObjectContext;
 
 @end

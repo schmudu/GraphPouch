@@ -11,6 +11,7 @@
 
 @interface EDDocument : NSPersistentDocument{
     IBOutlet NSArrayController *elementsController;
+    IBOutlet EDWorksheetViewController *worksheetController;
 }
 
 //- (void)setWorksheetElements:(NSArray *)elements;

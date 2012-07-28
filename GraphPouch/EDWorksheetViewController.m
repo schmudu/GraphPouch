@@ -25,4 +25,9 @@
     return self;
 }
 
+- (void)loadDataFromManageObjectContext{
+    //NSLog(@"going to load data: view: %@", [self view]);
+    [(EDWorksheetView *)[self view] loadDataFromManagedObjectContext];
+}
+
 @end

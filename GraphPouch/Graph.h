@@ -10,4 +10,8 @@
 #import <CoreData/CoreData.h>
 
 @interface Graph : NSManagedObject
+
+@property NSString *equation;
+@property BOOL hasTickMarks, hasGridLines;
+@property float locationX, locationY;
 @end

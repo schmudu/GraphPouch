@@ -20,7 +20,7 @@
     self = [self initWithWindowNibName:@"EDPropertiesView"];
     
     if (self) {
-        NSLog(@"regular init being called.");
+        //NSLog(@"regular init being called.");
     }
     return self;
     
@@ -29,7 +29,7 @@
 {
     self = [super initWithWindow:window];
     if (self) {
-        NSLog(@"initializing properties window.");
+        //NSLog(@"initializing properties window.");
     }
     
     return self;

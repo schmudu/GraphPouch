@@ -21,6 +21,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        NSLog(@"worksheet view initializing.");
         // init selected elements
         selectedElements = [[NSMutableDictionary alloc] init];
         
@@ -38,6 +39,14 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)loadDataFromManagedObjectContext{
+    NSArray *ao = [elements arrangedObjects];
+    NSLog(@"going to iterate through arranged objects: %@", elements);
+    for (EDGraphView *elem in ao){
+        NSLog(@"item:%@", elem);
+    }
 }
 
 #pragma mark Drawing
