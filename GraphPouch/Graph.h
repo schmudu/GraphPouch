@@ -9,8 +9,5 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@interface Graph : NSManagedObject <NSCoding>
-
-@property BOOL hasGridLines, hasTickMarks;
-
+@interface Graph : NSManagedObject
 @end

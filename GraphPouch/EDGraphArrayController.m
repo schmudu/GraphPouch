@@ -16,6 +16,9 @@
     //NSLog(@"object type: %@", [newObj class]);
     
     // default values
+    NSString *value_equation = [[NSString alloc] initWithString:@"default_equation"];
+    [newObj setValue:value_equation forKey:@"equation"];
+    
     NSNumber *value_has_tick_marks = [[NSNumber alloc] initWithInt:GRAPH_INIT_TICK_MARKS];
     [newObj setValue:value_has_tick_marks forKey:@"hasTickMarks"];
     
