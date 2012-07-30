@@ -12,6 +12,10 @@
 
 @implementation EDDocument
 
+-(id)getInstance{
+    return self;
+}
+
 - (id)init
 {
     self = [super init];
@@ -31,7 +35,8 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
-    
+#warning trying here
+    NSLog(@"finished loading context?:%@ controller:%@", [self managedObjectContext], worksheetController);
     // observe when the arranged objects have been loaded
     [elementsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:(void *)[self managedObjectContext]];
 }

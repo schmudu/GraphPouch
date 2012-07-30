@@ -42,11 +42,22 @@
 }
 
 - (void)loadDataFromManagedObjectContext{
+#warning need to figure this out
+    //EDDocument *ao = [self window
+    NSLog(@"going to iterate through arranged objects:%@", [[self window] windowController]);
+    /*
     NSArray *ao = [elements arrangedObjects];
     NSLog(@"going to iterate through arranged objects: %@", elements);
     for (EDGraphView *elem in ao){
         NSLog(@"item:%@", elem);
     }
+#warning need to figure out how to load Graph entities so we can draw them on the screen
+    // Trying something out, but not working
+    NSManagedObjectContext *context = [document managedObjectContext];
+    NSLog(@"context: %@", context);
+    NSManagedObjectModel *managedObjectModel = [[context persistentStoreCoordinator] managedObjectModel];
+    NSEntityDescription *graphEntity = [[managedObjectModel entitiesByName] objectForKey:@"Graph"];
+     */
 }
 
 #pragma mark Drawing

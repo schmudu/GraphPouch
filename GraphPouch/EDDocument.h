@@ -13,7 +13,7 @@
     IBOutlet NSArrayController *elementsController;
     IBOutlet EDWorksheetViewController *worksheetController;
 }
-
+-(id)getInstance;
 //- (void)setWorksheetElements:(NSArray *)elements;
 
 @end

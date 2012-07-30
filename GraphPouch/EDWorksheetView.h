@@ -7,11 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDDocument.h"
 
 @interface EDWorksheetView : NSView{
     NSMutableDictionary *selectedElements;
     NSNotificationCenter *nc;
     IBOutlet NSArrayController *elements;
+    IBOutlet EDDocument *document;
 }
 
 - (void)onGraphSelected:(NSNotification *)note;
