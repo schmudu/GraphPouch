@@ -36,21 +36,18 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
-#warning trying here
+    
     // populate core data utility
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
     [coreData setContext: [self managedObjectContext]];
     
-    NSLog(@"finished loading context?:%@", [coreData context]);
-    [coreData getAllObjects];
-    //NSLog(@"finished loading context?:%@ controller:%@", [self managedObjectContext], worksheetController);
-    // observe when the arranged objects have been loaded
+    //add listenter
+#warning this gets called anytime anything happens to arranged objects, can we remove the listener after it's done?
     [elementsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:(void *)[self managedObjectContext]];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     // data has been loaded ask the worksheet to draw the graphs
-    NSLog(@"ao: %@", [elementsController arrangedObjects]);
     [worksheetController loadDataFromManageObjectContext];
 }
 

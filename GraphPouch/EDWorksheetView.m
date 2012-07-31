@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
+#import "EDCoreDataUtility.h"
 #import "EDConstants.h"
 #import "EDWorksheetView.h"
 #import "EDGraphView.h"
@@ -44,7 +45,9 @@
 - (void)loadDataFromManagedObjectContext{
 #warning need to figure this out
     //EDDocument *ao = [self window
-    NSLog(@"going to iterate through arranged objects:%@", [[self window] windowController]);
+    //NSLog(@"going to iterate through arranged objects:%@", [[self window] windowController]);
+    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+    [coreData getAllObjects];
     /*
     NSArray *ao = [elements arrangedObjects];
     NSLog(@"going to iterate through arranged objects: %@", elements);
