@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CD015FCE15BA66CA0096CDF9 /* EDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CD015FCD15BA66CA0096CDF9 /* EDConstants.m */; };
+		CD1422C715C7590700F55819 /* EDCoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1422C615C7590700F55819 /* EDCoreDataUtility.m */; };
 		CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9915BDF93400AB7567 /* EDGraphView.m */; };
 		CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */; };
 		CD3F0AC515C22F0B00AB7567 /* EDWorksheetElementView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0AC415C22F0B00AB7567 /* EDWorksheetElementView.m */; };
@@ -34,6 +35,8 @@
 /* Begin PBXFileReference section */
 		CD015FCC15BA66CA0096CDF9 /* EDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDConstants.h; sourceTree = "<group>"; };
 		CD015FCD15BA66CA0096CDF9 /* EDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDConstants.m; sourceTree = "<group>"; };
+		CD1422C515C7590700F55819 /* EDCoreDataUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDCoreDataUtility.h; sourceTree = "<group>"; };
+		CD1422C615C7590700F55819 /* EDCoreDataUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDCoreDataUtility.m; sourceTree = "<group>"; };
 		CD3F0A9815BDF93400AB7567 /* EDGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphView.h; sourceTree = "<group>"; };
 		CD3F0A9915BDF93400AB7567 /* EDGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphView.m; sourceTree = "<group>"; };
 		CD3F0A9A15BDF93400AB7567 /* EDGraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphViewController.h; sourceTree = "<group>"; };
@@ -100,6 +103,8 @@
 			children = (
 				CD84979515BC75E600090E6E /* Graph.h */,
 				CD84979615BC75E600090E6E /* Graph.m */,
+				CD1422C515C7590700F55819 /* EDCoreDataUtility.h */,
+				CD1422C615C7590700F55819 /* EDCoreDataUtility.m */,
 				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
 				CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */,
 				CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */,
@@ -351,6 +356,7 @@
 				CD3F0ADB15C3844000AB7567 /* EDPropertiesController.m in Sources */,
 				CD3F0AE915C3966100AB7567 /* EDPropertiesViewControllerText.m in Sources */,
 				CD3F0AF315C4772700AB7567 /* EDPropertiesViewControllerGraph.m in Sources */,
+				CD1422C715C7590700F55819 /* EDCoreDataUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import "EDDocument.h"
 #import "EDWorksheetViewController.h"
 #import "Graph.h"
+#import "EDCoreDataUtility.h"
 
 @implementation EDDocument
 
@@ -36,7 +37,13 @@
 {
     [super windowControllerDidLoadNib:aController];
 #warning trying here
-    NSLog(@"finished loading context?:%@ controller:%@", [self managedObjectContext], worksheetController);
+    // populate core data utility
+    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+    [coreData setContext: [self managedObjectContext]];
+    
+    NSLog(@"finished loading context?:%@", [coreData context]);
+    [coreData getAllObjects];
+    //NSLog(@"finished loading context?:%@ controller:%@", [self managedObjectContext], worksheetController);
     // observe when the arranged objects have been loaded
     [elementsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:(void *)[self managedObjectContext]];
 }
