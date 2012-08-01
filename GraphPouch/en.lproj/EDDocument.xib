@@ -181,17 +181,16 @@
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 			<object class="NSCustomView" id="674313487">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<string key="NSFrameSize">{163, 96}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomObject" id="578366961">
 				<string key="NSClassName">EDWorksheetViewController</string>
-			</object>
-			<object class="NSCustomObject" id="949190838">
-				<string key="NSClassName">EDWorksheetView</string>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -259,22 +258,6 @@
 						<reference key="destination" ref="1017139771"/>
 					</object>
 					<int key="connectionID">100261</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">elements</string>
-						<reference key="source" ref="949190838"/>
-						<reference key="destination" ref="439036319"/>
-					</object>
-					<int key="connectionID">100284</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">document</string>
-						<reference key="source" ref="949190838"/>
-						<reference key="destination" ref="512844837"/>
-					</object>
-					<int key="connectionID">100285</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -380,11 +363,6 @@
 						<reference key="object" ref="1017139771"/>
 						<reference key="parent" ref="257841340"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100283</int>
-						<reference key="object" ref="949190838"/>
-						<reference key="parent" ref="0"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -402,7 +380,6 @@
 				<string key="100273.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100275.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100276.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100283.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBWindowTemplateEditedContentRect">{{133, 170}, {507, 413}}</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

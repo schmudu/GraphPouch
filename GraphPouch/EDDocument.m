@@ -42,11 +42,12 @@
     [coreData setContext: [self managedObjectContext]];
     
     //add listenter
-#warning this gets called anytime anything happens to arranged objects, can we remove the listener after it's done?
     [elementsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:(void *)[self managedObjectContext]];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    [elementsController removeObserver:self forKeyPath:@"arrangedObjects" context:(void *)[self managedObjectContext]];
+    
     // data has been loaded ask the worksheet to draw the graphs
     [worksheetController loadDataFromManageObjectContext];
 }

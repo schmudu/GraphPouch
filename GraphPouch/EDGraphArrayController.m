@@ -28,6 +28,7 @@
     [newObj setValue:0 forKey:@"locationX"];
     [newObj setValue:0 forKey:@"locationY"];
     
+    NSLog(@"creating new object.");
     // send notification
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:EDEventGraphAdded object:newObj];

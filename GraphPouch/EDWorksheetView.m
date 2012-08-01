@@ -25,7 +25,7 @@
         NSLog(@"worksheet view initializing.");
         // init selected elements
         selectedElements = [[NSMutableDictionary alloc] init];
-        
+ 
         // listen
         nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithShift object:nil];
@@ -43,24 +43,14 @@
 }
 
 - (void)loadDataFromManagedObjectContext{
-#warning need to figure this out
-    //EDDocument *ao = [self window
-    //NSLog(@"going to iterate through arranged objects:%@", [[self window] windowController]);
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    [coreData getAllObjects];
-    /*
-    NSArray *ao = [elements arrangedObjects];
-    NSLog(@"going to iterate through arranged objects: %@", elements);
-    for (EDGraphView *elem in ao){
-        NSLog(@"item:%@", elem);
+#warning need to alter this to allow the drawing different types of elements
+    //draw graphs
+    NSLog(@"load data from managed context.");
+    for (Graph *elem in [coreData getAllObjects]){
+        //draw graph
+        [self drawGraph:elem];
     }
-#warning need to figure out how to load Graph entities so we can draw them on the screen
-    // Trying something out, but not working
-    NSManagedObjectContext *context = [document managedObjectContext];
-    NSLog(@"context: %@", context);
-    NSManagedObjectModel *managedObjectModel = [[context persistentStoreCoordinator] managedObjectModel];
-    NSEntityDescription *graphEntity = [[managedObjectModel entitiesByName] objectForKey:@"Graph"];
-     */
 }
 
 #pragma mark Drawing
@@ -79,6 +69,15 @@
     }
 }
 
+- (void)drawGraph:(Graph *)graph{
+    EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, 40, 40) graphModel:graph];
+    
+    // set location
+    [graphView setFrameOrigin:NSMakePoint([graph locationX], [graph locationY])];
+    [self addSubview:graphView];
+    [self setNeedsDisplay:TRUE];
+}
+
 #pragma mark mouse behavior
 - (void)mouseDown:(NSEvent *)theEvent{
     //post notification
@@ -89,11 +88,16 @@
 #pragma mark Listeners
 - (void)handleNewGraphAdded:(NSNotification *)note{
     // draw new graph view
-    Graph *myGraph = [note object];
+    //Graph *myGraph = [note object];
+    NSLog(@"hand new graph added");
+                                               
+    [self drawGraph:(Graph *)[note object]];
+    /*
     EDGraphView *graph = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, 40, 40) graphModel:myGraph];
     
     [self addSubview:graph];
     [self setNeedsDisplay:TRUE];
+     */
     
     /*
     // listen
@@ -131,7 +135,6 @@
             //NSLog(@"key:%@ object:%@", key, [selectedElements objectForKey:key]);
             [undoElements setObject:[selectedElements objectForKey:key] forKey:key];
         }
-        NSLog(@"graph selected");
         
         //clear out graphs from selected elements
         [selectedElements removeAllObjects];
