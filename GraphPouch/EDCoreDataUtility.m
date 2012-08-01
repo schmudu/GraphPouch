@@ -46,5 +46,6 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
         }
         return fetchedObjects;
     }
+    return fetchedObjects;
 }
 @end

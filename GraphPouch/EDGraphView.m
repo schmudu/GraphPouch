@@ -52,6 +52,7 @@
 
 #pragma mark mouse events
 - (void)mouseDown:(NSEvent *)theEvent{
+    NSLog(@"mousedown.");
     NSUInteger flags = [theEvent modifierFlags];
     
     //post notification
@@ -81,6 +82,7 @@
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent{
+    NSLog(@"mouseDragged.");
     NSPoint newDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] fromView:nil];
     
     NSPoint thisOrigin = [self frame].origin;
@@ -99,6 +101,7 @@
 }
 
 - (void)mouseUp:(NSEvent *)theEvent{
+    NSLog(@"mouseup.");
     // last location of mouseDown
     //lastCursorLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
     

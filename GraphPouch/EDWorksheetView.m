@@ -26,13 +26,16 @@
         // init selected elements
         selectedElements = [[NSMutableDictionary alloc] init];
  
+        EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+        NSManagedObjectContext *context = [coreData context];
+        
         // listen
         nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithShift object:nil];
-        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithComand object:nil];
-        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelected object:nil];
-        [nc addObserver:self selector:@selector(onGraphDeselected:) name:EDEventElementDeselected object:nil];
-        [nc addObserver:self selector:@selector(handleNewGraphAdded:) name:EDEventGraphAdded object:nil];
+        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithShift object:context];
+        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithComand object:context];
+        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelected object:context];
+        [nc addObserver:self selector:@selector(onGraphDeselected:) name:EDEventElementDeselected object:context];
+        [nc addObserver:self selector:@selector(handleNewGraphAdded:) name:EDEventGraphAdded object:context];
     }
     
     return self;
