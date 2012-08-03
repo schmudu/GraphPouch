@@ -31,11 +31,16 @@
         
         // listen
         nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithShift object:context];
-        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithComand object:context];
-        [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelected object:context];
-        [nc addObserver:self selector:@selector(onGraphDeselected:) name:EDEventElementDeselected object:context];
-        [nc addObserver:self selector:@selector(handleNewGraphAdded:) name:EDEventGraphAdded object:context];
+        [nc addObserver:self selector:@selector(onNewGraphAdded:) name:EDEventGraphAdded object:context];
+        /*
+        [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClickedWithShift object:context];
+        [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClickedWithCommand object:context];
+        [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClicked object:context];
+        [nc addObserver:self selector:@selector(onWorksheetClicked:) name:EDEventWorksheetClicked object:context];
+        [nc addObserver:self selector:@selector(onNewGraphAdded:) name:EDEventGraphAdded object:context];
+         */
+        //[nc addObserver:self selector:@selector(onWorksheetClicked:) name:EDEventWorksheetClicked object:self];
+        //[nc addObserver:self selector:@selector(onNewGraphAdded:) name:NSManagedObjectContextDidSaveNotification object:context];
     }
     
     return self;
@@ -43,17 +48,30 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [nc removeObserver:self name:EDEventElementClickedWithShift object:nil];
+    [nc removeObserver:self name:EDEventElementClickedWithCommand object:nil];
+    [nc removeObserver:self name:EDEventElementClicked object:nil];
 }
 
 - (void)loadDataFromManagedObjectContext{
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
 #warning need to alter this to allow the drawing different types of elements
     //draw graphs
-    NSLog(@"load data from managed context.");
-    for (Graph *elem in [coreData getAllObjects]){
+    NSLog(@"load data from managed context: %@", [coreData context]);
+    
+    // load data
+    NSError *error = nil;
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Graph" inManagedObjectContext:[coreData context]];
+    [request setEntity:entity];
+    
+    NSArray *results = [[coreData context] executeFetchRequest:request error:&error];    
+    NSLog(@"results: %ld", [results count]);
+    for (Graph *elem in results){
         //draw graph
         [self drawGraph:elem];
     }
+    NSLog(@"edworksheetview load data from amanaged object context.");
 }
 
 #pragma mark Drawing
@@ -76,6 +94,7 @@
     EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, 40, 40) graphModel:graph];
     
     // set location
+    NSLog(@"drawing graph variable: %@", graph);
     [graphView setFrameOrigin:NSMakePoint([graph locationX], [graph locationY])];
     [self addSubview:graphView];
     [self setNeedsDisplay:TRUE];
@@ -89,92 +108,123 @@
 }
 
 #pragma mark Listeners
-- (void)handleNewGraphAdded:(NSNotification *)note{
-    // draw new graph view
-    //Graph *myGraph = [note object];
-    NSLog(@"hand new graph added");
-                                               
-    [self drawGraph:(Graph *)[note object]];
-    /*
-    EDGraphView *graph = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, 40, 40) graphModel:myGraph];
-    
-    [self addSubview:graph];
-    [self setNeedsDisplay:TRUE];
-     */
-    
-    /*
-    // listen
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithShift object:nil];
-    [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelectedWithComand object:nil];
-    [nc addObserver:self selector:@selector(onGraphSelected:) name:EDEventElementSelected object:nil];
-    [nc addObserver:self selector:@selector(onGraphDeselected:) name:EDEventElementDeselected object:nil];
-     */
+- (void)onNewGraphAdded:(NSNotification *)note{
+    //NSArray *myArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
+    Graph *myGraph = [note object];
+    //Graph *myGraph = [[note userInfo] objectForKey:@"inserted"];
+    //NSLog(@"new graph added: %@ count:%ld", [[[note userInfo] objectForKey:NSInsertedObjectsKey] class], [myArray count]);
+    //for (Graph *myGraph in myArray){
+        [self drawGraph:myGraph];
+        [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClickedWithShift object:myGraph];
+        [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClickedWithCommand object:myGraph];
+        [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClicked object:myGraph];
+    //}
 }
 
 #pragma mark Graphs
-- (void)onGraphSelected:(NSNotification *)note{
+#warning need to change this to allow for dragging
+- (void)onGraphClicked:(NSNotification *)note{
+    EDGraphView *graph = (EDGraphView *)[note object];
     // if the user pressed 'command' or 'shift' add this graph to selection
     if(([note userInfo] != nil) && (([(NSString *)[[note userInfo] objectForKey:@"key"] isEqualToString:@"command"]) || ([(NSString *)[[note userInfo] objectForKey:@"key"] isEqualToString:@"shift"]))){
         //NSLog(@"need to simply add another element to the selection.");
         //add graph to selected elements
-        EDGraphView *graph = (EDGraphView *)[note object];
-        
-        //add graph to selected elements
-        [self addSelectedElement:graph forKey:[graph viewID]];
-         
-        //undo
-        NSUndoManager *undo = [self undoManager];
-        [[undo prepareWithInvocationTarget:self] removeSelectedElement:[graph viewID]];
-        
-        if (![undo isUndoing]) {
-            [undo setActionName:@"Select Graph"];
+ 
+        if([self graphIsSelected:graph]){
+            // remove graph was selected elements
+            [self removeSelectedElement:[graph viewID]];
+            
+            //undo
+            NSUndoManager *undo = [self undoManager];
+            [[undo prepareWithInvocationTarget:self] addSelectedElement:graph forKey:[graph viewID]];
+            
+            if (![undo isUndoing]) {
+                [undo setActionName:@"Deselect Graph"];
+            }
+        }
+        else{
+            // graph is not selected
+            //add graph to selected elements
+            [self addSelectedElement:graph forKey:[graph viewID]];
+             
+            //undo
+            NSUndoManager *undo = [self undoManager];
+            [[undo prepareWithInvocationTarget:self] removeSelectedElement:[graph viewID]];
+            
+            if (![undo isUndoing]) {
+                [undo setActionName:@"Select Graph"];
+            }
         }
     }
     else{
-        // save all object for undo
-        NSMutableDictionary *undoElements = [[NSMutableDictionary alloc] init];
-        for (NSString *key in selectedElements){
-            //NSLog(@"key:%@ object:%@", key, [selectedElements objectForKey:key]);
-            [undoElements setObject:[selectedElements objectForKey:key] forKey:key];
-        }
-        
-        //clear out graphs from selected elements
-        [selectedElements removeAllObjects];
-        
-        //add graph to selected elements
-        EDGraphView *graph = (EDGraphView *)[note object];
-        
-        //add graph to selected elements
-        [self addSelectedElement:graph forKey:[graph viewID]];
-         
-        //undo
-        NSUndoManager *undo = [self undoManager];
-        [[undo prepareWithInvocationTarget:self] removeSelectedElement:[graph viewID] andAddElements:undoElements];
-        
-        if (![undo isUndoing]) {
-            [undo setActionName:@"Select Graph"];
+        // graph is not selected
+        if(![self graphIsSelected:graph]){
+            // add this object to the selected elements and deselect all other elements
+            // save all object for undo
+            NSMutableDictionary *undoElements = [[NSMutableDictionary alloc] init];
+            for (NSString *key in selectedElements){
+                //NSLog(@"key:%@ object:%@", key, [selectedElements objectForKey:key]);
+                [undoElements setObject:[selectedElements objectForKey:key] forKey:key];
+            }
+            
+            //clear out graphs from selected elements
+            [selectedElements removeAllObjects];
+            
+            //add graph to selected elements
+            EDGraphView *graph = (EDGraphView *)[note object];
+            
+            //add graph to selected elements
+            [self addSelectedElement:graph forKey:[graph viewID]];
+             
+            //undo
+            NSUndoManager *undo = [self undoManager];
+            [[undo prepareWithInvocationTarget:self] removeSelectedElement:[graph viewID] andAddElements:undoElements];
+            
+            if (![undo isUndoing]) {
+                [undo setActionName:@"Select Graph"];
+            }
         }
     }
 }
 
 
 #pragma mark selection
-- (void)onGraphDeselected:(NSNotification *)note{
-    EDGraphView *graph = (EDGraphView *)[note object];
-    
-    //add graph to selected elements
-    [self removeSelectedElement:[graph viewID]];
-    
-    //undo
-    NSUndoManager *undo = [self undoManager];
-    [[undo prepareWithInvocationTarget:self] addSelectedElement:graph forKey:[graph viewID]];
-    
-    if (![undo isUndoing]) {
-        [undo setActionName:@"Deselect Graph"];
+- (BOOL)graphIsSelected:(EDGraphView *)graphView{
+    if([selectedElements objectForKey:[graphView viewID]])
+        return TRUE;
+    else {
+        return FALSE;
     }
+        
 }
 
+- (void)onWorksheetClicked:(NSNotification *)note{
+    // remove all the elements from the selected elements
+    NSMutableArray *prevSelectedElements = [[NSMutableArray alloc] init];
+    for (id key in selectedElements){
+        [prevSelectedElements addObject:[selectedElements objectForKey:key]]; 
+    }
+    
+    // remove all object from selected elements
+    [selectedElements removeAllObjects];
+    
+    // undo
+    NSUndoManager *undo = [self undoManager];
+    [[undo prepareWithInvocationTarget:self] addSelectedElements:prevSelectedElements];
+    
+    if (![undo isUndoing]) {
+        [undo setActionName:@"Deselect"];
+    }
+    
+    // dispatch event
+    [nc postNotificationName:EDEventWorksheetElementRemoved object:self];
+}
+
+- (void)addSelectedElements:(NSMutableArray *)elements{
+    for (EDWorksheetElementView *element in elements){
+        [self addSelectedElement:element forKey:[element viewID]];
+    }
+}
 - (void)addSelectedElement:(id)element forKey:(NSString *)id{
     //NSLog(@"adding:%@", element);
     [selectedElements setObject:element forKey:id];
@@ -192,7 +242,6 @@
 
 
 - (void)removeSelectedElement:(NSString *)id andAddElements:(NSMutableDictionary *)undoElements{
-NSLog(@"doing the undo part.");
     // remove object
     [selectedElements removeObjectForKey:id];
     

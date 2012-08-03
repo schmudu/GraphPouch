@@ -14,10 +14,9 @@ int const GRAPH_INIT_HAS_GRID_LINES     = FALSE;
     NSString * const EDEventGraphAdded           = @"EDGraphAdded";
 
     // graphs
-    NSString * const EDEventElementDeselected                  = @"EDEventElementDeselected";
-    NSString * const EDEventElementSelected                    = @"EDEventElementSelected";
-    NSString * const EDEventElementSelectedWithComand          = @"EDEventElementSelectedWithCommand";
-    NSString * const EDEventElementSelectedWithShift           = @"EDEventElementSelectedWithShift";
+    NSString * const EDEventElementClicked                    = @"EDEventElementClicked";
+    NSString * const EDEventElementClickedWithCommand         = @"EDEventElementClickedWithCommand";
+    NSString * const EDEventElementClickedWithShift           = @"EDEventElementClickedWithShift";
 
     // worksheets
     NSString * const EDEventWorksheetClicked                 = @"EDEventWorksheetClicked";

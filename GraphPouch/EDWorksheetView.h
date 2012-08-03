@@ -15,7 +15,7 @@
     NSNotificationCenter *nc;
 }
 
-- (void)onGraphSelected:(NSNotification *)note;
+//- (void)onGraphSelected:(NSNotification *)note;
 - (BOOL)elementSelected:(id)element;
 - (void)loadDataFromManagedObjectContext;
 

@@ -52,23 +52,21 @@
 
 #pragma mark mouse events
 - (void)mouseDown:(NSEvent *)theEvent{
-    NSLog(@"mousedown.");
     NSUInteger flags = [theEvent modifierFlags];
     
     //post notification
-    //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     
     if(flags & NSCommandKeyMask){
         [dict setValue:@"command" forKey:@"key"];
-        [nc postNotificationName:EDEventElementSelectedWithComand object:self userInfo:dict];
+        [nc postNotificationName:EDEventElementClickedWithCommand object:self userInfo:dict];
     }
     else if(flags & NSShiftKeyMask){
         [dict setValue:@"shift" forKey:@"key"];
-        [nc postNotificationName:EDEventElementSelectedWithShift object:self userInfo:dict];
+        [nc postNotificationName:EDEventElementClickedWithShift object:self userInfo:dict];
     }
     else{
-        [nc postNotificationName:EDEventElementSelected object:self];
+        [nc postNotificationName:EDEventElementClicked object:self];
     }
     
     //save variable for undo
@@ -82,7 +80,6 @@
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent{
-    NSLog(@"mouseDragged.");
     NSPoint newDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] fromView:nil];
     
     NSPoint thisOrigin = [self frame].origin;
@@ -101,7 +98,6 @@
 }
 
 - (void)mouseUp:(NSEvent *)theEvent{
-    NSLog(@"mouseup.");
     // last location of mouseDown
     //lastCursorLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
     
@@ -124,12 +120,13 @@
 }
 
 # pragma mark listeners - graphs
+/*
 - (void)onGraphSelected:(NSNotification *)note{
     // was there a modifier key?
     if([note userInfo] == nil){
         // was this graph selected?
         if([note object] == self){
-            [nc postNotificationName:EDEventElementSelected object:self];
+            [nc postNotificationName:EDEventElementClicked object:self];
         }
         else {
             NSLog(@"sending notification that graph was deselected.");
@@ -140,10 +137,10 @@
         // multiple selection
         // was this graph selected?
         if([note object] == self){
-            [nc postNotificationName:EDEventElementSelected object:self];
+            [nc postNotificationName:EDEventElementClicked object:self];
         }
     }
-}
+}*/
 
 # pragma mark listeners - selection
 - (void)onWorksheetSelectedElementAdded:(NSNotification *)note{

@@ -25,15 +25,24 @@
     NSNumber *value_grid_lines = [[NSNumber alloc] initWithInt:GRAPH_INIT_HAS_GRID_LINES];
     [newObj setValue:value_grid_lines forKey:@"hasGridLines"];
     
-    [newObj setValue:0 forKey:@"locationX"];
-    [newObj setValue:0 forKey:@"locationY"];
+    NSNumber *value_location = [[NSNumber alloc] initWithFloat:0];
+    [newObj setValue:value_location forKey:@"locationX"];
+    [newObj setValue:value_location forKey:@"locationY"];
     
-    NSLog(@"creating new object.");
     // send notification
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:EDEventGraphAdded object:newObj];
+    //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    //[nc postNotificationName:EDEventGraphAdded object:newObj];
     
     return newObj;
+}
+
+- (void)addObject:(id)object{
+    
+    [super addObject:object];
+    // send notification
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:EDEventGraphAdded object:object];
+    
 }
 
 @end

@@ -15,7 +15,6 @@
     NSPoint                 savedFrameLocation;
     NSPoint                 lastDragLocation;
     NSPoint                 lastCursorLocation;
-    BOOL                    selected;
 }
 @property (nonatomic, assign) Graph *graph;
 
