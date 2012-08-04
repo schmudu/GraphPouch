@@ -31,7 +31,8 @@
         
         // listen
         nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(onNewGraphAdded:) name:EDEventGraphAdded object:context];
+        //[nc addObserver:self selector:@selector(onNewGraphAdded:) name:EDEventGraphAdded object:context];
+        [nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
         /*
         [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClickedWithShift object:context];
         [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClickedWithCommand object:context];
@@ -94,10 +95,14 @@
     EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, 40, 40) graphModel:graph];
     
     // set location
-    NSLog(@"drawing graph variable: %@", graph);
     [graphView setFrameOrigin:NSMakePoint([graph locationX], [graph locationY])];
     [self addSubview:graphView];
     [self setNeedsDisplay:TRUE];
+    
+    // add observer
+    [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClickedWithShift object:graphView];
+    [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClickedWithCommand object:graphView];
+    [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClicked object:graphView];
 }
 
 #pragma mark mouse behavior
@@ -108,22 +113,32 @@
 }
 
 #pragma mark Listeners
-- (void)onNewGraphAdded:(NSNotification *)note{
-    //NSArray *myArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
-    Graph *myGraph = [note object];
+- (void)onContextChanged:(NSNotification *)note{
+    //Graph *myGraph = [note object];
+    NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
+    NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
+    NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
     //Graph *myGraph = [[note userInfo] objectForKey:@"inserted"];
-    //NSLog(@"new graph added: %@ count:%ld", [[[note userInfo] objectForKey:NSInsertedObjectsKey] class], [myArray count]);
-    //for (Graph *myGraph in myArray){
+    //NSLog(@"new graph added: %@ count:%ld", [[[note userInfo] objectForKey:NSInsertedObjectsKey] class], [insertedArray count]);
+    //NSLog(@"new graph updated: %@ count:%ld", [[[note userInfo] objectForKey:NSUpdatedObjectsKey] class], [updatedArray count]);
+    //NSLog(@"new graph deleted: %@ count:%ld", [[[note userInfo] objectForKey:NSDeletedObjectsKey] class], [deletedArray count]);
+    // draw graphs that were added
+    for (Graph *myGraph in insertedArray){
+        //NSLog(@"insert graph: %@", myGraph);
         [self drawGraph:myGraph];
-        [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClickedWithShift object:myGraph];
-        [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClickedWithCommand object:myGraph];
-        [nc addObserver:self selector:@selector(onGraphClicked:) name:EDEventElementClicked object:myGraph];
-    //}
+    }
+    
+    /*
+    for (Graph *myGraph in updatedArray){
+        NSLog(@"udpate graph: %@", myGraph);
+        //[self drawGraph:myGraph];
+    }*/
 }
 
 #pragma mark Graphs
 #warning need to change this to allow for dragging
 - (void)onGraphClicked:(NSNotification *)note{
+    //NSLog(@"clicked on the graph.");
     EDGraphView *graph = (EDGraphView *)[note object];
     // if the user pressed 'command' or 'shift' add this graph to selection
     if(([note userInfo] != nil) && (([(NSString *)[[note userInfo] objectForKey:@"key"] isEqualToString:@"command"]) || ([(NSString *)[[note userInfo] objectForKey:@"key"] isEqualToString:@"shift"]))){
@@ -135,12 +150,13 @@
             [self removeSelectedElement:[graph viewID]];
             
             //undo
+            /*
             NSUndoManager *undo = [self undoManager];
             [[undo prepareWithInvocationTarget:self] addSelectedElement:graph forKey:[graph viewID]];
             
             if (![undo isUndoing]) {
                 [undo setActionName:@"Deselect Graph"];
-            }
+            }*/
         }
         else{
             // graph is not selected
@@ -148,12 +164,13 @@
             [self addSelectedElement:graph forKey:[graph viewID]];
              
             //undo
+            /*
             NSUndoManager *undo = [self undoManager];
             [[undo prepareWithInvocationTarget:self] removeSelectedElement:[graph viewID]];
             
             if (![undo isUndoing]) {
                 [undo setActionName:@"Select Graph"];
-            }
+            }*/
         }
     }
     else{
@@ -177,12 +194,13 @@
             [self addSelectedElement:graph forKey:[graph viewID]];
              
             //undo
+            /*
             NSUndoManager *undo = [self undoManager];
             [[undo prepareWithInvocationTarget:self] removeSelectedElement:[graph viewID] andAddElements:undoElements];
             
             if (![undo isUndoing]) {
                 [undo setActionName:@"Select Graph"];
-            }
+            }*/
         }
     }
 }
@@ -209,12 +227,13 @@
     [selectedElements removeAllObjects];
     
     // undo
+    /*
     NSUndoManager *undo = [self undoManager];
     [[undo prepareWithInvocationTarget:self] addSelectedElements:prevSelectedElements];
     
     if (![undo isUndoing]) {
         [undo setActionName:@"Deselect"];
-    }
+    }*/
     
     // dispatch event
     [nc postNotificationName:EDEventWorksheetElementRemoved object:self];

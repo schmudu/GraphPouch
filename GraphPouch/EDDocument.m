@@ -57,6 +57,18 @@
     return YES;
 }
 
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window{
+    // have the undo manager linked to the managed object context
+    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+    return [[coreData context] undoManager];
+}
+/*
+- (NSUndoManager *)undoManager{
+    // have the undo manager linked to the managed object context
+    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+    return [[coreData context] undoManager];
+}*/
+
 /*
 // Core Data uses this method to load the file
 - (id)initWithContentsOfFile:(NSString *)absolutePath ofType:(NSString *)typeName{

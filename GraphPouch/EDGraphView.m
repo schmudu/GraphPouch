@@ -23,7 +23,12 @@
         [self setViewID:[EDGraphView generateID]];
         
         // listen
+        EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+        NSManagedObjectContext *context = [coreData context];
+        
+        // listen
         nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
         [nc addObserver:self selector:@selector(onWorksheetSelectedElementRemoved:) name:EDEventWorksheetElementRemoved object:[self superview]];
         [nc addObserver:self selector:@selector(onWorksheetSelectedElementAdded:) name:EDEventWorksheetElementAdded object:[self superview]];
         
@@ -34,12 +39,19 @@
 }
 
 - (void) dealloc{
+    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+    NSManagedObjectContext *context = [coreData context];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:context];
+    [nc removeObserver:self name:EDEventWorksheetElementRemoved object:[self superview]];
+    [nc removeObserver:self name:EDEventWorksheetElementAdded object:[self superview]];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSRect bounds = NSMakeRect(10, 10, 20, 20);
+    
+    // fill color based on selection
     if([(EDWorksheetView *)[self superview] elementSelected:self])
         [[NSColor redColor] set];
     else {
@@ -48,6 +60,13 @@
     [NSBezierPath fillRect:bounds];
     
     [super drawRect:dirtyRect];
+}
+
+- (void)updateDisplayBasedOnContext{
+    // move to position
+    [self setFrameOrigin:NSMakePoint([graph locationX], [graph locationY])];
+    
+    [self setNeedsDisplay:TRUE];
 }
 
 #pragma mark mouse events
@@ -69,9 +88,6 @@
         [nc postNotificationName:EDEventElementClicked object:self];
     }
     
-    //save variable for undo
-    savedFrameLocation = [self frame].origin;
-    
     // set variable for dragging
     lastCursorLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
     
@@ -90,36 +106,43 @@
     
     [self setFrameOrigin:thisOrigin];
     lastDragLocation = newDragLocation;
-    
-    // set data in the model
-    //NSLog(@"graph locationX:%f", [[self graph] locationX]);
-    [[self graph] setLocationX:newDragLocation.x];
-    [[self graph] setLocationY:newDragLocation.y];
 }
 
 - (void)mouseUp:(NSEvent *)theEvent{
-    // last location of mouseDown
-    //lastCursorLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
+    NSPoint newDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] fromView:nil];
     
-    // current location
-    //lastDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
     float diffY = fabsf(lastCursorLocation.y - lastDragLocation.y);
     float diffX = fabsf(lastCursorLocation.x - lastDragLocation.x);
-    //NSLog(@"diff?: %f eq?%d", diffY, (diffY>0.1f));
     
     //if no diff in location than do not prepare an undo
     if(fabsf(diffX>0.01) && fabsf(diffY>0.01)){
-        // prepare undo
-        NSUndoManager *undo = [self undoManager];
-        [[undo prepareWithInvocationTarget:self] moveToSavedLocation];
-        
-        if (![undo isUndoing]) {
-            [undo setActionName:@"Move Graph"];
-        }
+        [[self graph] setLocationX:newDragLocation.x];
+        [[self graph] setLocationY:newDragLocation.y];
     }
 }
 
 # pragma mark listeners - graphs
+- (void)onContextChanged:(NSNotification *)note{
+    NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
+#warning move to category for checking for graphs
+    // need to move this to a category
+    BOOL hasChanged = FALSE;
+    int i = 0;
+    NSObject *element;
+    //for(id element in updatedArray){
+    while ((i<[updatedArray count]) && (!hasChanged)){    
+        if([[[[updatedArray objectAtIndex:i] class] description] isEqualToString:@"Graph"]){
+            element = [updatedArray objectAtIndex:i];
+            if (element == graph) {
+                hasChanged = TRUE;
+                [self updateDisplayBasedOnContext];
+                NSLog(@"this element has changed.");
+            }
+        }
+        i++;
+    }
+    //NSLog(@"context changed: class: %@ eql?:%d", [element class], (element == graph));
+}
 /*
 - (void)onGraphSelected:(NSNotification *)note{
     // was there a modifier key?
@@ -148,19 +171,6 @@
 }
 
 - (void)onWorksheetSelectedElementRemoved:(NSNotification *)note{
-    //selection was added
-    
-    //if in selection then show selected
-    //NSLog(@"figure out if removed");
     [self setNeedsDisplay:TRUE];
-}
-
-# pragma mark - movement
-- (void)moveToSavedLocation{
-    // set data in the model
-    [[self graph] setLocationX:savedFrameLocation.x];
-    [[self graph] setLocationY:savedFrameLocation.y];
-    
-    [self setFrameOrigin:savedFrameLocation];
 }
 @end

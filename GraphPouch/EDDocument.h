@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 @class EDWorksheetViewController;
 
-@interface EDDocument : NSPersistentDocument{
+@interface EDDocument : NSPersistentDocument <NSWindowDelegate>{
     IBOutlet NSArrayController *elementsController;
     IBOutlet EDWorksheetViewController *worksheetController;
 }
