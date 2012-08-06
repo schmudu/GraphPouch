@@ -33,6 +33,21 @@
     return results;
 }
 
+
++ (NSArray *)findAllSelectedObjects{
+    NSManagedObjectContext *context = [[EDCoreDataUtility sharedCoreDataUtility] context];
+    NSEntityDescription *entity = [self entityDescriptionInContext:context];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
+    NSError *error = nil;
+    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"selected = %ld", TRUE];
+    NSArray *results = [[context executeFetchRequest:request error:&error] filteredArrayUsingPredicate:searchFilter];
+    if (error != nil)
+    {
+        //handle errors
+    }
+    return results;
+}
 /*
  + (NSArray *)findAllObjectsInContext:(NSManagedObjectContext *)context;
 {

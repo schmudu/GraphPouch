@@ -73,6 +73,7 @@
 - (void)mouseDown:(NSEvent *)theEvent{
     NSUInteger flags = [theEvent modifierFlags];
     
+    NSLog(@"working:%@", [Graph findAllSelectedObjects]);
     if ([graph selected]) {
         // graph is already selected
         if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
