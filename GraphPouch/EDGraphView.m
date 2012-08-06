@@ -30,8 +30,6 @@
         // listen
         nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
-        [nc addObserver:self selector:@selector(onWorksheetSelectedElementRemoved:) name:EDEventWorksheetElementRemoved object:[self superview]];
-        [nc addObserver:self selector:@selector(onWorksheetSelectedElementAdded:) name:EDEventWorksheetElementAdded object:[self superview]];
         
         // set model info
         graph = myGraph;
@@ -44,8 +42,6 @@
     NSManagedObjectContext *context = [coreData context];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:context];
-    [nc removeObserver:self name:EDEventWorksheetElementRemoved object:[self superview]];
-    [nc removeObserver:self name:EDEventWorksheetElementAdded object:[self superview]];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
