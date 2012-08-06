@@ -8,9 +8,10 @@
 
 #import "Graph.h"
 #import "EDConstants.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @implementation Graph
 
-@dynamic locationX, locationY, equation, hasGridLines, hasTickMarks;
+@dynamic locationX, locationY, equation, hasGridLines, hasTickMarks, selected;
 
 @end

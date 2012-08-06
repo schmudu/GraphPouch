@@ -11,6 +11,7 @@
 #import "EDWorksheetElementView.h"
 #import "EDConstants.h"
 #import "Graph.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @implementation EDGraphView
 @synthesize graph;
@@ -52,8 +53,10 @@
     NSRect bounds = NSMakeRect(10, 10, 20, 20);
     
     // fill color based on selection
-    if([(EDWorksheetView *)[self superview] elementSelected:self])
+    //if([(EDWorksheetView *)[self superview] elementSelected:self])
+    if ([graph selected]) {
         [[NSColor redColor] set];
+    }
     else {
         [[NSColor greenColor] set];
     }
@@ -64,6 +67,7 @@
 
 - (void)updateDisplayBasedOnContext{
     // move to position
+    NSLog(@"moving frame origin to: x:%f y:%f lastCursor x:%f y:%f lastDrag: x:%f y:%f", [graph locationX], [graph locationY], lastCursorLocation.x, lastCursorLocation.y, lastDragLocation.x, lastDragLocation.y);
     [self setFrameOrigin:NSMakePoint([graph locationX], [graph locationY])];
     
     [self setNeedsDisplay:TRUE];
@@ -73,19 +77,22 @@
 - (void)mouseDown:(NSEvent *)theEvent{
     NSUInteger flags = [theEvent modifierFlags];
     
-    //post notification
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    
-    if(flags & NSCommandKeyMask){
-        [dict setValue:@"command" forKey:@"key"];
-        [nc postNotificationName:EDEventElementClickedWithCommand object:self userInfo:dict];
-    }
-    else if(flags & NSShiftKeyMask){
-        [dict setValue:@"shift" forKey:@"key"];
-        [nc postNotificationName:EDEventElementClickedWithShift object:self userInfo:dict];
-    }
-    else{
-        [nc postNotificationName:EDEventElementClicked object:self];
+    if ([graph selected]) {
+        // graph is already selected
+        if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
+            [graph setSelected:FALSE];
+        }
+    } else {
+        // graph is not selected
+        if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
+            [graph setSelected:TRUE];
+        }
+        else {
+#warning need to figure out how to deselect the other graphs
+            //need to deselect all the other graphs
+            
+            [graph setSelected:TRUE];
+        }
     }
     
     // set variable for dragging
@@ -109,15 +116,13 @@
 }
 
 - (void)mouseUp:(NSEvent *)theEvent{
-    NSPoint newDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] fromView:nil];
-    
     float diffY = fabsf(lastCursorLocation.y - lastDragLocation.y);
     float diffX = fabsf(lastCursorLocation.x - lastDragLocation.x);
     
     //if no diff in location than do not prepare an undo
     if(fabsf(diffX>0.01) && fabsf(diffY>0.01)){
-        [[self graph] setLocationX:newDragLocation.x];
-        [[self graph] setLocationY:newDragLocation.y];
+        [[self graph] setLocationX:[self frame].origin.x];
+        [[self graph] setLocationY:[self frame].origin.y];
     }
 }
 
@@ -136,34 +141,12 @@
             if (element == graph) {
                 hasChanged = TRUE;
                 [self updateDisplayBasedOnContext];
-                NSLog(@"this element has changed.");
             }
         }
         i++;
     }
     //NSLog(@"context changed: class: %@ eql?:%d", [element class], (element == graph));
 }
-/*
-- (void)onGraphSelected:(NSNotification *)note{
-    // was there a modifier key?
-    if([note userInfo] == nil){
-        // was this graph selected?
-        if([note object] == self){
-            [nc postNotificationName:EDEventElementClicked object:self];
-        }
-        else {
-            NSLog(@"sending notification that graph was deselected.");
-            [nc postNotificationName:EDEventElementDeselected object:self];
-        }
-    }
-    else{
-        // multiple selection
-        // was this graph selected?
-        if([note object] == self){
-            [nc postNotificationName:EDEventElementClicked object:self];
-        }
-    }
-}*/
 
 # pragma mark listeners - selection
 - (void)onWorksheetSelectedElementAdded:(NSNotification *)note{

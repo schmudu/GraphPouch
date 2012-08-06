@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "NSManagedObject+EasyFetching.h"
 
 @interface Graph : NSManagedObject
 
 @property NSString *equation;
-@property BOOL hasTickMarks, hasGridLines;
+@property BOOL hasTickMarks, hasGridLines, selected;
 @property float locationX, locationY;
 @end

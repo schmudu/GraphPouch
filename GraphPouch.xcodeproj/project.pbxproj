@@ -30,6 +30,7 @@
 		CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */; };
 		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
 		CD84979715BC75E600090E6E /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = CD84979615BC75E600090E6E /* Graph.m */; };
+		CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +76,8 @@
 		CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphArrayController.m; sourceTree = "<group>"; };
 		CD84979515BC75E600090E6E /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
 		CD84979615BC75E600090E6E /* Graph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph.m; sourceTree = "<group>"; };
+		CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+EasyFetching.h"; sourceTree = "<group>"; };
+		CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+EasyFetching.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +111,8 @@
 				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
 				CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */,
 				CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */,
+				CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */,
+				CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -357,6 +362,7 @@
 				CD3F0AE915C3966100AB7567 /* EDPropertiesViewControllerText.m in Sources */,
 				CD3F0AF315C4772700AB7567 /* EDPropertiesViewControllerGraph.m in Sources */,
 				CD1422C715C7590700F55819 /* EDCoreDataUtility.m in Sources */,
+				CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

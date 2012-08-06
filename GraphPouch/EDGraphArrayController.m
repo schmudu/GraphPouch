@@ -29,20 +29,13 @@
     [newObj setValue:value_location forKey:@"locationX"];
     [newObj setValue:value_location forKey:@"locationY"];
     
+    [newObj setValue:FALSE forKey:@"selected"];
+    
     // send notification
     //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     //[nc postNotificationName:EDEventGraphAdded object:newObj];
     
     return newObj;
-}
-
-- (void)addObject:(id)object{
-    [super addObject:object];
-    NSLog(@"add object of ac called.");
-    // send notification
-    //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    //[nc postNotificationName:EDEventGraphAdded object:object];
-    
 }
 
 @end

@@ -22,7 +22,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        NSLog(@"worksheet view initializing.");
         // init selected elements
         selectedElements = [[NSMutableDictionary alloc] init];
  
@@ -58,7 +57,7 @@
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
 #warning need to alter this to allow the drawing different types of elements
     //draw graphs
-    NSLog(@"load data from managed context: %@", [coreData context]);
+    //NSLog(@"load data from managed context: %@", [coreData context]);
     
     // load data
     NSError *error = nil;
@@ -67,12 +66,12 @@
     [request setEntity:entity];
     
     NSArray *results = [[coreData context] executeFetchRequest:request error:&error];    
-    NSLog(@"results: %ld", [results count]);
+    //NSLog(@"results: %ld", [results count]);
     for (Graph *elem in results){
         //draw graph
         [self drawGraph:elem];
     }
-    NSLog(@"edworksheetview load data from amanaged object context.");
+    //NSLog(@"edworksheetview load data from amanaged object context.");
 }
 
 #pragma mark Drawing
