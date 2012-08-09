@@ -13,10 +13,11 @@
 @interface EDWorksheetView : NSView{
     NSMutableDictionary *selectedElements;
     NSNotificationCenter *nc;
+    NSManagedObjectContext *_context;
 }
 
 //- (void)onGraphSelected:(NSNotification *)note;
 - (BOOL)elementSelected:(id)element;
-- (void)loadDataFromManagedObjectContext;
+//- (void)loadDataFromManagedObjectContext;
 
 @end

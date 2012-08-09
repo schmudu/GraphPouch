@@ -8,6 +8,7 @@
 
 #import "EDWorksheetViewController.h"
 #import "EDWorksheetView.h"
+#import "EDConstants.h"
 
 @interface EDWorksheetViewController ()
 
@@ -19,15 +20,21 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Init code
     }
     
     return self;
 }
 
 - (void)loadDataFromManageObjectContext{
-    //NSLog(@"going to load data: view: %@", [self view]);
-    [(EDWorksheetView *)[self view] loadDataFromManagedObjectContext];
+    NSLog(@"going to init worksheet view controller.");
+    //[(EDWorksheetView *)[self view] loadDataFromManagedObjectContext];
+    
+    //listen
+    //[nc addObserver:self selector:@selector(onWorksheetClicked:) name:EDEventWorksheetClicked object:[self view]];
+}
+
+- (void)onWorksheetClicked:(NSNotification *)note{
+    NSLog(@"worksheet clicked.");
 }
 
 @end

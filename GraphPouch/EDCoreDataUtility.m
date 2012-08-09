@@ -10,12 +10,12 @@
 #import "Graph.h"
 
 @implementation EDCoreDataUtility
-
 static EDCoreDataUtility *sharedCoreDataUtility = nil;
 
 + (EDCoreDataUtility *)sharedCoreDataUtility
 {
     if (sharedCoreDataUtility == nil) {
+        
         sharedCoreDataUtility = [[super allocWithZone:NULL] init];
     }
     return sharedCoreDataUtility;
@@ -26,6 +26,17 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 }
 
 - (void)setContext: (NSManagedObjectContext *)moc{
+    /*
+    NSPersistentStoreCoordinator *coordinator = [moc persistentStoreCoordinator];
+    NSManagedObjectContext *managedObjectContext;
+    if (coordinator != nil) {
+        managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [managedObjectContext setPersistentStoreCoordinator:coordinator];
+        [managedObjectContext setUndoManager:nil];
+    }
+    //context = managedObjectContext;
+     */
+    NSLog(@"context: %@", moc);
     context = moc; 
 }
 

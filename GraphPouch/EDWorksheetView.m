@@ -26,11 +26,13 @@
         selectedElements = [[NSMutableDictionary alloc] init];
  
         EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-        NSManagedObjectContext *context = [coreData context];
+        //NSManagedObjectContext *context = [coreData context];
+        _context = [coreData context];
         
+        NSLog(@"creating worksheet view:%@ with context:%@", self, _context);
         // listen
         nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
+        [nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     }
     
     return self;
@@ -98,15 +100,18 @@
 
 #pragma mark Listeners
 - (void)onContextChanged:(NSNotification *)note{
+    //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+    //NSManagedObjectContext *context = [coreData context];
+    NSLog(@"context that delivered message: %@ worksheet view:%@", _context, self);
     //Graph *myGraph = [note object];
-    NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
-    NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
-    NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
+    //NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
+    //NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
     //Graph *myGraph = [[note userInfo] objectForKey:@"inserted"];
     //NSLog(@"new graph added: %@ count:%ld", [[[note userInfo] objectForKey:NSInsertedObjectsKey] class], [insertedArray count]);
     //NSLog(@"new graph updated: %@ count:%ld", [[[note userInfo] objectForKey:NSUpdatedObjectsKey] class], [updatedArray count]);
     //NSLog(@"new graph deleted: %@ count:%ld", [[[note userInfo] objectForKey:NSDeletedObjectsKey] class], [deletedArray count]);
     // draw graphs that were added
+    NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
     for (Graph *myGraph in insertedArray){
         //NSLog(@"insert graph: %@", myGraph);
         [self drawGraph:myGraph];
@@ -121,6 +126,6 @@
 
 #pragma mark selection
 - (void)onWorksheetClicked:(NSNotification *)note{
-#warning figure out how to clear out selected attribute of elements
+    [nc postNotificationName:EDEventWorksheetClicked object:self];
 }
 @end

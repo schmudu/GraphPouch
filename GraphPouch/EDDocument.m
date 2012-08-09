@@ -22,6 +22,9 @@
     self = [super init];
     if (self) {
         //Init code
+        EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+        [coreData setContext: [self managedObjectContext]];
+        NSLog(@"init EDDocument.");
     }
     return self;
 }
@@ -38,15 +41,15 @@
     [super windowControllerDidLoadNib:aController];
     
     // populate core data utility
-    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    [coreData setContext: [self managedObjectContext]];
+    //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+    //[coreData setContext: [self managedObjectContext]];
     
     //add listenter
-    [elementsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:(void *)[self managedObjectContext]];
+    //[elementsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:(void *)[self managedObjectContext]];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    [elementsController removeObserver:self forKeyPath:@"arrangedObjects" context:(void *)[self managedObjectContext]];
+    //[elementsController removeObserver:self forKeyPath:@"arrangedObjects" context:(void *)[self managedObjectContext]];
     
     // data has been loaded ask the worksheet to draw the graphs
     [worksheetController loadDataFromManageObjectContext];

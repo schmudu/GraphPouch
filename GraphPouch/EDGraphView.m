@@ -63,7 +63,7 @@
 
 - (void)updateDisplayBasedOnContext{
     // move to position
-    NSLog(@"moving frame origin to: x:%f y:%f lastCursor x:%f y:%f lastDrag: x:%f y:%f", [graph locationX], [graph locationY], lastCursorLocation.x, lastCursorLocation.y, lastDragLocation.x, lastDragLocation.y);
+    //NSLog(@"moving frame origin to: x:%f y:%f lastCursor x:%f y:%f lastDrag: x:%f y:%f", [graph locationX], [graph locationY], lastCursorLocation.x, lastCursorLocation.y, lastDragLocation.x, lastDragLocation.y);
     [self setFrameOrigin:NSMakePoint([graph locationX], [graph locationY])];
     
     [self setNeedsDisplay:TRUE];
@@ -73,7 +73,7 @@
 - (void)mouseDown:(NSEvent *)theEvent{
     NSUInteger flags = [theEvent modifierFlags];
     
-    NSLog(@"working:%@", [Graph findAllSelectedObjects]);
+    //NSLog(@"working:%@", [Graph findAllSelectedObjects]);
     if ([graph selected]) {
         // graph is already selected
         if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
