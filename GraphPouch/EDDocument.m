@@ -52,7 +52,7 @@
     //[elementsController removeObserver:self forKeyPath:@"arrangedObjects" context:(void *)[self managedObjectContext]];
     
     // data has been loaded ask the worksheet to draw the graphs
-    [worksheetController loadDataFromManageObjectContext];
+    //[worksheetController loadDataFromManageObjectContext];
 }
 
 + (BOOL)autosavesInPlace

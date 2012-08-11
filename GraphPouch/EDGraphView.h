@@ -15,6 +15,7 @@
     NSPoint                 savedFrameLocation;
     NSPoint                 lastDragLocation;
     NSPoint                 lastCursorLocation;
+    NSNotificationCenter    *_nc;
 }
 @property (nonatomic, assign) Graph *graph;
 

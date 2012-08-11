@@ -28,8 +28,8 @@
         NSManagedObjectContext *context = [coreData context];
         
         // listen
-        nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
+        _nc = [NSNotificationCenter defaultCenter];
+        [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
         
         // set model info
         graph = myGraph;
@@ -41,7 +41,7 @@
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
     NSManagedObjectContext *context = [coreData context];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:context];
+    [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:context];
 }
 
 - (void)drawRect:(NSRect)dirtyRect

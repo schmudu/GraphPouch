@@ -11,13 +11,13 @@
 #import "EDCoreDataUtility.h"
 
 @interface EDWorksheetView : NSView{
-    NSMutableDictionary *selectedElements;
-    NSNotificationCenter *nc;
+    //NSMutableDictionary *selectedElements;
+    NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;
 }
 
 //- (void)onGraphSelected:(NSNotification *)note;
-- (BOOL)elementSelected:(id)element;
+//- (BOOL)elementSelected:(id)element;
 //- (void)loadDataFromManagedObjectContext;
 
 @end
