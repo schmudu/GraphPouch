@@ -7,17 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EDDocument.h"
-#import "EDCoreDataUtility.h"
+//#import "EDDocument.h"
+//#import "EDCoreDataUtility.h"
 
 @interface EDWorksheetView : NSView{
-    //NSMutableDictionary *selectedElements;
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;
 }
-
-//- (void)onGraphSelected:(NSNotification *)note;
-//- (BOOL)elementSelected:(id)element;
-//- (void)loadDataFromManagedObjectContext;
-
 @end

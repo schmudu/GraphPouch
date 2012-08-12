@@ -39,6 +39,10 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
+    NSLog(@"window controller did load nib. making worksheet controller init view");
+    [worksheetController setView:worksheetView];
+    [worksheetController initListeners];
+    NSLog(@"worksheet controller view: %@", [worksheetController view]);
     
     // populate core data utility
     //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];

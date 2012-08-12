@@ -10,21 +10,14 @@
 
 @interface EDCoreDataUtility : NSObject{
 @private
-    NSManagedObjectModel *managedObjectModel;
+    //NSManagedObjectModel *managedObjectModel;
     NSManagedObjectContext *context;
-    NSPersistentStoreCoordinator *persistentStoreCoordinator;
+    //NSPersistentStoreCoordinator *persistentStoreCoordinator;
 }
 
 + (EDCoreDataUtility *)sharedCoreDataUtility;
 - (void)setContext:(NSManagedObjectContext *)moc;
 - (NSManagedObjectContext *)context;
 - (NSArray *)getAllObjects;
-/*
-- (NSEntityDescription *) entityDesctiptionForName:(NSString *)name;
-- (NSMutableArray *) executeRequest:(NSFetchRequest *)request;
-- (id) getInsertedObjectForEntity:(NSString *)entity;
-- (void) deleteAllObjects:(NSString *) entityName;
-- (void) deleteManagedObject:(NSManagedObject *)object;
-- (void) saveContext;
-*/
+- (void)clearSelectedElements;
 @end

@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
+#import "EDDocument.h"
 #import "EDCoreDataUtility.h"
 #import "EDConstants.h"
 #import "EDWorksheetView.h"
@@ -13,7 +14,8 @@
 #import "Graph.h"
 
 @interface EDWorksheetView()
-- (void)removeSelectedElement:(NSString *)id andAddElements:(NSMutableDictionary *)undoElements;
+- (void)drawGraph:(Graph *)graph;
+- (void)onContextChanged:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetView
@@ -39,29 +41,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
-
-/*
-- (void)loadDataFromManagedObjectContext{
-    //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-#warning need to alter this to allow the drawing different types of elements
-    //draw graphs
-    //NSLog(@"load data from managed context: %@", [coreData context]);
-    
-    // load data
-    NSError *error = nil;
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    //NSEntityDescription *entity = [NSEntityDescription entityForName:@"Graph" inManagedObjectContext:[coreData context]];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Graph" inManagedObjectContext:_context];
-    [request setEntity:entity];
-    
-    NSArray *results = [_context executeFetchRequest:request error:&error];    
-    //NSLog(@"results: %ld", [results count]);
-    for (Graph *elem in results){
-        //draw graph
-        [self drawGraph:elem];
-    }
-    //NSLog(@"edworksheetview load data from amanaged object context.");
-}*/
 
 #pragma mark Drawing
 - (BOOL)isFlipped{
@@ -91,7 +70,6 @@
 #pragma mark mouse behavior
 - (void)mouseDown:(NSEvent *)theEvent{
     //post notification
-    //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [_nc postNotificationName:EDEventWorksheetClicked object:self];
 }
 
@@ -111,10 +89,5 @@
     for (Graph *myGraph in insertedArray){
         [self drawGraph:myGraph];
     }
-}
-
-#pragma mark selection
-- (void)onWorksheetClicked:(NSNotification *)note{
-    [_nc postNotificationName:EDEventWorksheetClicked object:self];
 }
 @end

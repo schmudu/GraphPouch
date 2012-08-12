@@ -9,6 +9,7 @@
 #import "EDWorksheetViewController.h"
 #import "EDWorksheetView.h"
 #import "EDConstants.h"
+#import "EDCoreDataUtility.h"
 
 @interface EDWorksheetViewController ()
 
@@ -20,6 +21,11 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        _nc = [NSNotificationCenter defaultCenter];
+        _context = [[EDCoreDataUtility sharedCoreDataUtility] context];
+        
+        // listen
+        NSLog(@"init worksheet view controller.");
     }
     
     return self;
@@ -33,8 +39,20 @@
     //[nc addObserver:self selector:@selector(onWorksheetClicked:) name:EDEventWorksheetClicked object:[self view]];
 }
 
+- (void)initListeners{
+    [_nc addObserver:self selector:@selector(onWorksheetClicked:) name:EDEventWorksheetClicked object:[self view]];
+}
+
 - (void)onWorksheetClicked:(NSNotification *)note{
     NSLog(@"worksheet clicked.");
+    // clear all the selected elements
+    //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+    //[coreData clearSelectedElements];
+    [[EDCoreDataUtility sharedCoreDataUtility] clearSelectedElements];
+}
+
+- (void)dealloc{
+    [_nc removeObserver:self name:EDEventWorksheetClicked object:[self view]];
 }
 
 @end

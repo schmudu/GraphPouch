@@ -26,17 +26,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 }
 
 - (void)setContext: (NSManagedObjectContext *)moc{
-    /*
-    NSPersistentStoreCoordinator *coordinator = [moc persistentStoreCoordinator];
-    NSManagedObjectContext *managedObjectContext;
-    if (coordinator != nil) {
-        managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [managedObjectContext setPersistentStoreCoordinator:coordinator];
-        [managedObjectContext setUndoManager:nil];
-    }
-    //context = managedObjectContext;
-     */
-    NSLog(@"context: %@", moc);
+    //NSLog(@"context: %@", moc);
     context = moc; 
 }
 
@@ -58,5 +48,27 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
         return fetchedObjects;
     }
     return fetchedObjects;
+}
+
+- (void)clearSelectedElements{
+    /*
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Graph"
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error = nil;
+     */
+    //NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    NSArray *fetchedObjects = [Graph findAllSelectedObjects];
+    if (fetchedObjects == nil) {
+        // Handle the error
+    }
+    else{
+        for (Graph *elem in fetchedObjects){
+            NSLog(@"setting to unselected: %@", elem);
+            [elem setSelected:FALSE];
+        }
+    }
 }
 @end

@@ -7,11 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+@class EDWorksheetView;
 @class EDWorksheetViewController;
 
 @interface EDDocument : NSPersistentDocument <NSWindowDelegate>{
     IBOutlet NSArrayController *elementsController;
     IBOutlet EDWorksheetViewController *worksheetController;
+    IBOutlet NSView *worksheetView;
 }
 -(id)getInstance;
 

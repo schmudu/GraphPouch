@@ -7,11 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@class EDWorksheetView;
+//@class EDWorksheetView;
 
 @interface EDWorksheetViewController : NSViewController{
-    NSNotificationCenter *nc;
+    NSNotificationCenter *_nc;
+    NSManagedObjectContext *_context;
 }
 - (void)loadDataFromManageObjectContext;
+- (void)initListeners;
 
 @end

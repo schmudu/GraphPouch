@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
+#import "EDCoreDataUtility.h"
 #import "EDGraphView.h"
 #import "EDWorksheetView.h"
 #import "EDWorksheetElementView.h"
