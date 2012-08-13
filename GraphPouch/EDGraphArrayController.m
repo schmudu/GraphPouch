@@ -29,8 +29,10 @@
     [newObj setValue:value_location forKey:@"locationX"];
     [newObj setValue:value_location forKey:@"locationY"];
     
-    [newObj setValue:FALSE forKey:@"selected"];
-    
+    // selected
+    [newObj setValue:[[NSNumber alloc] initWithInt:0] forKey:@"selected"];
+    NSLog(@"set value for selected:%@ obj:%@", [newObj valueForKey:@"selected"], newObj);
+    //[newObj setBool:FALSE forKey:@"selected"];
     // send notification
     //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     //[nc postNotificationName:EDEventGraphAdded object:newObj];

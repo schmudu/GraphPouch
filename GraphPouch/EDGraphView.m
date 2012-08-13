@@ -51,6 +51,7 @@
     
     // fill color based on selection
     //if([(EDWorksheetView *)[self superview] elementSelected:self])
+    NSLog(@"drawing rect with graph: %@",graph);
     if ([graph selected]) {
         [[NSColor redColor] set];
     }
@@ -136,6 +137,7 @@
     while ((i<[updatedArray count]) && (!hasChanged)){    
         if([[[[updatedArray objectAtIndex:i] class] description] isEqualToString:@"Graph"]){
             element = [updatedArray objectAtIndex:i];
+            NSLog(@"element has changed: %@", element);
             if (element == graph) {
                 hasChanged = TRUE;
                 [self updateDisplayBasedOnContext];

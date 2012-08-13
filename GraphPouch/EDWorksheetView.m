@@ -27,7 +27,7 @@
         EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
         _context = [coreData context];
         
-        NSLog(@"creating worksheet view:%@ with context:%@", self, _context);
+        //NSLog(@"creating worksheet view:%@ with context:%@", self, _context);
         
         // listen
         _nc = [NSNotificationCenter defaultCenter];
@@ -77,7 +77,7 @@
 - (void)onContextChanged:(NSNotification *)note{
     //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
     //NSManagedObjectContext *context = [coreData context];
-    NSLog(@"context that delivered message: %@ worksheet view:%@", _context, self);
+    //NSLog(@"context that delivered message: %@ worksheet view:%@", _context, self);
     //Graph *myGraph = [note object];
     //NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
     //NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
@@ -88,6 +88,22 @@
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
     for (Graph *myGraph in insertedArray){
         [self drawGraph:myGraph];
+    }
+    
+    // remove graphs that were deleted
+    NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
+    for (Graph *myGraph in deletedArray){
+        //[self drawGraph:myGraph];
+        NSLog(@"going to remove graph: %@", myGraph);
+        [self removeGraphView:myGraph];
+    }
+}
+
+- (void)removeGraphView:(Graph *)graph{
+    for (EDGraphView *graphView in [self subviews]){
+        if ([graphView graph] == graph){
+            [graphView removeFromSuperview];
+        }
     }
 }
 @end
