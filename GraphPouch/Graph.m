@@ -13,4 +13,5 @@
 @implementation Graph
 
 @dynamic locationX, locationY, equation, hasGridLines, hasTickMarks, selected;
+
 @end

@@ -14,6 +14,7 @@
 - (id)newObject{
     id newObj = [super newObject];
     //NSLog(@"object type: %@", [newObj class]);
+    NSLog(@"init in graph array controller.");
     
     // default values
     NSString *value_equation = [[NSString alloc] initWithString:@"default_equation"];
