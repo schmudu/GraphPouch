@@ -8,7 +8,7 @@
 
 #import "EDDocument.h"
 #import "EDWorksheetViewController.h"
-#import "Graph.h"
+#import "EDGraph.h"
 #import "EDCoreDataUtility.h"
 
 @implementation EDDocument

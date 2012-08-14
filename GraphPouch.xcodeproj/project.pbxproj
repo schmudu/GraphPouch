@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CD015FCE15BA66CA0096CDF9 /* EDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CD015FCD15BA66CA0096CDF9 /* EDConstants.m */; };
 		CD1422C715C7590700F55819 /* EDCoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1422C615C7590700F55819 /* EDCoreDataUtility.m */; };
+		CD27665515D996E900162240 /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CD27665415D996E900162240 /* EDGraph.m */; };
 		CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9915BDF93400AB7567 /* EDGraphView.m */; };
 		CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */; };
 		CD3F0AC515C22F0B00AB7567 /* EDWorksheetElementView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0AC415C22F0B00AB7567 /* EDWorksheetElementView.m */; };
@@ -29,7 +30,6 @@
 		CD47113B15BA1647008AACC3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD47113915BA1647008AACC3 /* MainMenu.xib */; };
 		CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */; };
 		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
-		CD84979715BC75E600090E6E /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = CD84979615BC75E600090E6E /* Graph.m */; };
 		CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +38,8 @@
 		CD015FCD15BA66CA0096CDF9 /* EDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDConstants.m; sourceTree = "<group>"; };
 		CD1422C515C7590700F55819 /* EDCoreDataUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDCoreDataUtility.h; sourceTree = "<group>"; };
 		CD1422C615C7590700F55819 /* EDCoreDataUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDCoreDataUtility.m; sourceTree = "<group>"; };
+		CD27665315D996E900162240 /* EDGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraph.h; sourceTree = "<group>"; };
+		CD27665415D996E900162240 /* EDGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraph.m; sourceTree = "<group>"; };
 		CD3F0A9815BDF93400AB7567 /* EDGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphView.h; sourceTree = "<group>"; };
 		CD3F0A9915BDF93400AB7567 /* EDGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphView.m; sourceTree = "<group>"; };
 		CD3F0A9A15BDF93400AB7567 /* EDGraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphViewController.h; sourceTree = "<group>"; };
@@ -74,8 +76,6 @@
 		CD47113D15BA1647008AACC3 /* EDDocument.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EDDocument.xcdatamodel; sourceTree = "<group>"; };
 		CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphArrayController.h; sourceTree = "<group>"; };
 		CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphArrayController.m; sourceTree = "<group>"; };
-		CD84979515BC75E600090E6E /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
-		CD84979615BC75E600090E6E /* Graph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph.m; sourceTree = "<group>"; };
 		CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+EasyFetching.h"; sourceTree = "<group>"; };
 		CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+EasyFetching.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,8 +104,8 @@
 		CD3F0AF715C4775900AB7567 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CD84979515BC75E600090E6E /* Graph.h */,
-				CD84979615BC75E600090E6E /* Graph.m */,
+				CD27665315D996E900162240 /* EDGraph.h */,
+				CD27665415D996E900162240 /* EDGraph.m */,
 				CD1422C515C7590700F55819 /* EDCoreDataUtility.h */,
 				CD1422C615C7590700F55819 /* EDCoreDataUtility.m */,
 				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
@@ -354,7 +354,6 @@
 				CD015FCE15BA66CA0096CDF9 /* EDConstants.m in Sources */,
 				CD41B54D15BB024C00640E73 /* EDWorksheetView.m in Sources */,
 				CD41B55015BB046B00640E73 /* EDWorksheetViewController.m in Sources */,
-				CD84979715BC75E600090E6E /* Graph.m in Sources */,
 				CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */,
 				CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */,
 				CD3F0AC515C22F0B00AB7567 /* EDWorksheetElementView.m in Sources */,
@@ -363,6 +362,7 @@
 				CD3F0AF315C4772700AB7567 /* EDPropertiesViewControllerGraph.m in Sources */,
 				CD1422C715C7590700F55819 /* EDCoreDataUtility.m in Sources */,
 				CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */,
+				CD27665515D996E900162240 /* EDGraph.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

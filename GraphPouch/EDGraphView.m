@@ -11,15 +11,14 @@
 #import "EDWorksheetView.h"
 #import "EDWorksheetElementView.h"
 #import "EDConstants.h"
-#import "Graph.h"
+#import "EDGraph.h"
 #import "NSManagedObject+EasyFetching.h"
 
 @implementation EDGraphView
 @synthesize graph;
 
-- (id)initWithFrame:(NSRect)frame graphModel:(Graph *)myGraph{
+- (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph{
     self = [super initWithFrame:frame];
-    
     if (self){
         //generate id
         [self setViewID:[EDGraphView generateID]];
@@ -34,6 +33,7 @@
         
         // set model info
         graph = myGraph;
+        NSLog(@"creating graph view with graph: %@", myGraph);
     }
     return self;
 }
@@ -51,7 +51,6 @@
     
     // fill color based on selection
     //if([(EDWorksheetView *)[self superview] elementSelected:self])
-    NSLog(@"drawing rect with graph: %@",graph);
     if ([graph selected]) {
         [[NSColor redColor] set];
     }
@@ -66,7 +65,9 @@
 - (void)updateDisplayBasedOnContext{
     // move to position
     //NSLog(@"moving frame origin to: x:%f y:%f lastCursor x:%f y:%f lastDrag: x:%f y:%f", [graph locationX], [graph locationY], lastCursorLocation.x, lastCursorLocation.y, lastDragLocation.x, lastDragLocation.y);
-    [self setFrameOrigin:NSMakePoint([graph locationX], [graph locationY])];
+    [[NSNumber alloc] initWithFloat:(float)[graph valueForKey:@"locationX"]];
+    [[NSNumber alloc] initWithFloat:(float)[graph valueForKey:@"locationY"]];
+    [self setFrameOrigin:NSMakePoint((float)[graph valueForKey:@"locationX"], [graph valueForKey:@"locationY"])];
     
     [self setNeedsDisplay:TRUE];
 }
@@ -75,7 +76,7 @@
 - (void)mouseDown:(NSEvent *)theEvent{
     NSUInteger flags = [theEvent modifierFlags];
     
-    //NSLog(@"working:%@", [Graph findAllSelectedObjects]);
+    //NSLog(@"working:%@", [EDGraph findAllSelectedObjects]);
     if ([graph selected]) {
         // graph is already selected
         if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
@@ -119,9 +120,16 @@
     float diffX = fabsf(lastCursorLocation.x - lastDragLocation.x);
     
     //if no diff in location than do not prepare an undo
+    NSLog(@"graph:%@", [self graph]);
+    NSLog(@"frame:%f", [self frame].origin.x);
+    //[[self graph] check];
     if(fabsf(diffX>0.01) && fabsf(diffY>0.01)){
-        [[self graph] setLocationX:[self frame].origin.x];
-        [[self graph] setLocationY:[self frame].origin.y];
+        NSNumber *valueX = [[NSNumber alloc] initWithFloat:[self frame].origin.x];
+        NSNumber *valueY = [[NSNumber alloc] initWithFloat:[self frame].origin.y];
+        [[self graph] setValue:valueX forKey:@"locationX"];
+        [[self graph] setValue:valueY forKey:@"locationY"];
+        //[[self graph] setLocationX:[self frame].origin.x];
+        //[[self graph] setLocationY:[self frame].origin.y];
     }
 }
 
@@ -135,7 +143,7 @@
     NSObject *element;
     //for(id element in updatedArray){
     while ((i<[updatedArray count]) && (!hasChanged)){    
-        if([[[[updatedArray objectAtIndex:i] class] description] isEqualToString:@"Graph"]){
+        if([[[[updatedArray objectAtIndex:i] class] description] isEqualToString:@"EDGraph"]){
             element = [updatedArray objectAtIndex:i];
             NSLog(@"element has changed: %@", element);
             if (element == graph) {

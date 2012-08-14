@@ -11,10 +11,10 @@
 #import "EDConstants.h"
 #import "EDWorksheetView.h"
 #import "EDGraphView.h"
-#import "Graph.h"
+#import "EDGraph.h"
 
 @interface EDWorksheetView()
-- (void)drawGraph:(Graph *)graph;
+- (void)drawGraph:(EDGraph *)graph;
 - (void)onContextChanged:(NSNotification *)note;
 @end
 
@@ -58,7 +58,7 @@
     }
 }
 
-- (void)drawGraph:(Graph *)graph{
+- (void)drawGraph:(EDGraph *)graph{
     EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, 40, 40) graphModel:graph];
     
     // set location
@@ -86,20 +86,21 @@
     //NSLog(@"new graph deleted: %@ count:%ld", [[[note userInfo] objectForKey:NSDeletedObjectsKey] class], [deletedArray count]);
     // draw graphs that were added
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
-    for (Graph *myGraph in insertedArray){
+    for (EDGraph *myGraph in insertedArray){
+        NSLog(@"going to insert graph: %@", myGraph);
         [self drawGraph:myGraph];
     }
     
     // remove graphs that were deleted
     NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
-    for (Graph *myGraph in deletedArray){
+    for (EDGraph *myGraph in deletedArray){
         //[self drawGraph:myGraph];
         NSLog(@"going to remove graph: %@", myGraph);
         [self removeGraphView:myGraph];
     }
 }
 
-- (void)removeGraphView:(Graph *)graph{
+- (void)removeGraphView:(EDGraph *)graph{
     for (EDGraphView *graphView in [self subviews]){
         if ([graphView graph] == graph){
             [graphView removeFromSuperview];

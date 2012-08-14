@@ -1,17 +1,20 @@
 //
-//  Graph.m
+//  EDGraph.m
 //  GraphPouch
 //
 //  Created by PATRICK LEE on 7/22/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "Graph.h"
+#import "EDGraph.h"
 #import "EDConstants.h"
 #import "NSManagedObject+EasyFetching.h"
 
-@implementation Graph
+@implementation EDGraph
 
 @dynamic locationX, locationY, equation, hasGridLines, hasTickMarks, selected;
 
+- (void)check{
+    NSLog(@"this is a check.");
+}
 @end

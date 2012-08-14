@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDWorksheetElementView.h"
-@class Graph;
+@class EDGraph;
 
 @interface EDGraphView : EDWorksheetElementView{
     @private
@@ -17,7 +17,8 @@
     NSPoint                 lastCursorLocation;
     NSNotificationCenter    *_nc;
 }
-@property (nonatomic, assign) Graph *graph;
+//@property (nonatomic, strong) EDGraph *graph;
+@property (nonatomic, assign) EDGraph *graph;
 
-- (id)initWithFrame:(NSRect)frame graphModel:(Graph *)myGraph;
+- (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph;
 @end

@@ -1,5 +1,5 @@
 //
-//  Graph.h
+//  EDGraph.h
 //  GraphPouch
 //
 //  Created by PATRICK LEE on 7/22/12.
@@ -10,9 +10,10 @@
 #import <CoreData/CoreData.h>
 #import "NSManagedObject+EasyFetching.h"
 
-@interface Graph : NSManagedObject
+@interface EDGraph : NSManagedObject
 
 @property NSString *equation;
 @property BOOL hasTickMarks, hasGridLines, selected;
 @property float locationX, locationY;
+- (void)check;
 @end

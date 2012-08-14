@@ -3,7 +3,7 @@
     <entity name="EDElement" syncable="YES">
         <attribute name="selected" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
-    <entity name="Graph" representedClassName="Graph" syncable="YES">
+    <entity name="EDGraph" syncable="YES">
         <attribute name="equation" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hasGridLines" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="hasTickMarks" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -12,7 +12,7 @@
         <attribute name="selected" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Graph" positionX="160" positionY="192" width="128" height="135"/>
         <element name="EDElement" positionX="160" positionY="192" width="128" height="60"/>
+        <element name="EDGraph" positionX="160" positionY="192" width="128" height="135"/>
     </elements>
 </model>

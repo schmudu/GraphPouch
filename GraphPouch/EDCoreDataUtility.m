@@ -7,7 +7,7 @@
 //
 
 #import "EDCoreDataUtility.h"
-#import "Graph.h"
+#import "EDGraph.h"
 
 @implementation EDCoreDataUtility
 static EDCoreDataUtility *sharedCoreDataUtility = nil;
@@ -32,7 +32,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 
 - (NSArray *)getAllObjects{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Graph"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"EDGraph"
                                               inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
@@ -43,7 +43,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }
     else{
         for (id elem in fetchedObjects){
-            NSLog(@"elem: %f", [(Graph *)elem locationX]);
+            NSLog(@"elem: %f", [(EDGraph *)elem locationX]);
         }
         return fetchedObjects;
     }
@@ -53,19 +53,19 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 - (void)clearSelectedElements{
     /*
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Graph"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"EDGraph"
                                               inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
     NSError *error = nil;
      */
     //NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-    NSArray *fetchedObjects = [Graph findAllSelectedObjects];
+    NSArray *fetchedObjects = [EDGraph findAllSelectedObjects];
     if (fetchedObjects == nil) {
         // Handle the error
     }
     else{
-        for (Graph *elem in fetchedObjects){
+        for (EDGraph *elem in fetchedObjects){
             NSLog(@"setting to unselected: %@", elem);
             [elem setSelected:FALSE];
         }
