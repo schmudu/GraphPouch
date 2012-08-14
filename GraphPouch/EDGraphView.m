@@ -65,9 +65,11 @@
 - (void)updateDisplayBasedOnContext{
     // move to position
     //NSLog(@"moving frame origin to: x:%f y:%f lastCursor x:%f y:%f lastDrag: x:%f y:%f", [graph locationX], [graph locationY], lastCursorLocation.x, lastCursorLocation.y, lastDragLocation.x, lastDragLocation.y);
-    [[NSNumber alloc] initWithFloat:(float)[graph valueForKey:@"locationX"]];
-    [[NSNumber alloc] initWithFloat:(float)[graph valueForKey:@"locationY"]];
-    [self setFrameOrigin:NSMakePoint((float)[graph valueForKey:@"locationX"], [graph valueForKey:@"locationY"])];
+    //float xPos = [[NSNumber alloc] initWithFloat:[[graph valueForKey:@"locationX"] floatValue]];
+    //float yPos = [[NSNumber alloc] initWithFloat:[[graph valueForKey:@"locationY"] floatValue]];
+    //[self setFrameOrigin:NSMakePoint(xPos, yPos)];
+    NSLog(@"moving to location x:%f", [[graph valueForKey:@"locationX"] floatValue]);
+    [self setFrameOrigin:NSMakePoint([[graph valueForKey:@"locationX"] floatValue], [[graph valueForKey:@"locationY"] floatValue])];
     
     [self setNeedsDisplay:TRUE];
 }
@@ -120,21 +122,18 @@
     float diffX = fabsf(lastCursorLocation.x - lastDragLocation.x);
     
     //if no diff in location than do not prepare an undo
-    NSLog(@"graph:%@", [self graph]);
-    NSLog(@"frame:%f", [self frame].origin.x);
     //[[self graph] check];
     if(fabsf(diffX>0.01) && fabsf(diffY>0.01)){
         NSNumber *valueX = [[NSNumber alloc] initWithFloat:[self frame].origin.x];
         NSNumber *valueY = [[NSNumber alloc] initWithFloat:[self frame].origin.y];
         [[self graph] setValue:valueX forKey:@"locationX"];
         [[self graph] setValue:valueY forKey:@"locationY"];
-        //[[self graph] setLocationX:[self frame].origin.x];
-        //[[self graph] setLocationY:[self frame].origin.y];
     }
 }
 
 # pragma mark listeners - graphs
 - (void)onContextChanged:(NSNotification *)note{
+    NSLog(@"context changed in graph view.");
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
 #warning move to category for checking for graphs
     // need to move this to a category
@@ -143,9 +142,8 @@
     NSObject *element;
     //for(id element in updatedArray){
     while ((i<[updatedArray count]) && (!hasChanged)){    
-        if([[[[updatedArray objectAtIndex:i] class] description] isEqualToString:@"EDGraph"]){
+        if([[[[updatedArray objectAtIndex:i] entity] name] isEqualToString:@"EDGraph"]){
             element = [updatedArray objectAtIndex:i];
-            NSLog(@"element has changed: %@", element);
             if (element == graph) {
                 hasChanged = TRUE;
                 [self updateDisplayBasedOnContext];
@@ -153,7 +151,6 @@
         }
         i++;
     }
-    //NSLog(@"context changed: class: %@ eql?:%d", [element class], (element == graph));
 }
 
 # pragma mark listeners - selection

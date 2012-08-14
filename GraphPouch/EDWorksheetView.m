@@ -87,7 +87,7 @@
     // draw graphs that were added
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
     for (EDGraph *myGraph in insertedArray){
-        NSLog(@"going to insert graph: %@", myGraph);
+        //NSLog(@"going to insert graph: %@", myGraph);
         [self drawGraph:myGraph];
     }
     
@@ -95,7 +95,7 @@
     NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
     for (EDGraph *myGraph in deletedArray){
         //[self drawGraph:myGraph];
-        NSLog(@"going to remove graph: %@", myGraph);
+        //NSLog(@"going to remove graph: %@", myGraph);
         [self removeGraphView:myGraph];
     }
 }
