@@ -50,8 +50,7 @@
     NSRect bounds = NSMakeRect(10, 10, 20, 20);
     
     // fill color based on selection
-    //if([(EDWorksheetView *)[self superview] elementSelected:self])
-    if ([graph selected]) {
+    if ([[graph valueForKey:@"selected"] isEqualToNumber:[[NSNumber alloc] initWithBool:TRUE]]){
         [[NSColor redColor] set];
     }
     else {
@@ -64,11 +63,6 @@
 
 - (void)updateDisplayBasedOnContext{
     // move to position
-    //NSLog(@"moving frame origin to: x:%f y:%f lastCursor x:%f y:%f lastDrag: x:%f y:%f", [graph locationX], [graph locationY], lastCursorLocation.x, lastCursorLocation.y, lastDragLocation.x, lastDragLocation.y);
-    //float xPos = [[NSNumber alloc] initWithFloat:[[graph valueForKey:@"locationX"] floatValue]];
-    //float yPos = [[NSNumber alloc] initWithFloat:[[graph valueForKey:@"locationY"] floatValue]];
-    //[self setFrameOrigin:NSMakePoint(xPos, yPos)];
-    NSLog(@"moving to location x:%f", [[graph valueForKey:@"locationX"] floatValue]);
     [self setFrameOrigin:NSMakePoint([[graph valueForKey:@"locationX"] floatValue], [[graph valueForKey:@"locationY"] floatValue])];
     
     [self setNeedsDisplay:TRUE];
@@ -78,22 +72,23 @@
 - (void)mouseDown:(NSEvent *)theEvent{
     NSUInteger flags = [theEvent modifierFlags];
     
-    //NSLog(@"working:%@", [EDGraph findAllSelectedObjects]);
-    if ([graph selected]) {
+    if ([[graph valueForKey:@"selected"] isEqualToNumber:[[NSNumber alloc] initWithBool:TRUE]]){
         // graph is already selected
         if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
-            [graph setSelected:FALSE];
+            [graph setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:@"selected"];
         }
     } else {
         // graph is not selected
         if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
-            [graph setSelected:TRUE];
+            [graph setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:@"selected"];
         }
         else {
-#warning need to figure out how to deselect the other graphs
-            //need to deselect all the other graphs
+#warning Need to deselect all the other graphs
+            // post notification
+            [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
             
-            [graph setSelected:TRUE];
+            //need to deselect all the other graphs
+            [graph setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:@"selected"];
         }
     }
     
@@ -133,7 +128,6 @@
 
 # pragma mark listeners - graphs
 - (void)onContextChanged:(NSNotification *)note{
-    NSLog(@"context changed in graph view.");
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
 #warning move to category for checking for graphs
     // need to move this to a category

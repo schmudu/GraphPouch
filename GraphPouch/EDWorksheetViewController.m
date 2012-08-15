@@ -12,7 +12,7 @@
 #import "EDCoreDataUtility.h"
 
 @interface EDWorksheetViewController ()
-
+- (void)deselectAllElements:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetViewController
@@ -40,10 +40,11 @@
 }
 
 - (void)initListeners{
-    [_nc addObserver:self selector:@selector(onWorksheetClicked:) name:EDEventWorksheetClicked object:[self view]];
+    [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventWorksheetClicked object:[self view]];
+    [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
 }
 
-- (void)onWorksheetClicked:(NSNotification *)note{
+- (void)deselectAllElements:(NSNotification *)note{
     NSLog(@"worksheet clicked.");
     // clear all the selected elements
     //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
@@ -53,6 +54,7 @@
 
 - (void)dealloc{
     [_nc removeObserver:self name:EDEventWorksheetClicked object:[self view]];
+    [_nc removeObserver:self name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
 }
 
 @end

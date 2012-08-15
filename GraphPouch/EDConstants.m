@@ -12,5 +12,7 @@ int const GRAPH_INIT_HAS_GRID_LINES     = FALSE;
 
 @implementation EDConstants
     // worksheets
-    NSString * const EDEventWorksheetClicked                 = @"EDEventWorksheetClicked";
+    NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";
+    NSString * const EDEventMouseDown                               = @"EDEventMouseDown";
+    NSString * const EDEventUnselectedGraphClickedWithoutModifier   = @"EDEventUnselectedGraphClickedWithoutModifier";
 @end

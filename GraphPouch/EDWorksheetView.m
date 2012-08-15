@@ -60,6 +60,7 @@
 
 - (void)drawGraph:(EDGraph *)graph{
     EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, 40, 40) graphModel:graph];
+    [_nc addObserver:self selector:@selector(onGraphSelectedDeselectOtherGraphs:) name:EDEventUnselectedGraphClickedWithoutModifier object:graphView];
     
     // set location
     [graphView setFrameOrigin:NSMakePoint([graph locationX], [graph locationY])];
@@ -104,7 +105,15 @@
     for (EDGraphView *graphView in [self subviews]){
         if ([graphView graph] == graph){
             [graphView removeFromSuperview];
+        
+            // remove listener
+            [_nc removeObserver:self name:EDEventUnselectedGraphClickedWithoutModifier object:graphView];
         }
     }
+}
+
+- (void)onGraphSelectedDeselectOtherGraphs:(NSNotification *)note{
+    NSLog(@"deslecting all other graphs.");
+    [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
 }
 @end

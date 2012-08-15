@@ -18,4 +18,7 @@ FOUNDATION_EXPORT int const GRAPH_INIT_HAS_GRID_LINES;
 
     // worksheet
     extern NSString *const EDEventWorksheetClicked;
+    extern NSString *const EDEventMouseDown;
+    extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
+
 @end
