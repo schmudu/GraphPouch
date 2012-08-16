@@ -11,13 +11,14 @@
 @interface EDCoreDataUtility : NSObject{
 @private
     //NSManagedObjectModel *managedObjectModel;
-    NSManagedObjectContext *context;
+    NSManagedObjectContext *_context;
     //NSPersistentStoreCoordinator *persistentStoreCoordinator;
 }
 
 + (EDCoreDataUtility *)sharedCoreDataUtility;
+//+ (NSArray *)findAllSelectedObjects;
 - (void)setContext:(NSManagedObjectContext *)moc;
 - (NSManagedObjectContext *)context;
-- (NSArray *)getAllObjects;
+- (NSSet *)getAllObjects;
 - (void)clearSelectedElements;
 @end

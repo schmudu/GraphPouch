@@ -71,6 +71,9 @@
 
 #pragma mark mouse events
 - (void)mouseDown:(NSEvent *)theEvent{
+    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+    [coreData getAllObjects];
+    
     NSUInteger flags = [theEvent modifierFlags];
     
     if ([graph isSelectedElement]){

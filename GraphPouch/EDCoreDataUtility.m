@@ -22,44 +22,18 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 }
 
 - (NSManagedObjectContext *)context{
-    return context;
+    return _context;
 }
 
 - (void)setContext: (NSManagedObjectContext *)moc{
-    //NSLog(@"context: %@", moc);
-    context = moc; 
+    _context = moc; 
 }
 
-- (NSArray *)getAllObjects{
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"EDGraph"
-                                              inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    
-    NSError *error = nil;
-    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-    if (fetchedObjects == nil) {
-        // Handle the error
-    }
-    else{
-        for (id elem in fetchedObjects){
-            NSLog(@"elem: %f", [(EDGraph *)elem locationX]);
-        }
-        return fetchedObjects;
-    }
-    return fetchedObjects;
+- (NSSet *)getAllObjects{
+    return [_context registeredObjects];
 }
 
 - (void)clearSelectedElements{
-    /*
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"EDGraph"
-                                              inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    
-    NSError *error = nil;
-     */
-    //NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
     NSArray *fetchedObjects = [EDGraph findAllSelectedObjects];
     if (fetchedObjects == nil) {
         // Handle the error
