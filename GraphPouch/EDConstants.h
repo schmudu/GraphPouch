@@ -11,14 +11,17 @@ FOUNDATION_EXPORT int const GRAPH_INIT_HAS_GRID_LINES;
 #import <Foundation/Foundation.h>
 
 @interface EDConstants : NSObject
-    // graph
-    //extern NSString *const EDEventElementClicked;
-    //extern NSString *const EDEventElementClickedWithCommand;
-    //extern NSString *const EDEventElementClickedWithShift;
+// entity name
+extern NSString *const EDEntityNameGraph;
 
-    // worksheet
-    extern NSString *const EDEventWorksheetClicked;
-    extern NSString *const EDEventMouseDown;
-    extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
+// worksheet
+extern NSString *const EDEventWorksheetClicked;
+extern NSString *const EDEventMouseDown;
+extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
+
+// attributes
+extern NSString *const EDWorksheetAttributeSelected;
+extern NSString *const EDWorksheetAttributeLocationX;
+extern NSString *const EDWorksheetAttributeLocationY;
 
 @end

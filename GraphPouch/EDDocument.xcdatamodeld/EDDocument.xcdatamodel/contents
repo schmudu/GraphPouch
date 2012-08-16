@@ -5,11 +5,11 @@
     </entity>
     <entity name="EDGraph" syncable="YES">
         <attribute name="equation" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="hasGridLines" optional="YES" attributeType="Integer 16" syncable="YES"/>
-        <attribute name="hasTickMarks" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="hasGridLines" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasTickMarks" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="locationX" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="locationY" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="selected" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="selected" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <elements>
         <element name="EDElement" positionX="160" positionY="192" width="128" height="60"/>

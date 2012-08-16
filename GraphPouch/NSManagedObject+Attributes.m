@@ -11,7 +11,8 @@
 @implementation NSManagedObject (Attributes)
 
 - (BOOL)isSelectedElement{
-    if ([[self valueForKey:@"selected"] isEqualToNumber:[[NSNumber alloc] initWithBool:TRUE]]){
+    //if ([[self valueForKey:@"selected"] isEqualToNumber:[[NSNumber alloc] initWithBool:TRUE]]){
+    if ([[self valueForKey:@"selected"] boolValue] == TRUE){
         return true;
     }
     else {

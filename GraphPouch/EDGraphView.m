@@ -64,7 +64,7 @@
 
 - (void)updateDisplayBasedOnContext{
     // move to position
-    [self setFrameOrigin:NSMakePoint([[graph valueForKey:@"locationX"] floatValue], [[graph valueForKey:@"locationY"] floatValue])];
+    [self setFrameOrigin:NSMakePoint([[graph valueForKey:EDWorksheetAttributeLocationX] floatValue], [[graph valueForKey:EDWorksheetAttributeLocationY] floatValue])];
     
     [self setNeedsDisplay:TRUE];
 }
@@ -79,12 +79,12 @@
     if ([graph isSelectedElement]){
         // graph is already selected
         if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
-            [graph setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:@"selected"];
+            [graph setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDWorksheetAttributeSelected];
         }
     } else {
         // graph is not selected
         if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
-            [graph setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:@"selected"];
+            [graph setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDWorksheetAttributeSelected];
         }
         else {
 #warning Need to deselect all the other graphs
@@ -92,7 +92,7 @@
             [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
             
             //need to deselect all the other graphs
-            [graph setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:@"selected"];
+            [graph setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDWorksheetAttributeSelected];
         }
     }
     
@@ -125,8 +125,8 @@
     if(fabsf(diffX>0.01) && fabsf(diffY>0.01)){
         NSNumber *valueX = [[NSNumber alloc] initWithFloat:[self frame].origin.x];
         NSNumber *valueY = [[NSNumber alloc] initWithFloat:[self frame].origin.y];
-        [[self graph] setValue:valueX forKey:@"locationX"];
-        [[self graph] setValue:valueY forKey:@"locationY"];
+        [[self graph] setValue:valueX forKey:EDWorksheetAttributeLocationX];
+        [[self graph] setValue:valueY forKey:EDWorksheetAttributeLocationY];
     }
 }
 
@@ -140,7 +140,7 @@
     NSObject *element;
     //for(id element in updatedArray){
     while ((i<[updatedArray count]) && (!hasChanged)){    
-        if([[[[updatedArray objectAtIndex:i] entity] name] isEqualToString:@"EDGraph"]){
+        if([[[[updatedArray objectAtIndex:i] entity] name] isEqualToString:EDEntityNameGraph]){
             element = [updatedArray objectAtIndex:i];
             if (element == graph) {
                 hasChanged = TRUE;

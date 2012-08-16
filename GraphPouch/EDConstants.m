@@ -11,8 +11,16 @@ int const GRAPH_INIT_TICK_MARKS         = FALSE;
 int const GRAPH_INIT_HAS_GRID_LINES     = FALSE; 
 
 @implementation EDConstants
-    // worksheets
-    NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";
-    NSString * const EDEventMouseDown                               = @"EDEventMouseDown";
-    NSString * const EDEventUnselectedGraphClickedWithoutModifier   = @"EDEventUnselectedGraphClickedWithoutModifier";
+// entity names
+NSString * const EDEntityNameGraph                              = @"EDGraph";
+
+// worksheet events
+NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";
+NSString * const EDEventMouseDown                               = @"EDEventMouseDown";
+NSString * const EDEventUnselectedGraphClickedWithoutModifier   = @"EDEventUnselectedGraphClickedWithoutModifier";
+
+// attributes
+NSString * const EDWorksheetAttributeSelected                   = @"selected";
+NSString * const EDWorksheetAttributeLocationX                  = @"locationX";
+NSString * const EDWorksheetAttributeLocationY                  = @"locationY";
 @end
