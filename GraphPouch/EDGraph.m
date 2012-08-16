@@ -14,7 +14,4 @@
 
 @dynamic locationX, locationY, equation, hasGridLines, hasTickMarks, selected;
 
-- (void)check{
-    NSLog(@"this is a check.");
-}
 @end

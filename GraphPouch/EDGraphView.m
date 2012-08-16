@@ -13,6 +13,7 @@
 #import "EDConstants.h"
 #import "EDGraph.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "NSManagedObject+Attributes.h"
 
 @implementation EDGraphView
 @synthesize graph;
@@ -50,7 +51,7 @@
     NSRect bounds = NSMakeRect(10, 10, 20, 20);
     
     // fill color based on selection
-    if ([[graph valueForKey:@"selected"] isEqualToNumber:[[NSNumber alloc] initWithBool:TRUE]]){
+    if ([graph isSelectedElement]){
         [[NSColor redColor] set];
     }
     else {
@@ -72,7 +73,7 @@
 - (void)mouseDown:(NSEvent *)theEvent{
     NSUInteger flags = [theEvent modifierFlags];
     
-    if ([[graph valueForKey:@"selected"] isEqualToNumber:[[NSNumber alloc] initWithBool:TRUE]]){
+    if ([graph isSelectedElement]){
         // graph is already selected
         if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
             [graph setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:@"selected"];

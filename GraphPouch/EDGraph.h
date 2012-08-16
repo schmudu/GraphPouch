@@ -13,7 +13,6 @@
 @interface EDGraph : NSManagedObject
 
 @property NSString *equation;
-@property BOOL hasTickMarks, hasGridLines, selected;
+@property int hasTickMarks, hasGridLines, selected;
 @property float locationX, locationY;
-- (void)check;
 @end
