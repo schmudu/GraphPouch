@@ -42,13 +42,11 @@
 - (void)initListeners{
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventWorksheetClicked object:[self view]];
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
+    NSLog(@"elements: %@", _context);
 }
 
 - (void)deselectAllElements:(NSNotification *)note{
-    NSLog(@"worksheet clicked.");
     // clear all the selected elements
-    //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    //[coreData clearSelectedElements];
     [[EDCoreDataUtility sharedCoreDataUtility] clearSelectedElements];
 }
 
