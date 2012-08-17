@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "EDElement.h"
 #import "NSManagedObject+EasyFetching.h"
 
-@interface EDGraph : NSManagedObject
+@interface EDGraph : EDElement
 
 @property NSString *equation;
-@property int hasTickMarks, hasGridLines, selected;
-@property float locationX, locationY;
+@property BOOL hasTickMarks, hasGridLines;
 @end

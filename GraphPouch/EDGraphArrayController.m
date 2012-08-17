@@ -21,7 +21,6 @@
     [newObj setValue:[[NSNumber alloc] initWithFloat:0] forKey:EDWorksheetAttributeLocationX];
     [newObj setValue:[[NSNumber alloc] initWithFloat:0] forKey:EDWorksheetAttributeLocationY];
     [newObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDWorksheetAttributeSelected];
-    //NSLog(@"set value for selected:%@ obj:%@", [newObj valueForKey:EDWorksheetAttributeSelected], newObj);
     return newObj;
 }
 

@@ -31,6 +31,7 @@
 		CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */; };
 		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
 		CDE6D61C15DC476B00E5695F /* NSManagedObject+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */; };
+		CDE6D63015DE774100E5695F /* EDElement.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D62F15DE774000E5695F /* EDElement.m */; };
 		CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,8 @@
 		CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphArrayController.m; sourceTree = "<group>"; };
 		CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Attributes.h"; sourceTree = "<group>"; };
 		CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Attributes.m"; sourceTree = "<group>"; };
+		CDE6D62E15DE774000E5695F /* EDElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDElement.h; sourceTree = "<group>"; };
+		CDE6D62F15DE774000E5695F /* EDElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDElement.m; sourceTree = "<group>"; };
 		CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+EasyFetching.h"; sourceTree = "<group>"; };
 		CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+EasyFetching.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,6 +117,8 @@
 				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
 				CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */,
 				CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */,
+				CDE6D62E15DE774000E5695F /* EDElement.h */,
+				CDE6D62F15DE774000E5695F /* EDElement.m */,
 				CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */,
 				CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */,
 				CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */,
@@ -369,6 +374,7 @@
 				CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */,
 				CD27665515D996E900162240 /* EDGraph.m in Sources */,
 				CDE6D61C15DC476B00E5695F /* NSManagedObject+Attributes.m in Sources */,
+				CDE6D63015DE774100E5695F /* EDElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

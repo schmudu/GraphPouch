@@ -12,6 +12,6 @@
 
 @implementation EDGraph
 
-@dynamic locationX, locationY, equation, hasGridLines, hasTickMarks, selected;
+@dynamic equation, hasGridLines, hasTickMarks;
 
 @end
