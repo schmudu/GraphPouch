@@ -19,6 +19,7 @@
 //+ (NSArray *)findAllSelectedObjects;
 - (void)setContext:(NSManagedObjectContext *)moc;
 - (NSManagedObjectContext *)context;
-- (NSSet *)getAllObjects;
+- (NSMutableArray *)getAllObjects;
+- (NSArray *)getAllGraphs;
 - (void)clearSelectedElements;
 @end

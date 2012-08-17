@@ -9,7 +9,7 @@
 #import "EDWorksheetViewController.h"
 #import "EDWorksheetView.h"
 #import "EDConstants.h"
-#import "EDCoreDataUtility.h"
+//#import "EDCoreDataUtility.h"
 
 @interface EDWorksheetViewController ()
 - (void)deselectAllElements:(NSNotification *)note;
@@ -22,7 +22,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _nc = [NSNotificationCenter defaultCenter];
-        _context = [[EDCoreDataUtility sharedCoreDataUtility] context];
+        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         
         // listen
         NSLog(@"init worksheet view controller.");
@@ -31,18 +31,13 @@
     return self;
 }
 
-- (void)loadDataFromManageObjectContext{
-    NSLog(@"going to init worksheet view controller.");
-    //[(EDWorksheetView *)[self view] loadDataFromManagedObjectContext];
-    
-    //listen
-    //[nc addObserver:self selector:@selector(onWorksheetClicked:) name:EDEventWorksheetClicked object:[self view]];
-}
-
-- (void)initListeners{
+- (void)postInitialize{
+    // listeners
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventWorksheetClicked object:[self view]];
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
-    NSLog(@"elements: %@", _context);
+        
+    // initialize view to display all of the objects
+    NSLog(@"controller view: %@", [self view]);
 }
 
 - (void)deselectAllElements:(NSNotification *)note{

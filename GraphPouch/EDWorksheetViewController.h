@@ -7,13 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDCoreDataUtility.h"
 //@class EDWorksheetView;
 
 @interface EDWorksheetViewController : NSViewController{
     NSNotificationCenter *_nc;
-    NSManagedObjectContext *_context;
+    EDCoreDataUtility *_coreData;
 }
-- (void)loadDataFromManageObjectContext;
-- (void)initListeners;
+- (void)postInitialize;
 
 @end

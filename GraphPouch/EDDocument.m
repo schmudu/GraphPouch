@@ -25,17 +25,8 @@
         EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
         [coreData setContext: [self managedObjectContext]];
         NSLog(@"init EDDocument:");
-        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onElementsLoaded:) name:NSManagedObjectContextObjectsDidChangeNotification object:[self managedObjectContext]];
     }
     return self;
-}
-
-- (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url ofType:(NSString *)fileType modelConfiguration:(NSString *)configuration storeOptions:(NSDictionary *)storeOptions error:(NSError *__autoreleasing *)error{
-    BOOL result = [super configurePersistentStoreCoordinatorForURL:url ofType:fileType modelConfiguration:configuration storeOptions:storeOptions error:error];
-    NSLog(@"read from file: psc: %@", [[[self managedObjectContext] persistentStoreCoordinator] persistentStores]);
-    //NSLog(@"read from file: objects: %@", [[EDCoreDataUtility sharedCoreDataUtility] getAllObjects]);
-    return result;
-    //return [super configurePersistentStoreCoordinatorForURL:url ofType:fileType modelConfiguration:configuration storeOptions:storeOptions error:error];
 }
 
 - (NSString *)windowNibName
@@ -50,59 +41,11 @@
     [super windowControllerDidLoadNib:aController];
     NSLog(@"window controller did load nib. making worksheet controller init view");
     [worksheetController setView:worksheetView];
-    [worksheetController initListeners];
-    //NSLog(@"worksheet controller view: %@", [worksheetController view]);
-    //NSLog(@"elements: %@", [[EDCoreDataUtility sharedCoreDataUtility] getAllObjects]);
-    // populate core data utility
-    //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    //[coreData setContext: [self managedObjectContext]];
-    
-    //add listenter
-    //[elementsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:(void *)[self managedObjectContext]];
-    [self fetchRecords];
-}
-
-- (void)fetchRecords{
-    // Define our table/entity to use   
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"EDGraph" inManagedObjectContext:[self managedObjectContext]];   
-    
-    // Setup the fetch request   
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];   
-    [request setEntity:entity];   
-    
-    // Define how we will sort the records   
-    /*
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];   
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];   
-    [request setSortDescriptors:sortDescriptors];    
-    [sortDescriptor release];   
-    */
-    // Fetch the records and handle an error   
-    NSError *error;   
-    NSMutableArray *mutableFetchResults = [[[self managedObjectContext] executeFetchRequest:request error:&error] mutableCopy];   
-    NSLog(@"fetch: %@", mutableFetchResults);
-    
-    if (!mutableFetchResults) {   
-        // Handle the error.   
-        // This is a serious error and should advise the user to restart the application   
-    }   
-}
-
-- (void)onElementsLoaded{
-    // remove observer
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[self managedObjectContext]];
-    NSLog(@"elements loaded.");
+    [worksheetController postInitialize];
 }
 
 - (void)awakeFromNib{
     // code that happens before windowControllerDidLoadNib
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    //[elementsController removeObserver:self forKeyPath:@"arrangedObjects" context:(void *)[self managedObjectContext]];
-    
-    // data has been loaded ask the worksheet to draw the graphs
-    //[worksheetController loadDataFromManageObjectContext];
 }
 
 + (BOOL)autosavesInPlace
@@ -115,17 +58,4 @@
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
     return [[coreData context] undoManager];
 }
-/*
-- (NSUndoManager *)undoManager{
-    // have the undo manager linked to the managed object context
-    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    return [[coreData context] undoManager];
-}*/
-
-/*
-// Core Data uses this method to load the file
-- (id)initWithContentsOfFile:(NSString *)absolutePath ofType:(NSString *)typeName{
-    
-}
-*/
 @end

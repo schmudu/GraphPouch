@@ -113,7 +113,6 @@
 }
 
 - (void)onGraphSelectedDeselectOtherGraphs:(NSNotification *)note{
-    NSLog(@"deslecting all other graphs.");
     [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
 }
 @end
