@@ -20,7 +20,10 @@ extern NSString *const EDEventMouseDown;
 extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
 
 // attributes
+extern NSString *const EDWorksheetAttributeEquation;
+extern NSString *const EDWorksheetAttributeGridLines;
 extern NSString *const EDWorksheetAttributeSelected;
+extern NSString *const EDWorksheetAttributeTickMarks;
 extern NSString *const EDWorksheetAttributeLocationX;
 extern NSString *const EDWorksheetAttributeLocationY;
 

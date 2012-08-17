@@ -13,31 +13,15 @@
 
 - (id)newObject{
     id newObj = [super newObject];
-    //NSLog(@"object type: %@", [newObj class]);
-    NSLog(@"init in graph array controller.");
     
     // default values
-    NSString *value_equation = [[NSString alloc] initWithString:@"default_equation"];
-    [newObj setValue:value_equation forKey:@"equation"];
-    
-    NSNumber *value_has_tick_marks = [[NSNumber alloc] initWithBool:GRAPH_INIT_TICK_MARKS];
-    [newObj setValue:value_has_tick_marks forKey:@"hasTickMarks"];
-    
-    NSNumber *value_grid_lines = [[NSNumber alloc] initWithBool:GRAPH_INIT_HAS_GRID_LINES];
-    [newObj setValue:value_grid_lines forKey:@"hasGridLines"];
-    
-    NSNumber *value_location = [[NSNumber alloc] initWithFloat:0];
-    [newObj setValue:value_location forKey:@"locationX"];
-    [newObj setValue:value_location forKey:@"locationY"];
-    
-    // selected
-    [newObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:@"selected"];
-    NSLog(@"set value for selected:%@ obj:%@", [newObj valueForKey:@"selected"], newObj);
-    //[newObj setBool:FALSE forKey:@"selected"];
-    // send notification
-    //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    //[nc postNotificationName:EDEventGraphAdded object:newObj];
-    
+    [newObj setValue:[[NSString alloc] initWithString:@"default_equation123"] forKey:EDWorksheetAttributeEquation];
+    [newObj setValue:[[NSNumber alloc] initWithBool:GRAPH_INIT_TICK_MARKS] forKey:EDWorksheetAttributeTickMarks];
+    [newObj setValue:[[NSNumber alloc] initWithBool:GRAPH_INIT_HAS_GRID_LINES] forKey:EDWorksheetAttributeGridLines];
+    [newObj setValue:[[NSNumber alloc] initWithFloat:0] forKey:EDWorksheetAttributeLocationX];
+    [newObj setValue:[[NSNumber alloc] initWithFloat:0] forKey:EDWorksheetAttributeLocationY];
+    [newObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDWorksheetAttributeSelected];
+    //NSLog(@"set value for selected:%@ obj:%@", [newObj valueForKey:EDWorksheetAttributeSelected], newObj);
     return newObj;
 }
 

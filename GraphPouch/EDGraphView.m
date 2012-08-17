@@ -34,7 +34,7 @@
         
         // set model info
         graph = myGraph;
-        NSLog(@"creating graph view with graph: %@", myGraph);
+        //NSLog(@"creating graph view with graph: %@", myGraph);
     }
     return self;
 }

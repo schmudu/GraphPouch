@@ -20,7 +20,10 @@ NSString * const EDEventMouseDown                               = @"EDEventMouse
 NSString * const EDEventUnselectedGraphClickedWithoutModifier   = @"EDEventUnselectedGraphClickedWithoutModifier";
 
 // attributes
+NSString * const EDWorksheetAttributeEquation                   = @"equation";
+NSString * const EDWorksheetAttributeGridLines                  = @"hasGridLines";
 NSString * const EDWorksheetAttributeSelected                   = @"selected";
+NSString * const EDWorksheetAttributeTickMarks                  = @"hasTickMarks";
 NSString * const EDWorksheetAttributeLocationX                  = @"locationX";
 NSString * const EDWorksheetAttributeLocationY                  = @"locationY";
 @end
