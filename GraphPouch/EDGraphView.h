@@ -12,13 +12,11 @@
 
 @interface EDGraphView : EDWorksheetElementView{
     @private
-    NSPoint                 savedFrameLocation;
     NSPoint                 lastDragLocation;
     NSPoint                 lastCursorLocation;
     NSNotificationCenter    *_nc;
 }
-//@property (nonatomic, strong) EDGraph *graph;
-@property (nonatomic, assign) EDGraph *graph;
+@property (nonatomic, strong) EDGraph *graph;
 
 - (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph;
 @end

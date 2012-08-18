@@ -24,8 +24,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-        _context = [coreData context];
+        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
+        _context = [_coreData context];
         
         //NSLog(@"creating worksheet view:%@ with context:%@", self, _context);
         
@@ -47,6 +47,18 @@
     return TRUE;
 }
 
+- (void)drawLoadedObjects{
+    // this draws the objects loaded from the persistence store
+    NSArray *graphs = [_coreData getAllGraphs];
+    for (EDGraph *graph in graphs){
+        [self drawGraph:graph];
+        //NSLog(@"going to draw: %@", graph);
+    }
+    
+#warning need to add loops for labels and lines once we implement those
+    
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSRect bounds = [self bounds];
@@ -63,7 +75,8 @@
     [_nc addObserver:self selector:@selector(onGraphSelectedDeselectOtherGraphs:) name:EDEventUnselectedGraphClickedWithoutModifier object:graphView];
     
     // set location
-    [graphView setFrameOrigin:NSMakePoint([graph locationX], [graph locationY])];
+    //[graphView setFrameOrigin:NSMakePoint([graph locationX], [graph locationY])];
+    [graphView setFrameOrigin:NSMakePoint([[graph valueForKey:EDWorksheetAttributeLocationX] floatValue], [[graph valueForKey:EDWorksheetAttributeLocationY] floatValue])];
     [self addSubview:graphView];
     [self setNeedsDisplay:TRUE];
 }

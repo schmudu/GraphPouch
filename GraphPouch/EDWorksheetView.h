@@ -13,5 +13,9 @@
 @interface EDWorksheetView : NSView{
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;
+    EDCoreDataUtility *_coreData;
 }
+
+- (void)drawLoadedObjects;
+
 @end

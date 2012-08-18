@@ -37,7 +37,8 @@
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
         
     // initialize view to display all of the objects
-    NSLog(@"controller view: %@", [self view]);
+    [(EDWorksheetView *)[self view] drawLoadedObjects];
+    //NSLog(@"controller view: %@", [self view]);
 }
 
 - (void)deselectAllElements:(NSNotification *)note{
