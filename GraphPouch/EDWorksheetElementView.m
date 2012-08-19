@@ -16,7 +16,6 @@
 #import "EDCoreDataUtility.h"
 
 @interface EDWorksheetElementView()
-- (void)mouseDownBehavior:(NSEvent *)theEvent;
 - (void)mouseUpBehavior:(NSEvent *)theEvent;
 - (void)mouseDraggedBehavior:(NSEvent *)theEvent;
 @end
@@ -83,7 +82,6 @@
             [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
         }
         else {
-#warning Need to deselect all the other graphs
             // post notification
             [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
             
@@ -116,7 +114,6 @@
             [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
         }
         else {
-#warning Need to deselect all the other graphs
             // post notification
             [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
             
@@ -208,7 +205,6 @@
 #pragma mark mouse up
 - (void)mouseUp:(NSEvent *)theEvent{
     [self mouseUpBehavior:theEvent];
-    NSLog(@"mouse up being called.");
     // notify listeners
     NSMutableDictionary *notificationDictionary = [[NSMutableDictionary alloc] init];
     [notificationDictionary setValue:theEvent forKey:EDEventKey];
@@ -228,7 +224,6 @@
     if(fabsf(diffX>0.01) && fabsf(diffY>0.01)){
         NSNumber *valueX = [[NSNumber alloc] initWithFloat:[self frame].origin.x];
         NSNumber *valueY = [[NSNumber alloc] initWithFloat:[self frame].origin.y];
-        NSLog(@"setting position in data obj.");
         [[self dataObj] setValue:valueX forKey:EDElementAttributeLocationX];
         [[self dataObj] setValue:valueY forKey:EDElementAttributeLocationY];
     }
@@ -236,6 +231,7 @@
 
 # pragma mark listeners - graphs
 - (void)onContextChanged:(NSNotification *)note{
+    // this enables undo method to work
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
 #warning move to category for checking for graphs
     // need to move this to a category

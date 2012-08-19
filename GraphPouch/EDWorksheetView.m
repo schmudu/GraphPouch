@@ -30,8 +30,6 @@
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         _context = [_coreData context];
         
-        //NSLog(@"creating worksheet view:%@ with context:%@", self, _context);
-        
         // listen
         _nc = [NSNotificationCenter defaultCenter];
         [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -58,7 +56,7 @@
         //NSLog(@"going to draw: %@", graph);
     }
     
-#warning need to add loops for labels and lines once we implement those
+#warning add other elements here
     
 }
 
@@ -97,27 +95,14 @@
 
 #pragma mark Listeners
 - (void)onContextChanged:(NSNotification *)note{
-    //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    //NSManagedObjectContext *context = [coreData context];
-    //NSLog(@"context that delivered message: %@ worksheet view:%@", _context, self);
-    //Graph *myGraph = [note object];
-    //NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
-    //NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
-    //NSLog(@"new graph added: %@ count:%ld", [[[note userInfo] objectForKey:NSInsertedObjectsKey] class], [insertedArray count]);
-    //NSLog(@"new graph updated: %@ count:%ld", [[[note userInfo] objectForKey:NSUpdatedObjectsKey] class], [updatedArray count]);
-    //NSLog(@"new graph deleted: %@ count:%ld", [[[note userInfo] objectForKey:NSDeletedObjectsKey] class], [deletedArray count]);
-    // draw graphs that were added
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
     for (EDGraph *myGraph in insertedArray){
-        //NSLog(@"going to insert graph: %@", myGraph);
         [self drawGraph:myGraph];
     }
     
     // remove graphs that were deleted
     NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
     for (EDGraph *myGraph in deletedArray){
-        //[self drawGraph:myGraph];
-        //NSLog(@"going to remove graph: %@", myGraph);
         [self removeGraphView:myGraph];
     }
 }
@@ -141,11 +126,11 @@
 }
 
 - (void)onGraphMouseDown:(NSNotification *)note{
+    // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedObjects];
     for (EDWorksheetElementView *myElement in [self subviews]){
         if([selectedElements containsObject:[myElement dataObj]]){
-            //NSLog(@"we have a selected element: event: %@", [[note userInfo] valueForKey:EDEventKey]);
             // notify element that of mouse down
             [myElement mouseDownBySelection:[[note userInfo] valueForKey:EDEventKey]];
         }
@@ -153,6 +138,7 @@
 }
 
 - (void)onGraphMouseDragged:(NSNotification *)note{
+    // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedObjects];
     for (EDWorksheetElementView *myElement in [self subviews]){
@@ -164,11 +150,11 @@
 }
 
 - (void)onGraphMouseUp:(NSNotification *)note{
+    // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedObjects];
     for (EDWorksheetElementView *myElement in [self subviews]){
         if([selectedElements containsObject:[myElement dataObj]]){
-            NSLog(@"calling mouse up on element.");
             // notify element that of mouse dragged
             [myElement mouseUpBySelection:[[note userInfo] valueForKey:EDEventKey]];
         }

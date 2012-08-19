@@ -12,8 +12,6 @@
 
 @interface EDGraphView : EDWorksheetElementView{
 }
-//@property (nonatomic, strong) EDGraph *graph;
-//@property (nonatomic, strong) EDElement *graph;
 
 - (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph;
 

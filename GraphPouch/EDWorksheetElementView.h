@@ -15,7 +15,8 @@
     NSPoint                 lastDragLocation;
     NSPoint                 lastCursorLocation;
 }
-@property (nonatomic, strong) EDElement *dataObj;
+//@property (nonatomic, strong) EDElement *dataObj;
+@property (nonatomic, strong) id dataObj;
 @property NSString *viewID;
 
 + (NSString *)generateID;
