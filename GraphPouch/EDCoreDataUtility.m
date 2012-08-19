@@ -37,10 +37,9 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *graphObjects = [self getAllGraphs];
     
+#warning add other elements here
     [allObjects addObjectsFromArray:graphObjects];
     
-    // add the other objects once we create them
-#warning add other elements here
     return allObjects;
 }
 
@@ -85,9 +84,18 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }
     else{
         for (EDGraph *elem in fetchedObjects){
-            NSLog(@"setting to unselected: %@", elem);
             [elem setSelected:FALSE];
         }
+    }
+}
+
+#pragma mark delete
+- (void)deleteSelectedElements{
+    NSMutableArray *selectedElements = [self getAllSelectedObjects];
+    for (EDElement *element in selectedElements){
+        NSLog(@"deleting object in context.");
+        // delete in context
+        [_context deleteObject:element];
     }
 }
 @end

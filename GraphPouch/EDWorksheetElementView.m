@@ -128,52 +128,6 @@
     // set variable for draggin
     lastDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
 }
-/*
-- (void)mouseDown:(NSEvent *)theEvent{
-    [self mouseDownBehavior:theEvent];
-    
-    // notify listeners
-    NSMutableDictionary *notificationDictionary = [[NSMutableDictionary alloc] init];
-    [notificationDictionary setValue:theEvent forKey:EDEventKey];
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDown object:self userInfo:notificationDictionary];
-}
-
-- (void)mouseDownBySelection:(NSEvent *)theEvent{
-    [self mouseDownBehavior:theEvent];
-}
-
-- (void)mouseDownBehavior:(NSEvent *)theEvent{
-    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    [coreData getAllObjects];
-    
-    NSUInteger flags = [theEvent modifierFlags];
-    
-    if ([[self dataObj] isSelectedElement]){
-        // graph is already selected
-        if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
-            [[self dataObj] setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDElementAttributeSelected];
-        }
-    } else {
-        // graph is not selected
-        if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
-            [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
-        }
-        else {
-#warning Need to deselect all the other graphs
-            // post notification
-            [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
-            
-            //need to deselect all the other graphs
-            [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
-        }
-    }
-    
-    // set variable for dragging
-    lastCursorLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
-    
-    // set variable for draggin
-    lastDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
-}*/
 
 #pragma mark mouse dragged
 - (void)mouseDragged:(NSEvent *)theEvent{
@@ -220,7 +174,6 @@
     float diffX = fabsf(lastCursorLocation.x - lastDragLocation.x);
     
     //if no diff in location than do not prepare an undo
-    //[[self graph] check];
     if(fabsf(diffX>0.01) && fabsf(diffY>0.01)){
         NSNumber *valueX = [[NSNumber alloc] initWithFloat:[self frame].origin.x];
         NSNumber *valueY = [[NSNumber alloc] initWithFloat:[self frame].origin.y];
@@ -233,20 +186,18 @@
 - (void)onContextChanged:(NSNotification *)note{
     // this enables undo method to work
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
-#warning move to category for checking for graphs
-    // need to move this to a category
+    
     BOOL hasChanged = FALSE;
     int i = 0;
     NSObject *element;
-    //for(id element in updatedArray){
+    
+    // search through updated array and see if this element has changed
     while ((i<[updatedArray count]) && (!hasChanged)){    
-        if([[[[updatedArray objectAtIndex:i] entity] name] isEqualToString:EDEntityNameGraph]){
             element = [updatedArray objectAtIndex:i];
             if (element == [self dataObj]) {
                 hasChanged = TRUE;
                 [self updateDisplayBasedOnContext];
             }
-        }
         i++;
     }
 }

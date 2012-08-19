@@ -58,4 +58,5 @@
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
     return [[coreData context] undoManager];
 }
+
 @end

@@ -20,6 +20,7 @@ NSString * const EDEventMouseDown                               = @"EDEventMouse
 NSString * const EDEventMouseDragged                            = @"EDEventMouseDragged";
 NSString * const EDEventMouseUp                                 = @"EDEventMouseUp";
 NSString * const EDEventUnselectedGraphClickedWithoutModifier   = @"EDEventUnselectedGraphClickedWithoutModifier";
+NSString * const EDEventDeleteKeyPressedWithoutModifiers        = @"EDEventDeleteKeyPressedWithoutModifiers";
 NSString * const EDEventKey                                     = @"EDEvent";
 
 // element attributes
@@ -31,4 +32,8 @@ NSString * const EDElementAttributeLocationY                    = @"locationY";
 NSString * const EDGraphAttributeTickMarks                      = @"hasTickMarks";
 NSString * const EDGraphAttributeEquation                       = @"equation";
 NSString * const EDGraphAttributeGrideLines                     = @"hasGridLines";
+
+// keyboard
+int const EDKeycodeDelete                                       = 51;
+int const EDKeyModifierNone                                     = 256;
 @end

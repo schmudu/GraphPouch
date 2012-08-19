@@ -75,6 +75,7 @@
     EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, 40, 40) graphModel:graph];
     
     // listen to graph
+    // NOTE: any listeners you add here, remove them in method 'removeGraphView'
     [_nc addObserver:self selector:@selector(onGraphSelectedDeselectOtherGraphs:) name:EDEventUnselectedGraphClickedWithoutModifier object:graphView];
     [_nc addObserver:self selector:@selector(onGraphMouseDown:) name:EDEventMouseDown object:graphView];
     [_nc addObserver:self selector:@selector(onGraphMouseDragged:) name:EDEventMouseDragged object:graphView];
@@ -85,6 +86,20 @@
     [graphView setFrameOrigin:NSMakePoint([[graph valueForKey:EDElementAttributeLocationX] floatValue], [[graph valueForKey:EDElementAttributeLocationY] floatValue])];
     [self addSubview:graphView];
     [self setNeedsDisplay:TRUE];
+}
+
+#pragma mark keyboard
+- (BOOL)acceptsFirstResponder{
+    return TRUE;
+}
+
+- (void)keyDown:(NSEvent *)theEvent{
+    NSLog(@"keydown.");
+    NSUInteger flags = [theEvent modifierFlags];
+    if(flags == EDKeyModifierNone && [theEvent keyCode] == EDKeycodeDelete){
+        NSLog(@"need to delete something");
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventDeleteKeyPressedWithoutModifiers object:self];
+    }
 }
 
 #pragma mark mouse behavior
@@ -108,16 +123,23 @@
 }
 
 - (void)removeGraphView:(EDGraph *)graph{
-    for (EDGraphView *graphView in [self subviews]){
-        if ([graphView dataObj] == graph){
-            [graphView removeFromSuperview];
+    BOOL found = FALSE;
+    int i = 0;
+    EDWorksheetElementView *currentElement;
+    //for (EDGraphView *graphView in [self subviews]){
+    while (!found && i<[[self subviews] count]){
+        currentElement = (EDWorksheetElementView *)[[self subviews] objectAtIndex:i];
+        if ([currentElement dataObj] == graph){
+            found = TRUE;
+            [currentElement removeFromSuperview];
         
             // remove listener
-            [_nc removeObserver:self name:EDEventUnselectedGraphClickedWithoutModifier object:graphView];
-            [_nc removeObserver:self name:EDEventMouseDown object:graphView];
-            [_nc removeObserver:self name:EDEventMouseDragged object:graphView];
-            [_nc removeObserver:self name:EDEventMouseUp object:graphView];
+            [_nc removeObserver:self name:EDEventUnselectedGraphClickedWithoutModifier object:currentElement];
+            [_nc removeObserver:self name:EDEventMouseDown object:currentElement];
+            [_nc removeObserver:self name:EDEventMouseDragged object:currentElement];
+            [_nc removeObserver:self name:EDEventMouseUp object:currentElement];
         }
+        i++;
     }
 }
 

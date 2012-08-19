@@ -32,6 +32,7 @@
 		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
 		CDE6D61C15DC476B00E5695F /* NSManagedObject+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */; };
 		CDE6D63015DE774100E5695F /* EDElement.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D62F15DE774000E5695F /* EDElement.m */; };
+		CDE6D65615E111C700E5695F /* EDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D65515E111C700E5695F /* EDWindow.m */; };
 		CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +83,8 @@
 		CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Attributes.m"; sourceTree = "<group>"; };
 		CDE6D62E15DE774000E5695F /* EDElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDElement.h; sourceTree = "<group>"; };
 		CDE6D62F15DE774000E5695F /* EDElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDElement.m; sourceTree = "<group>"; };
+		CDE6D65415E111C700E5695F /* EDWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDWindow.h; sourceTree = "<group>"; };
+		CDE6D65515E111C700E5695F /* EDWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDWindow.m; sourceTree = "<group>"; };
 		CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+EasyFetching.h"; sourceTree = "<group>"; };
 		CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+EasyFetching.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,6 +104,7 @@
 		CD3F0AF515C4774900AB7567 /* View+Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CDE6D65215E111A800E5695F /* Window */,
 				CD3F0AF915C4776900AB7567 /* Menu */,
 				CD3F0AF815C4776100AB7567 /* Worksheet */,
 			);
@@ -288,6 +292,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		CDE6D65215E111A800E5695F /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				CDE6D65415E111C700E5695F /* EDWindow.h */,
+				CDE6D65515E111C700E5695F /* EDWindow.m */,
+			);
+			name = Window;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -375,6 +388,7 @@
 				CD27665515D996E900162240 /* EDGraph.m in Sources */,
 				CDE6D61C15DC476B00E5695F /* NSManagedObject+Attributes.m in Sources */,
 				CDE6D63015DE774100E5695F /* EDElement.m in Sources */,
+				CDE6D65615E111C700E5695F /* EDWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

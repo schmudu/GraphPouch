@@ -20,7 +20,9 @@ extern NSString *const EDEventMouseDown;
 extern NSString *const EDEventMouseDragged;
 extern NSString *const EDEventMouseUp;
 extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
+extern NSString *const EDEventDeleteKeyPressedWithoutModifiers;
 extern NSString *const EDEventKey;
+
 
 // attributes
 extern NSString *const EDGraphAttributeEquation;
@@ -30,4 +32,7 @@ extern NSString *const EDGraphAttributeTickMarks;
 extern NSString *const EDElementAttributeLocationX;
 extern NSString *const EDElementAttributeLocationY;
 
+// keyboard mapping
+extern int const        EDKeycodeDelete;
+extern int const        EDKeyModifierNone;
 @end

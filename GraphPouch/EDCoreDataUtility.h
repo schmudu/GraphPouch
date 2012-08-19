@@ -23,4 +23,5 @@
 - (NSMutableArray *)getAllSelectedObjects;
 - (NSArray *)getAllGraphs;
 - (void)clearSelectedElements;
+- (void)deleteSelectedElements;
 @end

@@ -13,6 +13,7 @@
 
 @interface EDWorksheetViewController ()
 - (void)deselectAllElements:(NSNotification *)note;
+- (void)deleteSelectedElements:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetViewController
@@ -35,7 +36,8 @@
     // listeners
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventWorksheetClicked object:[self view]];
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
-        
+    [_nc addObserver:self selector:@selector(deleteSelectedElements:) name:EDEventDeleteKeyPressedWithoutModifiers object:[self view]];
+    
     // initialize view to display all of the objects
     [(EDWorksheetView *)[self view] drawLoadedObjects];
     //NSLog(@"controller view: %@", [self view]);
@@ -49,6 +51,11 @@
 - (void)dealloc{
     [_nc removeObserver:self name:EDEventWorksheetClicked object:[self view]];
     [_nc removeObserver:self name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
+    [_nc removeObserver:self name:EDEventDeleteKeyPressedWithoutModifiers object:[self view]];
+}
+
+- (void)deleteSelectedElements:(NSNotification *)note{
+    [_coreData deleteSelectedElements];
 }
 
 @end
