@@ -93,8 +93,6 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 - (void)deleteSelectedElements{
     NSMutableArray *selectedElements = [self getAllSelectedObjects];
     for (EDElement *element in selectedElements){
-        NSLog(@"deleting object in context.");
-        // delete in context
         [_context deleteObject:element];
     }
 }

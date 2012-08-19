@@ -16,9 +16,9 @@
 @interface EDWorksheetView()
 - (void)drawGraph:(EDGraph *)graph;
 - (void)onContextChanged:(NSNotification *)note;
-- (void)onGraphMouseDown:(NSNotification *)note;
-- (void)onGraphMouseDragged:(NSNotification *)note;
-- (void)onGraphMouseUp:(NSNotification *)note;
+- (void)onElementMouseDown:(NSNotification *)note;
+- (void)onElementMouseDragged:(NSNotification *)note;
+- (void)onElementMouseUp:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetView
@@ -51,9 +51,8 @@
 - (void)drawLoadedObjects{
     // this draws the objects loaded from the persistence store
     NSArray *graphs = [_coreData getAllGraphs];
-    for (EDGraph *graph in graphs){
-        [self drawGraph:graph];
-        //NSLog(@"going to draw: %@", graph);
+    for (EDGraph *myGraph in graphs){
+        [self drawGraph:myGraph];
     }
     
 #warning add other elements here
@@ -72,17 +71,16 @@
 }
 
 - (void)drawGraph:(EDGraph *)graph{
-    EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, 40, 40) graphModel:graph];
+    EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, 40, 40) graphModel:(EDGraph *)graph];
     
     // listen to graph
-    // NOTE: any listeners you add here, remove them in method 'removeGraphView'
+    // NOTE: any listeners you add here, remove them in method 'removeElementView'
     [_nc addObserver:self selector:@selector(onGraphSelectedDeselectOtherGraphs:) name:EDEventUnselectedGraphClickedWithoutModifier object:graphView];
-    [_nc addObserver:self selector:@selector(onGraphMouseDown:) name:EDEventMouseDown object:graphView];
-    [_nc addObserver:self selector:@selector(onGraphMouseDragged:) name:EDEventMouseDragged object:graphView];
-    [_nc addObserver:self selector:@selector(onGraphMouseUp:) name:EDEventMouseUp object:graphView];
+    [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:graphView];
+    [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:graphView];
+    [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:graphView];
     
     // set location
-    //[graphView setFrameOrigin:NSMakePoint([graph locationX], [graph locationY])];
     [graphView setFrameOrigin:NSMakePoint([[graph valueForKey:EDElementAttributeLocationX] floatValue], [[graph valueForKey:EDElementAttributeLocationY] floatValue])];
     [self addSubview:graphView];
     [self setNeedsDisplay:TRUE];
@@ -94,10 +92,8 @@
 }
 
 - (void)keyDown:(NSEvent *)theEvent{
-    NSLog(@"keydown.");
     NSUInteger flags = [theEvent modifierFlags];
     if(flags == EDKeyModifierNone && [theEvent keyCode] == EDKeycodeDelete){
-        NSLog(@"need to delete something");
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventDeleteKeyPressedWithoutModifiers object:self];
     }
 }
@@ -111,25 +107,30 @@
 #pragma mark Listeners
 - (void)onContextChanged:(NSNotification *)note{
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
-    for (EDGraph *myGraph in insertedArray){
-        [self drawGraph:myGraph];
+    
+    for (EDElement *myElement in insertedArray){
+        if ([[myElement className] isEqualToString:EDEntityNameGraph]) {
+            [self drawGraph:(EDGraph *)myElement];
+        }
+#warning add other elements here, need drawLabel, drawLine
+             
     }
     
     // remove graphs that were deleted
     NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
-    for (EDGraph *myGraph in deletedArray){
-        [self removeGraphView:myGraph];
+    for (EDElement *myElement in deletedArray){
+        [self removeElementView:myElement];
     }
 }
 
-- (void)removeGraphView:(EDGraph *)graph{
+- (void)removeElementView:(EDElement *)element{
     BOOL found = FALSE;
     int i = 0;
     EDWorksheetElementView *currentElement;
     //for (EDGraphView *graphView in [self subviews]){
     while (!found && i<[[self subviews] count]){
         currentElement = (EDWorksheetElementView *)[[self subviews] objectAtIndex:i];
-        if ([currentElement dataObj] == graph){
+        if ([currentElement dataObj] == element){
             found = TRUE;
             [currentElement removeFromSuperview];
         
@@ -147,7 +148,7 @@
     [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
 }
 
-- (void)onGraphMouseDown:(NSNotification *)note{
+- (void)onElementMouseDown:(NSNotification *)note{
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedObjects];
@@ -159,7 +160,7 @@
     }
 }
 
-- (void)onGraphMouseDragged:(NSNotification *)note{
+- (void)onElementMouseDragged:(NSNotification *)note{
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedObjects];
@@ -171,7 +172,7 @@
     }
 }
 
-- (void)onGraphMouseUp:(NSNotification *)note{
+- (void)onElementMouseUp:(NSNotification *)note{
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedObjects];
