@@ -19,6 +19,9 @@
 - (void)onElementMouseDown:(NSNotification *)note;
 - (void)onElementMouseDragged:(NSNotification *)note;
 - (void)onElementMouseUp:(NSNotification *)note;
+
+- (void)saveGuides;
+- (void)removeGuides;
 @end
 
 @implementation EDWorksheetView
@@ -43,7 +46,7 @@
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 
-#pragma mark Drawing
+#pragma mark drawing
 - (BOOL)isFlipped{
     return TRUE;
 }
@@ -98,13 +101,7 @@
     }
 }
 
-#pragma mark mouse behavior
-- (void)mouseDown:(NSEvent *)theEvent{
-    //post notification
-    [_nc postNotificationName:EDEventWorksheetClicked object:self];
-}
-
-#pragma mark Listeners
+#pragma mark listeners
 - (void)onContextChanged:(NSNotification *)note{
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
     
@@ -148,6 +145,12 @@
     [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
 }
 
+#pragma mark mouse behavior
+- (void)mouseDown:(NSEvent *)theEvent{
+    //post notification
+    [_nc postNotificationName:EDEventWorksheetClicked object:self];
+}
+
 - (void)onElementMouseDown:(NSNotification *)note{
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
@@ -157,6 +160,11 @@
             // notify element that of mouse down
             [myElement mouseDownBySelection:[[note userInfo] valueForKey:EDEventKey]];
         }
+    }
+    
+    // store all guides 
+    if(EDSnapToGuide){
+        [self saveGuides];
     }
 }
 
@@ -182,5 +190,37 @@
             [myElement mouseUpBySelection:[[note userInfo] valueForKey:EDEventKey]];
         }
     }
+    
+    // remove all guides 
+    if(EDSnapToGuide){
+        [self removeGuides];
+    }
+}
+
+#pragma mark guides
+- (NSMutableDictionary *)guides{
+    return _guides;
+}
+
+- (void)saveGuides{
+    _guides = [[NSMutableDictionary alloc] init];
+    
+    // add to guides any points that we can snap to
+    NSMutableArray *guidesVertical = [[NSMutableArray alloc] init];
+    NSMutableArray *guidesHorizontal = [[NSMutableArray alloc] init];
+    
+    // add sample point of 50 to vertical guide
+    NSNumber *samplePoint = [[NSNumber alloc] initWithFloat:50];
+    NSNumber *anotherSamplePoint = [[NSNumber alloc] initWithFloat:250];
+    [guidesVertical addObject:samplePoint];
+    [guidesVertical addObject:anotherSamplePoint];
+    
+    // set guides
+    [_guides setValue:guidesVertical forKey:EDKeyGuideVertical];
+    [_guides setValue:guidesHorizontal forKey:EDKeyGuideHorizontal];
+}
+
+- (void)removeGuides{
+    _guides = nil;
 }
 @end

@@ -23,6 +23,11 @@ extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
 extern NSString *const EDEventDeleteKeyPressedWithoutModifiers;
 extern NSString *const EDEventKey;
 
+// guides
+extern NSString *const EDKeyGuideVertical;
+extern NSString *const EDKeyGuideHorizontal;
+extern BOOL const EDSnapToGuide;   
+
 
 // attributes
 extern NSString *const EDGraphAttributeEquation;

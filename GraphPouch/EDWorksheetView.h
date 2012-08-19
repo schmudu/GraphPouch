@@ -14,8 +14,10 @@
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;
     EDCoreDataUtility *_coreData;
+    NSMutableDictionary *_guides;
 }
 
 - (void)drawLoadedObjects;
+- (NSMutableDictionary *)guides;
 
 @end

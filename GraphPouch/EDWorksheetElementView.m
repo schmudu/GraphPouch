@@ -152,6 +152,16 @@
     thisOrigin.x += (-lastDragLocation.x + newDragLocation.x);
     thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
     
+    if (EDSnapToGuide) {
+        float closestVerticalPoint;
+        NSMutableDictionary *guides = [(EDWorksheetView *)[self superview] guides];
+        // get vertical guide as long as there are guides to go by
+        if ([[guides objectForKey:EDKeyGuideVertical] count] > 0) {
+            closestVerticalPoint = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
+        }
+        NSLog(@"received guides: origin.y: %f closest point:%f", thisOrigin.y, closestVerticalPoint);
+    }
+    
     [self setFrameOrigin:thisOrigin];
     lastDragLocation = newDragLocation;
 }
@@ -209,5 +219,22 @@
 
 - (void)onWorksheetSelectedElementRemoved:(NSNotification *)note{
     [self setNeedsDisplay:TRUE];
+}
+
+# pragma mark snap
+- (float)findClosestPoint:(float)currentPoint guides:(NSMutableArray *)guides{
+    // go through guides and find closest point
+    float smallestDiff = 999999;
+    float closestPoint;
+    
+    // iterate through all the
+    for (NSNumber *point in guides){
+        if (fabsf(currentPoint - [point floatValue]) < smallestDiff) {
+            // found smallest point so far
+            smallestDiff = fabsf(currentPoint - [point floatValue]);
+            closestPoint = [point floatValue];
+        }
+    }
+    return closestPoint;
 }
 @end

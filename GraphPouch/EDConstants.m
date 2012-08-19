@@ -23,6 +23,11 @@ NSString * const EDEventUnselectedGraphClickedWithoutModifier   = @"EDEventUnsel
 NSString * const EDEventDeleteKeyPressedWithoutModifiers        = @"EDEventDeleteKeyPressedWithoutModifiers";
 NSString * const EDEventKey                                     = @"EDEvent";
 
+// guides
+NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
+NSString * const EDKeyGuideHorizontal                           = @"EDKeyGuideHorizontal";
+BOOL const EDSnapToGuide                                        = TRUE;
+
 // element attributes
 NSString * const EDElementAttributeSelected                     = @"selected";
 NSString * const EDElementAttributeLocationX                    = @"locationX";
