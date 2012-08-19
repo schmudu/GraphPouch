@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 //#import "EDDocument.h"
-//#import "EDCoreDataUtility.h"
+#import "EDCoreDataUtility.h"
 
 @interface EDWorksheetView : NSView{
     NSNotificationCenter *_nc;

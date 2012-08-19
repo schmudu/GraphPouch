@@ -11,12 +11,10 @@
 @class EDGraph;
 
 @interface EDGraphView : EDWorksheetElementView{
-    @private
-    NSPoint                 lastDragLocation;
-    NSPoint                 lastCursorLocation;
-    NSNotificationCenter    *_nc;
 }
-@property (nonatomic, strong) EDGraph *graph;
+//@property (nonatomic, strong) EDGraph *graph;
+//@property (nonatomic, strong) EDElement *graph;
 
 - (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph;
+
 @end

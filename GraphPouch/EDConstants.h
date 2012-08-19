@@ -14,17 +14,20 @@ FOUNDATION_EXPORT int const GRAPH_INIT_HAS_GRID_LINES;
 // entity name
 extern NSString *const EDEntityNameGraph;
 
-// worksheet
+// worksheet events
 extern NSString *const EDEventWorksheetClicked;
 extern NSString *const EDEventMouseDown;
+extern NSString *const EDEventMouseDragged;
+extern NSString *const EDEventMouseUp;
 extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
+extern NSString *const EDEventKey;
 
 // attributes
-extern NSString *const EDWorksheetAttributeEquation;
-extern NSString *const EDWorksheetAttributeGridLines;
-extern NSString *const EDWorksheetAttributeSelected;
-extern NSString *const EDWorksheetAttributeTickMarks;
-extern NSString *const EDWorksheetAttributeLocationX;
-extern NSString *const EDWorksheetAttributeLocationY;
+extern NSString *const EDGraphAttributeEquation;
+extern NSString *const EDGraphAttributeGrideLines;
+extern NSString *const EDElementAttributeSelected;
+extern NSString *const EDGraphAttributeTickMarks;
+extern NSString *const EDElementAttributeLocationX;
+extern NSString *const EDElementAttributeLocationY;
 
 @end

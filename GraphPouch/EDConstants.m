@@ -17,13 +17,18 @@ NSString * const EDEntityNameGraph                              = @"EDGraph";
 // worksheet events
 NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";
 NSString * const EDEventMouseDown                               = @"EDEventMouseDown";
+NSString * const EDEventMouseDragged                            = @"EDEventMouseDragged";
+NSString * const EDEventMouseUp                                 = @"EDEventMouseUp";
 NSString * const EDEventUnselectedGraphClickedWithoutModifier   = @"EDEventUnselectedGraphClickedWithoutModifier";
+NSString * const EDEventKey                                     = @"EDEvent";
 
-// attributes
-NSString * const EDWorksheetAttributeEquation                   = @"equation";
-NSString * const EDWorksheetAttributeGridLines                  = @"hasGridLines";
-NSString * const EDWorksheetAttributeSelected                   = @"selected";
-NSString * const EDWorksheetAttributeTickMarks                  = @"hasTickMarks";
-NSString * const EDWorksheetAttributeLocationX                  = @"locationX";
-NSString * const EDWorksheetAttributeLocationY                  = @"locationY";
+// element attributes
+NSString * const EDElementAttributeSelected                     = @"selected";
+NSString * const EDElementAttributeLocationX                    = @"locationX";
+NSString * const EDElementAttributeLocationY                    = @"locationY";
+
+// graph attributes
+NSString * const EDGraphAttributeTickMarks                      = @"hasTickMarks";
+NSString * const EDGraphAttributeEquation                       = @"equation";
+NSString * const EDGraphAttributeGrideLines                     = @"hasGridLines";
 @end

@@ -7,14 +7,20 @@
 //
 
 #import <Cocoa/Cocoa.h>
+@class EDElement;
 
 @interface EDWorksheetElementView : NSView{
     @protected
-    NSNotificationCenter    *nc;
+    NSNotificationCenter    *_nc;
+    NSPoint                 lastDragLocation;
+    NSPoint                 lastCursorLocation;
 }
+@property (nonatomic, strong) EDElement *dataObj;
 @property NSString *viewID;
 
 + (NSString *)generateID;
-
+- (void)mouseDraggedBySelection:(NSEvent *)theEvent;
+- (void)mouseUpBySelection:(NSEvent *)theEvent;
+- (void)mouseDownBySelection:(NSEvent *)theEvent;
 
 @end

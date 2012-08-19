@@ -15,12 +15,12 @@
     id newObj = [super newObject];
     
     // default values
-    [newObj setValue:[[NSString alloc] initWithString:@"default_equation123"] forKey:EDWorksheetAttributeEquation];
-    [newObj setValue:[[NSNumber alloc] initWithBool:GRAPH_INIT_TICK_MARKS] forKey:EDWorksheetAttributeTickMarks];
-    [newObj setValue:[[NSNumber alloc] initWithBool:GRAPH_INIT_HAS_GRID_LINES] forKey:EDWorksheetAttributeGridLines];
-    [newObj setValue:[[NSNumber alloc] initWithFloat:0] forKey:EDWorksheetAttributeLocationX];
-    [newObj setValue:[[NSNumber alloc] initWithFloat:0] forKey:EDWorksheetAttributeLocationY];
-    [newObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDWorksheetAttributeSelected];
+    [newObj setValue:[[NSString alloc] initWithString:@"default_equation123"] forKey:EDGraphAttributeEquation];
+    [newObj setValue:[[NSNumber alloc] initWithBool:GRAPH_INIT_TICK_MARKS] forKey:EDGraphAttributeTickMarks];
+    [newObj setValue:[[NSNumber alloc] initWithBool:GRAPH_INIT_HAS_GRID_LINES] forKey:EDGraphAttributeGrideLines];
+    [newObj setValue:[[NSNumber alloc] initWithFloat:0] forKey:EDElementAttributeLocationX];
+    [newObj setValue:[[NSNumber alloc] initWithFloat:0] forKey:EDElementAttributeLocationY];
+    [newObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDElementAttributeSelected];
     return newObj;
 }
 

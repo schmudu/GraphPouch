@@ -40,7 +40,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     [allObjects addObjectsFromArray:graphObjects];
     
     // add the other objects once we create them
-#warning need to add other objects to results array
+#warning add other elements here
     return allObjects;
 }
 
@@ -65,6 +65,17 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }   
      */
     return fetchResults;
+}
+
+- (NSMutableArray *)getAllSelectedObjects{
+    // gets all selected objects
+    NSMutableArray *allObjects = [[NSMutableArray alloc] init];
+    NSArray *fetchedGraphs = [EDGraph findAllSelectedObjects];
+    
+#warning add other elements here
+    [allObjects addObjectsFromArray:fetchedGraphs];
+    
+    return allObjects;
 }
 
 - (void)clearSelectedElements{
