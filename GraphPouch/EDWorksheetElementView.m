@@ -208,7 +208,7 @@
 #pragma mark mouse up
 - (void)mouseUp:(NSEvent *)theEvent{
     [self mouseUpBehavior:theEvent];
-    
+    NSLog(@"mouse up being called.");
     // notify listeners
     NSMutableDictionary *notificationDictionary = [[NSMutableDictionary alloc] init];
     [notificationDictionary setValue:theEvent forKey:EDEventKey];
@@ -228,6 +228,7 @@
     if(fabsf(diffX>0.01) && fabsf(diffY>0.01)){
         NSNumber *valueX = [[NSNumber alloc] initWithFloat:[self frame].origin.x];
         NSNumber *valueY = [[NSNumber alloc] initWithFloat:[self frame].origin.y];
+        NSLog(@"setting position in data obj.");
         [[self dataObj] setValue:valueX forKey:EDElementAttributeLocationX];
         [[self dataObj] setValue:valueY forKey:EDElementAttributeLocationY];
     }

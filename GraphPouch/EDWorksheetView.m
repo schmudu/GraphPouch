@@ -80,7 +80,7 @@
     [_nc addObserver:self selector:@selector(onGraphSelectedDeselectOtherGraphs:) name:EDEventUnselectedGraphClickedWithoutModifier object:graphView];
     [_nc addObserver:self selector:@selector(onGraphMouseDown:) name:EDEventMouseDown object:graphView];
     [_nc addObserver:self selector:@selector(onGraphMouseDragged:) name:EDEventMouseDragged object:graphView];
-    [_nc addObserver:self selector:@selector(onGraphMouseUp:) name:EDEventMouseDragged object:graphView];
+    [_nc addObserver:self selector:@selector(onGraphMouseUp:) name:EDEventMouseUp object:graphView];
     
     // set location
     //[graphView setFrameOrigin:NSMakePoint([graph locationX], [graph locationY])];
@@ -168,6 +168,7 @@
     NSArray *selectedElements = [_coreData getAllSelectedObjects];
     for (EDWorksheetElementView *myElement in [self subviews]){
         if([selectedElements containsObject:[myElement dataObj]]){
+            NSLog(@"calling mouse up on element.");
             // notify element that of mouse dragged
             [myElement mouseUpBySelection:[[note userInfo] valueForKey:EDEventKey]];
         }
