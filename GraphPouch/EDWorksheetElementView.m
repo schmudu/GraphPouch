@@ -18,6 +18,7 @@
 @interface EDWorksheetElementView()
 - (void)mouseUpBehavior:(NSEvent *)theEvent;
 - (void)mouseDraggedBehavior:(NSEvent *)theEvent;
+- (void)notifyMouseDownListeners:(NSEvent *)theEvent;
 @end
 
 @implementation EDWorksheetElementView
@@ -49,6 +50,10 @@
     // Drawing code here.
 }
 
+- (BOOL)isFlipped{
+    return TRUE;
+}
+
 
 - (void)updateDisplayBasedOnContext{
     // move to position
@@ -60,10 +65,16 @@
 #pragma mark mouse events
 #pragma mark mouse down
 - (void)mouseDown:(NSEvent *)theEvent{
+    // CAREFUL: any code you change here needs to change in the "mouseDownBySelection" method
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
     [coreData getAllObjects];
     
     NSUInteger flags = [theEvent modifierFlags];
+ 
+    //save mouse location
+    _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
+    _didSnap = FALSE;
+    //NSLog(@"saved mous location:x:%f y:%f", _savedMouseSnapLocation.x, _savedMouseSnapLocation.y);
     
     if ([[self dataObj] isSelectedElement]){
         // graph is already selected
@@ -71,10 +82,7 @@
             [[self dataObj] setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDElementAttributeSelected];
         }
         else{
-            // notify listeners of mouse down
-            NSMutableDictionary *notificationDictionary = [[NSMutableDictionary alloc] init];
-            [notificationDictionary setValue:theEvent forKey:EDEventKey];
-            [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDown object:self userInfo:notificationDictionary];
+            [self notifyMouseDownListeners:theEvent];
         }
     } else {
         // graph is not selected
@@ -87,6 +95,8 @@
             
             //need to deselect all the other graphs
             [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
+            
+            [self notifyMouseDownListeners:theEvent];
         }
     }
     
@@ -129,6 +139,13 @@
     lastDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
 }
 
+- (void)notifyMouseDownListeners:(NSEvent *)theEvent{
+    // notify listeners of mouse down
+    NSMutableDictionary *notificationDictionary = [[NSMutableDictionary alloc] init];
+    [notificationDictionary setValue:theEvent forKey:EDEventKey];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDown object:self userInfo:notificationDictionary];
+}
+
 #pragma mark mouse dragged
 - (void)mouseDragged:(NSEvent *)theEvent{
     [self mouseDraggedBehavior:theEvent];
@@ -152,14 +169,36 @@
     thisOrigin.x += (-lastDragLocation.x + newDragLocation.x);
     thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
     
+    // TODO: this whole method may be different for the dragged element and the element selected by selection
     if (EDSnapToGuide) {
         float closestVerticalPoint;
         NSMutableDictionary *guides = [(EDWorksheetView *)[self superview] guides];
         // get vertical guide as long as there are guides to go by
         if ([[guides objectForKey:EDKeyGuideVertical] count] > 0) {
             closestVerticalPoint = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
+            
+            // snap if close enough
+            if (fabsf(thisOrigin.y - closestVerticalPoint) < EDGuideThreshold) {
+                _didSnap = TRUE;
+                //NSLog(@"snapping...location: x:%f y:%f", mouseLocation.x, mouseLocation.y);
+                thisOrigin.y = closestVerticalPoint;
+            }
+            else{
+                if(_didSnap){
+                    // reset
+                    _didSnap = FALSE;
+                    NSPoint currentLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
+                    NSLog(@"element did snap. need to reset position: current: y:%f saved: y:%f", currentLocation.y, _savedMouseSnapLocation.y);
+                    thisOrigin.y += (currentLocation.y - _savedMouseSnapLocation.y);
+                }
+                else{
+                }
+            }
         }
-        NSLog(@"received guides: origin.y: %f closest point:%f", thisOrigin.y, closestVerticalPoint);
+        else{
+            _didSnap = FALSE;
+        }
+        //NSLog(@"received guides: origin.y: %f closest point:%f", thisOrigin.y, closestVerticalPoint);
     }
     
     [self setFrameOrigin:thisOrigin];

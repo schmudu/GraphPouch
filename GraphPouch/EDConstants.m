@@ -27,6 +27,7 @@ NSString * const EDEventKey                                     = @"EDEvent";
 NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
 NSString * const EDKeyGuideHorizontal                           = @"EDKeyGuideHorizontal";
 BOOL const EDSnapToGuide                                        = TRUE;
+float const EDGuideThreshold                                    = 5.0;
 
 // element attributes
 NSString * const EDElementAttributeSelected                     = @"selected";

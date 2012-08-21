@@ -47,7 +47,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSRect bounds = NSMakeRect(10, 10, 20, 20);
+    NSRect bounds = [self bounds];
     
     // fill color based on selection
     if ([[self dataObj] isSelectedElement]){

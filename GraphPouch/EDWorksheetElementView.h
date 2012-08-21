@@ -14,6 +14,8 @@
     NSNotificationCenter    *_nc;
     NSPoint                 lastDragLocation;
     NSPoint                 lastCursorLocation;
+    NSPoint                 _savedMouseSnapLocation;
+    BOOL                    _didSnap;
 }
 //@property (nonatomic, strong) EDElement *dataObj;
 @property (nonatomic, strong) id dataObj;

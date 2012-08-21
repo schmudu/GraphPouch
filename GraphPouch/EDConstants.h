@@ -27,7 +27,7 @@ extern NSString *const EDEventKey;
 extern NSString *const EDKeyGuideVertical;
 extern NSString *const EDKeyGuideHorizontal;
 extern BOOL const EDSnapToGuide;   
-
+extern float const EDGuideThreshold;
 
 // attributes
 extern NSString *const EDGraphAttributeEquation;
