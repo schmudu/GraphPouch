@@ -11,6 +11,9 @@ int const GRAPH_INIT_TICK_MARKS         = FALSE;
 int const GRAPH_INIT_HAS_GRID_LINES     = FALSE; 
 
 @implementation EDConstants
+// preferences
+NSString * const EDPreferenceSnapToGuides                       = @"EDPreferenceSnapToGuides";
+
 // entity names
 NSString * const EDEntityNameGraph                              = @"EDGraph";
 
@@ -22,12 +25,15 @@ NSString * const EDEventMouseUp                                 = @"EDEventMouse
 NSString * const EDEventUnselectedGraphClickedWithoutModifier   = @"EDEventUnselectedGraphClickedWithoutModifier";
 NSString * const EDEventDeleteKeyPressedWithoutModifiers        = @"EDEventDeleteKeyPressedWithoutModifiers";
 NSString * const EDEventKey                                     = @"EDEvent";
+NSString * const EDEventElementSnapped                          = @"EDEventElementSnapped";
 
 // guides
 NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
 NSString * const EDKeyGuideHorizontal                           = @"EDKeyGuideHorizontal";
+NSString * const EDKeySnapOffset                                = @"EDKeySnapOffset";
 BOOL const EDSnapToGuide                                        = TRUE;
-float const EDGuideThreshold                                    = 5.0;
+float const EDGuideThreshold                                    = 10.0;
+float const EDGuideWidth                                        = 3.0;
 
 // element attributes
 NSString * const EDElementAttributeSelected                     = @"selected";

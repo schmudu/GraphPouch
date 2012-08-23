@@ -25,5 +25,6 @@
 - (void)mouseDraggedBySelection:(NSEvent *)theEvent;
 - (void)mouseUpBySelection:(NSEvent *)theEvent;
 - (void)mouseDownBySelection:(NSEvent *)theEvent;
+- (void)snapToPoint:(float)snapOffset;
 
 @end

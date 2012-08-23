@@ -15,6 +15,7 @@
     IBOutlet EDWorksheetViewController *worksheetController;
     IBOutlet NSView *worksheetView;
 }
+
 -(id)getInstance;
 
 @end

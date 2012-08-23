@@ -33,6 +33,9 @@
 		CDE6D61C15DC476B00E5695F /* NSManagedObject+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */; };
 		CDE6D63015DE774100E5695F /* EDElement.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D62F15DE774000E5695F /* EDElement.m */; };
 		CDE6D65615E111C700E5695F /* EDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D65515E111C700E5695F /* EDWindow.m */; };
+		CDE6D66E15E4413100E5695F /* EDAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D66D15E4413100E5695F /* EDAppController.m */; };
+		CDE6D67015E4429800E5695F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDE6D66F15E4429800E5695F /* Preferences.xib */; };
+		CDE6D67715E4454B00E5695F /* EDPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D67615E4454B00E5695F /* EDPreferenceController.m */; };
 		CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +88,11 @@
 		CDE6D62F15DE774000E5695F /* EDElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDElement.m; sourceTree = "<group>"; };
 		CDE6D65415E111C700E5695F /* EDWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDWindow.h; sourceTree = "<group>"; };
 		CDE6D65515E111C700E5695F /* EDWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDWindow.m; sourceTree = "<group>"; };
+		CDE6D66C15E4413100E5695F /* EDAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDAppController.h; sourceTree = "<group>"; };
+		CDE6D66D15E4413100E5695F /* EDAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDAppController.m; sourceTree = "<group>"; };
+		CDE6D66F15E4429800E5695F /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
+		CDE6D67515E4454B00E5695F /* EDPreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPreferenceController.h; sourceTree = "<group>"; };
+		CDE6D67615E4454B00E5695F /* EDPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPreferenceController.m; sourceTree = "<group>"; };
 		CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+EasyFetching.h"; sourceTree = "<group>"; };
 		CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+EasyFetching.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,6 +159,7 @@
 		CD3F0AF915C4776900AB7567 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				CDE6D66715E41E7A00E5695F /* Preferences */,
 				CD3F0AFB15C477CE00AB7567 /* Properties */,
 			);
 			name = Menu;
@@ -272,6 +281,8 @@
 				CD47113415BA1647008AACC3 /* EDDocument.m */,
 				CD47113615BA1647008AACC3 /* EDDocument.xib */,
 				CD47113915BA1647008AACC3 /* MainMenu.xib */,
+				CDE6D66C15E4413100E5695F /* EDAppController.h */,
+				CDE6D66D15E4413100E5695F /* EDAppController.m */,
 				CD3F0AFA15C4777600AB7567 /* Constants */,
 				CD3F0AF715C4775900AB7567 /* Model */,
 				CD3F0AF515C4774900AB7567 /* View+Controllers */,
@@ -299,6 +310,16 @@
 				CDE6D65515E111C700E5695F /* EDWindow.m */,
 			);
 			name = Window;
+			sourceTree = "<group>";
+		};
+		CDE6D66715E41E7A00E5695F /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				CDE6D66F15E4429800E5695F /* Preferences.xib */,
+				CDE6D67515E4454B00E5695F /* EDPreferenceController.h */,
+				CDE6D67615E4454B00E5695F /* EDPreferenceController.m */,
+			);
+			name = Preferences;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,6 +381,7 @@
 				CD3F0ADC15C3844000AB7567 /* EDPropertiesView.xib in Resources */,
 				CD3F0AEA15C3966100AB7567 /* EDPropertiesViewText.xib in Resources */,
 				CD3F0AF415C4772700AB7567 /* EDPropertiesViewGraph.xib in Resources */,
+				CDE6D67015E4429800E5695F /* Preferences.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +411,8 @@
 				CDE6D61C15DC476B00E5695F /* NSManagedObject+Attributes.m in Sources */,
 				CDE6D63015DE774100E5695F /* EDElement.m in Sources */,
 				CDE6D65615E111C700E5695F /* EDWindow.m in Sources */,
+				CDE6D66E15E4413100E5695F /* EDAppController.m in Sources */,
+				CDE6D67715E4454B00E5695F /* EDPreferenceController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

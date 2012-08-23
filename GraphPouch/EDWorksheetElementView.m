@@ -181,7 +181,14 @@
             if (fabsf(thisOrigin.y - closestVerticalPoint) < EDGuideThreshold) {
                 _didSnap = TRUE;
                 //NSLog(@"snapping...location: x:%f y:%f", mouseLocation.x, mouseLocation.y);
+                float originalVerticalPoint = thisOrigin.y;
                 thisOrigin.y = closestVerticalPoint;
+                
+                //notify other selected points that we did snap
+                NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] init];
+                NSPoint currentLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
+                [infoDictionary setValue:[[NSNumber alloc] initWithFloat:(originalVerticalPoint - thisOrigin.y)] forKey:EDKeySnapOffset];
+                [[NSNotificationCenter defaultCenter] postNotificationName:EDEventElementSnapped object:self userInfo:infoDictionary];
             }
             else{
                 if(_didSnap){
@@ -228,6 +235,13 @@
         NSNumber *valueY = [[NSNumber alloc] initWithFloat:[self frame].origin.y];
         [[self dataObj] setValue:valueX forKey:EDElementAttributeLocationX];
         [[self dataObj] setValue:valueY forKey:EDElementAttributeLocationY];
+    }
+}
+
+- (void)snapToPoint:(float)snapOffset{
+    // only elements that didn't snap need to move
+    if(!_didSnap){
+        NSLog(@"need to snap this element by offset: %f", snapOffset);
     }
 }
 

@@ -11,6 +11,9 @@ FOUNDATION_EXPORT int const GRAPH_INIT_HAS_GRID_LINES;
 #import <Foundation/Foundation.h>
 
 @interface EDConstants : NSObject
+// constants
+extern NSString *const EDPreferenceSnapToGuides;
+
 // entity name
 extern NSString *const EDEntityNameGraph;
 
@@ -22,12 +25,15 @@ extern NSString *const EDEventMouseUp;
 extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
 extern NSString *const EDEventDeleteKeyPressedWithoutModifiers;
 extern NSString *const EDEventKey;
+extern NSString *const EDEventElementSnapped;
 
 // guides
 extern NSString *const EDKeyGuideVertical;
 extern NSString *const EDKeyGuideHorizontal;
+extern NSString *const EDKeySnapOffset;
 extern BOOL const EDSnapToGuide;   
 extern float const EDGuideThreshold;
+extern float const EDGuideWidth;
 
 // attributes
 extern NSString *const EDGraphAttributeEquation;

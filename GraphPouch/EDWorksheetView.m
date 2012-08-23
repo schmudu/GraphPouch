@@ -68,8 +68,23 @@
     [[NSColor whiteColor] set];
     [NSBezierPath fillRect:bounds];
     
+#warning add other elements here
+    // draw graphs
     for(EDGraphView *graph in [self subviews]){
         [graph setNeedsDisplay:TRUE];
+    }
+    
+    // draw guides
+    NSBezierPath *aPath;
+    for (NSNumber *verticalPoint in (NSMutableArray *)[_guides objectForKey:EDKeyGuideVertical]){
+        aPath = [NSBezierPath bezierPath];
+        [aPath setLineWidth:EDGuideWidth];
+        CGFloat dashedLined[] = {10.0, 10.0};
+        [aPath setLineDash:dashedLined count:2 phase:0];
+        [[NSColor blueColor] setStroke];
+        [aPath moveToPoint:NSMakePoint(0, [verticalPoint floatValue])];
+        [aPath lineToPoint:NSMakePoint([self frame].size.width, [verticalPoint floatValue])];
+        [aPath stroke];
     }
 }
 
@@ -82,6 +97,7 @@
     [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:graphView];
+    [_nc addObserver:self selector:@selector(onElementSnapped:) name:EDEventElementSnapped object:graphView];
     
     // set location
     [graphView setFrameOrigin:NSMakePoint([[graph valueForKey:EDElementAttributeLocationX] floatValue], [[graph valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -136,6 +152,7 @@
             [_nc removeObserver:self name:EDEventMouseDown object:currentElement];
             [_nc removeObserver:self name:EDEventMouseDragged object:currentElement];
             [_nc removeObserver:self name:EDEventMouseUp object:currentElement];
+            [_nc removeObserver:self name:EDEventElementSnapped object:currentElement];
         }
         i++;
     }
@@ -178,6 +195,25 @@
             [myElement mouseDraggedBySelection:[[note userInfo] valueForKey:EDEventKey]];
         }
     }
+    
+    [self setNeedsDisplay:TRUE];
+}
+
+- (void)onElementSnapped:(NSNotification *)note{
+    // notify all selectd subviews that they need to snap too
+    NSArray *selectedElements = [_coreData getAllSelectedObjects];
+    for (EDWorksheetElementView *myElement in [self subviews]){
+        if([selectedElements containsObject:[myElement dataObj]]){
+            // notify element that of mouse dragged
+            [myElement snapToPoint:[[[note userInfo] valueForKey:EDKeySnapOffset] floatValue]];
+        }
+    }
+    
+    /*
+    // remove all guides 
+    if(EDSnapToGuide){
+        [self removeGuides];
+    }*/
 }
 
 - (void)onElementMouseUp:(NSNotification *)note{
@@ -210,10 +246,10 @@
     NSMutableArray *guidesHorizontal = [[NSMutableArray alloc] init];
     
     // add sample point of 50 to vertical guide
-    NSNumber *samplePoint = [[NSNumber alloc] initWithFloat:50];
+    NSNumber *samplePoint = [[NSNumber alloc] initWithFloat:200];
     NSNumber *anotherSamplePoint = [[NSNumber alloc] initWithFloat:250];
     [guidesVertical addObject:samplePoint];
-    [guidesVertical addObject:anotherSamplePoint];
+    //[guidesVertical addObject:anotherSamplePoint];
     
     // set guides
     [_guides setValue:guidesVertical forKey:EDKeyGuideVertical];
