@@ -32,7 +32,7 @@ NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVe
 NSString * const EDKeyGuideHorizontal                           = @"EDKeyGuideHorizontal";
 NSString * const EDKeySnapOffset                                = @"EDKeySnapOffset";
 BOOL const EDSnapToGuide                                        = TRUE;
-float const EDGuideThreshold                                    = 10.0;
+float const EDGuideThreshold                                    = 2.0;
 float const EDGuideWidth                                        = 3.0;
 
 // element attributes

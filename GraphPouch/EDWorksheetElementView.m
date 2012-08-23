@@ -112,6 +112,7 @@
     [coreData getAllObjects];
     
     NSUInteger flags = [theEvent modifierFlags];
+    _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
     
     if ([[self dataObj] isSelectedElement]){
         // graph is already selected
@@ -169,7 +170,6 @@
     thisOrigin.x += (-lastDragLocation.x + newDragLocation.x);
     thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
     
-    // TODO: this whole method may be different for the dragged element and the element selected by selection
     if (EDSnapToGuide) {
         float closestVerticalPoint;
         NSMutableDictionary *guides = [(EDWorksheetView *)[self superview] guides];
@@ -180,13 +180,14 @@
             // snap if close enough
             if (fabsf(thisOrigin.y - closestVerticalPoint) < EDGuideThreshold) {
                 _didSnap = TRUE;
+                
                 //NSLog(@"snapping...location: x:%f y:%f", mouseLocation.x, mouseLocation.y);
                 float originalVerticalPoint = thisOrigin.y;
                 thisOrigin.y = closestVerticalPoint;
                 
                 //notify other selected points that we did snap
                 NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] init];
-                NSPoint currentLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
+                //NSPoint currentLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
                 [infoDictionary setValue:[[NSNumber alloc] initWithFloat:(originalVerticalPoint - thisOrigin.y)] forKey:EDKeySnapOffset];
                 [[NSNotificationCenter defaultCenter] postNotificationName:EDEventElementSnapped object:self userInfo:infoDictionary];
             }
@@ -194,20 +195,19 @@
                 if(_didSnap){
                     // reset
                     _didSnap = FALSE;
+                    
+                    // snap back to original location
                     NSPoint currentLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
-                    NSLog(@"element did snap. need to reset position: current: y:%f saved: y:%f", currentLocation.y, _savedMouseSnapLocation.y);
                     thisOrigin.y += (currentLocation.y - _savedMouseSnapLocation.y);
-                }
-                else{
                 }
             }
         }
         else{
             _didSnap = FALSE;
         }
-        //NSLog(@"received guides: origin.y: %f closest point:%f", thisOrigin.y, closestVerticalPoint);
     }
     
+    NSLog(@"setting frame origin to x:%f y:%f", thisOrigin.x, thisOrigin.y);
     [self setFrameOrigin:thisOrigin];
     lastDragLocation = newDragLocation;
 }
