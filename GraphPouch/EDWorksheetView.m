@@ -15,6 +15,7 @@
 
 @interface EDWorksheetView()
 - (void)drawGraph:(EDGraph *)graph;
+- (void)drawGuide:(NSPoint)startPoint endPoint:(NSPoint)endPoint;
 - (void)onContextChanged:(NSNotification *)note;
 - (void)onElementMouseDown:(NSNotification *)note;
 - (void)onElementMouseDragged:(NSNotification *)note;
@@ -23,7 +24,7 @@
 // guides
 - (void)saveGuides;
 - (void)removeGuides;
-- (float)getClosestVerticalGuide:(NSMutableArray *)guides elements:(NSArray *)elements;
+- (NSMutableDictionary *)getClosestVerticalGuide:(NSMutableArray *)guides elements:(NSArray *)elements;
 - (float)findClosestPoint:(float)currentPoint guides:(NSMutableArray *)guides;
 
 // elements
@@ -86,21 +87,26 @@
     if ([defaults boolForKey:EDPreferenceSnapToGuides]) {
             // get all elements
         NSMutableArray *elements = [self getAllSelectedWorksheetElementsViews];
-#warning need to draw only the closest guide, but make sure it's close other don't draw anything
-        float closestVerticalGuide = [self getClosestVerticalGuide:[_guides objectForKey:EDKeyGuideVertical] elements:elements];
-        NSLog(@"the closest vertical guide found was: %f", closestVerticalGuide);
-        NSBezierPath *aPath;
-        for (NSNumber *verticalPoint in (NSMutableArray *)[_guides objectForKey:EDKeyGuideVertical]){
-            aPath = [NSBezierPath bezierPath];
-            [aPath setLineWidth:EDGuideWidth];
-            CGFloat dashedLined[] = {10.0, 10.0};
-            [aPath setLineDash:dashedLined count:2 phase:0];
-            [[NSColor blueColor] setStroke];
-            [aPath moveToPoint:NSMakePoint(0, [verticalPoint floatValue])];
-            [aPath lineToPoint:NSMakePoint([self frame].size.width, [verticalPoint floatValue])];
-            [aPath stroke];
+        NSMutableDictionary *closestGuide = [self getClosestVerticalGuide:[_guides objectForKey:EDKeyGuideVertical] elements:elements];
+        //NSLog(@"the closest vertical guide found was: %@", closestGuide);
+        if ([[closestGuide valueForKey:EDKeyGuideDiff] floatValue] < EDGuideShowThreshold) {
+            [self drawGuide:NSMakePoint(0, [[closestGuide valueForKey:EDKeyClosestGuide] floatValue]) endPoint:NSMakePoint([self frame].size.width, [[closestGuide valueForKey:EDKeyClosestGuide] floatValue])];
         }
     }
+}
+
+- (void)drawGuide:(NSPoint)startPoint endPoint:(NSPoint)endPoint{
+        NSBezierPath *aPath;
+        aPath = [NSBezierPath bezierPath];
+        [aPath setLineWidth:EDGuideWidth];
+        CGFloat dashedLined[] = {10.0, 10.0};
+        [aPath setLineDash:dashedLined count:2 phase:0];
+        [[NSColor blueColor] setStroke];
+        //[aPath moveToPoint:NSMakePoint(0, [verticalPoint floatValue])];
+        //[aPath lineToPoint:NSMakePoint([self frame].size.width, [verticalPoint floatValue])];
+        [aPath moveToPoint:startPoint];
+        [aPath lineToPoint:endPoint];
+        [aPath stroke];
 }
 
 - (void)drawGraph:(EDGraph *)graph{
@@ -274,7 +280,8 @@
     _guides = nil;
 }
                                              
-- (float)getClosestVerticalGuide:(NSMutableArray *)guides elements:(NSArray *)elements{
+- (NSMutableDictionary *)getClosestVerticalGuide:(NSMutableArray *)guides elements:(NSArray *)elements{
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     float originDiff, edgeDiff, originClosestGuide, edgeClosestGuide, absoluteClosestGuide;
     float absoluteSmallestDiff = 999999;
     
@@ -283,23 +290,25 @@
         // find closest point to origin
         originClosestGuide = [self findClosestPoint:[element frame].origin.y guides:guides];
         edgeClosestGuide = [self findClosestPoint:([element frame].origin.y + [[element dataObj] elementHeight]) guides:guides];
-        NSLog(@"closest origin guide: %f closest edge guide: %f", originClosestGuide, edgeClosestGuide);
+        //NSLog(@"closest origin guide: %f closest edge guide: %f", originClosestGuide, edgeClosestGuide);
         originDiff = fabsf([element frame].origin.y - originClosestGuide);
         edgeDiff = fabsf(([element frame].origin.y + [[element dataObj] elementHeight])- edgeClosestGuide);
         if((originDiff > edgeDiff) && (edgeDiff < absoluteSmallestDiff)){
-            NSLog(@"setting absolute diff to: edge: %f", edgeDiff);
+            //NSLog(@"setting absolute diff to: edge: %f", edgeDiff);
             absoluteSmallestDiff = edgeDiff;
             absoluteClosestGuide = edgeClosestGuide;
         }
         else if((edgeDiff > originDiff) && (originDiff < absoluteSmallestDiff)){
-            NSLog(@"setting absolute diff to origin: %f", originDiff);
+            //NSLog(@"setting absolute diff to origin: %f", originDiff);
             absoluteSmallestDiff = originDiff;
             absoluteClosestGuide = originClosestGuide;
         }
     }
-    NSLog(@"the absolute smallest diff is:%f", absoluteSmallestDiff);
+    [results setValue:[[NSNumber alloc] initWithFloat:absoluteClosestGuide] forKey:EDKeyClosestGuide];
+    [results setValue:[[NSNumber alloc] initWithFloat:absoluteSmallestDiff] forKey:EDKeyGuideDiff];
+    //NSLog(@"the absolute smallest diff is:%f", absoluteSmallestDiff);
     
-    return absoluteClosestGuide;
+    return results;
 }
 
 - (float)findClosestPoint:(float)currentPoint guides:(NSMutableArray *)guides{
@@ -307,7 +316,7 @@
     float smallestDiff = 999999;
     float closestPoint;
     
-    NSLog(@"going to find closest point to: %f with guides: %@", currentPoint, guides);
+    //NSLog(@"going to find closest point to: %f with guides: %@", currentPoint, guides);
     // iterate through all the
     for (NSNumber *point in guides){
         if (fabsf(currentPoint - [point floatValue]) < smallestDiff) {

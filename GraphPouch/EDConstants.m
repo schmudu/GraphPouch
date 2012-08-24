@@ -31,8 +31,11 @@ NSString * const EDEventElementSnapped                          = @"EDEventEleme
 NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
 NSString * const EDKeyGuideHorizontal                           = @"EDKeyGuideHorizontal";
 NSString * const EDKeySnapOffset                                = @"EDKeySnapOffset";
+NSString * const EDKeyClosestGuide                              = @"EDKeyClosestGuide";
+NSString * const EDKeyGuideDiff                                 = @"EDKeyGuideDiff";
 float const EDGuideThreshold                                    = 2.0;
 float const EDGuideWidth                                        = 3.0;
+float const EDGuideShowThreshold                                = 10.0;  // diff must be less then this to show guide
 
 // element attributes
 NSString * const EDElementAttributeSelected                     = @"selected";
