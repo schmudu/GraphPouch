@@ -83,9 +83,9 @@
     
     // draw only the closest guides
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    // only do if we're snapping
-    if ([defaults boolForKey:EDPreferenceSnapToGuides]) {
-            // get all elements
+    // only do if we're snapping and at least one element is selected
+    if ((_mouseIsDown) && ([defaults boolForKey:EDPreferenceSnapToGuides])) {
+        // get all elements
         NSMutableArray *elements = [self getAllSelectedWorksheetElementsViews];
         NSMutableDictionary *closestGuide = [self getClosestVerticalGuide:[_guides objectForKey:EDKeyGuideVertical] elements:elements];
         //NSLog(@"the closest vertical guide found was: %@", closestGuide);
@@ -201,12 +201,13 @@
     }
     
     // store all guides 
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // only do if we're snapping
     if ([defaults boolForKey:EDPreferenceSnapToGuides]) {
         [self saveGuides];
     }
+    
+    _mouseIsDown = TRUE;   
 }
 
 - (void)onElementMouseDragged:(NSNotification *)note{
@@ -251,6 +252,9 @@
     if ([defaults boolForKey:EDPreferenceSnapToGuides]) {
         [self removeGuides];
     }
+    
+    _mouseIsDown = FALSE;   
+    [self setNeedsDisplay:TRUE];
 }
 
 #pragma mark guides
