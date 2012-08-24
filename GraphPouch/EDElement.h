@@ -12,10 +12,6 @@
 
 @interface EDElement : NSManagedObject
 
-//@property (nonatomic, retain) NSNumber * selected;
-//@property (nonatomic, retain) NSNumber * locationX;
-//@property (nonatomic, retain) NSNumber * locationY;
-
-@property float locationX, locationY;
+@property float locationX, locationY, elementWidth, elementHeight;
 @property BOOL selected;
 @end

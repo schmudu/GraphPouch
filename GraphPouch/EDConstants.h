@@ -31,7 +31,6 @@ extern NSString *const EDEventElementSnapped;
 extern NSString *const EDKeyGuideVertical;
 extern NSString *const EDKeyGuideHorizontal;
 extern NSString *const EDKeySnapOffset;
-extern BOOL const EDSnapToGuide;   
 extern float const EDGuideThreshold;
 extern float const EDGuideWidth;
 
@@ -42,6 +41,12 @@ extern NSString *const EDElementAttributeSelected;
 extern NSString *const EDGraphAttributeTickMarks;
 extern NSString *const EDElementAttributeLocationX;
 extern NSString *const EDElementAttributeLocationY;
+extern NSString *const EDElementAttributeWidth;
+extern NSString *const EDElementAttributeHeight;
+
+// graphs
+extern float const EDGraphDefaultHeight;
+extern float const EDGraphDefaultWidth;
 
 // keyboard mapping
 extern int const        EDKeycodeDelete;

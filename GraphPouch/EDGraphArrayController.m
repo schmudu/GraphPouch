@@ -20,6 +20,8 @@
     [newObj setValue:[[NSNumber alloc] initWithBool:GRAPH_INIT_HAS_GRID_LINES] forKey:EDGraphAttributeGrideLines];
     [newObj setValue:[[NSNumber alloc] initWithFloat:0] forKey:EDElementAttributeLocationX];
     [newObj setValue:[[NSNumber alloc] initWithFloat:0] forKey:EDElementAttributeLocationY];
+    [newObj setValue:[[NSNumber alloc] initWithFloat:EDGraphDefaultWidth] forKey:EDElementAttributeWidth];
+    [newObj setValue:[[NSNumber alloc] initWithFloat:EDGraphDefaultHeight] forKey:EDElementAttributeHeight];
     [newObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDElementAttributeSelected];
     return newObj;
 }

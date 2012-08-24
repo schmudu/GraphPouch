@@ -14,5 +14,7 @@
 @dynamic selected;
 @dynamic locationX;
 @dynamic locationY;
+@dynamic elementWidth;
+@dynamic elementHeight;
 
 @end

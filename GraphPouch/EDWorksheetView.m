@@ -89,7 +89,7 @@
 }
 
 - (void)drawGraph:(EDGraph *)graph{
-    EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, 40, 40) graphModel:(EDGraph *)graph];
+    EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph];
     
     // listen to graph
     // NOTE: any listeners you add here, remove them in method 'removeElementView'
@@ -180,7 +180,10 @@
     }
     
     // store all guides 
-    if(EDSnapToGuide){
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // only do if we're snapping
+    if ([defaults boolForKey:EDPreferenceSnapToGuides]) {
         [self saveGuides];
     }
 }
@@ -208,12 +211,6 @@
             [myElement snapToPoint:[[[note userInfo] valueForKey:EDKeySnapOffset] floatValue]];
         }
     }
-    
-    /*
-    // remove all guides 
-    if(EDSnapToGuide){
-        [self removeGuides];
-    }*/
 }
 
 - (void)onElementMouseUp:(NSNotification *)note{
@@ -228,7 +225,9 @@
     }
     
     // remove all guides 
-    if(EDSnapToGuide){
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // only do if we're snapping
+    if ([defaults boolForKey:EDPreferenceSnapToGuides]) {
         [self removeGuides];
     }
 }

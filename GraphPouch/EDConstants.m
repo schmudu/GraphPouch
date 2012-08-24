@@ -31,7 +31,6 @@ NSString * const EDEventElementSnapped                          = @"EDEventEleme
 NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
 NSString * const EDKeyGuideHorizontal                           = @"EDKeyGuideHorizontal";
 NSString * const EDKeySnapOffset                                = @"EDKeySnapOffset";
-BOOL const EDSnapToGuide                                        = TRUE;
 float const EDGuideThreshold                                    = 2.0;
 float const EDGuideWidth                                        = 3.0;
 
@@ -39,11 +38,15 @@ float const EDGuideWidth                                        = 3.0;
 NSString * const EDElementAttributeSelected                     = @"selected";
 NSString * const EDElementAttributeLocationX                    = @"locationX";
 NSString * const EDElementAttributeLocationY                    = @"locationY";
+NSString * const EDElementAttributeWidth                        = @"elementWidth";
+NSString * const EDElementAttributeHeight                       = @"elementHeight";
 
 // graph attributes
 NSString * const EDGraphAttributeTickMarks                      = @"hasTickMarks";
 NSString * const EDGraphAttributeEquation                       = @"equation";
 NSString * const EDGraphAttributeGrideLines                     = @"hasGridLines";
+float const EDGraphDefaultHeight                                = 30.0;
+float const EDGraphDefaultWidth                                 = 30.0;
 
 // keyboard
 int const EDKeycodeDelete                                       = 51;

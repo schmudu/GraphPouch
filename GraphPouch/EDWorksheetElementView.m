@@ -170,20 +170,38 @@
     thisOrigin.x += (-lastDragLocation.x + newDragLocation.x);
     thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
     
-    if (EDSnapToGuide) {
-        float closestVerticalPoint;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // only do if we're snapping
+    if ([defaults boolForKey:EDPreferenceSnapToGuides]) {
+        float closestVerticalPointToOrigin;
+        float closestVerticalPointToEdge;
         NSMutableDictionary *guides = [(EDWorksheetView *)[self superview] guides];
         // get vertical guide as long as there are guides to go by
         if ([[guides objectForKey:EDKeyGuideVertical] count] > 0) {
-            closestVerticalPoint = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
+            closestVerticalPointToOrigin = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
+            closestVerticalPointToEdge = [self findClosestPoint:(thisOrigin.y + [[self dataObj] elementHeight]) guides:[guides objectForKey:EDKeyGuideVertical]];
             
-            // snap if close enough
-            if (fabsf(thisOrigin.y - closestVerticalPoint) < EDGuideThreshold) {
+            // snap if close enough to edges of object
+            //if ((fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold) || ( fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToOrigin)< EDGuideThreshold)) {
+            NSLog(@"going to snap to origin: y: %f or far edge: %f closest edge point: %f", thisOrigin.y, thisOrigin.y + [[self dataObj] elementHeight], closestVerticalPointToEdge);
+            if ((fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold)) {
                 _didSnap = TRUE;
                 
                 //NSLog(@"snapping...location: x:%f y:%f", mouseLocation.x, mouseLocation.y);
                 float originalVerticalPoint = thisOrigin.y;
-                thisOrigin.y = closestVerticalPoint;
+                thisOrigin.y = closestVerticalPointToOrigin;
+                
+                //notify other selected points that we did snap
+                NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] init];
+                [infoDictionary setValue:[[NSNumber alloc] initWithFloat:(originalVerticalPoint - thisOrigin.y)] forKey:EDKeySnapOffset];
+                [[NSNotificationCenter defaultCenter] postNotificationName:EDEventElementSnapped object:self userInfo:infoDictionary];
+            }
+            else if ((fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold)) {
+                _didSnap = TRUE;
+                
+                NSLog(@"snapping to edge.");
+                float originalVerticalPoint = thisOrigin.y;
+                thisOrigin.y = closestVerticalPointToEdge - [[self dataObj] elementHeight];
                 
                 //notify other selected points that we did snap
                 NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] init];
@@ -207,7 +225,6 @@
         }
     }
     
-    NSLog(@"setting frame origin to x:%f y:%f", thisOrigin.x, thisOrigin.y);
     [self setFrameOrigin:thisOrigin];
     lastDragLocation = newDragLocation;
 }
