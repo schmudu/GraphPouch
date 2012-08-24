@@ -183,7 +183,7 @@
             
             // snap if close enough to edges of object
             //if ((fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold) || ( fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToOrigin)< EDGuideThreshold)) {
-            NSLog(@"going to snap to origin: y: %f or far edge: %f closest edge point: %f", thisOrigin.y, thisOrigin.y + [[self dataObj] elementHeight], closestVerticalPointToEdge);
+            //NSLog(@"going to snap to origin: y: %f or far edge: %f closest edge point: %f", thisOrigin.y, thisOrigin.y + [[self dataObj] elementHeight], closestVerticalPointToEdge);
             if ((fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold)) {
                 _didSnap = TRUE;
                 
@@ -199,7 +199,7 @@
             else if ((fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold)) {
                 _didSnap = TRUE;
                 
-                NSLog(@"snapping to edge.");
+                //NSLog(@"snapping to edge.");
                 float originalVerticalPoint = thisOrigin.y;
                 thisOrigin.y = closestVerticalPointToEdge - [[self dataObj] elementHeight];
                 
@@ -258,7 +258,7 @@
 - (void)snapToPoint:(float)snapOffset{
     // only elements that didn't snap need to move
     if(!_didSnap){
-        NSLog(@"need to snap this element by offset: %f", snapOffset);
+        //NSLog(@"need to snap this element by offset: %f", snapOffset);
     }
 }
 
