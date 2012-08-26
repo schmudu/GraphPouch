@@ -29,6 +29,7 @@
 
 // elements
 - (NSMutableArray *)getAllSelectedWorksheetElementsViews;
+- (NSMutableArray *)getAllUnselectedWorksheetElementsViews;
 @end
 
 @implementation EDWorksheetView
@@ -88,7 +89,6 @@
         // get all elements
         NSMutableArray *elements = [self getAllSelectedWorksheetElementsViews];
         NSMutableDictionary *closestGuide = [self getClosestVerticalGuide:[_guides objectForKey:EDKeyGuideVertical] elements:elements];
-        //NSLog(@"the closest vertical guide found was: %@", closestGuide);
         if ([[closestGuide valueForKey:EDKeyGuideDiff] floatValue] < EDGuideShowThreshold) {
             [self drawGuide:NSMakePoint(0, [[closestGuide valueForKey:EDKeyClosestGuide] floatValue]) endPoint:NSMakePoint([self frame].size.width, [[closestGuide valueForKey:EDKeyClosestGuide] floatValue])];
         }
@@ -263,17 +263,30 @@
 }
 
 - (void)saveGuides{
+    // get the margin guides and all unselected elemnts
     _guides = [[NSMutableDictionary alloc] init];
     
     // add to guides any points that we can snap to
     NSMutableArray *guidesVertical = [[NSMutableArray alloc] init];
     NSMutableArray *guidesHorizontal = [[NSMutableArray alloc] init];
     
-    // add sample point of 50 to vertical guide
-    NSNumber *samplePoint = [[NSNumber alloc] initWithFloat:100];
-    NSNumber *anotherSamplePoint = [[NSNumber alloc] initWithFloat:250];
-    [guidesVertical addObject:samplePoint];
-    [guidesVertical addObject:anotherSamplePoint];
+    // get all the unselected elements
+    NSMutableArray *unselectedElements = [self getAllUnselectedWorksheetElementsViews];
+    
+    // iterate through unselected elements and store both edges of the element as a guide
+    NSNumber *topGuide, *rightGuide, *bottomGuide, *leftGuide;
+    for (EDWorksheetElementView *elementView in unselectedElements){
+        topGuide = [[NSNumber alloc] initWithFloat:[elementView frame].origin.y];
+        leftGuide = [[NSNumber alloc] initWithFloat:[elementView frame].origin.x];
+        rightGuide = [[NSNumber alloc] initWithFloat:([elementView frame].origin.x + [[elementView dataObj] elementWidth])];
+        bottomGuide = [[NSNumber alloc] initWithFloat:([elementView frame].origin.y + [[elementView dataObj] elementHeight])];
+        
+        // add guides
+        [guidesVertical addObject:topGuide];
+        [guidesVertical addObject:bottomGuide];
+        [guidesHorizontal addObject:leftGuide];
+        [guidesHorizontal addObject:rightGuide];
+    }
     
     // set guides
     [_guides setValue:guidesVertical forKey:EDKeyGuideVertical];
@@ -294,23 +307,19 @@
         // find closest point to origin
         originClosestGuide = [self findClosestPoint:[element frame].origin.y guides:guides];
         edgeClosestGuide = [self findClosestPoint:([element frame].origin.y + [[element dataObj] elementHeight]) guides:guides];
-        //NSLog(@"closest origin guide: %f closest edge guide: %f", originClosestGuide, edgeClosestGuide);
         originDiff = fabsf([element frame].origin.y - originClosestGuide);
         edgeDiff = fabsf(([element frame].origin.y + [[element dataObj] elementHeight])- edgeClosestGuide);
-        if((originDiff > edgeDiff) && (edgeDiff < absoluteSmallestDiff)){
-            //NSLog(@"setting absolute diff to: edge: %f", edgeDiff);
-            absoluteSmallestDiff = edgeDiff;
-            absoluteClosestGuide = edgeClosestGuide;
-        }
-        else if((edgeDiff > originDiff) && (originDiff < absoluteSmallestDiff)){
-            //NSLog(@"setting absolute diff to origin: %f", originDiff);
+        if((edgeDiff >= originDiff) && (originDiff < absoluteSmallestDiff)){
             absoluteSmallestDiff = originDiff;
             absoluteClosestGuide = originClosestGuide;
+        }
+        else if((originDiff >= edgeDiff) && (edgeDiff < absoluteSmallestDiff)){
+            absoluteSmallestDiff = edgeDiff;
+            absoluteClosestGuide = edgeClosestGuide;
         }
     }
     [results setValue:[[NSNumber alloc] initWithFloat:absoluteClosestGuide] forKey:EDKeyClosestGuide];
     [results setValue:[[NSNumber alloc] initWithFloat:absoluteSmallestDiff] forKey:EDKeyGuideDiff];
-    //NSLog(@"the absolute smallest diff is:%f", absoluteSmallestDiff);
     
     return results;
 }
@@ -320,7 +329,6 @@
     float smallestDiff = 999999;
     float closestPoint;
     
-    //NSLog(@"going to find closest point to: %f with guides: %@", currentPoint, guides);
     // iterate through all the
     for (NSNumber *point in guides){
         if (fabsf(currentPoint - [point floatValue]) < smallestDiff) {
@@ -334,12 +342,24 @@
 
 #pragma mark elements
 - (NSMutableArray *)getAllSelectedWorksheetElementsViews{
-    // enables movement via multiple selection
-    // notify all selectd subviews that mouse down was pressed
+    // get all the selected worksheet elements
     NSMutableArray *results = [[NSMutableArray alloc] init];
     NSArray *selectedElements = [_coreData getAllSelectedObjects];
     for (EDWorksheetElementView *myElement in [self subviews]){
         if([selectedElements containsObject:[myElement dataObj]]){
+            [results addObject:myElement];
+        }
+    }
+    
+    return results;
+}
+
+- (NSMutableArray *)getAllUnselectedWorksheetElementsViews{
+    // get all the selected worksheet elements
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    NSArray *selectedElements = [_coreData getAllSelectedObjects];
+    for (EDWorksheetElementView *myElement in [self subviews]){
+        if(![selectedElements containsObject:[myElement dataObj]]){
             [results addObject:myElement];
         }
     }
