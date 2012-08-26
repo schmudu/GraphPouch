@@ -26,6 +26,9 @@ NSString * const EDEventUnselectedGraphClickedWithoutModifier   = @"EDEventUnsel
 NSString * const EDEventDeleteKeyPressedWithoutModifiers        = @"EDEventDeleteKeyPressedWithoutModifiers";
 NSString * const EDEventKey                                     = @"EDEvent";
 
+// menu
+NSString * const EDEventMenuAlignTop                             = @"EDEventMenuAlignTop";
+
 // guides
 NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
 NSString * const EDKeyGuideHorizontal                           = @"EDKeyGuideHorizontal";

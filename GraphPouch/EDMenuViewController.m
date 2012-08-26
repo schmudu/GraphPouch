@@ -37,4 +37,22 @@
     }
 }
 
+#pragma mark alignment
+- (IBAction)alignLeft:(id)sender{
+    NSLog(@"align left.");
+}
+
+- (IBAction)alignTop:(id)sender{
+    NSLog(@"align top. worksheet");
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMenuAlignTop object:self];
+}
+
+- (IBAction)alignBottom:(id)sender{
+    NSLog(@"align bottom.");
+}
+
+- (IBAction)alignRight:(id)sender{
+    NSLog(@"align right.");
+}
+
 @end

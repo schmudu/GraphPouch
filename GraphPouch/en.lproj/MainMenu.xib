@@ -11,6 +11,8 @@
 			<string key="NS.object.0">2182</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
+			<string>NSTextField</string>
+			<string>NSTextFieldCell</string>
 			<string>NSMenu</string>
 			<string>NSMenuItem</string>
 			<string>NSCustomObject</string>
@@ -890,6 +892,52 @@
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
 								</object>
+								<object class="NSMenuItem" id="1013201584">
+									<reference key="NSMenu" ref="466310130"/>
+									<string key="NSTitle">Align Elements</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1033313550"/>
+									<reference key="NSMixedImage" ref="310636482"/>
+									<string key="NSAction">submenuAction:</string>
+									<object class="NSMenu" key="NSSubmenu" id="239340894">
+										<string key="NSTitle">Align Elements</string>
+										<array class="NSMutableArray" key="NSMenuItems">
+											<object class="NSMenuItem" id="260973546">
+												<reference key="NSMenu" ref="239340894"/>
+												<string key="NSTitle">Align Top</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="1033313550"/>
+												<reference key="NSMixedImage" ref="310636482"/>
+											</object>
+											<object class="NSMenuItem" id="493139292">
+												<reference key="NSMenu" ref="239340894"/>
+												<string key="NSTitle">Align Left</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="1033313550"/>
+												<reference key="NSMixedImage" ref="310636482"/>
+											</object>
+											<object class="NSMenuItem" id="372582376">
+												<reference key="NSMenu" ref="239340894"/>
+												<string key="NSTitle">Align Right</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="1033313550"/>
+												<reference key="NSMixedImage" ref="310636482"/>
+											</object>
+											<object class="NSMenuItem" id="651097571">
+												<reference key="NSMenu" ref="239340894"/>
+												<string key="NSTitle">Align Bottom</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="1033313550"/>
+												<reference key="NSMixedImage" ref="310636482"/>
+											</object>
+										</array>
+									</object>
+								</object>
 								<object class="NSMenuItem" id="237841660">
 									<reference key="NSMenu" ref="466310130"/>
 									<string key="NSTitle">Graph Properties</string>
@@ -1002,6 +1050,49 @@
 			</object>
 			<object class="NSCustomObject" id="397275383">
 				<string key="NSClassName">EDMenuViewController</string>
+			</object>
+			<object class="NSCustomObject" id="6746668">
+				<string key="NSClassName">EDWorksheetViewController</string>
+			</object>
+			<object class="NSTextField" id="60131738">
+				<reference key="NSNextResponder"/>
+				<int key="NSvFlags">268</int>
+				<string key="NSFrameSize">{38, 17}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
+				<string key="NSReuseIdentifierKey">_NS:1505</string>
+				<bool key="NSEnabled">YES</bool>
+				<object class="NSTextFieldCell" key="NSCell" id="288804113">
+					<int key="NSCellFlags">68288064</int>
+					<int key="NSCellFlags2">272630784</int>
+					<string key="NSContents">Label</string>
+					<object class="NSFont" key="NSSupport">
+						<string key="NSName">LucidaGrande</string>
+						<double key="NSSize">13</double>
+						<int key="NSfFlags">1044</int>
+					</object>
+					<string key="NSCellIdentifier">_NS:1505</string>
+					<reference key="NSControlView" ref="60131738"/>
+					<object class="NSColor" key="NSBackgroundColor">
+						<int key="NSColorSpace">6</int>
+						<string key="NSCatalogName">System</string>
+						<string key="NSColorName">controlColor</string>
+						<object class="NSColor" key="NSColor">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+						</object>
+					</object>
+					<object class="NSColor" key="NSTextColor">
+						<int key="NSColorSpace">6</int>
+						<string key="NSCatalogName">System</string>
+						<string key="NSColorName">controlTextColor</string>
+						<object class="NSColor" key="NSColor">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MAA</bytes>
+						</object>
+					</object>
+				</object>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -1518,6 +1609,46 @@
 					</object>
 					<int key="connectionID">544</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">alignTop:</string>
+						<reference key="source" ref="397275383"/>
+						<reference key="destination" ref="260973546"/>
+					</object>
+					<int key="connectionID">558</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">alignLeft:</string>
+						<reference key="source" ref="397275383"/>
+						<reference key="destination" ref="493139292"/>
+					</object>
+					<int key="connectionID">559</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">alignRight:</string>
+						<reference key="source" ref="397275383"/>
+						<reference key="destination" ref="372582376"/>
+					</object>
+					<int key="connectionID">560</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">alignBottom:</string>
+						<reference key="source" ref="397275383"/>
+						<reference key="destination" ref="651097571"/>
+					</object>
+					<int key="connectionID">561</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">worksheetViewController</string>
+						<reference key="source" ref="397275383"/>
+						<reference key="destination" ref="6746668"/>
+					</object>
+					<int key="connectionID">563</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -1857,6 +1988,7 @@
 							<reference ref="237841660"/>
 							<reference ref="762432517"/>
 							<reference ref="526224168"/>
+							<reference ref="1013201584"/>
 						</array>
 						<reference key="parent" ref="586577488"/>
 					</object>
@@ -2290,6 +2422,63 @@
 						<reference key="object" ref="526224168"/>
 						<reference key="parent" ref="466310130"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">545</int>
+						<reference key="object" ref="60131738"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="288804113"/>
+						</array>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">546</int>
+						<reference key="object" ref="288804113"/>
+						<reference key="parent" ref="60131738"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">552</int>
+						<reference key="object" ref="1013201584"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="239340894"/>
+						</array>
+						<reference key="parent" ref="466310130"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">553</int>
+						<reference key="object" ref="239340894"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="493139292"/>
+							<reference ref="260973546"/>
+							<reference ref="372582376"/>
+							<reference ref="651097571"/>
+						</array>
+						<reference key="parent" ref="1013201584"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">554</int>
+						<reference key="object" ref="493139292"/>
+						<reference key="parent" ref="239340894"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">555</int>
+						<reference key="object" ref="260973546"/>
+						<reference key="parent" ref="239340894"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">556</int>
+						<reference key="object" ref="372582376"/>
+						<reference key="parent" ref="239340894"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">557</int>
+						<reference key="object" ref="651097571"/>
+						<reference key="parent" ref="239340894"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">562</int>
+						<reference key="object" ref="6746668"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2397,7 +2586,16 @@
 				<string key="538.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="540.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="541.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="545.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="546.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="552.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="553.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="554.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="555.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="556.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="557.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="562.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2416,7 +2614,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">544</int>
+			<int key="maxID">563</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2442,6 +2640,49 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">EDMenuViewController</string>
 					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="alignBottom:">id</string>
+						<string key="alignLeft:">id</string>
+						<string key="alignRight:">id</string>
+						<string key="alignTop:">id</string>
+						<string key="changeSnapToGrid:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="alignBottom:">
+							<string key="name">alignBottom:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alignLeft:">
+							<string key="name">alignLeft:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alignRight:">
+							<string key="name">alignRight:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alignTop:">
+							<string key="name">alignTop:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="changeSnapToGrid:">
+							<string key="name">changeSnapToGrid:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="snapToGrid">NSMenuItem</string>
+						<string key="worksheetViewController">EDWorksheetViewController</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="snapToGrid">
+							<string key="name">snapToGrid</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="worksheetViewController">
+							<string key="name">worksheetViewController</string>
+							<string key="candidateClassName">EDWorksheetViewController</string>
+						</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/EDMenuViewController.h</string>
@@ -2478,6 +2719,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/EDPropertiesController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">EDWorksheetViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/EDWorksheetViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

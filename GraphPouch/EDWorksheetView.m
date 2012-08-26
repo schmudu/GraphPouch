@@ -280,7 +280,6 @@
         [guidesVertical addObject:bottomGuide];
         [guidesHorizontal addObject:leftGuide];
         [guidesHorizontal addObject:rightGuide];
-        NSLog(@"saving guides: right: %f left: %f", [rightGuide floatValue], [leftGuide floatValue]);
     }
  
 #warning add margin guides here

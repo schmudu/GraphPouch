@@ -26,6 +26,9 @@ extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
 extern NSString *const EDEventDeleteKeyPressedWithoutModifiers;
 extern NSString *const EDEventKey;
 
+// menu
+extern NSString *const EDEventMenuAlignTop;
+
 // guides
 extern NSString *const EDKeyGuideVertical;
 extern NSString *const EDKeyGuideHorizontal;

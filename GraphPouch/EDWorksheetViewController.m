@@ -37,6 +37,7 @@
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventWorksheetClicked object:[self view]];
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
     [_nc addObserver:self selector:@selector(deleteSelectedElements:) name:EDEventDeleteKeyPressedWithoutModifiers object:[self view]];
+    [_nc addObserver:self selector:@selector(alignElementsToTop:) name:EDEventMenuAlignTop object:nil];
     
     // initialize view to display all of the objects
     [(EDWorksheetView *)[self view] drawLoadedObjects];
@@ -52,10 +53,16 @@
     [_nc removeObserver:self name:EDEventWorksheetClicked object:[self view]];
     [_nc removeObserver:self name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
     [_nc removeObserver:self name:EDEventDeleteKeyPressedWithoutModifiers object:[self view]];
+    [_nc removeObserver:self name:EDEventMenuAlignTop object:nil];
 }
 
 - (void)deleteSelectedElements:(NSNotification *)note{
     [_coreData deleteSelectedElements];
+}
+
+#pragma mark align
+- (void)alignElementsToTop:(NSNotification *)note{
+    NSLog(@"need to align elements to the top.");
 }
 
 @end
