@@ -17,7 +17,7 @@
     NSPoint                 _savedMouseSnapLocation;
     BOOL                    _didSnap;
 }
-//@property (nonatomic, strong) EDElement *dataObj;
+
 @property (nonatomic, strong) id dataObj;
 @property NSString *viewID;
 
@@ -25,6 +25,5 @@
 - (void)mouseDraggedBySelection:(NSEvent *)theEvent;
 - (void)mouseUpBySelection:(NSEvent *)theEvent;
 - (void)mouseDownBySelection:(NSEvent *)theEvent;
-- (void)snapToPoint:(float)snapOffset;
 
 @end

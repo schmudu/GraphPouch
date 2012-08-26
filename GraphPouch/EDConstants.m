@@ -25,7 +25,6 @@ NSString * const EDEventMouseUp                                 = @"EDEventMouse
 NSString * const EDEventUnselectedGraphClickedWithoutModifier   = @"EDEventUnselectedGraphClickedWithoutModifier";
 NSString * const EDEventDeleteKeyPressedWithoutModifiers        = @"EDEventDeleteKeyPressedWithoutModifiers";
 NSString * const EDEventKey                                     = @"EDEvent";
-NSString * const EDEventElementSnapped                          = @"EDEventElementSnapped";
 
 // guides
 NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";

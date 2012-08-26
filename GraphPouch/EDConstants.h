@@ -25,7 +25,6 @@ extern NSString *const EDEventMouseUp;
 extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
 extern NSString *const EDEventDeleteKeyPressedWithoutModifiers;
 extern NSString *const EDEventKey;
-extern NSString *const EDEventElementSnapped;
 
 // guides
 extern NSString *const EDKeyGuideVertical;

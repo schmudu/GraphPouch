@@ -125,7 +125,6 @@
     [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:graphView];
-    [_nc addObserver:self selector:@selector(onElementSnapped:) name:EDEventElementSnapped object:graphView];
     
     // set location
     [graphView setFrameOrigin:NSMakePoint([[graph valueForKey:EDElementAttributeLocationX] floatValue], [[graph valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -180,7 +179,6 @@
             [_nc removeObserver:self name:EDEventMouseDown object:currentElement];
             [_nc removeObserver:self name:EDEventMouseDragged object:currentElement];
             [_nc removeObserver:self name:EDEventMouseUp object:currentElement];
-            [_nc removeObserver:self name:EDEventElementSnapped object:currentElement];
         }
         i++;
     }
@@ -229,17 +227,6 @@
     }
     
     [self setNeedsDisplay:TRUE];
-}
-
-- (void)onElementSnapped:(NSNotification *)note{
-    // notify all selectd subviews that they need to snap too
-    NSArray *selectedElements = [_coreData getAllSelectedObjects];
-    for (EDWorksheetElementView *myElement in [self subviews]){
-        if([selectedElements containsObject:[myElement dataObj]]){
-            // notify element that of mouse dragged
-            [myElement snapToPoint:[[[note userInfo] valueForKey:EDKeySnapOffset] floatValue]];
-        }
-    }
 }
 
 - (void)onElementMouseUp:(NSNotification *)note{
@@ -314,7 +301,6 @@
     // for each point find the closest point
     for (EDWorksheetElementView *element in elements){
         // find closest point to origin
-        NSLog(@"one element origin x:%f", [element frame].origin.x);
         originClosestGuide = [self findClosestPoint:[element frame].origin.x guides:guides];
         edgeClosestGuide = [self findClosestPoint:([element frame].origin.x + [[element dataObj] elementWidth]) guides:guides];
         originDiff = fabsf([element frame].origin.x - originClosestGuide);
@@ -328,7 +314,7 @@
             absoluteClosestGuide = edgeClosestGuide;
         }
     }
-    NSLog(@"returning horizontal guide of:%f", absoluteClosestGuide);
+    
     [results setValue:[[NSNumber alloc] initWithFloat:absoluteClosestGuide] forKey:EDKeyClosestGuide];
     [results setValue:[[NSNumber alloc] initWithFloat:absoluteSmallestDiff] forKey:EDKeyGuideDiff];
     
