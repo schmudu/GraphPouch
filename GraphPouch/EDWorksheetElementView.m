@@ -173,21 +173,84 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // only do if we're snapping
     if ([defaults boolForKey:EDPreferenceSnapToGuides]) {
-        float closestVerticalPointToOrigin;
-        float closestVerticalPointToEdge;
+        float closestVerticalPointToOrigin, closestVerticalPointToEdge, closestHorizontalPointToOrigin, closestHorizontalPointToEdge;
         NSMutableDictionary *guides = [(EDWorksheetView *)[self superview] guides];
-        // get vertical guide as long as there are guides to go by
+        
+        // get vertical guide as long as there are guides to close enough
         if ([[guides objectForKey:EDKeyGuideVertical] count] > 0) {
             closestVerticalPointToOrigin = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
             closestVerticalPointToEdge = [self findClosestPoint:(thisOrigin.y + [[self dataObj] elementHeight]) guides:[guides objectForKey:EDKeyGuideVertical]];
+            closestHorizontalPointToOrigin = [self findClosestPoint:thisOrigin.x guides:[guides objectForKey:EDKeyGuideHorizontal]];
+            closestHorizontalPointToEdge = [self findClosestPoint:(thisOrigin.x + [[self dataObj] elementWidth]) guides:[guides objectForKey:EDKeyGuideHorizontal]];
             
-            // snap if close enough to edges of object
-            //if ((fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold) || ( fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToOrigin)< EDGuideThreshold)) {
-            //NSLog(@"going to snap to origin: y: %f or far edge: %f closest edge point: %f", thisOrigin.y, thisOrigin.y + [[self dataObj] elementHeight], closestVerticalPointToEdge);
-            if ((fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold)) {
+            
+            // snap if edge of object is close to guide
+            if ((fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold) || 
+                (fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold) || 
+                (fabsf(thisOrigin.x - closestHorizontalPointToOrigin) < EDGuideThreshold) || 
+                (fabsf((thisOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge) < EDGuideThreshold)) {
                 _didSnap = TRUE;
                 
-                //NSLog(@"snapping...location: x:%f y:%f", mouseLocation.x, mouseLocation.y);
+                NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] init];
+                
+                // check snap to vertical point
+                if (fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold) {
+                    float originalVerticalPoint = thisOrigin.y;
+                    thisOrigin.y = closestVerticalPointToOrigin;
+                    
+                    //notify other selected points that we did snap
+                    [infoDictionary setValue:[[NSNumber alloc] initWithFloat:(originalVerticalPoint - thisOrigin.y)] forKey:EDKeySnapOffset];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventElementSnapped object:self userInfo:infoDictionary];
+                }
+                else if (fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold) {
+                    float originalVerticalPoint = thisOrigin.y;
+                    thisOrigin.y = closestVerticalPointToEdge - [[self dataObj] elementHeight];
+                    
+                    //notify other selected points that we did snap
+                    [infoDictionary setValue:[[NSNumber alloc] initWithFloat:(originalVerticalPoint - thisOrigin.y)] forKey:EDKeySnapOffset];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventElementSnapped object:self userInfo:infoDictionary];
+                }
+                
+                // check snap to horizontal point
+                if (fabsf(thisOrigin.x - closestHorizontalPointToOrigin) < EDGuideThreshold) {
+                    float originalHorizontalPoint = thisOrigin.x;
+                    thisOrigin.x = closestHorizontalPointToOrigin;
+                    
+                    //notify other selected points that we did snap
+#warning we may need a diff snap offset for vertical and horizontal
+                    [infoDictionary setValue:[[NSNumber alloc] initWithFloat:(originalHorizontalPoint - thisOrigin.x)] forKey:EDKeySnapOffset];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventElementSnapped object:self userInfo:infoDictionary];
+                }
+                else if (fabsf((thisOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge) < EDGuideThreshold) {
+                    float originalHorizontalPoint = thisOrigin.x;
+                    thisOrigin.x = closestHorizontalPointToEdge - [[self dataObj] elementWidth];
+                    
+                    //notify other selected points that we did snap
+                    [infoDictionary setValue:[[NSNumber alloc] initWithFloat:(originalHorizontalPoint - thisOrigin.x)] forKey:EDKeySnapOffset];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventElementSnapped object:self userInfo:infoDictionary];
+                }
+            }
+            else{
+                if(_didSnap){
+                    // reset
+                    _didSnap = FALSE;
+                    
+                    // snap back to original location
+                    NSPoint currentLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
+                    thisOrigin.y += (currentLocation.y - _savedMouseSnapLocation.y);
+                    thisOrigin.x += (currentLocation.x - _savedMouseSnapLocation.x);
+                }
+            }
+            
+            
+            
+            
+            // snap if close enough to edges of object
+            /*
+            if ((fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold)) {
+                // see if we can snap to the top
+                _didSnap = TRUE;
+                
                 float originalVerticalPoint = thisOrigin.y;
                 thisOrigin.y = closestVerticalPointToOrigin;
                 
@@ -197,15 +260,14 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:EDEventElementSnapped object:self userInfo:infoDictionary];
             }
             else if ((fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold)) {
+                // see if we can snap to the bottom
                 _didSnap = TRUE;
                 
-                //NSLog(@"snapping to edge.");
                 float originalVerticalPoint = thisOrigin.y;
                 thisOrigin.y = closestVerticalPointToEdge - [[self dataObj] elementHeight];
                 
                 //notify other selected points that we did snap
                 NSMutableDictionary *infoDictionary = [[NSMutableDictionary alloc] init];
-                //NSPoint currentLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
                 [infoDictionary setValue:[[NSNumber alloc] initWithFloat:(originalVerticalPoint - thisOrigin.y)] forKey:EDKeySnapOffset];
                 [[NSNotificationCenter defaultCenter] postNotificationName:EDEventElementSnapped object:self userInfo:infoDictionary];
             }
@@ -219,6 +281,7 @@
                     thisOrigin.y += (currentLocation.y - _savedMouseSnapLocation.y);
                 }
             }
+             */
         }
         else{
             _didSnap = FALSE;

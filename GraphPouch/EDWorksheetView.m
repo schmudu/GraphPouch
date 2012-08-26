@@ -25,6 +25,7 @@
 - (void)saveGuides;
 - (void)removeGuides;
 - (NSMutableDictionary *)getClosestVerticalGuide:(NSMutableArray *)guides elements:(NSArray *)elements;
+- (NSMutableDictionary *)getClosestHorizontalGuide:(NSMutableArray *)guides elements:(NSArray *)elements;
 - (float)findClosestPoint:(float)currentPoint guides:(NSMutableArray *)guides;
 
 // elements
@@ -88,9 +89,17 @@
     if ((_mouseIsDown) && ([defaults boolForKey:EDPreferenceSnapToGuides])) {
         // get all elements
         NSMutableArray *elements = [self getAllSelectedWorksheetElementsViews];
-        NSMutableDictionary *closestGuide = [self getClosestVerticalGuide:[_guides objectForKey:EDKeyGuideVertical] elements:elements];
-        if ([[closestGuide valueForKey:EDKeyGuideDiff] floatValue] < EDGuideShowThreshold) {
-            [self drawGuide:NSMakePoint(0, [[closestGuide valueForKey:EDKeyClosestGuide] floatValue]) endPoint:NSMakePoint([self frame].size.width, [[closestGuide valueForKey:EDKeyClosestGuide] floatValue])];
+        NSMutableDictionary *closestVerticalGuide = [self getClosestVerticalGuide:[_guides objectForKey:EDKeyGuideVertical] elements:elements];
+        NSMutableDictionary *closestHorizontalGuide = [self getClosestHorizontalGuide:[_guides objectForKey:EDKeyGuideHorizontal] elements:elements];
+        //NSLog(@"closest horiz guide:%f", [[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue]);
+        // draw vertical guide
+        if ([[closestVerticalGuide valueForKey:EDKeyGuideDiff] floatValue] < EDGuideShowThreshold) {
+            [self drawGuide:NSMakePoint(0, [[closestVerticalGuide valueForKey:EDKeyClosestGuide] floatValue]) endPoint:NSMakePoint([self frame].size.width, [[closestVerticalGuide valueForKey:EDKeyClosestGuide] floatValue])];
+        }
+        
+        // draw horizontal guide
+        if ([[closestHorizontalGuide valueForKey:EDKeyGuideDiff] floatValue] < EDGuideShowThreshold) {
+            [self drawGuide:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], 0) endPoint:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], [self frame].size.height)];
         }
     }
 }
@@ -102,8 +111,6 @@
         CGFloat dashedLined[] = {10.0, 10.0};
         [aPath setLineDash:dashedLined count:2 phase:0];
         [[NSColor blueColor] setStroke];
-        //[aPath moveToPoint:NSMakePoint(0, [verticalPoint floatValue])];
-        //[aPath lineToPoint:NSMakePoint([self frame].size.width, [verticalPoint floatValue])];
         [aPath moveToPoint:startPoint];
         [aPath lineToPoint:endPoint];
         [aPath stroke];
@@ -286,8 +293,10 @@
         [guidesVertical addObject:bottomGuide];
         [guidesHorizontal addObject:leftGuide];
         [guidesHorizontal addObject:rightGuide];
+        NSLog(@"saving guides: right: %f left: %f", [rightGuide floatValue], [leftGuide floatValue]);
     }
-    
+ 
+#warning add margin guides here
     // set guides
     [_guides setValue:guidesVertical forKey:EDKeyGuideVertical];
     [_guides setValue:guidesHorizontal forKey:EDKeyGuideHorizontal];
@@ -297,6 +306,35 @@
     _guides = nil;
 }
                                              
+- (NSMutableDictionary *)getClosestHorizontalGuide:(NSMutableArray *)guides elements:(NSArray *)elements{
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    float originDiff, edgeDiff, originClosestGuide, edgeClosestGuide, absoluteClosestGuide;
+    float absoluteSmallestDiff = 999999;
+    
+    // for each point find the closest point
+    for (EDWorksheetElementView *element in elements){
+        // find closest point to origin
+        NSLog(@"one element origin x:%f", [element frame].origin.x);
+        originClosestGuide = [self findClosestPoint:[element frame].origin.x guides:guides];
+        edgeClosestGuide = [self findClosestPoint:([element frame].origin.x + [[element dataObj] elementWidth]) guides:guides];
+        originDiff = fabsf([element frame].origin.x - originClosestGuide);
+        edgeDiff = fabsf(([element frame].origin.x + [[element dataObj] elementWidth])- edgeClosestGuide);
+        if((edgeDiff >= originDiff) && (originDiff < absoluteSmallestDiff)){
+            absoluteSmallestDiff = originDiff;
+            absoluteClosestGuide = originClosestGuide;
+        }
+        else if((originDiff >= edgeDiff) && (edgeDiff < absoluteSmallestDiff)){
+            absoluteSmallestDiff = edgeDiff;
+            absoluteClosestGuide = edgeClosestGuide;
+        }
+    }
+    NSLog(@"returning horizontal guide of:%f", absoluteClosestGuide);
+    [results setValue:[[NSNumber alloc] initWithFloat:absoluteClosestGuide] forKey:EDKeyClosestGuide];
+    [results setValue:[[NSNumber alloc] initWithFloat:absoluteSmallestDiff] forKey:EDKeyGuideDiff];
+    
+    return results;
+}
+
 - (NSMutableDictionary *)getClosestVerticalGuide:(NSMutableArray *)guides elements:(NSArray *)elements{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     float originDiff, edgeDiff, originClosestGuide, edgeClosestGuide, absoluteClosestGuide;
