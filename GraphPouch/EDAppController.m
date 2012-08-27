@@ -13,18 +13,7 @@
 @implementation EDAppController
 
 + (void)initialize{
-    // Create a dictionary
-    NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
-    
-    // Archive the snapToGrid
-    //NSData *snapAsData = [NSKeyedArchiver archivedDataWithRootObject:TRUE];
-    
-    // Put the defaults in the dictionary
-    [defaultValues setObject:[NSNumber numberWithBool:TRUE] forKey:EDPreferenceSnapToGuides];
-    
-    // Register defaults
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
-    NSLog(@"registered defaults: %@", defaultValues);
+    // init app code
 }
 
 - (IBAction)showPreferencePanel:(id)sender{

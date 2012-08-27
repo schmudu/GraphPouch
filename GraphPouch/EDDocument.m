@@ -24,7 +24,6 @@
         //Init code
         EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
         [coreData setContext: [self managedObjectContext]];
-        NSLog(@"init EDDocument:");
     }
     return self;
 }
@@ -39,7 +38,6 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
-    NSLog(@"window controller did load nib. making worksheet controller init view");
     [worksheetController setView:worksheetView];
     [worksheetController postInitialize];
 }

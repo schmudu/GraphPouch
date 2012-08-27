@@ -10,6 +10,8 @@
 		CD015FCE15BA66CA0096CDF9 /* EDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CD015FCD15BA66CA0096CDF9 /* EDConstants.m */; };
 		CD1422C715C7590700F55819 /* EDCoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1422C615C7590700F55819 /* EDCoreDataUtility.m */; };
 		CD1D02FF15E83F1600C88A7A /* EDMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D02FE15E83F1600C88A7A /* EDMenuViewController.m */; };
+		CD1D032815EC1BCA00C88A7A /* EDMenuWindowAlignController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */; };
+		CD1D032915EC1BCA00C88A7A /* EDMenuWindowAlign.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */; };
 		CD27665515D996E900162240 /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CD27665415D996E900162240 /* EDGraph.m */; };
 		CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9915BDF93400AB7567 /* EDGraphView.m */; };
 		CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */; };
@@ -47,6 +49,9 @@
 		CD1422C615C7590700F55819 /* EDCoreDataUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDCoreDataUtility.m; sourceTree = "<group>"; };
 		CD1D02FD15E83F1600C88A7A /* EDMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuViewController.h; sourceTree = "<group>"; };
 		CD1D02FE15E83F1600C88A7A /* EDMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuViewController.m; sourceTree = "<group>"; };
+		CD1D032515EC1BCA00C88A7A /* EDMenuWindowAlignController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowAlignController.h; sourceTree = "<group>"; };
+		CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowAlignController.m; sourceTree = "<group>"; };
+		CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDMenuWindowAlign.xib; sourceTree = "<group>"; };
 		CD27665315D996E900162240 /* EDGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraph.h; sourceTree = "<group>"; };
 		CD27665415D996E900162240 /* EDGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraph.m; sourceTree = "<group>"; };
 		CD3F0A9815BDF93400AB7567 /* EDGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphView.h; sourceTree = "<group>"; };
@@ -121,6 +126,16 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		CD1D032315EC1BA600C88A7A /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				CD1D032515EC1BCA00C88A7A /* EDMenuWindowAlignController.h */,
+				CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */,
+				CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */,
+			);
+			name = Window;
+			sourceTree = "<group>";
+		};
 		CD3F0AF515C4774900AB7567 /* View+Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +186,7 @@
 		CD3F0AF915C4776900AB7567 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				CD1D032315EC1BA600C88A7A /* Window */,
 				CD1D02FB15E83EFC00C88A7A /* View */,
 				CDE6D66715E41E7A00E5695F /* Preferences */,
 				CD3F0AFB15C477CE00AB7567 /* Properties */,
@@ -395,6 +411,7 @@
 				CD3F0AEA15C3966100AB7567 /* EDPropertiesViewText.xib in Resources */,
 				CD3F0AF415C4772700AB7567 /* EDPropertiesViewGraph.xib in Resources */,
 				CDE6D67015E4429800E5695F /* Preferences.xib in Resources */,
+				CD1D032915EC1BCA00C88A7A /* EDMenuWindowAlign.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +444,7 @@
 				CDE6D66E15E4413100E5695F /* EDAppController.m in Sources */,
 				CDE6D67715E4454B00E5695F /* EDPreferenceController.m in Sources */,
 				CD1D02FF15E83F1600C88A7A /* EDMenuViewController.m in Sources */,
+				CD1D032815EC1BCA00C88A7A /* EDMenuWindowAlignController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
