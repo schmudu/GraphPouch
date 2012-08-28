@@ -22,7 +22,6 @@
         preferencesController = [[EDPreferenceController alloc] init];
     }
     
-    NSLog(@"showing %@", preferencesController);
     [preferencesController showWindow:self];
 }
 @end
