@@ -24,4 +24,7 @@
     return self;
 }
 
+- (void)initWindowAfterLoaded{
+    NSLog(@"document view did load.");
+}
 @end

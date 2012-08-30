@@ -1,18 +1,18 @@
 //
-//  EDMenuWindowPropertiesGraphController.m
+//  EDMenuWindowController.m
 //  GraphPouch
 //
-//  Created by PATRICK LEE on 8/29/12.
+//  Created by PATRICK LEE on 8/30/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDMenuWindowPropertiesGraphController.h"
+#import "EDMenuWindowController.h"
 
-@interface EDMenuWindowPropertiesGraphController ()
+@interface EDMenuWindowController ()
 
 @end
 
-@implementation EDMenuWindowPropertiesGraphController
+@implementation EDMenuWindowController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -25,7 +25,6 @@
 }
 
 - (void)initWindowAfterLoaded{
-    NSLog(@"graph view did load.");
+    NSLog(@"init window base class.");
 }
-
 @end

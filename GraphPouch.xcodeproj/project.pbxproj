@@ -33,6 +33,7 @@
 		CDA6643515EED102002FBE2F /* EDMenuWindowPropertiesDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDA6643415EED102002FBE2F /* EDMenuWindowPropertiesDocument.xib */; };
 		CDA6643815EED11D002FBE2F /* EDMenuWindowPropertiesGraphController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6643715EED11D002FBE2F /* EDMenuWindowPropertiesGraphController.m */; };
 		CDA6643B15EED131002FBE2F /* EDMenuWindowPropertiesDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6643A15EED131002FBE2F /* EDMenuWindowPropertiesDocumentController.m */; };
+		CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */; };
 		CDE6D61C15DC476B00E5695F /* NSManagedObject+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */; };
 		CDE6D63015DE774100E5695F /* EDElement.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D62F15DE774000E5695F /* EDElement.m */; };
 		CDE6D65615E111C700E5695F /* EDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D65515E111C700E5695F /* EDWindow.m */; };
@@ -90,6 +91,8 @@
 		CDA6643715EED11D002FBE2F /* EDMenuWindowPropertiesGraphController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowPropertiesGraphController.m; sourceTree = "<group>"; };
 		CDA6643915EED131002FBE2F /* EDMenuWindowPropertiesDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowPropertiesDocumentController.h; sourceTree = "<group>"; };
 		CDA6643A15EED131002FBE2F /* EDMenuWindowPropertiesDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowPropertiesDocumentController.m; sourceTree = "<group>"; };
+		CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowController.h; sourceTree = "<group>"; };
+		CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowController.m; sourceTree = "<group>"; };
 		CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Attributes.h"; sourceTree = "<group>"; };
 		CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Attributes.m"; sourceTree = "<group>"; };
 		CDE6D62E15DE774000E5695F /* EDElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDElement.h; sourceTree = "<group>"; };
@@ -193,6 +196,8 @@
 				CD1D032315EC1BA600C88A7A /* Window */,
 				CD1D02FB15E83EFC00C88A7A /* View */,
 				CDE6D66715E41E7A00E5695F /* Preferences */,
+				CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */,
+				CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -429,6 +434,7 @@
 				CDA6642115ED62C8002FBE2F /* EDMenuWindowPropertiesController.m in Sources */,
 				CDA6643815EED11D002FBE2F /* EDMenuWindowPropertiesGraphController.m in Sources */,
 				CDA6643B15EED131002FBE2F /* EDMenuWindowPropertiesDocumentController.m in Sources */,
+				CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

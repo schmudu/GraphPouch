@@ -9,7 +9,7 @@
 #import "EDMenuWindowPropertiesController.h"
 #import "EDCoreDataUtility.h"
 #import "EDConstants.h"
-
+#import "EDMenuWindowController.h"
 
 @interface EDMenuWindowPropertiesController ()
 - (void)setCorrectView;
@@ -63,10 +63,10 @@
 
 - (void)setCorrectView{
     // based on what is selected, this method set the view controller
-    NSViewController *viewController;
+    //NSViewController *viewController;
+    EDMenuWindowController *viewController;
     
     // get all the selected objects
-    EDCoreDataUtility *_coreData = [EDCoreDataUtility sharedCoreDataUtility];
     NSMutableDictionary *selectedTypes = [_coreData getAllTypesOfSelectedObjects];
     
 #warning add other elements here, need to check for other entities
@@ -101,6 +101,9 @@
     
     // set content of the window
     [[self window] setContentView:[viewController view]];
+    
+    // window init after loaded
+    [viewController initWindowAfterLoaded];
 }
 
 - (void)menuWillOpen:(NSMenu *)menu{
@@ -116,8 +119,10 @@
 #pragma mark context changed
 
 - (void)onContextChanged:(NSNotification *)note{
-    // alter view if necessary
-    [self setCorrectView];
+    // set the correct view if window is showing
+    if(([self isWindowLoaded]) && ([[self window] isVisible])){
+        [self setCorrectView];
+    }
 }
 
 @end
