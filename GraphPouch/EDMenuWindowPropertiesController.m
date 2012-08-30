@@ -13,6 +13,7 @@
 
 @interface EDMenuWindowPropertiesController ()
 - (void)setCorrectView;
+- (void)onContextChanged:(NSNotification *)note;
 @end
 
 @implementation EDMenuWindowPropertiesController
@@ -26,9 +27,18 @@
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
+        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
+        _context = [_coreData context];
+        _nc = [NSNotificationCenter defaultCenter];
+               
+        [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     }
     
     return self;
+}
+
+- (void)dealloc{
+    [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 
 - (void)windowDidLoad
@@ -59,6 +69,7 @@
     EDCoreDataUtility *_coreData = [EDCoreDataUtility sharedCoreDataUtility];
     NSMutableDictionary *selectedTypes = [_coreData getAllTypesOfSelectedObjects];
     
+#warning add other elements here, need to check for other entities
     if([selectedTypes valueForKey:EDEntityNameGraph]){
         if(!graphController){
             graphController = [[EDMenuWindowPropertiesGraphController alloc] initWithNibName:@"EDMenuWindowPropertiesGraph" bundle:nil];
@@ -100,6 +111,13 @@
     else {
         [menuItemProperties setState:NSOffState];
     }
+}
+
+#pragma mark context changed
+
+- (void)onContextChanged:(NSNotification *)note{
+    // alter view if necessary
+    [self setCorrectView];
 }
 
 @end

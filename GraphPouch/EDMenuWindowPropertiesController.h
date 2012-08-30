@@ -9,12 +9,16 @@
 #import <Cocoa/Cocoa.h>
 #import "EDMenuWindowPropertiesDocumentController.h"
 #import "EDMenuWindowPropertiesGraphController.h"
+#import "EDCoreDataUtility.h"
 
 
 @interface EDMenuWindowPropertiesController : NSWindowController <NSMenuDelegate>{
     IBOutlet NSMenuItem *menuItemProperties;
     EDMenuWindowPropertiesDocumentController *documentController;
     EDMenuWindowPropertiesGraphController *graphController;
+    NSNotificationCenter *_nc;
+    NSManagedObjectContext *_context;
+    EDCoreDataUtility *_coreData;
 }
 
 - (IBAction)toggleShowProperties:(id)sender;
