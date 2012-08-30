@@ -39,7 +39,6 @@
 
 - (IBAction)toggleShowProperties:(id)sender{
     NSMenuItem *menuItem = (NSMenuItem *)sender;
-    NSViewController *viewController;
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         // close window
         [[self window] close];
@@ -54,33 +53,29 @@
 
 - (void)setCorrectView{
     // based on what is selected, this method set the view controller
+    NSViewController *viewController;
     
     // get all the selected objects
     EDCoreDataUtility *_coreData = [EDCoreDataUtility sharedCoreDataUtility];
     NSMutableDictionary *selectedTypes = [_coreData getAllTypesOfSelectedObjects];
     
     if([selectedTypes valueForKey:EDEntityNameGraph]){
-        NSLog(@"there is something for graph.");
+        if(!graphController){
+            graphController = [[EDMenuWindowPropertiesGraphController alloc] initWithNibName:@"EDMenuWindowPropertiesGraph" bundle:nil];
+        }
+        viewController = graphController;
     }
     else {
-        NSLog(@"there is nothing selected.");
+        if(!documentController){
+            documentController = [[EDMenuWindowPropertiesDocumentController alloc] initWithNibName:@"EDMenuWindowPropertiesDocument" bundle:nil];
+        }
+        viewController = documentController;
     }
-        
-              
-    
-    // old code
-    /*
-    if(!viewControllerGraph){
-        viewControllerGraph = [[EDPropertiesViewControllerGraph alloc] initWithNibName:@"EDPropertiesViewGraph" bundle:nil];
-    }
-    // show my window
-    [self showWindow:self];
     
 #warning need to clean this up
-    // DUPLICATED CODE - see showPropertiesPanelText
     //Compute the new window frame
     NSSize currentSize = [[[self window] contentView] frame].size;
-    NSSize newSize = [[viewControllerGraph view] frame].size;
+    NSSize newSize = [[viewController view] frame].size;
     float deltaWidth = newSize.width - currentSize.width;
     float deltaHeight = newSize.height - currentSize.height;
     NSRect windowFrame = [[self window] frame];
@@ -94,9 +89,7 @@
     // END DUPLICATE
     
     // set content of the window
-    [[self window] setContentView:[viewControllerGraph view]];
-     */
-    
+    [[self window] setContentView:[viewController view]];
 }
 
 - (void)menuWillOpen:(NSMenu *)menu{
