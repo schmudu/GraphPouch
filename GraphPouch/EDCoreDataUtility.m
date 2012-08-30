@@ -77,6 +77,23 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return allObjects;
 }
 
+- (NSMutableDictionary *)getAllTypesOfSelectedObjects{
+    // this method returns a dictionary of the types of selected objects
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    NSArray *fetchedObjects;
+    
+    // get all graphs
+    fetchedObjects = [EDGraph findAllSelectedObjects];
+    
+#warning add other elements here
+    if ([fetchedObjects count] > 0) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDEntityNameGraph]; 
+    }
+    
+         
+    return results;
+}
+
 - (void)clearSelectedElements{
     NSArray *fetchedObjects = [EDGraph findAllSelectedObjects];
     if (fetchedObjects == nil) {

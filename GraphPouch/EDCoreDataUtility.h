@@ -21,6 +21,7 @@
 - (NSManagedObjectContext *)context;
 - (NSMutableArray *)getAllObjects;
 - (NSMutableArray *)getAllSelectedObjects;
+- (NSMutableDictionary *)getAllTypesOfSelectedObjects;
 - (NSArray *)getAllGraphs;
 - (void)clearSelectedElements;
 - (void)deleteSelectedElements;

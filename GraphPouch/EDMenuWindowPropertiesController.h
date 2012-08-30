@@ -7,9 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDMenuWindowPropertiesDocumentController.h"
+#import "EDMenuWindowPropertiesGraphController.h"
+
 
 @interface EDMenuWindowPropertiesController : NSWindowController <NSMenuDelegate>{
     IBOutlet NSMenuItem *menuItemProperties;
+    EDMenuWindowPropertiesDocumentController *documentController;
+    EDMenuWindowPropertiesGraphController *graphController;
 }
 
 - (IBAction)toggleShowProperties:(id)sender;
