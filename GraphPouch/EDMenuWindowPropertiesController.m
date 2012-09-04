@@ -26,7 +26,6 @@
 {
     self = [super initWithWindow:window];
     if (self) {
-        // Initialization code here.
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         _context = [_coreData context];
         _nc = [NSNotificationCenter defaultCenter];

@@ -193,11 +193,11 @@
 		CD3F0AF915C4776900AB7567 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */,
+				CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */,
 				CD1D032315EC1BA600C88A7A /* Window */,
 				CD1D02FB15E83EFC00C88A7A /* View */,
 				CDE6D66715E41E7A00E5695F /* Preferences */,
-				CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */,
-				CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
