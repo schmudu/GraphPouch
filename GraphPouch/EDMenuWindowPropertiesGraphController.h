@@ -11,5 +11,6 @@
 
 @interface EDMenuWindowPropertiesGraphController : EDMenuWindowController{
     IBOutlet NSTextField *labelWidth;
+    IBOutlet NSTextField *labelX;
 }
 @end

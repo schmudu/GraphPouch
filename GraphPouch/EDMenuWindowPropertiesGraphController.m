@@ -12,6 +12,7 @@
 
 @interface EDMenuWindowPropertiesGraphController ()
 - (void)setElementLabelWidth;
+- (void)setElementLabelX;
 @end
 
 @implementation EDMenuWindowPropertiesGraphController
@@ -32,6 +33,7 @@
     //NSArray *graphs = [EDGraph findAllSelectedObjects];
     //NSLog(@"graph view did load: graphs: %@", graphs);
     [self setElementLabelWidth];
+    [self setElementLabelX];
 }
 
 - (void)setElementLabelWidth{
@@ -61,10 +63,47 @@
     // if there is a diff then label shows nothing, otherwise show width
     if (diff) {
 #warning need to figure out how to set custom color
+        [labelWidth setStringValue:@""];
         [labelWidth setBackgroundColor:[NSColor grayColor]];
     }
     else {
-        [labelWidth setStringValue:[NSString stringWithFormat:@"%f", width]];
+        [labelWidth setStringValue:[NSString stringWithFormat:@"%.2f", width]];
+        [labelWidth setBackgroundColor:[NSColor whiteColor]];
+    }
+}
+
+- (void)setElementLabelX{
+    // this method will gather all of the selected objects and set the width label 
+    NSMutableArray *elements = [[NSMutableArray alloc] init];
+    NSArray *graphs = [EDGraph findAllSelectedObjects];
+    BOOL diff = FALSE;
+    int i = 0;
+    float x;
+    EDElement *currentElement;
+    
+#warning add other elements here
+    [elements addObjectsFromArray:graphs];
+    while ((i < [elements count]) && (!diff)) {
+        currentElement = [elements objectAtIndex:i];
+        // if not the first and current width is not the same as previous width
+        if((i != 0) && (x != [currentElement locationX])){
+            diff = TRUE;
+        }
+        else {
+            x = [currentElement locationX];
+        }
+        i++;
+    }
+    
+    // if there is a diff then label shows nothing, otherwise show width
+    if (diff) {
+#warning need to figure out how to set custom color
+        [labelX setStringValue:@""];
+        [labelX setBackgroundColor:[NSColor grayColor]];
+    }
+    else {
+        [labelX setStringValue:[NSString stringWithFormat:@"%.2f", x]];
+        [labelX setBackgroundColor:[NSColor whiteColor]];
     }
 }
 
