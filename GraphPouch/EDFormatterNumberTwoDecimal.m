@@ -19,5 +19,19 @@
     return TRUE;
 }
 
+- (BOOL)isPartialStringValid:(NSString *__autoreleasing *)partialStringPtr proposedSelectedRange:(NSRangePointer)proposedSelRangePtr originalString:(NSString *)origString originalSelectedRange:(NSRange)origSelRange errorDescription:(NSString *__autoreleasing *)error{
+    NSError *regexError = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^([0-9]*)$"
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&regexError];
+    NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:*partialStringPtr options:0 range:NSMakeRange(0, [*partialStringPtr length])];
+    
+    if (rangeOfFirstMatch.location != NSNotFound) {
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 @end
