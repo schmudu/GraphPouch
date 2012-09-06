@@ -256,6 +256,7 @@
 
 # pragma mark listeners - graphs
 - (void)onContextChanged:(NSNotification *)note{
+    NSLog(@"context changed.");
     // this enables undo method to work
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
     
@@ -272,6 +273,13 @@
             }
         i++;
     }
+    
+    /*
+    if(hasChanged)
+        NSLog(@"this element has changed.");
+    else {
+        NSLog(@"this element has not changed.");
+    }*/
 }
 
 # pragma mark listeners - selection

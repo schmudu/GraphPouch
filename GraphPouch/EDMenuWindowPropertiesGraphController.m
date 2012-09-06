@@ -9,6 +9,7 @@
 #import "EDMenuWindowPropertiesGraphController.h"
 #import "EDGraph.h"
 #import "EDElement.h"
+#import "EDConstants.h"
 
 @interface EDMenuWindowPropertiesGraphController ()
 - (void)setElementLabelWidth;
@@ -104,6 +105,25 @@
     else {
         [labelX setStringValue:[NSString stringWithFormat:@"%.2f", x]];
         [labelX setBackgroundColor:[NSColor whiteColor]];
+    }
+}
+
+#pragma mark text field delegation
+- (void)controlTextDidEndEditing:(NSNotification *)obj{
+    NSLog(@"user finished editing one of the labels: width: %@", [labelWidth stringValue]);
+#warning need to validate input
+#warning can abstract-ize this method
+    [self changeElementsWidth:[[labelWidth stringValue] floatValue]];
+}
+
+#pragma mark elements
+- (void)changeElementsWidth:(float)newWidth{
+    NSMutableArray *elements = [_coreData getAllSelectedObjects];
+    for (EDElement *element in elements){
+//#error not setting core data after 1st attempt
+        NSLog(@"setting width:%f", newWidth);
+        //[element setElementWidth:newWidth];
+        [element setValue:[[NSNumber alloc] initWithFloat:newWidth] forKey:EDElementAttributeWidth];
     }
 }
 

@@ -26,7 +26,7 @@
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         
         // listen
-        NSLog(@"init worksheet view controller.");
+        //NSLog(@"init worksheet view controller.");
     }
     
     return self;
