@@ -13,6 +13,7 @@ int const GRAPH_INIT_HAS_GRID_LINES     = FALSE;
 @implementation EDConstants
 // preferences
 NSString * const EDPreferenceSnapToGuides                       = @"EDPreferenceSnapToGuides";
+NSString * const EDPreferencePropertyPanel                      = @"EDPreferencePropertyPanel";
 
 // entity names
 NSString * const EDEntityNameGraph                              = @"EDGraph";

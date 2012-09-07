@@ -52,11 +52,17 @@
         // close window
         [[self window] close];
         [menuItem setState:NSOffState];
+        
+        // set preferences
+        [[NSUserDefaults standardUserDefaults] setBool:FALSE forKey:EDPreferencePropertyPanel];
     }
     else {
         [self showWindow:self];
         [menuItem setState:NSOnState];
         [self setCorrectView];
+        
+        // set preferences
+        [[NSUserDefaults standardUserDefaults] setBool:TRUE forKey:EDPreferencePropertyPanel];
     }
 }
 
