@@ -57,9 +57,13 @@
 
 - (void)updateDisplayBasedOnContext{
     // move to position
-    [self setFrameOrigin:NSMakePoint([[[self dataObj] valueForKey:EDElementAttributeLocationX] floatValue], [[[self dataObj] valueForKey:EDElementAttributeLocationY] floatValue])];
-    
-    [self setNeedsDisplay:TRUE];
+    //[self setFrameOrigin:NSMakePoint([[[self dataObj] valueForKey:EDElementAttributeLocationX] floatValue], [[[self dataObj] valueForKey:EDElementAttributeLocationY] floatValue])];
+    [self setFrame:NSMakeRect([[[self dataObj] valueForKey:EDElementAttributeLocationX] floatValue], 
+                              [[[self dataObj] valueForKey:EDElementAttributeLocationY] floatValue],
+                              [[[self dataObj] valueForKey:EDElementAttributeWidth] floatValue],
+                              [[[self dataObj] valueForKey:EDElementAttributeHeight] floatValue])];
+                              
+    //[self setNeedsDisplay:TRUE];
 }
 
 #pragma mark mouse events
@@ -256,7 +260,6 @@
 
 # pragma mark listeners - graphs
 - (void)onContextChanged:(NSNotification *)note{
-    NSLog(@"context changed.");
     // this enables undo method to work
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
     
@@ -273,13 +276,6 @@
             }
         i++;
     }
-    
-    /*
-    if(hasChanged)
-        NSLog(@"this element has changed.");
-    else {
-        NSLog(@"this element has not changed.");
-    }*/
 }
 
 # pragma mark listeners - selection

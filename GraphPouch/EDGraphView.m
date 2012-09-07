@@ -47,13 +47,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    //NSRect bounds = [self bounds];
-    NSRect bounds = NSMakeRect(0, 0, [[self dataObj] elementWidth], [[self dataObj] elementHeight]);
-    //[self setFrameSize:NSMakeSize([[self dataObj] elementWidth], [[self dataObj] elementHeight])];
-    //NSRect bounds = NSMakeRect([[self dataObj] locationX], [[self dataObj] locationY], [[self dataObj] elementWidth], [[self dataObj] elementHeight]);
-    //[self setBounds:NSMakeRect(0, 0, [[self dataObj] elementWidth], [[self dataObj] elementHeight])];
-    
-    // fill color based on selection
     if ([[self dataObj] isSelectedElement]){
         [[NSColor redColor] set];
     }
@@ -61,12 +54,7 @@
         [[NSColor greenColor] set];
     }
     
-    [NSBezierPath fillRect:bounds];
-    //[NSBezierPath fillRect:NSMakeRect(0, 0, [self bounds].size.width, [self bounds].size.height)]; 
-    //NSLog(@"bound width :%f frame width:%f data width:%f", [self bounds].size.width, [self frame].size.width, [[self dataObj] elementWidth]);
-    NSLog(@"here");
-    
-    //[super drawRect:dirtyRect];
+    [NSBezierPath fillRect:[self bounds]];
 }
 
 @end

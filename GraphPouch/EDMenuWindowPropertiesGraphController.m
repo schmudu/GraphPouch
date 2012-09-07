@@ -51,7 +51,6 @@
     while ((i < [elements count]) && (!diff)) {
         currentElement = [elements objectAtIndex:i];
         // if not the first and current width is not the same as previous width
-        NSLog(@"width: %f", [currentElement elementWidth]);
         if((i != 0) && (width != [currentElement elementWidth])){
             diff = TRUE;
         }
@@ -110,7 +109,6 @@
 
 #pragma mark text field delegation
 - (void)controlTextDidEndEditing:(NSNotification *)obj{
-    NSLog(@"user finished editing one of the labels: width: %@", [labelWidth stringValue]);
 #warning need to validate input
 #warning can abstract-ize this method
     [self changeElementsWidth:[[labelWidth stringValue] floatValue]];
@@ -120,9 +118,6 @@
 - (void)changeElementsWidth:(float)newWidth{
     NSMutableArray *elements = [_coreData getAllSelectedObjects];
     for (EDElement *element in elements){
-//#error not setting core data after 1st attempt
-        NSLog(@"setting width:%f", newWidth);
-        //[element setElementWidth:newWidth];
         [element setValue:[[NSNumber alloc] initWithFloat:newWidth] forKey:EDElementAttributeWidth];
     }
 }
