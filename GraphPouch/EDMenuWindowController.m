@@ -7,6 +7,7 @@
 //
 
 #import "EDMenuWindowController.h"
+#import "EDMenuWindowPropertiesController.h"
 
 @interface EDMenuWindowController ()
 
@@ -29,4 +30,5 @@
 - (void)initWindowAfterLoaded{
     NSLog(@"init window base class.");
 }
+
 @end

@@ -12,6 +12,7 @@
 		CD1D02FF15E83F1600C88A7A /* EDMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D02FE15E83F1600C88A7A /* EDMenuViewController.m */; };
 		CD1D032815EC1BCA00C88A7A /* EDMenuWindowAlignController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */; };
 		CD1D032915EC1BCA00C88A7A /* EDMenuWindowAlign.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */; };
+		CD1EBD3315FC587B00BEEA4D /* EDMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD3215FC587B00BEEA4D /* EDMenuController.m */; };
 		CD27665515D996E900162240 /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CD27665415D996E900162240 /* EDGraph.m */; };
 		CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9915BDF93400AB7567 /* EDGraphView.m */; };
 		CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */; };
@@ -54,6 +55,8 @@
 		CD1D032515EC1BCA00C88A7A /* EDMenuWindowAlignController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowAlignController.h; sourceTree = "<group>"; };
 		CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowAlignController.m; sourceTree = "<group>"; };
 		CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDMenuWindowAlign.xib; sourceTree = "<group>"; };
+		CD1EBD3115FC587B00BEEA4D /* EDMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuController.h; sourceTree = "<group>"; };
+		CD1EBD3215FC587B00BEEA4D /* EDMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuController.m; sourceTree = "<group>"; };
 		CD27665315D996E900162240 /* EDGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraph.h; sourceTree = "<group>"; };
 		CD27665415D996E900162240 /* EDGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraph.m; sourceTree = "<group>"; };
 		CD3F0A9815BDF93400AB7567 /* EDGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphView.h; sourceTree = "<group>"; };
@@ -135,6 +138,8 @@
 		CD1D032315EC1BA600C88A7A /* Window */ = {
 			isa = PBXGroup;
 			children = (
+				CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */,
+				CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */,
 				CD3F0AFB15C477CE00AB7567 /* Properties */,
 				CD1D032515EC1BCA00C88A7A /* EDMenuWindowAlignController.h */,
 				CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */,
@@ -197,11 +202,11 @@
 		CD3F0AF915C4776900AB7567 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */,
-				CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */,
 				CD1D032315EC1BA600C88A7A /* Window */,
 				CD1D02FB15E83EFC00C88A7A /* View */,
 				CDE6D66715E41E7A00E5695F /* Preferences */,
+				CD1EBD3115FC587B00BEEA4D /* EDMenuController.h */,
+				CD1EBD3215FC587B00BEEA4D /* EDMenuController.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -449,6 +454,7 @@
 				CDA6643B15EED131002FBE2F /* EDMenuWindowPropertiesDocumentController.m in Sources */,
 				CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */,
 				CDC3C82815F96390009A8BFD /* EDFormatterNumberTwoDecimal.m in Sources */,
+				CD1EBD3315FC587B00BEEA4D /* EDMenuController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

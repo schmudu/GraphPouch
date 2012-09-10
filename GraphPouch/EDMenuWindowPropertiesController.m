@@ -17,8 +17,18 @@
 @end
 
 @implementation EDMenuWindowPropertiesController
+static EDMenuWindowPropertiesController *_instance;
+
++ (EDMenuWindowPropertiesController *)getInstance{
+    if (_instance == nil) {
+        _instance = [[EDMenuWindowPropertiesController alloc] init];
+    }
+    return _instance;
+}
+
 - (id)init{
     self = [super initWithWindowNibName:@"EDMenuWindowProperties"];
+    NSLog(@"init window properties: create instance:%@", self);
     return self;
 }
 

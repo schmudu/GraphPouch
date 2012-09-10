@@ -25,6 +25,6 @@
 }
 
 - (void)initWindowAfterLoaded{
-    NSLog(@"document view did load.");
+    //NSLog(@"document view did load.");
 }
 @end

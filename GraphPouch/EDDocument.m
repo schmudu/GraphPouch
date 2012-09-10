@@ -10,6 +10,7 @@
 #import "EDWorksheetViewController.h"
 #import "EDGraph.h"
 #import "EDCoreDataUtility.h"
+#import "EDMenuController.h"
 
 @implementation EDDocument
 
@@ -40,6 +41,12 @@
     [super windowControllerDidLoadNib:aController];
     [worksheetController setView:worksheetView];
     [worksheetController postInitialize];
+    
+    if (!menuController) {
+        menuController = [[EDMenuController alloc] init];
+    }
+    
+    [menuController postInitialize];
 }
 
 - (void)awakeFromNib{

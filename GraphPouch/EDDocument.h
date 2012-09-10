@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDMenuController.h"
 @class EDWorksheetView;
 @class EDWorksheetViewController;
 
@@ -14,6 +15,7 @@
     IBOutlet NSArrayController *elementsController;
     IBOutlet EDWorksheetViewController *worksheetController;
     IBOutlet NSView *worksheetView;
+    EDMenuController *menuController;
 }
 
 -(id)getInstance;

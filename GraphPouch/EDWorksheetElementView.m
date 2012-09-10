@@ -63,7 +63,7 @@
                               [[[self dataObj] valueForKey:EDElementAttributeWidth] floatValue],
                               [[[self dataObj] valueForKey:EDElementAttributeHeight] floatValue])];
                               
-    //[self setNeedsDisplay:TRUE];
+    [self setNeedsDisplay:TRUE];
 }
 
 #pragma mark mouse events

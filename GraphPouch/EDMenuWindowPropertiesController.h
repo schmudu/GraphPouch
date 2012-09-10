@@ -21,6 +21,8 @@
     EDCoreDataUtility *_coreData;
 }
 
++ (EDMenuWindowPropertiesController *)getInstance;
 - (IBAction)toggleShowProperties:(id)sender;
-
+- (void)setCorrectView;
+    
 @end
