@@ -21,8 +21,8 @@
     EDCoreDataUtility *_coreData;
 }
 
-+ (EDMenuWindowPropertiesController *)getInstance;
-- (IBAction)toggleShowProperties:(id)sender;
+- (void)togglePropertiesPanel:(id)sender;
 - (void)setCorrectView;
-    
+- (void)postInitialize;
+
 @end

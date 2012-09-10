@@ -12,7 +12,6 @@
 @interface EDMenuController : NSObject{
     EDMenuWindowPropertiesController *propertiesController;
 }
-- (void)postInitialize;
 - (IBAction)togglePropertiesPanel:(id)sender;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "EDMenuWindowController.h"
 #import "EDMenuWindowPropertiesController.h"
+#import "EDConstants.h"
 
 @interface EDMenuWindowController ()
 
@@ -26,6 +27,18 @@
     
     return self;
 }
+
+- (void)menuWillOpen:(NSMenu *)menu{
+    NSLog(@"menu did open.");
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults boolForKey:EDPreferencePropertyPanel]) {
+        [properties setState:NSOnState];
+    }
+    else {
+        [properties setState:NSOffState];
+    }
+}
+
 
 - (void)initWindowAfterLoaded{
     NSLog(@"init window base class.");

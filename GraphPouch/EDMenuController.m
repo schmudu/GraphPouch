@@ -12,26 +12,15 @@
 
 @implementation EDMenuController
 
-- (IBAction)togglePropertiesPanel:(id)sender{
+- (id)init{
+    self = [super init];
     if(!propertiesController){
-        propertiesController = [EDMenuWindowPropertiesController getInstance];
+        propertiesController = [[EDMenuWindowPropertiesController alloc] init];
     }
-    
-    [propertiesController toggleShowProperties:sender];
+    return self;
 }
 
-// init any panels that need to be opened
-- (void)postInitialize{
-    if(!propertiesController){
-        //propertiesController = [[EDMenuWindowPropertiesController alloc] init];
-        NSLog(@"document post init.");
-        propertiesController = [EDMenuWindowPropertiesController getInstance];
-    }
-    
-    // show properties if needed
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:EDPreferencePropertyPanel]){
-        [propertiesController showWindow:self];
-        [propertiesController setCorrectView];
-    }
+- (IBAction)togglePropertiesPanel:(id)sender{
+    [[[NSDocumentController sharedDocumentController] currentDocument] togglePropertiesPanel:sender];
 }
 @end

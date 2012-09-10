@@ -17,18 +17,9 @@
 @end
 
 @implementation EDMenuWindowPropertiesController
-static EDMenuWindowPropertiesController *_instance;
-
-+ (EDMenuWindowPropertiesController *)getInstance{
-    if (_instance == nil) {
-        _instance = [[EDMenuWindowPropertiesController alloc] init];
-    }
-    return _instance;
-}
 
 - (id)init{
     self = [super initWithWindowNibName:@"EDMenuWindowProperties"];
-    NSLog(@"init window properties: create instance:%@", self);
     return self;
 }
 
@@ -50,13 +41,34 @@ static EDMenuWindowPropertiesController *_instance;
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 
-- (void)windowDidLoad
-{
+- (void)windowDidLoad{
+    NSLog(@"window did open.");
+    // set menu state if opened
+    if([[NSUserDefaults standardUserDefaults] boolForKey:EDPreferencePropertyPanel]){
+        NSLog(@"setting state to true: menu:%@", menuItemProperties);
+        [menuItemProperties setState:NSOnState];
+    }
     [super windowDidLoad];
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
-- (IBAction)toggleShowProperties:(id)sender{
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    NSLog(@"awake from nib: menu:%@", menuItemProperties);
+}
+
+- (void)postInitialize
+{
+    //[super windowDidLoad];
+    // init panel if needed
+    NSLog(@"post initialize.");
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:EDPreferencePropertyPanel]){
+        [self showWindow:self];
+        [self setCorrectView];
+    }
+}
+
+- (void)togglePropertiesPanel:(id)sender{
     NSMenuItem *menuItem = (NSMenuItem *)sender;
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         // close window
@@ -78,7 +90,6 @@ static EDMenuWindowPropertiesController *_instance;
 
 - (void)setCorrectView{
     // based on what is selected, this method set the view controller
-    //NSViewController *viewController;
     EDMenuWindowController *viewController;
     
     // get all the selected objects

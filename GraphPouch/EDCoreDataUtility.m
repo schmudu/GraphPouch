@@ -100,6 +100,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
         // Handle the error
     }
     else{
+        NSLog(@"clearing selected objects.");
         for (EDGraph *elem in fetchedObjects){
             [elem setSelected:FALSE];
         }

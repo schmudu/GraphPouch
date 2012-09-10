@@ -11,6 +11,7 @@
 #import "EDGraph.h"
 #import "EDCoreDataUtility.h"
 #import "EDMenuController.h"
+#import "EDMenuWindowPropertiesController.h"
 
 @implementation EDDocument
 
@@ -25,6 +26,7 @@
         //Init code
         EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
         [coreData setContext: [self managedObjectContext]];
+        propertyController = [[EDMenuWindowPropertiesController alloc] init];
     }
     return self;
 }
@@ -42,11 +44,8 @@
     [worksheetController setView:worksheetView];
     [worksheetController postInitialize];
     
-    if (!menuController) {
-        menuController = [[EDMenuController alloc] init];
-    }
-    
-    [menuController postInitialize];
+    // post init property panel
+    [propertyController postInitialize];
 }
 
 - (void)awakeFromNib{
@@ -64,4 +63,7 @@
     return [[coreData context] undoManager];
 }
 
+- (void)togglePropertiesPanel:(id)sender{
+    [propertyController togglePropertiesPanel:sender];
+}
 @end
