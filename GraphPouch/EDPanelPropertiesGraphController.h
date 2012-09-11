@@ -1,5 +1,5 @@
 //
-//  EDMenuWindowPropertiesGraphController.h
+//  EDPanelPropertiesGraphController.h
 //  GraphPouch
 //
 //  Created by PATRICK LEE on 8/29/12.
@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "EDPanelViewController.h"
 
-@interface EDMenuWindowPropertiesGraphController : EDPanelViewController <NSTextFieldDelegate>{
+@interface EDPanelPropertiesGraphController : EDPanelViewController <NSTextFieldDelegate>{
     IBOutlet NSTextField *labelWidth;
     IBOutlet NSTextField *labelX;
 }

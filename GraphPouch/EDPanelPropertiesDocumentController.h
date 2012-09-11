@@ -1,5 +1,5 @@
 //
-//  EDMenuWindowPropertiesDocumentController.h
+//  EDPanelPropertiesDocumentController.h
 //  GraphPouch
 //
 //  Created by PATRICK LEE on 8/29/12.
@@ -9,5 +9,5 @@
 #import <Cocoa/Cocoa.h>
 #import "EDPanelViewController.h"
 
-@interface EDMenuWindowPropertiesDocumentController : EDPanelViewController
+@interface EDPanelPropertiesDocumentController : EDPanelViewController
 @end

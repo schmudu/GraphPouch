@@ -7,15 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EDMenuWindowPropertiesDocumentController.h"
-#import "EDMenuWindowPropertiesGraphController.h"
+#import "EDPanelPropertiesDocumentController.h"
+#import "EDPanelPropertiesGraphController.h"
 #import "EDCoreDataUtility.h"
 
 
 @interface EDPanelPropertiesController : NSWindowController <NSMenuDelegate>{
     IBOutlet NSMenuItem *menuItemProperties;
-    EDMenuWindowPropertiesDocumentController *documentController;
-    EDMenuWindowPropertiesGraphController *graphController;
+    EDPanelPropertiesDocumentController *documentController;
+    EDPanelPropertiesGraphController *graphController;
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;
     EDCoreDataUtility *_coreData;

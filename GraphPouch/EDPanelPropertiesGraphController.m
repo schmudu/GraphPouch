@@ -1,22 +1,22 @@
 //
-//  EDMenuWindowPropertiesGraphController.m
+//  EDPanelPropertiesGraphController.m
 //  GraphPouch
 //
 //  Created by PATRICK LEE on 8/29/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDMenuWindowPropertiesGraphController.h"
+#import "EDPanelPropertiesGraphController.h"
 #import "EDGraph.h"
 #import "EDElement.h"
 #import "EDConstants.h"
 
-@interface EDMenuWindowPropertiesGraphController ()
+@interface EDPanelPropertiesGraphController ()
 - (void)setElementLabelWidth;
 - (void)setElementLabelX;
 @end
 
-@implementation EDMenuWindowPropertiesGraphController
+@implementation EDPanelPropertiesGraphController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

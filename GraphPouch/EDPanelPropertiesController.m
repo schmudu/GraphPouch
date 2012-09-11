@@ -98,13 +98,13 @@
 #warning add other elements here, need to check for other entities
     if([selectedTypes valueForKey:EDEntityNameGraph]){
         if(!graphController){
-            graphController = [[EDMenuWindowPropertiesGraphController alloc] initWithNibName:@"EDMenuWindowPropertiesGraph" bundle:nil];
+            graphController = [[EDPanelPropertiesGraphController alloc] initWithNibName:@"EDMenuWindowPropertiesGraph" bundle:nil];
         }
         viewController = graphController;
     }
     else {
         if(!documentController){
-            documentController = [[EDMenuWindowPropertiesDocumentController alloc] initWithNibName:@"EDMenuWindowPropertiesDocument" bundle:nil];
+            documentController = [[EDPanelPropertiesDocumentController alloc] initWithNibName:@"EDMenuWindowPropertiesDocument" bundle:nil];
         }
         viewController = documentController;
     }

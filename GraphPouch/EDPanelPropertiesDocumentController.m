@@ -1,18 +1,18 @@
 //
-//  EDMenuWindowPropertiesDocumentController.m
+//  EDPanelPropertiesDocumentController.m
 //  GraphPouch
 //
 //  Created by PATRICK LEE on 8/29/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDMenuWindowPropertiesDocumentController.h"
+#import "EDPanelPropertiesDocumentController.h"
 
-@interface EDMenuWindowPropertiesDocumentController ()
+@interface EDPanelPropertiesDocumentController ()
 
 @end
 
-@implementation EDMenuWindowPropertiesDocumentController
+@implementation EDPanelPropertiesDocumentController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
