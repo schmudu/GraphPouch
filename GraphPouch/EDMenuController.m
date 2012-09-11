@@ -7,7 +7,7 @@
 //
 
 #import "EDMenuController.h"
-#import "EDMenuWindowPropertiesController.h"
+#import "EDPanelPropertiesController.h"
 #import "EDConstants.h"
 
 @implementation EDMenuController
@@ -15,7 +15,7 @@
 - (id)init{
     self = [super init];
     if(!propertiesController){
-        propertiesController = [[EDMenuWindowPropertiesController alloc] init];
+        propertiesController = [[EDPanelPropertiesController alloc] init];
     }
     return self;
 }

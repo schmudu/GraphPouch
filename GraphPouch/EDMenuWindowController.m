@@ -7,7 +7,7 @@
 //
 
 #import "EDMenuWindowController.h"
-#import "EDMenuWindowPropertiesController.h"
+#import "EDPanelPropertiesController.h"
 #import "EDConstants.h"
 
 @interface EDMenuWindowController ()
@@ -16,17 +16,6 @@
 
 @implementation EDMenuWindowController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
-        _context = [_coreData context];
-        _nc = [NSNotificationCenter defaultCenter];
-    }
-    
-    return self;
-}
 
 - (void)menuWillOpen:(NSMenu *)menu{
     NSLog(@"menu did open.");
@@ -37,11 +26,6 @@
     else {
         [properties setState:NSOffState];
     }
-}
-
-
-- (void)initWindowAfterLoaded{
-    NSLog(@"init window base class.");
 }
 
 @end

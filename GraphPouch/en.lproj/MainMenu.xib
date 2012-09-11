@@ -1050,7 +1050,7 @@
 				<string key="NSClassName">EDMenuController</string>
 			</object>
 			<object class="NSCustomObject" id="454632675">
-				<string key="NSClassName">EDMenuWindowPropertiesController</string>
+				<string key="NSClassName">EDPanelPropertiesController</string>
 			</object>
 			<object class="NSCustomObject" id="363026120">
 				<string key="NSClassName">EDMenuWindowController</string>
@@ -2632,7 +2632,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">EDMenuWindowController</string>
-					<string key="superclassName">NSViewController</string>
+					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">properties</string>
 						<string key="NS.object.0">NSMenuItem</string>
@@ -2650,7 +2650,7 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">EDMenuWindowPropertiesController</string>
+					<string key="className">EDPanelPropertiesController</string>
 					<string key="superclassName">NSWindowController</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">menuItemProperties</string>
@@ -2665,7 +2665,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/EDMenuWindowPropertiesController.h</string>
+						<string key="minorKey">./Classes/EDPanelPropertiesController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

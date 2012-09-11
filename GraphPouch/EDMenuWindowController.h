@@ -7,14 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EDCoreDataUtility.h"
 
-@interface EDMenuWindowController : NSViewController <NSMenuDelegate>{
-    NSNotificationCenter *_nc;
-    NSManagedObjectContext *_context;
-    EDCoreDataUtility *_coreData;
+//@interface EDMenuWindowController : NSViewController <NSMenuDelegate>
+@interface EDMenuWindowController : NSObject <NSMenuDelegate>{
     IBOutlet NSMenuItem *properties;
 }
 
-- (void)initWindowAfterLoaded;
 @end

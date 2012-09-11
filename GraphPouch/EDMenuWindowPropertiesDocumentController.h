@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EDMenuWindowController.h"
+#import "EDPanelViewController.h"
 
-@interface EDMenuWindowPropertiesDocumentController : EDMenuWindowController
+@interface EDMenuWindowPropertiesDocumentController : EDPanelViewController
 @end

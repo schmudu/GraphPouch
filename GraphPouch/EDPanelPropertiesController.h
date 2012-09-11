@@ -1,5 +1,5 @@
 //
-//  EDMenuWindowPropertiesController.h
+//  EDPanelPropertiesController.h
 //  GraphPouch
 //
 //  Created by PATRICK LEE on 8/28/12.
@@ -12,7 +12,7 @@
 #import "EDCoreDataUtility.h"
 
 
-@interface EDMenuWindowPropertiesController : NSWindowController <NSMenuDelegate>{
+@interface EDPanelPropertiesController : NSWindowController <NSMenuDelegate>{
     IBOutlet NSMenuItem *menuItemProperties;
     EDMenuWindowPropertiesDocumentController *documentController;
     EDMenuWindowPropertiesGraphController *graphController;

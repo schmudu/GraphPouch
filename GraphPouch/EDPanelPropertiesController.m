@@ -1,22 +1,22 @@
 //
-//  EDMenuWindowPropertiesController.m
+//  EDPanelPropertiesController.m
 //  GraphPouch
 //
 //  Created by PATRICK LEE on 8/28/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDMenuWindowPropertiesController.h"
+#import "EDPanelPropertiesController.h"
 #import "EDCoreDataUtility.h"
 #import "EDConstants.h"
-#import "EDMenuWindowController.h"
+#import "EDPanelViewController.h"
 
-@interface EDMenuWindowPropertiesController ()
+@interface EDPanelPropertiesController ()
 - (void)setCorrectView;
 - (void)onContextChanged:(NSNotification *)note;
 @end
 
-@implementation EDMenuWindowPropertiesController
+@implementation EDPanelPropertiesController
 
 - (id)init{
     self = [super initWithWindowNibName:@"EDMenuWindowProperties"];
@@ -90,7 +90,7 @@
 
 - (void)setCorrectView{
     // based on what is selected, this method set the view controller
-    EDMenuWindowController *viewController;
+    EDPanelViewController *viewController;
     
     // get all the selected objects
     NSMutableDictionary *selectedTypes = [_coreData getAllTypesOfSelectedObjects];

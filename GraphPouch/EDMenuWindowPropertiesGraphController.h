@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EDMenuWindowController.h"
+#import "EDPanelViewController.h"
 
-@interface EDMenuWindowPropertiesGraphController : EDMenuWindowController <NSTextFieldDelegate>{
+@interface EDMenuWindowPropertiesGraphController : EDPanelViewController <NSTextFieldDelegate>{
     IBOutlet NSTextField *labelWidth;
     IBOutlet NSTextField *labelX;
 }

@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EDMenuWindowPropertiesController.h"
+#import "EDPanelPropertiesController.h"
 
 @interface EDMenuController : NSObject{
-    EDMenuWindowPropertiesController *propertiesController;
+    EDPanelPropertiesController *propertiesController;
 }
 - (IBAction)togglePropertiesPanel:(id)sender;
 

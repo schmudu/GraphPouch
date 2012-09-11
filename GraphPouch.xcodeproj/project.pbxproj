@@ -13,6 +13,8 @@
 		CD1D032815EC1BCA00C88A7A /* EDMenuWindowAlignController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */; };
 		CD1D032915EC1BCA00C88A7A /* EDMenuWindowAlign.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */; };
 		CD1EBD3315FC587B00BEEA4D /* EDMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD3215FC587B00BEEA4D /* EDMenuController.m */; };
+		CD1EBD4F15FED23F00BEEA4D /* EDPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD4E15FED23F00BEEA4D /* EDPanelViewController.m */; };
+		CD1EBD5B15FED4B800BEEA4D /* EDPanelPropertiesController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD5A15FED4B800BEEA4D /* EDPanelPropertiesController.m */; };
 		CD27665515D996E900162240 /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CD27665415D996E900162240 /* EDGraph.m */; };
 		CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9915BDF93400AB7567 /* EDGraphView.m */; };
 		CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */; };
@@ -28,7 +30,6 @@
 		CD47113B15BA1647008AACC3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD47113915BA1647008AACC3 /* MainMenu.xib */; };
 		CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */; };
 		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
-		CDA6642115ED62C8002FBE2F /* EDMenuWindowPropertiesController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6641F15ED62C8002FBE2F /* EDMenuWindowPropertiesController.m */; };
 		CDA6642215ED62C8002FBE2F /* EDMenuWindowProperties.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDA6642015ED62C8002FBE2F /* EDMenuWindowProperties.xib */; };
 		CDA6643215EED0F3002FBE2F /* EDMenuWindowPropertiesGraph.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDA6643115EED0F3002FBE2F /* EDMenuWindowPropertiesGraph.xib */; };
 		CDA6643515EED102002FBE2F /* EDMenuWindowPropertiesDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDA6643415EED102002FBE2F /* EDMenuWindowPropertiesDocument.xib */; };
@@ -57,6 +58,10 @@
 		CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDMenuWindowAlign.xib; sourceTree = "<group>"; };
 		CD1EBD3115FC587B00BEEA4D /* EDMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuController.h; sourceTree = "<group>"; };
 		CD1EBD3215FC587B00BEEA4D /* EDMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuController.m; sourceTree = "<group>"; };
+		CD1EBD4D15FED23F00BEEA4D /* EDPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelViewController.h; sourceTree = "<group>"; };
+		CD1EBD4E15FED23F00BEEA4D /* EDPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelViewController.m; sourceTree = "<group>"; };
+		CD1EBD5915FED4B800BEEA4D /* EDPanelPropertiesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesController.h; sourceTree = "<group>"; };
+		CD1EBD5A15FED4B800BEEA4D /* EDPanelPropertiesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesController.m; sourceTree = "<group>"; };
 		CD27665315D996E900162240 /* EDGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraph.h; sourceTree = "<group>"; };
 		CD27665415D996E900162240 /* EDGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraph.m; sourceTree = "<group>"; };
 		CD3F0A9815BDF93400AB7567 /* EDGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphView.h; sourceTree = "<group>"; };
@@ -86,8 +91,6 @@
 		CD47113D15BA1647008AACC3 /* EDDocument.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EDDocument.xcdatamodel; sourceTree = "<group>"; };
 		CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphArrayController.h; sourceTree = "<group>"; };
 		CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphArrayController.m; sourceTree = "<group>"; };
-		CDA6641E15ED62C8002FBE2F /* EDMenuWindowPropertiesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowPropertiesController.h; sourceTree = "<group>"; };
-		CDA6641F15ED62C8002FBE2F /* EDMenuWindowPropertiesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowPropertiesController.m; sourceTree = "<group>"; };
 		CDA6642015ED62C8002FBE2F /* EDMenuWindowProperties.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDMenuWindowProperties.xib; sourceTree = "<group>"; };
 		CDA6643115EED0F3002FBE2F /* EDMenuWindowPropertiesGraph.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDMenuWindowPropertiesGraph.xib; sourceTree = "<group>"; };
 		CDA6643415EED102002FBE2F /* EDMenuWindowPropertiesDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDMenuWindowPropertiesDocument.xib; sourceTree = "<group>"; };
@@ -140,15 +143,78 @@
 			children = (
 				CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */,
 				CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */,
-				CD3F0AFB15C477CE00AB7567 /* Properties */,
+			);
+			name = Window;
+			sourceTree = "<group>";
+		};
+		CD1EBD4415FECF1E00BEEA4D /* Panels */ = {
+			isa = PBXGroup;
+			children = (
+				CD1EBD4D15FED23F00BEEA4D /* EDPanelViewController.h */,
+				CD1EBD4E15FED23F00BEEA4D /* EDPanelViewController.m */,
+				CD1EBD4915FECF7500BEEA4D /* File */,
+				CD1EBD4815FECF6900BEEA4D /* Edit */,
+				CD1EBD4715FECF5900BEEA4D /* View */,
+				CD1EBD4615FECF3300BEEA4D /* Window */,
+			);
+			name = Panels;
+			sourceTree = "<group>";
+		};
+		CD1EBD4615FECF3300BEEA4D /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				CD1EBD4C15FECFEC00BEEA4D /* Properties */,
+			);
+			name = Window;
+			sourceTree = "<group>";
+		};
+		CD1EBD4715FECF5900BEEA4D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CD1EBD4B15FECFE600BEEA4D /* Align */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		CD1EBD4815FECF6900BEEA4D /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Edit;
+			sourceTree = "<group>";
+		};
+		CD1EBD4915FECF7500BEEA4D /* File */ = {
+			isa = PBXGroup;
+			children = (
+				CDE6D66715E41E7A00E5695F /* Preferences */,
+			);
+			name = File;
+			sourceTree = "<group>";
+		};
+		CD1EBD4B15FECFE600BEEA4D /* Align */ = {
+			isa = PBXGroup;
+			children = (
 				CD1D032515EC1BCA00C88A7A /* EDMenuWindowAlignController.h */,
 				CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */,
 				CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */,
-				CDA6641E15ED62C8002FBE2F /* EDMenuWindowPropertiesController.h */,
-				CDA6641F15ED62C8002FBE2F /* EDMenuWindowPropertiesController.m */,
-				CDA6642015ED62C8002FBE2F /* EDMenuWindowProperties.xib */,
 			);
-			name = Window;
+			name = Align;
+			sourceTree = "<group>";
+		};
+		CD1EBD4C15FECFEC00BEEA4D /* Properties */ = {
+			isa = PBXGroup;
+			children = (
+				CD1EBD5915FED4B800BEEA4D /* EDPanelPropertiesController.h */,
+				CD1EBD5A15FED4B800BEEA4D /* EDPanelPropertiesController.m */,
+				CDA6642015ED62C8002FBE2F /* EDMenuWindowProperties.xib */,
+				CDA6643115EED0F3002FBE2F /* EDMenuWindowPropertiesGraph.xib */,
+				CDA6643415EED102002FBE2F /* EDMenuWindowPropertiesDocument.xib */,
+				CDA6643615EED11D002FBE2F /* EDMenuWindowPropertiesGraphController.h */,
+				CDA6643715EED11D002FBE2F /* EDMenuWindowPropertiesGraphController.m */,
+				CDA6643915EED131002FBE2F /* EDMenuWindowPropertiesDocumentController.h */,
+				CDA6643A15EED131002FBE2F /* EDMenuWindowPropertiesDocumentController.m */,
+			);
+			name = Properties;
 			sourceTree = "<group>";
 		};
 		CD3F0AF515C4774900AB7567 /* View+Controllers */ = {
@@ -202,11 +268,10 @@
 		CD3F0AF915C4776900AB7567 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				CD1D032315EC1BA600C88A7A /* Window */,
-				CD1D02FB15E83EFC00C88A7A /* View */,
-				CDE6D66715E41E7A00E5695F /* Preferences */,
 				CD1EBD3115FC587B00BEEA4D /* EDMenuController.h */,
 				CD1EBD3215FC587B00BEEA4D /* EDMenuController.m */,
+				CD1D032315EC1BA600C88A7A /* Window */,
+				CD1D02FB15E83EFC00C88A7A /* View */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -218,19 +283,6 @@
 				CD015FCD15BA66CA0096CDF9 /* EDConstants.m */,
 			);
 			name = Constants;
-			sourceTree = "<group>";
-		};
-		CD3F0AFB15C477CE00AB7567 /* Properties */ = {
-			isa = PBXGroup;
-			children = (
-				CDA6643115EED0F3002FBE2F /* EDMenuWindowPropertiesGraph.xib */,
-				CDA6643415EED102002FBE2F /* EDMenuWindowPropertiesDocument.xib */,
-				CDA6643615EED11D002FBE2F /* EDMenuWindowPropertiesGraphController.h */,
-				CDA6643715EED11D002FBE2F /* EDMenuWindowPropertiesGraphController.m */,
-				CDA6643915EED131002FBE2F /* EDMenuWindowPropertiesDocumentController.h */,
-				CDA6643A15EED131002FBE2F /* EDMenuWindowPropertiesDocumentController.m */,
-			);
-			name = Properties;
 			sourceTree = "<group>";
 		};
 		CD3F0AFF15C4784000AB7567 /* Graph */ = {
@@ -344,6 +396,7 @@
 			children = (
 				CDE6D65415E111C700E5695F /* EDWindow.h */,
 				CDE6D65515E111C700E5695F /* EDWindow.m */,
+				CD1EBD4415FECF1E00BEEA4D /* Panels */,
 			);
 			name = Window;
 			sourceTree = "<group>";
@@ -449,12 +502,13 @@
 				CDE6D67715E4454B00E5695F /* EDPreferenceController.m in Sources */,
 				CD1D02FF15E83F1600C88A7A /* EDMenuViewController.m in Sources */,
 				CD1D032815EC1BCA00C88A7A /* EDMenuWindowAlignController.m in Sources */,
-				CDA6642115ED62C8002FBE2F /* EDMenuWindowPropertiesController.m in Sources */,
 				CDA6643815EED11D002FBE2F /* EDMenuWindowPropertiesGraphController.m in Sources */,
 				CDA6643B15EED131002FBE2F /* EDMenuWindowPropertiesDocumentController.m in Sources */,
 				CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */,
 				CDC3C82815F96390009A8BFD /* EDFormatterNumberTwoDecimal.m in Sources */,
 				CD1EBD3315FC587B00BEEA4D /* EDMenuController.m in Sources */,
+				CD1EBD4F15FED23F00BEEA4D /* EDPanelViewController.m in Sources */,
+				CD1EBD5B15FED4B800BEEA4D /* EDPanelPropertiesController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

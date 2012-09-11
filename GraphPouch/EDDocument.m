@@ -11,7 +11,7 @@
 #import "EDGraph.h"
 #import "EDCoreDataUtility.h"
 #import "EDMenuController.h"
-#import "EDMenuWindowPropertiesController.h"
+#import "EDPanelPropertiesController.h"
 
 @implementation EDDocument
 
@@ -26,7 +26,7 @@
         //Init code
         EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
         [coreData setContext: [self managedObjectContext]];
-        propertyController = [[EDMenuWindowPropertiesController alloc] init];
+        propertyController = [[EDPanelPropertiesController alloc] init];
     }
     return self;
 }
