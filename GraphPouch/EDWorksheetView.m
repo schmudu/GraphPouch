@@ -78,11 +78,6 @@
     [NSBezierPath fillRect:bounds];
     
 #warning add other elements here
-    // draw graphs
-    for(EDGraphView *graph in [self subviews]){
-        [graph setNeedsDisplay:TRUE];
-    }
-    
     // draw only the closest guides
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // only do if we're snapping and at least one element is selected
@@ -129,7 +124,8 @@
     // set location
     [graphView setFrameOrigin:NSMakePoint([[graph valueForKey:EDElementAttributeLocationX] floatValue], [[graph valueForKey:EDElementAttributeLocationY] floatValue])];
     [self addSubview:graphView];
-    [self setNeedsDisplay:TRUE];
+    [graphView setNeedsDisplay:TRUE];
+    //[self setNeedsDisplay:TRUE];
 }
 
 #pragma mark keyboard

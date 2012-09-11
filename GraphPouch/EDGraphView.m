@@ -35,6 +35,7 @@
         // set model info
         [self setDataObj:myGraph];
     }
+    NSLog(@"created square:%@", self);
     return self;
 }
 
@@ -47,6 +48,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    NSLog(@"redrawing square:%@", self);
     if ([[self dataObj] isSelectedElement]){
         [[NSColor redColor] set];
     }

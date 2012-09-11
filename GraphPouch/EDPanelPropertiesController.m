@@ -19,7 +19,7 @@
 @implementation EDPanelPropertiesController
 
 - (id)init{
-    self = [super initWithWindowNibName:@"EDMenuWindowProperties"];
+    self = [super initWithWindowNibName:@"EDPanelProperties"];
     return self;
 }
 
@@ -42,26 +42,17 @@
 }
 
 - (void)windowDidLoad{
-    NSLog(@"window did open.");
     // set menu state if opened
     if([[NSUserDefaults standardUserDefaults] boolForKey:EDPreferencePropertyPanel]){
-        NSLog(@"setting state to true: menu:%@", menuItemProperties);
         [menuItemProperties setState:NSOnState];
     }
     [super windowDidLoad];
-}
-
-- (void)awakeFromNib{
-    [super awakeFromNib];
-    NSLog(@"awake from nib: menu:%@", menuItemProperties);
 }
 
 - (void)postInitialize
 {
     //[super windowDidLoad];
     // init panel if needed
-    NSLog(@"post initialize.");
-    
     if([[NSUserDefaults standardUserDefaults] boolForKey:EDPreferencePropertyPanel]){
         [self showWindow:self];
         [self setCorrectView];
@@ -98,13 +89,13 @@
 #warning add other elements here, need to check for other entities
     if([selectedTypes valueForKey:EDEntityNameGraph]){
         if(!graphController){
-            graphController = [[EDPanelPropertiesGraphController alloc] initWithNibName:@"EDMenuWindowPropertiesGraph" bundle:nil];
+            graphController = [[EDPanelPropertiesGraphController alloc] initWithNibName:@"EDPanelPropertiesGraph" bundle:nil];
         }
         viewController = graphController;
     }
     else {
         if(!documentController){
-            documentController = [[EDPanelPropertiesDocumentController alloc] initWithNibName:@"EDMenuWindowPropertiesDocument" bundle:nil];
+            documentController = [[EDPanelPropertiesDocumentController alloc] initWithNibName:@"EDPanelPropertiesDocument" bundle:nil];
         }
         viewController = documentController;
     }
