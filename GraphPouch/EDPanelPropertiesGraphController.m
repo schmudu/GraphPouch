@@ -16,6 +16,7 @@
 - (void)setElementLabelWidth;
 - (void)setElementLabelX;
 - (void)setElementLabelY;
+- (void)changeElementsAttributes:(float)newWidth height:(float)newHeight locationX:(float)newXPos locationY:(float)newYPos;
 @end
 
 @implementation EDPanelPropertiesGraphController
@@ -183,15 +184,18 @@
 
 #pragma mark text field delegation
 - (void)controlTextDidEndEditing:(NSNotification *)obj{
-#warning can abstract-ize this method
-    [self changeElementsWidth:[[labelWidth stringValue] floatValue]];
+    [self changeElementsAttributes:[[labelWidth stringValue] floatValue] height:[[labelHeight stringValue] floatValue] locationX:[[labelX stringValue] floatValue] locationY:[[labelY stringValue] floatValue]];
 }
 
 #pragma mark elements
-- (void)changeElementsWidth:(float)newWidth{
+- (void)changeElementsAttributes:(float)newWidth height:(float)newHeight locationX:(float)newXPos locationY:(float)newYPos{
     NSMutableArray *elements = [_coreData getAllSelectedObjects];
+    NSLog(@"going to change yPos to:%f", newYPos);
     for (EDElement *element in elements){
         [element setValue:[[NSNumber alloc] initWithFloat:newWidth] forKey:EDElementAttributeWidth];
+        [element setValue:[[NSNumber alloc] initWithFloat:newHeight] forKey:EDElementAttributeHeight];
+        [element setValue:[[NSNumber alloc] initWithFloat:newXPos] forKey:EDElementAttributeLocationX];
+        [element setValue:[[NSNumber alloc] initWithFloat:newYPos] forKey:EDElementAttributeLocationY];
     }
 }
 
