@@ -10,6 +10,7 @@
 #import "EDGraph.h"
 #import "EDElement.h"
 #import "EDConstants.h"
+#import "NSObject+Document.h"
 
 @interface EDPanelPropertiesGraphController ()
 - (void)setElementLabelHeight;
@@ -80,6 +81,7 @@
 - (void)setElementLabelWidth{
     // this method will gather all of the selected objects and set the width label 
     NSMutableArray *elements = [[NSMutableArray alloc] init];
+    //NSArray *graphs = [EDGraph findAllSelectedObjects];
     NSArray *graphs = [EDGraph findAllSelectedObjects];
     BOOL diff = FALSE;
     int i = 0;
@@ -115,6 +117,7 @@
 - (void)setElementLabelX{
     // this method will gather all of the selected objects and set the width label 
     NSMutableArray *elements = [[NSMutableArray alloc] init];
+    //NSArray *graphs = [EDGraph findAllSelectedObjects];
     NSArray *graphs = [EDGraph findAllSelectedObjects];
     BOOL diff = FALSE;
     int i = 0;
@@ -189,14 +192,29 @@
 
 #pragma mark elements
 - (void)changeElementsAttributes:(float)newWidth height:(float)newHeight locationX:(float)newXPos locationY:(float)newYPos{
+    EDElement *newElement, *currentElement;
+    int i = 0;
     NSMutableArray *elements = [_coreData getAllSelectedObjects];
-    NSLog(@"going to change yPos to:%f element:%@", newYPos, elements);
-    for (EDElement *element in elements){
+    //for (EDElement *element in elements){
+    while (i < [elements count]) {
+        currentElement = [elements objectAtIndex:i];
+        
+        //NSLog(@"going to change element index:%d to:%@", i, element);
+        newElement = currentElement;
+        [newElement setValue:[[NSNumber alloc] initWithFloat:newWidth] forKey:EDElementAttributeWidth];
+        [newElement setValue:[[NSNumber alloc] initWithFloat:newHeight] forKey:EDElementAttributeHeight];
+        [newElement setValue:[[NSNumber alloc] initWithFloat:newXPos] forKey:EDElementAttributeLocationX];
+        [newElement setValue:[[NSNumber alloc] initWithFloat:newYPos] forKey:EDElementAttributeLocationY];
+        /*
         [element setValue:[[NSNumber alloc] initWithFloat:newWidth] forKey:EDElementAttributeWidth];
         [element setValue:[[NSNumber alloc] initWithFloat:newHeight] forKey:EDElementAttributeHeight];
         [element setValue:[[NSNumber alloc] initWithFloat:newXPos] forKey:EDElementAttributeLocationX];
         [element setValue:[[NSNumber alloc] initWithFloat:newYPos] forKey:EDElementAttributeLocationY];
+         */
+        [elements replaceObjectAtIndex:i withObject:newElement];
+        i++;
     }
+    NSLog(@"after edit: elements:%@", elements);
 }
 
 @end

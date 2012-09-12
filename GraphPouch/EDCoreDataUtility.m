@@ -9,6 +9,7 @@
 #import "EDCoreDataUtility.h"
 #import "EDGraph.h"
 #import "EDConstants.h"
+#import "NSObject+Document.h"
 
 @interface EDCoreDataUtility()
 @end
@@ -100,7 +101,6 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
         // Handle the error
     }
     else{
-        NSLog(@"clearing selected objects.");
         for (EDGraph *elem in fetchedObjects){
             [elem setSelected:FALSE];
         }

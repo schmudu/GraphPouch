@@ -10,6 +10,7 @@
 #import "EDCoreDataUtility.h"
 #import "EDConstants.h"
 #import "EDPanelViewController.h"
+#import "NSObject+Document.h"
 
 @interface EDPanelPropertiesController ()
 - (void)setCorrectView;
@@ -86,6 +87,7 @@
     // get all the selected objects
     NSMutableDictionary *selectedTypes = [_coreData getAllTypesOfSelectedObjects];
     
+    NSLog(@"setting correct view: selectedTypes:%@", selectedTypes);
 #warning add other elements here, need to check for other entities
     if([selectedTypes valueForKey:EDEntityNameGraph]){
         if(!graphController){

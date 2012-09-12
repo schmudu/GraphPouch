@@ -10,6 +10,7 @@
 #import "EDGraphView.h"
 #import "EDElement.h"
 #import "NSManagedObject+Attributes.h"
+#import "NSObject+Document.h"
 
 @interface EDGraphView()
 
@@ -25,8 +26,9 @@
         [self setViewID:[EDGraphView generateID]];
         
         // listen
-        EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-        NSManagedObjectContext *context = [coreData context];
+        //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+        //NSManagedObjectContext *context = [coreData context];
+        NSManagedObjectContext *context = [self currentContext];
         
         // listen
         _nc = [NSNotificationCenter defaultCenter];
@@ -39,8 +41,9 @@
 }
 
 - (void) dealloc{
-    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    NSManagedObjectContext *context = [coreData context];
+    //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+    //NSManagedObjectContext *context = [coreData context];
+    NSManagedObjectContext *context = [self currentContext];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:context];
 }

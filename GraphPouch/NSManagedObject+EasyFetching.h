@@ -13,6 +13,7 @@
 + (NSEntityDescription *)entityDescriptionInContext:(NSManagedObjectContext *)context;
 + (NSArray *)findAllObjects;
 + (NSArray *)findAllSelectedObjects;
-//+ (NSArray *)findAllObjectsInContext:(NSManagedObjectContext *)context;
+//+ (NSArray *)findAllSelectedObjectsInContext:(NSManagedObjectContext *)context;
+    //+ (NSArray *)findAllObjectsInContext:(NSManagedObjectContext *)context;
 
 @end

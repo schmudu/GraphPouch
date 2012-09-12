@@ -12,6 +12,7 @@
 #import "EDCoreDataUtility.h"
 #import "EDMenuController.h"
 #import "EDPanelPropertiesController.h"
+#import "NSObject+Document.h"
 
 @implementation EDDocument
 
@@ -25,6 +26,7 @@
     if (self) {
         //Init code
         EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+        NSLog(@"document: setting context:%@ current context:%@", [self managedObjectContext], [self currentContext]);
         [coreData setContext: [self managedObjectContext]];
         propertyController = [[EDPanelPropertiesController alloc] init];
     }

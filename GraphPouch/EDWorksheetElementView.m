@@ -58,7 +58,7 @@
 - (void)updateDisplayBasedOnContext{
     // move to position
     //[self setFrameOrigin:NSMakePoint([[[self dataObj] valueForKey:EDElementAttributeLocationX] floatValue], [[[self dataObj] valueForKey:EDElementAttributeLocationY] floatValue])];
-    NSLog(@"updating element: yPos:%f", [[[self dataObj] valueForKey:EDElementAttributeLocationY] floatValue]);
+    //NSLog(@"updating element: yPos:%f", [[[self dataObj] valueForKey:EDElementAttributeLocationY] floatValue]);
     [self setFrame:NSMakeRect([[[self dataObj] valueForKey:EDElementAttributeLocationX] floatValue], 
                               [[[self dataObj] valueForKey:EDElementAttributeLocationY] floatValue],
                               [[[self dataObj] valueForKey:EDElementAttributeWidth] floatValue],
@@ -261,7 +261,7 @@
 
 # pragma mark listeners - graphs
 - (void)onContextChanged:(NSNotification *)note{
-    NSLog(@"context changed.");
+    //NSLog(@"context changed.");
     // this enables undo method to work
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
     
