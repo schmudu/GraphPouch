@@ -9,6 +9,8 @@
 #import "EDMenuWindowController.h"
 #import "EDPanelPropertiesController.h"
 #import "EDConstants.h"
+#import "NSObject+Document.h"
+#import "EDDocument.h"
 
 @interface EDMenuWindowController ()
 
@@ -18,9 +20,7 @@
 
 
 - (void)menuWillOpen:(NSMenu *)menu{
-    NSLog(@"menu did open.");
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults boolForKey:EDPreferencePropertyPanel]) {
+    if ([(EDDocument *)[self currentDocument] propertiesPanelIsOpen]){
         [properties setState:NSOnState];
     }
     else {

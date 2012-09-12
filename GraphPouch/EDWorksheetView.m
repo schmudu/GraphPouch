@@ -44,6 +44,7 @@
         
         // listen
         _nc = [NSNotificationCenter defaultCenter];
+        NSLog(@"worksheet view: listening to context:%@", _context);
         [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     }
     

@@ -24,5 +24,6 @@
 - (void)togglePropertiesPanel:(id)sender;
 - (void)setCorrectView;
 - (void)postInitialize;
-
+- (BOOL)panelIsOpen;
+    
 @end

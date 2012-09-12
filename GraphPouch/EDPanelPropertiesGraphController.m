@@ -190,7 +190,7 @@
 #pragma mark elements
 - (void)changeElementsAttributes:(float)newWidth height:(float)newHeight locationX:(float)newXPos locationY:(float)newYPos{
     NSMutableArray *elements = [_coreData getAllSelectedObjects];
-    NSLog(@"going to change yPos to:%f", newYPos);
+    NSLog(@"going to change yPos to:%f element:%@", newYPos, elements);
     for (EDElement *element in elements){
         [element setValue:[[NSNumber alloc] initWithFloat:newWidth] forKey:EDElementAttributeWidth];
         [element setValue:[[NSNumber alloc] initWithFloat:newHeight] forKey:EDElementAttributeHeight];

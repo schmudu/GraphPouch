@@ -133,6 +133,13 @@
     }
 }
 
+- (BOOL)panelIsOpen{
+    if(([self isWindowLoaded]) && ([[self window] isVisible])){
+        return TRUE;
+    }
+    return FALSE;
+}
+
 #pragma mark context changed
 
 - (void)onContextChanged:(NSNotification *)note{

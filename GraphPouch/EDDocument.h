@@ -21,5 +21,5 @@
 
 - (id)getInstance;
 - (void)togglePropertiesPanel:(id)sender;
-
+- (BOOL)propertiesPanelIsOpen;
 @end

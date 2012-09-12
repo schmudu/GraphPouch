@@ -20,7 +20,6 @@
 		CD1EBD6A15FED65B00BEEA4D /* EDPanelPropertiesGraph.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1EBD6715FED65A00BEEA4D /* EDPanelPropertiesGraph.xib */; };
 		CD1EBD7415FED75900BEEA4D /* EDPanelPropertiesDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD7115FED75800BEEA4D /* EDPanelPropertiesDocumentController.m */; };
 		CD1EBD7515FED75900BEEA4D /* EDPanelPropertiesGraphController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD7315FED75900BEEA4D /* EDPanelPropertiesGraphController.m */; };
-		CD1EBD7C15FFF34300BEEA4D /* NSObject+CurrentContext.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD7B15FFF34300BEEA4D /* NSObject+CurrentContext.m */; };
 		CD1EBD89160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD88160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m */; };
 		CD1EBD8C160013D200BEEA4D /* EDFormatterDecimalSigned.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD8B160013D200BEEA4D /* EDFormatterDecimalSigned.m */; };
 		CD27665515D996E900162240 /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CD27665415D996E900162240 /* EDGraph.m */; };
@@ -38,6 +37,7 @@
 		CD47113B15BA1647008AACC3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD47113915BA1647008AACC3 /* MainMenu.xib */; };
 		CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */; };
 		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
+		CD5EE20216012A690027EFC6 /* NSObject+Document.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE20116012A690027EFC6 /* NSObject+Document.m */; };
 		CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */; };
 		CDE6D61C15DC476B00E5695F /* NSManagedObject+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */; };
 		CDE6D63015DE774100E5695F /* EDElement.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D62F15DE774000E5695F /* EDElement.m */; };
@@ -71,8 +71,6 @@
 		CD1EBD7115FED75800BEEA4D /* EDPanelPropertiesDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesDocumentController.m; sourceTree = "<group>"; };
 		CD1EBD7215FED75900BEEA4D /* EDPanelPropertiesGraphController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesGraphController.h; sourceTree = "<group>"; };
 		CD1EBD7315FED75900BEEA4D /* EDPanelPropertiesGraphController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesGraphController.m; sourceTree = "<group>"; };
-		CD1EBD7A15FFF34300BEEA4D /* NSObject+CurrentContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+CurrentContext.h"; sourceTree = "<group>"; };
-		CD1EBD7B15FFF34300BEEA4D /* NSObject+CurrentContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+CurrentContext.m"; sourceTree = "<group>"; };
 		CD1EBD87160011CC00BEEA4D /* EDFormatterDecimalUnsigned.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterDecimalUnsigned.h; sourceTree = "<group>"; };
 		CD1EBD88160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterDecimalUnsigned.m; sourceTree = "<group>"; };
 		CD1EBD8A160013D200BEEA4D /* EDFormatterDecimalSigned.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterDecimalSigned.h; sourceTree = "<group>"; };
@@ -106,6 +104,8 @@
 		CD47113D15BA1647008AACC3 /* EDDocument.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EDDocument.xcdatamodel; sourceTree = "<group>"; };
 		CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphArrayController.h; sourceTree = "<group>"; };
 		CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphArrayController.m; sourceTree = "<group>"; };
+		CD5EE20016012A690027EFC6 /* NSObject+Document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Document.h"; sourceTree = "<group>"; };
+		CD5EE20116012A690027EFC6 /* NSObject+Document.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Document.m"; sourceTree = "<group>"; };
 		CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowController.h; sourceTree = "<group>"; };
 		CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowController.m; sourceTree = "<group>"; };
 		CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Attributes.h"; sourceTree = "<group>"; };
@@ -250,8 +250,8 @@
 				CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */,
 				CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */,
 				CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */,
-				CD1EBD7A15FFF34300BEEA4D /* NSObject+CurrentContext.h */,
-				CD1EBD7B15FFF34300BEEA4D /* NSObject+CurrentContext.m */,
+				CD5EE20016012A690027EFC6 /* NSObject+Document.h */,
+				CD5EE20116012A690027EFC6 /* NSObject+Document.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -518,9 +518,9 @@
 				CD1EBD5B15FED4B800BEEA4D /* EDPanelPropertiesController.m in Sources */,
 				CD1EBD7415FED75900BEEA4D /* EDPanelPropertiesDocumentController.m in Sources */,
 				CD1EBD7515FED75900BEEA4D /* EDPanelPropertiesGraphController.m in Sources */,
-				CD1EBD7C15FFF34300BEEA4D /* NSObject+CurrentContext.m in Sources */,
 				CD1EBD89160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m in Sources */,
 				CD1EBD8C160013D200BEEA4D /* EDFormatterDecimalSigned.m in Sources */,
+				CD5EE20216012A690027EFC6 /* NSObject+Document.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

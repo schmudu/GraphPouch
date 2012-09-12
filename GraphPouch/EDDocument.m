@@ -66,4 +66,8 @@
 - (void)togglePropertiesPanel:(id)sender{
     [propertyController togglePropertiesPanel:sender];
 }
+
+- (BOOL)propertiesPanelIsOpen{
+    return [propertyController panelIsOpen];
+}
 @end
