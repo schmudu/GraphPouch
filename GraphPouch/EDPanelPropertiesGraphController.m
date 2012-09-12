@@ -12,8 +12,10 @@
 #import "EDConstants.h"
 
 @interface EDPanelPropertiesGraphController ()
+- (void)setElementLabelHeight;
 - (void)setElementLabelWidth;
 - (void)setElementLabelX;
+- (void)setElementLabelY;
 @end
 
 @implementation EDPanelPropertiesGraphController
@@ -33,8 +35,45 @@
     // get all of the graphs selected
     //NSArray *graphs = [EDGraph findAllSelectedObjects];
     //NSLog(@"graph view did load: graphs: %@", graphs);
+    [self setElementLabelHeight];
     [self setElementLabelWidth];
     [self setElementLabelX];
+    [self setElementLabelY];
+}
+
+- (void)setElementLabelHeight{
+    // this method will gather all of the selected objects and set the width label 
+    NSMutableArray *elements = [[NSMutableArray alloc] init];
+    NSArray *graphs = [EDGraph findAllSelectedObjects];
+    BOOL diff = FALSE;
+    int i = 0;
+    float height;
+    EDElement *currentElement;
+    
+#warning add other elements here
+    [elements addObjectsFromArray:graphs];
+    while ((i < [elements count]) && (!diff)) {
+        currentElement = [elements objectAtIndex:i];
+        // if not the first and current height is not the same as previous height
+        if((i != 0) && (height != [currentElement elementHeight])){
+            diff = TRUE;
+        }
+        else {
+            height = [currentElement elementHeight];
+        }
+        i++;
+    }
+    
+    // if there is a diff then label shows nothing, otherwise show height
+    if (diff) {
+#warning need to figure out how to set custom color
+        [labelHeight setStringValue:@""];
+        [labelHeight setBackgroundColor:[NSColor grayColor]];
+    }
+    else {
+        [labelHeight setStringValue:[NSString stringWithFormat:@"%.2f", height]];
+        [labelHeight setBackgroundColor:[NSColor whiteColor]];
+    }
 }
 
 - (void)setElementLabelWidth{
@@ -107,9 +146,43 @@
     }
 }
 
+- (void)setElementLabelY{
+    // this method will gather all of the selected objects and set the width label 
+    NSMutableArray *elements = [[NSMutableArray alloc] init];
+    NSArray *graphs = [EDGraph findAllSelectedObjects];
+    BOOL diff = FALSE;
+    int i = 0;
+    float y;
+    EDElement *currentElement;
+    
+#warning add other elements here
+    [elements addObjectsFromArray:graphs];
+    while ((i < [elements count]) && (!diff)) {
+        currentElement = [elements objectAtIndex:i];
+        // if not the first and current width is not the same as previous width
+        if((i != 0) && (y != [currentElement locationY])){
+            diff = TRUE;
+        }
+        else {
+            y = [currentElement locationY];
+        }
+        i++;
+    }
+    
+    // if there is a diff then label shows nothing, otherwise show width
+    if (diff) {
+#warning need to figure out how to set custom color
+        [labelY setStringValue:@""];
+        [labelY setBackgroundColor:[NSColor grayColor]];
+    }
+    else {
+        [labelY setStringValue:[NSString stringWithFormat:@"%.2f", y]];
+        [labelY setBackgroundColor:[NSColor whiteColor]];
+    }
+}
+
 #pragma mark text field delegation
 - (void)controlTextDidEndEditing:(NSNotification *)obj{
-#warning need to validate input
 #warning can abstract-ize this method
     [self changeElementsWidth:[[labelWidth stringValue] floatValue]];
 }

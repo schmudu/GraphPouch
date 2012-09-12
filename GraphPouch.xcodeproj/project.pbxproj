@@ -21,6 +21,8 @@
 		CD1EBD7415FED75900BEEA4D /* EDPanelPropertiesDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD7115FED75800BEEA4D /* EDPanelPropertiesDocumentController.m */; };
 		CD1EBD7515FED75900BEEA4D /* EDPanelPropertiesGraphController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD7315FED75900BEEA4D /* EDPanelPropertiesGraphController.m */; };
 		CD1EBD7C15FFF34300BEEA4D /* NSObject+CurrentContext.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD7B15FFF34300BEEA4D /* NSObject+CurrentContext.m */; };
+		CD1EBD89160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD88160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m */; };
+		CD1EBD8C160013D200BEEA4D /* EDFormatterDecimalSigned.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD8B160013D200BEEA4D /* EDFormatterDecimalSigned.m */; };
 		CD27665515D996E900162240 /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CD27665415D996E900162240 /* EDGraph.m */; };
 		CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9915BDF93400AB7567 /* EDGraphView.m */; };
 		CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */; };
@@ -37,7 +39,6 @@
 		CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */; };
 		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
 		CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */; };
-		CDC3C82815F96390009A8BFD /* EDFormatterNumberTwoDecimal.m in Sources */ = {isa = PBXBuildFile; fileRef = CDC3C82715F96390009A8BFD /* EDFormatterNumberTwoDecimal.m */; };
 		CDE6D61C15DC476B00E5695F /* NSManagedObject+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */; };
 		CDE6D63015DE774100E5695F /* EDElement.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D62F15DE774000E5695F /* EDElement.m */; };
 		CDE6D65615E111C700E5695F /* EDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D65515E111C700E5695F /* EDWindow.m */; };
@@ -72,6 +73,10 @@
 		CD1EBD7315FED75900BEEA4D /* EDPanelPropertiesGraphController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesGraphController.m; sourceTree = "<group>"; };
 		CD1EBD7A15FFF34300BEEA4D /* NSObject+CurrentContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+CurrentContext.h"; sourceTree = "<group>"; };
 		CD1EBD7B15FFF34300BEEA4D /* NSObject+CurrentContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+CurrentContext.m"; sourceTree = "<group>"; };
+		CD1EBD87160011CC00BEEA4D /* EDFormatterDecimalUnsigned.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterDecimalUnsigned.h; sourceTree = "<group>"; };
+		CD1EBD88160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterDecimalUnsigned.m; sourceTree = "<group>"; };
+		CD1EBD8A160013D200BEEA4D /* EDFormatterDecimalSigned.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterDecimalSigned.h; sourceTree = "<group>"; };
+		CD1EBD8B160013D200BEEA4D /* EDFormatterDecimalSigned.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterDecimalSigned.m; sourceTree = "<group>"; };
 		CD27665315D996E900162240 /* EDGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraph.h; sourceTree = "<group>"; };
 		CD27665415D996E900162240 /* EDGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraph.m; sourceTree = "<group>"; };
 		CD3F0A9815BDF93400AB7567 /* EDGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphView.h; sourceTree = "<group>"; };
@@ -103,8 +108,6 @@
 		CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphArrayController.m; sourceTree = "<group>"; };
 		CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowController.h; sourceTree = "<group>"; };
 		CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowController.m; sourceTree = "<group>"; };
-		CDC3C82615F96390009A8BFD /* EDFormatterNumberTwoDecimal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterNumberTwoDecimal.h; sourceTree = "<group>"; };
-		CDC3C82715F96390009A8BFD /* EDFormatterNumberTwoDecimal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterNumberTwoDecimal.m; sourceTree = "<group>"; };
 		CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Attributes.h"; sourceTree = "<group>"; };
 		CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Attributes.m"; sourceTree = "<group>"; };
 		CDE6D62E15DE774000E5695F /* EDElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDElement.h; sourceTree = "<group>"; };
@@ -390,8 +393,10 @@
 		CDC3C82415F96368009A8BFD /* Formatters */ = {
 			isa = PBXGroup;
 			children = (
-				CDC3C82615F96390009A8BFD /* EDFormatterNumberTwoDecimal.h */,
-				CDC3C82715F96390009A8BFD /* EDFormatterNumberTwoDecimal.m */,
+				CD1EBD87160011CC00BEEA4D /* EDFormatterDecimalUnsigned.h */,
+				CD1EBD88160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m */,
+				CD1EBD8A160013D200BEEA4D /* EDFormatterDecimalSigned.h */,
+				CD1EBD8B160013D200BEEA4D /* EDFormatterDecimalSigned.m */,
 			);
 			name = Formatters;
 			sourceTree = "<group>";
@@ -508,13 +513,14 @@
 				CD1D02FF15E83F1600C88A7A /* EDMenuViewController.m in Sources */,
 				CD1D032815EC1BCA00C88A7A /* EDMenuWindowAlignController.m in Sources */,
 				CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */,
-				CDC3C82815F96390009A8BFD /* EDFormatterNumberTwoDecimal.m in Sources */,
 				CD1EBD3315FC587B00BEEA4D /* EDMenuController.m in Sources */,
 				CD1EBD4F15FED23F00BEEA4D /* EDPanelViewController.m in Sources */,
 				CD1EBD5B15FED4B800BEEA4D /* EDPanelPropertiesController.m in Sources */,
 				CD1EBD7415FED75900BEEA4D /* EDPanelPropertiesDocumentController.m in Sources */,
 				CD1EBD7515FED75900BEEA4D /* EDPanelPropertiesGraphController.m in Sources */,
 				CD1EBD7C15FFF34300BEEA4D /* NSObject+CurrentContext.m in Sources */,
+				CD1EBD89160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m in Sources */,
+				CD1EBD8C160013D200BEEA4D /* EDFormatterDecimalSigned.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

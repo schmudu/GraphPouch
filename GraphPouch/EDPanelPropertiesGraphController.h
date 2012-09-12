@@ -11,6 +11,8 @@
 
 @interface EDPanelPropertiesGraphController : EDPanelViewController <NSTextFieldDelegate>{
     IBOutlet NSTextField *labelWidth;
+    IBOutlet NSTextField *labelHeight;
     IBOutlet NSTextField *labelX;
+    IBOutlet NSTextField *labelY;
 }
 @end

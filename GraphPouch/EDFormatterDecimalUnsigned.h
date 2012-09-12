@@ -1,5 +1,5 @@
 //
-//  EDFormatterNumberTwoDecimal.h
+//  EDFormatterDecimalUnsigned.h
 //  GraphPouch
 //
 //  Created by PATRICK LEE on 9/6/12.
@@ -8,6 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface EDFormatterNumberTwoDecimal : NSFormatter
+@interface EDFormatterDecimalUnsigned : NSFormatter
 
 @end

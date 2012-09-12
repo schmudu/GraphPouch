@@ -1,14 +1,14 @@
 //
-//  EDFormatterNumberTwoDecimal.m
+//  EDFormatterDecimalSigned.m
 //  GraphPouch
 //
-//  Created by PATRICK LEE on 9/6/12.
+//  Created by PATRICK LEE on 9/11/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDFormatterNumberTwoDecimal.h"
+#import "EDFormatterDecimalSigned.h"
 
-@implementation EDFormatterNumberTwoDecimal
+@implementation EDFormatterDecimalSigned
 
 - (NSString *)stringForObjectValue:(id)obj{
     return [NSString stringWithFormat:@"%.2f", [obj floatValue]];
@@ -21,7 +21,7 @@
 
 - (BOOL)isPartialStringValid:(NSString *__autoreleasing *)partialStringPtr proposedSelectedRange:(NSRangePointer)proposedSelRangePtr originalString:(NSString *)origString originalSelectedRange:(NSRange)origSelRange errorDescription:(NSString *__autoreleasing *)error{
     NSError *regexError = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^([0-9]*)$"
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^(-)?([0-9]*\\.[0-9]{0,2}|[0-9]*)$"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&regexError];
     NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:*partialStringPtr options:0 range:NSMakeRange(0, [*partialStringPtr length])];
@@ -33,5 +33,4 @@
         return FALSE;
     }
 }
-
 @end
