@@ -197,7 +197,7 @@
     NSMutableArray *elements = [_coreData getAllSelectedObjects];
     //for (EDElement *element in elements){
     while (i < [elements count]) {
-        currentElement = [elements objectAtIndex:i];
+     currentElement = [elements objectAtIndex:i];
         
         //NSLog(@"going to change element index:%d to:%@", i, element);
         newElement = currentElement;
@@ -205,16 +205,10 @@
         [newElement setValue:[[NSNumber alloc] initWithFloat:newHeight] forKey:EDElementAttributeHeight];
         [newElement setValue:[[NSNumber alloc] initWithFloat:newXPos] forKey:EDElementAttributeLocationX];
         [newElement setValue:[[NSNumber alloc] initWithFloat:newYPos] forKey:EDElementAttributeLocationY];
-        /*
-        [element setValue:[[NSNumber alloc] initWithFloat:newWidth] forKey:EDElementAttributeWidth];
-        [element setValue:[[NSNumber alloc] initWithFloat:newHeight] forKey:EDElementAttributeHeight];
-        [element setValue:[[NSNumber alloc] initWithFloat:newXPos] forKey:EDElementAttributeLocationX];
-        [element setValue:[[NSNumber alloc] initWithFloat:newYPos] forKey:EDElementAttributeLocationY];
-         */
+        
         [elements replaceObjectAtIndex:i withObject:newElement];
         i++;
     }
-    NSLog(@"after edit: elements:%@", elements);
 }
 
 @end
