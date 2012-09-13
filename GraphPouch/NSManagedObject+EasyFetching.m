@@ -13,7 +13,6 @@
 
 + (NSEntityDescription *)entityDescriptionInContext:(NSManagedObjectContext *)context;
 {
-    NSLog(@"special: context:%@", context);
     return [self respondsToSelector:@selector(entityInManagedObjectContext:)] ?
     [self performSelector:@selector(entityInManagedObjectContext:) withObject:context] :
     [NSEntityDescription entityForName:NSStringFromClass(self) inManagedObjectContext:context];
@@ -21,8 +20,7 @@
 
 + (NSArray *)findAllObjects;
 {
-    NSManagedObjectContext *context = [[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext];
-    //NSManagedObjectContext *context = [[EDCoreDataUtility sharedCoreDataUtility] context];
+    NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity = [self entityDescriptionInContext:context];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];
@@ -37,18 +35,10 @@
 
 
 + (NSArray *)findAllSelectedObjects{
-    NSManagedObjectContext *context = [[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext];
+    NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity;
     
-    // if current document is not key window then revert to shared core data
-    // default, get context from document
-    if (context != nil) {
-        entity = [self entityDescriptionInContext:context];
-    }
-    else {
-        context = [[EDCoreDataUtility sharedCoreDataUtility] context];
-        entity = [self entityDescriptionInContext:context];
-    }
+    entity = [self entityDescriptionInContext:context];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];
@@ -60,5 +50,14 @@
         //handle errors
     }
     return results;
+}
+
+#pragma mark context
++ (NSManagedObjectContext *)getContext{
+    // by default return document context
+    if ([[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]) {
+        return [[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext];
+    }
+    return [[EDCoreDataUtility sharedCoreDataUtility] context];
 }
 @end
