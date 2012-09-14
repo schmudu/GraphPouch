@@ -102,11 +102,16 @@
     }
     
 #warning add other elements here, need to add other checks if we add other types
-    // check to see if view is already being show
+    // check to see if view is already being shown
+    // if so then do nothing except update panel
     if ((viewController == graphController) && ([[self window] contentView] == [graphController view])) {
+        // still need to update panel properties
+        [viewController initWindowAfterLoaded];
         return;
     }
     else if ((viewController == documentController) && ([[self window] contentView] == [documentController view])) {
+        // still need to update panel properties
+        [viewController initWindowAfterLoaded];
         return;
     }
 #warning need to clean this up
@@ -151,7 +156,6 @@
 #pragma mark context changed
 
 - (void)onContextChanged:(NSNotification *)note{
-    NSLog(@"setting correct view.");
     // set the correct view if window is showing
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         [self setCorrectView];

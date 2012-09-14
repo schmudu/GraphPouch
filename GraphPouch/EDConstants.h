@@ -36,6 +36,8 @@ extern NSString *const EDKeyGuideHorizontal;
 extern NSString *const EDKeySnapOffset;
 extern NSString *const EDKeyClosestGuide;
 extern NSString *const EDKeyGuideDiff;
+extern NSString *const EDKeyDiff;
+extern NSString *const EDKeyValue;
 extern float const EDGuideThreshold;
 extern float const EDGuideWidth;
 extern float const EDGuideShowThreshold;

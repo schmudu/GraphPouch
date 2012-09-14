@@ -11,13 +11,16 @@
 #import "EDElement.h"
 #import "EDConstants.h"
 #import "NSObject+Document.h"
+#import "NSColor+Utilities.h"
 
 @interface EDPanelPropertiesGraphController ()
 - (void)setElementLabelHeight;
 - (void)setElementLabelWidth;
 - (void)setElementLabelX;
 - (void)setElementLabelY;
+- (void)setLabelState:(NSTextField *)label hasChange:(BOOL)diff value:(float)labelValue;
 - (void)changeElementsAttributes:(float)newWidth height:(float)newHeight locationX:(float)newXPos locationY:(float)newYPos;
+- (NSMutableDictionary *)checkForSameValueInLabelsForKey:(NSString *)key;
 @end
 
 @implementation EDPanelPropertiesGraphController
@@ -43,154 +46,52 @@
     [self setElementLabelY];
 }
 
+#pragma mark labels
 - (void)setElementLabelHeight{
-    // this method will gather all of the selected objects and set the width label 
-    NSMutableArray *elements = [[NSMutableArray alloc] init];
-    NSArray *graphs = [EDGraph findAllSelectedObjects];
-    BOOL diff = FALSE;
-    int i = 0;
-    float height;
-    EDElement *currentElement;
+    // find if there are differences in values of selected objects
+    NSMutableDictionary *results = [self checkForSameValueInLabelsForKey:EDElementAttributeHeight];
     
-#warning add other elements here
-    [elements addObjectsFromArray:graphs];
-    while ((i < [elements count]) && (!diff)) {
-        currentElement = [elements objectAtIndex:i];
-        // if not the first and current height is not the same as previous height
-        if((i != 0) && (height != [currentElement elementHeight])){
-            diff = TRUE;
-        }
-        else {
-            height = [currentElement elementHeight];
-        }
-        i++;
-    }
-    
-    // if there is a diff then label shows nothing, otherwise show height
-    if (diff) {
-#warning need to figure out how to set custom color
-        [labelHeight setStringValue:@""];
-        [labelHeight setBackgroundColor:[NSColor grayColor]];
-    }
-    else {
-        [labelHeight setStringValue:[NSString stringWithFormat:@"%.2f", height]];
-        [labelHeight setBackgroundColor:[NSColor whiteColor]];
-    }
+    // set label state
+    [self setLabelState:labelHeight hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
 }
 
 - (void)setElementLabelWidth{
-    // this method will gather all of the selected objects and set the width label 
-    NSMutableArray *elements = [[NSMutableArray alloc] init];
-    //NSArray *graphs = [EDGraph findAllSelectedObjects];
-    NSArray *graphs = [EDGraph findAllSelectedObjects];
-    BOOL diff = FALSE;
-    int i = 0;
-    float width;
-    EDElement *currentElement;
+    // find if there are differences in values of selected objects
+    NSMutableDictionary *results = [self checkForSameValueInLabelsForKey:EDElementAttributeWidth];
     
-#warning add other elements here
-    [elements addObjectsFromArray:graphs];
-    while ((i < [elements count]) && (!diff)) {
-        currentElement = [elements objectAtIndex:i];
-        // if not the first and current width is not the same as previous width
-        if((i != 0) && (width != [currentElement elementWidth])){
-            diff = TRUE;
-        }
-        else {
-            width = [currentElement elementWidth];
-        }
-        i++;
-    }
-    
-    // if there is a diff then label shows nothing, otherwise show width
-    if (diff) {
-#warning need to figure out how to set custom color
-        [labelWidth setStringValue:@""];
-        [labelWidth setBackgroundColor:[NSColor grayColor]];
-    }
-    else {
-        [labelWidth setStringValue:[NSString stringWithFormat:@"%.2f", width]];
-        [labelWidth setBackgroundColor:[NSColor whiteColor]];
-    }
+    // set label state
+    [self setLabelState:labelWidth hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
 }
 
 - (void)setElementLabelX{
-    // this method will gather all of the selected objects and set the width label 
-    NSMutableArray *elements = [[NSMutableArray alloc] init];
-    //NSArray *graphs = [EDGraph findAllSelectedObjects];
-    NSArray *graphs = [EDGraph findAllSelectedObjects];
-    BOOL diff = FALSE;
-    int i = 0;
-    float x;
-    EDElement *currentElement;
+    // find if there are differences in values of selected objects
+    NSMutableDictionary *results = [self checkForSameValueInLabelsForKey:EDElementAttributeLocationX];
     
-#warning add other elements here
-    [elements addObjectsFromArray:graphs];
-    while ((i < [elements count]) && (!diff)) {
-        currentElement = [elements objectAtIndex:i];
-        // if not the first and current width is not the same as previous width
-        if((i != 0) && (x != [currentElement locationX])){
-            diff = TRUE;
-        }
-        else {
-            x = [currentElement locationX];
-        }
-        i++;
-    }
-    
-    // if there is a diff then label shows nothing, otherwise show width
-    if (diff) {
-#warning need to figure out how to set custom color
-        [labelX setStringValue:@""];
-        [labelX setBackgroundColor:[NSColor grayColor]];
-    }
-    else {
-        [labelX setStringValue:[NSString stringWithFormat:@"%.2f", x]];
-        [labelX setBackgroundColor:[NSColor whiteColor]];
-    }
+    // set label state
+    [self setLabelState:labelX hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
 }
 
 - (void)setElementLabelY{
-    // this method will gather all of the selected objects and set the width label 
-    NSMutableArray *elements = [[NSMutableArray alloc] init];
-    NSArray *graphs = [EDGraph findAllSelectedObjects];
-    BOOL diff = FALSE;
-    int i = 0;
-    float y;
-    EDElement *currentElement;
+    // find if there are differences in values of selected objects
+    NSMutableDictionary *results = [self checkForSameValueInLabelsForKey:EDElementAttributeLocationY];
     
-#warning add other elements here
-    [elements addObjectsFromArray:graphs];
-    while ((i < [elements count]) && (!diff)) {
-        currentElement = [elements objectAtIndex:i];
-        // if not the first and current width is not the same as previous width
-        if((i != 0) && (y != [currentElement locationY])){
-            diff = TRUE;
-        }
-        else {
-            y = [currentElement locationY];
-        }
-        i++;
-    }
-    
+    // set label state
+    [self setLabelState:labelY hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
+}
+
+#pragma mark validate label state
+- (void)setLabelState:(NSTextField *)label hasChange:(BOOL)diff value:(float)labelValue{
     // if there is a diff then label shows nothing, otherwise show width
     if (diff) {
-#warning need to figure out how to set custom color
-        [labelY setStringValue:@""];
-        [labelY setBackgroundColor:[NSColor grayColor]];
+        [label setStringValue:@""];
+        [label setTextColor:[NSColor colorWithHexColorString:@"dddddd"]];
     }
     else {
-        [labelY setStringValue:[NSString stringWithFormat:@"%.2f", y]];
-        [labelY setBackgroundColor:[NSColor whiteColor]];
+        [label setStringValue:[NSString stringWithFormat:@"%.2f", labelValue]];
+        [label setTextColor:[NSColor blackColor]];
     }
 }
 
-#pragma mark text field delegation
-- (void)controlTextDidEndEditing:(NSNotification *)obj{
-    [self changeElementsAttributes:[[labelWidth stringValue] floatValue] height:[[labelHeight stringValue] floatValue] locationX:[[labelX stringValue] floatValue] locationY:[[labelY stringValue] floatValue]];
-}
-
-#pragma mark elements
 - (void)changeElementsAttributes:(float)newWidth height:(float)newHeight locationX:(float)newXPos locationY:(float)newYPos{
     EDElement *newElement, *currentElement;
     int i = 0;
@@ -199,7 +100,6 @@
     while (i < [elements count]) {
      currentElement = [elements objectAtIndex:i];
         
-        //NSLog(@"going to change element index:%d to:%@", i, element);
         newElement = currentElement;
         [newElement setValue:[[NSNumber alloc] initWithFloat:newWidth] forKey:EDElementAttributeWidth];
         [newElement setValue:[[NSNumber alloc] initWithFloat:newHeight] forKey:EDElementAttributeHeight];
@@ -209,6 +109,42 @@
         [elements replaceObjectAtIndex:i withObject:newElement];
         i++;
     }
+}
+
+- (NSMutableDictionary *)checkForSameValueInLabelsForKey:(NSString *)key{
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    NSMutableArray *elements = [[NSMutableArray alloc] init];
+    NSArray *graphs = [EDGraph findAllSelectedObjects];
+    BOOL diff = FALSE;
+    int i = 0;
+    float value;
+    EDElement *currentElement;
+    
+#warning add other elements here
+    [elements addObjectsFromArray:graphs];
+    while ((i < [elements count]) && (!diff)) {
+        currentElement = [elements objectAtIndex:i];
+        // if not the first and current width is not the same as previous width
+        //if((i != 0) && (value != [currentElement locationY])){
+        if((i != 0) && (value != [[currentElement valueForKey:key] floatValue])){
+            diff = TRUE;
+        }
+        else {
+            //value = [currentElement locationY];
+            value = [[currentElement valueForKey:key] floatValue];
+        }
+        i++;
+    }
+    
+    // set results
+    [results setValue:[[NSNumber alloc] initWithFloat:value] forKey:EDKeyValue];
+    [results setValue:[[NSNumber alloc] initWithBool:diff] forKey:EDKeyDiff];
+    return results;
+}
+
+#pragma mark text field delegation
+- (void)controlTextDidEndEditing:(NSNotification *)obj{
+    [self changeElementsAttributes:[[labelWidth stringValue] floatValue] height:[[labelHeight stringValue] floatValue] locationX:[[labelX stringValue] floatValue] locationY:[[labelY stringValue] floatValue]];
 }
 
 @end
