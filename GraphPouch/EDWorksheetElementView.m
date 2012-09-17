@@ -14,6 +14,7 @@
 #import "NSManagedObject+EasyFetching.h"
 #import "NSManagedObject+Attributes.h"
 #import "EDCoreDataUtility.h"
+#import "NSObject+Document.h"
 
 @interface EDWorksheetElementView()
 - (void)mouseUpBehavior:(NSEvent *)theEvent;
@@ -40,6 +41,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
+        NSManagedObjectContext *context = [self currentContext];
+        
+        // listen
+        _nc = [NSNotificationCenter defaultCenter];
+        [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
+        
     }
     
     return self;
@@ -56,9 +63,7 @@
 
 
 - (void)updateDisplayBasedOnContext{
-    // move to position
-    //[self setFrameOrigin:NSMakePoint([[[self dataObj] valueForKey:EDElementAttributeLocationX] floatValue], [[[self dataObj] valueForKey:EDElementAttributeLocationY] floatValue])];
-    //NSLog(@"updating element: yPos:%f", [[[self dataObj] valueForKey:EDElementAttributeLocationY] floatValue]);
+    // update position
     [self setFrame:NSMakeRect([[[self dataObj] valueForKey:EDElementAttributeLocationX] floatValue], 
                               [[[self dataObj] valueForKey:EDElementAttributeLocationY] floatValue],
                               [[[self dataObj] valueForKey:EDElementAttributeWidth] floatValue],
@@ -79,7 +84,6 @@
     //save mouse location
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
     _didSnap = FALSE;
-    //NSLog(@"saved mous location:x:%f y:%f", _savedMouseSnapLocation.x, _savedMouseSnapLocation.y);
     
     if ([[self dataObj] isSelectedElement]){
         // graph is already selected
@@ -261,7 +265,6 @@
 
 # pragma mark listeners - graphs
 - (void)onContextChanged:(NSNotification *)note{
-    //NSLog(@"context changed.");
     // this enables undo method to work
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
     

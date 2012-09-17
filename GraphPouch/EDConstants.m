@@ -25,6 +25,8 @@ NSString * const EDEventMouseDragged                            = @"EDEventMouse
 NSString * const EDEventMouseUp                                 = @"EDEventMouseUp";
 NSString * const EDEventUnselectedGraphClickedWithoutModifier   = @"EDEventUnselectedGraphClickedWithoutModifier";
 NSString * const EDEventDeleteKeyPressedWithoutModifiers        = @"EDEventDeleteKeyPressedWithoutModifiers";
+NSString * const EDEventWorksheetElementSelected                = @"EDEventWorksheetElementSelected";
+NSString * const EDEventWorksheetElementDeselected              = @"EDEventWorksheetElementDeselected";
 NSString * const EDEventKey                                     = @"EDEvent";
 
 // menu

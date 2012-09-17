@@ -25,6 +25,8 @@ extern NSString *const EDEventMouseDragged;
 extern NSString *const EDEventMouseUp;
 extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
 extern NSString *const EDEventDeleteKeyPressedWithoutModifiers;
+extern NSString *const EDEventWorksheetElementSelected;
+extern NSString *const EDEventWorksheetElementDeselected;
 extern NSString *const EDEventKey;
 
 // menu

@@ -265,10 +265,10 @@
 			children = (
 				CD41B54B15BB024C00640E73 /* EDWorksheetView.h */,
 				CD41B54C15BB024C00640E73 /* EDWorksheetView.m */,
-				CD3F0AC315C22F0B00AB7567 /* EDWorksheetElementView.h */,
-				CD3F0AC415C22F0B00AB7567 /* EDWorksheetElementView.m */,
 				CD41B54E15BB046B00640E73 /* EDWorksheetViewController.h */,
 				CD41B54F15BB046B00640E73 /* EDWorksheetViewController.m */,
+				CDD46E5A160435A900EDD75C /* Transform */,
+				CDD46E581604358F00EDD75C /* Element */,
 				CD3F0B0215C4785600AB7567 /* Table */,
 				CD3F0B0115C4784A00AB7567 /* Line */,
 				CD3F0B0015C4784600AB7567 /* Text */,
@@ -420,6 +420,22 @@
 				CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */,
 			);
 			name = NSColor;
+			sourceTree = "<group>";
+		};
+		CDD46E581604358F00EDD75C /* Element */ = {
+			isa = PBXGroup;
+			children = (
+				CD3F0AC315C22F0B00AB7567 /* EDWorksheetElementView.h */,
+				CD3F0AC415C22F0B00AB7567 /* EDWorksheetElementView.m */,
+			);
+			name = Element;
+			sourceTree = "<group>";
+		};
+		CDD46E5A160435A900EDD75C /* Transform */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Transform;
 			sourceTree = "<group>";
 		};
 		CDE6D65215E111A800E5695F /* Window */ = {

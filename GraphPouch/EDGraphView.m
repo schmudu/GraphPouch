@@ -28,11 +28,13 @@
         // listen
         //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
         //NSManagedObjectContext *context = [coreData context];
+        /*
         NSManagedObjectContext *context = [self currentContext];
         
         // listen
         _nc = [NSNotificationCenter defaultCenter];
         [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
+         */
         
         // set model info
         [self setDataObj:myGraph];

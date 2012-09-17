@@ -12,6 +12,7 @@
 #import "EDWorksheetView.h"
 #import "EDGraphView.h"
 #import "EDGraph.h"
+#import "EDWorksheetElementView.h"
 
 @interface EDWorksheetView()
 - (void)drawGraph:(EDGraph *)graph;
@@ -31,6 +32,7 @@
 // elements
 - (NSMutableArray *)getAllSelectedWorksheetElementsViews;
 - (NSMutableArray *)getAllUnselectedWorksheetElementsViews;
+- (void)drawTransformRect:(EDWorksheetElementView *)element;
 @end
 
 @implementation EDWorksheetView
@@ -126,7 +128,11 @@
     [graphView setFrameOrigin:NSMakePoint([[graph valueForKey:EDElementAttributeLocationX] floatValue], [[graph valueForKey:EDElementAttributeLocationY] floatValue])];
     [self addSubview:graphView];
     [graphView setNeedsDisplay:TRUE];
-    //[self setNeedsDisplay:TRUE];
+    
+    // draw transform rect if selected
+    if ([[graphView dataObj] selected]){
+        [self drawTransformRect:(EDWorksheetElementView *)graphView];
+    }
 }
 
 #pragma mark keyboard
@@ -143,6 +149,7 @@
 
 #pragma mark listeners
 - (void)onContextChanged:(NSNotification *)note{
+    NSLog(@"going to update transform rects.");
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
     
     for (EDElement *myElement in insertedArray){
@@ -222,7 +229,6 @@
             [myElement mouseDraggedBySelection:[[note userInfo] valueForKey:EDEventKey]];
         }
     }
-    
     [self setNeedsDisplay:TRUE];
 }
 
@@ -244,8 +250,8 @@
         [self removeGuides];
     }
     
-    _mouseIsDown = FALSE;   
     [self setNeedsDisplay:TRUE];
+    _mouseIsDown = FALSE;   
 }
 
 #pragma mark guides
@@ -387,4 +393,8 @@
     return results;
 }
 
+#pragma mark transform rect
+- (void)drawTransformRect:(EDWorksheetElementView *)element{
+    NSLog(@"going to draw transform rect and listen to element:%@", element);
+}
 @end
