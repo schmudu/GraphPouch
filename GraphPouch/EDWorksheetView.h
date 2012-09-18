@@ -15,6 +15,7 @@
     NSManagedObjectContext *_context;
     EDCoreDataUtility *_coreData;
     NSMutableDictionary *_guides;
+    NSMutableDictionary *_transformRects;
     BOOL _mouseIsDown;
 }
 

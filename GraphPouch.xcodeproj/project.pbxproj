@@ -40,6 +40,9 @@
 		CD5EE20216012A690027EFC6 /* NSObject+Document.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE20116012A690027EFC6 /* NSObject+Document.m */; };
 		CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */; };
 		CDD46E531603BE3C00EDD75C /* NSColor+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */; };
+		CDD46E611607D1F200EDD75C /* EDTransformRect.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E601607D1F200EDD75C /* EDTransformRect.m */; };
+		CDD46E651607D22F00EDD75C /* EDTransformPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E641607D22F00EDD75C /* EDTransformPoint.m */; };
+		CDD46E6816092F2F00EDD75C /* NSObject+Worksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E6716092F2E00EDD75C /* NSObject+Worksheet.m */; };
 		CDE6D61C15DC476B00E5695F /* NSManagedObject+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */; };
 		CDE6D63015DE774100E5695F /* EDElement.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D62F15DE774000E5695F /* EDElement.m */; };
 		CDE6D65615E111C700E5695F /* EDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D65515E111C700E5695F /* EDWindow.m */; };
@@ -111,6 +114,12 @@
 		CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowController.m; sourceTree = "<group>"; };
 		CDD46E511603BE3C00EDD75C /* NSColor+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Utilities.h"; sourceTree = "<group>"; };
 		CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Utilities.m"; sourceTree = "<group>"; };
+		CDD46E5F1607D1F200EDD75C /* EDTransformRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformRect.h; sourceTree = "<group>"; };
+		CDD46E601607D1F200EDD75C /* EDTransformRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformRect.m; sourceTree = "<group>"; };
+		CDD46E631607D22F00EDD75C /* EDTransformPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformPoint.h; sourceTree = "<group>"; };
+		CDD46E641607D22F00EDD75C /* EDTransformPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformPoint.m; sourceTree = "<group>"; };
+		CDD46E6616092F2E00EDD75C /* NSObject+Worksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Worksheet.h"; sourceTree = "<group>"; };
+		CDD46E6716092F2E00EDD75C /* NSObject+Worksheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Worksheet.m"; sourceTree = "<group>"; };
 		CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Attributes.h"; sourceTree = "<group>"; };
 		CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Attributes.m"; sourceTree = "<group>"; };
 		CDE6D62E15DE774000E5695F /* EDElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDElement.h; sourceTree = "<group>"; };
@@ -256,6 +265,8 @@
 				CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */,
 				CD5EE20016012A690027EFC6 /* NSObject+Document.h */,
 				CD5EE20116012A690027EFC6 /* NSObject+Document.m */,
+				CDD46E6616092F2E00EDD75C /* NSObject+Worksheet.h */,
+				CDD46E6716092F2E00EDD75C /* NSObject+Worksheet.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -434,6 +445,10 @@
 		CDD46E5A160435A900EDD75C /* Transform */ = {
 			isa = PBXGroup;
 			children = (
+				CDD46E5F1607D1F200EDD75C /* EDTransformRect.h */,
+				CDD46E601607D1F200EDD75C /* EDTransformRect.m */,
+				CDD46E631607D22F00EDD75C /* EDTransformPoint.h */,
+				CDD46E641607D22F00EDD75C /* EDTransformPoint.m */,
 			);
 			name = Transform;
 			sourceTree = "<group>";
@@ -559,6 +574,9 @@
 				CD1EBD8C160013D200BEEA4D /* EDFormatterDecimalSigned.m in Sources */,
 				CD5EE20216012A690027EFC6 /* NSObject+Document.m in Sources */,
 				CDD46E531603BE3C00EDD75C /* NSColor+Utilities.m in Sources */,
+				CDD46E611607D1F200EDD75C /* EDTransformRect.m in Sources */,
+				CDD46E651607D22F00EDD75C /* EDTransformPoint.m in Sources */,
+				CDD46E6816092F2F00EDD75C /* NSObject+Worksheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
