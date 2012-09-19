@@ -447,9 +447,9 @@
 }
     
 - (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element{
-    //NSLog(@"going to drag rect:%@ element:%@", event, element);
-    if ([_transformRects objectForKey:[NSValue valueWithNonretainedObject:[element dataObj]]]) {
-        NSLog(@"this element has a transform rect.");
+    EDTransformRect *transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:[element dataObj]]];
+    if (transformRect) {
+        [transformRect setFrameOrigin:[element frame].origin];
     }
 }
 @end
