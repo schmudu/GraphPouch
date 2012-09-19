@@ -38,6 +38,7 @@
 // transform
 - (void)drawTransformRect:(EDElement *)element;
 - (void)updateTransformRects:(NSArray *)updatedElements;
+- (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element;
 @end
 
 @implementation EDWorksheetView
@@ -155,7 +156,6 @@
 
 #pragma mark listeners
 - (void)onContextChanged:(NSNotification *)note{
-    NSLog(@"going to update transform rects.");
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
     
     for (EDElement *myElement in insertedArray){
@@ -213,7 +213,7 @@
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedObjects];
     for (NSObject *myElement in [self subviews]){
-        if(([myElement isWorksheetElement]) && (![selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
+        if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse down
             [(EDWorksheetElementView *)myElement mouseDownBySelection:[[note userInfo] valueForKey:EDEventKey]];
         }
@@ -230,13 +230,18 @@
 }
 
 - (void)onElementMouseDragged:(NSNotification *)note{
+    NSLog(@"element dragged.");
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedObjects];
     for (NSObject *myElement in [self subviews]){
-        if(([myElement isWorksheetElement]) && (![selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
+        //if(([myElement isWorksheetElement]) && (![selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
+        if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
             [(EDWorksheetElementView *)myElement mouseDraggedBySelection:[[note userInfo] valueForKey:EDEventKey]];
+            
+            // notify transform rect if it has one
+            [self mouseDragTransformRect:[[note userInfo] valueForKey:EDEventKey] element:(EDWorksheetElementView *)myElement];
         }
     }
     [self setNeedsDisplay:TRUE];
@@ -247,7 +252,7 @@
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedObjects];
     for (NSObject *myElement in [self subviews]){
-        if(([myElement isWorksheetElement]) && (![selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
+        if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
             [(EDWorksheetElementView *)myElement mouseUpBySelection:[[note userInfo] valueForKey:EDEventKey]];
         }
@@ -433,11 +438,18 @@
             //NSLog(@"going to remove element:%@ transformRect:%@", myElement, transformRect);
         }
         else if((isSelected) && (!transformRect)) {
-            NSLog(@"need to draw a transform for element:%@", myElement);
+            //NSLog(@"need to draw a transform for element:%@", myElement);
             [self drawTransformRect:myElement];
         }
         
         // if element is selected add a transform rect for it
+    }
+}
+    
+- (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element{
+    //NSLog(@"going to drag rect:%@ element:%@", event, element);
+    if ([_transformRects objectForKey:[NSValue valueWithNonretainedObject:[element dataObj]]]) {
+        NSLog(@"this element has a transform rect.");
     }
 }
 @end

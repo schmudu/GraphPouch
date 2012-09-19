@@ -22,7 +22,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSLog(@"drawing transform rect.");
     // Drawing code here.
     //NSRect bounds = NSMakeRect(0, 0, [self bounds], [self bounds]);
     
