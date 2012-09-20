@@ -230,7 +230,6 @@
 }
 
 - (void)onElementMouseDragged:(NSNotification *)note{
-    NSLog(@"element dragged.");
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedObjects];
@@ -419,8 +418,8 @@
     [_transformRects setObject:newTransformRect forKey:[NSValue valueWithNonretainedObject:element]];
     
     // add to view
-    [self addSubview:newTransformRect];
-    //NSLog(@"going to draw transform rect and listen to element:%@ transform:%@", element, [_transformRects objectForKey:[NSValue valueWithNonretainedObject:element]]);
+#warning need to put this back in however it affects the dragging behavior
+    //[self addSubview:newTransformRect];
 }
 
 - (void)updateTransformRects:(NSArray *)updatedElements{
@@ -435,14 +434,13 @@
         // if obj has a value and that element is not selected the remove the transform rect 
         if ((!isSelected) && (transformRect)) {
             [transformRect removeFromSuperview];
-            //NSLog(@"going to remove element:%@ transformRect:%@", myElement, transformRect);
+            
+            //reset
+            [_transformRects removeObjectForKey:[NSValue valueWithNonretainedObject:myElement]];
         }
         else if((isSelected) && (!transformRect)) {
-            //NSLog(@"need to draw a transform for element:%@", myElement);
             [self drawTransformRect:myElement];
         }
-        
-        // if element is selected add a transform rect for it
     }
 }
     

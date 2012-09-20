@@ -20,9 +20,18 @@
     return self;
 }
 
+- (BOOL)isFlipped{
+    return TRUE;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
+    //NSBezierPath *aPath;
+    //[aPath setLineWidth:2.0];
+    NSLog(@"drawing point.");
+    [[NSColor blueColor] set];
+    //[NSBezierPath strokeRect:[self frame]];
+    NSRectFill([self frame]);
 }
 
 @end

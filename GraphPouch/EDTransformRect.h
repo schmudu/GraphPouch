@@ -7,6 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDTransformPoint.h"
 
-@interface EDTransformRect : NSView
+@interface EDTransformRect : NSView{
+    EDTransformPoint *topLeftPoint;
+}
 @end
