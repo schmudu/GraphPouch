@@ -46,7 +46,6 @@
         // listen
         _nc = [NSNotificationCenter defaultCenter];
         [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
-        
     }
     
     return self;

@@ -10,6 +10,6 @@
 #import "EDTransformPoint.h"
 
 @interface EDTransformRect : NSView{
-    EDTransformPoint *topLeftPoint;
+    EDTransformPoint *topLeftPoint, *topRightPoint, *bottomLeftPoint, *bottomRightPoint;
 }
 @end

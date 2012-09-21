@@ -7,6 +7,7 @@
 //
 
 #import "EDTransformRect.h"
+#import "EDConstants.h"
 
 @implementation EDTransformRect
 
@@ -14,7 +15,15 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        topLeftPoint = [[EDTransformPoint alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+        topLeftPoint = [EDTransformPoint alloc];
+        topRightPoint = [EDTransformPoint alloc];
+        bottomLeftPoint = [EDTransformPoint alloc];
+        bottomRightPoint = [EDTransformPoint alloc];
+        
+        [topLeftPoint initWithFrame:NSMakeRect(0, 0, EDTransformPointLength, EDTransformPointLength)];
+        [topRightPoint initWithFrame:NSMakeRect([self frame].size.width - EDTransformPointLength, 0, EDTransformPointLength, EDTransformPointLength)];
+        [bottomLeftPoint initWithFrame:NSMakeRect(0, [self frame].size.height - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)];
+        [bottomRightPoint initWithFrame:NSMakeRect([self frame].size.width - EDTransformPointLength, [self frame].size.height - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)];
     }
     
     return self;
@@ -26,16 +35,17 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSLog(@"drawing rect.");
-    // Drawing code here.
-    //NSRect bounds = NSMakeRect(0, 0, [self bounds], [self bounds]);
-    
-    //[[NSColor purpleColor] setFill];
-    
-    //NSRectFill(dirtyRect);
-    
     if(![[self subviews] containsObject:topLeftPoint]){
         [self addSubview:topLeftPoint];
+    }
+    if(![[self subviews] containsObject:topRightPoint]){
+        [self addSubview:topRightPoint];
+    }
+    if(![[self subviews] containsObject:bottomLeftPoint]){
+        [self addSubview:bottomLeftPoint];
+    }
+    if(![[self subviews] containsObject:bottomRightPoint]){
+        [self addSubview:bottomRightPoint];
     }
 }
 @end

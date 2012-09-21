@@ -28,10 +28,10 @@
 {
     //NSBezierPath *aPath;
     //[aPath setLineWidth:2.0];
-    NSLog(@"drawing point.");
+    //NSLog(@"drawing point.");
     [[NSColor blueColor] set];
     //[NSBezierPath strokeRect:[self frame]];
-    NSRectFill([self frame]);
+    NSRectFill([self bounds]);
 }
 
 @end

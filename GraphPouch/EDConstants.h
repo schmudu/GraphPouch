@@ -61,4 +61,7 @@ extern float const EDGraphDefaultWidth;
 // keyboard mapping
 extern int const        EDKeycodeDelete;
 extern int const        EDKeyModifierNone;
+
+// transform
+extern float const EDTransformPointLength;
 @end

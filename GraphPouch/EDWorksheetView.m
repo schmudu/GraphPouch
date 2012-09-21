@@ -419,7 +419,7 @@
     
     // add to view
 #warning need to put this back in however it affects the dragging behavior
-    //[self addSubview:newTransformRect];
+    [self addSubview:newTransformRect];
 }
 
 - (void)updateTransformRects:(NSArray *)updatedElements{
@@ -447,6 +447,7 @@
 - (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element{
     EDTransformRect *transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:[element dataObj]]];
     if (transformRect) {
+        NSLog(@"setting frame origin x:%f y:%f", [element frame].origin.x, [element frame].origin.y);
         [transformRect setFrameOrigin:[element frame].origin];
     }
 }

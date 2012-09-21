@@ -61,4 +61,7 @@ float const EDGraphDefaultWidth                                 = 30.0;
 // keyboard
 int const EDKeycodeDelete                                       = 51;
 int const EDKeyModifierNone                                     = 256;
+
+// transform
+float const EDTransformPointLength                              = 10;
 @end
