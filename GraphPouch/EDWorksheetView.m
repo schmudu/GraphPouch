@@ -447,7 +447,6 @@
 - (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element{
     EDTransformRect *transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:[element dataObj]]];
     if (transformRect) {
-        NSLog(@"setting frame origin x:%f y:%f", [element frame].origin.x, [element frame].origin.y);
         [transformRect setFrameOrigin:[element frame].origin];
     }
 }

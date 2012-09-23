@@ -64,4 +64,5 @@ int const EDKeyModifierNone                                     = 256;
 
 // transform
 float const EDTransformPointLength                              = 10;
+NSString * const EDEventTransformPointMoved                     = @"EDEventTransformPointMoved";
 @end

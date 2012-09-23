@@ -9,7 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 @interface EDTransformPoint : NSView{
+    @protected
     BOOL _mouseIsOver;
+    NSNotificationCenter    *_nc;
+    NSPoint                 _lastDragLocation;
+    NSPoint                 _lastCursorLocation;
 }
 
 @end

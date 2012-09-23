@@ -13,4 +13,8 @@
     EDTransformCornerPoint *verticalPoint, *horizontalPoint;
 }
 
+- (id)initWithFrame:(NSRect)frame verticalPoint:(EDTransformCornerPoint *)newVerticalPoint horizPoint:(EDTransformCornerPoint *)newHorizPoint;
+- (void)onVerticalPointMoved:(NSNotification *)note;
+- (void)onHorizontalPointMoved:(NSNotification *)note;
+
 @end

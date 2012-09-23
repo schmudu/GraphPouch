@@ -74,7 +74,7 @@
 #pragma mark mouse events
 #pragma mark mouse down
 - (void)mouseDown:(NSEvent *)theEvent{
-    // CAREFUL: any code you change here needs to change in the "mouseDownBySelection" method
+#warning CAREFUL: any code you change here needs to change in the "mouseDownBySelection" method
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
     [coreData getAllObjects];
     

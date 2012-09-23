@@ -8,6 +8,7 @@
 
 #import "EDTransformRect.h"
 #import "EDConstants.h"
+#import "EDTransformCornerPoint.h"
 
 @implementation EDTransformRect
 
@@ -15,15 +16,23 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        topLeftPoint = [EDTransformPoint alloc];
-        topRightPoint = [EDTransformPoint alloc];
-        bottomLeftPoint = [EDTransformPoint alloc];
-        bottomRightPoint = [EDTransformPoint alloc];
+        topLeftPoint = [EDTransformCornerPoint alloc];
+        topRightPoint = [EDTransformCornerPoint alloc];
+        bottomLeftPoint = [EDTransformCornerPoint alloc];
+        bottomRightPoint = [EDTransformCornerPoint alloc];
         
-        [topLeftPoint initWithFrame:NSMakeRect(0, 0, EDTransformPointLength, EDTransformPointLength)];
-        [topRightPoint initWithFrame:NSMakeRect([self frame].size.width - EDTransformPointLength, 0, EDTransformPointLength, EDTransformPointLength)];
-        [bottomLeftPoint initWithFrame:NSMakeRect(0, [self frame].size.height - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)];
-        [bottomRightPoint initWithFrame:NSMakeRect([self frame].size.width - EDTransformPointLength, [self frame].size.height - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)];
+        [topLeftPoint initWithFrame:NSMakeRect(0, 0, EDTransformPointLength, EDTransformPointLength) 
+                      verticalPoint:(EDTransformCornerPoint *)topRightPoint 
+                         horizPoint:(EDTransformCornerPoint *)bottomLeftPoint];
+        [topRightPoint initWithFrame:NSMakeRect([self frame].size.width - EDTransformPointLength, 0, EDTransformPointLength, EDTransformPointLength)
+                       verticalPoint:(EDTransformCornerPoint *)topLeftPoint 
+                          horizPoint:(EDTransformCornerPoint *)bottomRightPoint];
+        [bottomLeftPoint initWithFrame:NSMakeRect(0, [self frame].size.height - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
+                         verticalPoint:(EDTransformCornerPoint *)bottomRightPoint 
+                            horizPoint:(EDTransformCornerPoint *)topLeftPoint];
+        [bottomRightPoint initWithFrame:NSMakeRect([self frame].size.width - EDTransformPointLength, [self frame].size.height - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
+                          verticalPoint:(EDTransformCornerPoint *)bottomLeftPoint 
+                             horizPoint:(EDTransformCornerPoint *)topRightPoint];
     }
     
     return self;

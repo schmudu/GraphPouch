@@ -64,4 +64,5 @@ extern int const        EDKeyModifierNone;
 
 // transform
 extern float const EDTransformPointLength;
+extern NSString *const EDEventTransformPointMoved;
 @end

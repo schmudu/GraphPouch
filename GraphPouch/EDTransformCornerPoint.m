@@ -7,6 +7,10 @@
 //
 
 #import "EDTransformCornerPoint.h"
+#import "EDConstants.h"
+
+@interface EDTransformCornerPoint()
+@end
 
 @implementation EDTransformCornerPoint
 
@@ -18,14 +22,25 @@
         verticalPoint = newVerticalPoint;
         
         // listen
+        [_nc addObserver:self selector:@selector(onVerticalPointMoved:) name:EDEventTransformPointMoved object:verticalPoint];
+        [_nc addObserver:self selector:@selector(onHorizontalPointMoved:) name:EDEventTransformPointMoved object:horizontalPoint];
     }
     
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
-    // Drawing code here.
+#pragma mark movement
+- (void)onHorizontalPointMoved:(NSNotification *)note{
+    // set frame horizontal position
+    NSPoint thisOrigin = NSMakePoint([self frame].origin.x, [self frame].origin.y);
+    thisOrigin.x = [[[note userInfo] valueForKey:@"locationX"] floatValue];
+    [self setFrameOrigin:thisOrigin];
 }
 
+- (void)onVerticalPointMoved:(NSNotification *)note{
+    // set frame horizontal position
+    NSPoint thisOrigin = NSMakePoint([self frame].origin.x, [self frame].origin.y);
+    thisOrigin.y = [[[note userInfo] valueForKey:@"locationY"] floatValue];
+    [self setFrameOrigin:thisOrigin];
+}
 @end
