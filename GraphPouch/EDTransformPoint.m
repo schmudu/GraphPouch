@@ -14,7 +14,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
+        _mouseIsOver = FALSE;
+        
+        // add tracking area
+        [self addTrackingArea:[[NSTrackingArea alloc] initWithRect:[self bounds] options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways) owner:self userInfo:nil]];
     }
     
     return self;
@@ -26,12 +29,23 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    //NSBezierPath *aPath;
-    //[aPath setLineWidth:2.0];
-    //NSLog(@"drawing point.");
     [[NSColor blueColor] set];
-    //[NSBezierPath strokeRect:[self frame]];
-    NSRectFill([self bounds]);
+    if(_mouseIsOver){
+        [NSBezierPath fillRect:[self bounds]];
+    }
+    else {
+        [NSBezierPath strokeRect:[self bounds]];
+    }
 }
 
+#pragma mark mouse
+- (void)mouseEntered:(NSEvent *)theEvent{
+    _mouseIsOver = TRUE;
+    [self setNeedsDisplay:TRUE];
+}
+
+- (void)mouseExited:(NSEvent *)theEvent{
+    _mouseIsOver = FALSE;
+    [self setNeedsDisplay:TRUE];
+}
 @end

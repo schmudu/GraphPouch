@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface EDTransformPoint : NSView
+@interface EDTransformPoint : NSView{
+    BOOL _mouseIsOver;
+}
 
 @end
