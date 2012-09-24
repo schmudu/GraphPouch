@@ -64,5 +64,10 @@ extern int const        EDKeyModifierNone;
 
 // transform
 extern float const EDTransformPointLength;
-extern NSString *const EDEventTransformPointMoved;
+extern NSString *const EDEventTransformPointDragged;
+extern NSString *const EDEventTransformRectChanged;
+extern NSString *const EDKeyWidth;
+extern NSString *const EDKeyHeight;
+extern NSString *const EDKeyLocationY;
+extern NSString *const EDKeyLocationX;
 @end

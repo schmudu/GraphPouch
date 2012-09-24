@@ -22,11 +22,15 @@
         verticalPoint = newVerticalPoint;
         
         // listen
-        [_nc addObserver:self selector:@selector(onVerticalPointMoved:) name:EDEventTransformPointMoved object:verticalPoint];
-        [_nc addObserver:self selector:@selector(onHorizontalPointMoved:) name:EDEventTransformPointMoved object:horizontalPoint];
+        [_nc addObserver:self selector:@selector(onVerticalPointMoved:) name:EDEventTransformPointDragged object:verticalPoint];
+        [_nc addObserver:self selector:@selector(onHorizontalPointMoved:) name:EDEventTransformPointDragged object:horizontalPoint];
     }
     
     return self;
+}
+
+- (BOOL)isFlipped{
+    return TRUE;
 }
 
 #pragma mark movement

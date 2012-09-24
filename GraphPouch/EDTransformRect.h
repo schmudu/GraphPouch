@@ -10,6 +10,7 @@
 #import "EDTransformCornerPoint.h"
 
 @interface EDTransformRect : NSView{
+    NSNotificationCenter *_nc;
     EDTransformCornerPoint *topLeftPoint, *topRightPoint, *bottomLeftPoint, *bottomRightPoint;
 }
 @end

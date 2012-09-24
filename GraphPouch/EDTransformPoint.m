@@ -75,6 +75,6 @@
     NSMutableDictionary *infoDic = [[NSMutableDictionary alloc] init];
     [infoDic setValue:[[NSNumber alloc] initWithFloat:thisOrigin.x] forKey:@"locationX"];
     [infoDic setValue:[[NSNumber alloc] initWithFloat:thisOrigin.y] forKey:@"locationY"];
-    [_nc postNotificationName:EDEventTransformPointMoved object:self userInfo:infoDic];
+    [_nc postNotificationName:EDEventTransformPointDragged object:self userInfo:infoDic];
 }
 @end

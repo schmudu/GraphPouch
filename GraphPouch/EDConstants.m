@@ -64,5 +64,10 @@ int const EDKeyModifierNone                                     = 256;
 
 // transform
 float const EDTransformPointLength                              = 10;
-NSString * const EDEventTransformPointMoved                     = @"EDEventTransformPointMoved";
+NSString * const EDEventTransformPointDragged                   = @"EDEventTransformPointDragged";
+NSString * const EDEventTransformRectChanged                    = @"EDEventTransformRectChanged";
+NSString * const EDKeyHeight                                    = @"EDKeyHeight";
+NSString * const EDKeyWidth                                     = @"EDKeyWidth";
+NSString * const EDKeyLocationX                                 = @"EDKeyLocationX";
+NSString * const EDKeyLocationY                                 = @"EDKeyLocationY";
 @end
