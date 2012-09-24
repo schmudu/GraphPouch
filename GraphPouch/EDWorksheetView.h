@@ -16,6 +16,7 @@
     EDCoreDataUtility *_coreData;
     NSMutableDictionary *_guides;
     NSMutableDictionary *_transformRects;
+    NSMutableDictionary *_elementsWithTransformRects;
     BOOL _mouseIsDown;
 }
 

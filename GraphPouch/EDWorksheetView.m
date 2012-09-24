@@ -39,6 +39,7 @@
 - (void)drawTransformRect:(EDElement *)element;
 - (void)updateTransformRects:(NSArray *)updatedElements;
 - (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element;
+- (void)onTransformRectChanged:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetView
@@ -49,8 +50,10 @@
     if (self) {
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         _context = [_coreData context];
-        NSLog(@"worksheet view init.");
+        
+        // these dictionaries are the reverse of each other
         _transformRects = [[NSMutableDictionary alloc] init];
+        _elementsWithTransformRects = [[NSMutableDictionary alloc] init];
         
         // listen
         _nc = [NSNotificationCenter defaultCenter];
@@ -409,16 +412,18 @@
 }
 
 #pragma mark transform rect
-//- (void)drawTransformRect:(EDWorksheetElementView *)element{
 - (void)drawTransformRect:(EDElement *)element{
     // create new transform rect
     EDTransformRect *newTransformRect = [[EDTransformRect alloc] initWithFrame:NSMakeRect([element locationX], [element locationY], [element elementWidth], [element elementHeight])];
     
     // add to dictionary
     [_transformRects setObject:newTransformRect forKey:[NSValue valueWithNonretainedObject:element]];
+    [_elementsWithTransformRects setObject:element forKey:[NSValue valueWithNonretainedObject:newTransformRect]];
     
+    // listen
+    [_nc addObserver:self selector:@selector(onTransformRectChanged:) name:EDEventTransformRectChanged object:newTransformRect];
+     
     // add to view
-#warning need to put this back in however it affects the dragging behavior
     [self addSubview:newTransformRect];
 }
 
@@ -435,8 +440,13 @@
         if ((!isSelected) && (transformRect)) {
             [transformRect removeFromSuperview];
             
+            // remove listener
+            [_nc removeObserver:self name:EDEventTransformRectChanged object:transformRect];
+            
             //reset
             [_transformRects removeObjectForKey:[NSValue valueWithNonretainedObject:myElement]];
+            [_elementsWithTransformRects removeObjectForKey:[NSValue valueWithNonretainedObject:transformRect]];
+            
         }
         else if((isSelected) && (!transformRect)) {
             [self drawTransformRect:myElement];
@@ -449,5 +459,11 @@
     if (transformRect) {
         [transformRect setFrameOrigin:[element frame].origin];
     }
+}
+
+- (void)onTransformRectChanged:(NSNotification *)note{
+    // find element that has corresponding transform rect
+    EDElement *element = [_elementsWithTransformRects objectForKey:[NSValue valueWithNonretainedObject:[note object]]];
+    NSLog(@"transform rect changed:%@", element);
 }
 @end
