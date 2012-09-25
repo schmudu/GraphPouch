@@ -104,9 +104,12 @@
     // set results
     [results setValue:[[NSNumber alloc] initWithFloat:windowPoint.x] forKey:EDKeyLocationX];
     [results setValue:[[NSNumber alloc] initWithFloat:windowPoint.y] forKey:EDKeyLocationY];
-    [results setValue:[[NSNumber alloc] initWithFloat:(maxX-minX)] forKey:EDKeyWidth];
-    [results setValue:[[NSNumber alloc] initWithFloat:(maxY-minY)] forKey:EDKeyHeight];
+    [results setValue:[[NSNumber alloc] initWithFloat:(maxX-minX+EDTransformPointLength)] forKey:EDKeyWidth];
+    [results setValue:[[NSNumber alloc] initWithFloat:(maxY-minY+EDTransformPointLength)] forKey:EDKeyHeight];
     
+    // reset frame size
+    [self setFrameSize:NSMakeSize((maxX-minX+EDTransformPointLength), (maxY-minY+EDTransformPointLength))];
+     
     //dispatch
     [_nc postNotificationName:EDEventTransformRectChanged object:self userInfo:results];
 }

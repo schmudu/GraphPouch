@@ -53,7 +53,7 @@
         
         // these dictionaries are the reverse of each other
         _transformRects = [[NSMutableDictionary alloc] init];
-        _elementsWithTransformRects = [[NSMutableDictionary alloc] init];
+        //_elementsWithTransformRects = [[NSMutableDictionary alloc] init];
         
         // listen
         _nc = [NSNotificationCenter defaultCenter];
@@ -141,7 +141,7 @@
     
     // draw transform rect if selected
     if ([[graphView dataObj] selected]){
-        [self drawTransformRect:[(EDWorksheetElementView *)graphView dataObj]];
+        [self drawTransformRect:(EDElement *)[graphView dataObj]];
     }
 }
 
@@ -418,7 +418,7 @@
     
     // add to dictionary
     [_transformRects setObject:newTransformRect forKey:[NSValue valueWithNonretainedObject:element]];
-    [_elementsWithTransformRects setObject:element forKey:[NSValue valueWithNonretainedObject:newTransformRect]];
+    //[_elementsWithTransformRects setObject:elementView forKey:[NSValue valueWithNonretainedObject:newTransformRect]];
     
     // listen
     [_nc addObserver:self selector:@selector(onTransformRectChanged:) name:EDEventTransformRectChanged object:newTransformRect];
@@ -445,7 +445,7 @@
             
             //reset
             [_transformRects removeObjectForKey:[NSValue valueWithNonretainedObject:myElement]];
-            [_elementsWithTransformRects removeObjectForKey:[NSValue valueWithNonretainedObject:transformRect]];
+            //[_elementsWithTransformRects removeObjectForKey:[NSValue valueWithNonretainedObject:transformRect]];
             
         }
         else if((isSelected) && (!transformRect)) {
@@ -462,8 +462,14 @@
 }
 
 - (void)onTransformRectChanged:(NSNotification *)note{
-    // find element that has corresponding transform rect
-    EDElement *element = [_elementsWithTransformRects objectForKey:[NSValue valueWithNonretainedObject:[note object]]];
-    NSLog(@"transform rect changed:%@", element);
+    // transform rect changed
+    // change corresponding worksheet element view
+    
+    //EDWorksheetElementView *elementView = [_elementsWithTransformRects objectForKey:[NSValue valueWithNonretainedObject:[note object]]];
+    NSPoint origin = NSMakePoint([[[note userInfo] valueForKey:EDKeyLocationX] floatValue], [[[note userInfo] valueForKey:EDKeyLocationY] floatValue]);
+    
+    //change element view
+    //[elementView setFrameOrigin:origin];
+    //[elementView setFrameSize:NSMakeSize([[[note userInfo] valueForKey:EDKeyWidth] floatValue], [[[note userInfo] valueForKey:EDKeyHeight] floatValue])];
 }
 @end
