@@ -414,7 +414,8 @@
 #pragma mark transform rect
 - (void)drawTransformRect:(EDElement *)element{
     // create new transform rect
-    EDTransformRect *newTransformRect = [[EDTransformRect alloc] initWithFrame:NSMakeRect([element locationX], [element locationY], [element elementWidth], [element elementHeight])];
+    //EDTransformRect *newTransformRect = [[EDTransformRect alloc] initWithFrame:NSMakeRect([element locationX], [element locationY], [element elementWidth], [element elementHeight])];
+    EDTransformRect *newTransformRect = [[EDTransformRect alloc] initWithFrame:[self frame] element:element];
     
     // add to dictionary
     [_transformRects setObject:newTransformRect forKey:[NSValue valueWithNonretainedObject:element]];

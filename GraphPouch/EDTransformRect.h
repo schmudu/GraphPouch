@@ -8,9 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDTransformCornerPoint.h"
+#import "EDElement.h"
 
 @interface EDTransformRect : NSView{
+    EDElement *_element;
     NSNotificationCenter *_nc;
     EDTransformCornerPoint *topLeftPoint, *topRightPoint, *bottomLeftPoint, *bottomRightPoint;
 }
+- (id)initWithFrame:(NSRect)frame element:(EDElement *)element;
 @end

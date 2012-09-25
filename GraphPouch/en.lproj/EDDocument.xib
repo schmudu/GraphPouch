@@ -39,7 +39,7 @@
 			<object class="NSWindowTemplate" id="275939982">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{133, 235}, {708, 684}}</string>
+				<string key="NSWindowRect">{{133, 235}, {723, 711}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">Window</string>
 				<string key="NSWindowClass">EDWindow</string>
@@ -53,7 +53,7 @@
 						<object class="NSButton" id="807704737">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{20, 624}, {48, 48}}</string>
+							<string key="NSFrame">{{20, 651}, {48, 48}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="257841340"/>
@@ -141,7 +141,7 @@
 									<double key="NSPercent">0.50602412223815918</double>
 								</object>
 							</array>
-							<string key="NSFrame">{{-1, -28}, {725, 622}}</string>
+							<string key="NSFrameSize">{725, 622}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="668718214"/>
@@ -152,7 +152,7 @@
 							<reference key="NSContentView" ref="668718214"/>
 						</object>
 					</array>
-					<string key="NSFrameSize">{708, 684}</string>
+					<string key="NSFrameSize">{723, 711}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="807704737"/>
