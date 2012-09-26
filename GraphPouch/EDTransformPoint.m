@@ -39,7 +39,6 @@
     else {
         [NSBezierPath strokeRect:[self bounds]];
     }
-    NSLog(@"drawing point: bounds:x:%f width:%f", [self bounds].origin.x, [self bounds].size.width);
 }
 
 #pragma mark mouse

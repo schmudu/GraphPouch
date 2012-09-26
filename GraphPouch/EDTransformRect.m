@@ -16,63 +16,26 @@
 
 @implementation EDTransformRect
 
-/*
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        topLeftPoint = [EDTransformCornerPoint alloc];
-        topRightPoint = [EDTransformCornerPoint alloc];
-        bottomLeftPoint = [EDTransformCornerPoint alloc];
-        bottomRightPoint = [EDTransformCornerPoint alloc];
-        
-        [topLeftPoint initWithFrame:NSMakeRect(0, 0, EDTransformPointLength, EDTransformPointLength) 
-                      verticalPoint:(EDTransformCornerPoint *)topRightPoint 
-                         horizPoint:(EDTransformCornerPoint *)bottomLeftPoint];
-        [topRightPoint initWithFrame:NSMakeRect([self frame].size.width - EDTransformPointLength, 0, EDTransformPointLength, EDTransformPointLength)
-                       verticalPoint:(EDTransformCornerPoint *)topLeftPoint 
-                          horizPoint:(EDTransformCornerPoint *)bottomRightPoint];
-        [bottomLeftPoint initWithFrame:NSMakeRect(0, [self frame].size.height - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
-                         verticalPoint:(EDTransformCornerPoint *)bottomRightPoint 
-                            horizPoint:(EDTransformCornerPoint *)topLeftPoint];
-        [bottomRightPoint initWithFrame:NSMakeRect([self frame].size.width - EDTransformPointLength, [self frame].size.height - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
-                          verticalPoint:(EDTransformCornerPoint *)bottomLeftPoint 
-                             horizPoint:(EDTransformCornerPoint *)topRightPoint];
-        
-        // listen
-        _nc = [NSNotificationCenter defaultCenter];
-        [_nc addObserver:self selector:@selector(onTransformPointDragged:) name:EDEventTransformPointDragged object:topLeftPoint];
-        [_nc addObserver:self selector:@selector(onTransformPointDragged:) name:EDEventTransformPointDragged object:topRightPoint];
-        [_nc addObserver:self selector:@selector(onTransformPointDragged:) name:EDEventTransformPointDragged object:bottomLeftPoint];
-        [_nc addObserver:self selector:@selector(onTransformPointDragged:) name:EDEventTransformPointDragged object:bottomRightPoint];
-    }
-    
-    return self;
-}
- */
 - (id)initWithFrame:(NSRect)frame element:(EDElement *)element
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _element = element;
-        
         topLeftPoint = [EDTransformCornerPoint alloc];
         topRightPoint = [EDTransformCornerPoint alloc];
         bottomLeftPoint = [EDTransformCornerPoint alloc];
         bottomRightPoint = [EDTransformCornerPoint alloc];
         
-        [topLeftPoint initWithFrame:NSMakeRect(0, 0, EDTransformPointLength, EDTransformPointLength) 
+        // align element with data attributes
+        [topLeftPoint initWithFrame:NSMakeRect([element locationX], [element locationY], EDTransformPointLength, EDTransformPointLength) 
                       verticalPoint:(EDTransformCornerPoint *)topRightPoint 
                          horizPoint:(EDTransformCornerPoint *)bottomLeftPoint];
-        //[topRightPoint initWithFrame:NSMakeRect([self frame].size.width - EDTransformPointLength, 0, EDTransformPointLength, EDTransformPointLength)
-        [topRightPoint initWithFrame:NSMakeRect(700, 0, EDTransformPointLength, EDTransformPointLength)
+        [topRightPoint initWithFrame:NSMakeRect([element locationX] + [element elementWidth] - EDTransformPointLength, [element locationY], EDTransformPointLength, EDTransformPointLength)
                        verticalPoint:(EDTransformCornerPoint *)topLeftPoint 
                           horizPoint:(EDTransformCornerPoint *)bottomRightPoint];
-        //[bottomLeftPoint initWithFrame:NSMakeRect(0, [self frame].size.height - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
-        [bottomLeftPoint initWithFrame:NSMakeRect(0, 500, EDTransformPointLength, EDTransformPointLength)
+        [bottomLeftPoint initWithFrame:NSMakeRect([element locationX], [element locationY] + [element elementHeight] - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
                          verticalPoint:(EDTransformCornerPoint *)bottomRightPoint 
                             horizPoint:(EDTransformCornerPoint *)topLeftPoint];
-        [bottomRightPoint initWithFrame:NSMakeRect([self frame].size.width - EDTransformPointLength, [self frame].size.height - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
+        [bottomRightPoint initWithFrame:NSMakeRect([element locationX] + [element elementWidth] - EDTransformPointLength, [element locationY] + [element elementHeight] - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
                           verticalPoint:(EDTransformCornerPoint *)bottomLeftPoint 
                              horizPoint:(EDTransformCornerPoint *)topRightPoint];
         
@@ -97,7 +60,6 @@
         [self addSubview:topLeftPoint];
     }
     if(![[self subviews] containsObject:topRightPoint]){
-        NSLog(@"adding top right point.");
         [self addSubview:topRightPoint];
     }
     if(![[self subviews] containsObject:bottomLeftPoint]){
@@ -106,8 +68,6 @@
     if(![[self subviews] containsObject:bottomRightPoint]){
         [self addSubview:bottomRightPoint];
     }
-    NSLog(@"self frame origin x:%f y:%f top right frame origin x:%f y:%f", [self frame].origin.x, [self frame].origin.y, [topRightPoint frame].origin.x, [topRightPoint frame].origin.y);
-    NSLog(@"self width:%f top right width:%f", [self frame].size.width, [topRightPoint frame].size.width);
 }
 
 # pragma mark transform point dragged
@@ -148,10 +108,8 @@
     [results setValue:[[NSNumber alloc] initWithFloat:(maxX-minX+EDTransformPointLength)] forKey:EDKeyWidth];
     [results setValue:[[NSNumber alloc] initWithFloat:(maxY-minY+EDTransformPointLength)] forKey:EDKeyHeight];
     
-    // reset frame size
-    [self setFrameSize:NSMakeSize((maxX-minX+EDTransformPointLength), (maxY-minY+EDTransformPointLength))];
-     
     //dispatch
+    //NSLog(@"going to dispatch width of:%f x:%f", (maxX-minX+EDTransformPointLength), windowPoint.x);
     [_nc postNotificationName:EDEventTransformRectChanged object:self userInfo:results];
 }
 @end

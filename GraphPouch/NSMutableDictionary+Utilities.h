@@ -10,4 +10,5 @@
 
 @interface NSMutableDictionary (Utilities)
 
+- (id)findKeyinDictionaryForValue:(id)value;
 @end

@@ -10,4 +10,11 @@
 
 @implementation NSMutableDictionary (Utilities)
 
+- (id)findKeyinDictionaryForValue:(id)value{
+    for (NSObject *key in self){
+        NSLog(@"key:%@ value:%@", [[NSValue valueWithNonretainedObject:key] nonretainedObjectValue], [self objectForKey:key]);
+    }
+    return nil;
+}
+
 @end
