@@ -18,4 +18,5 @@
     NSPoint                 _savedMouseSnapLocation;
 }
 
+@property NSString *transformCorner;
 @end

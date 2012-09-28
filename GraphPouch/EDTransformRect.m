@@ -100,6 +100,23 @@
 # pragma mark transform point dragged
 -(void)onTransformPointDragged:(NSNotification *)note{
     NSMutableDictionary *results = [self getDimensionsOfEvent:note];
+    EDTransformCornerPoint *cornerPoint = (EDTransformCornerPoint *)[note object];
+    
+    //NSLog(@"point being dragged: point x:%f minX:%f", [cornerPoint frame].origin.x, [[results valueForKey:EDKeyTransformDragPointX] floatValue]);
+    // set variable to distinguish which corner is being referenced
+    if ([cornerPoint frame].origin.x == [[results valueForKey:EDKeyTransformDragPointX] floatValue]) {
+        if ([cornerPoint frame].origin.y == [[results valueForKey:EDKeyTransformDragPointY] floatValue])
+            [cornerPoint setTransformCorner:EDTransformCornerUpperLeft]; 
+        else 
+            [cornerPoint setTransformCorner:EDTransformCornerBottomLeft]; 
+    }
+    else {
+        if ([cornerPoint frame].origin.y == [[results valueForKey:EDKeyTransformDragPointY] floatValue]) 
+            [cornerPoint setTransformCorner:EDTransformCornerUpperRight]; 
+        else 
+            [cornerPoint setTransformCorner:EDTransformCornerBottomRight]; 
+    }
+    
     [_nc postNotificationName:EDEventTransformRectChanged object:self userInfo:results];
 }
 

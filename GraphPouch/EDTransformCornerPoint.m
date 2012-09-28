@@ -14,6 +14,7 @@
 
 @implementation EDTransformCornerPoint
 
+
 - (id)initWithFrame:(NSRect)frame verticalPoint:(EDTransformCornerPoint *)newVerticalPoint horizPoint:(EDTransformCornerPoint *)newHorizPoint
 {
     self = [super initWithFrame:frame];

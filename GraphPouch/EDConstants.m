@@ -74,4 +74,8 @@ NSString * const EDKeyLocationX                                 = @"EDKeyLocatio
 NSString * const EDKeyLocationY                                 = @"EDKeyLocationY";
 NSString * const EDKeyTransformDragPointX                       = @"EDKeyTransformDragPointX";
 NSString * const EDKeyTransformDragPointY                       = @"EDKeyTransformDragPointY";
+NSString * const EDTransformCornerUpperLeft                     = @"EDTransformCornerUpperLeft";
+NSString * const EDTransformCornerUpperRight                    = @"EDTransformCornerUpperRight";
+NSString * const EDTransformCornerBottomLeft                    = @"EDTransformCornerBottomLeft";
+NSString * const EDTransformCornerBottomRight                   = @"EDTransformCornerBottomRight";
 @end

@@ -74,4 +74,8 @@ extern NSString *const EDKeyLocationY;
 extern NSString *const EDKeyLocationX;
 extern NSString *const EDKeyTransformDragPointX;
 extern NSString *const EDKeyTransformDragPointY;
+extern NSString *const EDTransformCornerUpperLeft;
+extern NSString *const EDTransformCornerUpperRight;
+extern NSString *const EDTransformCornerBottomLeft;
+extern NSString *const EDTransformCornerBottomRight;
 @end
