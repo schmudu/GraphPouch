@@ -139,7 +139,7 @@
                 [self drawGuide:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], 0) endPoint:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], [self frame].size.height)];
             }
             
-            NSLog(@"going to draw guides for transform: vertical guide:%f", [[closestVerticalGuide valueForKey:EDKeyClosestGuide] floatValue]);
+            //NSLog(@"going to draw guides for transform: vertical guide:%f", [[closestVerticalGuide valueForKey:EDKeyClosestGuide] floatValue]);
         }
     }
 }

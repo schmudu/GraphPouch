@@ -11,9 +11,11 @@
 @interface EDTransformPoint : NSView{
     @protected
     BOOL _mouseIsOver;
+    BOOL _didSnap;
     NSNotificationCenter    *_nc;
     NSPoint                 _lastDragLocation;
     NSPoint                 _lastCursorLocation;
+    NSPoint                 _savedMouseSnapLocation;
 }
 
 @end
