@@ -18,6 +18,8 @@
     NSMutableDictionary *_transformRects;
     NSMutableDictionary *_elementsWithTransformRects;
     BOOL _mouseIsDown;
+    BOOL _elementIsBeingModified;
+    NSPoint _transformRectDragPoint;
 }
 
 - (void)drawLoadedObjects;

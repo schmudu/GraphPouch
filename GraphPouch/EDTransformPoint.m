@@ -58,6 +58,7 @@
     
     // set variable for draggin
     _lastDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
+    [_nc postNotificationName:EDEventTransformMouseDown object:self];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent{

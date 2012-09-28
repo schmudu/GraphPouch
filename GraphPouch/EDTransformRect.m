@@ -14,6 +14,7 @@
 @interface EDTransformRect()
 -(void)onTransformPointDragged:(NSNotification *)note;
 -(void)onTransformPointMouseUp:(NSNotification *)note;
+-(void)onTransformPointMouseDown:(NSNotification *)note;
 - (NSMutableDictionary *)getDimensionsOfEvent:(NSNotification *)note;
 @end
 
@@ -52,6 +53,10 @@
         [_nc addObserver:self selector:@selector(onTransformPointMouseUp:) name:EDEventTransformMouseUp object:topRightPoint];
         [_nc addObserver:self selector:@selector(onTransformPointMouseUp:) name:EDEventTransformMouseUp object:bottomLeftPoint];
         [_nc addObserver:self selector:@selector(onTransformPointMouseUp:) name:EDEventTransformMouseUp object:bottomRightPoint];
+        [_nc addObserver:self selector:@selector(onTransformPointMouseDown:) name:EDEventTransformMouseDown object:topLeftPoint];
+        [_nc addObserver:self selector:@selector(onTransformPointMouseDown:) name:EDEventTransformMouseDown object:topRightPoint];
+        [_nc addObserver:self selector:@selector(onTransformPointMouseDown:) name:EDEventTransformMouseDown object:bottomLeftPoint];
+        [_nc addObserver:self selector:@selector(onTransformPointMouseDown:) name:EDEventTransformMouseDown object:bottomRightPoint];
     }
     
     return self;
@@ -66,6 +71,10 @@
     [_nc removeObserver:self name:EDEventTransformMouseUp object:topRightPoint];
     [_nc removeObserver:self name:EDEventTransformMouseUp object:bottomLeftPoint];
     [_nc removeObserver:self name:EDEventTransformMouseUp object:bottomRightPoint];
+    [_nc removeObserver:self name:EDEventTransformMouseDown object:topLeftPoint];
+    [_nc removeObserver:self name:EDEventTransformMouseDown object:topRightPoint];
+    [_nc removeObserver:self name:EDEventTransformMouseDown object:bottomLeftPoint];
+    [_nc removeObserver:self name:EDEventTransformMouseDown object:bottomRightPoint];
 }
 
 - (BOOL)isFlipped{
@@ -136,6 +145,18 @@
     [results setValue:[[NSNumber alloc] initWithFloat:(maxX-minX+EDTransformPointLength)] forKey:EDKeyWidth];
     [results setValue:[[NSNumber alloc] initWithFloat:(maxY-minY+EDTransformPointLength)] forKey:EDKeyHeight];
  
+    // figure out which point is being dragged
+    EDTransformCornerPoint *currentCornerPoint = (EDTransformCornerPoint *)[note object];
+    if ([currentCornerPoint frame].origin.x == minX) 
+        [results setValue:[[NSNumber alloc] initWithFloat:minX] forKey:EDKeyTransformDragPointX];
+    else 
+        [results setValue:[[NSNumber alloc] initWithFloat:(maxX + EDTransformPointLength)] forKey:EDKeyTransformDragPointX];
+    
+    if ([currentCornerPoint frame].origin.y == minY) 
+        [results setValue:[[NSNumber alloc] initWithFloat:minY] forKey:EDKeyTransformDragPointY];
+    else 
+        [results setValue:[[NSNumber alloc] initWithFloat:(maxY + EDTransformPointLength)] forKey:EDKeyTransformDragPointY];
+    
     return results;
 }
 
@@ -179,6 +200,9 @@
     [topRightPoint setFrameOrigin:NSMakePoint(origin.x + [element elementWidth] - EDTransformPointLength, origin.y)];
     [bottomLeftPoint setFrameOrigin:NSMakePoint(origin.x, origin.y + [element elementHeight] - EDTransformPointLength)];
     [bottomRightPoint setFrameOrigin:NSMakePoint(origin.x + [element elementWidth] - EDTransformPointLength, origin.y + [element elementHeight] - EDTransformPointLength)];
-    //NSLog(@"right x:%f y:%f", [topRightPoint frame].origin.x, [topRightPoint frame].origin.y);
+}
+
+-(void)onTransformPointMouseDown:(NSNotification *)note{
+    [_nc postNotificationName:EDEventTransformMouseDown object:self];
 }
 @end

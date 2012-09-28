@@ -67,8 +67,11 @@ float const EDTransformPointLength                              = 10;
 NSString * const EDEventTransformPointDragged                   = @"EDEventTransformPointDragged";
 NSString * const EDEventTransformRectChanged                    = @"EDEventTransformRectChanged";
 NSString * const EDEventTransformMouseUp                        = @"EDEventTransformMouseUp";
+NSString * const EDEventTransformMouseDown                      = @"EDEventTransformMouseDown";
 NSString * const EDKeyHeight                                    = @"EDKeyHeight";
 NSString * const EDKeyWidth                                     = @"EDKeyWidth";
 NSString * const EDKeyLocationX                                 = @"EDKeyLocationX";
 NSString * const EDKeyLocationY                                 = @"EDKeyLocationY";
+NSString * const EDKeyTransformDragPointX                       = @"EDKeyTransformDragPointX";
+NSString * const EDKeyTransformDragPointY                       = @"EDKeyTransformDragPointY";
 @end

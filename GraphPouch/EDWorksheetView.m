@@ -30,6 +30,8 @@
 - (void)removeGuides;
 - (NSMutableDictionary *)getClosestVerticalGuide:(NSMutableArray *)guides elements:(NSArray *)elements;
 - (NSMutableDictionary *)getClosestHorizontalGuide:(NSMutableArray *)guides elements:(NSArray *)elements;
+- (NSMutableDictionary *)getClosestVerticalGuide:(NSMutableArray *)guides point:(NSPoint)point;
+- (NSMutableDictionary *)getClosestHorizontalGuide:(NSMutableArray *)guides point:(NSPoint)point;
 - (float)findClosestPoint:(float)currentPoint guides:(NSMutableArray *)guides;
 
 // elements
@@ -43,6 +45,7 @@
 - (void)onTransformRectChanged:(NSNotification *)note;
 - (EDWorksheetElementView *)findElementViewViaTransformRect:(EDTransformRect *)rect element:(EDElement *)element;
 - (void)onTransformPointMouseUp:(NSNotification *)note;
+- (void)onTransformPointMouseDown:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetView
@@ -53,6 +56,9 @@
     if (self) {
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         _context = [_coreData context];
+        
+        _mouseIsDown = FALSE;
+        _elementIsBeingModified = FALSE;
         
         // these dictionaries are the reverse of each other
         _transformRects = [[NSMutableDictionary alloc] init];
@@ -96,21 +102,44 @@
 #warning add other elements here
     // draw only the closest guides
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
     // only do if we're snapping and at least one element is selected
     if ((_mouseIsDown) && ([defaults boolForKey:EDPreferenceSnapToGuides])) {
-        // get all elements
-        NSMutableArray *elements = [self getAllSelectedWorksheetElementsViews];
-        NSMutableDictionary *closestVerticalGuide = [self getClosestVerticalGuide:[_guides objectForKey:EDKeyGuideVertical] elements:elements];
-        NSMutableDictionary *closestHorizontalGuide = [self getClosestHorizontalGuide:[_guides objectForKey:EDKeyGuideHorizontal] elements:elements];
-        //NSLog(@"closest horiz guide:%f", [[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue]);
-        // draw vertical guide
-        if ([[closestVerticalGuide valueForKey:EDKeyGuideDiff] floatValue] < EDGuideShowThreshold) {
-            [self drawGuide:NSMakePoint(0, [[closestVerticalGuide valueForKey:EDKeyClosestGuide] floatValue]) endPoint:NSMakePoint([self frame].size.width, [[closestVerticalGuide valueForKey:EDKeyClosestGuide] floatValue])];
-        }
         
-        // draw horizontal guide
-        if ([[closestHorizontalGuide valueForKey:EDKeyGuideDiff] floatValue] < EDGuideShowThreshold) {
-            [self drawGuide:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], 0) endPoint:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], [self frame].size.height)];
+        // either element is being modified or transform rect is
+        if (_elementIsBeingModified) {
+            // get all elements
+            NSMutableArray *elements = [self getAllSelectedWorksheetElementsViews];
+            NSMutableDictionary *closestVerticalGuide = [self getClosestVerticalGuide:[_guides objectForKey:EDKeyGuideVertical] elements:elements];
+            NSMutableDictionary *closestHorizontalGuide = [self getClosestHorizontalGuide:[_guides objectForKey:EDKeyGuideHorizontal] elements:elements];
+            
+            // draw vertical guide
+            if ([[closestVerticalGuide valueForKey:EDKeyGuideDiff] floatValue] < EDGuideShowThreshold) {
+                [self drawGuide:NSMakePoint(0, [[closestVerticalGuide valueForKey:EDKeyClosestGuide] floatValue]) endPoint:NSMakePoint([self frame].size.width, [[closestVerticalGuide valueForKey:EDKeyClosestGuide] floatValue])];
+            }
+            
+            // draw horizontal guide
+            if ([[closestHorizontalGuide valueForKey:EDKeyGuideDiff] floatValue] < EDGuideShowThreshold) {
+                [self drawGuide:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], 0) endPoint:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], [self frame].size.height)];
+            }
+        }
+        else {
+            // get all elements
+            NSMutableArray *elements = [self getAllSelectedWorksheetElementsViews];
+            NSMutableDictionary *closestVerticalGuide = [self getClosestVerticalGuide:[_guides objectForKey:EDKeyGuideVertical] point:_transformRectDragPoint];
+            NSMutableDictionary *closestHorizontalGuide = [self getClosestHorizontalGuide:[_guides objectForKey:EDKeyGuideHorizontal] point:_transformRectDragPoint];
+            
+            // draw vertical guide
+            if ([[closestVerticalGuide valueForKey:EDKeyGuideDiff] floatValue] < EDGuideShowThreshold) {
+                [self drawGuide:NSMakePoint(0, [[closestVerticalGuide valueForKey:EDKeyClosestGuide] floatValue]) endPoint:NSMakePoint([self frame].size.width, [[closestVerticalGuide valueForKey:EDKeyClosestGuide] floatValue])];
+            }
+            
+             // draw horizontal guide
+            if ([[closestHorizontalGuide valueForKey:EDKeyGuideDiff] floatValue] < EDGuideShowThreshold) {
+                [self drawGuide:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], 0) endPoint:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], [self frame].size.height)];
+            }
+            
+            NSLog(@"going to draw guides for transform: vertical guide:%f", [[closestVerticalGuide valueForKey:EDKeyClosestGuide] floatValue]);
         }
     }
 }
@@ -227,12 +256,14 @@
     
     // store all guides 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
     // only do if we're snapping
     if ([defaults boolForKey:EDPreferenceSnapToGuides]) {
         [self saveGuides];
     }
     
     _mouseIsDown = TRUE;   
+    _elementIsBeingModified = TRUE;   
 }
 
 - (void)onElementMouseDragged:(NSNotification *)note{
@@ -272,6 +303,7 @@
     
     [self setNeedsDisplay:TRUE];
     _mouseIsDown = FALSE;   
+    _elementIsBeingModified = FALSE;   
 }
 
 #pragma mark guides
@@ -351,6 +383,7 @@
     // for each point find the closest point
     for (EDWorksheetElementView *element in elements){
         // find closest point to origin
+        // origin is the origin of the element where as edge represents the far side
         originClosestGuide = [self findClosestPoint:[element frame].origin.y guides:guides];
         edgeClosestGuide = [self findClosestPoint:([element frame].origin.y + [[element dataObj] elementHeight]) guides:guides];
         originDiff = fabsf([element frame].origin.y - originClosestGuide);
@@ -366,6 +399,36 @@
     }
     [results setValue:[[NSNumber alloc] initWithFloat:absoluteClosestGuide] forKey:EDKeyClosestGuide];
     [results setValue:[[NSNumber alloc] initWithFloat:absoluteSmallestDiff] forKey:EDKeyGuideDiff];
+    
+    return results;
+}
+
+- (NSMutableDictionary *)getClosestHorizontalGuide:(NSMutableArray *)guides point:(NSPoint)point{
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    float originDiff, originClosestGuide;
+    
+    // for each point find the closest point
+    // find closest point to origin
+    originClosestGuide = [self findClosestPoint:point.x guides:guides];
+    originDiff = fabsf(point.x - originClosestGuide);
+    
+    [results setValue:[[NSNumber alloc] initWithFloat:originClosestGuide] forKey:EDKeyClosestGuide];
+    [results setValue:[[NSNumber alloc] initWithFloat:originDiff] forKey:EDKeyGuideDiff];
+    
+    return results;
+}
+
+- (NSMutableDictionary *)getClosestVerticalGuide:(NSMutableArray *)guides point:(NSPoint)point{
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    float originDiff, originClosestGuide;
+    
+    // for each point find the closest point
+    // find closest point to origin
+    originClosestGuide = [self findClosestPoint:point.y guides:guides];
+    originDiff = fabsf(point.y - originClosestGuide);
+    
+    [results setValue:[[NSNumber alloc] initWithFloat:originClosestGuide] forKey:EDKeyClosestGuide];
+    [results setValue:[[NSNumber alloc] initWithFloat:originDiff] forKey:EDKeyGuideDiff];
     
     return results;
 }
@@ -427,6 +490,7 @@
     // listen
     [_nc addObserver:self selector:@selector(onTransformRectChanged:) name:EDEventTransformRectChanged object:newTransformRect];
     [_nc addObserver:self selector:@selector(onTransformPointMouseUp:) name:EDEventTransformMouseUp object:newTransformRect];
+    [_nc addObserver:self selector:@selector(onTransformPointMouseDown:) name:EDEventTransformMouseDown object:newTransformRect];
     
     // add to view
     [self addSubview:newTransformRect];
@@ -448,6 +512,7 @@
             // remove listener
             [_nc removeObserver:self name:EDEventTransformRectChanged object:transformRect];
             [_nc removeObserver:self name:EDEventTransformMouseUp object:transformRect];
+            [_nc removeObserver:self name:EDEventTransformMouseDown object:transformRect];
             
             //reset
             [_transformRects removeObjectForKey:[NSValue valueWithNonretainedObject:myElement]];
@@ -467,6 +532,14 @@
     }
 }
 
+- (void)onTransformPointMouseDown:(NSNotification *)note{
+    // only do if we're snapping
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults boolForKey:EDPreferenceSnapToGuides]) {
+        [self saveGuides];
+    }
+}
+
 - (void)onTransformPointMouseUp:(NSNotification *)note{
     EDElement *element = [_elementsWithTransformRects objectForKey:[NSValue valueWithNonretainedObject:[note object]]];
     
@@ -475,6 +548,8 @@
     [element setLocationY:[[[note userInfo] valueForKey:EDKeyLocationY] floatValue]];
     [element setElementWidth:[[[note userInfo] valueForKey:EDKeyWidth] floatValue]];
     [element setElementHeight:[[[note userInfo] valueForKey:EDKeyHeight] floatValue]];
+    
+    _mouseIsDown = FALSE;
 }
 
 - (void)onTransformRectChanged:(NSNotification *)note{
@@ -488,6 +563,14 @@
     //change element view
     [elementView setFrameOrigin:origin];
     [elementView setFrameSize:NSMakeSize([[[note userInfo] valueForKey:EDKeyWidth] floatValue], [[[note userInfo] valueForKey:EDKeyHeight] floatValue])];
+    
+    // signal to board to redraw guides
+    _mouseIsDown = TRUE;
+    
+    // set transform points so that drawRect can reference them
+    _transformRectDragPoint = NSMakePoint([[[note userInfo] valueForKey:EDKeyTransformDragPointX] floatValue], [[[note userInfo] valueForKey:EDKeyTransformDragPointY] floatValue]);
+    //NSLog(@"need to draw guide for point x:%f y%f", [[[note userInfo] valueForKey:EDKeyTransformDragPointX] floatValue], [[[note userInfo] valueForKey:EDKeyTransformDragPointY] floatValue]);
+    [self setNeedsDisplay:TRUE];
 }
 
 #pragma mark utilities
