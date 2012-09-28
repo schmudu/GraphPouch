@@ -46,6 +46,7 @@
 - (EDWorksheetElementView *)findElementViewViaTransformRect:(EDTransformRect *)rect element:(EDElement *)element;
 - (void)onTransformPointMouseUp:(NSNotification *)note;
 - (void)onTransformPointMouseDown:(NSNotification *)note;
+- (void)removeTransformRect:(EDTransformRect *)transformRect element:(EDElement *)element;
 @end
 
 @implementation EDWorksheetView
@@ -198,13 +199,17 @@
             [self drawGraph:(EDGraph *)myElement];
         }
 #warning add other elements here, need drawLabel, drawLine
-             
     }
     
     // remove graphs that were deleted
     NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
+    EDTransformRect *transformRect;
     for (EDElement *myElement in deletedArray){
         [self removeElementView:myElement];
+        
+        // remove transform rects if exists
+        transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:myElement]];
+        [self removeTransformRect:transformRect element:myElement];
     }
     
     // update transform rects
@@ -480,7 +485,6 @@
 #pragma mark transform rect
 - (void)drawTransformRect:(EDElement *)element{
     // create new transform rect
-    //EDTransformRect *newTransformRect = [[EDTransformRect alloc] initWithFrame:NSMakeRect([element locationX], [element locationY], [element elementWidth], [element elementHeight])];
     EDTransformRect *newTransformRect = [[EDTransformRect alloc] initWithFrame:[self frame] element:element];
     
     // add to dictionary
@@ -507,24 +511,35 @@
         
         // if obj has a value and that element is not selected the remove the transform rect 
         if ((!isSelected) && (transformRect)) {
-            [transformRect removeFromSuperview];
-            
-            // remove listener
-            [_nc removeObserver:self name:EDEventTransformRectChanged object:transformRect];
-            [_nc removeObserver:self name:EDEventTransformMouseUp object:transformRect];
-            [_nc removeObserver:self name:EDEventTransformMouseDown object:transformRect];
-            
-            //reset
-            [_transformRects removeObjectForKey:[NSValue valueWithNonretainedObject:myElement]];
-            [_elementsWithTransformRects removeObjectForKey:[NSValue valueWithNonretainedObject:transformRect]];
-            
+            [self removeTransformRect:transformRect element:myElement];
         }
         else if((isSelected) && (!transformRect)) {
             [self drawTransformRect:myElement];
         }
+        else{
+            // update transform rect
+            if (transformRect){ 
+                NSPoint transformOrigin = NSMakePoint([myElement locationX], [myElement locationY]);
+                [transformRect setDimensionAndPositionElementViewOrigin:transformOrigin element:myElement];
+            }
+            //[transformRect updateDimensions:myElement];
+        }
     }
 }
     
+- (void)removeTransformRect:(EDTransformRect *)transformRect element:(EDElement *)element{
+    [transformRect removeFromSuperview];
+    
+    // remove listener
+    [_nc removeObserver:self name:EDEventTransformRectChanged object:transformRect];
+    [_nc removeObserver:self name:EDEventTransformMouseUp object:transformRect];
+    [_nc removeObserver:self name:EDEventTransformMouseDown object:transformRect];
+    
+    //reset
+    [_transformRects removeObjectForKey:[NSValue valueWithNonretainedObject:element]];
+    [_elementsWithTransformRects removeObjectForKey:[NSValue valueWithNonretainedObject:transformRect]];
+}
+
 - (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element{
     EDTransformRect *transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:[element dataObj]]];
     if (transformRect) {

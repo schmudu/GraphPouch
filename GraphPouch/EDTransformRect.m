@@ -97,6 +97,10 @@
     }
 }
 
+- (void)updateDimensions:(EDElement *)element{
+    NSLog(@"going to update to:%@", element);
+}
+
 # pragma mark transform point dragged
 -(void)onTransformPointDragged:(NSNotification *)note{
     NSMutableDictionary *results = [self getDimensionsOfEvent:note];

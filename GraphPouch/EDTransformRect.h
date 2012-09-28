@@ -17,4 +17,5 @@
 }
 - (id)initWithFrame:(NSRect)frame element:(EDElement *)element;
 - (void)setDimensionAndPositionElementViewOrigin:(NSPoint)origin element:(EDElement *)element;
+- (void)updateDimensions:(EDElement *)element;
 @end

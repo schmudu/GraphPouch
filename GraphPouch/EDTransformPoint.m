@@ -72,15 +72,11 @@
 
 - (void)mouseDragged:(NSEvent *)theEvent{
     NSPoint newDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
-#warning once we figure out which corner, we need to set this point to the correct origin
-    NSLog(@"which corner?%@", [self transformCorner]);
     NSPoint thisOrigin = [self frame].origin;
-    
         
     // alter origin
     thisOrigin.x += (-_lastDragLocation.x + newDragLocation.x);
     thisOrigin.y += (-_lastDragLocation.y + newDragLocation.y);
-    
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // only do if we're snapping
