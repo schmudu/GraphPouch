@@ -9,9 +9,12 @@
 #import "EDTransformRect.h"
 #import "EDConstants.h"
 #import "EDTransformCornerPoint.h"
+#import "EDElement.h"
 
 @interface EDTransformRect()
 -(void)onTransformPointDragged:(NSNotification *)note;
+-(void)onTransformPointMouseUp:(NSNotification *)note;
+- (NSMutableDictionary *)getDimensionsOfEvent:(NSNotification *)note;
 @end
 
 @implementation EDTransformRect
@@ -45,9 +48,24 @@
         [_nc addObserver:self selector:@selector(onTransformPointDragged:) name:EDEventTransformPointDragged object:topRightPoint];
         [_nc addObserver:self selector:@selector(onTransformPointDragged:) name:EDEventTransformPointDragged object:bottomLeftPoint];
         [_nc addObserver:self selector:@selector(onTransformPointDragged:) name:EDEventTransformPointDragged object:bottomRightPoint];
+        [_nc addObserver:self selector:@selector(onTransformPointMouseUp:) name:EDEventTransformMouseUp object:topLeftPoint];
+        [_nc addObserver:self selector:@selector(onTransformPointMouseUp:) name:EDEventTransformMouseUp object:topRightPoint];
+        [_nc addObserver:self selector:@selector(onTransformPointMouseUp:) name:EDEventTransformMouseUp object:bottomLeftPoint];
+        [_nc addObserver:self selector:@selector(onTransformPointMouseUp:) name:EDEventTransformMouseUp object:bottomRightPoint];
     }
     
     return self;
+}
+
+- (void)dealloc{
+    [_nc removeObserver:self name:EDEventTransformPointDragged object:topLeftPoint];
+    [_nc removeObserver:self name:EDEventTransformPointDragged object:topRightPoint];
+    [_nc removeObserver:self name:EDEventTransformPointDragged object:bottomLeftPoint];
+    [_nc removeObserver:self name:EDEventTransformPointDragged object:bottomRightPoint];
+    [_nc removeObserver:self name:EDEventTransformMouseUp object:topLeftPoint];
+    [_nc removeObserver:self name:EDEventTransformMouseUp object:topRightPoint];
+    [_nc removeObserver:self name:EDEventTransformMouseUp object:bottomLeftPoint];
+    [_nc removeObserver:self name:EDEventTransformMouseUp object:bottomRightPoint];
 }
 
 - (BOOL)isFlipped{
@@ -72,6 +90,16 @@
 
 # pragma mark transform point dragged
 -(void)onTransformPointDragged:(NSNotification *)note{
+    NSMutableDictionary *results = [self getDimensionsOfEvent:note];
+    [_nc postNotificationName:EDEventTransformRectChanged object:self userInfo:results];
+}
+
+-(void)onTransformPointMouseUp:(NSNotification *)note{
+    NSMutableDictionary *results = [self getDimensionsOfEvent:note];
+    [_nc postNotificationName:EDEventTransformMouseUp object:self userInfo:results];
+}
+
+- (NSMutableDictionary *)getDimensionsOfEvent:(NSNotification *)note{
     float minX, minY, maxX = 0, maxY = 0;
     int i =0;
     EDTransformCornerPoint *currentPoint;
@@ -107,9 +135,50 @@
     [results setValue:[[NSNumber alloc] initWithFloat:windowPoint.y] forKey:EDKeyLocationY];
     [results setValue:[[NSNumber alloc] initWithFloat:(maxX-minX+EDTransformPointLength)] forKey:EDKeyWidth];
     [results setValue:[[NSNumber alloc] initWithFloat:(maxY-minY+EDTransformPointLength)] forKey:EDKeyHeight];
+ 
+    return results;
+}
+
+#pragma element
+- (void)setDimensionAndPositionElementViewOrigin:(NSPoint)origin element:(EDElement *)element{
+    // set position and dimension based on element
+    EDTransformCornerPoint *topLeft, *topRight, *bottomLeft, *bottomRight;
     
-    //dispatch
-    //NSLog(@"going to dispatch width of:%f x:%f", (maxX-minX+EDTransformPointLength), windowPoint.x);
-    [_nc postNotificationName:EDEventTransformRectChanged object:self userInfo:results];
+    // find the positions of points
+    if ([topLeftPoint frame].origin.y < [bottomLeftPoint frame].origin.y){
+        if([topLeftPoint frame].origin.x < [topRightPoint frame].origin.x){
+            topLeft = topLeftPoint;
+            topRight = topRightPoint;
+            bottomLeft = bottomLeftPoint;
+            bottomRight = bottomRightPoint;
+        }
+        else {
+            topLeft = topRightPoint;
+            topRight = topLeftPoint;
+            bottomLeft = bottomRightPoint;
+            bottomRight = bottomLeftPoint;
+        }
+    }
+    else{
+        if([topLeftPoint frame].origin.x < [topRightPoint frame].origin.x){
+            topLeft = bottomLeftPoint;
+            topRight = bottomRightPoint;
+            bottomLeft = topLeftPoint;
+            bottomRight = topRightPoint;
+        }
+        else {
+            topLeft = bottomRightPoint;
+            topRight = bottomLeftPoint;
+            bottomLeft = topRightPoint;
+            bottomRight = topLeftPoint;
+        }
+    }
+    
+    // set positions
+    [topLeftPoint setFrameOrigin:NSMakePoint(origin.x, origin.y)];
+    [topRightPoint setFrameOrigin:NSMakePoint(origin.x + [element elementWidth] - EDTransformPointLength, origin.y)];
+    [bottomLeftPoint setFrameOrigin:NSMakePoint(origin.x, origin.y + [element elementHeight] - EDTransformPointLength)];
+    [bottomRightPoint setFrameOrigin:NSMakePoint(origin.x + [element elementWidth] - EDTransformPointLength, origin.y + [element elementHeight] - EDTransformPointLength)];
+    //NSLog(@"right x:%f y:%f", [topRightPoint frame].origin.x, [topRightPoint frame].origin.y);
 }
 @end

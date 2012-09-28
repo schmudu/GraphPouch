@@ -66,6 +66,7 @@ extern int const        EDKeyModifierNone;
 extern float const EDTransformPointLength;
 extern NSString *const EDEventTransformPointDragged;
 extern NSString *const EDEventTransformRectChanged;
+extern NSString *const EDEventTransformMouseUp;
 extern NSString *const EDKeyWidth;
 extern NSString *const EDKeyHeight;
 extern NSString *const EDKeyLocationY;

@@ -77,4 +77,10 @@
     [infoDic setValue:[[NSNumber alloc] initWithFloat:thisOrigin.y] forKey:@"locationY"];
     [_nc postNotificationName:EDEventTransformPointDragged object:self userInfo:infoDic];
 }
+
+- (void)mouseUp:(NSEvent *)theEvent{
+    [super mouseUp:theEvent];
+    
+    [_nc postNotificationName:EDEventTransformMouseUp object:self];
+}
 @end

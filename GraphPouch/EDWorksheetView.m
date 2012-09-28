@@ -42,6 +42,7 @@
 - (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element;
 - (void)onTransformRectChanged:(NSNotification *)note;
 - (EDWorksheetElementView *)findElementViewViaTransformRect:(EDTransformRect *)rect element:(EDElement *)element;
+- (void)onTransformPointMouseUp:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetView
@@ -425,7 +426,8 @@
     
     // listen
     [_nc addObserver:self selector:@selector(onTransformRectChanged:) name:EDEventTransformRectChanged object:newTransformRect];
-     
+    [_nc addObserver:self selector:@selector(onTransformPointMouseUp:) name:EDEventTransformMouseUp object:newTransformRect];
+    
     // add to view
     [self addSubview:newTransformRect];
 }
@@ -445,6 +447,7 @@
             
             // remove listener
             [_nc removeObserver:self name:EDEventTransformRectChanged object:transformRect];
+            [_nc removeObserver:self name:EDEventTransformMouseUp object:transformRect];
             
             //reset
             [_transformRects removeObjectForKey:[NSValue valueWithNonretainedObject:myElement]];
@@ -460,8 +463,18 @@
 - (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element{
     EDTransformRect *transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:[element dataObj]]];
     if (transformRect) {
-        [transformRect setFrameOrigin:[element frame].origin];
+        [transformRect setDimensionAndPositionElementViewOrigin:[element frame].origin element:[element dataObj]];
     }
+}
+
+- (void)onTransformPointMouseUp:(NSNotification *)note{
+    EDElement *element = [_elementsWithTransformRects objectForKey:[NSValue valueWithNonretainedObject:[note object]]];
+    
+    // set attributes
+    [element setLocationX:[[[note userInfo] valueForKey:EDKeyLocationX] floatValue]];
+    [element setLocationY:[[[note userInfo] valueForKey:EDKeyLocationY] floatValue]];
+    [element setElementWidth:[[[note userInfo] valueForKey:EDKeyWidth] floatValue]];
+    [element setElementHeight:[[[note userInfo] valueForKey:EDKeyHeight] floatValue]];
 }
 
 - (void)onTransformRectChanged:(NSNotification *)note{
@@ -477,6 +490,7 @@
     [elementView setFrameSize:NSMakeSize([[[note userInfo] valueForKey:EDKeyWidth] floatValue], [[[note userInfo] valueForKey:EDKeyHeight] floatValue])];
 }
 
+#pragma mark utilities
 - (EDWorksheetElementView *)findElementViewViaTransformRect:(EDTransformRect *)rect{
     // first get the element data object
     EDElement *element = [_elementsWithTransformRects objectForKey:[NSValue valueWithNonretainedObject:rect]];
