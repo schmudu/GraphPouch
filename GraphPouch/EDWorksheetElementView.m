@@ -81,7 +81,6 @@
     NSUInteger flags = [theEvent modifierFlags];
  
     //save mouse location
-    //_savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
     _didSnap = FALSE;
     
@@ -110,11 +109,9 @@
     }
     
     // set variable for dragging
-    //lastCursorLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
     lastCursorLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
     
     // set variable for draggin
-    //lastDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
     lastDragLocation = [[[self window] contentView]convertPoint:[theEvent locationInWindow] toView:[self superview]];
 }
 
@@ -123,7 +120,6 @@
     [coreData getAllObjects];
     
     NSUInteger flags = [theEvent modifierFlags];
-    //_savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
     
     if ([[self dataObj] isSelectedElement]){
@@ -146,11 +142,9 @@
     }
     
     // set variable for dragging
-    //lastCursorLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
     lastCursorLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
     
     // set variable for draggin
-    //lastDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] toView:nil];
     lastDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
 }
 
@@ -176,7 +170,6 @@
 }
 
 - (void)mouseDraggedBehavior:(NSEvent *)theEvent{
-    //NSPoint newDragLocation = [[self superview] convertPoint:[theEvent locationInWindow] fromView:nil];
     NSPoint newDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
     
     NSPoint thisOrigin = [self frame].origin;
@@ -228,9 +221,7 @@
                     _didSnap = FALSE;
                     
                     // snap back to original location
-                    //NSPoint currentLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
                     NSPoint currentLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
-                    NSLog(@"snapping back to position x origin:%f currentLocation:%f saved location:%f", thisOrigin.x, currentLocation.x, _savedMouseSnapLocation.x);
                     thisOrigin.y += (currentLocation.y - _savedMouseSnapLocation.y);
                     thisOrigin.x += (currentLocation.x - _savedMouseSnapLocation.x);
                 }
