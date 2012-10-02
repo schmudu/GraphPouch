@@ -192,6 +192,7 @@
 
 #pragma mark listeners
 - (void)onContextChanged:(NSNotification *)note{
+    NSLog(@"context changed.");
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
     
     for (EDElement *myElement in insertedArray){

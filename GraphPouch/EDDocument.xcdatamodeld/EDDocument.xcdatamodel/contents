@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11G56" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="EDElement" representedClassName="EDElement" syncable="YES">
         <attribute name="elementHeight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="elementWidth" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -12,8 +12,14 @@
         <attribute name="hasGridLines" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="hasTickMarks" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
+    <entity name="EDPage" representedClassName="EDPage" syncable="YES">
+        <attribute name="currentPage" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="pageNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="selected" optional="YES" attributeType="Boolean" syncable="YES"/>
+    </entity>
     <elements>
         <element name="EDElement" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDGraph" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="EDPage" positionX="160" positionY="192" width="128" height="90"/>
     </elements>
 </model>

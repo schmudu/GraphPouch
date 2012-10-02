@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		CD015FCE15BA66CA0096CDF9 /* EDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CD015FCD15BA66CA0096CDF9 /* EDConstants.m */; };
 		CD1422C715C7590700F55819 /* EDCoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1422C615C7590700F55819 /* EDCoreDataUtility.m */; };
+		CD1C57AD161B9AB200534D49 /* EDPageArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57AC161B9AB200534D49 /* EDPageArrayController.m */; };
+		CD1C57B1161B9B9200534D49 /* EDPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57B0161B9B9200534D49 /* EDPage.m */; };
 		CD1D02FF15E83F1600C88A7A /* EDMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D02FE15E83F1600C88A7A /* EDMenuViewController.m */; };
 		CD1D032815EC1BCA00C88A7A /* EDMenuWindowAlignController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */; };
 		CD1D032915EC1BCA00C88A7A /* EDMenuWindowAlign.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */; };
@@ -59,6 +61,10 @@
 		CD015FCD15BA66CA0096CDF9 /* EDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDConstants.m; sourceTree = "<group>"; };
 		CD1422C515C7590700F55819 /* EDCoreDataUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDCoreDataUtility.h; sourceTree = "<group>"; };
 		CD1422C615C7590700F55819 /* EDCoreDataUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDCoreDataUtility.m; sourceTree = "<group>"; };
+		CD1C57AB161B9AB200534D49 /* EDPageArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageArrayController.h; sourceTree = "<group>"; };
+		CD1C57AC161B9AB200534D49 /* EDPageArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageArrayController.m; sourceTree = "<group>"; };
+		CD1C57AF161B9B9200534D49 /* EDPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPage.h; sourceTree = "<group>"; };
+		CD1C57B0161B9B9200534D49 /* EDPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPage.m; sourceTree = "<group>"; };
 		CD1D02FD15E83F1600C88A7A /* EDMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuViewController.h; sourceTree = "<group>"; };
 		CD1D02FE15E83F1600C88A7A /* EDMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuViewController.m; sourceTree = "<group>"; };
 		CD1D032515EC1BCA00C88A7A /* EDMenuWindowAlignController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowAlignController.h; sourceTree = "<group>"; };
@@ -262,7 +268,11 @@
 				CD1422C615C7590700F55819 /* EDCoreDataUtility.m */,
 				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
 				CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */,
+				CD1C57AB161B9AB200534D49 /* EDPageArrayController.h */,
+				CD1C57AC161B9AB200534D49 /* EDPageArrayController.m */,
 				CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */,
+				CD1C57AF161B9B9200534D49 /* EDPage.h */,
+				CD1C57B0161B9B9200534D49 /* EDPage.m */,
 				CDE6D62E15DE774000E5695F /* EDElement.h */,
 				CDE6D62F15DE774000E5695F /* EDElement.m */,
 				CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */,
@@ -589,6 +599,8 @@
 				CDD46E6816092F2F00EDD75C /* NSObject+Worksheet.m in Sources */,
 				CD6DF301160D181900935BF2 /* EDTransformCornerPoint.m in Sources */,
 				CDAC3748161112E700545F1E /* NSMutableDictionary+Utilities.m in Sources */,
+				CD1C57AD161B9AB200534D49 /* EDPageArrayController.m in Sources */,
+				CD1C57B1161B9B9200534D49 /* EDPage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
