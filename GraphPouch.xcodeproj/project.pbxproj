@@ -11,6 +11,9 @@
 		CD1422C715C7590700F55819 /* EDCoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1422C615C7590700F55819 /* EDCoreDataUtility.m */; };
 		CD1C57AD161B9AB200534D49 /* EDPageArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57AC161B9AB200534D49 /* EDPageArrayController.m */; };
 		CD1C57B1161B9B9200534D49 /* EDPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57B0161B9B9200534D49 /* EDPage.m */; };
+		CD1C57BA161BB26A00534D49 /* EDPagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57B9161BB26A00534D49 /* EDPagesViewController.m */; };
+		CD1C57BE161BCAA100534D49 /* EDPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57BC161BCAA100534D49 /* EDPageViewController.m */; };
+		CD1C57BF161BCAA100534D49 /* EDPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1C57BD161BCAA100534D49 /* EDPageViewController.xib */; };
 		CD1D02FF15E83F1600C88A7A /* EDMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D02FE15E83F1600C88A7A /* EDMenuViewController.m */; };
 		CD1D032815EC1BCA00C88A7A /* EDMenuWindowAlignController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */; };
 		CD1D032915EC1BCA00C88A7A /* EDMenuWindowAlign.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */; };
@@ -65,6 +68,11 @@
 		CD1C57AC161B9AB200534D49 /* EDPageArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageArrayController.m; sourceTree = "<group>"; };
 		CD1C57AF161B9B9200534D49 /* EDPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPage.h; sourceTree = "<group>"; };
 		CD1C57B0161B9B9200534D49 /* EDPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPage.m; sourceTree = "<group>"; };
+		CD1C57B8161BB26A00534D49 /* EDPagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPagesViewController.h; sourceTree = "<group>"; };
+		CD1C57B9161BB26A00534D49 /* EDPagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPagesViewController.m; sourceTree = "<group>"; };
+		CD1C57BB161BCAA100534D49 /* EDPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewController.h; sourceTree = "<group>"; };
+		CD1C57BC161BCAA100534D49 /* EDPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewController.m; sourceTree = "<group>"; };
+		CD1C57BD161BCAA100534D49 /* EDPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPageViewController.xib; sourceTree = "<group>"; };
 		CD1D02FD15E83F1600C88A7A /* EDMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuViewController.h; sourceTree = "<group>"; };
 		CD1D02FE15E83F1600C88A7A /* EDMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuViewController.m; sourceTree = "<group>"; };
 		CD1D032515EC1BCA00C88A7A /* EDMenuWindowAlignController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowAlignController.h; sourceTree = "<group>"; };
@@ -159,6 +167,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CD1C57B6161BB23400534D49 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				CD1C57B8161BB26A00534D49 /* EDPagesViewController.h */,
+				CD1C57B9161BB26A00534D49 /* EDPagesViewController.m */,
+				CD1C57BB161BCAA100534D49 /* EDPageViewController.h */,
+				CD1C57BC161BCAA100534D49 /* EDPageViewController.m */,
+				CD1C57BD161BCAA100534D49 /* EDPageViewController.xib */,
+			);
+			name = Pages;
+			sourceTree = "<group>";
+		};
 		CD1D02FB15E83EFC00C88A7A /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +270,7 @@
 		CD3F0AF515C4774900AB7567 /* View+Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CD1C57B6161BB23400534D49 /* Pages */,
 				CDD46E4E1603BE1200EDD75C /* Categories */,
 				CDC3C82415F96368009A8BFD /* Formatters */,
 				CDE6D65215E111A800E5695F /* Window */,
@@ -554,6 +575,7 @@
 				CD1EBD6815FED65A00BEEA4D /* EDPanelProperties.xib in Resources */,
 				CD1EBD6915FED65B00BEEA4D /* EDPanelPropertiesDocument.xib in Resources */,
 				CD1EBD6A15FED65B00BEEA4D /* EDPanelPropertiesGraph.xib in Resources */,
+				CD1C57BF161BCAA100534D49 /* EDPageViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +623,8 @@
 				CDAC3748161112E700545F1E /* NSMutableDictionary+Utilities.m in Sources */,
 				CD1C57AD161B9AB200534D49 /* EDPageArrayController.m in Sources */,
 				CD1C57B1161B9B9200534D49 /* EDPage.m in Sources */,
+				CD1C57BA161BB26A00534D49 /* EDPagesViewController.m in Sources */,
+				CD1C57BE161BCAA100534D49 /* EDPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

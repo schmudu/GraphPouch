@@ -8,6 +8,7 @@
 
 #import "EDDocument.h"
 #import "EDWorksheetViewController.h"
+#import "EDPagesViewController.h"
 #import "EDGraph.h"
 #import "EDCoreDataUtility.h"
 #import "EDMenuController.h"
@@ -26,7 +27,6 @@
     if (self) {
         //Init code
         EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-        NSLog(@"document: setting context:%@ current context:%@", [self managedObjectContext], [self currentContext]);
         [coreData setContext: [self managedObjectContext]];
         propertyController = [[EDPanelPropertiesController alloc] init];
     }
@@ -45,6 +45,7 @@
     [super windowControllerDidLoadNib:aController];
     [worksheetController setView:worksheetView];
     [worksheetController postInitialize];
+    [pagesController postInitialize];
     
     // post init property panel
     [propertyController postInitialize];

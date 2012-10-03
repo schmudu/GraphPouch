@@ -23,6 +23,7 @@
 - (NSMutableArray *)getAllSelectedObjects;
 - (NSMutableDictionary *)getAllTypesOfSelectedObjects;
 - (NSArray *)getAllGraphs;
+- (NSArray *)getAllPages;
 - (void)clearSelectedElements;
 - (void)deleteSelectedElements;
 @end

@@ -17,6 +17,7 @@ extern NSString *const EDPreferencePropertyPanel;
 
 // entity name
 extern NSString *const EDEntityNameGraph;
+extern NSString *const EDEntityNamePage;
 
 // worksheet events
 extern NSString *const EDEventWorksheetClicked;

@@ -17,6 +17,7 @@ NSString * const EDPreferencePropertyPanel                      = @"EDPreference
 
 // entity names
 NSString * const EDEntityNameGraph                              = @"EDGraph";
+NSString * const EDEntityNamePage                               = @"EDPage";
 
 // worksheet events
 NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";

@@ -41,7 +41,6 @@
     
     // initialize view to display all of the objects
     [(EDWorksheetView *)[self view] drawLoadedObjects];
-    //NSLog(@"controller view: %@", [self view]);
 }
 
 - (void)deselectAllElements:(NSNotification *)note{
