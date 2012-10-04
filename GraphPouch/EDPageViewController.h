@@ -7,7 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDPage.h"
 
-@interface EDPageViewController : NSViewController
+@interface EDPageViewController : NSViewController{
+    IBOutlet NSTextField *pageLabel;
+#warning does this need to be a weak assignment?
+    EDPage *pageData;
+}
 
+- (id)initWithPage:(EDPage *)page;
+- (void)postInit;
 @end

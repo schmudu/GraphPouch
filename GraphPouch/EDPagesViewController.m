@@ -53,11 +53,13 @@
     //NSLog(@"page count:%ld", [pages count]);
     EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
     //[[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
-    NSArray *newPages = [_coreData getAllPages];
-    //NSLog(@"new page count:%ld", [newPages count]);
     
-    // add it to context
-    //[[_coreData context] insertObject:newPage];
+    // if no other pages then set this page to be the first one
+    if ([pages count] == 0) {
+        [newPage setPageNumber:[[NSNumber alloc] initWithInt:1]];
+    }
+    NSArray *newPages = [_coreData getAllPages];
+    NSLog(@"new page count:%ld page number:%@", [newPages count], [newPage pageNumber]);
 }
 
 - (void)onContextChanged:(NSNotification *)note{
@@ -71,14 +73,12 @@
 }
 
 - (void)drawPage:(EDPage *)page{
-    NSLog(@"going to draw page");
-    EDPageViewController *pageController = [[EDPageViewController alloc] initWithNibName:@"EDPageViewController" bundle:nil];
-    //EDPageView *pageView = [[EDPageView alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
-    
-    // set view
-    //[pageController setView:pageView];
+    EDPageViewController *pageController = [[EDPageViewController alloc] initWithPage:page];
     
     // add to view
     [[self view] addSubview:[pageController view]];
+    
+    // init view after loaded
+    [pageController postInit];
 }
 @end

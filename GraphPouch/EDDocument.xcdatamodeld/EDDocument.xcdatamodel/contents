@@ -13,9 +13,9 @@
         <attribute name="hasTickMarks" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <entity name="EDPage" representedClassName="EDPage" syncable="YES">
-        <attribute name="currentPage" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="pageNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="selected" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="currentPage" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="pageNumber" optional="YES" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="selected" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
     </entity>
     <elements>
         <element name="EDElement" positionX="160" positionY="192" width="128" height="120"/>
