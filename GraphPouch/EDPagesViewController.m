@@ -78,6 +78,8 @@
     // add to view
     [[self view] addSubview:[pageController view]];
     
+    //position it
+    [[pageController view] setFrameOrigin:NSMakePoint(20, [[page pageNumber] intValue]*80)];
     // init view after loaded
     [pageController postInit];
 }

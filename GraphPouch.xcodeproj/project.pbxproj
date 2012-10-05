@@ -13,9 +13,9 @@
 		CD1C57B1161B9B9200534D49 /* EDPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57B0161B9B9200534D49 /* EDPage.m */; };
 		CD1C57BA161BB26A00534D49 /* EDPagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57B9161BB26A00534D49 /* EDPagesViewController.m */; };
 		CD1C57BE161BCAA100534D49 /* EDPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57BC161BCAA100534D49 /* EDPageViewController.m */; };
-		CD1C57BF161BCAA100534D49 /* EDPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1C57BD161BCAA100534D49 /* EDPageViewController.xib */; };
 		CD1C57C6161D13B900534D49 /* EDPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57C5161D13B900534D49 /* EDPageView.m */; };
 		CD1C57CA161D153300534D49 /* EDPagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57C9161D153200534D49 /* EDPagesView.m */; };
+		CD1C57DF161E750400534D49 /* EDPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1C57DE161E750400534D49 /* EDPageView.xib */; };
 		CD1D02FF15E83F1600C88A7A /* EDMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D02FE15E83F1600C88A7A /* EDMenuViewController.m */; };
 		CD1D032815EC1BCA00C88A7A /* EDMenuWindowAlignController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */; };
 		CD1D032915EC1BCA00C88A7A /* EDMenuWindowAlign.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */; };
@@ -74,11 +74,11 @@
 		CD1C57B9161BB26A00534D49 /* EDPagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPagesViewController.m; sourceTree = "<group>"; };
 		CD1C57BB161BCAA100534D49 /* EDPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewController.h; sourceTree = "<group>"; };
 		CD1C57BC161BCAA100534D49 /* EDPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewController.m; sourceTree = "<group>"; };
-		CD1C57BD161BCAA100534D49 /* EDPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPageViewController.xib; sourceTree = "<group>"; };
 		CD1C57C4161D13B900534D49 /* EDPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageView.h; sourceTree = "<group>"; };
 		CD1C57C5161D13B900534D49 /* EDPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageView.m; sourceTree = "<group>"; };
 		CD1C57C8161D153200534D49 /* EDPagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPagesView.h; sourceTree = "<group>"; };
 		CD1C57C9161D153200534D49 /* EDPagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPagesView.m; sourceTree = "<group>"; };
+		CD1C57DE161E750400534D49 /* EDPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPageView.xib; sourceTree = "<group>"; };
 		CD1D02FD15E83F1600C88A7A /* EDMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuViewController.h; sourceTree = "<group>"; };
 		CD1D02FE15E83F1600C88A7A /* EDMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuViewController.m; sourceTree = "<group>"; };
 		CD1D032515EC1BCA00C88A7A /* EDMenuWindowAlignController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowAlignController.h; sourceTree = "<group>"; };
@@ -176,6 +176,7 @@
 		CD1C57B6161BB23400534D49 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				CD1C57DE161E750400534D49 /* EDPageView.xib */,
 				CD1C57B8161BB26A00534D49 /* EDPagesViewController.h */,
 				CD1C57B9161BB26A00534D49 /* EDPagesViewController.m */,
 				CD1C57BB161BCAA100534D49 /* EDPageViewController.h */,
@@ -184,7 +185,6 @@
 				CD1C57C5161D13B900534D49 /* EDPageView.m */,
 				CD1C57C8161D153200534D49 /* EDPagesView.h */,
 				CD1C57C9161D153200534D49 /* EDPagesView.m */,
-				CD1C57BD161BCAA100534D49 /* EDPageViewController.xib */,
 			);
 			name = Pages;
 			sourceTree = "<group>";
@@ -585,7 +585,7 @@
 				CD1EBD6815FED65A00BEEA4D /* EDPanelProperties.xib in Resources */,
 				CD1EBD6915FED65B00BEEA4D /* EDPanelPropertiesDocument.xib in Resources */,
 				CD1EBD6A15FED65B00BEEA4D /* EDPanelPropertiesGraph.xib in Resources */,
-				CD1C57BF161BCAA100534D49 /* EDPageViewController.xib in Resources */,
+				CD1C57DF161E750400534D49 /* EDPageView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
