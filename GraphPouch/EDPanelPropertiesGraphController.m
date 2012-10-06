@@ -117,7 +117,7 @@
     NSArray *graphs = [EDGraph findAllSelectedObjects];
     BOOL diff = FALSE;
     int i = 0;
-    float value;
+    float value = 0;
     EDElement *currentElement;
     
 #warning add other elements here

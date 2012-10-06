@@ -11,6 +11,9 @@ FOUNDATION_EXPORT int const GRAPH_INIT_HAS_GRID_LINES;
 #import <Foundation/Foundation.h>
 
 @interface EDConstants : NSObject
+// num
+extern float const EDNumberMax;
+
 // preferences
 extern NSString *const EDPreferenceSnapToGuides;
 extern NSString *const EDPreferencePropertyPanel;

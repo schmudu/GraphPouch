@@ -130,7 +130,7 @@
 }
 
 - (NSMutableDictionary *)getDimensionsOfEvent:(NSNotification *)note{
-    float minX, minY, maxX = 0, maxY = 0;
+    float minX = EDNumberMax, minY = EDNumberMax, maxX = 0, maxY = 0;
     int i =0;
     EDTransformCornerPoint *currentPoint;
     // figure out which point is where then dispatch event notifying rectangle of the change

@@ -11,6 +11,9 @@ int const GRAPH_INIT_TICK_MARKS         = FALSE;
 int const GRAPH_INIT_HAS_GRID_LINES     = FALSE; 
 
 @implementation EDConstants
+// numbers
+float const EDNumberMax                                         = 9999999;
+
 // preferences
 NSString * const EDPreferenceSnapToGuides                       = @"EDPreferenceSnapToGuides";
 NSString * const EDPreferencePropertyPanel                      = @"EDPreferencePropertyPanel";

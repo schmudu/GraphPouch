@@ -356,7 +356,7 @@
 - (NSMutableDictionary *)getClosestHorizontalGuide:(NSMutableArray *)guides elements:(NSArray *)elements{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     float originDiff, edgeDiff, originClosestGuide, edgeClosestGuide, absoluteClosestGuide;
-    float absoluteSmallestDiff = 999999;
+    float absoluteSmallestDiff = EDNumberMax;
     
     // for each point find the closest point
     for (EDWorksheetElementView *element in elements){
@@ -442,7 +442,7 @@
 - (float)findClosestPoint:(float)currentPoint guides:(NSMutableArray *)guides{
     // go through guides and find closest point
     float smallestDiff = 999999;
-    float closestPoint;
+    float closestPoint = 0;
     
     // iterate through all the
     for (NSNumber *point in guides){

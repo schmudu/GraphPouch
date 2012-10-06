@@ -298,8 +298,8 @@
 # pragma mark snap
 - (float)findClosestPoint:(float)currentPoint guides:(NSMutableArray *)guides{
     // go through guides and find closest point
-    float smallestDiff = 999999;
-    float closestPoint;
+    float smallestDiff = EDNumberMax;
+    float closestPoint = 0;
     
     // iterate through all the
     for (NSNumber *point in guides){
