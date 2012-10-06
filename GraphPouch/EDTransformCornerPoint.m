@@ -30,6 +30,11 @@
     return self;
 }
 
+- (void) dealloc{
+    [_nc removeObserver:self name:EDEventTransformPointDragged object:verticalPoint];
+    [_nc removeObserver:self name:EDEventTransformPointDragged object:horizontalPoint];
+}
+
 - (BOOL)isFlipped{
     return TRUE;
 }

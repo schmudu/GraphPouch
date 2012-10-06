@@ -25,17 +25,6 @@
         //generate id
         [self setViewID:[EDGraphView generateID]];
         
-        // listen
-        //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-        //NSManagedObjectContext *context = [coreData context];
-        /*
-        NSManagedObjectContext *context = [self currentContext];
-        
-        // listen
-        _nc = [NSNotificationCenter defaultCenter];
-        [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
-         */
-        
         // set model info
         [self setDataObj:myGraph];
     }
@@ -43,8 +32,6 @@
 }
 
 - (void) dealloc{
-    //EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    //NSManagedObjectContext *context = [coreData context];
     NSManagedObjectContext *context = [self currentContext];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:context];

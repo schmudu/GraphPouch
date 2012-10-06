@@ -18,6 +18,7 @@
     self = [super initWithNibName:@"EDPageView" bundle:nil];
     if (self) {
         pageData = page;
+        NSLog(@"init page view controller: view:%@", [self view]);
     }
     
     return self;
@@ -25,18 +26,8 @@
 
 - (void)postInit{
     [pageLabel setStringValue:[[NSString alloc] initWithFormat:@"%@", [pageData pageNumber]]];
-    NSLog(@"init page view controller: page number:%@ page label:%@", [pageData pageNumber], pageLabel);
+    //NSLog(@"init page view controller: page number:%@ page label:%@", [pageData pageNumber], pageLabel);
     
 }
-/*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
-}*/
 
 @end

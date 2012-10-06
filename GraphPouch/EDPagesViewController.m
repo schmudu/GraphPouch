@@ -33,6 +33,10 @@
     return self;
 }
 
+- (void)dealloc{
+    [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
+}
+
 - (void)postInitialize{
     NSArray *pages = [_coreData getAllPages];
     
@@ -42,7 +46,9 @@
     }
     else{
         // else draw the pages that already exist
-        NSLog(@"we need to draw the pages");
+        for(EDPage *page in pages){
+            [self drawPage:page];
+        }
     }
 }
 
@@ -83,7 +89,7 @@
 
 - (void)drawPage:(EDPage *)page{
     NSArray *currentPages = [_coreData getAllPages];
-    NSLog(@"got all pages: going to draw page: page count:%ld page number:%@", [currentPages count], [page pageNumber]);
+    //NSLog(@"got all pages: going to draw page: page count:%ld page number:%@", [currentPages count], [page pageNumber]);
     
     EDPageViewController *pageController = [[EDPageViewController alloc] initWithPage:page];
     

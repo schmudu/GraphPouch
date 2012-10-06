@@ -43,7 +43,7 @@
 - (void)updateTransformRects:(NSArray *)updatedElements;
 - (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element;
 - (void)onTransformRectChanged:(NSNotification *)note;
-- (EDWorksheetElementView *)findElementViewViaTransformRect:(EDTransformRect *)rect element:(EDElement *)element;
+//- (EDWorksheetElementView *)findElementViewViaTransformRect:(EDTransformRect *)rect element:(EDElement *)element;
 - (void)onTransformPointMouseUp:(NSNotification *)note;
 - (void)onTransformPointMouseDown:(NSNotification *)note;
 - (void)removeTransformRect:(EDTransformRect *)transformRect element:(EDElement *)element;
@@ -74,7 +74,6 @@
 }
 
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 

@@ -51,6 +51,10 @@
     return self;
 }
 
+- (void)dealloc{
+    [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[self currentContext]];
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.

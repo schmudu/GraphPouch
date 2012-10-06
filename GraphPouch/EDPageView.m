@@ -26,11 +26,16 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSRect bounds = NSMakeRect(0, 50, 20, 20);
+    NSRect bounds = NSMakeRect(0, 10, 42.5, 55);
     
     [[NSColor blueColor] setFill];
     
     [NSBezierPath fillRect:bounds];
+}
+
+#pragma mark mouse
+- (void)mouseDown:(NSEvent *)theEvent{
+    NSLog(@"mouse down.");
 }
 
 @end
