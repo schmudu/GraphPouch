@@ -59,6 +59,9 @@ extern NSString *const EDElementAttributeHeight;
 extern float const EDGraphDefaultHeight;
 extern float const EDGraphDefaultWidth;
 
+// page
+extern NSString *const EDPageAttributePageNumber;
+
 // keyboard mapping
 extern int const        EDKeycodeDelete;
 extern int const        EDKeyModifierNone;

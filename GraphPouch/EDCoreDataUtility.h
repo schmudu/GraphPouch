@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EDPage.h"
 
 @interface EDCoreDataUtility : NSObject{
 @private
@@ -24,6 +25,7 @@
 - (NSMutableDictionary *)getAllTypesOfSelectedObjects;
 - (NSArray *)getAllGraphs;
 - (NSArray *)getAllPages;
+- (EDPage *)getLastSelectedPage;
 - (void)clearSelectedElements;
 - (void)deleteSelectedElements;
 @end

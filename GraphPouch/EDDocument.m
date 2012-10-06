@@ -73,4 +73,9 @@
 - (BOOL)propertiesPanelIsOpen{
     return [propertyController panelIsOpen];
 }
+
+#pragma mark graph
+- (IBAction)addPage:(id)sender{
+    [pagesController addNewPage];
+}
 @end

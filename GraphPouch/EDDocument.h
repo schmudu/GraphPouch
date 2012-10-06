@@ -24,4 +24,5 @@
 - (id)getInstance;
 - (void)togglePropertiesPanel:(id)sender;
 - (BOOL)propertiesPanelIsOpen;
+- (IBAction)addPage:(id)sender;
 @end

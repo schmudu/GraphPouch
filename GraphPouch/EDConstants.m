@@ -59,6 +59,9 @@ NSString * const EDGraphAttributeGrideLines                     = @"hasGridLines
 float const EDGraphDefaultHeight                                = 30.0;
 float const EDGraphDefaultWidth                                 = 30.0;
 
+// page attributes
+NSString * const EDPageAttributePageNumber                     = @"pageNumber";
+
 // keyboard
 int const EDKeycodeDelete                                       = 51;
 int const EDKeyModifierNone                                     = 256;

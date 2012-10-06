@@ -173,7 +173,8 @@
     [graphView setNeedsDisplay:TRUE];
     
     // draw transform rect if selected
-    if ([[graphView dataObj] selected]){
+    //if ([[graphView dataObj] selected]){
+    if ([[[graphView dataObj] valueForKey:EDElementAttributeSelected] boolValue]){
         [self drawTransformRect:(EDElement *)[graphView dataObj]];
     }
 }

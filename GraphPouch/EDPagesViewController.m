@@ -58,8 +58,17 @@
     if ([pages count] == 0) {
         [newPage setPageNumber:[[NSNumber alloc] initWithInt:1]];
     }
-    NSArray *newPages = [_coreData getAllPages];
-    NSLog(@"new page count:%ld page number:%@", [newPages count], [newPage pageNumber]);
+    else {
+        EDPage *lastPage = [_coreData getLastSelectedPage];
+        //NSLog(@"more than 1 page count:%ld page number:%@ last page:%@", [pages count], [newPage pageNumber], lastPage);
+        if (lastPage) {
+            [newPage setPageNumber:[[NSNumber alloc] initWithInt:[[lastPage pageNumber] intValue]]];
+        }
+        else {
+            // nothing is selected so add page to the end of the list
+            [newPage setPageNumber:[[NSNumber alloc] initWithInt:([pages count] + 1)]];
+        }
+    }
 }
 
 - (void)onContextChanged:(NSNotification *)note{
@@ -73,6 +82,9 @@
 }
 
 - (void)drawPage:(EDPage *)page{
+    NSArray *currentPages = [_coreData getAllPages];
+    NSLog(@"got all pages: going to draw page: page count:%ld page number:%@", [currentPages count], [page pageNumber]);
+    
     EDPageViewController *pageController = [[EDPageViewController alloc] initWithPage:page];
     
     // add to view

@@ -44,6 +44,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return allObjects;
 }
 
+#pragma mark pages
 - (NSArray *)getAllPages{
    // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
@@ -51,6 +52,11 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     // Setup the fetch request   
     NSFetchRequest *request = [[NSFetchRequest alloc] init];   
     [request setEntity:entity];   
+    
+    // order pages
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDPageAttributePageNumber ascending:TRUE];
+    NSArray *sortArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortArray];
     
     // Fetch the records and handle an error   
     NSError *error;   
@@ -65,6 +71,19 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }   
      */
     return fetchResults;
+}
+
+- (EDPage *)getLastSelectedPage{
+    
+    // this method returns a dictionary of the types of selected objects
+    NSArray *fetchedObjects;
+    
+    // get all selected pages ordered by page number
+    fetchedObjects = [EDPage findAllSelectedObjectsOrderedByPageNumber];
+    if ([fetchedObjects count] > 0) {
+        return [fetchedObjects lastObject];
+    }
+    return nil;
 }
 
 - (NSArray *)getAllGraphs{
@@ -106,7 +125,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSArray *fetchedObjects;
     
-    // get all graphs
+    // get all selected graphs
     fetchedObjects = [EDGraph findAllSelectedObjects];
     
 #warning add other elements here
