@@ -215,6 +215,7 @@
     
     // update transform rects
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
+    
     [self updateTransformRects:updatedArray];
 }
 
@@ -506,7 +507,14 @@
     EDTransformRect *transformRect;
     BOOL isSelected;
     // iterate through elements
-    for (EDElement *myElement in updatedElements){
+    for (NSObject *myObject in updatedElements){
+        // check - only update if objects are displayed on worksheet
+        if (![myObject isKindOfClass:[EDElement class]])
+            break;
+    
+        // cast
+        EDElement *myElement = (EDElement *)myObject;
+        
         transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:myElement]];
         isSelected = [myElement selected];
         

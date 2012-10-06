@@ -7,7 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDPage.h"
 
-@interface EDPageView : NSView
+@interface EDPageView : NSView{
+    EDPage *_dataObj;
+}
+
+- (void)setDataObj:(EDPage *)pageObj;
 
 @end
