@@ -62,6 +62,10 @@ extern NSString *const EDElementAttributeHeight;
 extern float const EDGraphDefaultHeight;
 extern float const EDGraphDefaultWidth;
 
+// pages
+extern NSString *const EDEventPagesViewClicked;
+extern NSString *const EDEventPagesDeletePressed;
+
 // page
 extern NSString *const EDPageAttributePageNumber;
 extern NSString *const EDPageAttributeSelected;

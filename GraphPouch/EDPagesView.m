@@ -7,10 +7,15 @@
 //
 
 #import "EDPagesView.h"
+#import "EDConstants.h"
 
 @implementation EDPagesView
 
 - (BOOL)isFlipped{
+    return TRUE;
+}
+
+- (BOOL)acceptsFirstResponder{
     return TRUE;
 }
 
@@ -27,6 +32,18 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+}
+
+#pragma mark keyboard
+- (void)keyDown:(NSEvent *)theEvent{
+    if ([theEvent keyCode] == EDKeycodeDelete) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
+    }
+}
+
+#pragma mark mouse
+- (void)mouseDown:(NSEvent *)theEvent{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesViewClicked object:self];
 }
 
 @end

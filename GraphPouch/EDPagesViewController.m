@@ -13,9 +13,12 @@
 #import "EDPageViewController.h"
 
 @interface EDPagesViewController ()
-- (void)onPageViewClickedWithoutModifier:(NSNotification *)note;
 - (void)onContextChanged:(NSNotification *)note;
 - (void)drawPage:(EDPage *)page;
+- (void)deselectAllPages;
+- (void)onPageViewClickedWithoutModifier:(NSNotification *)note;
+- (void)onPagesViewClicked:(NSNotification *)note;
+- (void)onDeleteKeyPressed:(NSNotification *)note;
 @end
 
 @implementation EDPagesViewController
@@ -37,6 +40,8 @@
 
 - (void)dealloc{
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
+    [_nc removeObserver:self name:EDEventPagesDeletePressed object:[self view]];
+    [_nc removeObserver:self name:EDEventPagesViewClicked object:[self view]];
 }
 
 - (void)postInitialize{
@@ -52,6 +57,10 @@
             [self drawPage:page];
         }
     }
+    
+    // listen
+    [_nc addObserver:self selector:@selector(onPagesViewClicked:) name:EDEventPagesViewClicked object:[self view]];
+    [_nc addObserver:self selector:@selector(onDeleteKeyPressed:) name:EDEventPagesDeletePressed object:[self view]];
 }
 
 
@@ -113,10 +122,25 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewClickedWithoutModifier:) name:EDEventPageClickedWithoutModifier object:pageController];
 }
 
+#pragma mark page events
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note{
+    [self deselectAllPages];
+}
+
+- (void)onPagesViewClicked:(NSNotification *)note{
+    [self deselectAllPages];
+}
+
+- (void)deselectAllPages{
      // iterate through page controllers and deselect   
     for (EDPageViewController *pageController in _pageControllers){
         [pageController deselectPage];
     }
 }
+
+#pragma mark pages events
+- (void)onDeleteKeyPressed:(NSNotification *)note{
+    NSLog(@"need to remove selected pages.");
+}
+
 @end
