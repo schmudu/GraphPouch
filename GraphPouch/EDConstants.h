@@ -66,6 +66,7 @@ extern float const EDGraphDefaultWidth;
 extern NSString *const EDPageAttributePageNumber;
 extern NSString *const EDPageAttributeSelected;
 extern NSString *const EDPageAttributeCurrent;
+extern NSString *const EDEventPageClickedWithoutModifier;
 
 // keyboard mapping
 extern int const        EDKeycodeDelete;

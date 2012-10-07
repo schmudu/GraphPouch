@@ -13,6 +13,7 @@
 #import "EDPageViewController.h"
 
 @interface EDPagesViewController ()
+- (void)onPageViewClickedWithoutModifier:(NSNotification *)note;
 - (void)onContextChanged:(NSNotification *)note;
 - (void)drawPage:(EDPage *)page;
 @end
@@ -23,6 +24,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        _pageControllers = [[NSMutableArray alloc] init];
         _nc = [NSNotificationCenter defaultCenter];
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         
@@ -92,13 +94,29 @@
     //NSLog(@"got all pages: going to draw page: page count:%ld page number:%@", [currentPages count], [page pageNumber]);
     
     EDPageViewController *pageController = [[EDPageViewController alloc] initWithPage:page];
+ 
+    // add controller to array so we can iterate through them
+#warning need to release controller if we remove the view
+    [_pageControllers addObject:pageController];
     
     // add to view
     [[self view] addSubview:[pageController view]];
     
     //position it
     [[pageController view] setFrameOrigin:NSMakePoint(20, [[page pageNumber] intValue]*80)];
+    
     // init view after loaded
     [pageController postInit];
+    
+    // listen
+#warning need to remove this observer
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewClickedWithoutModifier:) name:EDEventPageClickedWithoutModifier object:pageController];
+}
+
+- (void)onPageViewClickedWithoutModifier:(NSNotification *)note{
+     // iterate through page controllers and deselect   
+    for (EDPageViewController *pageController in _pageControllers){
+        [pageController deselectPage];
+    }
 }
 @end

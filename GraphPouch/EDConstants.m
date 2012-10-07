@@ -66,6 +66,7 @@ float const EDGraphDefaultWidth                                 = 30.0;
 NSString * const EDPageAttributePageNumber                      = @"pageNumber";
 NSString * const EDPageAttributeSelected                        = @"selected";
 NSString * const EDPageAttributeCurrent                         = @"currentPage";
+NSString * const EDEventPageClickedWithoutModifier              = @"EDEventPageClickedWithoutModifier";
 
 // keyboard
 int const EDKeycodeDelete                                       = 51;

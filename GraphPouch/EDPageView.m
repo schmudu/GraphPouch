@@ -28,7 +28,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSRect bounds = NSMakeRect(0, 10, 42.5, 55);
-    NSLog(@"drawing rect: bool value:%d", [[_dataObj selected] boolValue]);
+    
     if ([[_dataObj selected] boolValue]) {
         [[NSColor blueColor] setFill];
     }
@@ -46,15 +46,25 @@
 
 #pragma mark mouse
 - (void)mouseDown:(NSEvent *)theEvent{
-    NSLog(@"mouse down.");
-    
     NSUInteger flags = [theEvent modifierFlags];
     
     if ([[_dataObj selected] boolValue]){
         // page is already selected
+        if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
+            [_dataObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDPageAttributeSelected];
+        }
+        /*
+        else{
+            [self notifyMouseDownListeners:theEvent];
+        }*/
     }
     else {
         // page is not selected
+        if(!(flags & NSCommandKeyMask) && !(flags & NSShiftKeyMask)){
+            // dispatch event that a new page has been selected
+            [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageClickedWithoutModifier object:self];
+        }
+        
         [_dataObj setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDPageAttributeSelected];
     }
     
@@ -107,4 +117,11 @@
      */
 }
 
+- (void)deselectPage{
+    // deselect 
+    [_dataObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDPageAttributeSelected];
+    
+    // redisplay
+    [self setNeedsDisplay:TRUE];
+}
 @end

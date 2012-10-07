@@ -12,6 +12,7 @@
 @interface EDPagesViewController : NSViewController{
     NSNotificationCenter *_nc;
     EDCoreDataUtility *_coreData;
+    NSMutableArray *_pageControllers;
 }
 - (void)postInitialize;
 - (void)addNewPage;

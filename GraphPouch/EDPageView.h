@@ -14,5 +14,5 @@
 }
 
 - (void)setDataObj:(EDPage *)pageObj;
-
+- (void)deselectPage;
 @end

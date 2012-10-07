@@ -12,9 +12,10 @@
 @interface EDPageViewController : NSViewController{
     IBOutlet NSTextField *pageLabel;
 #warning does this need to be a weak assignment?
-    EDPage *pageData;
+    EDPage *_pageData;
 }
 
+- (void)deselectPage;
 - (id)initWithPage:(EDPage *)page;
 - (void)postInit;
 @end
