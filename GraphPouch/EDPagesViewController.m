@@ -15,6 +15,7 @@
 @interface EDPagesViewController ()
 - (void)onContextChanged:(NSNotification *)note;
 - (void)drawPage:(EDPage *)page;
+- (void)removePage:(EDPage *)page;
 - (void)deselectAllPages;
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note;
 - (void)onPagesViewClicked:(NSNotification *)note;
@@ -96,6 +97,14 @@
             [self drawPage:(EDPage *)addedObject];
         }
     }
+    
+    NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
+    for (NSObject *removedObject in deletedArray){
+        // only remove page objects
+        if ([[removedObject className] isEqualToString:EDEntityNamePage]) {
+            [self removePage:(EDPage *)removedObject];
+        }
+    }
 }
 
 - (void)drawPage:(EDPage *)page{
@@ -122,6 +131,26 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewClickedWithoutModifier:) name:EDEventPageClickedWithoutModifier object:pageController];
 }
 
+- (void)removePage:(EDPage *)page{
+    // iterate through page controllers and remove controller and page
+    BOOL found = FALSE;
+    int i = 0;
+    EDPageViewController *currentPageController;
+    
+    while ((!found) && (i < [_pageControllers count])) {
+        currentPageController = (EDPageViewController *)[_pageControllers objectAtIndex:i];
+        
+        if ([(EDPageView *)[currentPageController view] dataObj] == page){
+            // remove page view
+            [[currentPageController view] removeFromSuperview];
+            
+            // remove controller
+            [_pageControllers removeObject:currentPageController];
+        }
+        i++;
+    }
+}
+
 #pragma mark page events
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note{
     [self deselectAllPages];
@@ -140,7 +169,7 @@
 
 #pragma mark pages events
 - (void)onDeleteKeyPressed:(NSNotification *)note{
-    NSLog(@"need to remove selected pages.");
+    [_coreData deleteSelectedPages];
 }
 
 @end

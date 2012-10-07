@@ -26,6 +26,8 @@
 - (NSArray *)getAllGraphs;
 - (NSArray *)getAllPages;
 - (EDPage *)getLastSelectedPage;
+- (NSMutableArray *)getAllSelectedPages;
+- (void)deleteSelectedPages;
 - (void)clearSelectedElements;
 - (void)deleteSelectedElements;
 @end

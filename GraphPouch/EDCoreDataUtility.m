@@ -86,6 +86,24 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return nil;
 }
 
+- (NSMutableArray *)getAllSelectedPages{
+    // gets all pages
+    NSMutableArray *allObjects = [[NSMutableArray alloc] init];
+    NSArray *fetchedGraphs = [EDPage findAllSelectedObjects];
+    
+    [allObjects addObjectsFromArray:fetchedGraphs];
+    
+    return allObjects;
+}
+
+- (void)deleteSelectedPages{
+    NSMutableArray *selectedPages = [self getAllSelectedPages];
+    for (EDPage *page in selectedPages){
+        [_context deleteObject:page];
+    }
+}
+
+#pragma mark worksheet
 - (NSArray *)getAllGraphs{
    // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:_context];   
@@ -149,7 +167,6 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }
 }
 
-#pragma mark delete
 - (void)deleteSelectedElements{
     NSMutableArray *selectedElements = [self getAllSelectedObjects];
     for (EDElement *element in selectedElements){

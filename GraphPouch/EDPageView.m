@@ -40,6 +40,10 @@
 }
 
 #pragma mark data
+- (EDPage *)dataObj{
+    return _dataObj;
+}
+
 - (void)setDataObj:(EDPage *)pageObj{
     _dataObj = pageObj;
 }

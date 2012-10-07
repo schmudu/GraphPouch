@@ -13,6 +13,7 @@
     EDPage *_dataObj;
 }
 
+- (EDPage *)dataObj;
 - (void)setDataObj:(EDPage *)pageObj;
 - (void)deselectPage;
 @end
