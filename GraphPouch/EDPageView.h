@@ -13,6 +13,7 @@
 @interface EDPageView : NSView{
     EDPage *_dataObj;
     EDCoreDataUtility *_coreData;
+    NSEvent *_mouseDownEvent;
 }
 
 - (EDPage *)dataObj;

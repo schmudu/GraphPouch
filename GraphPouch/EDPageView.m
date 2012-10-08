@@ -62,6 +62,10 @@
 
 #pragma mark mouse
 - (void)mouseDown:(NSEvent *)theEvent{
+    // store for drag operation
+    _mouseDownEvent = theEvent;
+    
+    // listen for modifier keys
     NSUInteger flags = [theEvent modifierFlags];
     
     if ([[_dataObj selected] boolValue]){
@@ -142,6 +146,78 @@
 }
 
 - (void)onContextChanged:(NSNotification *)note{
+    // code of context changed
+}
+
+#pragma mark dragging
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)flag{
+    return NSDragOperationCopy;
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent{
+    NSPoint down = [_mouseDownEvent locationInWindow];
+    NSPoint drag = [theEvent locationInWindow];
+    float distance = hypotf(down.x - drag.x, down.y - drag.y);
+    NSLog(@"distance:%f", distance);
+    if (distance < 3){
+        return;
+    }
     
+    // validation
+    /*
+    if ([tring length] == 0){
+        return;
+    }
+     */
+    // more validations
+    //NSSize s = [string sizeWithAttributes:attributes];
+    NSSize s = NSMakeSize(100, 100);
+    
+    // create the image
+    NSImage *anImage = [[NSImage alloc] initWithSize:s];
+    
+    // create a rect in which you will draw the letter in the image
+    NSRect imageBounds;
+    imageBounds.origin = NSZeroPoint;
+    imageBounds.size = s;
+    
+    // draw the letter on the image
+    [anImage lockFocus];
+    [self drawStringCenteredIn:imageBounds];
+    [anImage unlockFocus];
+    
+    // Get the location of the mouseDown event
+    NSPoint p = [[[self window] contentView] convertPoint:down toView:[self superview]];
+    NSLog(@"point for dragging: x:%f y:%f", p.x, p.y);
+    // Drag from the center of the image
+    p.x = p.x - s.width/2;
+    p.y = p.y - s.height/2;
+    //p.x = 0;
+    //p.y = 0;
+    // Get the pasteboard
+    NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSDragPboard];
+    
+    // Start the drag
+    [self dragImage:anImage at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:pb source:self slideBack:YES];
+}
+
+- (void)drawStringCenteredIn:(NSRect)rect{
+    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
+    [attributes setObject:[NSFont fontWithName:@"Helvetica" size:75]
+                   forKey:NSFontAttributeName];
+    [attributes setObject:[NSColor redColor]
+                   forKey:NSForegroundColorAttributeName]; 
+    
+    NSString *string = [[NSString alloc] initWithFormat:@"Patrick"];
+    NSSize strSize = NSMakeSize(40, 80);
+    NSPoint strOrigin;
+    strOrigin.x = rect.origin.x + ((rect.size.width - strSize.width)/2);
+    strOrigin.y = rect.origin.y + ((rect.size.height - strSize.height)/2);
+    //[string drawAtPoint:strOrigin withAttributes:attributes]; 
+    [string drawAtPoint:NSMakePoint(0, 0) withAttributes:attributes]; 
+    /*
+    [[NSColor purpleColor] setFill];
+    [NSBezierPath fillRect:NSMakeRect(0, 0, 40, 40)];
+     */
 }
 @end
