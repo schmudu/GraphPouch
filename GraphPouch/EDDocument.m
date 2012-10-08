@@ -14,6 +14,7 @@
 #import "EDMenuController.h"
 #import "EDPanelPropertiesController.h"
 #import "NSObject+Document.h"
+#import "EDConstants.h"
 
 @implementation EDDocument
 
@@ -77,5 +78,10 @@
 #pragma mark graph
 - (IBAction)addPage:(id)sender{
     [pagesController addNewPage];
+}
+
+#pragma mark window
+- (void)windowDidResize:(NSNotification *)notification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWindowDidResize object:self];
 }
 @end

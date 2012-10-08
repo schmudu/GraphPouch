@@ -62,9 +62,15 @@ NSString * const EDGraphAttributeGrideLines                     = @"hasGridLines
 float const EDGraphDefaultHeight                                = 30.0;
 float const EDGraphDefaultWidth                                 = 30.0;
 
+// window
+NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";
+
 // pages view
 NSString * const EDEventPagesViewClicked                        = @"EDEventPagesViewClicked";
 NSString * const EDEventPagesDeletePressed                      = @"EDEventPagesDeletePressed";
+float const EDPageViewOffsetY                                   = 15;
+float const EDPageViewIncrementPosY                             = 120;
+float const EDPageViewPosX                                      = 20;
 
 // page view
 NSString * const EDPageAttributePageNumber                      = @"pageNumber";

@@ -15,7 +15,7 @@
     EDPage *_pageData;
     EDCoreDataUtility *_coreData;
 }
-
+- (EDPage *)dataObj;
 - (void)deselectPage;
 - (id)initWithPage:(EDPage *)page;
 - (void)postInit;

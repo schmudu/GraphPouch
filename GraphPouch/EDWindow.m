@@ -9,5 +9,4 @@
 #import "EDWindow.h"
 
 @implementation EDWindow
-
 @end

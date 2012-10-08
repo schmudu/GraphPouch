@@ -8,11 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDCoreDataUtility.h"
+#import "EDDocument.h"
 
 @interface EDPagesViewController : NSViewController{
     NSNotificationCenter *_nc;
     EDCoreDataUtility *_coreData;
     NSMutableArray *_pageControllers;
+    IBOutlet EDDocument *_documentController;
 }
 - (void)postInitialize;
 - (void)addNewPage;

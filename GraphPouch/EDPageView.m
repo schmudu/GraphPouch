@@ -37,7 +37,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSRect bounds = NSMakeRect(0, 10, 42.5, 55);
+    //NSRect bounds = NSMakeRect(0, 10, 42.5, 55);
     
     if ([[_dataObj selected] boolValue]) {
         [[NSColor blueColor] setFill];
@@ -46,7 +46,9 @@
         [[NSColor redColor] setFill];
     }
     
-    [NSBezierPath fillRect:bounds];
+    //[NSBezierPath fillRect:bounds];
+    //NSLog(@"bounds size: frame: x:%f y:%f width%f height:%f", [self frame].origin.x, [self frame].origin.y, [self bounds].size.width, [self bounds].size.height);
+    [NSBezierPath fillRect:[self bounds]];
 }
 
 #pragma mark data

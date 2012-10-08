@@ -164,7 +164,7 @@
 									<double key="NSPercent">0.50602412223815918</double>
 								</object>
 							</array>
-							<string key="NSFrame">{{133, 0}, {592, 622}}</string>
+							<string key="NSFrame">{{137, 0}, {592, 622}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="668718214"/>
@@ -176,7 +176,7 @@
 						</object>
 						<object class="NSScrollView" id="204223611">
 							<reference key="NSNextResponder" ref="568628114"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">276</int>
 							<array class="NSMutableArray" key="NSSubviews">
 								<object class="NSClipView" id="302567203">
 									<reference key="NSNextResponder" ref="204223611"/>
@@ -184,15 +184,15 @@
 									<array class="NSMutableArray" key="NSSubviews">
 										<object class="NSView" id="310730408">
 											<reference key="NSNextResponder" ref="302567203"/>
-											<int key="NSvFlags">274</int>
-											<string key="NSFrameSize">{132, 620}</string>
+											<int key="NSvFlags">308</int>
+											<string key="NSFrameSize">{138, 620}</string>
 											<reference key="NSSuperview" ref="302567203"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="220590525"/>
+											<reference key="NSNextKeyView" ref="495829339"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 										</object>
 									</array>
-									<string key="NSFrame">{{1, 1}, {132, 620}}</string>
+									<string key="NSFrame">{{1, 1}, {138, 620}}</string>
 									<reference key="NSSuperview" ref="204223611"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="310730408"/>
@@ -204,7 +204,7 @@
 								<object class="NSScroller" id="495829339">
 									<reference key="NSNextResponder" ref="204223611"/>
 									<int key="NSvFlags">256</int>
-									<string key="NSFrame">{{118, 1}, {15, 620}}</string>
+									<string key="NSFrame">{{124, 1}, {15, 620}}</string>
 									<reference key="NSSuperview" ref="204223611"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="257841340"/>
@@ -228,10 +228,10 @@
 									<double key="NSPercent">0.50602412223815918</double>
 								</object>
 							</array>
-							<string key="NSFrame">{{-1, 0}, {134, 622}}</string>
+							<string key="NSFrame">{{-1, 0}, {140, 622}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="302567203"/>
+							<reference key="NSNextKeyView" ref="220590525"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133138</int>
 							<reference key="NSVScroller" ref="495829339"/>
@@ -286,6 +286,9 @@
 				<bool key="NSSelectsInsertedObjects">YES</bool>
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
+			</object>
+			<object class="NSCustomObject" id="254499860">
+				<string key="NSClassName">EDWindow</string>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -402,6 +405,14 @@
 					</object>
 					<int key="connectionID">100317</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_documentController</string>
+						<reference key="source" ref="1011574510"/>
+						<reference key="destination" ref="512844837"/>
+					</object>
+					<int key="connectionID">100320</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -436,10 +447,10 @@
 						<int key="objectID">6</int>
 						<reference key="object" ref="568628114"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="257841340"/>
 							<reference ref="204223611"/>
 							<reference ref="807704737"/>
 							<reference ref="835139896"/>
+							<reference ref="257841340"/>
 						</array>
 						<reference key="parent" ref="275939982"/>
 					</object>
@@ -552,6 +563,11 @@
 						<reference key="object" ref="1011574510"/>
 						<reference key="parent" ref="0"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100319</int>
+						<reference key="object" ref="254499860"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -577,18 +593,28 @@
 				<string key="100311.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100312.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100315.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="100319.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBWindowTemplateEditedContentRect">{{133, 170}, {507, 413}}</string>
+				<string key="6.CustomClassName">EDContentView</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">100318</int>
+			<int key="maxID">100320</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">EDContentView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/EDContentView.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">EDDocument</string>
 					<string key="superclassName">NSPersistentDocument</string>
@@ -651,6 +677,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">EDPagesViewController</string>
 					<string key="superclassName">NSViewController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">_documentController</string>
+						<string key="NS.object.0">EDDocument</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">_documentController</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">_documentController</string>
+							<string key="candidateClassName">EDDocument</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/EDPagesViewController.h</string>

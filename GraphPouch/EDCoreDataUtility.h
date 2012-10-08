@@ -19,6 +19,7 @@
 + (EDCoreDataUtility *)sharedCoreDataUtility;
 //+ (NSArray *)findAllSelectedObjects;
 - (void)setContext:(NSManagedObjectContext *)moc;
+- (void)save;
 - (NSManagedObjectContext *)context;
 - (NSMutableArray *)getAllObjects;
 - (NSMutableArray *)getAllSelectedObjects;

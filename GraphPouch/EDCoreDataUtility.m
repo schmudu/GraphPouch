@@ -34,6 +34,11 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     _context = moc; 
 }
 
+- (void)save{
+    NSError *error;
+    [_context save:&error];
+}
+
 - (NSMutableArray *)getAllObjects{
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *graphObjects = [self getAllGraphs];
@@ -98,9 +103,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 
 - (void)deleteSelectedPages{
     NSMutableArray *selectedPages = [self getAllSelectedPages];
-    NSLog(@"going to delete selected pages:%@", selectedPages);
     for (EDPage *page in selectedPages){
-        NSLog(@"deleting page:%@", page);
 #warning for some reason, this delete object takes a while
         [_context deleteObject:page];
     }
@@ -111,11 +114,9 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     NSArray *fetchedPages = [EDPage findAllObjectsOrderedByPageNumber];
     int currentPageNumber = 1;
     
-    NSLog(@"pages returned: %@", fetchedPages);
     // iterate through pages
     for (EDPage *currentPage in fetchedPages){
         if ([[currentPage pageNumber] intValue] != currentPageNumber) {
-            NSLog(@"changing page number:%@", currentPage);
             // reset page number to proper number
             [currentPage setValue:[[NSNumber alloc] initWithInt:currentPageNumber] forKey:EDPageAttributePageNumber];
         }

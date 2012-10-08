@@ -35,6 +35,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageClickedWithoutModifier object:[self view]];
 }
 
+- (EDPage *)dataObj{
+    return _pageData;
+}
+
 - (void)postInit{
     // set data obj
     [(EDPageView *)[self view] setDataObj:_pageData];
