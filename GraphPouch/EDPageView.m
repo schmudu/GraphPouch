@@ -8,6 +8,11 @@
 
 #import "EDPageView.h"
 #import "EDConstants.h"
+#import "EDCoreDataUtility.h"
+
+@interface EDPageView()
+- (void)onContextChanged:(NSNotification *)note;
+@end
 
 @implementation EDPageView
 
@@ -19,10 +24,15 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
+        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
     }
     
     return self;
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -127,5 +137,9 @@
     
     // redisplay
     [self setNeedsDisplay:TRUE];
+}
+
+- (void)onContextChanged:(NSNotification *)note{
+    
 }
 @end

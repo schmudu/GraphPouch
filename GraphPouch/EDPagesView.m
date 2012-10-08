@@ -37,6 +37,7 @@
 #pragma mark keyboard
 - (void)keyDown:(NSEvent *)theEvent{
     if ([theEvent keyCode] == EDKeycodeDelete) {
+        NSLog(@"delete key pressed.");
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
     }
 }

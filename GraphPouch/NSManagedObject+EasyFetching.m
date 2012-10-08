@@ -44,8 +44,40 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];
     NSError *error = nil;
+    NSArray *objects = [context executeFetchRequest:request error:&error];
+    
+    // verify that objects actually exist
+    if ([objects count] == 0) {
+        // if no objects then return empty
+        return objects;
+    }
+    
     NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"selected = %ld", TRUE];
-    NSArray *results = [[context executeFetchRequest:request error:&error] filteredArrayUsingPredicate:searchFilter];
+    NSArray *filteredResults = [objects filteredArrayUsingPredicate:searchFilter];;
+    
+    //NSArray *results = [[context executeFetchRequest:request error:&error] filteredArrayUsingPredicate:searchFilter];
+    if (error != nil)
+    {
+        //handle errors
+    }
+    return filteredResults;
+}
+
++ (NSArray *)findAllObjectsOrderedByPageNumber{
+    NSManagedObjectContext *context = [self getContext];
+    NSEntityDescription *entity;
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    
+    entity = [self entityDescriptionInContext:context];
+    
+    // order by page number
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDPageAttributePageNumber ascending:TRUE];
+    NSArray *sortArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortArray];
+    
+    [request setEntity:entity];
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:request error:&error];
     if (error != nil)
     {
         //handle errors

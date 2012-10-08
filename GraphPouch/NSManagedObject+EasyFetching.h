@@ -12,6 +12,7 @@
 
 + (NSEntityDescription *)entityDescriptionInContext:(NSManagedObjectContext *)context;
 + (NSArray *)findAllObjects;
++ (NSArray *)findAllObjectsOrderedByPageNumber;
 + (NSArray *)findAllSelectedObjects;
 + (NSArray *)findAllSelectedObjectsOrderedByPageNumber;
 + (NSManagedObjectContext *)getContext;

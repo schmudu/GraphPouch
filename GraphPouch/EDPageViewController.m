@@ -12,6 +12,7 @@
 
 @interface EDPageViewController ()
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note;
+- (void)onContextChanged:(NSNotification *)note;
 @end
 
 @implementation EDPageViewController
@@ -20,10 +21,18 @@
     self = [super initWithNibName:@"EDPageView" bundle:nil];
     if (self) {
         _pageData = page;
-        //NSLog(@"init page view controller: view:%@", [self view]);
+        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
+        
+        // listen
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
     }
     
     return self;
+}
+
+- (void) dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageClickedWithoutModifier object:[self view]];
 }
 
 - (void)postInit{
@@ -35,9 +44,6 @@
     
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewClickedWithoutModifier:) name:EDEventPageClickedWithoutModifier object:[self view]];
-    
-    // release data obj we don't want to have references to it
-    _pageData = nil;
 }
 
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note{
@@ -47,5 +53,9 @@
 
 - (void)deselectPage{
     [(EDPageView *)[self view] deselectPage];
+}
+
+- (void)onContextChanged:(NSNotification *)note{
+    [pageLabel setStringValue:[[NSString alloc] initWithFormat:@"%@", [_pageData pageNumber]]];
 }
 @end

@@ -68,9 +68,7 @@
 - (void)addNewPage{
     // create new page
     NSArray *pages = [_coreData getAllPages];
-    //NSLog(@"page count:%ld", [pages count]);
     EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
-    //[[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
     
     // if no other pages then set this page to be the first one
     if ([pages count] == 0) {
@@ -78,7 +76,6 @@
     }
     else {
         EDPage *lastPage = [_coreData getLastSelectedPage];
-        //NSLog(@"more than 1 page count:%ld page number:%@ last page:%@", [pages count], [newPage pageNumber], lastPage);
         if (lastPage) {
             [newPage setPageNumber:[[NSNumber alloc] initWithInt:[[lastPage pageNumber] intValue]]];
         }
@@ -91,6 +88,7 @@
 
 - (void)onContextChanged:(NSNotification *)note{
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
+    int entityDeleted = FALSE;
     
     for (NSObject *addedObject in insertedArray){
         if ([[addedObject className] isEqualToString:EDEntityNamePage]) {
@@ -102,19 +100,21 @@
     for (NSObject *removedObject in deletedArray){
         // only remove page objects
         if ([[removedObject className] isEqualToString:EDEntityNamePage]) {
+            entityDeleted = TRUE;
             [self removePage:(EDPage *)removedObject];
         }
+    }
+
+    // correct array if objects deleted
+    if (entityDeleted) {
+        [_coreData correctPageNumbersAfterDelete];
     }
 }
 
 - (void)drawPage:(EDPage *)page{
-    NSArray *currentPages = [_coreData getAllPages];
-    //NSLog(@"got all pages: going to draw page: page count:%ld page number:%@", [currentPages count], [page pageNumber]);
-    
     EDPageViewController *pageController = [[EDPageViewController alloc] initWithPage:page];
  
     // add controller to array so we can iterate through them
-#warning need to release controller if we remove the view
     [_pageControllers addObject:pageController];
     
     // add to view
@@ -127,25 +127,28 @@
     [pageController postInit];
     
     // listen
-#warning need to remove this observer
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewClickedWithoutModifier:) name:EDEventPageClickedWithoutModifier object:pageController];
 }
 
 - (void)removePage:(EDPage *)page{
     // iterate through page controllers and remove controller and page
-    BOOL found = FALSE;
     int i = 0;
     EDPageViewController *currentPageController;
     
-    while ((!found) && (i < [_pageControllers count])) {
+    while (i < [_pageControllers count]) {
         currentPageController = (EDPageViewController *)[_pageControllers objectAtIndex:i];
         
         if ([(EDPageView *)[currentPageController view] dataObj] == page){
+            // remove listener
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageClickedWithoutModifier object:currentPageController];
+            
             // remove page view
             [[currentPageController view] removeFromSuperview];
             
             // remove controller
             [_pageControllers removeObject:currentPageController];
+            
+            return;
         }
         i++;
     }
@@ -169,6 +172,7 @@
 
 #pragma mark pages events
 - (void)onDeleteKeyPressed:(NSNotification *)note{
+    NSLog(@"calling delete on core data.");
     [_coreData deleteSelectedPages];
 }
 

@@ -8,9 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDPage.h"
+#import "EDCoreDataUtility.h"
 
 @interface EDPageView : NSView{
     EDPage *_dataObj;
+    EDCoreDataUtility *_coreData;
 }
 
 - (EDPage *)dataObj;

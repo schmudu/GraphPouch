@@ -8,11 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDPage.h"
+#import "EDCoreDataUtility.h"
 
 @interface EDPageViewController : NSViewController{
     IBOutlet NSTextField *pageLabel;
-#warning does this need to be a weak assignment?
     EDPage *_pageData;
+    EDCoreDataUtility *_coreData;
 }
 
 - (void)deselectPage;
