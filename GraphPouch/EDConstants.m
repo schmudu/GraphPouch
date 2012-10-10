@@ -70,7 +70,9 @@ NSString * const EDEventPagesViewClicked                        = @"EDEventPages
 NSString * const EDEventPagesDeletePressed                      = @"EDEventPagesDeletePressed";
 float const EDPageViewOffsetY                                   = 15;
 float const EDPageViewIncrementPosY                             = 120;
-float const EDPageViewPosX                                      = 20;
+float const EDPageViewPosX                                      = 0;
+float const EDPageImageViewWidth                                = 60;
+float const EDPageImageViewHeight                               = 80;
 
 // page view
 NSString * const EDPageAttributePageNumber                      = @"pageNumber";

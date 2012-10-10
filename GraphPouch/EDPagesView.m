@@ -23,7 +23,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
+        [self registerForDraggedTypes:[NSArray arrayWithObject:NSPasteboardTypeString]];
     }
     
     return self;

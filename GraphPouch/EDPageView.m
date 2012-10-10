@@ -37,7 +37,8 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    //NSRect bounds = NSMakeRect(0, 10, 42.5, 55);
+    //NSRect bounds = NSMakeRect(([self superview].frame.size.width - EDPageImageViewWidth)/2, 0, EDPageImageViewWidth, EDPageImageViewHeight);
+    NSRect bounds = NSMakeRect(40, 0, EDPageImageViewWidth, EDPageImageViewHeight);
     
     if ([[_dataObj selected] boolValue]) {
         [[NSColor blueColor] setFill];
@@ -48,7 +49,8 @@
     
     //[NSBezierPath fillRect:bounds];
     //NSLog(@"bounds size: frame: x:%f y:%f width%f height:%f", [self frame].origin.x, [self frame].origin.y, [self bounds].size.width, [self bounds].size.height);
-    [NSBezierPath fillRect:[self bounds]];
+    [NSBezierPath fillRect:bounds];
+    //NSLog(@"drawing frame x:%f width%f", [self frame].origin.x, [self frame].size.width);
 }
 
 #pragma mark data
@@ -151,27 +153,28 @@
 
 #pragma mark dragging
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)flag{
-    return NSDragOperationCopy;
+    return NSDragOperationCopy | NSDragOperationDelete;
+}
+
+- (void)draggedImage:(NSImage *)image endedAt:(NSPoint)screenPoint operation:(NSDragOperation)operation{
+    if (operation == NSDragOperationDelete){
+        NSLog(@"should delete something.");
+    }
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent{
     NSPoint down = [_mouseDownEvent locationInWindow];
     NSPoint drag = [theEvent locationInWindow];
     float distance = hypotf(down.x - drag.x, down.y - drag.y);
-    NSLog(@"distance:%f", distance);
+    
     if (distance < 3){
         return;
     }
     
     // validation
-    /*
-    if ([tring length] == 0){
-        return;
-    }
-     */
+    
     // more validations
-    //NSSize s = [string sizeWithAttributes:attributes];
-    NSSize s = NSMakeSize(100, 100);
+    NSSize s = NSMakeSize(200, 100);
     
     // create the image
     NSImage *anImage = [[NSImage alloc] initWithSize:s];
@@ -187,13 +190,12 @@
     [anImage unlockFocus];
     
     // Get the location of the mouseDown event
-    NSPoint p = [[[self window] contentView] convertPoint:down toView:[self superview]];
-    NSLog(@"point for dragging: x:%f y:%f", p.x, p.y);
+    NSPoint p = [[[self window] contentView] convertPoint:down toView:self];
+    
     // Drag from the center of the image
-    p.x = p.x - s.width/2;
-    p.y = p.y - s.height/2;
-    //p.x = 0;
-    //p.y = 0;
+    p.x = p.x - EDPageImageViewWidth/2;
+    p.y = p.y + EDPageImageViewHeight/2;
+    
     // Get the pasteboard
     NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSDragPboard];
     
@@ -202,22 +204,7 @@
 }
 
 - (void)drawStringCenteredIn:(NSRect)rect{
-    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
-    [attributes setObject:[NSFont fontWithName:@"Helvetica" size:75]
-                   forKey:NSFontAttributeName];
-    [attributes setObject:[NSColor redColor]
-                   forKey:NSForegroundColorAttributeName]; 
-    
-    NSString *string = [[NSString alloc] initWithFormat:@"Patrick"];
-    NSSize strSize = NSMakeSize(40, 80);
-    NSPoint strOrigin;
-    strOrigin.x = rect.origin.x + ((rect.size.width - strSize.width)/2);
-    strOrigin.y = rect.origin.y + ((rect.size.height - strSize.height)/2);
-    //[string drawAtPoint:strOrigin withAttributes:attributes]; 
-    [string drawAtPoint:NSMakePoint(0, 0) withAttributes:attributes]; 
-    /*
     [[NSColor purpleColor] setFill];
-    [NSBezierPath fillRect:NSMakeRect(0, 0, 40, 40)];
-     */
+    [NSBezierPath fillRect:NSMakeRect(0, 0, EDPageImageViewWidth, EDPageImageViewHeight)];
 }
 @end

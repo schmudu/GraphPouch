@@ -71,6 +71,8 @@ extern NSString *const EDEventPagesDeletePressed;
 extern float const EDPageViewOffsetY;
 extern float const EDPageViewIncrementPosY;
 extern float const EDPageViewPosX;
+extern float const EDPageImageViewWidth;
+extern float const EDPageImageViewHeight;
 
 // page
 extern NSString *const EDPageAttributePageNumber;
