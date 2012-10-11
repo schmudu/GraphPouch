@@ -10,12 +10,13 @@
 #import "EDPage.h"
 #import "EDCoreDataUtility.h"
 
-@interface EDPageView : NSView{
+@interface EDPageView : NSView <NSPasteboardWriting, NSPasteboardReading>{
     EDPage *_dataObj;
     EDCoreDataUtility *_coreData;
     NSEvent *_mouseDownEvent;
+    NSPasteboard *_pb;
+    BOOL _highlighted;
 }
-
 - (EDPage *)dataObj;
 - (void)setDataObj:(EDPage *)pageObj;
 - (void)deselectPage;

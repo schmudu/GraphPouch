@@ -12,6 +12,7 @@
 
 @interface EDPageView()
 - (void)onContextChanged:(NSNotification *)note;
+- (void)writeToPasteboard:(NSPasteboard *)pb;
 @end
 
 @implementation EDPageView
@@ -24,7 +25,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _pb = [NSPasteboard generalPasteboard];
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
+        [self registerForDraggedTypes:[NSArray arrayWithObjects:EDUTIPage,nil]];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
     }
     
@@ -45,6 +48,13 @@
     }
     else {
         [[NSColor redColor] setFill];
+    }
+    
+    if (_highlighted){
+        NSLog(@"page view needs to be highlighted.");
+    }
+    else {
+        NSLog(@"page view will not be highlighted.");
     }
     
     //[NSBezierPath fillRect:bounds];
@@ -151,7 +161,7 @@
     // code of context changed
 }
 
-#pragma mark dragging
+#pragma mark dragging source
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)flag{
     return NSDragOperationCopy | NSDragOperationDelete;
 }
@@ -160,6 +170,48 @@
     if (operation == NSDragOperationDelete){
         NSLog(@"should delete something.");
     }
+}
+
+#pragma mark dragging destination
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    return [NSArray arrayWithObject:EDUTIPage];
+}
+
+- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender{
+    NSLog(@"draggingEntered");
+    if([sender draggingSource] == self){
+        return NSDragOperationNone;
+    }
+       
+       _highlighted = TRUE;
+       [self setNeedsDisplay:TRUE];
+       return NSDragOperationCopy; 
+}
+
+- (void)draggingExited:(id<NSDraggingInfo>)sender{
+    NSLog(@"dragging exited.");
+    _highlighted = FALSE;
+    [self setNeedsDisplay:TRUE];
+}
+
+- (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender{
+    NSLog(@"preparing for drag operation.");
+    return YES;
+}
+
+- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender{
+    NSPasteboard *pb = [sender draggingPasteboard];
+    if(![self readFromPasteboard:pb]){
+        NSLog(@"Error: Could not read from dragging pasteboard");
+        return NO;
+    }
+    return YES;
+}
+
+- (void)concludeDragOperation:(id<NSDraggingInfo>)sender{
+    NSLog(@"conclude drag operation.");
+    _highlighted = FALSE;
+    [self setNeedsDisplay:TRUE];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent{
@@ -199,12 +251,54 @@
     // Get the pasteboard
     NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSDragPboard];
     
+    // write to pasteboard
+    [self writeToPasteboard:_pb];
+    
     // Start the drag
-    [self dragImage:anImage at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:pb source:self slideBack:YES];
+    //[self dragImage:anImage at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:pb source:self slideBack:YES];
+    [self dragImage:anImage at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:_pb source:self slideBack:YES];
 }
 
 - (void)drawStringCenteredIn:(NSRect)rect{
     [[NSColor purpleColor] setFill];
     [NSBezierPath fillRect:NSMakeRect(0, 0, EDPageImageViewWidth, EDPageImageViewHeight)];
+}
+
+#pragma mark pasteboard
+- (void)writeToPasteboard:(NSPasteboard *)pb{
+    [_pb clearContents];
+    [_pb writeObjects:[NSArray arrayWithObject:self]];
+    NSLog(@"just wrote to pasteboard.");
+}
+
+- (BOOL)readFromPasteboard:(NSPasteboard *)pb{
+    NSLog(@"reading from pasteboard.");
+    NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
+    NSArray *objects = [_pb readObjectsForClasses:classes options:nil];
+    
+    if ([objects count] > 0) {
+        // read data from the pasteboard
+        EDPageView *pageView = [objects objectAtIndex:0];
+        
+        if (pageView) {
+
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    NSArray *writableTypes = nil;
+    if (!writableTypes){
+        writableTypes = [[NSArray alloc] initWithObjects:EDUTIPage, nil];
+    }
+    NSLog(@"writable%@", writableTypes);
+    return writableTypes;
+}
+
+- (id)pasteboardPropertyListForType:(NSString *)type{
+    NSLog(@"type = %@", type);
+    return type;
 }
 @end

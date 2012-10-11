@@ -7,6 +7,7 @@
 //
 
 #import "EDWindow.h"
+#import "EDConstants.h"
 
 @implementation EDWindow
 @end
