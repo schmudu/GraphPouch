@@ -30,7 +30,6 @@
         [self registerForDraggedTypes:[NSArray arrayWithObjects:EDUTIPage,nil]];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
     }
-    
     return self;
 }
 
@@ -51,10 +50,10 @@
     }
     
     if (_highlighted){
-        NSLog(@"page view needs to be highlighted.");
+        //NSLog(@"page view needs to be highlighted.");
     }
     else {
-        NSLog(@"page view will not be highlighted.");
+        //NSLog(@"page view will not be highlighted.");
     }
     
     //[NSBezierPath fillRect:bounds];
@@ -73,6 +72,47 @@
 }
 
 #pragma mark mouse
+- (void)mouseDragged:(NSEvent *)theEvent{
+    NSPoint down = [_mouseDownEvent locationInWindow];
+    NSPoint drag = [theEvent locationInWindow];
+    float distance = hypotf(down.x - drag.x, down.y - drag.y);
+    
+    if (distance < 3){
+        return;
+    }
+    
+    // validation
+    
+    // more validations
+    NSSize s = NSMakeSize(200, 100);
+    
+    // create the image
+    NSImage *anImage = [[NSImage alloc] initWithSize:s];
+    
+    // create a rect in which you will draw the letter in the image
+    NSRect imageBounds;
+    imageBounds.origin = NSZeroPoint;
+    imageBounds.size = s;
+    
+    // draw the letter on the image
+    [anImage lockFocus];
+    [self drawStringCenteredIn:imageBounds];
+    [anImage unlockFocus];
+    
+    // Get the location of the mouseDown event
+    NSPoint p = [[[self window] contentView] convertPoint:down toView:self];
+    
+    // Drag from the center of the image
+    p.x = p.x - EDPageImageViewWidth/2;
+    p.y = p.y + EDPageImageViewHeight/2;
+    
+    // write to pasteboard
+    [self writeToPasteboard:_pb];
+    
+    // Start the drag
+    [self dragImage:anImage at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:_pb source:self slideBack:YES];
+}
+
 - (void)mouseDown:(NSEvent *)theEvent{
     // store for drag operation
     _mouseDownEvent = theEvent;
@@ -178,31 +218,27 @@
 }
 
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender{
-    NSLog(@"draggingEntered");
     if([sender draggingSource] == self){
         return NSDragOperationNone;
     }
        
-       _highlighted = TRUE;
-       [self setNeedsDisplay:TRUE];
-       return NSDragOperationCopy; 
+   _highlighted = TRUE;
+   [self setNeedsDisplay:TRUE];
+   return NSDragOperationCopy; 
 }
 
 - (void)draggingExited:(id<NSDraggingInfo>)sender{
-    NSLog(@"dragging exited.");
     _highlighted = FALSE;
     [self setNeedsDisplay:TRUE];
 }
 
 - (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender{
-    NSLog(@"preparing for drag operation.");
     return YES;
 }
 
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender{
-    NSPasteboard *pb = [sender draggingPasteboard];
-    if(![self readFromPasteboard:pb]){
-        NSLog(@"Error: Could not read from dragging pasteboard");
+    //NSPasteboard *pb = [sender draggingPasteboard];
+    if(![self readFromPasteboard:_pb]){
         return NO;
     }
     return YES;
@@ -214,78 +250,15 @@
     [self setNeedsDisplay:TRUE];
 }
 
-- (void)mouseDragged:(NSEvent *)theEvent{
-    NSPoint down = [_mouseDownEvent locationInWindow];
-    NSPoint drag = [theEvent locationInWindow];
-    float distance = hypotf(down.x - drag.x, down.y - drag.y);
-    
-    if (distance < 3){
-        return;
-    }
-    
-    // validation
-    
-    // more validations
-    NSSize s = NSMakeSize(200, 100);
-    
-    // create the image
-    NSImage *anImage = [[NSImage alloc] initWithSize:s];
-    
-    // create a rect in which you will draw the letter in the image
-    NSRect imageBounds;
-    imageBounds.origin = NSZeroPoint;
-    imageBounds.size = s;
-    
-    // draw the letter on the image
-    [anImage lockFocus];
-    [self drawStringCenteredIn:imageBounds];
-    [anImage unlockFocus];
-    
-    // Get the location of the mouseDown event
-    NSPoint p = [[[self window] contentView] convertPoint:down toView:self];
-    
-    // Drag from the center of the image
-    p.x = p.x - EDPageImageViewWidth/2;
-    p.y = p.y + EDPageImageViewHeight/2;
-    
-    // Get the pasteboard
-    NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSDragPboard];
-    
-    // write to pasteboard
-    [self writeToPasteboard:_pb];
-    
-    // Start the drag
-    //[self dragImage:anImage at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:pb source:self slideBack:YES];
-    [self dragImage:anImage at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:_pb source:self slideBack:YES];
-}
-
 - (void)drawStringCenteredIn:(NSRect)rect{
     [[NSColor purpleColor] setFill];
     [NSBezierPath fillRect:NSMakeRect(0, 0, EDPageImageViewWidth, EDPageImageViewHeight)];
 }
 
-#pragma mark pasteboard
+#pragma mark write pasteboard protocol
 - (void)writeToPasteboard:(NSPasteboard *)pb{
     [_pb clearContents];
     [_pb writeObjects:[NSArray arrayWithObject:self]];
-    NSLog(@"just wrote to pasteboard.");
-}
-
-- (BOOL)readFromPasteboard:(NSPasteboard *)pb{
-    NSLog(@"reading from pasteboard.");
-    NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
-    NSArray *objects = [_pb readObjectsForClasses:classes options:nil];
-    
-    if ([objects count] > 0) {
-        // read data from the pasteboard
-        EDPageView *pageView = [objects objectAtIndex:0];
-        
-        if (pageView) {
-
-            return YES;
-        }
-    }
-    return NO;
 }
 
 - (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{
@@ -293,12 +266,46 @@
     if (!writableTypes){
         writableTypes = [[NSArray alloc] initWithObjects:EDUTIPage, nil];
     }
-    NSLog(@"writable%@", writableTypes);
     return writableTypes;
 }
 
+#pragma mark read pasteboard protocol
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
+    // encode object
+    return NSPasteboardReadingAsKeyedArchive;
+}
+
+- (BOOL)readFromPasteboard:(NSPasteboard *)pb{
+    NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
+    NSArray *objects = [_pb readObjectsForClasses:classes options:nil];
+    if ([objects count] > 0) {
+        // read data from the pasteboard
+        EDPageView *pageView = [objects objectAtIndex:0];
+        
+        if (pageView) {
+            NSLog(@"reading from pasteboard.");
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (id)pasteboardPropertyListForType:(NSString *)type{
-    NSLog(@"type = %@", type);
-    return type;
+    //return self;
+    return [NSKeyedArchiver archivedDataWithRootObject:self];
+}
+
+#pragma mark encoding, decoding
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    if((self=[super init])){
+        _highlighted = [aDecoder decodeBoolForKey:EDPageViewAttributeHighlighted];
+        _dataObj = [aDecoder decodeObjectForKey:EDPageViewAttributeDataObject];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeBool:_highlighted forKey:EDPageViewAttributeHighlighted];
+    [aCoder encodeObject:_dataObj forKey:EDPageViewAttributeDataObject];
 }
 @end

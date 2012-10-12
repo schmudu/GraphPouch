@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface EDPage : NSManagedObject
+@interface EDPage : NSManagedObject <NSCoding>
 
 @property (nonatomic, retain) NSNumber * currentPage;
 @property (nonatomic, retain) NSNumber * pageNumber;

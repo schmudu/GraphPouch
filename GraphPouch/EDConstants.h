@@ -71,6 +71,8 @@ extern NSString *const EDEventWindowDidResize;
 // pages
 extern NSString *const EDEventPagesViewClicked;
 extern NSString *const EDEventPagesDeletePressed;
+extern NSString *const EDPageViewAttributeHighlighted;
+extern NSString *const EDPageViewAttributeDataObject;
 extern float const EDPageViewOffsetY;
 extern float const EDPageViewIncrementPosY;
 extern float const EDPageViewPosX;
