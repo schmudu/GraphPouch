@@ -12,6 +12,7 @@
 
 @interface EDPageViewController ()
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note;
+- (void)onPageViewStartDrag:(NSNotification *)note;
 - (void)onContextChanged:(NSNotification *)note;
 @end
 
@@ -33,6 +34,7 @@
 - (void) dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageClickedWithoutModifier object:[self view]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageViewStartDrag object:[self view]];
 }
 
 - (EDPage *)dataObj{
@@ -48,6 +50,14 @@
     
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewClickedWithoutModifier:) name:EDEventPageClickedWithoutModifier object:[self view]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewStartDrag:) name:EDEventPageViewStartDrag object:[self view]];
+}
+
+#pragma mark events
+- (void)onPageViewStartDrag:(NSNotification *)note{
+    NSMutableDictionary *eventInfo = [[NSMutableDictionary alloc] init];
+    [eventInfo setObject:_pageData forKey:EDKeyPageViewData];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewStartDrag object:self userInfo:eventInfo];
 }
 
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note{

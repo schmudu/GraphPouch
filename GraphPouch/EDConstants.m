@@ -72,6 +72,10 @@ NSString * const EDEventWindowDidResize                         = @"EDEventWindo
 // pages view
 NSString * const EDEventPagesViewClicked                        = @"EDEventPagesViewClicked";
 NSString * const EDEventPagesDeletePressed                      = @"EDEventPagesDeletePressed";
+NSString * const EDEventPageViewDragged                         = @"EDEventPageViewDragged";
+NSString * const EDEventPageViewStartDrag                       = @"EDEventPageViewStartDrag";
+NSString * const EDKeyPageViewDragPoint                         = @"EDKeyPageViewDragPoint";
+NSString * const EDKeyPageViewData                              = @"EDKeyPageViewData";
 NSString * const EDPageViewAttributeHighlighted                 = @"EDPageViewAttributeHighlighted";
 NSString * const EDPageViewAttributeDataObject                  = @"EDPageViewAttributeDataObject";
 float const EDPageViewOffsetY                                   = 15;

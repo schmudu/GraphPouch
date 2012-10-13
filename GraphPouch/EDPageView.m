@@ -27,8 +27,10 @@
     if (self) {
         _pb = [NSPasteboard generalPasteboard];
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
+        
         // re-implement this when we can start dragging graphs
         //[self registerForDraggedTypes:[NSArray arrayWithObjects:EDUTIGraph,nil]];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
     }
     return self;
@@ -75,6 +77,9 @@
 
 #pragma mark mouse
 - (void)mouseDragged:(NSEvent *)theEvent{
+    // Notify listeners
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewStartDrag object:self];
+    
     NSPoint down = [_mouseDownEvent locationInWindow];
     NSPoint drag = [theEvent locationInWindow];
     float distance = hypotf(down.x - drag.x, down.y - drag.y);
@@ -113,6 +118,7 @@
     
     // Start the drag
     [self dragImage:anImage at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:_pb source:self slideBack:YES];
+    
 }
 
 - (void)mouseDown:(NSEvent *)theEvent{
@@ -161,6 +167,7 @@
 
 #pragma mark dragging source
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)flag{
+    NSLog(@"dragged image.");
     return NSDragOperationCopy | NSDragOperationDelete;
 }
 
@@ -168,10 +175,18 @@
     if (operation == NSDragOperationDelete){
         NSLog(@"should delete something.");
     }
+    
+    // notify listners
+    /*
+    NSMutableDictionary *eventDict = [[NSMutableDictionary alloc] init];
+    [eventDict setObject:theEvent forKey:EDKeyPageViewDragPoint];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewDragged object:self userInfo:eventDict];
+     */
 }
 
 #pragma mark dragging destination
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender{
+    NSLog(@"1");
     if([sender draggingSource] == self){
         return NSDragOperationNone;
     }
@@ -182,15 +197,18 @@
 }
 
 - (void)draggingExited:(id<NSDraggingInfo>)sender{
+    NSLog(@"2");
     _highlighted = FALSE;
     [self setNeedsDisplay:TRUE];
 }
 
 - (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender{
+    NSLog(@"3");
     return YES;
 }
 
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender{
+    NSLog(@"4");
     //NSPasteboard *pb = [sender draggingPasteboard];
     if(![self readFromPasteboard:_pb]){
         return NO;

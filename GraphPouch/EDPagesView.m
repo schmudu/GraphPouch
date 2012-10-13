@@ -9,6 +9,7 @@
 #import "EDPagesView.h"
 #import "EDPageView.h"
 #import "EDConstants.h"
+#import "EDCoreDataUtility.h"
 
 @implementation EDPagesView
 
@@ -46,6 +47,12 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesViewClicked object:self];
 }
 
+#pragma mark events
+- (void)setPageViewStartDragInfo:(EDPage *)pageData{
+    NSLog(@"setting data:%@", pageData);
+    _startDragPageData = pageData;
+}
+
 #pragma mark dragging destination
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard{
     return [NSArray arrayWithObject:EDUTIPage];
@@ -59,6 +66,15 @@
    _highlighted = TRUE;
    [self setNeedsDisplay:TRUE];
    return NSDragOperationCopy; 
+}
+
+- (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender{
+    NSPoint pagesPoint = [[[self window] contentView] convertPoint:[sender draggingLocation] toView:self];
+    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+    int pageCount = [[coreData getAllPages] count];
+    
+    NSLog(@"highlight: page count:%d page dragged:%d current y:%f", pageCount, [[_startDragPageData pageNumber] intValue], pagesPoint.y);
+    return NSDragOperationCopy;
 }
 
 - (void)draggingExited:(id<NSDraggingInfo>)sender{

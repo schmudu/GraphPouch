@@ -7,11 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDPage.h"
 
 @interface EDPagesView : NSView {
     BOOL _highlighted;
     NSPasteboard *_pb;
+    EDPage *_startDragPageData;
 }
 
 - (void)postInitialize;
+- (void)setPageViewStartDragInfo:(EDPage *)pageData;
 @end

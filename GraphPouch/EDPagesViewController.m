@@ -21,6 +21,7 @@
 - (void)correctPagePositionsAfterUpdateWithoutAnimation;
 - (void)deselectAllPages;
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note;
+- (void)onPageViewStartDrag:(NSNotification *)note;
 - (void)onPagesViewClicked:(NSNotification *)note;
 - (void)onDeleteKeyPressed:(NSNotification *)note;
 - (void)onWindowResized:(NSNotification *)note;
@@ -143,6 +144,7 @@
     
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewClickedWithoutModifier:) name:EDEventPageClickedWithoutModifier object:pageController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewStartDrag:) name:EDEventPageViewStartDrag object:pageController];
 }
 
 - (void)removePage:(EDPage *)page{
@@ -156,6 +158,7 @@
         if ([(EDPageView *)[currentPageController view] dataObj] == page){
             // remove listener
             [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageClickedWithoutModifier object:currentPageController];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageViewStartDrag object:currentPageController];
             
             // remove page view
             [[currentPageController view] removeFromSuperview];
@@ -170,6 +173,10 @@
 }
 
 #pragma mark page events
+- (void)onPageViewStartDrag:(NSNotification *)note{
+    [(EDPagesView *)[self view] setPageViewStartDragInfo:[[note userInfo] objectForKey:EDKeyPageViewData]];
+}
+
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note{
     [self deselectAllPages];
 }
