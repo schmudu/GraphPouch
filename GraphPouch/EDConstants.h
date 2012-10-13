@@ -13,6 +13,7 @@ FOUNDATION_EXPORT int const GRAPH_INIT_HAS_GRID_LINES;
 @interface EDConstants : NSObject
 // UTI
 extern NSString *const EDUTIPage;
+extern NSString *const EDUTIGraph;
 
 // num
 extern float const EDNumberMax;

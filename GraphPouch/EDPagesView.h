@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface EDPagesView : NSView
+@interface EDPagesView : NSView {
+    BOOL _highlighted;
+    NSPasteboard *_pb;
+}
 
+- (void)postInitialize;
 @end

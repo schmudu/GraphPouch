@@ -27,13 +27,15 @@
     if (self) {
         _pb = [NSPasteboard generalPasteboard];
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
-        [self registerForDraggedTypes:[NSArray arrayWithObjects:EDUTIPage,nil]];
+        // re-implement this when we can start dragging graphs
+        //[self registerForDraggedTypes:[NSArray arrayWithObjects:EDUTIGraph,nil]];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
     }
     return self;
 }
 
 - (void)dealloc{
+    [self unregisterDraggedTypes];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
 }
 
@@ -125,10 +127,6 @@
         if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
             [_dataObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDPageAttributeSelected];
         }
-        /*
-        else{
-            [self notifyMouseDownListeners:theEvent];
-        }*/
     }
     else {
         // page is not selected
@@ -142,51 +140,11 @@
     
     //redraw page
     [self setNeedsDisplay:TRUE];
-    
-    
-    
-    /*
-     
-#warning CAREFUL: any code you change here needs to change in the "mouseDownBySelection" method
-    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    [coreData getAllObjects];
-    
-    NSUInteger flags = [theEvent modifierFlags];
- 
-    //save mouse location
-    _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
-    _didSnap = FALSE;
-    
-    if ([[self dataObj] isSelectedElement]){
-        // graph is already selected
-        if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
-            [[self dataObj] setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDElementAttributeSelected];
-        }
-        else{
-            [self notifyMouseDownListeners:theEvent];
-        }
-    } else {
-        // graph is not selected
-        if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
-            [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
-        }
-        else {
-            // post notification
-            [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
-            
-            //need to deselect all the other graphs
-            [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
-            
-            [self notifyMouseDownListeners:theEvent];
-        }
-    }
-    
-    // set variable for dragging
-    lastCursorLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
-    
-    // set variable for draggin
-     lastDragLocation = [[[self window] contentView]convertPoint:[theEvent locationInWindow] toView:[self superview]];
-     */
+}
+
+- (void)drawStringCenteredIn:(NSRect)rect{
+    [[NSColor purpleColor] setFill];
+    [NSBezierPath fillRect:NSMakeRect(0, 0, EDPageImageViewWidth, EDPageImageViewHeight)];
 }
 
 - (void)deselectPage{
@@ -213,10 +171,6 @@
 }
 
 #pragma mark dragging destination
-+ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard{
-    return [NSArray arrayWithObject:EDUTIPage];
-}
-
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender{
     if([sender draggingSource] == self){
         return NSDragOperationNone;
@@ -250,31 +204,7 @@
     [self setNeedsDisplay:TRUE];
 }
 
-- (void)drawStringCenteredIn:(NSRect)rect{
-    [[NSColor purpleColor] setFill];
-    [NSBezierPath fillRect:NSMakeRect(0, 0, EDPageImageViewWidth, EDPageImageViewHeight)];
-}
-
-#pragma mark write pasteboard protocol
-- (void)writeToPasteboard:(NSPasteboard *)pb{
-    [_pb clearContents];
-    [_pb writeObjects:[NSArray arrayWithObject:self]];
-}
-
-- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{
-    NSArray *writableTypes = nil;
-    if (!writableTypes){
-        writableTypes = [[NSArray alloc] initWithObjects:EDUTIPage, nil];
-    }
-    return writableTypes;
-}
-
-#pragma mark read pasteboard protocol
-+ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
-    // encode object
-    return NSPasteboardReadingAsKeyedArchive;
-}
-
+#pragma mark pastboard
 - (BOOL)readFromPasteboard:(NSPasteboard *)pb{
     NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
     NSArray *objects = [_pb readObjectsForClasses:classes options:nil];
@@ -290,12 +220,40 @@
     return NO;
 }
 
+- (void)writeToPasteboard:(NSPasteboard *)pb{
+    [_pb clearContents];
+    [_pb writeObjects:[NSArray arrayWithObject:self]];
+}
+
+#pragma mark pasteboard writing protocol
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    NSArray *writableTypes = nil;
+    if (!writableTypes){
+        writableTypes = [[NSArray alloc] initWithObjects:EDUTIPage, nil];
+    }
+    return writableTypes;
+}
+
 - (id)pasteboardPropertyListForType:(NSString *)type{
     //return self;
     return [NSKeyedArchiver archivedDataWithRootObject:self];
 }
 
-#pragma mark encoding, decoding
+- (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
+    return 0;
+}
+
+#pragma mark pasteboard reading protocol
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
+    // encode object
+    return NSPasteboardReadingAsKeyedArchive;
+}
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    return [NSArray arrayWithObject:EDUTIPage];
+}
+
+#pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
     if((self=[super init])){
         _highlighted = [aDecoder decodeBoolForKey:EDPageViewAttributeHighlighted];

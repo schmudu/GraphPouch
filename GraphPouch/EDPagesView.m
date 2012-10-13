@@ -7,6 +7,7 @@
 //
 
 #import "EDPagesView.h"
+#import "EDPageView.h"
 #import "EDConstants.h"
 
 @implementation EDPagesView
@@ -19,14 +20,13 @@
     return TRUE;
 }
 
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self registerForDraggedTypes:[NSArray arrayWithObject:NSPasteboardTypeString]];
-    }
-    
-    return self;
+- (void)postInitialize{
+    _pb = [NSPasteboard generalPasteboard];
+    [self registerForDraggedTypes:[NSArray arrayWithObjects:EDUTIPage,nil]];
+}
+
+- (void)dealloc{
+    [self unregisterDraggedTypes];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -44,6 +44,65 @@
 #pragma mark mouse
 - (void)mouseDown:(NSEvent *)theEvent{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesViewClicked object:self];
+}
+
+#pragma mark dragging destination
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    return [NSArray arrayWithObject:EDUTIPage];
+}
+
+- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender{
+    if([sender draggingSource] == self){
+        return NSDragOperationNone;
+    }
+       
+   _highlighted = TRUE;
+   [self setNeedsDisplay:TRUE];
+   return NSDragOperationCopy; 
+}
+
+- (void)draggingExited:(id<NSDraggingInfo>)sender{
+    _highlighted = FALSE;
+    [self setNeedsDisplay:TRUE];
+}
+
+- (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender{
+    return YES;
+}
+
+- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender{
+    //NSPasteboard *pb = [sender draggingPasteboard];
+    if(![self readFromPasteboard:_pb]){
+        return NO;
+    }
+    return YES;
+}
+
+- (void)concludeDragOperation:(id<NSDraggingInfo>)sender{
+    _highlighted = FALSE;
+    [self setNeedsDisplay:TRUE];
+}
+
+#pragma mark pasteboard 
+/*
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
+    // encode object
+    return NSPasteboardReadingAsKeyedArchive;
+}*/
+
+- (BOOL)readFromPasteboard:(NSPasteboard *)pb{
+    NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
+    NSArray *objects = [_pb readObjectsForClasses:classes options:nil];
+    if ([objects count] > 0) {
+        // read data from the pasteboard
+        EDPageView *pageView = [objects objectAtIndex:0];
+        
+        if (pageView) {
+            NSLog(@"reading from pasteboard: page view:%@", [pageView dataObj]);
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end

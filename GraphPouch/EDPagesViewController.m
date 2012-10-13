@@ -9,6 +9,7 @@
 #import "EDPagesViewController.h"
 #import "EDPage.h"
 #import "EDPageView.h"
+#import "EDPagesView.h"
 #import "EDConstants.h"
 #import "EDPageViewController.h"
 
@@ -62,6 +63,9 @@
             [self drawPage:page];
         }
     }
+    
+    // init view
+    [(EDPagesView *)[self view] postInitialize];
     
     // listen
     [_nc addObserver:self selector:@selector(onPagesViewClicked:) name:EDEventPagesViewClicked object:[self view]];

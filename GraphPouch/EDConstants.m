@@ -13,6 +13,7 @@ int const GRAPH_INIT_HAS_GRID_LINES     = FALSE;
 @implementation EDConstants
 // UTI
 NSString * const EDUTIPage                                      = @"com.edcodia.graphpouch.page";
+NSString * const EDUTIGraph                                     = @"com.edcodia.graphpouch.graph";
 
 // numbers
 float const EDNumberMax                                         = 9999999;
