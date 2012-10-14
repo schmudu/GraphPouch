@@ -11,6 +11,10 @@
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
 
+@interface EDPagesView()
+- (int)getHighlightedDragSection:(int)totalPages pageDragged:(int)pageDragged mousePosition:(float)yPos;
+@end
+
 @implementation EDPagesView
 
 - (BOOL)isFlipped{
@@ -35,6 +39,40 @@
     // Drawing code here.
 }
 
+- (int)getHighlightedDragSection:(int)totalPages pageDragged:(int)pageDragged mousePosition:(float)yPos{
+    // if number of pages is unacceptable
+    if (totalPages <= 1)
+        return -1;
+    
+    // returns which section needs to be highlighted
+    if (yPos < EDPageViewOffsetY/2) {
+        if (pageDragged == 1) {
+            // page already dragged is 1
+            // can't drag to same position
+            return -1;
+        }
+        return 1;
+    }
+    else {
+        int pageSection = ((yPos - EDPageViewOffsetY/2) / EDPageViewIncrementPosY) + 1;
+        if (pageSection == pageDragged) {
+            // can't drag to same position
+            return -1;
+        }
+        else {
+            if (pageDragged < pageSection) {
+                pageSection++;
+            }
+        }
+        
+        // can't drag to section greater than +1 of total pages
+        if (pageSection > totalPages) {
+            pageSection = totalPages + 1;
+        }
+        
+        return pageSection;
+    }
+}
 #pragma mark keyboard
 - (void)keyDown:(NSEvent *)theEvent{
     if ([theEvent keyCode] == EDKeycodeDelete) {
@@ -49,7 +87,6 @@
 
 #pragma mark events
 - (void)setPageViewStartDragInfo:(EDPage *)pageData{
-    NSLog(@"setting data:%@", pageData);
     _startDragPageData = pageData;
 }
 
@@ -63,7 +100,6 @@
         return NSDragOperationNone;
     }
        
-   _highlighted = TRUE;
    [self setNeedsDisplay:TRUE];
    return NSDragOperationCopy; 
 }
@@ -72,13 +108,21 @@
     NSPoint pagesPoint = [[[self window] contentView] convertPoint:[sender draggingLocation] toView:self];
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
     int pageCount = [[coreData getAllPages] count];
-    
-    NSLog(@"highlight: page count:%d page dragged:%d current y:%f", pageCount, [[_startDragPageData pageNumber] intValue], pagesPoint.y);
+ 
+    if (pageCount <= 1) {
+        // if there is only one page or less do not highlight
+        _highlighted = FALSE;
+    }
+    else{
+        _highlighted = TRUE;
+        _highlightedDragSection = [self getHighlightedDragSection:pageCount pageDragged:[[_startDragPageData pageNumber] intValue] mousePosition:pagesPoint.y];
+    }
+    NSLog(@"highlighted:%d highlighted section:%d", _highlighted, _highlightedDragSection);
+    //NSLog(@"highlight: page count:%d page dragged:%d current y:%f", pageCount, [[_startDragPageData pageNumber] intValue], pagesPoint.y);
     return NSDragOperationCopy;
 }
 
 - (void)draggingExited:(id<NSDraggingInfo>)sender{
-    _highlighted = FALSE;
     [self setNeedsDisplay:TRUE];
 }
 
@@ -95,7 +139,6 @@
 }
 
 - (void)concludeDragOperation:(id<NSDraggingInfo>)sender{
-    _highlighted = FALSE;
     [self setNeedsDisplay:TRUE];
 }
 

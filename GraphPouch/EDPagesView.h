@@ -13,6 +13,7 @@
     BOOL _highlighted;
     NSPasteboard *_pb;
     EDPage *_startDragPageData;
+    int _highlightedDragSection;
 }
 
 - (void)postInitialize;
