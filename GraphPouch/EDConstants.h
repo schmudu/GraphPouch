@@ -83,6 +83,10 @@ extern float const EDPageViewIncrementPosY;
 extern float const EDPageViewPosX;
 extern float const EDPageImageViewWidth;
 extern float const EDPageImageViewHeight;
+extern float const EDPageViewDragPosX;
+extern float const EDPageViewDragOffsetY;
+extern float const EDPageViewDragWidth;
+extern float const EDPageViewDragLength;
 
 // page
 extern NSString *const EDPageAttributePageNumber;

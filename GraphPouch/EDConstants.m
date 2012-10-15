@@ -78,11 +78,15 @@ NSString * const EDKeyPageViewDragPoint                         = @"EDKeyPageVie
 NSString * const EDKeyPageViewData                              = @"EDKeyPageViewData";
 NSString * const EDPageViewAttributeHighlighted                 = @"EDPageViewAttributeHighlighted";
 NSString * const EDPageViewAttributeDataObject                  = @"EDPageViewAttributeDataObject";
-float const EDPageViewOffsetY                                   = 15;
+float const EDPageViewOffsetY                                   = 30;
 float const EDPageViewIncrementPosY                             = 120;
 float const EDPageViewPosX                                      = 0;
 float const EDPageImageViewWidth                                = 60;
 float const EDPageImageViewHeight                               = 80;
+float const EDPageViewDragPosX                                  = 30;
+float const EDPageViewDragOffsetY                               = -5;
+float const EDPageViewDragWidth                                 = 80;
+float const EDPageViewDragLength                                = 10;
 
 // page view
 NSString * const EDPageAttributePageNumber                      = @"pageNumber";

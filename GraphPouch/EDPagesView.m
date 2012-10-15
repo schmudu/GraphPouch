@@ -36,7 +36,11 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
+    if ((_highlighted) && (_highlightedDragSection > 0)) {
+        NSLog(@"highlighted section:%d", _highlightedDragSection);
+        NSRect highlightRect = NSMakeRect(EDPageViewDragPosX, (_highlightedDragSection - 1) * EDPageViewIncrementPosY - EDPageViewDragOffsetY, EDPageViewDragWidth, EDPageViewDragLength);
+        [NSBezierPath fillRect:highlightRect];
+    }
 }
 
 - (int)getHighlightedDragSection:(int)totalPages pageDragged:(int)pageDragged mousePosition:(float)yPos{
@@ -117,7 +121,11 @@
         _highlighted = TRUE;
         _highlightedDragSection = [self getHighlightedDragSection:pageCount pageDragged:[[_startDragPageData pageNumber] intValue] mousePosition:pagesPoint.y];
     }
-    NSLog(@"highlighted:%d highlighted section:%d", _highlighted, _highlightedDragSection);
+    
+    // redraw
+    [self setNeedsDisplay:TRUE];
+    
+    //NSLog(@"highlighted:%d highlighted section:%d", _highlighted, _highlightedDragSection);
     //NSLog(@"highlight: page count:%d page dragged:%d current y:%f", pageCount, [[_startDragPageData pageNumber] intValue], pagesPoint.y);
     return NSDragOperationCopy;
 }
