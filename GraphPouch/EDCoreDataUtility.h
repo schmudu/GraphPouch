@@ -28,6 +28,7 @@
 - (NSArray *)getAllPages;
 - (EDPage *)getLastSelectedPage;
 - (NSMutableArray *)getAllSelectedPages;
+- (NSArray *)getAllPagesWithPageNumberGreaterThan:(int)pageNumber;
 - (void)deleteSelectedPages;
 - (void)correctPageNumbersAfterDelete;
 - (void)clearSelectedElements;

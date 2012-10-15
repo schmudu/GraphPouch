@@ -37,7 +37,6 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     if ((_highlighted) && (_highlightedDragSection > 0)) {
-        NSLog(@"highlighted section:%d", _highlightedDragSection);
         NSRect highlightRect = NSMakeRect(EDPageViewDragPosX, (_highlightedDragSection - 1) * EDPageViewIncrementPosY - EDPageViewDragOffsetY, EDPageViewDragWidth, EDPageViewDragLength);
         [NSBezierPath fillRect:highlightRect];
     }

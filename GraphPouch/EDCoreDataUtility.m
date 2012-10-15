@@ -125,6 +125,37 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }
 }
 
+- (NSArray *)getAllPagesWithPageNumberGreaterThan:(int)pageNumber{
+   // Define our table/entity to use   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    
+    // Setup the fetch request   
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];   
+    [request setEntity:entity];   
+    
+    // order pages
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDPageAttributePageNumber ascending:TRUE];
+    NSArray *sortArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortArray];
+    
+    // Fetch the records and handle an error   
+    NSError *error;   
+    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    //NSLog(@"fetch: %@", mutableFetchResults);
+    
+    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"pageNumber > %ld", pageNumber];
+    NSArray *filteredResults = [fetchResults filteredArrayUsingPredicate:searchFilter];;
+    
+    /*
+    // handle error
+    if (!mutableFetchResults) {   
+        // Handle the error.   
+        // This is a serious error and should advise the user to restart the application   
+    }   
+     */
+    NSLog(@"number of pages greater than:%d count:%lu", pageNumber, [filteredResults count]);
+    return filteredResults;
+}
 #pragma mark worksheet
 - (NSArray *)getAllGraphs{
    // Define our table/entity to use   

@@ -87,7 +87,14 @@
     else {
         EDPage *lastPage = [_coreData getLastSelectedPage];
         if (lastPage) {
-            [newPage setPageNumber:[[NSNumber alloc] initWithInt:[[lastPage pageNumber] intValue]]];
+            NSArray *pagesNeedUpdating = [_coreData getAllPagesWithPageNumberGreaterThan:[[lastPage pageNumber] intValue]];
+            
+            //update page numbers 
+            for (EDPage *page in pagesNeedUpdating){
+                [page setPageNumber:[[NSNumber alloc] initWithInt:([[page pageNumber] intValue] + 1)]];
+            }
+            
+            [newPage setPageNumber:[[NSNumber alloc] initWithInt:([[lastPage pageNumber] intValue]+1)]];
         }
         else {
             // nothing is selected so add page to the end of the list
