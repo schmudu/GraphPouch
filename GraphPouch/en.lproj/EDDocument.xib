@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11G56</string>
+		<string key="IBDocument.SystemVersion">11G63</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
 		<string key="IBDocument.AppKitVersion">1138.51</string>
 		<string key="IBDocument.HIToolboxVersion">569.00</string>
@@ -144,6 +144,7 @@
 									<string key="NSFrame">{{576, 1}, {15, 614}}</string>
 									<reference key="NSSuperview" ref="257841340"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:26</string>
 									<reference key="NSTarget" ref="257841340"/>
 									<string key="NSAction">_doScroller:</string>
@@ -209,6 +210,7 @@
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="257841340"/>
 									<string key="NSReuseIdentifierKey">_NS:15</string>
+									<bool key="NSEnabled">YES</bool>
 									<reference key="NSTarget" ref="204223611"/>
 									<string key="NSAction">_doScroller:</string>
 									<double key="NSCurValue">1</double>
@@ -217,7 +219,7 @@
 								<object class="NSScroller" id="220590525">
 									<reference key="NSNextResponder" ref="204223611"/>
 									<int key="NSvFlags">-2147483392</int>
-									<string key="NSFrame">{{-100, -100}, {126, 15}}</string>
+									<string key="NSFrame">{{-100, -100}, {132, 15}}</string>
 									<reference key="NSSuperview" ref="204223611"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="302567203"/>
@@ -237,6 +239,7 @@
 							<reference key="NSVScroller" ref="495829339"/>
 							<reference key="NSHScroller" ref="220590525"/>
 							<reference key="NSContentView" ref="302567203"/>
+							<bytes key="NSScrollAmts">QSAAAEEgAAAAAAAAQsgAAA</bytes>
 						</object>
 					</array>
 					<string key="NSFrameSize">{723, 711}</string>
@@ -399,19 +402,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">view</string>
-						<reference key="source" ref="1011574510"/>
-						<reference key="destination" ref="310730408"/>
-					</object>
-					<int key="connectionID">100317</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">_documentController</string>
 						<reference key="source" ref="1011574510"/>
 						<reference key="destination" ref="512844837"/>
 					</object>
 					<int key="connectionID">100320</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">view</string>
+						<reference key="source" ref="1011574510"/>
+						<reference key="destination" ref="310730408"/>
+					</object>
+					<int key="connectionID">100330</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -515,31 +518,6 @@
 						<string key="objectName">Graphs</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">100303</int>
-						<reference key="object" ref="204223611"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="310730408"/>
-							<reference ref="220590525"/>
-							<reference ref="495829339"/>
-						</array>
-						<reference key="parent" ref="568628114"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100304</int>
-						<reference key="object" ref="310730408"/>
-						<reference key="parent" ref="204223611"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100305</int>
-						<reference key="object" ref="220590525"/>
-						<reference key="parent" ref="204223611"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100306</int>
-						<reference key="object" ref="495829339"/>
-						<reference key="parent" ref="204223611"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">100307</int>
 						<reference key="object" ref="831842768"/>
 						<reference key="parent" ref="0"/>
@@ -567,6 +545,31 @@
 						<int key="objectID">100319</int>
 						<reference key="object" ref="254499860"/>
 						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100303</int>
+						<reference key="object" ref="204223611"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="310730408"/>
+							<reference ref="220590525"/>
+							<reference ref="495829339"/>
+						</array>
+						<reference key="parent" ref="568628114"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100306</int>
+						<reference key="object" ref="495829339"/>
+						<reference key="parent" ref="204223611"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100305</int>
+						<reference key="object" ref="220590525"/>
+						<reference key="parent" ref="204223611"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100304</int>
+						<reference key="object" ref="310730408"/>
+						<reference key="parent" ref="204223611"/>
 					</object>
 				</array>
 			</object>
@@ -603,7 +606,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">100320</int>
+			<int key="maxID">100330</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
