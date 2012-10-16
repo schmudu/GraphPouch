@@ -78,6 +78,22 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return fetchResults;
 }
 
+- (EDPage *)getPage:(int)pageNumber{
+    // this method returns a dictionary of the types of selected objects
+    NSArray *fetchedObjects;
+    
+    // get all selected pages ordered by page number
+    fetchedObjects = [EDPage findAllObjects];
+    if ([fetchedObjects count] > 0) {
+        return [fetchedObjects lastObject];
+    }
+    
+    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"pageNumber == %ld", pageNumber];
+    NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];;
+    
+    return [filteredResults objectAtIndex:0];
+}
+
 - (EDPage *)getLastSelectedPage{
     
     // this method returns a dictionary of the types of selected objects
@@ -107,6 +123,10 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 #warning for some reason, this delete object takes a while
         [_context deleteObject:page];
     }
+    
+    // save
+    NSError *error;
+    [_context save:&error];
 }
 
 - (void)correctPageNumbersAfterDelete{
@@ -123,6 +143,21 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
         
         currentPageNumber++;
     }
+}
+
+- (void)updatePageNumbersStartingAt:(int)startPageNumber forCount:(int)count{
+    NSArray *pages = [self getAllPagesWithPageNumberGreaterThan:startPageNumber];
+    
+    // iterate through pages
+    for (EDPage *currentPage in pages){
+        // reset page number to proper number
+        [currentPage setValue:[[NSNumber alloc] initWithInt:([[currentPage pageNumber] intValue] + count)] forKey:EDPageAttributePageNumber];
+    }
+}
+
+- (void)removePage:(EDPage *)page{
+    NSLog(@"removing page:%@", page);
+    [_context deleteObject:page];
 }
 
 - (NSArray *)getAllPagesWithPageNumberGreaterThan:(int)pageNumber{
@@ -153,7 +188,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
         // This is a serious error and should advise the user to restart the application   
     }   
      */
-    NSLog(@"number of pages greater than:%d count:%lu", pageNumber, [filteredResults count]);
+    //NSLog(@"number of pages greater than:%d count:%lu", pageNumber, [filteredResults count]);
     return filteredResults;
 }
 #pragma mark worksheet

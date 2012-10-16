@@ -167,7 +167,6 @@
 
 #pragma mark dragging source
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)flag{
-    NSLog(@"dragged image.");
     return NSDragOperationCopy | NSDragOperationDelete;
 }
 
@@ -186,7 +185,6 @@
 
 #pragma mark dragging destination
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender{
-    NSLog(@"1");
     if([sender draggingSource] == self){
         return NSDragOperationNone;
     }
@@ -197,18 +195,15 @@
 }
 
 - (void)draggingExited:(id<NSDraggingInfo>)sender{
-    NSLog(@"2");
     _highlighted = FALSE;
     [self setNeedsDisplay:TRUE];
 }
 
 - (BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender{
-    NSLog(@"3");
     return YES;
 }
 
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender{
-    NSLog(@"4");
     //NSPasteboard *pb = [sender draggingPasteboard];
     if(![self readFromPasteboard:_pb]){
         return NO;

@@ -142,6 +142,11 @@
     if(![self readFromPasteboard:_pb]){
         return NO;
     }
+    
+    // finished
+    _highlighted = FALSE;
+    [self setNeedsDisplay:TRUE];
+    
     return YES;
 }
 
@@ -160,13 +165,22 @@
     NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
     NSArray *objects = [_pb readObjectsForClasses:classes options:nil];
     if ([objects count] > 0) {
-        // read data from the pasteboard
-        EDPageView *pageView = [objects objectAtIndex:0];
+        NSMutableDictionary *userDict = [[NSMutableDictionary alloc] init];
+        [userDict setObject:objects forKey:EDKeyPagesViewDraggedViews];
+        [userDict setValue:[[NSNumber alloc] initWithInt:_highlightedDragSection] forKey:EDKeyPagesViewHighlightedDragSection];
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewsFinishedDrag object:self userInfo:userDict];
+ 
+        // read data from the pasteboard
+        //EDPageView *pageView = [objects objectAtIndex:0];
+        
+        /*
         if (pageView) {
             NSLog(@"reading from pasteboard: page view:%@", [pageView dataObj]);
             return YES;
         }
+        */
+        return YES;
     }
     return NO;
 }

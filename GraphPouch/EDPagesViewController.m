@@ -15,6 +15,8 @@
 
 @interface EDPagesViewController ()
 - (void)onContextChanged:(NSNotification *)note;
+- (void)insertPageViews:(NSMutableArray *)pageViews toPage:(int)pageNumber;
+- (void)removePageViews:(NSMutableArray *)pageViews;
 - (void)drawPage:(EDPage *)page;
 - (void)removePage:(EDPage *)page;
 - (void)correctPagePositionsAfterUpdate;
@@ -25,6 +27,7 @@
 - (void)onPagesViewClicked:(NSNotification *)note;
 - (void)onDeleteKeyPressed:(NSNotification *)note;
 - (void)onWindowResized:(NSNotification *)note;
+- (void)onPagesViewFinishedDragged:(NSNotification *)note;
 - (void)updateViewFrameSize;
 @end
 
@@ -49,6 +52,7 @@
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
     [_nc removeObserver:self name:EDEventPagesDeletePressed object:[self view]];
     [_nc removeObserver:self name:EDEventPagesViewClicked object:[self view]];
+    [_nc removeObserver:self name:EDEventPageViewsFinishedDrag object:[self view]];
     [_nc removeObserver:self name:EDEventWindowDidResize object:_documentController];
 }
 
@@ -72,22 +76,48 @@
     // init view
     [(EDPagesView *)[self view] postInitialize];
     
-    // set scrollview
-    NSLog(@"scroll view: height:%f", [(NSScrollView *)[[[self view] superview] superview] contentSize].height);
-    
     // listen
     [_nc addObserver:self selector:@selector(onPagesViewClicked:) name:EDEventPagesViewClicked object:[self view]];
     [_nc addObserver:self selector:@selector(onDeleteKeyPressed:) name:EDEventPagesDeletePressed object:[self view]];
+    [_nc addObserver:self selector:@selector(onPagesViewFinishedDragged:) name:EDEventPageViewsFinishedDrag object:[self view]];
     [_nc addObserver:self selector:@selector(onWindowResized:) name:EDEventWindowDidResize object:_documentController];
 }
 
+#pragma mark page CRUD
+- (void)insertPageViews:(NSMutableArray *)pageViews toPage:(int)pageNumber{
+    NSLog(@"inserting pages.");
+    EDPage *newPage;
+    int currentPageNumber = pageNumber;
+    // update old page numbers
+    [_coreData updatePageNumbersStartingAt:(pageNumber-1) forCount:[pageViews count]];
+    
+    // insert new pages
+    for (EDPageView *pageView in pageViews){
+        // create new page
+        newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+        // set page number
+        [newPage setPageNumber:[[NSNumber alloc] initWithInt:currentPageNumber]];
+#warning need to figure out this after we set up core data relationships 
+        currentPageNumber++;
+    }
+}
+    
+- (void)removePageViews:(NSMutableArray *)pageViews{
+    EDPage *pageObj;
+    for (EDPageView *pageView in pageViews){
+        pageObj = [_coreData getPage:[[[pageView dataObj] pageNumber] intValue]];
+        
+        // delete object
+        [_coreData removePage:pageObj];
+     }
+}
 
 - (void)addNewPage{
-    NSLog(@"scroll view: height:%f", [(NSView *)[(NSScrollView *)[[[self view] superview] superview] documentView] frame].size.height);
     // create new page
     NSArray *pages = [_coreData getAllPages];
     EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
     
+    NSLog(@"creating page:%@", newPage);
     // if no other pages then set this page to be the first one
     if ([pages count] == 0) {
         [newPage setPageNumber:[[NSNumber alloc] initWithInt:1]];
@@ -102,9 +132,6 @@
                 [page setPageNumber:[[NSNumber alloc] initWithInt:([[page pageNumber] intValue] + 1)]];
             }
             
-            //NSLog(@"scroll view:%@", [[(NSClipView *)[[self view] superview] documentView]);
-                                       
-            
             [newPage setPageNumber:[[NSNumber alloc] initWithInt:([[lastPage pageNumber] intValue]+1)]];
         }
         else {
@@ -112,9 +139,6 @@
             [newPage setPageNumber:[[NSNumber alloc] initWithInt:([pages count] + 1)]];
         }
     }
-    
-    // update frame
-    [self updateViewFrameSize];
 }
 
 - (void)onContextChanged:(NSNotification *)note{
@@ -142,13 +166,13 @@
         
         // for some reason we need to save, context does not update right away
         [_coreData save];
-    
-        // update frame
-        //[self updateViewFrameSize];
     }
     
     // update positions of pages
     [self correctPagePositionsAfterUpdate];
+    
+    // update frame size
+    [self updateViewFrameSize];
 }
 
 - (void)drawPage:(EDPage *)page{
@@ -161,7 +185,7 @@
     [[self view] addSubview:[pageController view]];
     
     //position it
-    [[pageController view] setFrameOrigin:NSMakePoint(EDPageViewPosX, ([[page pageNumber] intValue]-1)*EDPageViewIncrementPosY + EDPageViewOffsetY)];
+    [[[pageController view] animator] setFrameOrigin:NSMakePoint(EDPageViewPosX, ([[page pageNumber] intValue]-1)*EDPageViewIncrementPosY + EDPageViewOffsetY)];
     
     // init view after loaded
     [pageController postInit];
@@ -235,13 +259,37 @@
     }
 }
 
+- (void)onPagesViewFinishedDragged:(NSNotification *)note{
+    NSMutableArray *pageViews = [[note userInfo] objectForKey:EDKeyPagesViewDraggedViews];
+    int draggedSection = [[[note userInfo] valueForKey:EDKeyPagesViewHighlightedDragSection] intValue];
+    // do not insert if dragged section not valid
+    if (draggedSection != -1) {
+        NSLog(@"===before page count:%ld", [[_coreData getAllPages] count]);
+        // remove old page views
+        [self removePageViews:pageViews];
+        
+        // insert pages into new location
+        [self insertPageViews:pageViews toPage:draggedSection];
+        
+        // save changes
+        /*
+        NSLog(@"saving data.");
+        [_coreData save];
+         */
+        NSLog(@"===after page count:%ld", [[_coreData getAllPages] count]);
+    }
+    else {
+        // nothing to insert, user dragged to undraggable location
+    }
+}
+
 #pragma mark view frame
 - (void)updateViewFrameSize{
     NSArray *pages = [_coreData getAllPages];
     
     // update frame height
     NSRect originalFrame = [[self view] frame];
-    [[self view] setFrameSize:NSMakeSize(originalFrame.size.width, [pages count] * EDPageViewIncrementPosY)];
+    [[[self view] animator] setFrameSize:NSMakeSize(originalFrame.size.width, [pages count] * EDPageViewIncrementPosY)];
 }
 
 #pragma mark window

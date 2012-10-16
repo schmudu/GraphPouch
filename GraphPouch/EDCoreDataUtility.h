@@ -31,6 +31,9 @@
 - (NSArray *)getAllPagesWithPageNumberGreaterThan:(int)pageNumber;
 - (void)deleteSelectedPages;
 - (void)correctPageNumbersAfterDelete;
+- (void)updatePageNumbersStartingAt:(int)startPageNumber forCount:(int)count;
+- (void)removePage:(EDPage *)page;
+- (EDPage *)getPage:(int)pageNumber;
 - (void)clearSelectedElements;
 - (void)deleteSelectedElements;
 @end
