@@ -186,7 +186,10 @@
     // add to view
     [[self view] addSubview:[pageController view]];
     
-    //position it
+    //position one page below
+    [[pageController view] setFrameOrigin:NSMakePoint(EDPageViewPosX, ([[page pageNumber] intValue]-2)*EDPageViewIncrementPosY + EDPageViewOffsetY)];
+    
+    //animate insert
     [[[pageController view] animator] setFrameOrigin:NSMakePoint(EDPageViewPosX, ([[page pageNumber] intValue]-1)*EDPageViewIncrementPosY + EDPageViewOffsetY)];
     
     // init view after loaded

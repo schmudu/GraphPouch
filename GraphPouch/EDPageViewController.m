@@ -9,11 +9,14 @@
 #import "EDPageViewController.h"
 #import "EDPageView.h"
 #import "EDConstants.h"
+#import "EDPage.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @interface EDPageViewController ()
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note;
 - (void)onPageViewStartDrag:(NSNotification *)note;
 - (void)onContextChanged:(NSNotification *)note;
+- (void)onDeleteKeyPressed:(NSNotification *)note;
 @end
 
 @implementation EDPageViewController
@@ -26,6 +29,7 @@
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDeleteKeyPressed:) name:EDEventPagesDeletePressed object:[self view]];
     }
     
     return self;
@@ -35,6 +39,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageClickedWithoutModifier object:[self view]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageViewStartDrag object:[self view]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPagesDeletePressed object:[self view]];
 }
 
 - (EDPage *)dataObj{
@@ -54,6 +59,17 @@
 }
 
 #pragma mark events
+- (void)onDeleteKeyPressed:(NSNotification *)note{
+    NSArray *pages = [_coreData getAllPages];
+    NSArray *selectedPages = [EDPage findAllSelectedObjects];
+    
+    // do not delete if there will be no pages left
+    if (([pages count] - [selectedPages count]) < 1) 
+        return;
+    
+    [_coreData deleteSelectedPages];
+}
+
 - (void)onPageViewStartDrag:(NSNotification *)note{
     NSMutableDictionary *eventInfo = [[NSMutableDictionary alloc] init];
     [eventInfo setObject:_pageData forKey:EDKeyPageViewData];

@@ -17,6 +17,10 @@
 
 @implementation EDPageView
 
+- (BOOL)acceptsFirstResponder{
+    return TRUE;
+}
+
 - (BOOL)isFlipped{
     return TRUE;
 }
@@ -159,6 +163,13 @@
     
     // redisplay
     [self setNeedsDisplay:TRUE];
+}
+
+#pragma mark keyboard
+- (void)keyDown:(NSEvent *)theEvent{
+    if ([theEvent keyCode] == EDKeycodeDelete) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
+    }
 }
 
 - (void)onContextChanged:(NSNotification *)note{
