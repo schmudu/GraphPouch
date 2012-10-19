@@ -12,6 +12,7 @@
 #import "EDPagesView.h"
 #import "EDConstants.h"
 #import "EDPageViewController.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @interface EDPagesViewController ()
 - (void)onContextChanged:(NSNotification *)note;
@@ -89,6 +90,7 @@
     EDPage *newPage;
     int currentPageNumber = pageNumber;
     // update old page numbers
+    NSLog(@"updating page numbers starting at:%d", pageNumber -1);
     [_coreData updatePageNumbersStartingAt:(pageNumber-1) forCount:[pageViews count]];
     
     // insert new pages
@@ -165,7 +167,7 @@
         [_coreData correctPageNumbersAfterDelete];
         
         // for some reason we need to save, context does not update right away
-        [_coreData save];
+        //[_coreData save];
     }
     
     // update positions of pages
@@ -242,6 +244,13 @@
 
 #pragma mark pages events
 - (void)onDeleteKeyPressed:(NSNotification *)note{
+    NSArray *pages = [_coreData getAllPages];
+    NSArray *selectedPages = [EDPage findAllSelectedObjects];
+    
+    // do not delete if there will be no pages left
+    if (([pages count] - [selectedPages count]) < 1) 
+        return;
+    
     [_coreData deleteSelectedPages];
 }
 
@@ -264,7 +273,7 @@
     int draggedSection = [[[note userInfo] valueForKey:EDKeyPagesViewHighlightedDragSection] intValue];
     // do not insert if dragged section not valid
     if (draggedSection != -1) {
-        NSLog(@"===before page count:%ld", [[_coreData getAllPages] count]);
+        //NSLog(@"===before pages:%@", [_coreData getAllPages]);
         // remove old page views
         [self removePageViews:pageViews];
         
@@ -276,7 +285,6 @@
         NSLog(@"saving data.");
         [_coreData save];
          */
-        NSLog(@"===after page count:%ld", [[_coreData getAllPages] count]);
     }
     else {
         // nothing to insert, user dragged to undraggable location
@@ -289,7 +297,18 @@
     
     // update frame height
     NSRect originalFrame = [[self view] frame];
-    [[[self view] animator] setFrameSize:NSMakeSize(originalFrame.size.width, [pages count] * EDPageViewIncrementPosY)];
+    
+    // set frame height to at a minimum the height of the scroll view
+    float targetHeight;
+    float scrollViewHeight = [[[[self view] superview] superview] frame].size.height;    
+    float viewHeight = [pages count] * EDPageViewIncrementPosY;
+    
+    if (viewHeight < scrollViewHeight)
+        targetHeight = scrollViewHeight; 
+    else
+        targetHeight = viewHeight;
+    
+    [[[self view] animator] setFrameSize:NSMakeSize(originalFrame.size.width, targetHeight)];
 }
 
 #pragma mark window

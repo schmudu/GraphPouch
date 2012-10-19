@@ -36,7 +36,8 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 
 - (void)save{
     NSError *error;
-    [_context save:&error];
+    BOOL errorFromSave = [_context save:&error];
+    NSLog(@"error from save:%@", error);
 }
 
 - (NSMutableArray *)getAllObjects{
@@ -151,7 +152,9 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     // iterate through pages
     for (EDPage *currentPage in pages){
         // reset page number to proper number
+        //NSLog(@"==before: updated page:%@", currentPage);
         [currentPage setValue:[[NSNumber alloc] initWithInt:([[currentPage pageNumber] intValue] + count)] forKey:EDPageAttributePageNumber];
+        //NSLog(@"==after: updated page:%@", currentPage);
     }
 }
 
@@ -176,7 +179,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     // Fetch the records and handle an error   
     NSError *error;   
     NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
-    //NSLog(@"fetch: %@", mutableFetchResults);
+    NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
     NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"pageNumber > %ld", pageNumber];
     NSArray *filteredResults = [fetchResults filteredArrayUsingPredicate:searchFilter];;
