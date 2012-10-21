@@ -68,6 +68,7 @@ float const EDGraphDefaultWidth                                 = 30.0;
 
 // window
 NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";
+NSString * const EDEventWindowWillClose                         = @"EDEventWindowWillClose";
 
 // pages view
 NSString * const EDEventPagesViewClicked                        = @"EDEventPagesViewClicked";

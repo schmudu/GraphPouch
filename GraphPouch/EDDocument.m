@@ -16,6 +16,10 @@
 #import "NSObject+Document.h"
 #import "EDConstants.h"
 
+@interface EDDocument()
+- (void)onMainWindowClosed:(NSNotification *)note;
+@end
+
 @implementation EDDocument
 
 -(id)getInstance{
@@ -34,6 +38,10 @@
     return self;
 }
 
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:EDEventWindowWillClose];
+}
+
 - (NSString *)windowNibName
 {
     // Override returning the nib file name of the document
@@ -50,6 +58,9 @@
     
     // post init property panel
     [propertyController postInitialize];
+    
+    // listen
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMainWindowClosed:) name:EDEventWindowWillClose object:[self windowForSheet]];
 }
 
 - (void)awakeFromNib{
@@ -81,6 +92,11 @@
 }
 
 #pragma mark window
+- (void)onMainWindowClosed:(NSNotification *)note{
+    // close auxilary panels
+    [propertyController closePanel];
+}
+
 - (void)windowDidResize:(NSNotification *)notification{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWindowDidResize object:self];
 }

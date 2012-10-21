@@ -60,6 +60,8 @@
 
 #pragma mark events
 - (void)onDeleteKeyPressed:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
+    /*
     NSArray *pages = [_coreData getAllPages];
     NSArray *selectedPages = [EDPage findAllSelectedObjects];
     
@@ -68,6 +70,7 @@
         return;
     
     [_coreData deleteSelectedPages];
+     */
 }
 
 - (void)onPageViewStartDrag:(NSNotification *)note{

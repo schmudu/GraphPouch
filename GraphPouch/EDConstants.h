@@ -68,6 +68,7 @@ extern float const EDGraphDefaultWidth;
 
 // window
 extern NSString *const EDEventWindowDidResize;
+extern NSString *const EDEventWindowWillClose;
 
 // pages
 extern NSString *const EDEventPagesViewClicked;

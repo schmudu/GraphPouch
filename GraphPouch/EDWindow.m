@@ -10,4 +10,10 @@
 #import "EDConstants.h"
 
 @implementation EDWindow
+
+- (void)close{
+    [super close];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWindowWillClose object:self];
+}
 @end

@@ -25,5 +25,6 @@
 - (void)setCorrectView;
 - (void)postInitialize;
 - (BOOL)panelIsOpen;
+- (void)closePanel;
     
 @end

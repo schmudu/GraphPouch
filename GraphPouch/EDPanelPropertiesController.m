@@ -18,7 +18,6 @@
 @end
 
 @implementation EDPanelPropertiesController
-
 - (id)init{
     self = [super initWithWindowNibName:@"EDPanelProperties"];
     return self;
@@ -38,8 +37,19 @@
     return self;
 }
 
+/*
+- (void)close{
+    NSLog(@"closing panel.");
+    [super close];
+}*/
+
 - (void)dealloc{
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+}
+
+- (void)closePanel{
+    NSLog(@"is open:%d", [self panelIsOpen]);
+    [[self window] close];
 }
 
 - (void)windowDidLoad{
@@ -95,7 +105,9 @@
         viewController = graphController;
     }
     else {
+        NSLog(@"trying document controller.");
         if(!documentController){
+        NSLog(@"setting document controller.");
             documentController = [[EDPanelPropertiesDocumentController alloc] initWithNibName:@"EDPanelPropertiesDocument" bundle:nil];
         }
         viewController = documentController;
