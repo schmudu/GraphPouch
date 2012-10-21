@@ -72,6 +72,7 @@
 
 - (void)togglePropertiesPanel:(id)sender{
     NSMenuItem *menuItem = (NSMenuItem *)sender;
+    NSLog(@"toggling property panel:%@ is open?:%d", [self window], [self isWindowLoaded]);
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         // close window
         [[self window] close];
@@ -100,6 +101,7 @@
 #warning add other elements here, need to check for other entities
     if([selectedTypes valueForKey:EDEntityNameGraph]){
         if(!graphController){
+            NSLog(@"setting graph controller.");
             graphController = [[EDPanelPropertiesGraphController alloc] initWithNibName:@"EDPanelPropertiesGraph" bundle:nil];
         }
         viewController = graphController;
@@ -142,6 +144,7 @@
     [[self window] setFrame:windowFrame display:TRUE animate:TRUE];
     
     // set content of the window
+    NSLog(@"setting content view to:%@ controller:%@", [viewController view], viewController);
     [[self window] setContentView:[viewController view]];
     
     // window init after loaded
