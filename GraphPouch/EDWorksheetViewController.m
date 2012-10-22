@@ -9,7 +9,7 @@
 #import "EDWorksheetViewController.h"
 #import "EDWorksheetView.h"
 #import "EDConstants.h"
-//#import "EDCoreDataUtility.h"
+#import "EDGraph.h"
 
 @interface EDWorksheetViewController ()
 - (void)deselectAllElements:(NSNotification *)note;
@@ -61,34 +61,25 @@
 
 #pragma mark graphs
 - (void)addNewGraph{
-    /*
-    // create new page
-    NSArray *pages = [_coreData getAllPages];
-    EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+    // create new graph
+    EDPage *currentPage = [_coreData getCurrentPage];
     
-    // if no other pages then set this page to be the first one
-    if ([pages count] == 0) {
-        [newPage setPageNumber:[[NSNumber alloc] initWithInt:1]];
-    }
-    else {
-        EDPage *lastPage = [_coreData getLastSelectedPage];
-        if (lastPage) {
-            NSArray *pagesNeedUpdating = [_coreData getAllPagesWithPageNumberGreaterThan:[[lastPage pageNumber] intValue]];
-            
-            //update page numbers 
-            for (EDPage *page in pagesNeedUpdating){
-                [page setPageNumber:[[NSNumber alloc] initWithInt:([[page pageNumber] intValue] + 1)]];
-            }
-            
-            [newPage setPageNumber:[[NSNumber alloc] initWithInt:([[lastPage pageNumber] intValue]+1)]];
-        }
-        else {
-            // nothing is selected so add page to the end of the list
-            [newPage setPageNumber:[[NSNumber alloc] initWithInt:([pages count] + 1)]];
-        }
-    }
-     */
-    NSLog(@"creating new graph.");
+    //NSLog(@"current page:%@", currentPage);
+    EDGraph *newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+    
+    // add graph to page
+    [currentPage addGraphsObject:newGraph];
+    
+    // set graph attributes
+    [newGraph setPage:currentPage];
+    [newGraph setEquation:[[NSString alloc] initWithFormat:@"some equation"]];
+    [newGraph setHasGridLines:TRUE];
+    [newGraph setHasTickMarks:TRUE];
+    [newGraph setSelected:FALSE];
+    [newGraph setLocationX:50];
+    [newGraph setLocationY:150];
+    [newGraph setElementWidth:70];
+    [newGraph setElementHeight:70];
 }
 
 

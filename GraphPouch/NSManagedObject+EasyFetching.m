@@ -43,6 +43,10 @@
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];
+    
+    // grab relationships
+    [request setRelationshipKeyPathsForPrefetching:[NSArray arrayWithObject:@"graphs"]];
+    
     NSError *error = nil;
     NSArray *objects = [context executeFetchRequest:request error:&error];
     

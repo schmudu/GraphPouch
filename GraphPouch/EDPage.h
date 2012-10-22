@@ -14,14 +14,11 @@
 @interface EDPage : NSManagedObject <NSCoding>
 
 @property BOOL currentPage, selected;
-//@property (nonatomic, retain) NSNumber * currentPage;
 @property (nonatomic, retain) NSNumber * pageNumber;
-//@property (nonatomic, retain) NSNumber * selected;
 @property (nonatomic, retain) NSSet *graphs;
 @end
 
 @interface EDPage (CoreDataGeneratedAccessors)
-
 - (void)addGraphsObject:(EDGraph *)value;
 - (void)removeGraphsObject:(EDGraph *)value;
 - (void)addGraphs:(NSSet *)values;

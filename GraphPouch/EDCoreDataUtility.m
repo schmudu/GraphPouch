@@ -192,6 +192,10 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return filteredResults;
 }
 
+- (EDPage *)getCurrentPage{
+    return (EDPage *)[EDPage findCurrentPage];
+}
+
 - (void)setPageAsCurrent:(EDPage *)page{
     NSArray *pages = [EDPage findAllObjects];
  
@@ -204,8 +208,8 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }
     
     for (EDPage *currentPage in pages){
-        //NSLog(@"key: %@ current:%@", page, currentPage);
         if (page == currentPage) {
+            NSLog(@"setting page as current:%@ graphs:%@", currentPage, [currentPage graphs]);
             [currentPage setCurrentPage:[[[NSNumber alloc] initWithBool:TRUE] boolValue]];
             return;
         }

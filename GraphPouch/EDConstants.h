@@ -98,6 +98,7 @@ extern NSString *const EDPageAttributePageNumber;
 extern NSString *const EDPageAttributeSelected;
 extern NSString *const EDPageAttributeCurrent;
 extern NSString *const EDPageAttributeGraphs;
+extern NSString *const EDGraphAttributePage;
 extern NSString *const EDEventPageClickedWithoutModifier;
 
 // keyboard mapping

@@ -98,6 +98,7 @@ NSString * const EDPageAttributePageNumber                      = @"pageNumber";
 NSString * const EDPageAttributeSelected                        = @"selected";
 NSString * const EDPageAttributeCurrent                         = @"currentPage";
 NSString * const EDPageAttributeGraphs                          = @"graphs";
+NSString * const EDGraphAttributePage                           = @"page";
 NSString * const EDEventPageClickedWithoutModifier              = @"EDEventPageClickedWithoutModifier";
 
 // keyboard

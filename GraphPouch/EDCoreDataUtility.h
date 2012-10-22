@@ -40,6 +40,7 @@
 - (void)removePage:(EDPage *)page;
 - (void)updatePageNumbersStartingAt:(int)startPageNumber forCount:(int)count;
 - (EDPage *)getPage:(int)pageNumber;
+- (EDPage *)getCurrentPage;
 - (void)setPageAsCurrent:(EDPage *)page;
 
 // graphs

@@ -118,7 +118,7 @@
 											<string key="NSFrameSize">{575, 605}</string>
 											<reference key="NSSuperview" ref="668718214"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="739011583"/>
+											<reference key="NSNextKeyView" ref="981661087"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<string key="NSClassName">EDWorksheetView</string>
 										</object>
@@ -146,6 +146,7 @@
 									<string key="NSFrame">{{576, 1}, {15, 605}}</string>
 									<reference key="NSSuperview" ref="257841340"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="739011583"/>
 									<string key="NSReuseIdentifierKey">_NS:26</string>
 									<reference key="NSTarget" ref="257841340"/>
 									<string key="NSAction">_doScroller:</string>
@@ -158,7 +159,7 @@
 									<string key="NSFrame">{{1, 606}, {575, 15}}</string>
 									<reference key="NSSuperview" ref="257841340"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="981661087"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:30</string>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="257841340"/>
@@ -190,7 +191,7 @@
 											<string key="NSFrameSize">{138, 596}</string>
 											<reference key="NSSuperview" ref="302567203"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="220590525"/>
+											<reference key="NSNextKeyView" ref="495829339"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 										</object>
 									</array>
@@ -237,7 +238,7 @@
 							<string key="NSFrame">{{-1, 0}, {140, 598}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="302567203"/>
+							<reference key="NSNextKeyView" ref="220590525"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133650</int>
 							<reference key="NSVScroller" ref="495829339"/>
@@ -374,6 +375,14 @@
 					<int key="connectionID">100318</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addGraph:</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="807704737"/>
+					</object>
+					<int key="connectionID">100339</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="275939982"/>
@@ -412,14 +421,6 @@
 						</object>
 					</object>
 					<int key="connectionID">100296</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">add:</string>
-						<reference key="source" ref="439036319"/>
-						<reference key="destination" ref="807704737"/>
-					</object>
-					<int key="connectionID">100338</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -659,7 +660,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">100338</int>
+			<int key="maxID">100339</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

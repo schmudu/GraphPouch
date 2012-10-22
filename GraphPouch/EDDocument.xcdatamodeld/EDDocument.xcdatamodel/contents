@@ -11,16 +11,17 @@
         <attribute name="equation" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hasGridLines" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="hasTickMarks" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="graphs" inverseEntity="EDPage" syncable="YES"/>
     </entity>
     <entity name="EDPage" representedClassName="EDPage" syncable="YES">
         <attribute name="currentPage" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="pageNumber" optional="YES" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="selected" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <relationship name="graphs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EDGraph" syncable="YES"/>
+        <relationship name="graphs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EDGraph" inverseName="page" inverseEntity="EDGraph" syncable="YES"/>
     </entity>
     <elements>
         <element name="EDElement" positionX="160" positionY="192" width="128" height="120"/>
-        <element name="EDGraph" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="EDGraph" positionX="160" positionY="192" width="128" height="105"/>
         <element name="EDPage" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>

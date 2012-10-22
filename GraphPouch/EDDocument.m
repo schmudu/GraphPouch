@@ -45,8 +45,11 @@
 }
 
 - (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    /*
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:EDEventWindowWillClose];
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:EDEventShortcutNewPage];
+     */
 }
 
 - (NSString *)windowNibName
