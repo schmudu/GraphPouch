@@ -123,8 +123,8 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }
     
     // save
-    NSError *error;
-    [_context save:&error];
+    //NSError *error;
+    //[_context save:&error];
 }
 
 - (void)correctPageNumbersAfterDelete{

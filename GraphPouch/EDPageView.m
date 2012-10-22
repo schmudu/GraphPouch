@@ -50,7 +50,7 @@
     //NSRect bounds = NSMakeRect(([self superview].frame.size.width - EDPageImageViewWidth)/2, 0, EDPageImageViewWidth, EDPageImageViewHeight);
     NSRect bounds = NSMakeRect(40, 0, EDPageImageViewWidth, EDPageImageViewHeight);
     
-    if ([[_dataObj selected] boolValue]) {
+    if ([_dataObj selected]) {
         [[NSColor blueColor] setFill];
     }
     else {
@@ -132,7 +132,7 @@
     // listen for modifier keys
     NSUInteger flags = [theEvent modifierFlags];
     
-    if ([[_dataObj selected] boolValue]){
+    if ([_dataObj selected]){
         // page is already selected
         if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
             [_dataObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDPageAttributeSelected];

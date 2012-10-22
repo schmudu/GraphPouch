@@ -8,13 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDPage.m"
-         timestampString = "372548576.362449"
+         timestampString = "372615788.336452"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "29"
-         endingLineNumber = "29"
-         landmarkName = "-initWithCoder:"
-         landmarkType = "5">
+         startingLineNumber = "49"
+         endingLineNumber = "49">
       </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>

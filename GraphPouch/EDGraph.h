@@ -11,7 +11,7 @@
 #import "EDElement.h"
 #import "NSManagedObject+EasyFetching.h"
 
-@interface EDGraph : EDElement
+@interface EDGraph : EDElement <NSCoding>
 
 @property NSString *equation;
 @property BOOL hasTickMarks, hasGridLines;
