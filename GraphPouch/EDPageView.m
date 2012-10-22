@@ -13,6 +13,7 @@
 @interface EDPageView()
 - (void)onContextChanged:(NSNotification *)note;
 - (void)writeToPasteboard:(NSPasteboard *)pb;
+- (void)setPageAsCurrent;
 @end
 
 @implementation EDPageView
@@ -137,12 +138,16 @@
         if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
             [_dataObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDPageAttributeSelected];
         }
+        else {
+            [self setPageAsCurrent];
+        }
     }
     else {
         // page is not selected
         if(!(flags & NSCommandKeyMask) && !(flags & NSShiftKeyMask)){
             // dispatch event that a new page has been selected
             [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageClickedWithoutModifier object:self];
+            [self setPageAsCurrent];
         }
         
         [_dataObj setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDPageAttributeSelected];
@@ -174,6 +179,11 @@
 
 - (void)onContextChanged:(NSNotification *)note{
     // code of context changed
+}
+
+#pragma mark current
+- (void)setPageAsCurrent{
+    [_coreData setPageAsCurrent:_dataObj];
 }
 
 #pragma mark dragging source

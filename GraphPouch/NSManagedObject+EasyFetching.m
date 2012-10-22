@@ -35,6 +35,34 @@
 }
 
 
++ (NSManagedObject *)findCurrentPage{
+    NSManagedObjectContext *context = [self getContext];
+    NSEntityDescription *entity;
+    
+    entity = [self entityDescriptionInContext:context];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
+    NSError *error = nil;
+    NSArray *objects = [context executeFetchRequest:request error:&error];
+    
+    // verify that objects actually exist
+    if ([objects count] == 0) {
+        // if no objects then return empty
+        return nil;
+    }
+    
+    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"currentPage = %ld", TRUE];
+    NSArray *filteredResults = [objects filteredArrayUsingPredicate:searchFilter];;
+    
+    //NSArray *results = [[context executeFetchRequest:request error:&error] filteredArrayUsingPredicate:searchFilter];
+    if (error != nil)
+    {
+        //handle errors
+    }
+    return [filteredResults lastObject];
+}
+
 + (NSArray *)findAllSelectedObjects{
     NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity;

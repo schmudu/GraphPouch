@@ -21,19 +21,27 @@
 - (void)setContext:(NSManagedObjectContext *)moc;
 - (void)save;
 - (NSManagedObjectContext *)context;
+// objects
 - (NSMutableArray *)getAllObjects;
+
+// selection
 - (NSMutableArray *)getAllSelectedObjects;
 - (NSMutableDictionary *)getAllTypesOfSelectedObjects;
-- (NSArray *)getAllGraphs;
-- (NSArray *)getAllPages;
 - (EDPage *)getLastSelectedPage;
+- (void)clearSelectedElements;
+- (void)deleteSelectedElements;
+
+// pages
+- (NSArray *)getAllPages;
 - (NSMutableArray *)getAllSelectedPages;
 - (NSArray *)getAllPagesWithPageNumberGreaterThan:(int)pageNumber;
 - (void)deleteSelectedPages;
 - (void)correctPageNumbersAfterDelete;
-- (void)updatePageNumbersStartingAt:(int)startPageNumber forCount:(int)count;
 - (void)removePage:(EDPage *)page;
+- (void)updatePageNumbersStartingAt:(int)startPageNumber forCount:(int)count;
 - (EDPage *)getPage:(int)pageNumber;
-- (void)clearSelectedElements;
-- (void)deleteSelectedElements;
+- (void)setPageAsCurrent:(EDPage *)page;
+
+// graphs
+- (NSArray *)getAllGraphs;
 @end

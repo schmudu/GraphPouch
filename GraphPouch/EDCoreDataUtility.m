@@ -191,6 +191,27 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     //NSLog(@"number of pages greater than:%d count:%lu", pageNumber, [filteredResults count]);
     return filteredResults;
 }
+
+- (void)setPageAsCurrent:(EDPage *)page{
+    NSArray *pages = [EDPage findAllObjects];
+ 
+    // get current page
+    EDPage *oldCurrentPage = (EDPage *)[EDPage findCurrentPage];
+    
+    // reset old current page
+    if (oldCurrentPage) {
+        [oldCurrentPage setCurrentPage:[[[NSNumber alloc] initWithBool:FALSE] boolValue]];
+    }
+    
+    for (EDPage *currentPage in pages){
+        //NSLog(@"key: %@ current:%@", page, currentPage);
+        if (page == currentPage) {
+            [currentPage setCurrentPage:[[[NSNumber alloc] initWithBool:TRUE] boolValue]];
+            return;
+        }
+    }
+}
+
 #pragma mark worksheet
 - (NSArray *)getAllGraphs{
    // Define our table/entity to use   

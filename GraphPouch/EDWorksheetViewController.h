@@ -15,5 +15,6 @@
     EDCoreDataUtility *_coreData;
 }
 - (void)postInitialize;
+- (void)addNewGraph;
 
 @end

@@ -59,6 +59,39 @@
     [_coreData deleteSelectedElements];
 }
 
+#pragma mark graphs
+- (void)addNewGraph{
+    /*
+    // create new page
+    NSArray *pages = [_coreData getAllPages];
+    EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+    
+    // if no other pages then set this page to be the first one
+    if ([pages count] == 0) {
+        [newPage setPageNumber:[[NSNumber alloc] initWithInt:1]];
+    }
+    else {
+        EDPage *lastPage = [_coreData getLastSelectedPage];
+        if (lastPage) {
+            NSArray *pagesNeedUpdating = [_coreData getAllPagesWithPageNumberGreaterThan:[[lastPage pageNumber] intValue]];
+            
+            //update page numbers 
+            for (EDPage *page in pagesNeedUpdating){
+                [page setPageNumber:[[NSNumber alloc] initWithInt:([[page pageNumber] intValue] + 1)]];
+            }
+            
+            [newPage setPageNumber:[[NSNumber alloc] initWithInt:([[lastPage pageNumber] intValue]+1)]];
+        }
+        else {
+            // nothing is selected so add page to the end of the list
+            [newPage setPageNumber:[[NSNumber alloc] initWithInt:([pages count] + 1)]];
+        }
+    }
+     */
+    NSLog(@"creating new graph.");
+}
+
+
 #pragma mark align
 - (void)alignElementsToTop:(NSNotification *)note{
     NSLog(@"need to align elements to the top.");

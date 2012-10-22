@@ -374,6 +374,14 @@
 					<int key="connectionID">100318</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addGraph:</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="807704737"/>
+					</object>
+					<int key="connectionID">100337</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="275939982"/>
@@ -412,14 +420,6 @@
 						</object>
 					</object>
 					<int key="connectionID">100296</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">add:</string>
-						<reference key="source" ref="439036319"/>
-						<reference key="destination" ref="807704737"/>
-					</object>
-					<int key="connectionID">100297</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -659,7 +659,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">100336</int>
+			<int key="maxID">100337</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -674,17 +674,20 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">EDDocument</string>
 					<string key="superclassName">NSPersistentDocument</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">addPage:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">addPage:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="addGraph:">id</string>
+						<string key="addPage:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="addGraph:">
+							<string key="name">addGraph:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="addPage:">
 							<string key="name">addPage:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="elementsController">NSArrayController</string>
 						<string key="pagesController">EDPagesViewController</string>

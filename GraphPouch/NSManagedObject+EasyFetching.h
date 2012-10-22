@@ -14,6 +14,7 @@
 + (NSArray *)findAllObjects;
 + (NSArray *)findAllObjectsOrderedByPageNumber;
 + (NSArray *)findAllSelectedObjects;
++ (NSManagedObject *)findCurrentPage;
 + (NSArray *)findAllSelectedObjectsOrderedByPageNumber;
 + (NSManagedObjectContext *)getContext;
 

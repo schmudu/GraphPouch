@@ -99,6 +99,10 @@
 }
 
 #pragma mark graph
+- (IBAction)addGraph:(id)sender{
+    [worksheetController addNewGraph];
+}
+
 
 #pragma mark window
 - (void)onMainWindowClosed:(NSNotification *)note{

@@ -27,4 +27,5 @@
 - (void)togglePropertiesPanel:(id)sender;
 - (BOOL)propertiesPanelIsOpen;
 - (IBAction)addPage:(id)sender;
+- (IBAction)addGraph:(id)sender;
 @end
