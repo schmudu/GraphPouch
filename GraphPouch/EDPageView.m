@@ -246,6 +246,7 @@
 
 - (void)writeToPasteboard:(NSPasteboard *)pb{
     [_pb clearContents];
+    NSLog(@"writing data to pasteboard:%@", [self dataObj]);
     [_pb writeObjects:[NSArray arrayWithObject:self]];
 }
 

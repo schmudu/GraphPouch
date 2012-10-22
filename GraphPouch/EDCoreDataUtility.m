@@ -80,14 +80,11 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 }
 
 - (EDPage *)getPage:(int)pageNumber{
-    // this method returns a dictionary of the types of selected objects
+    // this method returns the page object that matches the page number
     NSArray *fetchedObjects;
     
     // get all selected pages ordered by page number
-    fetchedObjects = [EDPage findAllObjects];
-    if ([fetchedObjects count] > 0) {
-        return [fetchedObjects lastObject];
-    }
+    fetchedObjects = [EDPage findAllObjectsOrderedByPageNumber];
     
     NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"pageNumber == %ld", pageNumber];
     NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];;
@@ -179,7 +176,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     // Fetch the records and handle an error   
     NSError *error;   
     NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
-    NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
+    //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
     NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"pageNumber > %ld", pageNumber];
     NSArray *filteredResults = [fetchResults filteredArrayUsingPredicate:searchFilter];;

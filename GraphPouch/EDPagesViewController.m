@@ -97,6 +97,7 @@
         newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
         // set page number
         [newPage setPageNumber:[[NSNumber alloc] initWithInt:currentPageNumber]];
+        
 #warning need to figure out this after we set up core data relationships 
         currentPageNumber++;
     }
@@ -105,6 +106,7 @@
 - (void)removePageViews:(NSMutableArray *)pageViews{
     EDPage *pageObj;
     for (EDPageView *pageView in pageViews){
+        NSLog(@"going to get ride of page number:%d", [[[pageView dataObj] pageNumber] intValue]);
         pageObj = [_coreData getPage:[[[pageView dataObj] pageNumber] intValue]];
         
         // delete object
@@ -117,7 +119,6 @@
     NSArray *pages = [_coreData getAllPages];
     EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
     
-    NSLog(@"creating page:%@", newPage);
     // if no other pages then set this page to be the first one
     if ([pages count] == 0) {
         [newPage setPageNumber:[[NSNumber alloc] initWithInt:1]];
@@ -139,6 +140,7 @@
             [newPage setPageNumber:[[NSNumber alloc] initWithInt:([pages count] + 1)]];
         }
     }
+    NSLog(@"created page:%@", newPage);
 }
 
 - (void)onContextChanged:(NSNotification *)note{
@@ -288,6 +290,10 @@
         NSLog(@"saving data.");
         [_coreData save];
          */
+        NSArray *pages = [EDPage findAllObjectsOrderedByPageNumber];
+        for (EDPage *page in pages){
+            NSLog(@"page:%@", page);
+        }
     }
     else {
         // nothing to insert, user dragged to undraggable location
