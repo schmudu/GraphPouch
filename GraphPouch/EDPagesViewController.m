@@ -86,11 +86,9 @@
 
 #pragma mark page CRUD
 - (void)insertPageViews:(NSMutableArray *)pageViews toPage:(int)pageNumber{
-    NSLog(@"inserting pages.");
     EDPage *newPage;
     int currentPageNumber = pageNumber;
     // update old page numbers
-    NSLog(@"updating page numbers starting at:%d", pageNumber -1);
     [_coreData updatePageNumbersStartingAt:(pageNumber-1) forCount:[pageViews count]];
     
     // insert new pages

@@ -242,7 +242,6 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
         [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDEntityNameGraph]; 
     }
     
-    NSLog(@"fetched all selected graph objects: count:%ld", [results count]);
     return results;
 }
 

@@ -48,7 +48,6 @@
 }
 
 - (void)closePanel{
-    NSLog(@"is open:%d", [self panelIsOpen]);
     [[self window] close];
 }
 
@@ -101,15 +100,12 @@
 #warning add other elements here, need to check for other entities
     if([selectedTypes valueForKey:EDEntityNameGraph]){
         if(!graphController){
-            NSLog(@"setting graph controller.");
             graphController = [[EDPanelPropertiesGraphController alloc] initWithNibName:@"EDPanelPropertiesGraph" bundle:nil];
         }
         viewController = graphController;
     }
     else {
-        NSLog(@"trying document controller.");
         if(!documentController){
-        NSLog(@"setting document controller.");
             documentController = [[EDPanelPropertiesDocumentController alloc] initWithNibName:@"EDPanelPropertiesDocument" bundle:nil];
         }
         viewController = documentController;
@@ -144,7 +140,6 @@
     [[self window] setFrame:windowFrame display:TRUE animate:TRUE];
     
     // set content of the window
-    NSLog(@"setting content view to:%@ controller:%@", [viewController view], viewController);
     [[self window] setContentView:[viewController view]];
     
     // window init after loaded
