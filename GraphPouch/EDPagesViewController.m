@@ -106,7 +106,6 @@
 - (void)removePageViews:(NSMutableArray *)pageViews{
     EDPage *pageObj;
     for (EDPageView *pageView in pageViews){
-        NSLog(@"going to get ride of page number:%d", [[[pageView dataObj] pageNumber] intValue]);
         pageObj = [_coreData getPage:[[[pageView dataObj] pageNumber] intValue]];
         
         // delete object

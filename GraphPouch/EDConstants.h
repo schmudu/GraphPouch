@@ -39,6 +39,7 @@ extern NSString *const EDEventKey;
 
 // menu
 extern NSString *const EDEventMenuAlignTop;
+extern NSString *const EDEventShortcutNewPage;
 
 // guides
 extern NSString *const EDKeyGuideVertical;

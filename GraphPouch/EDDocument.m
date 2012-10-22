@@ -18,6 +18,7 @@
 
 @interface EDDocument()
 - (void)onMainWindowClosed:(NSNotification *)note;
+- (void)onShortcutNewPage:(NSNotification *)note;
 @end
 
 @implementation EDDocument
@@ -28,18 +29,24 @@
 
 - (id)init
 {
+    NSLog(@"init document");
     self = [super init];
     if (self) {
         //Init code
         EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
         [coreData setContext: [self managedObjectContext]];
         propertyController = [[EDPanelPropertiesController alloc] init];
+        menuController = [[EDMenuController alloc] init];
+        
+        // listen
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onShortcutNewPage:) name:EDEventShortcutNewPage object:menuController];
     }
     return self;
 }
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:EDEventWindowWillClose];
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:EDEventShortcutNewPage];
 }
 
 - (NSString *)windowNibName
@@ -86,10 +93,12 @@
     return [propertyController panelIsOpen];
 }
 
-#pragma mark graph
+#pragma mark page
 - (IBAction)addPage:(id)sender{
     [pagesController addNewPage];
 }
+
+#pragma mark graph
 
 #pragma mark window
 - (void)onMainWindowClosed:(NSNotification *)note{

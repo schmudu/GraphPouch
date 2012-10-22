@@ -225,7 +225,7 @@
     //for (EDGraphView *graphView in [self subviews]){
     while (!found && i<[[self subviews] count]){
         currentElement = (EDWorksheetElementView *)[[self subviews] objectAtIndex:i];
-        if ([currentElement dataObj] == element){
+        if (([currentElement isKindOfClass:[EDWorksheetElementView class]]) && ([currentElement dataObj] == element)){
             found = TRUE;
             [currentElement removeFromSuperview];
         

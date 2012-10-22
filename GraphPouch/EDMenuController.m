@@ -23,4 +23,14 @@
 - (IBAction)togglePropertiesPanel:(id)sender{
     [[[NSDocumentController sharedDocumentController] currentDocument] togglePropertiesPanel:sender];
 }
+
+- (IBAction)addGraph:(id)sender{
+    //[[[NSDocumentController sharedDocumentController] currentDocument] addPage:nil];
+    //NSLog(@"going to add graph");
+}
+
+- (IBAction)addPage:(id)sender{
+    [[[NSDocumentController sharedDocumentController] currentDocument] addPage:nil];
+    //[[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutNewPage object:self];
+}
 @end

@@ -39,6 +39,7 @@ NSString * const EDEventKey                                     = @"EDEvent";
 
 // menu
 NSString * const EDEventMenuAlignTop                             = @"EDEventMenuAlignTop";
+NSString * const EDEventShortcutNewPage                          = @"EDEventShortcutNewPage";
 
 // guides
 NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
