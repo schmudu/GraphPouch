@@ -143,15 +143,14 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }
 }
 
-- (void)updatePageNumbersStartingAt:(int)startPageNumber forCount:(int)count{
-    NSArray *pages = [self getAllPagesWithPageNumberGreaterThan:startPageNumber];
+- (void)updatePageNumbersStartingAt:(int)startPageNumber byDifference:(int)difference endNumber:(int)endPageNumber{
+    NSArray *pages = [self getPagesWithPageNumberGreaterThan:startPageNumber lessThan:endPageNumber];
     
     // iterate through pages
     for (EDPage *currentPage in pages){
         // reset page number to proper number
-        //NSLog(@"==before: updated page:%@", currentPage);
-        [currentPage setValue:[[NSNumber alloc] initWithInt:([[currentPage pageNumber] intValue] + count)] forKey:EDPageAttributePageNumber];
-        //NSLog(@"==after: updated page:%@", currentPage);
+        NSLog(@"update page number:%d by difference:%d", [[currentPage pageNumber] intValue], difference);
+        [currentPage setValue:[[NSNumber alloc] initWithInt:([[currentPage pageNumber] intValue] + difference)] forKey:EDPageAttributePageNumber];
     }
 }
 
@@ -160,7 +159,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     [_context deleteObject:page];
 }
 
-- (NSArray *)getAllPagesWithPageNumberGreaterThan:(int)pageNumber{
+- (NSArray *)getPagesWithPageNumberGreaterThan:(int)beginPageNumber{
    // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
     
@@ -178,8 +177,8 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
     //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
-    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"pageNumber > %ld", pageNumber];
-    NSArray *filteredResults = [fetchResults filteredArrayUsingPredicate:searchFilter];;
+    NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber > %ld", beginPageNumber];
+    NSArray *startFilteredResults = [fetchResults filteredArrayUsingPredicate:beginSearchFilter];;
     
     /*
     // handle error
@@ -189,7 +188,42 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }   
      */
     //NSLog(@"number of pages greater than:%d count:%lu", pageNumber, [filteredResults count]);
-    return filteredResults;
+    return startFilteredResults;
+}
+
+- (NSArray *)getPagesWithPageNumberGreaterThan:(int)beginPageNumber lessThan:(int)endPageNumber{
+   // Define our table/entity to use   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    
+    // Setup the fetch request   
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];   
+    [request setEntity:entity];   
+    
+    // order pages
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDPageAttributePageNumber ascending:TRUE];
+    NSArray *sortArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortArray];
+    
+    // Fetch the records and handle an error   
+    NSError *error;   
+    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
+    
+    NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", beginPageNumber];
+    NSArray *startFilteredResults = [fetchResults filteredArrayUsingPredicate:beginSearchFilter];;
+    
+    NSPredicate *endSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber < %ld", endPageNumber];
+    NSArray *endFilteredResults = [startFilteredResults filteredArrayUsingPredicate:endSearchFilter];;
+    
+    /*
+    // handle error
+    if (!mutableFetchResults) {   
+        // Handle the error.   
+        // This is a serious error and should advise the user to restart the application   
+    }   
+     */
+    NSLog(@"number of pages greater than:%d less than:%d count:%lu results:%@", beginPageNumber, endPageNumber, [endFilteredResults count], endFilteredResults);
+    return endFilteredResults;
 }
 
 - (EDPage *)getCurrentPage{
@@ -209,7 +243,6 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     
     for (EDPage *currentPage in pages){
         if (page == currentPage) {
-            NSLog(@"setting page as current:%@ graphs:%@", currentPage, [currentPage graphs]);
             [currentPage setCurrentPage:[[[NSNumber alloc] initWithBool:TRUE] boolValue]];
             return;
         }

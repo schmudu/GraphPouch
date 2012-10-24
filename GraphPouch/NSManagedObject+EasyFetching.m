@@ -148,4 +148,19 @@
     }
     return [[EDCoreDataUtility sharedCoreDataUtility] context];
 }
+#pragma mark print
++ (void)printAll{
+    // print out all pages
+    NSManagedObjectContext *context = [self getContext];
+    NSEntityDescription *entity = [self entityDescriptionInContext:context];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:request error:&error];
+    
+    // print out all pages
+    for (NSManagedObject *obj in results){
+        NSLog(@"object:%@", obj);
+    }
+}
 @end

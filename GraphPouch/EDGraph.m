@@ -29,7 +29,7 @@
     // create entity but don't insert it anywhere
     self = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
     if(self){
-        [self setEquation:[[aDecoder decodeObjectForKey:EDGraphAttributeEquation] string]];
+        [self setEquation:[aDecoder decodeObjectForKey:EDGraphAttributeEquation]];
         [self setHasGridLines:[aDecoder decodeBoolForKey:EDGraphAttributeGrideLines]];
         [self setHasTickMarks:[aDecoder decodeBoolForKey:EDGraphAttributeTickMarks]];
         [self setSelected:[aDecoder decodeBoolForKey:EDElementAttributeSelected]];

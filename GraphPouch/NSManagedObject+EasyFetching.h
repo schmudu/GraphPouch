@@ -17,5 +17,6 @@
 + (NSManagedObject *)findCurrentPage;
 + (NSArray *)findAllSelectedObjectsOrderedByPageNumber;
 + (NSManagedObjectContext *)getContext;
++ (void)printAll;
 
 @end

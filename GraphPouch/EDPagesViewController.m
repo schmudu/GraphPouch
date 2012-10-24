@@ -88,16 +88,15 @@
 - (void)insertPageViews:(NSMutableArray *)pageViews toPage:(int)pageNumber{
     EDPage *newPage;
     int currentPageNumber = pageNumber;
-    // update old page numbers
-    [_coreData updatePageNumbersStartingAt:(pageNumber-1) forCount:[pageViews count]];
     
     // insert new pages
     for (EDPageView *pageView in pageViews){
         // create new page
         newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+        //NSLog(@"inserting new page: to page number:%d", currentPageNumber);
         // set page number
         [newPage setPageNumber:[[NSNumber alloc] initWithInt:currentPageNumber]];
-        
+    
 #warning need to figure out this after we set up core data relationships 
         currentPageNumber++;
     }
@@ -125,7 +124,7 @@
     else {
         EDPage *lastPage = [_coreData getLastSelectedPage];
         if (lastPage) {
-            NSArray *pagesNeedUpdating = [_coreData getAllPagesWithPageNumberGreaterThan:[[lastPage pageNumber] intValue]];
+            NSArray *pagesNeedUpdating = [_coreData getPagesWithPageNumberGreaterThan:[[lastPage pageNumber] intValue]];
             
             //update page numbers 
             for (EDPage *page in pagesNeedUpdating){
@@ -139,7 +138,7 @@
             [newPage setPageNumber:[[NSNumber alloc] initWithInt:([pages count] + 1)]];
         }
     }
-    NSLog(@"created page:%@", newPage);
+    //NSLog(@"created page:%@", newPage);
 }
 
 - (void)onContextChanged:(NSNotification *)note{
@@ -161,14 +160,6 @@
         }
     }
 
-    // correct array if objects deleted
-    if (entityDeleted) {
-        [_coreData correctPageNumbersAfterDelete];
-        
-        // for some reason we need to save, context does not update right away
-        //[_coreData save];
-    }
-    
     // update positions of pages
     [self correctPagePositionsAfterUpdate];
     
@@ -256,6 +247,9 @@
         return;
     
     [_coreData deleteSelectedPages];
+    
+    // correct page numbers
+    [_coreData correctPageNumbersAfterDelete];
 }
 
 - (void)correctPagePositionsAfterUpdate{
@@ -274,25 +268,46 @@
 
 - (void)onPagesViewFinishedDragged:(NSNotification *)note{
     NSMutableArray *pageViews = [[note userInfo] objectForKey:EDKeyPagesViewDraggedViews];
-    int draggedSection = [[[note userInfo] valueForKey:EDKeyPagesViewHighlightedDragSection] intValue];
+    int destinationSection = [[[note userInfo] valueForKey:EDKeyPagesViewHighlightedDragSection] intValue];
+    
+    // get first object
+    int sourceSection = [[[(EDPageView *)[pageViews objectAtIndex:0] dataObj] pageNumber] intValue];
+    int dragDifference = destinationSection - sourceSection;
+    //NSLog(@"page number:%d dragged section:%d", pageNumber, draggedSection);
     // do not insert if dragged section not valid
-    if (draggedSection != -1) {
-        //NSLog(@"===before pages:%@", [_coreData getAllPages]);
-        // remove old page views
+    if (destinationSection != -1) {
+        // remove pages
         [self removePageViews:pageViews];
         
-        // insert pages into new location
-        [self insertPageViews:pageViews toPage:draggedSection];
+        if (dragDifference < 0) {
+            // user is dragging to previous section
+            
+            // update old page numbers
+            //[_coreData updatePageNumbersStartingAt:sourceSection forCount:[pageViews count]];
+            [_coreData updatePageNumbersStartingAt:destinationSection byDifference:[pageViews count] endNumber:sourceSection];
+            
+            // insert pages into new location
+            [self insertPageViews:pageViews toPage:destinationSection];
+        }
+        else {
+            // user is dragging pages forward
+            
+            // update old page numbers
+            //[_coreData updatePageNumbersStartingAt:destinationSection forCount:(-1 * [pageViews count])];
+            [_coreData updatePageNumbersStartingAt:(sourceSection+[pageViews count]) byDifference:([pageViews count] * -1) endNumber:destinationSection];
+            
+            // insert pages into new location
+            [self insertPageViews:pageViews toPage:(destinationSection - 1)];
+        }
         
-        // save changes
+        // print out all pages
+        [EDPage printAll];
         /*
-        NSLog(@"saving data.");
-        [_coreData save];
-         */
         NSArray *pages = [EDPage findAllObjectsOrderedByPageNumber];
         for (EDPage *page in pages){
             NSLog(@"page:%@", page);
         }
+        */
     }
     else {
         // nothing to insert, user dragged to undraggable location
