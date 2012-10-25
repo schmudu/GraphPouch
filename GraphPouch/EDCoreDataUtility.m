@@ -149,13 +149,11 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     // iterate through pages
     for (EDPage *currentPage in pages){
         // reset page number to proper number
-        NSLog(@"update page number:%d by difference:%d", [[currentPage pageNumber] intValue], difference);
         [currentPage setValue:[[NSNumber alloc] initWithInt:([[currentPage pageNumber] intValue] + difference)] forKey:EDPageAttributePageNumber];
     }
 }
 
 - (void)removePage:(EDPage *)page{
-    NSLog(@"removing page:%@", page);
     [_context deleteObject:page];
 }
 
@@ -222,7 +220,6 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
         // This is a serious error and should advise the user to restart the application   
     }   
      */
-    NSLog(@"number of pages greater than:%d less than:%d count:%lu results:%@", beginPageNumber, endPageNumber, [endFilteredResults count], endFilteredResults);
     return endFilteredResults;
 }
 

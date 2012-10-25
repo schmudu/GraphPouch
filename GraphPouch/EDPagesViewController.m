@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
+#import "EDGraph.h"
 #import "EDPagesViewController.h"
 #import "EDPage.h"
 #import "EDPageView.h"
@@ -96,7 +97,7 @@
         //NSLog(@"inserting new page: to page number:%d", currentPageNumber);
         // set page number
         [newPage setPageNumber:[[NSNumber alloc] initWithInt:currentPageNumber]];
-    
+        
 #warning need to figure out this after we set up core data relationships 
         currentPageNumber++;
     }
@@ -301,6 +302,8 @@
         }
         
         // print out all pages
+        //NSArray *graphs = [_coreData getAllGraphs];
+        //NSLog(@"===== getting graphs: count:%ld", [graphs count]);
         [EDPage printAll];
         /*
         NSArray *pages = [EDPage findAllObjectsOrderedByPageNumber];

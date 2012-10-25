@@ -16,15 +16,7 @@
 @dynamic equation, hasGridLines, hasTickMarks, page;
 
 #pragma mark encoding, decoding this object
-/*
-- (void)setPage:(EDPage *)newPage{
-    page = newPage;
-}
 
-- (EDPage *)getPage{
-    return page;
-}
-*/
 - (id)initWithCoder:(NSCoder *)aDecoder{
     // create entity but don't insert it anywhere
     self = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
@@ -36,7 +28,7 @@
         [self setLocationX:[aDecoder decodeFloatForKey:EDElementAttributeLocationX]];
         [self setLocationY:[aDecoder decodeFloatForKey:EDElementAttributeLocationY]];
         [self setElementWidth:[aDecoder decodeFloatForKey:EDElementAttributeWidth]];
-        [self setPage:[aDecoder decodeObjectForKey:EDGraphAttributePage]];
+        //[self setPage:[aDecoder decodeObjectForKey:EDGraphAttributePage]];
     }
     return self;
 }
@@ -50,6 +42,7 @@
     [aCoder encodeFloat:[self locationY] forKey:EDElementAttributeLocationY];
     [aCoder encodeFloat:[self elementWidth] forKey:EDElementAttributeWidth];
     [aCoder encodeFloat:[self elementHeight] forKey:EDElementAttributeHeight];
-    [aCoder encodeObject:[self page] forKey:EDGraphAttributePage];
+    NSLog(@"encoding page:%@", [self page]);
+    //[aCoder encodeObject:[self page] forKey:EDGraphAttributePage];
 }
 @end
