@@ -92,8 +92,10 @@
     
     // insert new pages
     for (EDPageView *pageView in pageViews){
+        //NSLog(@"data in insert:%@", [pageView dataObj]);
         // create new page
-        newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+        //newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+        newPage = [pageView dataObj];
         //NSLog(@"inserting new page: to page number:%d", currentPageNumber);
         // set page number
         [newPage setPageNumber:[[NSNumber alloc] initWithInt:currentPageNumber]];
@@ -104,19 +106,17 @@
 }
     
 - (void)removePageViews:(NSMutableArray *)pageViews{
-    EDPage *pageObj;
     for (EDPageView *pageView in pageViews){
-        pageObj = [_coreData getPage:[[[pageView dataObj] pageNumber] intValue]];
-        
-        // delete object
-        [_coreData removePage:pageObj];
-     }
+        [_coreData removePage:[pageView dataObj]];
+    }
 }
 
 - (void)addNewPage{
     // create new page
     NSArray *pages = [_coreData getAllPages];
     EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+    NSLog(@"adding new page: %@", newPage);
+    //[newPage setGraphs:[[NSSet alloc] init]];
     
     // if no other pages then set this page to be the first one
     if ([pages count] == 0) {
@@ -274,6 +274,18 @@
     // get first object
     int sourceSection = [[[(EDPageView *)[pageViews objectAtIndex:0] dataObj] pageNumber] intValue];
     int dragDifference = destinationSection - sourceSection;
+    /*
+    NSLog(@"=== data to insert");
+    for (EDPageView *pageView in pageViews){
+        NSLog(@"pageView: deleted:%d data:%@", [[pageView dataObj] isDeleted], [pageView dataObj]);
+    }
+    
+    NSArray *pages = [EDPage findAllObjectsOrderedByPageNumber];
+    NSLog(@"===before page count:%ld context:%@", [pages count], [_coreData context]);
+    for (EDPage *page in pages){
+        NSLog(@"page:%@", page);
+        //NSLog(@"pages graph:%@", [[page graphs] class]);
+    }*/
     //NSLog(@"page number:%d dragged section:%d", pageNumber, draggedSection);
     // do not insert if dragged section not valid
     if (destinationSection != -1) {
@@ -285,32 +297,50 @@
             
             // update old page numbers
             //[_coreData updatePageNumbersStartingAt:sourceSection forCount:[pageViews count]];
-            [_coreData updatePageNumbersStartingAt:destinationSection byDifference:[pageViews count] endNumber:sourceSection];
+            //[_coreData updatePageNumbersStartingAt:destinationSection byDifference:[pageViews count] endNumber:sourceSection];
             
             // insert pages into new location
-            [self insertPageViews:pageViews toPage:destinationSection];
+            //NSLog(@"==before inserting page views.");
+            //[self insertPageViews:pageViews toPage:destinationSection];
+            //NSLog(@"==after inserting page views.");
         }
         else {
             // user is dragging pages forward
             
             // update old page numbers
             //[_coreData updatePageNumbersStartingAt:destinationSection forCount:(-1 * [pageViews count])];
-            [_coreData updatePageNumbersStartingAt:(sourceSection+[pageViews count]) byDifference:([pageViews count] * -1) endNumber:destinationSection];
+            //[_coreData updatePageNumbersStartingAt:(sourceSection+[pageViews count]) byDifference:([pageViews count] * -1) endNumber:destinationSection];
             
             // insert pages into new location
-            [self insertPageViews:pageViews toPage:(destinationSection - 1)];
+            //[self insertPageViews:pageViews toPage:(destinationSection - 1)];
         }
         
+        /*
+        for (EDPageView *pageView in pageViews){
+            NSLog(@"pageView: data:%@", [[pageView dataObj] objectID]);
+        }
+        */
         // print out all pages
         //NSArray *graphs = [_coreData getAllGraphs];
         //NSLog(@"===== getting graphs: count:%ld", [graphs count]);
-        [EDPage printAll];
+        //NSLog(@"===begin print all");
+        //[EDPage printAll];
+        //NSLog(@"===end print all from context:%@", [_coreData context]);
+        //NSArray *pages = [EDPage findAllObjectsOrderedByPageNumber];
         /*
-        NSArray *pages = [EDPage findAllObjectsOrderedByPageNumber];
+        pages = [EDPage findAllObjectsOrderedByPageNumber];
+        NSLog(@"===after page count:%ld context:%@", [pages count], [_coreData context]);
         for (EDPage *page in pages){
             NSLog(@"page:%@", page);
-        }
-        */
+            //NSLog(@"pages graph:%@", [[page graphs] class]);
+        }*/
+        /*
+    NSLog(@"=== data to insert");
+    for (EDPageView *pageView in pageViews){
+        NSLog(@"pageView: deleted:%d data:%@", [[pageView dataObj] isDeleted], [pageView dataObj]);
+    }*/
+    
+        
     }
     else {
         // nothing to insert, user dragged to undraggable location

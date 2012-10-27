@@ -153,8 +153,23 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }
 }
 
+//- (void)removeObject:(NSManagedObject *)object{
 - (void)removePage:(EDPage *)page{
-    [_context deleteObject:page];
+    // fetch page
+    NSManagedObject *managedObj = [self getPage:[[page pageNumber] intValue]];
+    /*
+    NSArray *pages = [EDPage findAllObjectsOrderedByPageNumber];
+    NSArray *graphs = [EDGraph findAllObjects];
+    NSLog(@"===before deleted:%d page count:%ld graphs count:%ld", [page isDeleted], [pages count], [graphs count]);
+     */
+    // fetch object
+    [_context deleteObject:managedObj];
+    
+    /*
+    pages = [EDPage findAllObjectsOrderedByPageNumber];
+    graphs = [EDGraph findAllObjects];
+    NSLog(@"===after deleted:%d page count:%ld graphs count:%ld", [page isDeleted], [pages count], [graphs count]);
+     */
 }
 
 - (NSArray *)getPagesWithPageNumberGreaterThan:(int)beginPageNumber{

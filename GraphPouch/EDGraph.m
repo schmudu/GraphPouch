@@ -42,7 +42,6 @@
     [aCoder encodeFloat:[self locationY] forKey:EDElementAttributeLocationY];
     [aCoder encodeFloat:[self elementWidth] forKey:EDElementAttributeWidth];
     [aCoder encodeFloat:[self elementHeight] forKey:EDElementAttributeHeight];
-    NSLog(@"encoding page:%@", [self page]);
     //[aCoder encodeObject:[self page] forKey:EDGraphAttributePage];
 }
 @end

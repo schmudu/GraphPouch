@@ -13,17 +13,10 @@
 #import "EDPage.h"
 
 @interface EDGraph : EDElement <NSCoding>{
-    // set as weak otherwise we'll have a cyclic cycle between the page and graphs
-    //__weak EDPage *page;
 }
 
 @property NSString *equation;
 @property EDPage *page;
 @property BOOL hasTickMarks, hasGridLines;
 
-
-/*
-- (void)setPage:(EDPage *)newPage;
-- (EDPage *)getPage;
- */
 @end

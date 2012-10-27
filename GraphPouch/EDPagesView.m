@@ -10,6 +10,7 @@
 #import "EDPageView.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @interface EDPagesView()
 - (int)getHighlightedDragSection:(int)totalPages pageDragged:(int)pageDragged mousePosition:(float)yPos;
@@ -132,6 +133,7 @@
 }
 
 - (void)draggingExited:(id<NSDraggingInfo>)sender{
+    _highlighted = FALSE;
     [self setNeedsDisplay:TRUE];
 }
 
@@ -165,7 +167,10 @@
 
 - (BOOL)readFromPasteboard:(NSPasteboard *)pb{
     NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
+    NSArray *pages = [EDPage findAllObjects];
+    NSLog(@"===before: reading from pasteboard: page count:%ld", [pages count]);
     NSArray *objects = [_pb readObjectsForClasses:classes options:nil];
+    NSLog(@"===after: reading from pasteboard: page count:%ld", [pages count]);
     if ([objects count] > 0) {
         NSMutableDictionary *userDict = [[NSMutableDictionary alloc] init];
         [userDict setObject:objects forKey:EDKeyPagesViewDraggedViews];
