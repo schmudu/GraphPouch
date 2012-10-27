@@ -120,7 +120,8 @@
     p.y = p.y + EDPageImageViewHeight/2;
     
     // write to pasteboard
-    [self writeToPasteboard:_pb];
+    //[[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewDragged object:self];
+    //[self writeToPasteboard:_pb];
     
     // Start the drag
     [self dragImage:anImage at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:_pb source:self slideBack:YES];
@@ -196,13 +197,6 @@
     if (operation == NSDragOperationDelete){
         NSLog(@"should delete something.");
     }
-    
-    // notify listners
-    /*
-    NSMutableDictionary *eventDict = [[NSMutableDictionary alloc] init];
-    [eventDict setObject:theEvent forKey:EDKeyPageViewDragPoint];
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewDragged object:self userInfo:eventDict];
-     */
 }
 
 #pragma mark dragging destination

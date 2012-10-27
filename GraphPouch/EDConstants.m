@@ -74,7 +74,7 @@ NSString * const EDEventWindowWillClose                         = @"EDEventWindo
 // pages view
 NSString * const EDEventPagesViewClicked                        = @"EDEventPagesViewClicked";
 NSString * const EDEventPagesDeletePressed                      = @"EDEventPagesDeletePressed";
-NSString * const EDEventPageViewDragged                         = @"EDEventPageViewDragged";
+//NSString * const EDEventPageViewDragged                         = @"EDEventPageViewDragged";
 NSString * const EDEventPageViewStartDrag                       = @"EDEventPageViewStartDrag";
 NSString * const EDEventPageViewsFinishedDrag                   = @"EDEventPageViewsFinishedDrag";
 NSString * const EDKeyPageViewDragPoint                         = @"EDKeyPageViewDragPoint";

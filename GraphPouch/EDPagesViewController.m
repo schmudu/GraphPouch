@@ -23,6 +23,7 @@
 - (void)removePage:(EDPage *)page;
 - (void)correctPagePositionsAfterUpdate;
 - (void)correctPagePositionsAfterUpdateWithoutAnimation;
+- (void)updatePageNumbersOfDraggedPages:(int)startPageNumber;
 - (void)deselectAllPages;
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note;
 - (void)onPageViewStartDrag:(NSNotification *)note;
@@ -31,6 +32,7 @@
 - (void)onWindowResized:(NSNotification *)note;
 - (void)onPagesViewFinishedDragged:(NSNotification *)note;
 - (void)updateViewFrameSize;
+- (NSArray *)getSelectedPageViews;
 @end
 
 @implementation EDPagesViewController
@@ -219,6 +221,12 @@
 #pragma mark page events
 - (void)onPageViewStartDrag:(NSNotification *)note{
     [(EDPagesView *)[self view] setPageViewStartDragInfo:[[note userInfo] objectForKey:EDKeyPageViewData]];
+    
+    NSArray *selectedPageViews = [self getSelectedPageViews];
+    
+    // copy all page views that are selected to the pasteboard
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPageViews]];
 }
 
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note{
@@ -265,6 +273,26 @@
     }
 }
 
+- (void)updatePageNumbersOfDraggedPages:(int)startPageNumber{
+    // get all the selected pages by order of page number
+    
+//#error start here
+    // iterate through all of them and set their page number accordingly
+}
+
+- (NSArray *)getSelectedPageViews{
+    NSMutableArray *selectedPageViews = [[NSMutableArray alloc] init];
+    
+     // iterate through page controllers and add to array if it's selected
+    for (EDPageViewController *pageController in _pageControllers){
+        if ([[(EDPageView *)[pageController view] dataObj] selected] == TRUE) {
+            [selectedPageViews addObject:[pageController view]];
+        }
+    }
+    
+    return selectedPageViews;
+}
+
 - (void)onPagesViewFinishedDragged:(NSNotification *)note{
     NSMutableArray *pageViews = [[note userInfo] objectForKey:EDKeyPagesViewDraggedViews];
     int destinationSection = [[[note userInfo] valueForKey:EDKeyPagesViewHighlightedDragSection] intValue];
@@ -272,13 +300,13 @@
     // get first object
     int sourceSection = [[[(EDPageView *)[pageViews objectAtIndex:0] dataObj] pageNumber] intValue];
     int dragDifference = destinationSection - sourceSection;
-    /*
     NSLog(@"=== data to insert");
     for (EDPageView *pageView in pageViews){
-        NSLog(@"pageView: deleted:%d data:%@", [[pageView dataObj] isDeleted], [pageView dataObj]);
+        NSLog(@"pageView: %@", [pageView dataObj]);
     }
     
-    NSArray *pages = [EDPage findAllObjectsOrderedByPageNumber];
+    /*
+     NSArray *pages = [EDPage findAllObjectsOrderedByPageNumber];
     NSLog(@"===before page count:%ld context:%@", [pages count], [_coreData context]);
     for (EDPage *page in pages){
         NSLog(@"page:%@", page);
@@ -289,6 +317,9 @@
     if (destinationSection != -1) {
         // remove pages that were dragged
         [self removePageViews:pageViews];
+        
+        // update page numbers of pages dragged
+        //[self updatePageNumbersOfDraggedPages];
         
         if (dragDifference < 0) {
             // user is dragging to previous section

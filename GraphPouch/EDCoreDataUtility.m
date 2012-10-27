@@ -88,7 +88,6 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     
     NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(SELF == %@)", page];
     NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];;
-    NSLog(@"getting page: results: %@ context:%@", filteredResults, [page managedObjectContext]);
     return [filteredResults objectAtIndex:0];
 }
 

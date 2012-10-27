@@ -73,7 +73,7 @@ extern NSString *const EDEventWindowWillClose;
 
 // pages
 extern NSString *const EDEventPagesViewClicked;
-extern NSString *const EDEventPageViewDragged;
+//extern NSString *const EDEventPageViewDragged;
 extern NSString *const EDEventPagesDeletePressed;
 extern NSString *const EDEventPageViewStartDrag;
 extern NSString *const EDEventPageViewsFinishedDrag;
