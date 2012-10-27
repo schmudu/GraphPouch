@@ -21,8 +21,8 @@
 #pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
     // create entity but don't insert it anywhere
-    self = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
-    //self = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]];
+    //self = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
+    self = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]];
     if(self){
         [self setCurrentPage:[aDecoder decodeBoolForKey:EDPageAttributeCurrent]];
         [self setPageNumber:[[NSNumber alloc] initWithInt:[aDecoder decodeInt32ForKey:EDPageAttributePageNumber]]];
@@ -30,9 +30,8 @@
         //NSLog(@"===graph set:%@", [aDecoder decodeObjectForKey:EDPageAttributeGraphs]);
         
         
-        //EDGraph *newGraph;
-        
-        //NSSet *graphs = [aDecoder decodeObjectForKey:EDPageAttributeGraphs];
+        EDGraph *newGraph;
+        NSSet *graphs = [aDecoder decodeObjectForKey:EDPageAttributeGraphs];
         // if no graphs then create empty set
         //[self setGraphs:[[NSMutableSet alloc] init]];
         //NSMutableSet *newGraphs = [[NSMutableSet alloc] init];
@@ -40,13 +39,13 @@
         if ([graphs count] == 0) {
             [self setGraphs:[[NSSet alloc] init]];
         }*/
-        /*
+        
         for (EDGraph *graph in graphs){
             // create a graph and set it for this page
             //NSLog(@"graph:%@", graph);
             //newGraph = [[EDGraph alloc] init];
-            newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
-            //newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]];
+            //newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
+            newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]];
             
             //set attributes
             [newGraph setEquation:[graph equation]];
@@ -60,13 +59,12 @@
             
             // set relationship
             //[newGraph setPage:self];
-            //[self addGraphsObject:newGraph];
-            [newGraphs addObject:newGraph];
+            [self addGraphsObject:newGraph];
+            //[newGraphs addObject:newGraph];
         }
         
         // set graphs
-        [self setGraphs:newGraphs];
-         */
+        //[self setGraphs:newGraphs];
     }
     return self;
 }

@@ -79,6 +79,20 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return fetchResults;
 }
 
+- (EDPage *)getPage:(EDPage *)page{
+    // this method returns the page object that matches the page number
+    NSArray *fetchedObjects;
+    
+    // get all selected pages ordered by page number
+    fetchedObjects = [EDPage findAllObjectsOrderedByPageNumber];
+    
+    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(SELF == %@)", page];
+    NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];;
+    NSLog(@"getting page: results: %@ context:%@", filteredResults, [page managedObjectContext]);
+    return [filteredResults objectAtIndex:0];
+}
+
+/*
 - (EDPage *)getPage:(int)pageNumber{
     // this method returns the page object that matches the page number
     NSArray *fetchedObjects;
@@ -90,7 +104,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];;
     
     return [filteredResults objectAtIndex:0];
-}
+}*/
 
 - (EDPage *)getLastSelectedPage{
     
@@ -156,20 +170,16 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 //- (void)removeObject:(NSManagedObject *)object{
 - (void)removePage:(EDPage *)page{
     // fetch page
-    NSManagedObject *managedObj = [self getPage:[[page pageNumber] intValue]];
-    /*
+    NSManagedObject *managedObj = [self getPage:page];
     NSArray *pages = [EDPage findAllObjectsOrderedByPageNumber];
     NSArray *graphs = [EDGraph findAllObjects];
     NSLog(@"===before deleted:%d page count:%ld graphs count:%ld", [page isDeleted], [pages count], [graphs count]);
-     */
     // fetch object
     [_context deleteObject:managedObj];
     
-    /*
     pages = [EDPage findAllObjectsOrderedByPageNumber];
     graphs = [EDGraph findAllObjects];
     NSLog(@"===after deleted:%d page count:%ld graphs count:%ld", [page isDeleted], [pages count], [graphs count]);
-     */
 }
 
 - (NSArray *)getPagesWithPageNumberGreaterThan:(int)beginPageNumber{

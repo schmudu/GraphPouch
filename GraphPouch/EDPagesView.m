@@ -142,7 +142,7 @@
 }
 
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender{
-    //NSPasteboard *pb = [sender draggingPasteboard];
+    // going to insert pages from PagesViewController after we have removed pages
     if(![self readFromPasteboard:_pb]){
         return NO;
     }

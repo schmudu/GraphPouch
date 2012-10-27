@@ -115,8 +115,6 @@
     // create new page
     NSArray *pages = [_coreData getAllPages];
     EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
-    NSLog(@"adding new page: %@", newPage);
-    //[newPage setGraphs:[[NSSet alloc] init]];
     
     // if no other pages then set this page to be the first one
     if ([pages count] == 0) {
@@ -146,7 +144,7 @@
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
     int entityDeleted = FALSE;
     
-    for (NSObject *addedObject in insertedArray){
+    for (NSManagedObject *addedObject in insertedArray){
         if ([[addedObject className] isEqualToString:EDEntityNamePage]) {
             [self drawPage:(EDPage *)addedObject];
         }
@@ -289,7 +287,7 @@
     //NSLog(@"page number:%d dragged section:%d", pageNumber, draggedSection);
     // do not insert if dragged section not valid
     if (destinationSection != -1) {
-        // remove pages
+        // remove pages that were dragged
         [self removePageViews:pageViews];
         
         if (dragDifference < 0) {

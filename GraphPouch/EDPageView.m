@@ -77,6 +77,7 @@
 }
 
 - (void)setDataObj:(EDPage *)pageObj{
+    NSLog(@"setting page view data obj: context:%@", [pageObj managedObjectContext]);
     _dataObj = pageObj;
 }
 

@@ -41,7 +41,8 @@
 - (void)removePage:(EDPage *)page;
 //- (void)removeObject:(NSManagedObject *)object;
 - (void)updatePageNumbersStartingAt:(int)startPageNumber byDifference:(int)difference endNumber:(int)endPageNumber;
-- (EDPage *)getPage:(int)pageNumber;
+//- (EDPage *)getPage:(int)pageNumber;
+- (EDPage *)getPage:(EDPage *)page;
 - (EDPage *)getCurrentPage;
 - (void)setPageAsCurrent:(EDPage *)page;
 
