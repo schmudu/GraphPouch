@@ -172,6 +172,11 @@
     NSArray *objects = [_pb readObjectsForClasses:classes options:nil];
     NSLog(@"===after: reading from pasteboard: page count:%ld", [pages count]);
     if ([objects count] > 0) {
+        /*
+        for (EDPageView *pageView in objects){
+            NSLog(@"sending dragged page views: data %@", [pageView dataObj]);
+        }*/
+        
         NSMutableDictionary *userDict = [[NSMutableDictionary alloc] init];
         [userDict setObject:objects forKey:EDKeyPagesViewDraggedViews];
         [userDict setValue:[[NSNumber alloc] initWithInt:_highlightedDragSection] forKey:EDKeyPagesViewHighlightedDragSection];

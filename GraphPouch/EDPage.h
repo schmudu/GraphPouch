@@ -14,7 +14,7 @@
 @interface EDPage : NSManagedObject <NSCoding>
 
 @property BOOL currentPage, selected;
-@property (nonatomic, retain) NSNumber * pageNumber;
+@property (nonatomic, retain) NSNumber *pageNumber;
 @property (nonatomic, retain) NSSet *graphs;
 @end
 
