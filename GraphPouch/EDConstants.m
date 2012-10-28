@@ -77,6 +77,8 @@ NSString * const EDEventPagesDeletePressed                      = @"EDEventPages
 //NSString * const EDEventPageViewDragged                         = @"EDEventPageViewDragged";
 NSString * const EDEventPageViewStartDrag                       = @"EDEventPageViewStartDrag";
 NSString * const EDEventPageViewsFinishedDrag                   = @"EDEventPageViewsFinishedDrag";
+NSString * const EDKeySelectedPageFirst                         = @"EDKeySelectedPageFirst";
+NSString * const EDKeySelectedPageLast                          = @"EDKeySelectedPageLast";
 NSString * const EDKeyPageViewDragPoint                         = @"EDKeyPageViewDragPoint";
 NSString * const EDKeyPageViewData                              = @"EDKeyPageViewData";
 NSString * const EDKeyPagesViewDraggedViews                     = @"EDKeyPagesViewDraggedViews";
@@ -100,6 +102,7 @@ NSString * const EDPageAttributeCurrent                         = @"currentPage"
 NSString * const EDPageAttributeGraphs                          = @"graphs";
 NSString * const EDGraphAttributePage                           = @"page";
 NSString * const EDEventPageClickedWithoutModifier              = @"EDEventPageClickedWithoutModifier";
+NSString * const EDEventPageViewMouseDown                       = @"EDEventPageViewMouseDown";
 
 // keyboard
 int const EDKeycodeDelete                                       = 51;

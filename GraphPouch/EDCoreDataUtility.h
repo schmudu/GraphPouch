@@ -34,8 +34,11 @@
 // pages
 - (NSArray *)getAllPages;
 - (NSMutableArray *)getAllSelectedPages;
-- (NSArray *)getPagesWithPageNumberGreaterThan:(int)beginPageNumber lessThan:(int)endPageNumber;
+- (NSArray *)getSelectedPagesWithPageNumberLessThan:(int)pageNumber;
+- (NSArray *)getUnselectedPagesWithPageNumberLessThan:(int)pageNumber greaterThanOrEqualTo:(int)endPageNumber;
 - (NSArray *)getPagesWithPageNumberGreaterThan:(int)beginPageNumber;
+- (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber lessThan:(int)endPageNumber;
+- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber lessThan:(int)endPageNumber;
 - (void)deleteSelectedPages;
 - (void)correctPageNumbersAfterDelete;
 - (void)removePage:(EDPage *)page;

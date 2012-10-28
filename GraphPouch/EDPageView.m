@@ -77,7 +77,6 @@
 }
 
 - (void)setDataObj:(EDPage *)pageObj{
-    NSLog(@"setting page view data obj: context:%@", [pageObj managedObjectContext]);
     _dataObj = pageObj;
 }
 
@@ -154,6 +153,11 @@
         
         [_dataObj setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDPageAttributeSelected];
     }
+    
+    // dispatch
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:self forKey:EDKeyPageViewData];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewMouseDown object:self userInfo:userInfo];
     
     //redraw page
     [self setNeedsDisplay:TRUE];

@@ -77,6 +77,8 @@ extern NSString *const EDEventPagesViewClicked;
 extern NSString *const EDEventPagesDeletePressed;
 extern NSString *const EDEventPageViewStartDrag;
 extern NSString *const EDEventPageViewsFinishedDrag;
+extern NSString *const EDKeySelectedPageFirst;
+extern NSString *const EDKeySelectedPageLast;
 extern NSString *const EDKeyPageViewDragPoint;
 extern NSString *const EDKeyPageViewData;
 extern NSString *const EDKeyPagesViewDraggedViews;
@@ -100,6 +102,7 @@ extern NSString *const EDPageAttributeCurrent;
 extern NSString *const EDPageAttributeGraphs;
 extern NSString *const EDGraphAttributePage;
 extern NSString *const EDEventPageClickedWithoutModifier;
+extern NSString *const EDEventPageViewMouseDown;
 
 // keyboard mapping
 extern int const        EDKeycodeDelete;

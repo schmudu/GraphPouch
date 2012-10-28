@@ -87,7 +87,6 @@
 
 #pragma mark mouse
 - (void)mouseDown:(NSEvent *)theEvent{
-    NSLog(@"user clicked");
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesViewClicked object:self];
 }
 
@@ -167,10 +166,13 @@
 
 - (BOOL)readFromPasteboard:(NSPasteboard *)pb{
     NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
-    NSArray *pages = [EDPage findAllObjects];
-    NSLog(@"===before: reading from pasteboard: page count:%ld", [pages count]);
+    
+    // get first and last selected objects
+    NSArray *selectedPages = [EDPage findAllSelectedObjectsOrderedByPageNumber];
+    EDPage *firstSelectedPage = (EDPage *)[selectedPages objectAtIndex:0];
+    EDPage *lastSelectedPage = (EDPage *)[selectedPages lastObject];
+    
     NSArray *objects = [_pb readObjectsForClasses:classes options:nil];
-    NSLog(@"===after: reading from pasteboard: page count:%ld", [pages count]);
     if ([objects count] > 0) {
         /*
         for (EDPageView *pageView in objects){
@@ -179,6 +181,8 @@
         
         NSMutableDictionary *userDict = [[NSMutableDictionary alloc] init];
         [userDict setObject:objects forKey:EDKeyPagesViewDraggedViews];
+        [userDict setObject:firstSelectedPage forKey:EDKeySelectedPageFirst];
+        [userDict setObject:lastSelectedPage forKey:EDKeySelectedPageLast];
         [userDict setValue:[[NSNumber alloc] initWithInt:_highlightedDragSection] forKey:EDKeyPagesViewHighlightedDragSection];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewsFinishedDrag object:self userInfo:userDict];

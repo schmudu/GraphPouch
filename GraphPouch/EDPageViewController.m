@@ -17,6 +17,7 @@
 - (void)onPageViewStartDrag:(NSNotification *)note;
 - (void)onContextChanged:(NSNotification *)note;
 - (void)onDeleteKeyPressed:(NSNotification *)note;
+- (void)onPageViewMouseDown:(NSNotification *)note;
 @end
 
 @implementation EDPageViewController
@@ -40,6 +41,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageClickedWithoutModifier object:[self view]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageViewStartDrag object:[self view]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPagesDeletePressed object:[self view]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageViewMouseDown object:[self view]];
 }
 
 - (EDPage *)dataObj{
@@ -56,9 +58,14 @@
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewClickedWithoutModifier:) name:EDEventPageClickedWithoutModifier object:[self view]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewStartDrag:) name:EDEventPageViewStartDrag object:[self view]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewMouseDown:) name:EDEventPageViewMouseDown object:[self view]];
 }
 
 #pragma mark events
+- (void)onPageViewMouseDown:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewMouseDown object:self userInfo:[note userInfo]];
+}
+
 - (void)onDeleteKeyPressed:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
     /*

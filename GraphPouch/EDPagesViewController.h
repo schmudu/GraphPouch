@@ -15,6 +15,7 @@
     EDCoreDataUtility *_coreData;
     NSMutableArray *_pageControllers;
     IBOutlet EDDocument *_documentController;
+    int _startDragSection;
 }
 - (void)postInitialize;
 - (void)addNewPage;
