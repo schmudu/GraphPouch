@@ -34,11 +34,17 @@
 // pages
 - (NSArray *)getAllPages;
 - (NSMutableArray *)getAllSelectedPages;
-- (NSArray *)getSelectedPagesWithPageNumberLessThan:(int)pageNumber;
-- (NSArray *)getUnselectedPagesWithPageNumberLessThan:(int)pageNumber greaterThanOrEqualTo:(int)endPageNumber;
+- (NSArray *)getUnselectedPagesWithPageNumberLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber;
+- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber;
+- (NSArray *)getSelectedPagesWithPageNumberLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber;
+- (NSArray *)getSelectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber;
+
+
+
+//- (NSArray *)getUnselectedPagesWithPageNumberLessThan:(int)pageNumber greaterThanOrEqualTo:(int)endPageNumber;
 - (NSArray *)getPagesWithPageNumberGreaterThan:(int)beginPageNumber;
 - (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber lessThan:(int)endPageNumber;
-- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber lessThan:(int)endPageNumber;
+//- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber lessThan:(int)endPageNumber;
 - (void)deleteSelectedPages;
 - (void)correctPageNumbersAfterDelete;
 - (void)removePage:(EDPage *)page;

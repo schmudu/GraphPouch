@@ -202,12 +202,12 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
         // Handle the error.   
         // This is a serious error and should advise the user to restart the application   
     }   
-     */
+    */
     //NSLog(@"number of pages greater than:%d count:%lu", pageNumber, [filteredResults count]);
     return startFilteredResults;
 }
 
-- (NSArray *)getUnselectedPagesWithPageNumberLessThan:(int)pageNumber greaterThanOrEqualTo:(int)endPageNumber{
+- (NSArray *)getUnselectedPagesWithPageNumberLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber{
    // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
     
@@ -225,13 +225,13 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
     //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
-    NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber < %ld", pageNumber];
+    NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber < %ld", upperNumber];
     NSArray *startFilteredResults = [fetchResults filteredArrayUsingPredicate:beginSearchFilter];;
     
-    NSPredicate *endSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", endPageNumber];
+    NSPredicate *endSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", lowerNumber];
     NSArray *endFilteredResults = [startFilteredResults filteredArrayUsingPredicate:endSearchFilter];
     
-    NSPredicate *unselectedSearchFilter = [NSPredicate predicateWithFormat:@"selected = %ld", TRUE];
+    NSPredicate *unselectedSearchFilter = [NSPredicate predicateWithFormat:@"selected = %ld", FALSE];
     NSArray *unselectedFilteredResults = [endFilteredResults filteredArrayUsingPredicate:unselectedSearchFilter];;
     
     /*
@@ -245,7 +245,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return unselectedFilteredResults;
 }
 
-- (NSArray *)getSelectedPagesWithPageNumberLessThan:(int)pageNumber{
+- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber{
    // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
     
@@ -263,11 +263,14 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
     //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
-    NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber < %ld", pageNumber];
-    NSArray *startFilteredResults = [fetchResults filteredArrayUsingPredicate:beginSearchFilter];;
+    NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", lowerNumber];
+    NSArray *startFilteredResults = [fetchResults filteredArrayUsingPredicate:beginSearchFilter];
     
-    NSPredicate *selectedSearchFilter = [NSPredicate predicateWithFormat:@"selected = %ld", TRUE];
-    NSArray *selectedFilteredResults = [startFilteredResults filteredArrayUsingPredicate:selectedSearchFilter];;
+    NSPredicate *endSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber < %ld", upperNumber];
+    NSArray *endFilteredResults = [startFilteredResults filteredArrayUsingPredicate:endSearchFilter];
+    
+    NSPredicate *selectedSearchFilter = [NSPredicate predicateWithFormat:@"selected = %ld", FALSE];
+    NSArray *selectedFilteredResults = [endFilteredResults filteredArrayUsingPredicate:selectedSearchFilter];;
     
     /*
     // handle error
@@ -280,7 +283,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return selectedFilteredResults;
 }
 
-- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber lessThan:(int)endPageNumber{
+- (NSArray *)getSelectedPagesWithPageNumberLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber{
    // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
     
@@ -298,14 +301,51 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
     //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
-    NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", beginPageNumber];
+    NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber < %ld", upperNumber];
     NSArray *startFilteredResults = [fetchResults filteredArrayUsingPredicate:beginSearchFilter];;
     
-    NSPredicate *endSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber < %ld", endPageNumber];
-    NSArray *endFilteredResults = [startFilteredResults filteredArrayUsingPredicate:endSearchFilter];;
+    NSPredicate *endSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", lowerNumber];
+    NSArray *endFilteredResults = [startFilteredResults filteredArrayUsingPredicate:endSearchFilter];
     
-    NSPredicate *unselectedSearchFilter = [NSPredicate predicateWithFormat:@"selected = %ld", FALSE];
-    NSArray *unselectedFilteredResults = [endFilteredResults filteredArrayUsingPredicate:unselectedSearchFilter];;
+    NSPredicate *selectedSearchFilter = [NSPredicate predicateWithFormat:@"selected = %ld", TRUE];
+    NSArray *selectedFilteredResults = [endFilteredResults filteredArrayUsingPredicate:selectedSearchFilter];;
+    
+    /*
+    // handle error
+    if (!mutableFetchResults) {   
+        // Handle the error.   
+        // This is a serious error and should advise the user to restart the application   
+    } */  
+    //NSLog(@"number of pages greater than:%d count:%lu", pageNumber, [filteredResults count]);
+    return selectedFilteredResults;
+}
+
+- (NSArray *)getSelectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber{
+   // Define our table/entity to use   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    
+    // Setup the fetch request   
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];   
+    [request setEntity:entity];   
+    
+    // order pages
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDPageAttributePageNumber ascending:TRUE];
+    NSArray *sortArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortArray];
+    
+    // Fetch the records and handle an error   
+    NSError *error;   
+    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
+    
+    NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", lowerNumber];
+    NSArray *startFilteredResults = [fetchResults filteredArrayUsingPredicate:beginSearchFilter];;
+    
+    NSPredicate *endSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber < %ld", upperNumber];
+    NSArray *endFilteredResults = [startFilteredResults filteredArrayUsingPredicate:endSearchFilter];
+    
+    NSPredicate *selectedSearchFilter = [NSPredicate predicateWithFormat:@"selected = %ld", TRUE];
+    NSArray *selectedFilteredResults = [endFilteredResults filteredArrayUsingPredicate:selectedSearchFilter];;
     
     /*
     // handle error
@@ -313,9 +353,11 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
         // Handle the error.   
         // This is a serious error and should advise the user to restart the application   
     }   
-     */
-    return unselectedFilteredResults;
+    */
+    //NSLog(@"number of pages greater than:%d count:%lu", pageNumber, [filteredResults count]);
+    return selectedFilteredResults;
 }
+
 
 
 - (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber lessThan:(int)endPageNumber{
@@ -342,13 +384,12 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     NSPredicate *endSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber < %ld", endPageNumber];
     NSArray *endFilteredResults = [startFilteredResults filteredArrayUsingPredicate:endSearchFilter];;
     
-    /*
     // handle error
+    /*
     if (!mutableFetchResults) {   
         // Handle the error.   
         // This is a serious error and should advise the user to restart the application   
-    }   
-     */
+    } */  
     return endFilteredResults;
 }
 

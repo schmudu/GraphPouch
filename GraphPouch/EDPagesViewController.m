@@ -26,7 +26,11 @@
 //- (void)updatePageNumbersOfDraggedPages:(NSArray *)draggedPageViews startPageNumber:(int)startPageNumber;
 //- (void)updatePageNumbersOfDraggedPagesFromSection:(int)sourceSection endSection:(int)endSection;
 - (void)updatePageNumbersOfDraggedPages:(int)endSection;
-- (void)updatePageNumbersOfUndraggedPages:(int)startSection endSection:(int)endSection difference:(int)pageDifference;
+- (void)updatePageNumbersOfUndraggedPagesLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber;
+- (void)updatePageNumbersOfUndraggedPagesGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber;
+//- (void)updatePageNumbersOfUndraggedPages:(int)startSection endSection:(int)endSection difference:(int)pageDifference;
+//- (void)updatePageNumbersOfUndraggedPagesLessThanDestination:(int)startSection endSection:(int)endSection;
+//- (void)updatePageNumbersOfUndraggedPagesLessThanDestination:(int)startSection endSection:(int)endSection;
 - (void)deselectAllPages;
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note;
 - (void)onPageViewStartDrag:(NSNotification *)note;
@@ -282,11 +286,73 @@
     }
 }
 
+- (void)updatePageNumbersOfUndraggedPagesLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber{
+    // get selected pages
+    NSArray *unselectedPages = [_coreData getUnselectedPagesWithPageNumberLessThan:upperNumber greaterThanOrEqualTo:lowerNumber];
+    NSArray *selectedPages = [_coreData getSelectedPagesWithPageNumberLessThan:upperNumber greaterThanOrEqualTo:lowerNumber];
+    
+    //NSLog(@"unselected pages that we are going to update: start:%d end:%d pageDifference:%d", startSection, endSection, pageDifference);
+    
+    // if no unselected pages then exit
+    if ([unselectedPages count] == 0) {
+        return;
+    }
+    
+    // sort selected pages by page number
+    NSArray *sortedArray;
+    sortedArray = [unselectedPages sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        // sort array by page number
+        NSNumber *first = [(EDPage *)a pageNumber];
+        NSNumber *second = [(EDPage *)b pageNumber];
+        return [first compare:second];
+    }]; 
+    
+    // iterate through pages and set their page number accordingly
+    //int pageNumber = endSection;
+    //int pageNumber = pageDifference;
+    for (EDPage *page in sortedArray){
+        [page setPageNumber:[[NSNumber alloc] initWithInt:([[page pageNumber] intValue] - [selectedPages count])]];
+        //NSLog(@"undragged pages: setting page number to:%d data:%@", pageNumber, page);
+        //pageNumber++;
+    }
+}
+
+- (void)updatePageNumbersOfUndraggedPagesGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber{
+    // get selected pages
+    NSArray *unselectedPages = [_coreData getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:lowerNumber lessThan:upperNumber];
+    NSArray *selectedPages = [_coreData getSelectedPagesWithPageNumberGreaterThanOrEqualTo:lowerNumber lessThan:upperNumber];
+    
+    //NSLog(@"unselected pages that we are going to update: start:%d end:%d pageDifference:%d", startSection, endSection, pageDifference);
+    
+    // if no unselected pages then exit
+    if ([unselectedPages count] == 0) {
+        return;
+    }
+    
+    // sort selected pages by page number
+    NSArray *sortedArray;
+    sortedArray = [unselectedPages sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        // sort array by page number
+        NSNumber *first = [(EDPage *)a pageNumber];
+        NSNumber *second = [(EDPage *)b pageNumber];
+        return [first compare:second];
+    }]; 
+    
+    // iterate through pages and set their page number accordingly
+    //int pageNumber = endSection;
+    //int pageNumber = pageDifference;
+    for (EDPage *page in sortedArray){
+        [page setPageNumber:[[NSNumber alloc] initWithInt:([[page pageNumber] intValue] + [selectedPages count])]];
+        //NSLog(@"undragged pages: setting page number to:%d data:%@", pageNumber, page);
+        //pageNumber++;
+    }
+}
+/*
 - (void)updatePageNumbersOfUndraggedPages:(int)startSection endSection:(int)endSection difference:(int)pageDifference{
     // get selected pages
     NSArray *unselectedPages = [_coreData getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:startSection lessThan:endSection];
     
-    NSLog(@"unselected pages that we are going to update: start:%d end:%d pageDifference:%d", startSection, endSection, pageDifference);
+    //NSLog(@"unselected pages that we are going to update: start:%d end:%d pageDifference:%d", startSection, endSection, pageDifference);
     
     // if no unselected pages then exit
     if ([unselectedPages count] == 0) {
@@ -310,6 +376,11 @@
         //NSLog(@"undragged pages: setting page number to:%d data:%@", pageNumber, page);
         pageNumber++;
     }
+}*/
+
+- (void)updatePageNumbersOfUndraggedPagesLessThanDestination:(int)startSection endSection:(int)endSection{
+    // find pages between the destination and the first selected page
+    // iterate through pages update each page number by the number of pages that's between it and the first selected page
 }
 
 - (void)updatePageNumbersOfDraggedPages:(int)endSection{
@@ -329,6 +400,7 @@
         return [first compare:second];
     }]; 
     
+    NSLog(@"going to update dragged pages to no:%d sorted array:%@", endSection, sortedArray);
     // iterate through pages and set their page number accordingly
     int pageNumber = endSection;
     for (EDPage *page in sortedArray){
@@ -385,6 +457,7 @@
     //int dragDifference = destinationSection - sourceSection;
     int dragDifference = destinationSection - _startDragSection;
     //int dragDifference = destinationSection - lastSelectedPageSection;
+    NSLog(@"drag difference:%d destination:%d", dragDifference, destinationSection);
     /*
     for (EDPageView *pageView in pageViews){
         NSLog(@"pageView: %@", [pageView dataObj]);
@@ -403,8 +476,16 @@
         // remove pages that were dragged
         [self removePageViews:pageViews];
         
+        NSArray *selectedPagesLessThanDestination = [_coreData getSelectedPagesWithPageNumberLessThan:destinationSection greaterThanOrEqualTo:firstSelectedPageSection];
+        [self updatePageNumbersOfDraggedPages:(destinationSection - [selectedPagesLessThanDestination count])];
+        
+        //NSArray *unselectedPagesLessThanDestination = [_coreData getUnselectedPagesWithPageNumberLessThan:destinationSection];
+        [self updatePageNumbersOfUndraggedPagesLessThan:destinationSection greaterThanOrEqualTo:firstSelectedPageSection];
+        [self updatePageNumbersOfUndraggedPagesGreaterThanOrEqualTo:destinationSection lessThan:lastSelectedPageSection];
+        // update positions of selected pages
+        /*
         if (dragDifference < 0) {
-            NSLog(@"user dragged previous: diff:%d", dragDifference);
+            //NSLog(@"user dragged previous: diff:%d", dragDifference);
             // user is dragging to previous section
             
             // update page numbers of pages dragged
@@ -412,16 +493,17 @@
             // destination - number of selected pages that are less than that desination section
             
             // get pages that are less than the destination
-            NSArray *selectedPagesLessThanDestination = [_coreData getSelectedPagesWithPageNumberLessThan:destinationSection];
-        
-            [self updatePageNumbersOfDraggedPages:(destinationSection - [selectedPagesLessThanDestination count])];
+            //NSArray *selectedPagesLessThanDestination = [_coreData getSelectedPagesWithPageNumberLessThan:destinationSection];
+            
+            //NSLog(@"user dragged backward: diff:%d destination:%d dragged views:%ld unselected pages less:%ld", dragDifference, destinationSection, [pageViews count], [selectedPagesLessThanDestination count]);
+            //[self updatePageNumbersOfDraggedPages:(destinationSection - [selectedPagesLessThanDestination count])];
             
             // update old page numbers
             // starting number - where the user is dragging to
             // ending number - last selected object
             //NSArray *unselectedPages = [EDPage findAllUnselectedObjectsOrderedByPageNumber];
             //int lastSelectedSection = [[(EDPage *)[unselectedPages lastObject] pageNumber] intValue];
-            [self updatePageNumbersOfUndraggedPages:destinationSection endSection:lastSelectedPageSection difference:(destinationSection + [pageViews count] - [selectedPagesLessThanDestination count])];
+            //[self updatePageNumbersOfUndraggedPages:destinationSection endSection:lastSelectedPageSection difference:(destinationSection + [pageViews count] - [selectedPagesLessThanDestination count])];
             
             // insert pages into new location
             //NSLog(@"==before inserting page views.");
@@ -437,14 +519,14 @@
             NSLog(@"user dragged forward: diff:%d destination:%d dragged views:%ld unselected pages less:%ld", dragDifference, destinationSection, [pageViews count], [unselectedPagesLessThanDestination count]);
             // update page numbers of pages dragged
             //[self updatePageNumbersOfDraggedPages:(destinationSection-[pageViews count] + [unselectedPagesLessThanDestination count])];
-            [self updatePageNumbersOfDraggedPages:(destinationSection-[pageViews count])];
+            //[self updatePageNumbersOfDraggedPages:(destinationSection-[pageViews count])];
             
             // update old page numbers
             // starting number - where the user is dragging to
             // ending number - last selected object
             //NSArray *unselectedPages = [EDPage findAllUnselectedObjectsOrderedByPageNumber];
             //int firstSelectedSection = [[(EDPage *)[unselectedPages objectAtIndex:0] pageNumber] intValue];
-            [self updatePageNumbersOfUndraggedPages:firstSelectedPageSection endSection:destinationSection difference:firstSelectedPageSection];
+            //[self updatePageNumbersOfUndraggedPages:firstSelectedPageSection endSection:destinationSection difference:firstSelectedPageSection];
             
             // update old page numbers
             //[_coreData updatePageNumbersStartingAt:destinationSection forCount:(-1 * [pageViews count])];
@@ -454,6 +536,7 @@
             //[self insertPageViews:pageViews toPage:(destinationSection - 1)];
         }
         
+         */
         /*
         for (EDPageView *pageView in pageViews){
             NSLog(@"pageView: data:%@", [[pageView dataObj] objectID]);
