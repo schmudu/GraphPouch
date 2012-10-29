@@ -29,6 +29,7 @@
 		CD1EBD89160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD88160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m */; };
 		CD1EBD8C160013D200BEEA4D /* EDFormatterDecimalSigned.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD8B160013D200BEEA4D /* EDFormatterDecimalSigned.m */; };
 		CD27665515D996E900162240 /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CD27665415D996E900162240 /* EDGraph.m */; };
+		CD2DD578163ED449006557FC /* EDCoreDataUtility+Pages.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD577163ED449006557FC /* EDCoreDataUtility+Pages.m */; };
 		CD3A4FE516359FC90042B6DD /* EDPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3A4FE416359FC90042B6DD /* EDPage.m */; };
 		CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9915BDF93400AB7567 /* EDGraphView.m */; };
 		CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */; };
@@ -102,6 +103,8 @@
 		CD1EBD8B160013D200BEEA4D /* EDFormatterDecimalSigned.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterDecimalSigned.m; sourceTree = "<group>"; };
 		CD27665315D996E900162240 /* EDGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraph.h; sourceTree = "<group>"; };
 		CD27665415D996E900162240 /* EDGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraph.m; sourceTree = "<group>"; };
+		CD2DD576163ED449006557FC /* EDCoreDataUtility+Pages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Pages.h"; sourceTree = "<group>"; };
+		CD2DD577163ED449006557FC /* EDCoreDataUtility+Pages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EDCoreDataUtility+Pages.m"; sourceTree = "<group>"; };
 		CD3A4FE316359FC90042B6DD /* EDPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPage.h; sourceTree = "<group>"; };
 		CD3A4FE416359FC90042B6DD /* EDPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPage.m; sourceTree = "<group>"; };
 		CD3F0A9815BDF93400AB7567 /* EDGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphView.h; sourceTree = "<group>"; };
@@ -300,6 +303,8 @@
 				CD27665415D996E900162240 /* EDGraph.m */,
 				CD1422C515C7590700F55819 /* EDCoreDataUtility.h */,
 				CD1422C615C7590700F55819 /* EDCoreDataUtility.m */,
+				CD2DD576163ED449006557FC /* EDCoreDataUtility+Pages.h */,
+				CD2DD577163ED449006557FC /* EDCoreDataUtility+Pages.m */,
 				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
 				CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */,
 				CD1C57AB161B9AB200534D49 /* EDPageArrayController.h */,
@@ -643,6 +648,7 @@
 				CD1C57CA161D153300534D49 /* EDPagesView.m in Sources */,
 				CDA8555816236EF9006FCD62 /* EDContentView.m in Sources */,
 				CD3A4FE516359FC90042B6DD /* EDPage.m in Sources */,
+				CD2DD578163ED449006557FC /* EDCoreDataUtility+Pages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

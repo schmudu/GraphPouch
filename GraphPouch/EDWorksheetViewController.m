@@ -10,6 +10,7 @@
 #import "EDWorksheetView.h"
 #import "EDConstants.h"
 #import "EDGraph.h"
+#import "EDCoreDataUtility+Pages.h"
 
 @interface EDWorksheetViewController ()
 - (void)deselectAllElements:(NSNotification *)note;

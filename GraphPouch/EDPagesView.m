@@ -10,6 +10,7 @@
 #import "EDPageView.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
+#import "EDCoreDataUtility+Pages.h"
 #import "NSManagedObject+EasyFetching.h"
 
 @interface EDPagesView()

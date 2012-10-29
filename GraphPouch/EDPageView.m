@@ -9,6 +9,7 @@
 #import "EDPageView.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
+#import "EDCoreDataUtility+Pages.h"
 
 @interface EDPageView()
 - (void)onContextChanged:(NSNotification *)note;
