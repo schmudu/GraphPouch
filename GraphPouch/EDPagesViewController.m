@@ -19,7 +19,7 @@
 @interface EDPagesViewController ()
 - (void)onContextChanged:(NSNotification *)note;
 - (void)insertPageViews:(NSMutableArray *)pageViews toPage:(int)pageNumber;
-- (void)removePageViews:(NSMutableArray *)pageViews;
+- (void)removePageViews:(NSArray *)pageViews;
 - (void)drawPage:(EDPage *)page;
 - (void)removePage:(EDPage *)page;
 - (void)correctPagePositionsAfterUpdate;
@@ -35,8 +35,12 @@
 - (void)onWindowResized:(NSNotification *)note;
 - (void)onPagesViewFinishedDragged:(NSNotification *)note;
 - (void)onPageViewMouseDown:(NSNotification *)note;
+- (void)onShortcutCopy:(NSNotification *)note;
+- (void)onShortcutCut:(NSNotification *)note;
+- (void)onShortcutPaste:(NSNotification *)note;
 - (void)updateViewFrameSize;
 - (NSArray *)getSelectedPageViews;
+- (BOOL)readFromPasteboard;
 @end
 
 @implementation EDPagesViewController
@@ -61,6 +65,9 @@
     [_nc removeObserver:self name:EDEventPagesDeletePressed object:[self view]];
     [_nc removeObserver:self name:EDEventPagesViewClicked object:[self view]];
     [_nc removeObserver:self name:EDEventPageViewsFinishedDrag object:[self view]];
+    [_nc removeObserver:self name:EDEventShortcutCopy object:[self view]];
+    [_nc removeObserver:self name:EDEventShortcutCut object:[self view]];
+    [_nc removeObserver:self name:EDEventShortcutPaste object:[self view]];
     [_nc removeObserver:self name:EDEventWindowDidResize object:_documentController];
 }
 
@@ -85,6 +92,9 @@
     [(EDPagesView *)[self view] postInitialize];
     
     // listen
+    [_nc addObserver:self selector:@selector(onShortcutCopy:) name:EDEventShortcutCopy object:[self view]];
+    [_nc addObserver:self selector:@selector(onShortcutCut:) name:EDEventShortcutCut object:[self view]];
+    [_nc addObserver:self selector:@selector(onShortcutPaste:) name:EDEventShortcutPaste object:[self view]];
     [_nc addObserver:self selector:@selector(onPagesViewClicked:) name:EDEventPagesViewClicked object:[self view]];
     [_nc addObserver:self selector:@selector(onDeleteKeyPressed:) name:EDEventPagesDeletePressed object:[self view]];
     [_nc addObserver:self selector:@selector(onPagesViewFinishedDragged:) name:EDEventPageViewsFinishedDrag object:[self view]];
@@ -111,7 +121,7 @@
     }
 }
     
-- (void)removePageViews:(NSMutableArray *)pageViews{
+- (void)removePageViews:(NSArray *)pageViews{
     for (EDPageView *pageView in pageViews){
         [_coreData removePage:[pageView dataObj]];
     }
@@ -393,6 +403,84 @@
     else {
         // nothing to insert, user dragged to undraggable location
     }
+}
+
+#pragma mark keyboard
+- (void)onShortcutCut:(NSNotification *)note{
+    NSArray *selectedPageViews = [self getSelectedPageViews];
+    NSArray *allPages = [EDPage findAllObjects];
+    
+    // if there will no pages left if all pages are cut, then do not allow this operation
+    if ([allPages count] - [selectedPageViews count] < 1) 
+        return;
+    
+    // copy all page views that are selected to the pasteboard
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPageViews]];
+    
+    // now cut all selected views
+    [self removePageViews:selectedPageViews];
+    
+    // update page numbers
+    [_coreData correctPageNumbersAfterDelete];
+    
+    // update location
+    [self correctPagePositionsAfterUpdate];
+}
+
+- (void)onShortcutCopy:(NSNotification *)note{
+    NSArray *selectedPageViews = [self getSelectedPageViews];
+    
+    // copy all page views that are selected to the pasteboard
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPageViews]];
+}
+
+- (void)onShortcutPaste:(NSNotification *)note{
+    // read objects from pasteboard
+    [self readFromPasteboard];
+}
+
+#pragma mark pasteboard
+- (BOOL)readFromPasteboard{
+    NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
+    
+    // get last selected object
+    NSArray *selectedPages = [EDPage findAllSelectedObjectsOrderedByPageNumber];
+    EDPage *lastSelectedPage = (EDPage *)[selectedPages lastObject];
+    int insertPosition, startInsertPosition;
+    if (lastSelectedPage){
+        startInsertPosition = [[lastSelectedPage pageNumber] intValue] + 1;
+    }
+    else {
+        // append pages 
+        startInsertPosition = [[EDPage findAllObjects] count] + 1;
+    }
+    
+    // save position
+    insertPosition = startInsertPosition;
+    
+    NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+    // update page numbers of inserted objects
+    if ([objects count] > 0) {
+        // cycle through objects and insert after last selected page
+        for (EDPageView *pageView in objects){
+            // update each page view with it's new position
+            [[pageView dataObj] setPageNumber:[[NSNumber alloc] initWithInt:insertPosition]];
+            insertPosition++;
+        }
+        
+        // retrieve pages that we will need to update after inserting the pasted pages
+        NSArray *postPages = [_coreData getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:startInsertPosition];
+        
+        // update each page view with it's new position
+        for (EDPage *page in postPages){
+            [page setPageNumber:[[NSNumber alloc] initWithInt:insertPosition]];
+            insertPosition++;
+        }
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark view frame

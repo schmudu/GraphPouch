@@ -13,7 +13,7 @@
 
 @interface EDPageView()
 - (void)onContextChanged:(NSNotification *)note;
-- (void)writeToPasteboard:(NSPasteboard *)pb;
+//- (void)writeToPasteboard:(NSPasteboard *)pb;
 - (void)setPageAsCurrent;
 @end
 
@@ -253,10 +253,11 @@
     return NO;
 }
 
+/*
 - (void)writeToPasteboard:(NSPasteboard *)pb{
     [_pb clearContents];
     [_pb writeObjects:[NSArray arrayWithObject:self]];
-}
+}*/
 
 #pragma mark pasteboard writing protocol
 - (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{

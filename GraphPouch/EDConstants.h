@@ -40,6 +40,9 @@ extern NSString *const EDEventKey;
 // menu
 extern NSString *const EDEventMenuAlignTop;
 extern NSString *const EDEventShortcutNewPage;
+extern NSString *const EDEventShortcutCopy;
+extern NSString *const EDEventShortcutCut;
+extern NSString *const EDEventShortcutPaste;
 
 // guides
 extern NSString *const EDKeyGuideVertical;
@@ -106,6 +109,9 @@ extern NSString *const EDEventPageViewMouseDown;
 
 // keyboard mapping
 extern int const        EDKeycodeDelete;
+extern int const        EDKeycodeCopy;
+extern int const        EDKeycodeCut;
+extern int const        EDKeycodePaste;
 extern int const        EDKeyModifierNone;
 
 // transform

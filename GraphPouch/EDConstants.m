@@ -38,8 +38,11 @@ NSString * const EDEventWorksheetElementDeselected              = @"EDEventWorks
 NSString * const EDEventKey                                     = @"EDEvent";
 
 // menu
-NSString * const EDEventMenuAlignTop                             = @"EDEventMenuAlignTop";
-NSString * const EDEventShortcutNewPage                          = @"EDEventShortcutNewPage";
+NSString * const EDEventMenuAlignTop                            = @"EDEventMenuAlignTop";
+NSString * const EDEventShortcutNewPage                         = @"EDEventShortcutNewPage";
+NSString * const EDEventShortcutCopy                            = @"EDEventShortcutCopy";
+NSString * const EDEventShortcutCut                             = @"EDEventShortcutCut";
+NSString * const EDEventShortcutPaste                           = @"EDEventShortcutPaste";
 
 // guides
 NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
@@ -106,6 +109,9 @@ NSString * const EDEventPageViewMouseDown                       = @"EDEventPageV
 
 // keyboard
 int const EDKeycodeDelete                                       = 51;
+int const EDKeycodeCopy                                         = 8;
+int const EDKeycodeCut                                          = 7;
+int const EDKeycodePaste                                        = 9;
 int const EDKeyModifierNone                                     = 256;
 
 // transform

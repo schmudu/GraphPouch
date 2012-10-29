@@ -79,6 +79,21 @@
     }
 }
 #pragma mark keyboard
+- (BOOL)performKeyEquivalent:(NSEvent *)theEvent{
+    if ([theEvent keyCode] == EDKeycodeCopy) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
+        return YES;
+    }
+    else if ([theEvent keyCode] == EDKeycodeCut) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCut object:self];
+        return YES;
+    }
+    else if ([theEvent keyCode] == EDKeycodePaste) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutPaste object:self];
+        return YES;
+    }
+    return NO;
+}
 - (void)keyDown:(NSEvent *)theEvent{
         //NSLog(@"going to delete something.");
     if ([theEvent keyCode] == EDKeycodeDelete) {

@@ -122,6 +122,38 @@
     [_context deleteObject:managedObj];
 }
 
+- (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber{
+    // Define our table/entity to use   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    
+    // Setup the fetch request   
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];   
+    [request setEntity:entity];   
+    
+    // order pages
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDPageAttributePageNumber ascending:TRUE];
+    NSArray *sortArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortArray];
+    
+    // Fetch the records and handle an error   
+    NSError *error;   
+    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
+    
+    NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", beginPageNumber];
+    NSArray *startFilteredResults = [fetchResults filteredArrayUsingPredicate:beginSearchFilter];;
+    
+    /*
+     // handle error
+     if (!mutableFetchResults) {   
+     // Handle the error.   
+     // This is a serious error and should advise the user to restart the application   
+     }   
+     */
+    //NSLog(@"number of pages greater than:%d count:%lu", pageNumber, [filteredResults count]);
+    return startFilteredResults;
+}
+
 - (NSArray *)getPagesWithPageNumberGreaterThan:(int)beginPageNumber{
     // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
@@ -190,6 +222,41 @@
      */
     //NSLog(@"number of pages greater than:%d count:%lu", pageNumber, [filteredResults count]);
     return unselectedFilteredResults;
+}
+
+- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber{
+    // Define our table/entity to use   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    
+    // Setup the fetch request   
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];   
+    [request setEntity:entity];   
+    
+    // order pages
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDPageAttributePageNumber ascending:TRUE];
+    NSArray *sortArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortArray];
+    
+    // Fetch the records and handle an error   
+    NSError *error;   
+    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
+    
+    NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", lowerNumber];
+    NSArray *startFilteredResults = [fetchResults filteredArrayUsingPredicate:beginSearchFilter];
+    
+    NSPredicate *selectedSearchFilter = [NSPredicate predicateWithFormat:@"selected = %ld", FALSE];
+    NSArray *selectedFilteredResults = [startFilteredResults filteredArrayUsingPredicate:selectedSearchFilter];;
+    
+    /*
+     // handle error
+     if (!mutableFetchResults) {   
+     // Handle the error.   
+     // This is a serious error and should advise the user to restart the application   
+     }   
+     */
+    //NSLog(@"number of pages greater than:%d count:%lu", pageNumber, [filteredResults count]);
+    return selectedFilteredResults;
 }
 
 - (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber{
