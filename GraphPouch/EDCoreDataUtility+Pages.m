@@ -412,22 +412,20 @@
 }
 
 - (void)setPageAsCurrent:(EDPage *)page{
-    NSArray *pages = [EDPage findAllObjects];
+    // unset previous current page
+    EDPage *previousPage = (EDPage *)[EDPage findCurrentPage];
     
-    // get current page
-    EDPage *oldCurrentPage = (EDPage *)[EDPage findCurrentPage];
-    
-    // reset old current page
-    if (oldCurrentPage) {
-        [oldCurrentPage setCurrentPage:[[[NSNumber alloc] initWithBool:FALSE] boolValue]];
+    // if already set then do nothing
+    if (previousPage == page){
+        return;
+    }
+    else {
+        [previousPage setCurrentPage:FALSE];
     }
     
-    for (EDPage *currentPage in pages){
-        if (page == currentPage) {
-            [currentPage setCurrentPage:[[[NSNumber alloc] initWithBool:TRUE] boolValue]];
-            return;
-        }
-    }
+    // set parameter as current page
+    EDPage *newPage = [self getPage:page];
+    [newPage setCurrentPage:TRUE];
 }
 
 

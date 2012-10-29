@@ -27,6 +27,7 @@
 - (void)updatePageNumbersStartingAt:(int)startPageNumber byDifference:(int)difference endNumber:(int)endPageNumber;
 - (EDPage *)getPage:(EDPage *)page;
 - (EDPage *)getCurrentPage;
+- (void)setCurrentPage:(EDPage *)page;
 - (void)setPageAsCurrent:(EDPage *)page;
 - (EDPage *)getLastSelectedPage;
 @end

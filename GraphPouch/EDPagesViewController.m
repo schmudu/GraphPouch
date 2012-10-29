@@ -108,11 +108,8 @@
     
     // insert new pages
     for (EDPageView *pageView in pageViews){
-        //NSLog(@"data in insert:%@", [pageView dataObj]);
-        // create new page
-        //newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
         newPage = [pageView dataObj];
-        //NSLog(@"inserting new page: to page number:%d", currentPageNumber);
+        
         // set page number
         [newPage setPageNumber:[[NSNumber alloc] initWithInt:currentPageNumber]];
         
@@ -135,6 +132,7 @@
     // if no other pages then set this page to be the first one
     if ([pages count] == 0) {
         [newPage setPageNumber:[[NSNumber alloc] initWithInt:1]];
+        [newPage setCurrentPage:TRUE];
     }
     else {
         EDPage *lastPage = [_coreData getLastSelectedPage];

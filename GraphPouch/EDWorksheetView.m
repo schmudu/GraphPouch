@@ -214,7 +214,7 @@
     
     // update transform rects
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
-    
+    NSLog(@"worksheet: update array:%@", updatedArray);
     [self updateTransformRects:updatedArray];
 }
 
