@@ -20,6 +20,7 @@
     BOOL _mouseIsDown;
     BOOL _elementIsBeingModified;
     NSPoint _transformRectDragPoint;
+    EDPage *_currentPage;
 }
 
 - (void)drawLoadedObjects;

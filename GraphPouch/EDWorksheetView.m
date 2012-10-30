@@ -35,6 +35,8 @@
 - (float)findClosestPoint:(float)currentPoint guides:(NSMutableArray *)guides;
 
 // elements
+- (void)drawAllElements;
+- (void)removeAllElements:(EDPage *)page;
 - (NSMutableArray *)getAllSelectedWorksheetElementsViews;
 - (NSMutableArray *)getAllUnselectedWorksheetElementsViews;
 
@@ -64,6 +66,10 @@
         // these dictionaries are the reverse of each other
         _transformRects = [[NSMutableDictionary alloc] init];
         _elementsWithTransformRects = [[NSMutableDictionary alloc] init];
+        
+        // find current page
+        EDPage *newPage = (EDPage *)[EDPage findCurrentPage];
+        _currentPage = newPage;
         
         // listen
         _nc = [NSNotificationCenter defaultCenter];
@@ -192,6 +198,7 @@
 
 #pragma mark listeners
 - (void)onContextChanged:(NSNotification *)note{
+    /*
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
     
     for (EDElement *myElement in insertedArray){
@@ -216,6 +223,25 @@
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
     NSLog(@"worksheet: update array:%@", updatedArray);
     [self updateTransformRects:updatedArray];
+     */
+    EDPage *newPage = (EDPage *)[EDPage findCurrentPage];
+    if (newPage == _currentPage) {
+        // only redraw the updated objects
+        
+        // update transform rects
+        NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
+        [self updateTransformRects:updatedArray];
+    }
+    else {
+        // need to erase everything and redraw
+        [self removeAllElements:_currentPage];
+        
+        // redraw
+        [self drawAllElements];
+        
+        // set this page as the new current
+        _currentPage = newPage;
+    }
 }
 
 - (void)removeElementView:(EDElement *)element{
@@ -456,6 +482,38 @@
 }
 
 #pragma mark elements
+- (void)drawAllElements{
+    // draw all elements for the current page
+    EDPage *currentPage = (EDPage *)[EDPage findCurrentPage];
+    
+    // draw all graphs
+    for (EDGraph *graph in [currentPage graphs]){
+        [self drawGraph:graph];
+    }
+}
+
+- (void)removeAllElements:(EDPage *)page{
+    // iterate through all objects for page 
+#warning add other elements here
+    NSSet *worksheetElements = [page graphs];
+    // remove transform rects
+    for (EDElement *element in worksheetElements){
+        EDTransformRect *transformRect;
+        transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:element]];
+        if (transformRect) {
+            [self removeTransformRect:transformRect element:element];
+        }
+    }
+    
+    // remove all views
+    for (NSView *elementView in [self subviews]){
+        if([elementView isWorksheetElement]){
+            // remove if worksheet element
+            [self removeElementView:[(EDWorksheetElementView *)elementView dataObj]];
+        }
+    }
+}
+
 - (NSMutableArray *)getAllSelectedWorksheetElementsViews{
     // get all the selected worksheet elements
     NSMutableArray *results = [[NSMutableArray alloc] init];
@@ -536,8 +594,9 @@
 }
     
 - (void)removeTransformRect:(EDTransformRect *)transformRect element:(EDElement *)element{
-    [transformRect removeFromSuperview];
-    
+     [transformRect removeFromSuperview];
+    /*
+     
     // remove listener
     [_nc removeObserver:self name:EDEventTransformRectChanged object:transformRect];
     [_nc removeObserver:self name:EDEventTransformMouseUp object:transformRect];
@@ -546,6 +605,7 @@
     //reset
     [_transformRects removeObjectForKey:[NSValue valueWithNonretainedObject:element]];
     [_elementsWithTransformRects removeObjectForKey:[NSValue valueWithNonretainedObject:transformRect]];
+     */
 }
 
 - (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element{

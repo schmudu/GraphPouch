@@ -41,7 +41,7 @@
     [_nc addObserver:self selector:@selector(alignElementsToTop:) name:EDEventMenuAlignTop object:nil];
     
     // initialize view to display all of the objects
-    [(EDWorksheetView *)[self view] drawLoadedObjects];
+    //[(EDWorksheetView *)[self view] drawLoadedObjects];
 }
 
 - (void)deselectAllElements:(NSNotification *)note{
@@ -65,7 +65,6 @@
     // create new graph
     EDPage *currentPage = [_coreData getCurrentPage];
     
-    //NSLog(@"current page:%@", currentPage);
     EDGraph *newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
     
     // add graph to page
