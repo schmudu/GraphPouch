@@ -129,6 +129,9 @@
 }
 
 - (void)mouseDown:(NSEvent *)theEvent{
+    // make pages first responder
+    [[self window] makeFirstResponder:[self superview]];
+    
     // store for drag operation
     _mouseDownEvent = theEvent;
     

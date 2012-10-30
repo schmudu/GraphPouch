@@ -96,7 +96,6 @@
     return NO;
 }
 - (void)keyDown:(NSEvent *)theEvent{
-    NSLog(@"going to delete something.");
     if ([theEvent keyCode] == EDKeycodeDelete) {
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
     }
@@ -104,6 +103,9 @@
 
 #pragma mark mouse
 - (void)mouseDown:(NSEvent *)theEvent{
+    // make first responder
+    [[self window] makeFirstResponder:self];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesViewClicked object:self];
 }
 

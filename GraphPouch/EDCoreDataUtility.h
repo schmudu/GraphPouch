@@ -18,9 +18,11 @@
 - (void)setContext:(NSManagedObjectContext *)moc;
 - (void)save;
 - (NSManagedObjectContext *)context;
+
 // objects
 - (NSMutableArray *)getAllObjects;
-
+- (NSManagedObject *)getObject:(NSManagedObject *)object;
+    
 // selection
 - (NSMutableArray *)getAllSelectedObjects;
 - (NSMutableDictionary *)getAllTypesOfSelectedObjects;

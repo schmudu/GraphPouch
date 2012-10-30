@@ -40,6 +40,15 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     NSLog(@"error from save:%@", error);
 }
 
+- (NSManagedObject *)getObject:(NSManagedObject *)object{
+    // this method returns the page object that matches the page number
+    NSArray *fetchedObjects;
+    
+    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(SELF == %@)", object];
+    NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];;
+    return [filteredResults objectAtIndex:0];
+}
+
 - (NSMutableArray *)getAllObjects{
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *graphObjects = [self getAllGraphs];

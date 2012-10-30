@@ -195,8 +195,8 @@
 }*/
 
 - (void)keyDown:(NSEvent *)theEvent{
+    NSLog(@"worksheet view: first responder:%@", [[self window] firstResponder]);
     NSUInteger flags = [theEvent modifierFlags];
-    NSLog(@"key down: keycode:%d const:%d", [theEvent keyCode], EDKeycodeDelete);
     if(flags == EDKeyModifierNone && [theEvent keyCode] == EDKeycodeDelete){
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventDeleteKeyPressedWithoutModifiers object:self];
     }
@@ -204,32 +204,6 @@
 
 #pragma mark listeners
 - (void)onContextChanged:(NSNotification *)note{
-    /*
-    NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
-    
-    for (EDElement *myElement in insertedArray){
-        if ([[myElement className] isEqualToString:EDEntityNameGraph]) {
-            [self drawGraph:(EDGraph *)myElement];
-        }
-#warning add other elements here, need drawLabel, drawLine
-    }
-    
-    // remove graphs that were deleted
-    NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
-    EDTransformRect *transformRect;
-    for (EDElement *myElement in deletedArray){
-        [self removeElementView:myElement];
-        
-        // remove transform rects if exists
-        transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:myElement]];
-        [self removeTransformRect:transformRect element:myElement];
-    }
-    
-    // update transform rects
-    NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
-    NSLog(@"worksheet: update array:%@", updatedArray);
-    [self updateTransformRects:updatedArray];
-     */
     EDPage *newPage = (EDPage *)[EDPage findCurrentPage];
     if (newPage == _currentPage) {
         // only redraw the objects on page
@@ -248,18 +222,16 @@
         // delete elements
         NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
         EDTransformRect *transformRect;
-        //NSLog(@"deleted array:%@", deletedArray);
-        for (EDElement *myElement in deletedArray){
-            // remove element from worksheet
-            NSLog(@"trying to delete: equal?%d", (newPage == [(EDGraph *)myElement page]));
-            if (newPage == [(EDGraph *)myElement page]) {
-                [self removeElementView:myElement];
+        for (EDElement *element in deletedArray){
+            // remove worksheet element from worksheet only if it's a worksheet element
+            if ([element isKindOfClass:[EDElement class]]){
+                [self removeElementView:element];
             }
             
             // remove transform rects if exists
-            transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:myElement]];
+            transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:element]];
             if(transformRect)
-                [self removeTransformRect:transformRect element:myElement];
+                [self removeTransformRect:transformRect element:element];
         }
         
         // update transform rects
@@ -305,6 +277,9 @@
 
 #pragma mark mouse behavior
 - (void)mouseDown:(NSEvent *)theEvent{
+    // make this the first responder
+    [[self window] makeFirstResponder:self];
+    
     //post notification
     [_nc postNotificationName:EDEventWorksheetClicked object:self];
 }

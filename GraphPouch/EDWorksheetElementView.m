@@ -78,7 +78,10 @@
 #pragma mark mouse events
 #pragma mark mouse down
 - (void)mouseDown:(NSEvent *)theEvent{
-#warning CAREFUL: any code you change here needs to change in the "mouseDownBySelection" method
+#warning CAREFUL: SOME code you change here needs to change in the "mouseDownBySelection" method
+    // set worksheet view as first responder
+    [[self window] makeFirstResponder:[self superview]];
+    
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
     [coreData getAllObjects];
     
