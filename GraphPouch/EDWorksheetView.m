@@ -37,6 +37,7 @@
 // elements
 - (void)drawAllElements;
 - (void)removeAllElements:(EDPage *)page;
+- (void)removeElementView:(EDElement *)element;
 - (NSMutableArray *)getAllSelectedWorksheetElementsViews;
 - (NSMutableArray *)getAllUnselectedWorksheetElementsViews;
 
@@ -89,6 +90,7 @@
 }
 
 - (void)drawLoadedObjects{
+    /*
     // this draws the objects loaded from the persistence store
     NSArray *graphs = [_coreData getAllGraphs];
     for (EDGraph *myGraph in graphs){
@@ -96,6 +98,8 @@
     }
     
 #warning add other elements here
+     */
+    [self drawAllElements];
     
 }
 
@@ -185,12 +189,14 @@
 }
 
 #pragma mark keyboard
+/*
 - (BOOL)acceptsFirstResponder{
     return TRUE;
-}
+}*/
 
 - (void)keyDown:(NSEvent *)theEvent{
     NSUInteger flags = [theEvent modifierFlags];
+    NSLog(@"key down: keycode:%d const:%d", [theEvent keyCode], EDKeycodeDelete);
     if(flags == EDKeyModifierNone && [theEvent keyCode] == EDKeycodeDelete){
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventDeleteKeyPressedWithoutModifiers object:self];
     }
@@ -229,6 +235,7 @@
         // only redraw the objects on page
         NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
         
+        // insert elements
         for (EDElement *myElement in insertedArray){
             // draw graph if it's located on this page
             if (([[myElement className] isEqualToString:EDEntityNameGraph]) && (newPage == [(EDGraph *)myElement page])) {
@@ -236,6 +243,23 @@
                 [self drawGraph:(EDGraph *)myElement];
             }
     #warning add other elements here, need drawLabel, drawLine
+        }
+        
+        // delete elements
+        NSArray *deletedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
+        EDTransformRect *transformRect;
+        //NSLog(@"deleted array:%@", deletedArray);
+        for (EDElement *myElement in deletedArray){
+            // remove element from worksheet
+            NSLog(@"trying to delete: equal?%d", (newPage == [(EDGraph *)myElement page]));
+            if (newPage == [(EDGraph *)myElement page]) {
+                [self removeElementView:myElement];
+            }
+            
+            // remove transform rects if exists
+            transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:myElement]];
+            if(transformRect)
+                [self removeTransformRect:transformRect element:myElement];
         }
         
         // update transform rects
@@ -500,6 +524,7 @@
     for (EDGraph *graph in [currentPage graphs]){
         [self drawGraph:graph];
     }
+#warning add other elements here
 }
 
 - (void)removeAllElements:(EDPage *)page{
@@ -565,7 +590,6 @@
 }
 
 - (void)updateTransformRects:(NSArray *)updatedElements{
-    NSLog(@"going to update transform rects: updated elements:%@", updatedElements);
     // need to update transform rects
     EDTransformRect *transformRect;
     BOOL isSelected;

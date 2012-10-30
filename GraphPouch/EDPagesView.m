@@ -23,9 +23,10 @@
     return TRUE;
 }
 
+/*
 - (BOOL)acceptsFirstResponder{
     return TRUE;
-}
+}*/
 
 - (void)postInitialize{
     _pb = [NSPasteboard generalPasteboard];
@@ -95,7 +96,7 @@
     return NO;
 }
 - (void)keyDown:(NSEvent *)theEvent{
-        //NSLog(@"going to delete something.");
+    NSLog(@"going to delete something.");
     if ([theEvent keyCode] == EDKeycodeDelete) {
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
     }

@@ -27,7 +27,6 @@
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         
         // listen
-        //NSLog(@"init worksheet view controller.");
     }
     
     return self;
@@ -40,8 +39,8 @@
     [_nc addObserver:self selector:@selector(deleteSelectedElements:) name:EDEventDeleteKeyPressedWithoutModifiers object:[self view]];
     [_nc addObserver:self selector:@selector(alignElementsToTop:) name:EDEventMenuAlignTop object:nil];
     
-    // initialize view to display all of the objects
-    //[(EDWorksheetView *)[self view] drawLoadedObjects];
+    // initialize view to display all of the worksheet elements
+    [(EDWorksheetView *)[self view] drawLoadedObjects];
 }
 
 - (void)deselectAllElements:(NSNotification *)note{
