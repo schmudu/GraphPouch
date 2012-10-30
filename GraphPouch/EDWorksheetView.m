@@ -494,8 +494,9 @@
 
 - (void)removeAllElements:(EDPage *)page{
     // iterate through all objects for page 
-#warning add other elements here
+#warning add other elements here, to worksheetElements set
     NSSet *worksheetElements = [page graphs];
+    
     // remove transform rects
     for (EDElement *element in worksheetElements){
         EDTransformRect *transformRect;
@@ -503,14 +504,8 @@
         if (transformRect) {
             [self removeTransformRect:transformRect element:element];
         }
-    }
-    
-    // remove all views
-    for (NSView *elementView in [self subviews]){
-        if([elementView isWorksheetElement]){
-            // remove if worksheet element
-            [self removeElementView:[(EDWorksheetElementView *)elementView dataObj]];
-        }
+        
+        [self removeElementView:element];
     }
 }
 
