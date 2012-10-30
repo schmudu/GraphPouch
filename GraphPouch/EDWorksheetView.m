@@ -226,7 +226,17 @@
      */
     EDPage *newPage = (EDPage *)[EDPage findCurrentPage];
     if (newPage == _currentPage) {
-        // only redraw the updated objects
+        // only redraw the objects on page
+        NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
+        
+        for (EDElement *myElement in insertedArray){
+            // draw graph if it's located on this page
+            if (([[myElement className] isEqualToString:EDEntityNameGraph]) && (newPage == [(EDGraph *)myElement page])) {
+                //NSLog(@"equal?%d graph page?:%@", (newPage == [(EDGraph *)myElement page]), [(EDGraph *)myElement page]);
+                [self drawGraph:(EDGraph *)myElement];
+            }
+    #warning add other elements here, need drawLabel, drawLine
+        }
         
         // update transform rects
         NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
@@ -555,6 +565,7 @@
 }
 
 - (void)updateTransformRects:(NSArray *)updatedElements{
+    NSLog(@"going to update transform rects: updated elements:%@", updatedElements);
     // need to update transform rects
     EDTransformRect *transformRect;
     BOOL isSelected;
@@ -583,14 +594,12 @@
                 NSPoint transformOrigin = NSMakePoint([myElement locationX], [myElement locationY]);
                 [transformRect setDimensionAndPositionElementViewOrigin:transformOrigin element:myElement];
             }
-            //[transformRect updateDimensions:myElement];
         }
     }
 }
     
 - (void)removeTransformRect:(EDTransformRect *)transformRect element:(EDElement *)element{
-     [transformRect removeFromSuperview];
-    /*
+    [transformRect removeFromSuperview];
      
     // remove listener
     [_nc removeObserver:self name:EDEventTransformRectChanged object:transformRect];
@@ -600,7 +609,6 @@
     //reset
     [_transformRects removeObjectForKey:[NSValue valueWithNonretainedObject:element]];
     [_elementsWithTransformRects removeObjectForKey:[NSValue valueWithNonretainedObject:transformRect]];
-     */
 }
 
 - (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element{
