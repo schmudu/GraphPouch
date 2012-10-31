@@ -17,6 +17,6 @@
 
 @property NSString *equation;
 @property EDPage *page;
-@property BOOL hasTickMarks, hasGridLines;
+@property BOOL hasTickMarks, hasGridLines, hasCoordinateAxes;
 
 @end

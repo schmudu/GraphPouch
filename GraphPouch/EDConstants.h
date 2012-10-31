@@ -61,6 +61,7 @@ extern NSString *const EDGraphAttributeEquation;
 extern NSString *const EDGraphAttributeGrideLines;
 extern NSString *const EDElementAttributeSelected;
 extern NSString *const EDGraphAttributeTickMarks;
+extern NSString *const EDGraphAttributeCoordinateAxes;
 extern NSString *const EDElementAttributeLocationX;
 extern NSString *const EDElementAttributeLocationY;
 extern NSString *const EDElementAttributeWidth;

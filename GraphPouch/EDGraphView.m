@@ -56,21 +56,23 @@
     [NSBezierPath fillRect:[self bounds]];
     
     // stroke coordinate axes
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    float height = [self frame].size.height;
-    float width = [self frame].size.width;
-    [[NSColor blackColor] setStroke];
-    
-    //draw x-axis
-    [path moveToPoint:NSMakePoint(0, height/2)];
-    [path lineToPoint:NSMakePoint(width, height/2)];
-    
-    // draw y-axis
-    [path moveToPoint:NSMakePoint(width/2, 0)];
-    [path lineToPoint:NSMakePoint(width/2, height)];
-    
-    [path setLineWidth:EDGraphDefaultCoordinateLineWidth];
-    [path stroke];
+    if ([(EDGraph *)[self dataObj] hasCoordinateAxes]) {
+        NSBezierPath *path = [NSBezierPath bezierPath];
+        float height = [self frame].size.height;
+        float width = [self frame].size.width;
+        [[NSColor blackColor] setStroke];
+        
+        //draw x-axis
+        [path moveToPoint:NSMakePoint(0, height/2)];
+        [path lineToPoint:NSMakePoint(width, height/2)];
+        
+        // draw y-axis
+        [path moveToPoint:NSMakePoint(width/2, 0)];
+        [path lineToPoint:NSMakePoint(width/2, height)];
+        
+        [path setLineWidth:EDGraphDefaultCoordinateLineWidth];
+        [path stroke];
+    }
 }
 
 @end

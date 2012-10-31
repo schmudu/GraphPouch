@@ -13,7 +13,7 @@
 
 @implementation EDGraph
 
-@dynamic equation, hasGridLines, hasTickMarks, page;
+@dynamic equation, hasGridLines, hasTickMarks, hasCoordinateAxes, page;
 
 #pragma mark encoding, decoding this object
 
@@ -24,6 +24,7 @@
         [self setEquation:[aDecoder decodeObjectForKey:EDGraphAttributeEquation]];
         [self setHasGridLines:[aDecoder decodeBoolForKey:EDGraphAttributeGrideLines]];
         [self setHasTickMarks:[aDecoder decodeBoolForKey:EDGraphAttributeTickMarks]];
+        [self setHasCoordinateAxes:[aDecoder decodeBoolForKey:EDGraphAttributeCoordinateAxes]];
         [self setSelected:[aDecoder decodeBoolForKey:EDElementAttributeSelected]];
         [self setLocationX:[aDecoder decodeFloatForKey:EDElementAttributeLocationX]];
         [self setLocationY:[aDecoder decodeFloatForKey:EDElementAttributeLocationY]];
@@ -36,7 +37,7 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:[self equation] forKey:EDGraphAttributeEquation];
     [aCoder encodeBool:[self hasGridLines] forKey:EDGraphAttributeGrideLines];
-    [aCoder encodeBool:[self hasTickMarks] forKey:EDGraphAttributeTickMarks];
+    [aCoder encodeBool:[self hasTickMarks] forKey:EDGraphAttributeCoordinateAxes];
     [aCoder encodeBool:[self selected] forKey:EDElementAttributeSelected];
     [aCoder encodeFloat:[self locationX] forKey:EDElementAttributeLocationX];
     [aCoder encodeFloat:[self locationY] forKey:EDElementAttributeLocationY];

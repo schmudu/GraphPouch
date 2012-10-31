@@ -65,6 +65,7 @@ NSString * const EDElementAttributeHeight                       = @"elementHeigh
 
 // graph attributes
 NSString * const EDGraphAttributeTickMarks                      = @"hasTickMarks";
+NSString * const EDGraphAttributeCoordinateAxes                 = @"hasCoordinateAxes";
 NSString * const EDGraphAttributeEquation                       = @"equation";
 NSString * const EDGraphAttributeGrideLines                     = @"hasGridLines";
 float const EDGraphDefaultHeight                                = 30.0;

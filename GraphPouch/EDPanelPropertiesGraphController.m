@@ -20,6 +20,7 @@
 - (void)setElementLabelY;
 - (void)setLabelState:(NSTextField *)label hasChange:(BOOL)diff value:(float)labelValue;
 - (void)changeElementsAttributes:(float)newWidth height:(float)newHeight locationX:(float)newXPos locationY:(float)newYPos;
+- (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue;
 - (NSMutableDictionary *)checkForSameValueInLabelsForKey:(NSString *)key;
 @end
 
@@ -111,6 +112,21 @@
     }
 }
 
+- (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue{
+    EDElement *newElement, *currentElement;
+    int i = 0;
+    NSMutableArray *elements = [_coreData getAllSelectedObjects];
+    while (i < [elements count]) {
+     currentElement = [elements objectAtIndex:i];
+        
+        newElement = currentElement;
+        [newElement setValue:newValue forKey:key];
+        
+        [elements replaceObjectAtIndex:i withObject:newElement];
+        i++;
+    }
+}
+
 - (NSMutableDictionary *)checkForSameValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSMutableArray *elements = [[NSMutableArray alloc] init];
@@ -145,6 +161,11 @@
 #pragma mark text field delegation
 - (void)controlTextDidEndEditing:(NSNotification *)obj{
     [self changeElementsAttributes:[[labelWidth stringValue] floatValue] height:[[labelHeight stringValue] floatValue] locationX:[[labelX stringValue] floatValue] locationY:[[labelY stringValue] floatValue]];
+}
+
+#pragma mark checkbox
+- (IBAction)toggleHasCoordinateAxes:(id)sender{
+    [self changeSelectedElementsAttribute:EDGraphAttributeCoordinateAxes newValue:[[NSNumber alloc] initWithBool:[checkboxHasCoordinates state]]];
 }
 
 @end

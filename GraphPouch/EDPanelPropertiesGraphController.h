@@ -14,5 +14,8 @@
     IBOutlet NSTextField *labelHeight;
     IBOutlet NSTextField *labelX;
     IBOutlet NSTextField *labelY;
+    IBOutlet NSButton *checkboxHasCoordinates;
 }
+
+- (IBAction)toggleHasCoordinateAxes:(id)sender;
 @end

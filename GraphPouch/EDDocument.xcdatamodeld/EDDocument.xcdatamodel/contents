@@ -9,6 +9,7 @@
     </entity>
     <entity name="EDGraph" representedClassName="EDGraph" parentEntity="EDElement" syncable="YES">
         <attribute name="equation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hasCoordinateAxes" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="hasGridLines" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="hasTickMarks" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="graphs" inverseEntity="EDPage" syncable="YES"/>
@@ -21,7 +22,7 @@
     </entity>
     <elements>
         <element name="EDElement" positionX="160" positionY="192" width="128" height="120"/>
-        <element name="EDGraph" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="EDGraph" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDPage" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>
