@@ -69,6 +69,7 @@ NSString * const EDGraphAttributeEquation                       = @"equation";
 NSString * const EDGraphAttributeGrideLines                     = @"hasGridLines";
 float const EDGraphDefaultHeight                                = 30.0;
 float const EDGraphDefaultWidth                                 = 30.0;
+float const EDGraphDefaultCoordinateLineWidth                   = 2.0;
 
 // window
 NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";

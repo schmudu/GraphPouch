@@ -18,7 +18,6 @@
 
 @interface EDDocument()
 - (void)onMainWindowClosed:(NSNotification *)note;
-- (void)onShortcutNewPage:(NSNotification *)note;
 @end
 
 @implementation EDDocument
@@ -39,7 +38,6 @@
         menuController = [[EDMenuController alloc] init];
         
         // listen
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onShortcutNewPage:) name:EDEventShortcutNewPage object:menuController];
     }
     return self;
 }

@@ -69,6 +69,7 @@ extern NSString *const EDElementAttributeHeight;
 // graphs
 extern float const EDGraphDefaultHeight;
 extern float const EDGraphDefaultWidth;
+extern float const EDGraphDefaultCoordinateLineWidth;
 
 // window
 extern NSString *const EDEventWindowDidResize;
