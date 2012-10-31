@@ -46,6 +46,7 @@
     [self setElementLabelWidth];
     [self setElementLabelX];
     [self setElementLabelY];
+    [self setElementHasCoordinateAxes];
 }
 
 #pragma mark labels
@@ -86,6 +87,7 @@
     NSMutableDictionary *results = [self checkForSameBoolValueInLabelsForKey:EDGraphAttributeCoordinateAxes];
     
     // set state
+    NSLog(@"diff?%d", [[results valueForKey:EDKeyDiff] boolValue]);
     if ([[results valueForKey:EDKeyDiff] boolValue]) {
         [checkboxHasCoordinates setState:NSMixedState];
     }
@@ -210,6 +212,10 @@
 
 #pragma mark checkbox
 - (IBAction)toggleHasCoordinateAxes:(id)sender{
+    // if toggle then set state to on
+    if([checkboxHasCoordinates state] == NSMixedState)
+        [checkboxHasCoordinates setState:NSOnState];
+    
     [self changeSelectedElementsAttribute:EDGraphAttributeCoordinateAxes newValue:[[NSNumber alloc] initWithBool:[checkboxHasCoordinates state]]];
 }
 
