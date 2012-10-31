@@ -21,7 +21,8 @@
 - (void)setLabelState:(NSTextField *)label hasChange:(BOOL)diff value:(float)labelValue;
 - (void)changeElementsAttributes:(float)newWidth height:(float)newHeight locationX:(float)newXPos locationY:(float)newYPos;
 - (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue;
-- (NSMutableDictionary *)checkForSameValueInLabelsForKey:(NSString *)key;
+- (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key;
+- (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key;
 @end
 
 @implementation EDPanelPropertiesGraphController
@@ -50,7 +51,7 @@
 #pragma mark labels
 - (void)setElementLabelHeight{
     // find if there are differences in values of selected objects
-    NSMutableDictionary *results = [self checkForSameValueInLabelsForKey:EDElementAttributeHeight];
+    NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:EDElementAttributeHeight];
     
     // set label state
     [self setLabelState:labelHeight hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
@@ -58,7 +59,7 @@
 
 - (void)setElementLabelWidth{
     // find if there are differences in values of selected objects
-    NSMutableDictionary *results = [self checkForSameValueInLabelsForKey:EDElementAttributeWidth];
+    NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:EDElementAttributeWidth];
     
     // set label state
     [self setLabelState:labelWidth hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
@@ -66,7 +67,7 @@
 
 - (void)setElementLabelX{
     // find if there are differences in values of selected objects
-    NSMutableDictionary *results = [self checkForSameValueInLabelsForKey:EDElementAttributeLocationX];
+    NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:EDElementAttributeLocationX];
     
     // set label state
     [self setLabelState:labelX hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
@@ -74,10 +75,26 @@
 
 - (void)setElementLabelY{
     // find if there are differences in values of selected objects
-    NSMutableDictionary *results = [self checkForSameValueInLabelsForKey:EDElementAttributeLocationY];
+    NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:EDElementAttributeLocationY];
     
     // set label state
     [self setLabelState:labelY hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
+}
+
+- (void)setElementHasCoordinateAxes{
+    // find if there are differences in values of selected objects
+    NSMutableDictionary *results = [self checkForSameBoolValueInLabelsForKey:EDGraphAttributeCoordinateAxes];
+    
+    // set state
+    if ([[results valueForKey:EDKeyDiff] boolValue]) {
+        [checkboxHasCoordinates setState:NSMixedState];
+    }
+    else {
+        if ([[results valueForKey:EDKeyValue] boolValue]) 
+            [checkboxHasCoordinates setState:NSOnState];
+        else
+            [checkboxHasCoordinates setState:NSOffState];
+    }
 }
 
 #pragma mark validate label state
@@ -127,7 +144,7 @@
     }
 }
 
-- (NSMutableDictionary *)checkForSameValueInLabelsForKey:(NSString *)key{
+- (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSMutableArray *elements = [[NSMutableArray alloc] init];
     NSArray *graphs = [EDGraph findAllSelectedObjects];
@@ -141,12 +158,10 @@
     while ((i < [elements count]) && (!diff)) {
         currentElement = [elements objectAtIndex:i];
         // if not the first and current width is not the same as previous width
-        //if((i != 0) && (value != [currentElement locationY])){
         if((i != 0) && (value != [[currentElement valueForKey:key] floatValue])){
             diff = TRUE;
         }
         else {
-            //value = [currentElement locationY];
             value = [[currentElement valueForKey:key] floatValue];
         }
         i++;
@@ -154,6 +169,36 @@
     
     // set results
     [results setValue:[[NSNumber alloc] initWithFloat:value] forKey:EDKeyValue];
+    [results setValue:[[NSNumber alloc] initWithBool:diff] forKey:EDKeyDiff];
+    return results;
+}
+
+- (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key{
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    NSMutableArray *elements = [[NSMutableArray alloc] init];
+    NSArray *graphs = [EDGraph findAllSelectedObjects];
+    BOOL diff = FALSE;
+    int i = 0;
+    float value = 0;
+    EDElement *currentElement;
+    
+#warning add other elements here
+    [elements addObjectsFromArray:graphs];
+    while ((i < [elements count]) && (!diff)) {
+        currentElement = [elements objectAtIndex:i];
+        // if not the first and current width is not the same as previous width
+        if((i != 0) && (value != [[currentElement valueForKey:key] boolValue])){
+            diff = TRUE;
+        }
+        else {
+            //value = [currentElement locationY];
+            value = [[currentElement valueForKey:key] boolValue];
+        }
+        i++;
+    }
+    
+    // set results
+    [results setValue:[[NSNumber alloc] initWithBool:value] forKey:EDKeyValue];
     [results setValue:[[NSNumber alloc] initWithBool:diff] forKey:EDKeyDiff];
     return results;
 }
