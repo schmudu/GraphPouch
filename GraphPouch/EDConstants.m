@@ -84,6 +84,7 @@ float const EDGridAlpha                                         = 0.8;
 NSString * const EDKeyGridFactor                                = @"EDKeyGridFactor";
 NSString * const EDKeyDistanceIncrement                         = @"EDKeyDistanceIncrement";
 NSString * const EDKeyGridLinesCount                            = @"EDKeyGridLinesCount";
+float const EDGraphTickLength                                   = 4;
 
 // window
 NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";

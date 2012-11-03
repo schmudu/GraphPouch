@@ -37,7 +37,8 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:[self equation] forKey:EDGraphAttributeEquation];
     [aCoder encodeBool:[self hasGridLines] forKey:EDGraphAttributeGrideLines];
-    [aCoder encodeBool:[self hasTickMarks] forKey:EDGraphAttributeCoordinateAxes];
+    [aCoder encodeBool:[self hasTickMarks] forKey:EDGraphAttributeTickMarks];
+    [aCoder encodeBool:[self hasCoordinateAxes] forKey:EDGraphAttributeCoordinateAxes];
     [aCoder encodeBool:[self selected] forKey:EDElementAttributeSelected];
     [aCoder encodeFloat:[self locationX] forKey:EDElementAttributeLocationX];
     [aCoder encodeFloat:[self locationY] forKey:EDElementAttributeLocationY];

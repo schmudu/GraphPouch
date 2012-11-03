@@ -16,8 +16,10 @@
     IBOutlet NSTextField *labelY;
     IBOutlet NSButton *checkboxHasCoordinates;
     IBOutlet NSButton *checkboxGrid;
+    IBOutlet NSButton *checkboxHasTickMarks;
 }
 
 - (IBAction)toggleHasCoordinateAxes:(id)sender;
 - (IBAction)toggleHasGrid:(id)sender;
+- (IBAction)toggleHasTickMarks:(id)sender;
 @end

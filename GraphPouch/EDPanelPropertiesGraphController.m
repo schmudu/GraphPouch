@@ -48,6 +48,7 @@
     [self setElementLabelY];
     [self setElementHasCoordinateAxes];
     [self setElementHasGrid];
+    [self setElementHasTickMarks];
 }
 
 #pragma mark labels
@@ -112,6 +113,22 @@
             [checkboxGrid setState:NSOnState];
         else
             [checkboxGrid setState:NSOffState];
+    }
+}
+
+- (void)setElementHasTickMarks{
+    // find if there are differences in values of selected objects
+    NSMutableDictionary *results = [self checkForSameBoolValueInLabelsForKey:EDGraphAttributeTickMarks];
+    
+    // set state
+    if ([[results valueForKey:EDKeyDiff] boolValue]) {
+        [checkboxHasTickMarks setState:NSMixedState];
+    }
+    else {
+        if ([[results valueForKey:EDKeyValue] boolValue]) 
+            [checkboxHasTickMarks setState:NSOnState];
+        else
+            [checkboxHasTickMarks setState:NSOffState];
     }
 }
 
@@ -243,4 +260,11 @@
     [self changeSelectedElementsAttribute:EDGraphAttributeCoordinateAxes newValue:[[NSNumber alloc] initWithBool:[checkboxHasCoordinates state]]];
 }
 
+- (IBAction)toggleHasTickMarks:(id)sender{
+    // if toggle then set state to on
+    if([checkboxHasTickMarks state] == NSMixedState)
+        [checkboxHasTickMarks setState:NSOnState];
+    
+    [self changeSelectedElementsAttribute:EDGraphAttributeTickMarks newValue:[[NSNumber alloc] initWithBool:[checkboxHasTickMarks state]]];
+}
 @end

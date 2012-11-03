@@ -84,6 +84,7 @@ extern float const EDGridAlpha;
 extern NSString *const EDKeyDistanceIncrement;
 extern NSString *const EDKeyGridFactor;
 extern NSString *const EDKeyGridLinesCount;
+extern float const EDGraphTickLength;
 
 // window
 extern NSString *const EDEventWindowDidResize;
