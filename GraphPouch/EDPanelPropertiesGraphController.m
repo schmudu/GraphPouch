@@ -47,6 +47,7 @@
     [self setElementLabelX];
     [self setElementLabelY];
     [self setElementHasCoordinateAxes];
+    [self setElementHasGrid];
 }
 
 #pragma mark labels
@@ -87,7 +88,6 @@
     NSMutableDictionary *results = [self checkForSameBoolValueInLabelsForKey:EDGraphAttributeCoordinateAxes];
     
     // set state
-    NSLog(@"diff?%d", [[results valueForKey:EDKeyDiff] boolValue]);
     if ([[results valueForKey:EDKeyDiff] boolValue]) {
         [checkboxHasCoordinates setState:NSMixedState];
     }
@@ -96,6 +96,22 @@
             [checkboxHasCoordinates setState:NSOnState];
         else
             [checkboxHasCoordinates setState:NSOffState];
+    }
+}
+
+- (void)setElementHasGrid{
+    // find if there are differences in values of selected objects
+    NSMutableDictionary *results = [self checkForSameBoolValueInLabelsForKey:EDGraphAttributeGrideLines];
+    
+    // set state
+    if ([[results valueForKey:EDKeyDiff] boolValue]) {
+        [checkboxGrid setState:NSMixedState];
+    }
+    else {
+        if ([[results valueForKey:EDKeyValue] boolValue]) 
+            [checkboxGrid setState:NSOnState];
+        else
+            [checkboxGrid setState:NSOffState];
     }
 }
 
@@ -211,6 +227,14 @@
 }
 
 #pragma mark checkbox
+- (IBAction)toggleHasGrid:(id)sender{
+    // if toggle then set state to on
+    if([checkboxGrid state] == NSMixedState)
+        [checkboxGrid setState:NSOnState];
+    
+    [self changeSelectedElementsAttribute:EDGraphAttributeGrideLines newValue:[[NSNumber alloc] initWithBool:[checkboxGrid state]]];
+}
+
 - (IBAction)toggleHasCoordinateAxes:(id)sender{
     // if toggle then set state to on
     if([checkboxHasCoordinates state] == NSMixedState)

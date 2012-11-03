@@ -71,6 +71,15 @@ extern NSString *const EDElementAttributeHeight;
 extern float const EDGraphDefaultHeight;
 extern float const EDGraphDefaultWidth;
 extern float const EDGraphDefaultCoordinateLineWidth;
+extern float const EDCoordinateArrowWidth;
+extern float const EDCoordinateArrowLength;
+extern float const EDGridDistanceMinimumThreshold;
+extern int const EDGridMaximum;
+extern float const EDGridIncrementalMaximum;
+extern float const EDGridIncrementalMinimum;
+extern NSString *const EDKeyDistanceIncrement;
+extern NSString *const EDKeyGridFactor;
+extern NSString *const EDKeyGridLinesCount;
 
 // window
 extern NSString *const EDEventWindowDidResize;

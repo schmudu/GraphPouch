@@ -70,7 +70,16 @@ NSString * const EDGraphAttributeEquation                       = @"equation";
 NSString * const EDGraphAttributeGrideLines                     = @"hasGridLines";
 float const EDGraphDefaultHeight                                = 30.0;
 float const EDGraphDefaultWidth                                 = 30.0;
-float const EDGraphDefaultCoordinateLineWidth                   = 2.0;
+float const EDGraphDefaultCoordinateLineWidth                   = 1.5;
+float const EDCoordinateArrowWidth                              = 5.0;
+float const EDCoordinateArrowLength                             = 10.0;
+float const EDGridDistanceMinimumThreshold                      = 20.0;
+int const EDGridMaximum                                         = 10;
+float const EDGridIncrementalMaximum                            = 50;
+float const EDGridIncrementalMinimum                            = 20;
+NSString * const EDKeyGridFactor                                = @"EDKeyGridFactor";
+NSString * const EDKeyDistanceIncrement                         = @"EDKeyDistanceIncrement";
+NSString * const EDKeyGridLinesCount                            = @"EDKeyGridLinesCount";
 
 // window
 NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";
