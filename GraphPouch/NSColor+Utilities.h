@@ -10,5 +10,5 @@
 
 @interface NSColor (Utilities)
 +(NSColor*)colorWithHexColorString:(NSString*)inColorString;
-    
++(NSColor*)colorWithHexColorString:(NSString*)inColorString alpha:(float)alpha;
 @end

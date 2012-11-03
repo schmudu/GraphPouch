@@ -13,10 +13,12 @@
 #import "NSObject+Document.h"
 #import "EDGraph.h"
 #import "EDConstants.h"
+#import "NSColor+Utilities.h"
 
 @interface EDGraphView()
 - (NSArray *)getLowestIntegralFactors:(int)number;
 - (NSMutableDictionary *)calculateGridIncrement:(int)maxValue length:(float)length;
+- (void)drawCoordinateAxes;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal;
 @end
 
@@ -47,53 +49,53 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // set background
-    if ([[self dataObj] isSelectedElement]){
-        [[NSColor redColor] set];
-    }
-    else {
-        [[NSColor greenColor] set];
-    }
-    
-    [NSBezierPath fillRect:[self bounds]];
-    
-    // stroke coordinate axes
-    if ([(EDGraph *)[self dataObj] hasCoordinateAxes]) {
-        NSBezierPath *path = [NSBezierPath bezierPath];
-        float height = [self frame].size.height;
-        float width = [self frame].size.width;
-        [[NSColor blackColor] setStroke];
-        
-        //draw x-axis
-        [path moveToPoint:NSMakePoint(0, height/2)];
-        [path lineToPoint:NSMakePoint(width, height/2)];
-        
-        // draw x-axis arrow
-        [path moveToPoint:NSMakePoint(width - EDCoordinateArrowLength, height/2 + EDCoordinateArrowWidth)];
-        [path lineToPoint:NSMakePoint(width , height/2)];
-        [path lineToPoint:NSMakePoint(width - EDCoordinateArrowLength, height/2 - EDCoordinateArrowWidth)];
-        
-        // draw y-axis
-        [path moveToPoint:NSMakePoint(width/2, 0)];
-        [path lineToPoint:NSMakePoint(width/2, height)];
-        
-        // draw y-axis arrow
-        [path moveToPoint:NSMakePoint(width/2 - EDCoordinateArrowWidth, 0 + EDCoordinateArrowLength)];
-        [path lineToPoint:NSMakePoint(width/2, 0)];
-        [path lineToPoint:NSMakePoint(width/2 + EDCoordinateArrowWidth, 0 + EDCoordinateArrowLength)];
-        
-        [path setLineWidth:EDGraphDefaultCoordinateLineWidth];
-        [path stroke];
-    }
     
     // stroke grid
     if ([(EDGraph *)[self dataObj] hasGridLines]) {
         NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];
         NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
-        NSLog(@"going to draw lines: length:%f no grid lines:%d distance:%f factor:%d", [self frame].size.height/2, [[verticalResults objectForKey:EDKeyGridLinesCount] intValue], [[verticalResults objectForKey:EDKeyDistanceIncrement] floatValue], [[verticalResults objectForKey:EDKeyGridFactor] intValue]);
         [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults];
-        // draw horizontal lines
     }
+    
+    // stroke coordinate axes
+    if ([(EDGraph *)[self dataObj] hasCoordinateAxes]) {
+        [self drawCoordinateAxes];
+    }
+    
+    // color background
+    if ([[self dataObj] isSelectedElement]){
+        [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
+        [NSBezierPath fillRect:[self bounds]];
+    }
+    
+}
+
+- (void)drawCoordinateAxes{
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    float height = [self frame].size.height;
+    float width = [self frame].size.width;
+    [[NSColor blackColor] setStroke];
+    
+    //draw x-axis
+    [path moveToPoint:NSMakePoint(0, height/2)];
+    [path lineToPoint:NSMakePoint(width, height/2)];
+    
+    // draw x-axis arrow
+    [path moveToPoint:NSMakePoint(width - EDCoordinateArrowLength, height/2 + EDCoordinateArrowWidth)];
+    [path lineToPoint:NSMakePoint(width , height/2)];
+    [path lineToPoint:NSMakePoint(width - EDCoordinateArrowLength, height/2 - EDCoordinateArrowWidth)];
+    
+    // draw y-axis
+    [path moveToPoint:NSMakePoint(width/2, 0)];
+    [path lineToPoint:NSMakePoint(width/2, height)];
+    
+    // draw y-axis arrow
+    [path moveToPoint:NSMakePoint(width/2 - EDCoordinateArrowWidth, 0 + EDCoordinateArrowLength)];
+    [path lineToPoint:NSMakePoint(width/2, 0)];
+    [path lineToPoint:NSMakePoint(width/2 + EDCoordinateArrowWidth, 0 + EDCoordinateArrowLength)];
+    
+    [path setLineWidth:EDGraphDefaultCoordinateLineWidth];
+    [path stroke];
 }
 
 - (NSMutableDictionary *)calculateGridIncrement:(int)maxValue length:(float)length{
@@ -105,7 +107,7 @@
     // check if distance falls within bounds
     for (NSNumber *factor in factors){
         distanceIncrement = length/[factor floatValue];
-        //NSLog(@"distance:%f, length:%f, factor:%f", distanceIncrement, length, [factor floatValue]);
+        
         // if grid distance falls within the bounds of the thresholds then return that value
         if ((distanceIncrement < EDGridIncrementalMaximum) && (distanceIncrement > EDGridIncrementalMinimum)){
             // get number of grid lines
@@ -131,12 +133,12 @@
     int numGridLines = [[gridInfoVertical objectForKey:EDKeyGridLinesCount] intValue]*2;
     float distanceIncrement = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     
-    //NSLog(@"after mod: going to draw lines:%d increment distance:%f", numGridLinesVertical, distanceIncrementVertical);
     // set stroke
-    [[NSColor grayColor] setStroke];
-     
+    //[[NSColor grayColor] setStroke];
+    [[NSColor colorWithHexColorString:EDGridColor alpha:EDGridAlpha] setStroke];
+    
     // draw vertical lines
-    for (int i=0; i<numGridLines; i++) {
+    for (int i=0; i<=numGridLines; i++) {
         [path moveToPoint:NSMakePoint(0, i*distanceIncrement)];
         [path lineToPoint:NSMakePoint([self frame].size.width, i*distanceIncrement)];
     }
@@ -146,7 +148,7 @@
     distanceIncrement = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
     
     // draw horizontal lines
-    for (int i=0; i<numGridLines; i++) {
+    for (int i=0; i<=numGridLines; i++) {
         [path moveToPoint:NSMakePoint(i*distanceIncrement, 0)];
         [path lineToPoint:NSMakePoint(i*distanceIncrement, [self frame].size.height)];
     }
