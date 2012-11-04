@@ -12,6 +12,7 @@
 #import "EDConstants.h"
 #import "NSObject+Document.h"
 #import "NSColor+Utilities.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @interface EDPanelPropertiesGraphController ()
 - (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute;
@@ -106,7 +107,7 @@
 - (void)changeElementsAttributes:(float)newWidth height:(float)newHeight locationX:(float)newXPos locationY:(float)newYPos{
     EDElement *newElement, *currentElement;
     int i = 0;
-    NSMutableArray *elements = [_coreData getAllSelectedObjects];
+    NSMutableArray *elements = [_coreData getAllSelectedWorksheetElements];
     //for (EDElement *element in elements){
     while (i < [elements count]) {
      currentElement = [elements objectAtIndex:i];
@@ -125,7 +126,7 @@
 - (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue{
     EDElement *newElement, *currentElement;
     int i = 0;
-    NSMutableArray *elements = [_coreData getAllSelectedObjects];
+    NSMutableArray *elements = [_coreData getAllSelectedWorksheetElements];
     while (i < [elements count]) {
      currentElement = [elements objectAtIndex:i];
         
@@ -213,8 +214,19 @@
 - (IBAction)toggleHasCoordinateAxes:(id)sender{
 #warning need to set tick marks checkbox as well
     // if toggle then set state to on
-    if([checkboxHasCoordinates state] == NSMixedState)
+    // if toggled to off then turn tick marks off as well, and disable it
+    if([checkboxHasCoordinates state] == NSOffState){
+        [checkboxHasTickMarks setState:NSOffState];
+        [checkboxHasTickMarks setEnabled:FALSE];
+        [self changeSelectedElementsAttribute:EDGraphAttributeTickMarks newValue:[[NSNumber alloc] initWithBool:[checkboxHasTickMarks state]]];
+    }
+    else if([checkboxHasCoordinates state] == NSOnState){
+        [checkboxHasTickMarks setEnabled:TRUE];
+    }
+    else if([checkboxHasCoordinates state] == NSMixedState){
         [checkboxHasCoordinates setState:NSOnState];
+        [checkboxHasTickMarks setEnabled:TRUE];
+    }
     
     [self changeSelectedElementsAttribute:EDGraphAttributeCoordinateAxes newValue:[[NSNumber alloc] initWithBool:[checkboxHasCoordinates state]]];
 }
@@ -224,6 +236,36 @@
     if([checkboxHasTickMarks state] == NSMixedState)
         [checkboxHasTickMarks setState:NSOnState];
     
+    
     [self changeSelectedElementsAttribute:EDGraphAttributeTickMarks newValue:[[NSNumber alloc] initWithBool:[checkboxHasTickMarks state]]];
+}
+
+#pragma mark graph points
+- (IBAction)addNewPoint:(id)sender{
+    NSLog(@"add new point.");
+    // get currently selected graphs
+    
+    // create new point
+    //EDPoint *currentPage = [_coreData getCurrentPage];
+
+    // add point to currently selected graphs
+    
+    /*
+    EDGraph *newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+    
+    // add graph to page
+    [currentPage addGraphsObject:newGraph];
+    
+    // set graph attributes
+    [newGraph setPage:currentPage];
+    [newGraph setEquation:[[NSString alloc] initWithFormat:@"some equation"]];
+    [newGraph setHasGridLines:TRUE];
+    [newGraph setHasTickMarks:TRUE];
+    [newGraph setSelected:FALSE];
+    [newGraph setLocationX:50];
+    [newGraph setLocationY:150];
+    [newGraph setElementWidth:70];
+    [newGraph setElementHeight:70];
+     */
 }
 @end

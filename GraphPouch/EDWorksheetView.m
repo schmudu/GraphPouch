@@ -16,6 +16,7 @@
 #import "EDTransformRect.h"
 #import "NSObject+Worksheet.h"
 #import "NSMutableDictionary+Utilities.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @interface EDWorksheetView()
 - (void)drawGraph:(EDGraph *)graph;
@@ -195,7 +196,6 @@
 }*/
 
 - (void)keyDown:(NSEvent *)theEvent{
-    NSLog(@"worksheet view: first responder:%@", [[self window] firstResponder]);
     NSUInteger flags = [theEvent modifierFlags];
     if(flags == EDKeyModifierNone && [theEvent keyCode] == EDKeycodeDelete){
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventDeleteKeyPressedWithoutModifiers object:self];
@@ -287,7 +287,7 @@
 - (void)onElementMouseDown:(NSNotification *)note{
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
-    NSArray *selectedElements = [_coreData getAllSelectedObjects];
+    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];
     for (NSObject *myElement in [self subviews]){
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse down
@@ -310,7 +310,7 @@
 - (void)onElementMouseDragged:(NSNotification *)note{
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
-    NSArray *selectedElements = [_coreData getAllSelectedObjects];
+    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];
     for (NSObject *myElement in [self subviews]){
         //if(([myElement isWorksheetElement]) && (![selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
@@ -327,7 +327,7 @@
 - (void)onElementMouseUp:(NSNotification *)note{
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
-    NSArray *selectedElements = [_coreData getAllSelectedObjects];
+    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];
     for (NSObject *myElement in [self subviews]){
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
@@ -522,7 +522,7 @@
 - (NSMutableArray *)getAllSelectedWorksheetElementsViews{
     // get all the selected worksheet elements
     NSMutableArray *results = [[NSMutableArray alloc] init];
-    NSArray *selectedElements = [_coreData getAllSelectedObjects];
+    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];
     for (NSObject *myElement in [self subviews]){
         // only add if it's a worksheet element
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
@@ -536,7 +536,7 @@
 - (NSMutableArray *)getAllUnselectedWorksheetElementsViews{
     // get all the selected worksheet elements
     NSMutableArray *results = [[NSMutableArray alloc] init];
-    NSArray *selectedElements = [_coreData getAllSelectedObjects];
+    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];
     for (NSObject *myElement in [self subviews]){
         if(([myElement isWorksheetElement]) && (![selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             [results addObject:myElement];

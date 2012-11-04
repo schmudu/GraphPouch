@@ -25,6 +25,7 @@ extern NSString *const EDPreferencePropertyPanel;
 // entity name
 extern NSString *const EDEntityNameGraph;
 extern NSString *const EDEntityNamePage;
+extern NSString *const EDEntityNamePoint;
 
 // worksheet events
 extern NSString *const EDEventWorksheetClicked;
@@ -85,6 +86,9 @@ extern NSString *const EDKeyDistanceIncrement;
 extern NSString *const EDKeyGridFactor;
 extern NSString *const EDKeyGridLinesCount;
 extern float const EDGraphTickLength;
+
+// graph points
+extern NSString *const EDGraphPointAttributeVisible;
 
 // window
 extern NSString *const EDEventWindowDidResize;

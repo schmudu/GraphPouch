@@ -22,4 +22,5 @@
 - (IBAction)toggleHasCoordinateAxes:(id)sender;
 - (IBAction)toggleHasGrid:(id)sender;
 - (IBAction)toggleHasTickMarks:(id)sender;
+- (IBAction)addNewPoint:(id)sender;
 @end

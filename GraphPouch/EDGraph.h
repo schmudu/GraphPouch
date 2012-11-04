@@ -2,21 +2,29 @@
 //  EDGraph.h
 //  GraphPouch
 //
-//  Created by PATRICK LEE on 7/22/12.
+//  Created by PATRICK LEE on 11/4/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "EDElement.h"
-#import "NSManagedObject+EasyFetching.h"
-#import "EDPage.h"
 
-@interface EDGraph : EDElement <NSCoding>{
-}
+@class EDPage;
+@class EDPoint;
 
-@property NSString *equation;
-@property EDPage *page;
-@property BOOL hasTickMarks, hasGridLines, hasCoordinateAxes;
+@interface EDGraph : EDElement <NSCoding>
 
+@property (nonatomic, retain) NSString * equation;
+@property BOOL hasCoordinateAxes;
+@property BOOL hasGridLines;
+@property BOOL hasTickMarks;
+@property (nonatomic, retain) EDPage *page;
+@end
+
+@interface EDGraph (CoreDataGeneratedAccessors)
+- (void)addPointsObject:(EDPoint *)value;
+- (void)removePointsObject:(EDPoint *)value;
+- (void)addPoints:(NSSet *)values;
+- (void)removePoints:(NSSet *)values;
 @end

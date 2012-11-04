@@ -103,7 +103,7 @@
 
 #pragma mark mouse
 - (void)mouseDown:(NSEvent *)theEvent{
-    // make first responder
+    // make getAllSelectedWorksheetElements
     [[self window] makeFirstResponder:self];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesViewClicked object:self];

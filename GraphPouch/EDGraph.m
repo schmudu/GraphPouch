@@ -2,18 +2,23 @@
 //  EDGraph.m
 //  GraphPouch
 //
-//  Created by PATRICK LEE on 7/22/12.
+//  Created by PATRICK LEE on 11/4/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
 #import "EDGraph.h"
+#import "EDPage.h"
 #import "EDConstants.h"
-#import "NSManagedObject+EasyFetching.h"
 #import "EDCoreDataUtility.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @implementation EDGraph
 
-@dynamic equation, hasGridLines, hasTickMarks, hasCoordinateAxes, page;
+@dynamic equation;
+@dynamic hasCoordinateAxes;
+@dynamic hasGridLines;
+@dynamic hasTickMarks;
+@dynamic page;
 
 #pragma mark encoding, decoding this object
 

@@ -79,11 +79,11 @@
 #pragma mark mouse down
 - (void)mouseDown:(NSEvent *)theEvent{
 #warning CAREFUL: SOME code you change here needs to change in the "mouseDownBySelection" method
-    // set worksheet view as first responder
+    // set worksheet view as getAllSelectedWorksheetElements
     [[self window] makeFirstResponder:[self superview]];
     
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    [coreData getAllObjects];
+    [coreData getAllWorksheetElements];
     
     NSUInteger flags = [theEvent modifierFlags];
  
@@ -124,7 +124,7 @@
 
 - (void)mouseDownBySelection:(NSEvent *)theEvent{
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    [coreData getAllObjects];
+    [coreData getAllWorksheetElements];
     
     NSUInteger flags = [theEvent modifierFlags];
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];

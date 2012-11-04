@@ -25,6 +25,7 @@ NSString * const EDPreferencePropertyPanel                      = @"EDPreference
 // entity names
 NSString * const EDEntityNameGraph                              = @"EDGraph";
 NSString * const EDEntityNamePage                               = @"EDPage";
+NSString * const EDEntityNamePoint                              = @"EDPoint";
 
 // worksheet events
 NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";
@@ -85,6 +86,9 @@ NSString * const EDKeyGridFactor                                = @"EDKeyGridFac
 NSString * const EDKeyDistanceIncrement                         = @"EDKeyDistanceIncrement";
 NSString * const EDKeyGridLinesCount                            = @"EDKeyGridLinesCount";
 float const EDGraphTickLength                                   = 4;
+
+// graph points
+NSString * const EDGraphPointAttributeVisible                   = @"EDGraphPointAttributeVisible";
 
 // window
 NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";

@@ -61,7 +61,6 @@
         }
         
         if ([(EDGraph *)[self dataObj] hasTickMarks]) {
-            NSLog(@"going to draw tick marks.");
             [self drawTickMarks:verticalResults horizontal:horizontalResults];
         }
     }

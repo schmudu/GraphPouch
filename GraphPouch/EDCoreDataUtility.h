@@ -20,14 +20,14 @@
 - (NSManagedObjectContext *)context;
 
 // objects
-- (NSMutableArray *)getAllObjects;
+- (NSMutableArray *)getAllWorksheetElements;
 - (NSManagedObject *)getObject:(NSManagedObject *)object;
     
 // selection
-- (NSMutableArray *)getAllSelectedObjects;
-- (NSMutableDictionary *)getAllTypesOfSelectedObjects;
-- (void)clearSelectedElements;
-- (void)deleteSelectedElements;
+- (NSMutableArray *)getAllSelectedWorksheetElements;
+- (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements;
+- (void)clearSelectedWorksheetElements;
+- (void)deleteSelectedWorksheetElements;
 
 // graphs
 - (NSArray *)getAllGraphs;

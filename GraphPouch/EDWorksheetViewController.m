@@ -11,6 +11,7 @@
 #import "EDConstants.h"
 #import "EDGraph.h"
 #import "EDCoreDataUtility+Pages.h"
+#import "EDPoint.h"
 
 @interface EDWorksheetViewController ()
 - (void)deselectAllElements:(NSNotification *)note;
@@ -45,7 +46,7 @@
 
 - (void)deselectAllElements:(NSNotification *)note{
     // clear all the selected elements
-    [[EDCoreDataUtility sharedCoreDataUtility] clearSelectedElements];
+    [[EDCoreDataUtility sharedCoreDataUtility] clearSelectedWorksheetElements];
 }
 
 - (void)dealloc{
@@ -56,7 +57,7 @@
 }
 
 - (void)deleteSelectedElements:(NSNotification *)note{
-    [_coreData deleteSelectedElements];
+    [_coreData deleteSelectedWorksheetElements];
 }
 
 #pragma mark graphs
@@ -80,7 +81,6 @@
     [newGraph setElementWidth:70];
     [newGraph setElementHeight:70];
 }
-
 
 #pragma mark align
 - (void)alignElementsToTop:(NSNotification *)note{

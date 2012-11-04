@@ -10,6 +10,7 @@
 #import "EDGraph.h"
 #import "EDConstants.h"
 #import "NSObject+Document.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @interface EDCoreDataUtility()
 @end
@@ -49,7 +50,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return [filteredResults objectAtIndex:0];
 }
 
-- (NSMutableArray *)getAllObjects{
+- (NSMutableArray *)getAllWorksheetElements{
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *graphObjects = [self getAllGraphs];
     
@@ -82,7 +83,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return fetchResults;
 }
 
-- (NSMutableArray *)getAllSelectedObjects{
+- (NSMutableArray *)getAllSelectedWorksheetElements{
     // gets all selected objects
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *fetchedGraphs = [EDGraph findAllSelectedObjects];
@@ -93,7 +94,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return allObjects;
 }
 
-- (NSMutableDictionary *)getAllTypesOfSelectedObjects{
+- (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements{
     // this method returns a dictionary of the types of selected objects
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSArray *fetchedObjects;
@@ -109,7 +110,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return results;
 }
 
-- (void)clearSelectedElements{
+- (void)clearSelectedWorksheetElements{
     NSArray *fetchedObjects = [EDGraph findAllSelectedObjects];
     if (fetchedObjects == nil) {
         // Handle the error
@@ -121,8 +122,8 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }
 }
 
-- (void)deleteSelectedElements{
-    NSMutableArray *selectedElements = [self getAllSelectedObjects];
+- (void)deleteSelectedWorksheetElements{
+    NSMutableArray *selectedElements = [self getAllSelectedWorksheetElements];
     for (EDElement *element in selectedElements){
         [_context deleteObject:element];
     }

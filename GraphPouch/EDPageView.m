@@ -129,7 +129,7 @@
 }
 
 - (void)mouseDown:(NSEvent *)theEvent{
-    // make pages first responder
+    // make pages getAllSelectedWorksheetElements
     [[self window] makeFirstResponder:[self superview]];
     
     // store for drag operation

@@ -95,7 +95,7 @@
     EDPanelViewController *viewController;
     
     // get all the selected objects
-    NSMutableDictionary *selectedTypes = [_coreData getAllTypesOfSelectedObjects];
+    NSMutableDictionary *selectedTypes = [_coreData getAllTypesOfSelectedWorksheetElements];
     
 #warning add other elements here, need to check for other entities
     if([selectedTypes valueForKey:EDEntityNameGraph]){
