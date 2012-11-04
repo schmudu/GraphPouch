@@ -14,10 +14,9 @@
 #import "NSColor+Utilities.h"
 
 @interface EDPanelPropertiesGraphController ()
-- (void)setElementLabelHeight;
-- (void)setElementLabelWidth;
-- (void)setElementLabelX;
-- (void)setElementLabelY;
+- (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute;
+- (void)setElementHasCoordinateAxes;
+- (void)setElementCheckbox:(NSButton *)checkbox attribute:(NSString *)attribute;
 - (void)setLabelState:(NSTextField *)label hasChange:(BOOL)diff value:(float)labelValue;
 - (void)changeElementsAttributes:(float)newWidth height:(float)newHeight locationX:(float)newXPos locationY:(float)newYPos;
 - (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue;
@@ -40,51 +39,42 @@
 - (void)initWindowAfterLoaded{
     // this method will only be called if only graphs are shown
     // get all of the graphs selected
-    //NSArray *graphs = [EDGraph findAllSelectedObjects];
-    //NSLog(@"graph view did load: graphs: %@", graphs);
-    [self setElementLabelHeight];
-    [self setElementLabelWidth];
-    [self setElementLabelX];
-    [self setElementLabelY];
+    [self setElementLabel:labelHeight attribute:EDElementAttributeHeight];
+    [self setElementLabel:labelWidth attribute:EDElementAttributeWidth];
+    [self setElementLabel:labelX attribute:EDElementAttributeLocationX];
+    [self setElementLabel:labelY attribute:EDElementAttributeLocationY];
     [self setElementHasCoordinateAxes];
-    [self setElementHasGrid];
-    [self setElementHasTickMarks];
+    [self setElementCheckbox:checkboxGrid attribute:EDGraphAttributeGrideLines];
+    [self setElementCheckbox:checkboxHasTickMarks attribute:EDGraphAttributeTickMarks];
 }
 
 #pragma mark labels
-- (void)setElementLabelHeight{
+- (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute{
     // find if there are differences in values of selected objects
-    NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:EDElementAttributeHeight];
+    NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:attribute];
     
     // set label state
-    [self setLabelState:labelHeight hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
+    [self setLabelState:label hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
 }
 
-- (void)setElementLabelWidth{
+- (void)setElementCheckbox:(NSButton *)checkbox attribute:(NSString *)attribute{
     // find if there are differences in values of selected objects
-    NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:EDElementAttributeWidth];
+    NSMutableDictionary *results = [self checkForSameBoolValueInLabelsForKey:attribute];
     
-    // set label state
-    [self setLabelState:labelWidth hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
-}
-
-- (void)setElementLabelX{
-    // find if there are differences in values of selected objects
-    NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:EDElementAttributeLocationX];
-    
-    // set label state
-    [self setLabelState:labelX hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
-}
-
-- (void)setElementLabelY{
-    // find if there are differences in values of selected objects
-    NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:EDElementAttributeLocationY];
-    
-    // set label state
-    [self setLabelState:labelY hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
+    // set state
+    if ([[results valueForKey:EDKeyDiff] boolValue]) {
+        [checkbox setState:NSMixedState];
+    }
+    else {
+        if ([[results valueForKey:EDKeyValue] boolValue]) 
+            [checkbox setState:NSOnState];
+        else
+            [checkbox setState:NSOffState];
+    }
 }
 
 - (void)setElementHasCoordinateAxes{
+#warning need to set tick marks checkbox as well
     // find if there are differences in values of selected objects
     NSMutableDictionary *results = [self checkForSameBoolValueInLabelsForKey:EDGraphAttributeCoordinateAxes];
     
@@ -97,38 +87,6 @@
             [checkboxHasCoordinates setState:NSOnState];
         else
             [checkboxHasCoordinates setState:NSOffState];
-    }
-}
-
-- (void)setElementHasGrid{
-    // find if there are differences in values of selected objects
-    NSMutableDictionary *results = [self checkForSameBoolValueInLabelsForKey:EDGraphAttributeGrideLines];
-    
-    // set state
-    if ([[results valueForKey:EDKeyDiff] boolValue]) {
-        [checkboxGrid setState:NSMixedState];
-    }
-    else {
-        if ([[results valueForKey:EDKeyValue] boolValue]) 
-            [checkboxGrid setState:NSOnState];
-        else
-            [checkboxGrid setState:NSOffState];
-    }
-}
-
-- (void)setElementHasTickMarks{
-    // find if there are differences in values of selected objects
-    NSMutableDictionary *results = [self checkForSameBoolValueInLabelsForKey:EDGraphAttributeTickMarks];
-    
-    // set state
-    if ([[results valueForKey:EDKeyDiff] boolValue]) {
-        [checkboxHasTickMarks setState:NSMixedState];
-    }
-    else {
-        if ([[results valueForKey:EDKeyValue] boolValue]) 
-            [checkboxHasTickMarks setState:NSOnState];
-        else
-            [checkboxHasTickMarks setState:NSOffState];
     }
 }
 
@@ -253,6 +211,7 @@
 }
 
 - (IBAction)toggleHasCoordinateAxes:(id)sender{
+#warning need to set tick marks checkbox as well
     // if toggle then set state to on
     if([checkboxHasCoordinates state] == NSMixedState)
         [checkboxHasCoordinates setState:NSOnState];
