@@ -35,4 +35,22 @@
     [aCoder encodeFloat:[self locationY] forKey:EDElementAttributeLocationY];
 }
 
+- (id)copyWithZone:(NSZone *)zone{
+    id copy = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
+    if (copy) 
+    {
+        // Copy NSObject subclasses
+        /*
+        [copy setLocationX:[self locationX]];
+        [copy setLocationY:[self locationY]];
+        [copy setIsVisible:[self isVisible]];
+         */
+        [copy setLocationX:0];
+        [copy setLocationY:0];
+        [copy setIsVisible:TRUE];
+    }
+    
+    return copy;
+}
+
 @end

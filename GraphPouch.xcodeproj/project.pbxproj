@@ -30,7 +30,8 @@
 		CD1EBD8C160013D200BEEA4D /* EDFormatterDecimalSigned.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD8B160013D200BEEA4D /* EDFormatterDecimalSigned.m */; };
 		CD2DD578163ED449006557FC /* EDCoreDataUtility+Pages.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD577163ED449006557FC /* EDCoreDataUtility+Pages.m */; };
 		CD2DD5BC1646BC42006557FC /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5BB1646BC42006557FC /* EDGraph.m */; };
-		CD2DD5C31646E0DE006557FC /* EDPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5C21646E0DE006557FC /* EDPoint.m */; };
+		CD2DD5CF16470906006557FC /* EDPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5CE16470906006557FC /* EDPoint.m */; };
+		CD2DD5D416474144006557FC /* EDPanelPropertiesGraphTablePoints.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5D316474144006557FC /* EDPanelPropertiesGraphTablePoints.m */; };
 		CD3A4FE516359FC90042B6DD /* EDPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3A4FE416359FC90042B6DD /* EDPage.m */; };
 		CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9915BDF93400AB7567 /* EDGraphView.m */; };
 		CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */; };
@@ -106,8 +107,10 @@
 		CD2DD577163ED449006557FC /* EDCoreDataUtility+Pages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EDCoreDataUtility+Pages.m"; sourceTree = "<group>"; };
 		CD2DD5BA1646BC42006557FC /* EDGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraph.h; sourceTree = "<group>"; };
 		CD2DD5BB1646BC42006557FC /* EDGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraph.m; sourceTree = "<group>"; };
-		CD2DD5C11646E0DE006557FC /* EDPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EDPoint.h; path = ../EDPoint.h; sourceTree = "<group>"; };
-		CD2DD5C21646E0DE006557FC /* EDPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EDPoint.m; path = ../EDPoint.m; sourceTree = "<group>"; };
+		CD2DD5CD16470906006557FC /* EDPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPoint.h; sourceTree = "<group>"; };
+		CD2DD5CE16470906006557FC /* EDPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPoint.m; sourceTree = "<group>"; };
+		CD2DD5D216474144006557FC /* EDPanelPropertiesGraphTablePoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesGraphTablePoints.h; sourceTree = "<group>"; };
+		CD2DD5D316474144006557FC /* EDPanelPropertiesGraphTablePoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesGraphTablePoints.m; sourceTree = "<group>"; };
 		CD3A4FE316359FC90042B6DD /* EDPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPage.h; sourceTree = "<group>"; };
 		CD3A4FE416359FC90042B6DD /* EDPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPage.m; sourceTree = "<group>"; };
 		CD3F0A9815BDF93400AB7567 /* EDGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphView.h; sourceTree = "<group>"; };
@@ -276,14 +279,32 @@
 				CD1EBD6515FED65A00BEEA4D /* EDPanelProperties.xib */,
 				CD1EBD5915FED4B800BEEA4D /* EDPanelPropertiesController.h */,
 				CD1EBD5A15FED4B800BEEA4D /* EDPanelPropertiesController.m */,
-				CD1EBD6615FED65A00BEEA4D /* EDPanelPropertiesDocument.xib */,
-				CD1EBD7015FED75800BEEA4D /* EDPanelPropertiesDocumentController.h */,
-				CD1EBD7115FED75800BEEA4D /* EDPanelPropertiesDocumentController.m */,
+				CD2DD5D116474108006557FC /* Document */,
+				CD2DD5D0164740F9006557FC /* Graph */,
+			);
+			name = Properties;
+			sourceTree = "<group>";
+		};
+		CD2DD5D0164740F9006557FC /* Graph */ = {
+			isa = PBXGroup;
+			children = (
 				CD1EBD6715FED65A00BEEA4D /* EDPanelPropertiesGraph.xib */,
 				CD1EBD7215FED75900BEEA4D /* EDPanelPropertiesGraphController.h */,
 				CD1EBD7315FED75900BEEA4D /* EDPanelPropertiesGraphController.m */,
+				CD2DD5D216474144006557FC /* EDPanelPropertiesGraphTablePoints.h */,
+				CD2DD5D316474144006557FC /* EDPanelPropertiesGraphTablePoints.m */,
 			);
-			name = Properties;
+			name = Graph;
+			sourceTree = "<group>";
+		};
+		CD2DD5D116474108006557FC /* Document */ = {
+			isa = PBXGroup;
+			children = (
+				CD1EBD6615FED65A00BEEA4D /* EDPanelPropertiesDocument.xib */,
+				CD1EBD7015FED75800BEEA4D /* EDPanelPropertiesDocumentController.h */,
+				CD1EBD7115FED75800BEEA4D /* EDPanelPropertiesDocumentController.m */,
+			);
+			name = Document;
 			sourceTree = "<group>";
 		};
 		CD3F0AF515C4774900AB7567 /* View+Controllers */ = {
@@ -315,10 +336,10 @@
 				CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */,
 				CD2DD5BA1646BC42006557FC /* EDGraph.h */,
 				CD2DD5BB1646BC42006557FC /* EDGraph.m */,
+				CD2DD5CD16470906006557FC /* EDPoint.h */,
+				CD2DD5CE16470906006557FC /* EDPoint.m */,
 				CDE6D62E15DE774000E5695F /* EDElement.h */,
 				CDE6D62F15DE774000E5695F /* EDElement.m */,
-				CD2DD5C11646E0DE006557FC /* EDPoint.h */,
-				CD2DD5C21646E0DE006557FC /* EDPoint.m */,
 				CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */,
 				CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */,
 				CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */,
@@ -340,12 +361,12 @@
 				CD41B54C15BB024C00640E73 /* EDWorksheetView.m */,
 				CD41B54E15BB046B00640E73 /* EDWorksheetViewController.h */,
 				CD41B54F15BB046B00640E73 /* EDWorksheetViewController.m */,
-				CDD46E5A160435A900EDD75C /* Transform */,
-				CDD46E581604358F00EDD75C /* Element */,
-				CD3F0B0215C4785600AB7567 /* Table */,
 				CD3F0B0115C4784A00AB7567 /* Line */,
-				CD3F0B0015C4784600AB7567 /* Text */,
+				CDD46E581604358F00EDD75C /* Element */,
 				CD3F0AFF15C4784000AB7567 /* Graph */,
+				CDD46E5A160435A900EDD75C /* Transform */,
+				CD3F0B0215C4785600AB7567 /* Table */,
+				CD3F0B0015C4784600AB7567 /* Text */,
 			);
 			name = Worksheet;
 			sourceTree = "<group>";
@@ -654,7 +675,8 @@
 				CD3A4FE516359FC90042B6DD /* EDPage.m in Sources */,
 				CD2DD578163ED449006557FC /* EDCoreDataUtility+Pages.m in Sources */,
 				CD2DD5BC1646BC42006557FC /* EDGraph.m in Sources */,
-				CD2DD5C31646E0DE006557FC /* EDPoint.m in Sources */,
+				CD2DD5CF16470906006557FC /* EDPoint.m in Sources */,
+				CD2DD5D416474144006557FC /* EDPanelPropertiesGraphTablePoints.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

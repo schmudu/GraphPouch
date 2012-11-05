@@ -31,4 +31,7 @@
 
 // graphs
 - (NSArray *)getAllGraphs;
+
+// points
+- (NSDictionary *)getAllCommonPointsforSelectedGraphs;
 @end

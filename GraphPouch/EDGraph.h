@@ -20,6 +20,7 @@
 @property BOOL hasGridLines;
 @property BOOL hasTickMarks;
 @property (nonatomic, retain) EDPage *page;
+@property (nonatomic, retain) NSSet *points;
 @end
 
 @interface EDGraph (CoreDataGeneratedAccessors)

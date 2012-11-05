@@ -11,7 +11,7 @@
 
 @class EDGraph;
 
-@interface EDPoint : NSManagedObject <NSCoding>
+@interface EDPoint : NSManagedObject <NSCoding, NSCopying>
 
 @property float locationX;
 @property BOOL isVisible;

@@ -59,10 +59,11 @@ extern float const EDGuideShowThreshold;
 
 // attributes
 extern NSString *const EDGraphAttributeEquation;
-extern NSString *const EDGraphAttributeGrideLines;
+extern NSString *const EDGraphAttributeGridLines;
 extern NSString *const EDElementAttributeSelected;
 extern NSString *const EDGraphAttributeTickMarks;
 extern NSString *const EDGraphAttributeCoordinateAxes;
+extern NSString *const EDGraphAttributePoints;
 extern NSString *const EDElementAttributeLocationX;
 extern NSString *const EDElementAttributeLocationY;
 extern NSString *const EDElementAttributeWidth;

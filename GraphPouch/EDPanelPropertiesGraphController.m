@@ -8,6 +8,7 @@
 
 #import "EDPanelPropertiesGraphController.h"
 #import "EDGraph.h"
+#import "EDPoint.h"
 #import "EDElement.h"
 #import "EDConstants.h"
 #import "NSObject+Document.h"
@@ -45,7 +46,7 @@
     [self setElementLabel:labelX attribute:EDElementAttributeLocationX];
     [self setElementLabel:labelY attribute:EDElementAttributeLocationY];
     [self setElementHasCoordinateAxes];
-    [self setElementCheckbox:checkboxGrid attribute:EDGraphAttributeGrideLines];
+    [self setElementCheckbox:checkboxGrid attribute:EDGraphAttributeGridLines];
     [self setElementCheckbox:checkboxHasTickMarks attribute:EDGraphAttributeTickMarks];
 }
 
@@ -208,11 +209,10 @@
     if([checkboxGrid state] == NSMixedState)
         [checkboxGrid setState:NSOnState];
     
-    [self changeSelectedElementsAttribute:EDGraphAttributeGrideLines newValue:[[NSNumber alloc] initWithBool:[checkboxGrid state]]];
+    [self changeSelectedElementsAttribute:EDGraphAttributeGridLines newValue:[[NSNumber alloc] initWithBool:[checkboxGrid state]]];
 }
 
 - (IBAction)toggleHasCoordinateAxes:(id)sender{
-#warning need to set tick marks checkbox as well
     // if toggle then set state to on
     // if toggled to off then turn tick marks off as well, and disable it
     if([checkboxHasCoordinates state] == NSOffState){
@@ -242,30 +242,16 @@
 
 #pragma mark graph points
 - (IBAction)addNewPoint:(id)sender{
-    NSLog(@"add new point.");
     // get currently selected graphs
+    NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
     
-    // create new point
+    // create new point for each graph
     //EDPoint *currentPage = [_coreData getCurrentPage];
-
-    // add point to currently selected graphs
-    
-    /*
-    EDGraph *newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
-    
-    // add graph to page
-    [currentPage addGraphsObject:newGraph];
-    
-    // set graph attributes
-    [newGraph setPage:currentPage];
-    [newGraph setEquation:[[NSString alloc] initWithFormat:@"some equation"]];
-    [newGraph setHasGridLines:TRUE];
-    [newGraph setHasTickMarks:TRUE];
-    [newGraph setSelected:FALSE];
-    [newGraph setLocationX:50];
-    [newGraph setLocationY:150];
-    [newGraph setElementWidth:70];
-    [newGraph setElementHeight:70];
-     */
+    for (EDGraph *graph in selectedGraphs){
+        EDPoint *newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+        // set relationship
+        [graph addPointsObject:newPoint];
+    }
+    NSLog(@"selected graphs:%@", selectedGraphs);
 }
 @end

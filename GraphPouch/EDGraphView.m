@@ -14,6 +14,7 @@
 #import "EDGraph.h"
 #import "EDConstants.h"
 #import "NSColor+Utilities.h"
+#import "EDPoint.h"
 
 @interface EDGraphView()
 - (NSArray *)getLowestIntegralFactors:(int)number;
@@ -50,7 +51,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    
     // stroke grid
     if (([(EDGraph *)[self dataObj] hasTickMarks]) || ([(EDGraph *)[self dataObj] hasGridLines])) {
         NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];

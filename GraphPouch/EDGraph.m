@@ -8,6 +8,7 @@
 
 #import "EDGraph.h"
 #import "EDPage.h"
+#import "EDPoint.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
 #import "NSManagedObject+EasyFetching.h"
@@ -19,6 +20,7 @@
 @dynamic hasGridLines;
 @dynamic hasTickMarks;
 @dynamic page;
+@dynamic points;
 
 #pragma mark encoding, decoding this object
 
@@ -27,7 +29,7 @@
     self = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
     if(self){
         [self setEquation:[aDecoder decodeObjectForKey:EDGraphAttributeEquation]];
-        [self setHasGridLines:[aDecoder decodeBoolForKey:EDGraphAttributeGrideLines]];
+        [self setHasGridLines:[aDecoder decodeBoolForKey:EDGraphAttributeGridLines]];
         [self setHasTickMarks:[aDecoder decodeBoolForKey:EDGraphAttributeTickMarks]];
         [self setHasCoordinateAxes:[aDecoder decodeBoolForKey:EDGraphAttributeCoordinateAxes]];
         [self setSelected:[aDecoder decodeBoolForKey:EDElementAttributeSelected]];
@@ -35,13 +37,29 @@
         [self setLocationY:[aDecoder decodeFloatForKey:EDElementAttributeLocationY]];
         [self setElementWidth:[aDecoder decodeFloatForKey:EDElementAttributeWidth]];
         //[self setPage:[aDecoder decodeObjectForKey:EDGraphAttributePage]];
+        
+        EDPoint *newPoint;
+        NSSet *points = [aDecoder decodeObjectForKey:EDGraphAttributePoints];
+        
+        for (EDPoint *point in points){
+            // create a point and set it for this graph
+            newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]];
+            
+            //set attributes
+            [newPoint setLocationX:[point locationX]];
+            [newPoint setLocationY:[point locationY]];
+            [newPoint setIsVisible:[point isVisible]];
+            
+            // set relationship
+            [self addPointsObject:newPoint];
+        }
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:[self equation] forKey:EDGraphAttributeEquation];
-    [aCoder encodeBool:[self hasGridLines] forKey:EDGraphAttributeGrideLines];
+    [aCoder encodeBool:[self hasGridLines] forKey:EDGraphAttributeGridLines];
     [aCoder encodeBool:[self hasTickMarks] forKey:EDGraphAttributeTickMarks];
     [aCoder encodeBool:[self hasCoordinateAxes] forKey:EDGraphAttributeCoordinateAxes];
     [aCoder encodeBool:[self selected] forKey:EDElementAttributeSelected];
@@ -49,6 +67,7 @@
     [aCoder encodeFloat:[self locationY] forKey:EDElementAttributeLocationY];
     [aCoder encodeFloat:[self elementWidth] forKey:EDElementAttributeWidth];
     [aCoder encodeFloat:[self elementHeight] forKey:EDElementAttributeHeight];
+    [aCoder encodeObject:[self points] forKey:EDGraphAttributePoints];
     //[aCoder encodeObject:[self page] forKey:EDGraphAttributePage];
 }
 @end
