@@ -11,7 +11,7 @@
 #import "EDConstants.h"
 #import "NSObject+Document.h"
 #import "NSManagedObject+EasyFetching.h"
-#import "NSMutableDictionary+Utilities.h"
+#import "NSMutableArray+Utilities.h"
 
 @interface EDCoreDataUtility()
 @end
@@ -135,20 +135,21 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     // get all selected graphs
     NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
     // create dictionary of all the common points
-    NSMutableDictionary *commonPoints = [[NSMutableDictionary alloc] init];
+    NSMutableArray *commonPoints = [[NSMutableArray alloc] init];
     
     // add all points in first graph
     for (EDPoint *point in [[selectedGraphs objectAtIndex:0] points]){
-        [commonPoints setObject:point forKey:point];
+        //[commonPoints setObject:point forKey:point];
+        [commonPoints addObject:point];
     }
-    NSLog(@"number of selected graphs:%ld startingPoints:%ld", [selectedGraphs count], [commonPoints count]);
+    //NSLog(@"number of selected graphs:%ld startingPoints:%ld", [selectedGraphs count], [commonPoints count]);
     
     //iterate through graphs
     for (EDGraph *graph in selectedGraphs){
         // if no match
         for (EDPoint *graphPoint in [graph points]){
             if (![commonPoints containsPoint:graphPoint]){
-                NSLog(@"removing point:%@", graphPoint);
+                //NSLog(@"removing point:%@", graphPoint);
                 // no match so remove from common points
                 [commonPoints removePoint:graphPoint];
             }

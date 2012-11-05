@@ -12,6 +12,4 @@
 @interface NSMutableDictionary (Utilities)
 
 - (id)findKeyinDictionaryForValue:(id)value;
-- (BOOL)containsPoint:(EDPoint *)point;
-- (void)removePoint:(EDPoint *)point;
 @end
