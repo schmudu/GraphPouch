@@ -131,9 +131,15 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 }
 
 #pragma mark graph points
-- (NSDictionary *)getAllCommonPointsforSelectedGraphs{
+- (NSMutableArray *)getAllCommonPointsforSelectedGraphs{
     // get all selected graphs
     NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
+    
+    // return if empty
+    if ([selectedGraphs count] == 0){
+        return nil;
+    }
+    
     // create dictionary of all the common points
     NSMutableArray *commonPoints = [[NSMutableArray alloc] init];
     

@@ -11,11 +11,34 @@
 #import "EDPoint.h"
 #import "NSMutableArray+Utilities.h"
 
+@interface EDPanelPropertiesGraphTablePoints()
+- (void)onContextChanged:(NSNotification *)note;
+@end
+
 @implementation EDPanelPropertiesGraphTablePoints
+
+- (id)init{
+    self = [super init];
+    if (self){
+        // init
+        _context = [[EDCoreDataUtility sharedCoreDataUtility] context];
+        NSLog(@"init");
+        // listen
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+    }
+    return self;
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+}
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
     NSLog(@"number of rows");
-    NSDictionary *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    NSMutableArray *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    if (!commonPointsForSelectedGraphs) {
+        return 0;
+    }
     return [commonPointsForSelectedGraphs count];
 }
 
@@ -28,12 +51,18 @@
     NSString *columnIdentifier = [tableColumn identifier];
     
     // Get common points
-    NSDictionary *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    NSMutableArray *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
     NSMutableArray *commonPoints = [[NSMutableArray alloc] init];
     
+    // return if empty
+    if (!commonPointsForSelectedGraphs) {
+        return nil;
+    }
+    
     // populate array
-    for (id key in commonPointsForSelectedGraphs){
-        [commonPoints addObject:[commonPointsForSelectedGraphs objectForKey:key]];
+    for (EDPoint *point in commonPointsForSelectedGraphs){
+        //[commonPoints addObject:[commonPointsForSelectedGraphs objectForKey:key]];
+        [commonPoints addObject:point];
     }
     
     // sort
@@ -64,12 +93,13 @@
     NSString *columnIdentifier = [tableColumn identifier];
     
     // Get common points
-    NSDictionary *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    NSMutableArray *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
     NSMutableArray *commonPoints = [[NSMutableArray alloc] init];
     
     // populate array
-    for (id key in commonPointsForSelectedGraphs){
-        [commonPoints addObject:[commonPointsForSelectedGraphs objectForKey:key]];
+    for (EDPoint *point in commonPointsForSelectedGraphs){
+        //[commonPoints addObject:[commonPointsForSelectedGraphs objectForKey:key]];
+        [commonPoints addObject:point];
     }
     
     // sort
@@ -94,4 +124,13 @@
     
 }
 
+#pragma mark table delegate
+- (void)tableViewSelectionDidChange:(NSNotification *)notification{
+    NSLog(@"table view selction did change.");
+}
+
+- (void)onContextChanged:(NSNotification *)note{
+    [pointsTable reloadData];
+    //NSLog(@"context changed.");
+}
 @end

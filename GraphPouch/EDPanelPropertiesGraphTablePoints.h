@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface EDPanelPropertiesGraphTablePoints : NSObject <NSTableViewDataSource>
+@interface EDPanelPropertiesGraphTablePoints : NSObject <NSTableViewDataSource, NSTableViewDelegate>{
+    NSManagedObjectContext *_context;
+    IBOutlet NSTableView *pointsTable;
+}
 
 @end
