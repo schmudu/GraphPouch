@@ -17,10 +17,12 @@
     IBOutlet NSButton *checkboxHasCoordinates;
     IBOutlet NSButton *checkboxGrid;
     IBOutlet NSButton *checkboxHasTickMarks;
+    IBOutlet NSTableView *tablePoints;
 }
 
 - (IBAction)toggleHasCoordinateAxes:(id)sender;
 - (IBAction)toggleHasGrid:(id)sender;
 - (IBAction)toggleHasTickMarks:(id)sender;
 - (IBAction)addNewPoint:(id)sender;
+- (IBAction)removePoints:(id)sender;
 @end

@@ -254,4 +254,9 @@
     }
     NSLog(@"selected graphs:%@", selectedGraphs);
 }
+
+- (IBAction)removePoints:(id)sender{
+    // need to remove points
+    NSLog(@"remove points in table:%@",tablePoints);
+}
 @end

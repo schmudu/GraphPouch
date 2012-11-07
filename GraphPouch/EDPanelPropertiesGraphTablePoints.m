@@ -51,8 +51,10 @@
     NSString *columnIdentifier = [tableColumn identifier];
     
     // Get common points
-    NSMutableArray *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
-    NSMutableArray *commonPoints = [[NSMutableArray alloc] init];
+    NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    /*
+    NSArray *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+     NSMutableArray *commonPoints = [[NSMutableArray alloc] init];
     
     // return if empty
     if (!commonPointsForSelectedGraphs) {
@@ -64,7 +66,7 @@
         //[commonPoints addObject:[commonPointsForSelectedGraphs objectForKey:key]];
         [commonPoints addObject:point];
     }
-    
+    */
     // sort
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"locationX" ascending:TRUE];
     NSArray *descriptorArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
@@ -75,7 +77,7 @@
         returnValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[sortedArray objectAtIndex:row] locationX]];
     }
     else if ([columnIdentifier isEqualToString:@"y"]) {
-        returnValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[sortedArray objectAtIndex:row] locationX]];
+        returnValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[sortedArray objectAtIndex:row] locationY]];
     }
     else if ([columnIdentifier isEqualToString:@"visible"]) {
         returnValue = [[NSNumber alloc] initWithBool:[(EDPoint *)[sortedArray objectAtIndex:row] isVisible]];
@@ -93,6 +95,8 @@
     NSString *columnIdentifier = [tableColumn identifier];
     
     // Get common points
+    NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    /*
     NSMutableArray *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
     NSMutableArray *commonPoints = [[NSMutableArray alloc] init];
     
@@ -106,27 +110,36 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"locationX" ascending:TRUE];
     NSArray *descriptorArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     NSArray *sortedArray = [commonPoints sortedArrayUsingDescriptors:descriptorArray];
-    
-    
+    */
+    EDPoint *currentPoint = (EDPoint *)[commonPoints objectAtIndex:row];
+    NSLog(@"object core data?:%@ context:%@", currentPoint, [currentPoint managedObjectContext]);
     // set attribute of EDPoint
     if ([columnIdentifier isEqualToString:@"x"]) {
-        newValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[sortedArray objectAtIndex:row] locationX]];
-        [(EDPoint *)[sortedArray objectAtIndex:row] setLocationX:[newValue floatValue]];
+        newValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[commonPoints objectAtIndex:row] locationX]];
+        NSLog(@"changing x to:%@", object);
+        //[(EDPoint *)[commonPoints objectAtIndex:row] setLocationX:[newValue floatValue]];
+        [(EDPoint *)[commonPoints objectAtIndex:row] setLocationX:[object floatValue]];
     }
     else if ([columnIdentifier isEqualToString:@"y"]) {
-        newValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[sortedArray objectAtIndex:row] locationX]];
-        [(EDPoint *)[sortedArray objectAtIndex:row] setLocationX:[newValue floatValue]];
+        newValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[commonPoints objectAtIndex:row] locationX]];
+        [(EDPoint *)[commonPoints objectAtIndex:row] setLocationX:[newValue floatValue]];
     }
     else if ([columnIdentifier isEqualToString:@"visible"]) {
-        newValue = [[NSNumber alloc] initWithBool:[(EDPoint *)[sortedArray objectAtIndex:row] isVisible]];
-        [(EDPoint *)[sortedArray objectAtIndex:row] setIsVisible:[newValue boolValue]];
+        newValue = [[NSNumber alloc] initWithBool:[(EDPoint *)[commonPoints objectAtIndex:row] isVisible]];
+        [(EDPoint *)[commonPoints objectAtIndex:row] setIsVisible:[newValue boolValue]];
     }
     
 }
 
 #pragma mark table delegate
 - (void)tableViewSelectionDidChange:(NSNotification *)notification{
-    NSLog(@"table view selction did change.");
+    // if nothing selected
+    if ([pointsTable numberOfSelectedRows] == 0) {
+        [buttonPointRemove setEnabled:FALSE];
+    }
+    else{
+        [buttonPointRemove setEnabled:TRUE];
+    }
 }
 
 - (void)onContextChanged:(NSNotification *)note{

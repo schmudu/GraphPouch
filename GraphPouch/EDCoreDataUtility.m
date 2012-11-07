@@ -131,7 +131,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 }
 
 #pragma mark graph points
-- (NSMutableArray *)getAllCommonPointsforSelectedGraphs{
+- (NSArray *)getAllCommonPointsforSelectedGraphs{
     // get all selected graphs
     NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
     
@@ -161,6 +161,13 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
             }
         }
     }
-    return commonPoints;
+    
+    
+    // sort common points by x
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"locationX" ascending:TRUE];
+    NSArray *descriptorArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    NSArray *sortedArray = [commonPoints sortedArrayUsingDescriptors:descriptorArray];
+    
+    return sortedArray;
 }
 @end
