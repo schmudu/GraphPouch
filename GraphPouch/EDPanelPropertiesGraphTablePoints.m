@@ -11,6 +11,7 @@
 #import "EDPoint.h"
 #import "NSMutableArray+Utilities.h"
 #import "EDConstants.h"
+#import "EDCoreDataUtility+Points.h"
 
 @interface EDPanelPropertiesGraphTablePoints()
 - (void)onContextChanged:(NSNotification *)note;
@@ -23,7 +24,7 @@
     if (self){
         // init
         _context = [[EDCoreDataUtility sharedCoreDataUtility] context];
-        NSLog(@"init");
+        
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     }
@@ -35,8 +36,7 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    NSLog(@"number of rows");
-    NSMutableArray *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    NSArray *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
     if (!commonPointsForSelectedGraphs) {
         return 0;
     }
@@ -54,7 +54,7 @@
     // Get common points
     NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
     // sort
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"locationX" ascending:TRUE];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDElementAttributeLocationX ascending:TRUE];
     NSArray *descriptorArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     NSArray *sortedArray = [commonPoints sortedArrayUsingDescriptors:descriptorArray];
     
@@ -85,10 +85,8 @@
     EDPoint *currentPoint = (EDPoint *)[commonPoints objectAtIndex:row];
     EDPoint *newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
     NSMutableDictionary *newAttribute = [[NSMutableDictionary alloc] init];
-#warning change:EDPoint
-    [newPoint setLocationX:[currentPoint locationX]];
-    [newPoint setLocationY:[currentPoint locationY]];
-    [newPoint setIsVisible:[currentPoint isVisible]];
+    
+    [newPoint copyAttributes:currentPoint];
     
     if ([columnIdentifier isEqualToString:@"x"]) {
         [newAttribute setValue:EDElementAttributeLocationX forKey:EDKey];
@@ -102,17 +100,6 @@
         [newAttribute setValue:EDGraphPointAttributeVisible forKey:EDKey];
         [newAttribute setObject:object forKey:EDValue];
     }
-    /*
-    if ([columnIdentifier isEqualToString:@"x"]) {
-        [(EDPoint *)[commonPoints objectAtIndex:row] setLocationX:[object floatValue]];
-    }
-    else if ([columnIdentifier isEqualToString:@"y"]) {
-        [(EDPoint *)[commonPoints objectAtIndex:row] setLocationX:[object floatValue]];
-    }
-    else if ([columnIdentifier isEqualToString:@"visible"]) {
-        [(EDPoint *)[commonPoints objectAtIndex:row] setIsVisible:[object boolValue]];
-    }*/
-    NSLog(@"going to change edpoint that matches:%@", newPoint);
     
     // set the common points
     [[EDCoreDataUtility sharedCoreDataUtility] setAllCommonPointsforSelectedGraphs:newPoint attribute:newAttribute];

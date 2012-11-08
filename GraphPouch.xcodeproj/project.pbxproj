@@ -33,6 +33,7 @@
 		CD2DD5CF16470906006557FC /* EDPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5CE16470906006557FC /* EDPoint.m */; };
 		CD2DD5D416474144006557FC /* EDPanelPropertiesGraphTablePoints.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5D316474144006557FC /* EDPanelPropertiesGraphTablePoints.m */; };
 		CD2DD5DB1648813F006557FC /* NSMutableArray+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5DA1648813F006557FC /* NSMutableArray+Utilities.m */; };
+		CD2DD5F3164C7478006557FC /* EDCoreDataUtility+Points.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5F2164C7478006557FC /* EDCoreDataUtility+Points.m */; };
 		CD3A4FE516359FC90042B6DD /* EDPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3A4FE416359FC90042B6DD /* EDPage.m */; };
 		CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9915BDF93400AB7567 /* EDGraphView.m */; };
 		CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */; };
@@ -112,8 +113,10 @@
 		CD2DD5CE16470906006557FC /* EDPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPoint.m; sourceTree = "<group>"; };
 		CD2DD5D216474144006557FC /* EDPanelPropertiesGraphTablePoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesGraphTablePoints.h; sourceTree = "<group>"; };
 		CD2DD5D316474144006557FC /* EDPanelPropertiesGraphTablePoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesGraphTablePoints.m; sourceTree = "<group>"; };
-		CD2DD5D91648813F006557FC /* NSMutableArray+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; path = "NSMutableArray+Utilities.h"; sourceTree = "<group>"; };
+		CD2DD5D91648813F006557FC /* NSMutableArray+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Utilities.h"; sourceTree = "<group>"; };
 		CD2DD5DA1648813F006557FC /* NSMutableArray+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Utilities.m"; sourceTree = "<group>"; };
+		CD2DD5F1164C7478006557FC /* EDCoreDataUtility+Points.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Points.h"; sourceTree = "<group>"; };
+		CD2DD5F2164C7478006557FC /* EDCoreDataUtility+Points.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EDCoreDataUtility+Points.m"; sourceTree = "<group>"; };
 		CD3A4FE316359FC90042B6DD /* EDPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPage.h; sourceTree = "<group>"; };
 		CD3A4FE416359FC90042B6DD /* EDPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPage.m; sourceTree = "<group>"; };
 		CD3F0A9815BDF93400AB7567 /* EDGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphView.h; sourceTree = "<group>"; };
@@ -330,6 +333,8 @@
 				CD1422C615C7590700F55819 /* EDCoreDataUtility.m */,
 				CD2DD576163ED449006557FC /* EDCoreDataUtility+Pages.h */,
 				CD2DD577163ED449006557FC /* EDCoreDataUtility+Pages.m */,
+				CD2DD5F1164C7478006557FC /* EDCoreDataUtility+Points.h */,
+				CD2DD5F2164C7478006557FC /* EDCoreDataUtility+Points.m */,
 				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
 				CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */,
 				CD1C57AB161B9AB200534D49 /* EDPageArrayController.h */,
@@ -683,6 +688,7 @@
 				CD2DD5CF16470906006557FC /* EDPoint.m in Sources */,
 				CD2DD5D416474144006557FC /* EDPanelPropertiesGraphTablePoints.m in Sources */,
 				CD2DD5DB1648813F006557FC /* NSMutableArray+Utilities.m in Sources */,
+				CD2DD5F3164C7478006557FC /* EDCoreDataUtility+Points.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

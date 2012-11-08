@@ -42,6 +42,12 @@
     return FALSE;
 }
 
+- (void)copyAttributes:(EDPoint *)otherPoint{
+    [self setIsVisible:[otherPoint isVisible]];
+    [self setLocationX:[otherPoint locationX]];
+    [self setLocationY:[otherPoint locationY]];
+}
+
 - (id)copyWithZone:(NSZone *)zone{
     id copy = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
     if (copy) 

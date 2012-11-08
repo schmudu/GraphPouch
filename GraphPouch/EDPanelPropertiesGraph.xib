@@ -72,7 +72,7 @@
 																<string key="NSFrameSize">{267, 209}</string>
 																<reference key="NSSuperview" ref="753094011"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="45311825"/>
+																<reference key="NSNextKeyView" ref="645334946"/>
 																<string key="NSReuseIdentifierKey">_NS:13</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTableHeaderView" key="NSHeaderView" id="176472092">
@@ -279,7 +279,6 @@
 														<string key="NSFrame">{{1, 235}, {280, 15}}</string>
 														<reference key="NSSuperview" ref="1023586222"/>
 														<reference key="NSWindow"/>
-														<reference key="NSNextKeyView"/>
 														<string key="NSReuseIdentifierKey">_NS:60</string>
 														<int key="NSsFlags">1</int>
 														<reference key="NSTarget" ref="1023586222"/>
@@ -305,7 +304,7 @@
 												<string key="NSFrame">{{20, 18}, {269, 227}}</string>
 												<reference key="NSSuperview" ref="7230525"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="645334946"/>
+												<reference key="NSNextKeyView" ref="753094011"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<int key="NSsFlags">133682</int>
 												<reference key="NSVScroller" ref="45311825"/>
@@ -397,7 +396,6 @@
 												<string key="NSFrame">{{43, 540}, {91, 18}}</string>
 												<reference key="NSSuperview" ref="7230525"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="150517951">
@@ -546,7 +544,6 @@
 												<string key="NSFrame">{{43, 610}, {70, 22}}</string>
 												<reference key="NSSuperview" ref="7230525"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="1035513503">
@@ -826,6 +823,14 @@
 						<reference key="destination" ref="503575084"/>
 					</object>
 					<int key="connectionID">1271</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">buttonRemovePoints</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="960473295"/>
+					</object>
+					<int key="connectionID">2054</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2379,7 +2384,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2051</int>
+			<int key="maxID">2054</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2432,6 +2437,7 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="buttonRemovePoints">NSButton</string>
 						<string key="checkboxGrid">NSButton</string>
 						<string key="checkboxHasCoordinates">NSButton</string>
 						<string key="checkboxHasTickMarks">NSButton</string>
@@ -2442,6 +2448,10 @@
 						<string key="tablePoints">NSTableView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="buttonRemovePoints">
+							<string key="name">buttonRemovePoints</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="checkboxGrid">
 							<string key="name">checkboxGrid</string>
 							<string key="candidateClassName">NSButton</string>

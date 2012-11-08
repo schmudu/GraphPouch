@@ -33,7 +33,4 @@
 // graphs
 - (NSArray *)getAllGraphs;
 
-// points
-- (NSArray *)getAllCommonPointsforSelectedGraphs;
-- (void)setAllCommonPointsforSelectedGraphs:(EDPoint *)pointToChange attribute:(NSDictionary *)attributes;
 @end

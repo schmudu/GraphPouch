@@ -14,6 +14,7 @@
 #import "NSObject+Document.h"
 #import "NSColor+Utilities.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "EDCoreDataUtility+Points.h"
 
 @interface EDPanelPropertiesGraphController ()
 - (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute;
@@ -32,7 +33,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Initialization code here.
+        // init
     }
     
     return self;
@@ -48,6 +49,11 @@
     [self setElementHasCoordinateAxes];
     [self setElementCheckbox:checkboxGrid attribute:EDGraphAttributeGridLines];
     [self setElementCheckbox:checkboxHasTickMarks attribute:EDGraphAttributeTickMarks];
+    
+    // set button state
+    if ([tablePoints numberOfSelectedRows] == 0) {
+        [buttonRemovePoints setEnabled:FALSE];
+    }
 }
 
 #pragma mark labels
@@ -246,17 +252,32 @@
     NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
     
     // create new point for each graph
-    //EDPoint *currentPage = [_coreData getCurrentPage];
     for (EDGraph *graph in selectedGraphs){
         EDPoint *newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
         // set relationship
         [graph addPointsObject:newPoint];
     }
-    NSLog(@"selected graphs:%@", selectedGraphs);
 }
 
 - (IBAction)removePoints:(id)sender{
-    // need to remove points
-    NSLog(@"remove points in table:%@",tablePoints);
+    // get all selected points and their attributes
+    NSMutableArray *selectedIndices = [[NSMutableArray alloc] init];
+    NSIndexSet *selectedIndexSet = [tablePoints selectedRowIndexes];
+    
+    [selectedIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [selectedIndices addObject:[[NSNumber alloc] initWithInt:idx]];
+    }];
+    
+    // get all the common points
+    NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    NSMutableArray *selectedPoints = [[NSMutableArray alloc] init];
+    
+    // pull the indexed objects from the common points and place into an array
+    for (NSNumber *index in selectedIndices){
+        [selectedPoints addObject:[commonPoints objectAtIndex:[index intValue]]];
+    }
+    // remove all points from selected graphs that have the same attributes
+    [[EDCoreDataUtility sharedCoreDataUtility] removeCommonPointsforSelectedGraphsMatchingPoints:selectedPoints];
+    
 }
 @end
