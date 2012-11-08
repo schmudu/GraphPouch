@@ -13,7 +13,7 @@
         <attribute name="hasGridLines" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="hasTickMarks" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="graphs" inverseEntity="EDPage" syncable="YES"/>
-        <relationship name="points" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EDPoint" inverseName="graph" inverseEntity="EDPoint" syncable="YES"/>
+        <relationship name="points" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDPoint" inverseName="graph" inverseEntity="EDPoint" syncable="YES"/>
     </entity>
     <entity name="EDPage" representedClassName="EDPage" syncable="YES">
         <attribute name="currentPage" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
