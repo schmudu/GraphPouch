@@ -18,4 +18,5 @@
 @property float locationY;
 @property (nonatomic, retain) EDGraph *graph;
 
+- (BOOL)matchesPoint:(EDPoint *)otherPoint;
 @end

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "EDPage.h"
+#import "EDPoint.h"
 
 @interface EDCoreDataUtility : NSObject{
 @private
@@ -34,4 +35,5 @@
 
 // points
 - (NSArray *)getAllCommonPointsforSelectedGraphs;
+- (void)setAllCommonPointsforSelectedGraphs:(EDPoint *)pointToChange attribute:(NSDictionary *)attributes;
 @end

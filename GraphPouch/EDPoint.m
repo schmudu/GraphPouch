@@ -35,6 +35,13 @@
     [aCoder encodeFloat:[self locationY] forKey:EDElementAttributeLocationY];
 }
 
+- (BOOL)matchesPoint:(EDPoint *)otherPoint{
+    if (([self locationX] == [otherPoint locationX]) && ([self locationY] == [otherPoint locationY]) && ([self isVisible] == [otherPoint isVisible])){
+        return TRUE;
+    }
+    return FALSE;
+}
+
 - (id)copyWithZone:(NSZone *)zone{
     id copy = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
     if (copy) 

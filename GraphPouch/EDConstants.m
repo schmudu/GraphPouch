@@ -15,6 +15,10 @@ int const GRAPH_INIT_HAS_GRID_LINES     = FALSE;
 NSString * const EDUTIPage                                      = @"com.edcodia.graphpouch.page";
 NSString * const EDUTIGraph                                     = @"com.edcodia.graphpouch.graph";
 
+// General
+NSString * const EDKey                                          = @"EDKey";
+NSString * const EDValue                                        = @"EDValue";
+
 // numbers
 float const EDNumberMax                                         = 9999999;
 
@@ -89,7 +93,7 @@ NSString * const EDKeyGridLinesCount                            = @"EDKeyGridLin
 float const EDGraphTickLength                                   = 4;
 
 // graph points
-NSString * const EDGraphPointAttributeVisible                   = @"EDGraphPointAttributeVisible";
+NSString * const EDGraphPointAttributeVisible                   = @"isVisible";
 
 // window
 NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";

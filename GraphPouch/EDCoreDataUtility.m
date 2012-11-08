@@ -148,14 +148,12 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
         //[commonPoints setObject:point forKey:point];
         [commonPoints addObject:point];
     }
-    //NSLog(@"number of selected graphs:%ld startingPoints:%ld", [selectedGraphs count], [commonPoints count]);
     
     //iterate through graphs
     for (EDGraph *graph in selectedGraphs){
         // if no match
         for (EDPoint *graphPoint in [graph points]){
             if (![commonPoints containsPoint:graphPoint]){
-                //NSLog(@"removing point:%@", graphPoint);
                 // no match so remove from common points
                 [commonPoints removePoint:graphPoint];
             }
@@ -169,5 +167,49 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     NSArray *sortedArray = [commonPoints sortedArrayUsingDescriptors:descriptorArray];
     
     return sortedArray;
+}
+
+- (NSArray *)getAllCommonPointsMatchingPoint:(EDPoint *)matchPoint{
+    // get all selected graphs
+    NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
+    
+    // return if empty
+    if ([selectedGraphs count] == 0){
+        return nil;
+    }
+    
+    // create dictionary of all the common points
+    NSMutableArray *matchingPoints = [[NSMutableArray alloc] init];
+    
+    //iterate through graphs
+    for (EDGraph *graph in selectedGraphs){
+        for (EDPoint *point in [graph points]){
+            if ([matchPoint matchesPoint:point]){
+                [matchingPoints addObject:point];
+            }
+        }
+    }
+    
+    return matchingPoints;
+}
+
+- (void)setAllCommonPointsforSelectedGraphs:(EDPoint *)pointToChange attribute:(NSDictionary *)attributes{
+    NSArray *commonPoints = [self getAllCommonPointsMatchingPoint:pointToChange];
+    
+    // find points with the same attributes
+    for (EDPoint *point in commonPoints){
+        // if all attributes match then change the designated attribute
+        if ([pointToChange matchesPoint:point]){
+            if ([[attributes valueForKey:EDKey] isEqualToString:EDElementAttributeLocationX]) {
+                [point setLocationX:[[attributes objectForKey:EDValue] floatValue]];
+            }
+            else if ([[attributes valueForKey:EDKey] isEqualToString:EDElementAttributeLocationY]) {
+                [point setLocationY:[[attributes objectForKey:EDValue] floatValue]];
+            }
+            else if ([[attributes valueForKey:EDKey] isEqualToString:EDGraphPointAttributeVisible]) {
+                [point setIsVisible:[[attributes objectForKey:EDValue] boolValue]];
+            }
+        }
+    }
 }
 @end
