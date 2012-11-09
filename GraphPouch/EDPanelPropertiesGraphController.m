@@ -21,7 +21,6 @@
 - (void)setElementHasCoordinateAxes;
 - (void)setElementCheckbox:(NSButton *)checkbox attribute:(NSString *)attribute;
 - (void)setLabelState:(NSTextField *)label hasChange:(BOOL)diff value:(float)labelValue;
-- (void)changeElementsAttributes:(float)newWidth height:(float)newHeight locationX:(float)newXPos locationY:(float)newYPos;
 - (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue;
 - (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key;
 - (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key;
@@ -115,25 +114,6 @@
     }
 }
 
-- (void)changeElementsAttributes:(float)newWidth height:(float)newHeight locationX:(float)newXPos locationY:(float)newYPos{
-    EDElement *newElement, *currentElement;
-    int i = 0;
-    NSMutableArray *elements = [_coreData getAllSelectedWorksheetElements];
-    //for (EDElement *element in elements){
-    while (i < [elements count]) {
-     currentElement = [elements objectAtIndex:i];
-        
-        newElement = currentElement;
-        [newElement setValue:[[NSNumber alloc] initWithFloat:newWidth] forKey:EDElementAttributeWidth];
-        [newElement setValue:[[NSNumber alloc] initWithFloat:newHeight] forKey:EDElementAttributeHeight];
-        [newElement setValue:[[NSNumber alloc] initWithFloat:newXPos] forKey:EDElementAttributeLocationX];
-        [newElement setValue:[[NSNumber alloc] initWithFloat:newYPos] forKey:EDElementAttributeLocationY];
-        
-        [elements replaceObjectAtIndex:i withObject:newElement];
-        i++;
-    }
-}
-
 - (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue{
     EDElement *newElement, *currentElement;
     int i = 0;
@@ -196,7 +176,6 @@
             diff = TRUE;
         }
         else {
-            //value = [currentElement locationY];
             value = [[currentElement valueForKey:key] boolValue];
         }
         i++;
@@ -210,7 +189,19 @@
 
 #pragma mark text field delegation
 - (void)controlTextDidEndEditing:(NSNotification *)obj{
-    [self changeElementsAttributes:[[labelWidth stringValue] floatValue] height:[[labelHeight stringValue] floatValue] locationX:[[labelX stringValue] floatValue] locationY:[[labelY stringValue] floatValue]];
+    // only change the specific attribute that was changed
+    if ([obj object] == labelX) {
+        [self changeSelectedElementsAttribute:EDElementAttributeLocationX newValue:[[NSNumber alloc] initWithFloat:[[labelX stringValue] floatValue]]];
+    }
+    else if ([obj object] == labelY) {
+        [self changeSelectedElementsAttribute:EDElementAttributeLocationY newValue:[[NSNumber alloc] initWithFloat:[[labelY stringValue] floatValue]]];
+    }
+    else if ([obj object] == labelWidth) {
+        [self changeSelectedElementsAttribute:EDElementAttributeWidth newValue:[[NSNumber alloc] initWithFloat:[[labelWidth stringValue] floatValue]]];
+    }
+    else if ([obj object] == labelHeight) {
+        [self changeSelectedElementsAttribute:EDElementAttributeHeight newValue:[[NSNumber alloc] initWithFloat:[[labelHeight stringValue] floatValue]]];
+    }
 }
 
 #pragma mark checkbox
