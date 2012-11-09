@@ -47,14 +47,14 @@
     
     
     // sort common points by x
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"locationX" ascending:TRUE];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDElementAttributeLocationX ascending:TRUE];
     NSArray *descriptorArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     NSArray *sortedArray = [commonPoints sortedArrayUsingDescriptors:descriptorArray];
     
     return sortedArray;
 }
 
-- (NSArray *)getAllCommonPointsFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint{
+- (NSArray *)getOneCommonPointFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint{
     // get all selected graphs
     NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
     
@@ -70,7 +70,9 @@
     for (EDGraph *graph in selectedGraphs){
         for (EDPoint *point in [graph points]){
             if ([matchPoint matchesPoint:point]){
+                // only match one point
                 [matchingPoints addObject:point];
+                break;
             }
         }
     }
@@ -79,7 +81,7 @@
 }
 
 - (void)setAllCommonPointsforSelectedGraphs:(EDPoint *)pointToChange attribute:(NSDictionary *)attributes{
-    NSArray *commonPoints = [self getAllCommonPointsFromSelectedGraphsMatchingPoint:pointToChange];
+    NSArray *commonPoints = [self getOneCommonPointFromSelectedGraphsMatchingPoint:pointToChange];
     
     // find points with the same attributes
     for (EDPoint *point in commonPoints){
@@ -108,7 +110,7 @@
             // if all attributes match then delete the designated point
             if ([commonPoint matchesPoint:deletePoint]){
                 // get all points in context from selected graphs and delete them
-                matchingPoints = [self getAllCommonPointsFromSelectedGraphsMatchingPoint:commonPoint];
+                matchingPoints = [self getOneCommonPointFromSelectedGraphsMatchingPoint:commonPoint];
                 
                 // delete all of the points
                 for (EDPoint *matchingPoint in matchingPoints){

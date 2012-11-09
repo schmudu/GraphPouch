@@ -13,7 +13,7 @@
 
 // points
 - (NSArray *)getAllCommonPointsforSelectedGraphs;
-- (NSArray *)getAllCommonPointsFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint;
+- (NSArray *)getOneCommonPointFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint;
 - (void)setAllCommonPointsforSelectedGraphs:(EDPoint *)pointToChange attribute:(NSDictionary *)attributes;
 - (void)removeCommonPointsforSelectedGraphsMatchingPoints:(NSArray *)pointsToRemove;
 @end
