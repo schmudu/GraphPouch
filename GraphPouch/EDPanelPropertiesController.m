@@ -59,6 +59,12 @@
     [super windowDidLoad];
 }
 
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window{
+    // have the undo manager linked to the managed object context
+    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+    return [[coreData context] undoManager];
+}
+
 - (void)postInitialize
 {
     //[super windowDidLoad];

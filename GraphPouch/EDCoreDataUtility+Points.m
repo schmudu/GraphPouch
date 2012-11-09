@@ -36,19 +36,16 @@
         [commonPoints addObject:point];
     }
     
-    NSLog(@"===before number of common points from first graph:%ld", [commonPoints count]);
     //iterate through graphs
     for (EDGraph *graph in selectedGraphs){
         for (EDPoint *commonPoint in commonPoints){
             //NSLog(@"checking if common points:%@ contains point:%@ result:%d", commonPoints, graphPoint, [commonPoints containsPoint:graphPoint]);
             if (![[graph points] containsPoint:commonPoint]){
                 // no match so remove from common points
-                //[commonPoints removePoint:commonPoint];
                 [commonPointsToRemove addObject:commonPoint];
             }
         }
     }
-    NSLog(@"===after number of common points from all graphs:%ld", [commonPoints count]);
     
     // remove points that weren't common to all graphs
     for (EDPoint *point in commonPointsToRemove){
@@ -62,46 +59,6 @@
     
     return sortedArray;
 }
-/*
-- (NSArray *)getAllCommonPointsforSelectedGraphs{
-    // get all selected graphs
-    NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
-    
-    // return if empty
-    if ([selectedGraphs count] == 0){
-        return nil;
-    }
-    
-    // create dictionary of all the common points
-    NSMutableArray *commonPoints = [[NSMutableArray alloc] init];
-    
-    // add all points in first graph
-    for (EDPoint *point in [[selectedGraphs objectAtIndex:0] points]){
-        //[commonPoints setObject:point forKey:point];
-        [commonPoints addObject:point];
-    }
-    
-    NSLog(@"===before number of common points from first graph:%ld", [commonPoints count]);
-    //iterate through graphs
-    for (EDGraph *graph in selectedGraphs){
-        for (EDPoint *graphPoint in [graph points]){
-            NSLog(@"checking if common points:%@ contains point:%@ result:%d", commonPoints, graphPoint, [commonPoints containsPoint:graphPoint]);
-            if (![commonPoints containsPoint:graphPoint]){
-                // no match so remove from common points
-                [commonPoints removePoint:graphPoint];
-            }
-        }
-    }
-    NSLog(@"===after number of common points from all graphs:%ld", [commonPoints count]);
-    
-    
-    // sort common points by x
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDElementAttributeLocationX ascending:TRUE];
-    NSArray *descriptorArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    NSArray *sortedArray = [commonPoints sortedArrayUsingDescriptors:descriptorArray];
-    
-    return sortedArray;
-}*/
 
 - (NSArray *)getOneCommonPointFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint{
     // get all selected graphs

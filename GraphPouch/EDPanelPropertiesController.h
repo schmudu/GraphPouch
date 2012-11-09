@@ -12,7 +12,7 @@
 #import "EDCoreDataUtility.h"
 
 
-@interface EDPanelPropertiesController : NSWindowController <NSMenuDelegate>{
+@interface EDPanelPropertiesController : NSWindowController <NSMenuDelegate, NSWindowDelegate>{
     IBOutlet NSMenuItem *menuItemProperties;
     EDPanelPropertiesDocumentController *documentController;
     EDPanelPropertiesGraphController *graphController;

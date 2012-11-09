@@ -55,6 +55,10 @@
         [buttonRemovePoints setEnabled:FALSE];
     }
 }
+#pragma mark keyboard
+- (void)keyDown:(NSEvent *)theEvent{
+    NSLog(@"key down.");
+}
 
 #pragma mark labels
 - (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute{

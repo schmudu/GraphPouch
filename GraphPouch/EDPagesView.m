@@ -103,7 +103,6 @@
 
 #pragma mark mouse
 - (void)mouseDown:(NSEvent *)theEvent{
-    // make getAllSelectedWorksheetElements
     [[self window] makeFirstResponder:self];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesViewClicked object:self];
@@ -145,8 +144,6 @@
     // redraw
     [self setNeedsDisplay:TRUE];
     
-    //NSLog(@"highlighted:%d highlighted section:%d", _highlighted, _highlightedDragSection);
-    //NSLog(@"highlight: page count:%d page dragged:%d current y:%f", pageCount, [[_startDragPageData pageNumber] intValue], pagesPoint.y);
     return NSDragOperationCopy;
 }
 
@@ -160,6 +157,10 @@
 }
 
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender{
+    // if there is only one page or less do not allow drag
+    if ([[[EDCoreDataUtility sharedCoreDataUtility] getAllPages] count] <= 1) 
+        return NO;
+    
     // going to insert pages from PagesViewController after we have removed pages
     if(![self readFromPasteboard:_pb]){
         return NO;
@@ -193,10 +194,6 @@
     
     NSArray *objects = [_pb readObjectsForClasses:classes options:nil];
     if ([objects count] > 0) {
-        /*
-        for (EDPageView *pageView in objects){
-            NSLog(@"sending dragged page views: data %@", [pageView dataObj]);
-        }*/
         
         NSMutableDictionary *userDict = [[NSMutableDictionary alloc] init];
         [userDict setObject:objects forKey:EDKeyPagesViewDraggedViews];
@@ -206,15 +203,6 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewsFinishedDrag object:self userInfo:userDict];
  
-        // read data from the pasteboard
-        //EDPageView *pageView = [objects objectAtIndex:0];
-        
-        /*
-        if (pageView) {
-            NSLog(@"reading from pasteboard: page view:%@", [pageView dataObj]);
-            return YES;
-        }
-        */
         return YES;
     }
     return NO;

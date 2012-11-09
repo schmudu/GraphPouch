@@ -13,7 +13,6 @@
 
 @interface EDPageView()
 - (void)onContextChanged:(NSNotification *)note;
-//- (void)writeToPasteboard:(NSPasteboard *)pb;
 - (void)setPageAsCurrent;
 @end
 
@@ -34,9 +33,6 @@
         _pb = [NSPasteboard generalPasteboard];
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         
-        // re-implement this when we can start dragging graphs
-        //[self registerForDraggedTypes:[NSArray arrayWithObjects:EDUTIGraph,nil]];
-        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
     }
     return self;
@@ -49,7 +45,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    //NSRect bounds = NSMakeRect(([self superview].frame.size.width - EDPageImageViewWidth)/2, 0, EDPageImageViewWidth, EDPageImageViewHeight);
     NSRect bounds = NSMakeRect(40, 0, EDPageImageViewWidth, EDPageImageViewHeight);
     
     if ([_dataObj selected]) {
@@ -59,17 +54,7 @@
         [[NSColor redColor] setFill];
     }
     
-    if (_highlighted){
-        //NSLog(@"page view needs to be highlighted.");
-    }
-    else {
-        //NSLog(@"page view will not be highlighted.");
-    }
-    
-    //[NSBezierPath fillRect:bounds];
-    //NSLog(@"bounds size: frame: x:%f y:%f width%f height:%f", [self frame].origin.x, [self frame].origin.y, [self bounds].size.width, [self bounds].size.height);
     [NSBezierPath fillRect:bounds];
-    //NSLog(@"drawing frame x:%f width%f", [self frame].origin.x, [self frame].size.width);
 }
 
 #pragma mark data
@@ -118,10 +103,6 @@
     // Drag from the center of the image
     p.x = p.x - EDPageImageViewWidth/2;
     p.y = p.y + EDPageImageViewHeight/2;
-    
-    // write to pasteboard
-    //[[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewDragged object:self];
-    //[self writeToPasteboard:_pb];
     
     // Start the drag
     [self dragImage:anImage at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:_pb source:self slideBack:YES];
