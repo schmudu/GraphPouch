@@ -12,10 +12,57 @@
 #import "NSManagedObject+EasyFetching.h"
 #import "NSMutableArray+Utilities.h"
 #import "EDConstants.h"
+#import "NSSet+Points.h"
 
 @implementation EDCoreDataUtility (Points)
 
 #pragma mark graph points
+- (NSArray *)getAllCommonPointsforSelectedGraphs{
+    // get all selected graphs
+    NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
+    
+    // return if empty
+    if ([selectedGraphs count] == 0){
+        return nil;
+    }
+    
+    // create dictionary of all the common points
+    NSMutableArray *commonPoints = [[NSMutableArray alloc] init];
+    NSMutableArray *commonPointsToRemove = [[NSMutableArray alloc] init];
+    
+    // add all points in first graph
+    for (EDPoint *point in [[selectedGraphs objectAtIndex:0] points]){
+        //[commonPoints setObject:point forKey:point];
+        [commonPoints addObject:point];
+    }
+    
+    NSLog(@"===before number of common points from first graph:%ld", [commonPoints count]);
+    //iterate through graphs
+    for (EDGraph *graph in selectedGraphs){
+        for (EDPoint *commonPoint in commonPoints){
+            //NSLog(@"checking if common points:%@ contains point:%@ result:%d", commonPoints, graphPoint, [commonPoints containsPoint:graphPoint]);
+            if (![[graph points] containsPoint:commonPoint]){
+                // no match so remove from common points
+                //[commonPoints removePoint:commonPoint];
+                [commonPointsToRemove addObject:commonPoint];
+            }
+        }
+    }
+    NSLog(@"===after number of common points from all graphs:%ld", [commonPoints count]);
+    
+    // remove points that weren't common to all graphs
+    for (EDPoint *point in commonPointsToRemove){
+        [commonPoints removePoint:point];
+    }
+    
+    // sort common points by x
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDElementAttributeLocationX ascending:TRUE];
+    NSArray *descriptorArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    NSArray *sortedArray = [commonPoints sortedArrayUsingDescriptors:descriptorArray];
+    
+    return sortedArray;
+}
+/*
 - (NSArray *)getAllCommonPointsforSelectedGraphs{
     // get all selected graphs
     NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
@@ -34,16 +81,18 @@
         [commonPoints addObject:point];
     }
     
+    NSLog(@"===before number of common points from first graph:%ld", [commonPoints count]);
     //iterate through graphs
     for (EDGraph *graph in selectedGraphs){
-        // if no match
         for (EDPoint *graphPoint in [graph points]){
+            NSLog(@"checking if common points:%@ contains point:%@ result:%d", commonPoints, graphPoint, [commonPoints containsPoint:graphPoint]);
             if (![commonPoints containsPoint:graphPoint]){
                 // no match so remove from common points
                 [commonPoints removePoint:graphPoint];
             }
         }
     }
+    NSLog(@"===after number of common points from all graphs:%ld", [commonPoints count]);
     
     
     // sort common points by x
@@ -52,7 +101,7 @@
     NSArray *sortedArray = [commonPoints sortedArrayUsingDescriptors:descriptorArray];
     
     return sortedArray;
-}
+}*/
 
 - (NSArray *)getOneCommonPointFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint{
     // get all selected graphs
@@ -101,22 +150,20 @@
 }
 
 - (void)removeCommonPointsforSelectedGraphsMatchingPoints:(NSArray *)pointsToRemove{
-    NSArray *commonPoints = [self getAllCommonPointsforSelectedGraphs];
+   // NSArray *commonPoints = [self getAllCommonPointsforSelectedGraphs];
     NSArray *matchingPoints;
     
     // find points with the same attributes
-    for (EDPoint *commonPoint in commonPoints){
-        for (EDPoint *deletePoint in pointsToRemove){
-            // if all attributes match then delete the designated point
-            if ([commonPoint matchesPoint:deletePoint]){
-                // get all points in context from selected graphs and delete them
-                matchingPoints = [self getOneCommonPointFromSelectedGraphsMatchingPoint:commonPoint];
-                
-                // delete all of the points
-                for (EDPoint *matchingPoint in matchingPoints){
-                    [_context deleteObject:matchingPoint];
-                }
-            }
+    for (EDPoint *deletePoint in pointsToRemove){
+        matchingPoints = [self getOneCommonPointFromSelectedGraphsMatchingPoint:deletePoint];
+            
+        // delete all of the points
+        for (EDPoint *matchingPoint in matchingPoints){
+            // destroy relationship
+            [[matchingPoint graph] removePointsObject:matchingPoint];
+            
+            // remove object
+            [_context deleteObject:matchingPoint];
         }
     }
 }
