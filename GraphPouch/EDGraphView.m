@@ -88,6 +88,11 @@
     [path moveToPoint:NSMakePoint(0, height/2)];
     [path lineToPoint:NSMakePoint(width, height/2)];
     
+    // draw x-axis arrow negative
+    [path moveToPoint:NSMakePoint(0 + EDCoordinateArrowLength, height/2 + EDCoordinateArrowWidth)];
+    [path lineToPoint:NSMakePoint(0 , height/2)];
+    [path lineToPoint:NSMakePoint(0 + EDCoordinateArrowLength, height/2 - EDCoordinateArrowWidth)];
+    
     // draw x-axis arrow
     [path moveToPoint:NSMakePoint(width - EDCoordinateArrowLength, height/2 + EDCoordinateArrowWidth)];
     [path lineToPoint:NSMakePoint(width , height/2)];
@@ -101,6 +106,11 @@
     [path moveToPoint:NSMakePoint(width/2 - EDCoordinateArrowWidth, 0 + EDCoordinateArrowLength)];
     [path lineToPoint:NSMakePoint(width/2, 0)];
     [path lineToPoint:NSMakePoint(width/2 + EDCoordinateArrowWidth, 0 + EDCoordinateArrowLength)];
+    
+    // draw y-axis arrow negative
+    [path moveToPoint:NSMakePoint(width/2 - EDCoordinateArrowWidth, height - EDCoordinateArrowLength)];
+    [path lineToPoint:NSMakePoint(width/2, height)];
+    [path lineToPoint:NSMakePoint(width/2 + EDCoordinateArrowWidth, height - EDCoordinateArrowLength)];
     
     [path setLineWidth:EDGraphDefaultCoordinateLineWidth];
     [path stroke];
