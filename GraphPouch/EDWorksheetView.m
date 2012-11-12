@@ -312,10 +312,8 @@
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];
     for (NSObject *myElement in [self subviews]){
-        //if(([myElement isWorksheetElement]) && (![selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
-            //NSLog(@"snap info?:%@", [[note userInfo] valueForKey:EDKeySnapInfo]);
             // do not notify element if it was the original element that was dragged
             if (myElement != [[note userInfo] valueForKey:EDKeyWorksheetElement]) {
                 [(EDWorksheetElementView *)myElement mouseDraggedBySelection:[[note userInfo] valueForKey:EDEventKey] snapInfo:[[note userInfo] valueForKey:EDKeySnapInfo]];
@@ -669,7 +667,7 @@
     
     // using the data object, find the element view
     for (EDWorksheetElementView *elementView in [self subviews]){
-        if ([elementView dataObj] == element)
+        if (([elementView isKindOfClass:[EDWorksheetElementView class]]) && ([elementView dataObj] == element))
             return elementView;
     }
     return nil;

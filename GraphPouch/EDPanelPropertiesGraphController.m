@@ -227,6 +227,8 @@
     else if([checkboxHasCoordinates state] == NSMixedState){
         [checkboxHasCoordinates setState:NSOnState];
         [checkboxHasTickMarks setEnabled:TRUE];
+        [checkboxHasTickMarks setState:NSOnState];
+        [self changeSelectedElementsAttribute:EDGraphAttributeTickMarks newValue:[[NSNumber alloc] initWithBool:[checkboxHasTickMarks state]]];
     }
     
     [self changeSelectedElementsAttribute:EDGraphAttributeCoordinateAxes newValue:[[NSNumber alloc] initWithBool:[checkboxHasCoordinates state]]];
