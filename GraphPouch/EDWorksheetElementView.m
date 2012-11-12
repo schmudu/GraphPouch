@@ -241,8 +241,9 @@
                     thisOrigin.y += (currentLocation.y - _savedMouseSnapLocation.y);
                     thisOrigin.x += (currentLocation.x - _savedMouseSnapLocation.x);
                     
-                    snapBackDistanceY = (currentLocation.y - _savedMouseSnapLocation.y);
-                    NSLog(@"sending snap back distance of:%f try:%f", snapBackDistanceY, (savedOrigin.y - lastDragLocation.y + newDragLocation.y));
+                    //snapBackDistanceY = (currentLocation.y - _savedMouseSnapLocation.y);
+                    snapBackDistanceY = (savedOrigin.y - thisOrigin.y);
+                    NSLog(@"sending snap back distance of:%f try:%f", snapBackDistanceY, (savedOrigin.y - thisOrigin.y));
                     snapBackDistanceX = (currentLocation.x - _savedMouseSnapLocation.x);
                 }
             }
@@ -308,7 +309,7 @@
     // if original source did snap back then modify location by that distance
     if (originalSourceDidSnapBack){
         NSLog(@"snapping back distance:%f", [[snapInfo valueForKey:EDKeySnapBackDistanceY] floatValue]);
-        thisOrigin.y += [[snapInfo valueForKey:EDKeySnapBackDistanceY] floatValue];
+        thisOrigin.y -= [[snapInfo valueForKey:EDKeySnapBackDistanceY] floatValue];
         thisOrigin.x += [[snapInfo valueForKey:EDKeySnapBackDistanceX] floatValue];
     }
     else{
