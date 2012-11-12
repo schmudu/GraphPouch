@@ -18,8 +18,9 @@
 
 @interface EDWorksheetElementView()
 - (void)mouseUpBehavior:(NSEvent *)theEvent;
-- (void)mouseDraggedBehavior:(NSEvent *)theEvent;
+- (void)mouseDraggedBehavior:(NSEvent *)theEvent dragSource:(BOOL)isDragSource snapInfo:(NSDictionary *)snapInfo;
 - (void)notifyMouseDownListeners:(NSEvent *)theEvent;
+- (void)dispatchMouseDragNotification:(NSEvent *)theEvent snapInfo:(NSDictionary *)snapInfo;
 @end
 
 @implementation EDWorksheetElementView
@@ -42,6 +43,8 @@
     if (self) {
         // Initialization code here.
         NSManagedObjectContext *context = [self currentContext];
+        _didSnapToSourceX = FALSE;
+        _didSnapToSourceY = FALSE;
         
         // listen
         _nc = [NSNotificationCenter defaultCenter];
@@ -164,24 +167,15 @@
 
 #pragma mark mouse dragged
 - (void)mouseDragged:(NSEvent *)theEvent{
-    [self mouseDraggedBehavior:theEvent];
+    BOOL didSnapX = FALSE, didSnapY = FALSE, didSnapBack = FALSE;
     
-    // notify listeners
-    NSMutableDictionary *notificationDictionary = [[NSMutableDictionary alloc] init];
-    [notificationDictionary setValue:theEvent forKey:EDEventKey];
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDragged object:self userInfo:notificationDictionary];
-}
-
-- (void)mouseDraggedBySelection:(NSEvent *)theEvent{
-    [self mouseDraggedBehavior:theEvent];
-}
-
-- (void)mouseDraggedBehavior:(NSEvent *)theEvent{
+    // check 
     NSPoint newDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
-    
+    float snapDistanceY=0, snapDistanceX = 0;
+    float snapBackDistanceY=0, snapBackDistanceX = 0;
     NSPoint thisOrigin = [self frame].origin;
+    NSPoint savedOrigin = [self frame].origin;
     
-    // alter origin
     thisOrigin.x += (-lastDragLocation.x + newDragLocation.x);
     thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
     
@@ -192,7 +186,9 @@
         NSMutableDictionary *guides = [(EDWorksheetView *)[self superview] guides];
         
         // get vertical guide as long as there are guides to close enough
+        // only allow the drag source to snap to guides
         if ([[guides objectForKey:EDKeyGuideVertical] count] > 0) {
+        //if ([[guides objectForKey:EDKeyGuideVertical] count] > 0) {
             closestVerticalPointToOrigin = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
             closestVerticalPointToEdge = [self findClosestPoint:(thisOrigin.y + [[self dataObj] elementHeight]) guides:[guides objectForKey:EDKeyGuideVertical]];
             closestHorizontalPointToOrigin = [self findClosestPoint:thisOrigin.x guides:[guides objectForKey:EDKeyGuideHorizontal]];
@@ -208,18 +204,245 @@
                 
                 // check snap to vertical point
                 if (fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold) {
+                    //NSLog(@"case 1 origin y:%f closest y:%f", thisOrigin.y, closestVerticalPointToOrigin);
+                    //NSLog(@"saved origin difference:%f tried:%f", savedOrigin.y - closestVerticalPointToOrigin, thisOrigin.y - closestVerticalPointToOrigin);
+                    //snapDistanceY = thisOrigin.y - closestVerticalPointToOrigin;
+                    snapDistanceY = savedOrigin.y - closestVerticalPointToOrigin;
                     thisOrigin.y = closestVerticalPointToOrigin;
+                    didSnapY = TRUE;
                 }
                 else if (fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold) {
+                    //NSLog(@"case 2");
                     thisOrigin.y = closestVerticalPointToEdge - [[self dataObj] elementHeight];
+                    snapDistanceY = thisOrigin.y + [[self dataObj] elementHeight] - closestVerticalPointToEdge;
+                    didSnapY = TRUE;
                 }
                 
                 // check snap to horizontal point
                 if (fabsf(thisOrigin.x - closestHorizontalPointToOrigin) < EDGuideThreshold) {
                     thisOrigin.x = closestHorizontalPointToOrigin;
+                    snapDistanceX = thisOrigin.x - closestHorizontalPointToOrigin;
+                    didSnapX = TRUE;
                 }
                 else if (fabsf((thisOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge) < EDGuideThreshold) {
                     thisOrigin.x = closestHorizontalPointToEdge - [[self dataObj] elementWidth];
+                    snapDistanceX = (thisOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge;
+                    didSnapX = TRUE;
+                }
+            }
+            else{
+                if(_didSnap){
+                    // reset
+                    _didSnap = FALSE;
+                    didSnapBack = TRUE;
+                    
+                    // snap back to original location
+                    NSPoint currentLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
+                    thisOrigin.y += (currentLocation.y - _savedMouseSnapLocation.y);
+                    thisOrigin.x += (currentLocation.x - _savedMouseSnapLocation.x);
+                    
+                    snapBackDistanceY = (currentLocation.y - _savedMouseSnapLocation.y);
+                    NSLog(@"sending snap back distance of:%f try:%f", snapBackDistanceY, (savedOrigin.y - lastDragLocation.y + newDragLocation.y));
+                    snapBackDistanceX = (currentLocation.x - _savedMouseSnapLocation.x);
+                }
+            }
+        }
+        else{
+            _didSnap = FALSE;
+        }
+    }
+    
+    [self setFrameOrigin:thisOrigin];
+    lastDragLocation = newDragLocation;
+    
+    // dispatch event if drag source
+    if (_didSnap) {
+        // if source did snap then notify listeners
+        NSMutableDictionary *snapInfo = [[NSMutableDictionary alloc] init];
+        [snapInfo setValue:[[NSNumber alloc] initWithBool:didSnapX] forKey:EDKeyDidSnapX];
+        [snapInfo setValue:[[NSNumber alloc] initWithFloat:snapDistanceX] forKey:EDKeySnapDistanceX];
+        [snapInfo setValue:[[NSNumber alloc] initWithBool:didSnapY] forKey:EDKeyDidSnapY];
+        NSLog(@"sending y snap distance:%f", snapDistanceY);
+        [snapInfo setValue:[[NSNumber alloc] initWithFloat:snapDistanceY] forKey:EDKeySnapDistanceY];
+        [self dispatchMouseDragNotification:theEvent snapInfo:snapInfo];
+    }
+    else {
+        if (didSnapBack) {
+            // notify listeners that we snapped back
+            NSMutableDictionary *snapInfo = [[NSMutableDictionary alloc] init];
+            [snapInfo setValue:[[NSNumber alloc] initWithBool:didSnapBack] forKey:EDKeyDidSnapBack];
+            [snapInfo setValue:[[NSNumber alloc] initWithFloat:snapBackDistanceY] forKey:EDKeySnapBackDistanceY];
+            [snapInfo setValue:[[NSNumber alloc] initWithFloat:snapBackDistanceX] forKey:EDKeySnapBackDistanceX];
+            [self dispatchMouseDragNotification:theEvent snapInfo:snapInfo];
+         }
+        else{
+            [self dispatchMouseDragNotification:theEvent snapInfo:nil];
+        }
+    }
+}
+
+- (void)dispatchMouseDragNotification:(NSEvent *)theEvent snapInfo:(NSDictionary *)snapInfo{
+    NSMutableDictionary *notificationDictionary = [[NSMutableDictionary alloc] init];
+    [notificationDictionary setValue:theEvent forKey:EDEventKey];
+    
+    // if there is snap info
+    if (snapInfo) {
+        [notificationDictionary setValue:snapInfo forKey:EDKeySnapInfo];
+    }
+    
+    [notificationDictionary setValue:theEvent forKey:EDEventKey];
+    [notificationDictionary setValue:self forKey:EDKeyWorksheetElement];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDragged object:self userInfo:notificationDictionary];
+}
+
+//- (void)mouseDraggedBySelection:(NSEvent *)theEvent{
+- (void)mouseDraggedBySelection:(NSEvent *)theEvent snapInfo:(NSDictionary *)snapInfo{
+    BOOL originalSourceSnapX = [[snapInfo valueForKey:EDKeyDidSnapX] boolValue];
+    BOOL originalSourceSnapY = [[snapInfo valueForKey:EDKeyDidSnapY] boolValue];
+    BOOL originalSourceDidSnapBack = [[snapInfo valueForKey:EDKeyDidSnapBack] boolValue];
+    // if not drag source then maybe we don't need to move this!
+    // check 
+    NSPoint newDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
+    NSPoint thisOrigin = [self frame].origin;
+    
+    // if original source did snap back then modify location by that distance
+    if (originalSourceDidSnapBack){
+        NSLog(@"snapping back distance:%f", [[snapInfo valueForKey:EDKeySnapBackDistanceY] floatValue]);
+        thisOrigin.y += [[snapInfo valueForKey:EDKeySnapBackDistanceY] floatValue];
+        thisOrigin.x += [[snapInfo valueForKey:EDKeySnapBackDistanceX] floatValue];
+    }
+    else{
+        if (!originalSourceSnapX) {
+            thisOrigin.x += (-lastDragLocation.x + newDragLocation.x);
+        }
+        else {
+            // do something if the source snapped
+        }
+        
+        if (!originalSourceSnapY) {
+            thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
+        }
+        else {
+            NSLog(@"altering origin by:%f", [[snapInfo valueForKey:EDKeySnapDistanceY] floatValue]);
+            thisOrigin.y -= [[snapInfo valueForKey:EDKeySnapDistanceY] floatValue];
+        }
+    }
+    
+    /*
+    // do not alter x if this element is being dragged by selection and the source is snapping x
+    if (!originalSourceSnapY) {
+        thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
+        if(!originalSourceSnapY) {
+            // if original source did not snap then reset snapping for this element
+            NSLog(@"element already snapped.");
+            _didSnapToSourceY = FALSE;
+        }
+    }
+    else if (!isDragSource){
+        NSLog(@"this is not the drag source and snap y:%d", originalSourceSnapY);
+        // if source snapped and this element has not snapped already then snap to position
+        if ((!_didSnapToSourceY) && (originalSourceSnapY)){
+            _didSnapToSourceY = TRUE;
+            NSLog(@"move element snap distance y:%f", [[snapInfo valueForKey:EDKeySnapDistanceY] floatValue]);
+            thisOrigin.y += [[snapInfo valueForKey:EDKeySnapDistanceY] floatValue];
+            [self setFrameOrigin:thisOrigin];
+        }
+    }*/
+    
+    [self setFrameOrigin:thisOrigin];
+    lastDragLocation = newDragLocation;
+}
+
+/*
+- (void)mouseDraggedBehavior:(NSEvent *)theEvent dragSource:(BOOL)isDragSource snapInfo:(NSDictionary *)snapInfo{
+    BOOL originalSourceSnapX = [[snapInfo valueForKey:EDKeyDidSnapX] boolValue];
+    BOOL originalSourceSnapY = [[snapInfo valueForKey:EDKeyDidSnapY] boolValue];
+    BOOL didSnapX = FALSE;
+    BOOL didSnapY = FALSE;
+    
+    if (!isDragSource) {
+        //NSLog(@"nonsource: snap info: original source snap y;%d", originalSourceSnapY);
+    }
+    // if not drag source then maybe we don't need to move this!
+    // check 
+    NSPoint newDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
+    float snapDistanceY=0, snapDistanceX = 0;
+    NSPoint thisOrigin = [self frame].origin;
+    
+    // alter if drag source
+    // do not alter x if this element is being dragged by selection and the source is snapping x
+    if ((isDragSource) || ((!isDragSource) && (!originalSourceSnapX))) {
+        thisOrigin.x += (-lastDragLocation.x + newDragLocation.x);
+    }
+    
+    // alter if drag source
+    // do not alter x if this element is being dragged by selection and the source is snapping x
+    if ((isDragSource) || ((!isDragSource) && (!originalSourceSnapY))) {
+        thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
+        if(!originalSourceSnapY) {
+            // if original source did not snap then reset snapping for this element
+            NSLog(@"element already snapped.");
+            _didSnapToSourceY = FALSE;
+        }
+    }
+    else if (!isDragSource){
+        NSLog(@"this is not the drag source and snap y:%d", originalSourceSnapY);
+        // if source snapped and this element has not snapped already then snap to position
+        if ((!_didSnapToSourceY) && (originalSourceSnapY)){
+            _didSnapToSourceY = TRUE;
+            NSLog(@"move element snap distance y:%f", [[snapInfo valueForKey:EDKeySnapDistanceY] floatValue]);
+            thisOrigin.y += [[snapInfo valueForKey:EDKeySnapDistanceY] floatValue];
+            [self setFrameOrigin:thisOrigin];
+        }
+    }
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // only do if we're snapping
+    if ([defaults boolForKey:EDPreferenceSnapToGuides]) {
+        float closestVerticalPointToOrigin, closestVerticalPointToEdge, closestHorizontalPointToOrigin, closestHorizontalPointToEdge;
+        NSMutableDictionary *guides = [(EDWorksheetView *)[self superview] guides];
+        
+        // get vertical guide as long as there are guides to close enough
+        // only allow the drag source to snap to guides
+        if ((isDragSource) && ([[guides objectForKey:EDKeyGuideVertical] count] > 0)) {
+        //if ([[guides objectForKey:EDKeyGuideVertical] count] > 0) {
+            closestVerticalPointToOrigin = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
+            closestVerticalPointToEdge = [self findClosestPoint:(thisOrigin.y + [[self dataObj] elementHeight]) guides:[guides objectForKey:EDKeyGuideVertical]];
+            closestHorizontalPointToOrigin = [self findClosestPoint:thisOrigin.x guides:[guides objectForKey:EDKeyGuideHorizontal]];
+            closestHorizontalPointToEdge = [self findClosestPoint:(thisOrigin.x + [[self dataObj] elementWidth]) guides:[guides objectForKey:EDKeyGuideHorizontal]];
+            
+            
+            // snap if edge of object is close to guide
+            if ((fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold) || 
+                (fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold) || 
+                (fabsf(thisOrigin.x - closestHorizontalPointToOrigin) < EDGuideThreshold) || 
+                (fabsf((thisOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge) < EDGuideThreshold)) {
+                _didSnap = TRUE;
+                
+                // check snap to vertical point
+                if (fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold) {
+                    //NSLog(@"case 1 origin y:%f closest y:%f", thisOrigin.y, closestVerticalPointToOrigin);
+                    snapDistanceY = thisOrigin.y - closestVerticalPointToOrigin;
+                    thisOrigin.y = closestVerticalPointToOrigin;
+                    didSnapY = TRUE;
+                }
+                else if (fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold) {
+                    //NSLog(@"case 2");
+                    thisOrigin.y = closestVerticalPointToEdge - [[self dataObj] elementHeight];
+                    snapDistanceY = thisOrigin.y + [[self dataObj] elementHeight] - closestVerticalPointToEdge;
+                    didSnapY = TRUE;
+                }
+                
+                // check snap to horizontal point
+                if (fabsf(thisOrigin.x - closestHorizontalPointToOrigin) < EDGuideThreshold) {
+                    thisOrigin.x = closestHorizontalPointToOrigin;
+                    snapDistanceX = thisOrigin.x - closestHorizontalPointToOrigin;
+                    didSnapX = TRUE;
+                }
+                else if (fabsf((thisOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge) < EDGuideThreshold) {
+                    thisOrigin.x = closestHorizontalPointToEdge - [[self dataObj] elementWidth];
+                    snapDistanceX = (thisOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge;
+                    didSnapX = TRUE;
                 }
             }
             else{
@@ -239,9 +462,28 @@
         }
     }
     
-    [self setFrameOrigin:thisOrigin];
+    if ((isDragSource) || ((!isDragSource) && (!originalSourceSnapX))|| ((!isDragSource) && (!originalSourceSnapY))) {
+        [self setFrameOrigin:thisOrigin];
+    }
     lastDragLocation = newDragLocation;
+    
+    // dispatch event if drag source
+    if (isDragSource) {
+        if (_didSnap) {
+            // if source did snap then notify listeners
+            NSMutableDictionary *snapInfo = [[NSMutableDictionary alloc] init];
+            [snapInfo setValue:[[NSNumber alloc] initWithBool:didSnapX] forKey:EDKeyDidSnapX];
+            [snapInfo setValue:[[NSNumber alloc] initWithFloat:snapDistanceX] forKey:EDKeySnapDistanceX];
+            [snapInfo setValue:[[NSNumber alloc] initWithBool:didSnapY] forKey:EDKeyDidSnapY];
+            [snapInfo setValue:[[NSNumber alloc] initWithFloat:snapDistanceY] forKey:EDKeySnapDistanceY];
+            [self dispatchMouseDragNotification:theEvent snapInfo:snapInfo];
+        }
+        else {
+            [self dispatchMouseDragNotification:theEvent snapInfo:nil];
+        }
+    }
 }
+*/
 
 #pragma mark mouse up
 - (void)mouseUp:(NSEvent *)theEvent{

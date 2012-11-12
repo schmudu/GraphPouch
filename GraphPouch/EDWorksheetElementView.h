@@ -16,13 +16,15 @@
     NSPoint                 lastCursorLocation;
     NSPoint                 _savedMouseSnapLocation;
     BOOL                    _didSnap;
+    BOOL                    _didSnapToSourceX;
+    BOOL                    _didSnapToSourceY;
 }
 
 @property (nonatomic, strong) id dataObj;
 @property NSString *viewID;
 
 + (NSString *)generateID;
-- (void)mouseDraggedBySelection:(NSEvent *)theEvent;
+- (void)mouseDraggedBySelection:(NSEvent *)theEvent snapInfo:(NSDictionary *)snapInfo;
 - (void)mouseUpBySelection:(NSEvent *)theEvent;
 - (void)mouseDownBySelection:(NSEvent *)theEvent;
 

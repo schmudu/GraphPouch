@@ -315,7 +315,11 @@
         //if(([myElement isWorksheetElement]) && (![selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
-            [(EDWorksheetElementView *)myElement mouseDraggedBySelection:[[note userInfo] valueForKey:EDEventKey]];
+            //NSLog(@"snap info?:%@", [[note userInfo] valueForKey:EDKeySnapInfo]);
+            // do not notify element if it was the original element that was dragged
+            if (myElement != [[note userInfo] valueForKey:EDKeyWorksheetElement]) {
+                [(EDWorksheetElementView *)myElement mouseDraggedBySelection:[[note userInfo] valueForKey:EDEventKey] snapInfo:[[note userInfo] valueForKey:EDKeySnapInfo]];
+            }
             
             // notify transform rect if it has one
             [self mouseDragTransformRect:[[note userInfo] valueForKey:EDEventKey] element:(EDWorksheetElementView *)myElement];
