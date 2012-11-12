@@ -78,6 +78,7 @@ NSString * const EDElementAttributeWidth                        = @"elementWidth
 NSString * const EDElementAttributeHeight                       = @"elementHeight";
 
 // graph attributes
+NSString * const EDGraphAttributeLabels                         = @"hasLabels";
 NSString * const EDGraphAttributeTickMarks                      = @"hasTickMarks";
 NSString * const EDGraphAttributeCoordinateAxes                 = @"hasCoordinateAxes";
 NSString * const EDGraphAttributeEquation                       = @"equation";

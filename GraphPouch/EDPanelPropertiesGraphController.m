@@ -243,6 +243,15 @@
     [self changeSelectedElementsAttribute:EDGraphAttributeTickMarks newValue:[[NSNumber alloc] initWithBool:[checkboxHasTickMarks state]]];
 }
 
+- (IBAction)toggleHasLabels:(id)sender{
+    // if toggle then set state to on
+    if([checkboxHasLabels state] == NSMixedState)
+        [checkboxHasLabels setState:NSOnState];
+    
+    
+    [self changeSelectedElementsAttribute:EDGraphAttributeLabels newValue:[[NSNumber alloc] initWithBool:[checkboxHasLabels state]]];   
+}
+
 #pragma mark graph points
 - (IBAction)addNewPoint:(id)sender{
     // get currently selected graphs

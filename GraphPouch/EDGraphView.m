@@ -22,10 +22,11 @@
 - (void)drawCoordinateAxes;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal;
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
+- (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
+- (void)removeLabels;
 @end
 
 @implementation EDGraphView
-//@synthesize graph;
 
 - (BOOL)isFlipped{
     return TRUE;
@@ -34,6 +35,8 @@
 - (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph{
     self = [super initWithFrame:frame];
     if (self){
+        _numberLabels = [[NSMutableArray alloc] init];
+        
         //generate id
         [self setViewID:[EDGraphView generateID]];
         
@@ -51,8 +54,11 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    // cleanup
+    [self removeLabels];
+    
     // stroke grid
-    if (([(EDGraph *)[self dataObj] hasTickMarks]) || ([(EDGraph *)[self dataObj] hasGridLines])) {
+    if (([(EDGraph *)[self dataObj] hasLabels]) || ([(EDGraph *)[self dataObj] hasTickMarks]) || ([(EDGraph *)[self dataObj] hasGridLines])) {
         NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];
         NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
         
@@ -63,6 +69,11 @@
         if ([(EDGraph *)[self dataObj] hasTickMarks]) {
             [self drawTickMarks:verticalResults horizontal:horizontalResults];
         }
+        
+        if ([(EDGraph *)[self dataObj] hasLabels]) {
+            [self drawLabels:verticalResults horizontal:horizontalResults];
+        }
+    
     }
     
     // stroke coordinate axes
@@ -211,5 +222,43 @@
         }
     }
     return results;
+}
+
+#pragma mark labels
+- (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal{
+    NSTextField *numberField;
+    // grid lines multiplied by 2 because the calculation only covers half the axis
+    //int numGridLines = [[gridInfoVertical objectForKey:EDKeyGridLinesCount] intValue]*2;
+    int numGridLines = [[gridInfoVertical objectForKey:EDKeyGridLinesCount] intValue];
+    float distanceIncrement = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
+    
+    // draw vertical labels
+    for (int i=1; i<numGridLines; i++) {
+        numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
+        [numberField setStringValue:[[NSString alloc] initWithFormat:@"%d", i]];
+        [numberField setBezeled:FALSE];
+        [numberField setDrawsBackground:FALSE];
+        [numberField setEditable:FALSE];
+        [numberField setSelectable:FALSE];
+    
+        //[path moveToPoint:NSMakePoint([self frame].size.width/2 - EDGraphTickLength, i*distanceIncrement)];
+        //[path lineToPoint:NSMakePoint([self frame].size.width/2 + EDGraphTickLength, i*distanceIncrement)];
+        [self addSubview:numberField];
+        
+        // position it
+        [numberField setFrameOrigin:NSMakePoint([self frame].size.width/2, distanceIncrement * i)];
+        
+        // add to list
+        [_numberLabels addObject:numberField];
+    }
+    
+}
+
+- (void)removeLabels{
+    // remove all labels from view
+    for (NSTextField *numberField in _numberLabels){
+        [numberField removeFromSuperview];
+    }
+    
 }
 @end

@@ -11,6 +11,7 @@
 @class EDGraph;
 
 @interface EDGraphView : EDWorksheetElementView{
+    NSMutableArray *_numberLabels;
 }
 
 - (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph;

@@ -71,6 +71,7 @@ extern float const EDGuideWidth;
 extern float const EDGuideShowThreshold;
 
 // attributes
+extern NSString *const EDGraphAttributeLabels;
 extern NSString *const EDGraphAttributeEquation;
 extern NSString *const EDGraphAttributeGridLines;
 extern NSString *const EDElementAttributeSelected;

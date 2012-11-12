@@ -17,6 +17,7 @@
     IBOutlet NSButton *checkboxHasCoordinates;
     IBOutlet NSButton *checkboxGrid;
     IBOutlet NSButton *checkboxHasTickMarks;
+    IBOutlet NSButton *checkboxHasLabels;
     IBOutlet NSTableView *tablePoints;
     IBOutlet NSButton *buttonRemovePoints;
 }
@@ -24,6 +25,7 @@
 - (IBAction)toggleHasCoordinateAxes:(id)sender;
 - (IBAction)toggleHasGrid:(id)sender;
 - (IBAction)toggleHasTickMarks:(id)sender;
+- (IBAction)toggleHasLabels:(id)sender;
 - (IBAction)addNewPoint:(id)sender;
 - (IBAction)removePoints:(id)sender;
 @end

@@ -19,6 +19,7 @@
 @property BOOL hasCoordinateAxes;
 @property BOOL hasGridLines;
 @property BOOL hasTickMarks;
+@property BOOL hasLabels;
 @property (nonatomic, retain) EDPage *page;
 @property (nonatomic, retain) NSSet *points;
 @end

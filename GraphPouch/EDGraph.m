@@ -19,6 +19,7 @@
 @dynamic hasCoordinateAxes;
 @dynamic hasGridLines;
 @dynamic hasTickMarks;
+@dynamic hasLabels;
 @dynamic page;
 @dynamic points;
 
@@ -29,6 +30,7 @@
     self = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
     if(self){
         [self setEquation:[aDecoder decodeObjectForKey:EDGraphAttributeEquation]];
+        [self setHasLabels:[aDecoder decodeBoolForKey:EDGraphAttributeLabels]];
         [self setHasGridLines:[aDecoder decodeBoolForKey:EDGraphAttributeGridLines]];
         [self setHasTickMarks:[aDecoder decodeBoolForKey:EDGraphAttributeTickMarks]];
         [self setHasCoordinateAxes:[aDecoder decodeBoolForKey:EDGraphAttributeCoordinateAxes]];
@@ -59,6 +61,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:[self equation] forKey:EDGraphAttributeEquation];
+    [aCoder encodeBool:[self hasLabels] forKey:EDGraphAttributeLabels];
     [aCoder encodeBool:[self hasGridLines] forKey:EDGraphAttributeGridLines];
     [aCoder encodeBool:[self hasTickMarks] forKey:EDGraphAttributeTickMarks];
     [aCoder encodeBool:[self hasCoordinateAxes] forKey:EDGraphAttributeCoordinateAxes];
