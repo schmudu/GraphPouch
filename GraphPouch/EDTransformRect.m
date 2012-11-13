@@ -42,9 +42,6 @@
         [bottomRightPoint initWithFrame:NSMakeRect([element locationX] + [element elementWidth] - EDTransformPointLength, [element locationY] + [element elementHeight] - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
                           verticalPoint:(EDTransformCornerPoint *)bottomLeftPoint 
                              horizPoint:(EDTransformCornerPoint *)topRightPoint];
-        NSLog(@"self frame width:%f height:%f", [self frame].size.width, [self frame].size.height);
-        NSLog(@"drawing upper left x:%f y:%f", [topLeftPoint frame].origin.x, [topLeftPoint frame].origin.y);
-        NSLog(@"drawing upper right x:%f y:%f", [topRightPoint frame].origin.x, [topRightPoint frame].origin.y);
         // listen
         _nc = [NSNotificationCenter defaultCenter];
         [_nc addObserver:self selector:@selector(onTransformPointDragged:) name:EDEventTransformPointDragged object:topLeftPoint];
@@ -86,11 +83,9 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     if(![[self subviews] containsObject:topLeftPoint]){
-        NSLog(@"adding top left to view");
         [self addSubview:topLeftPoint];
     }
     if(![[self subviews] containsObject:topRightPoint]){
-        NSLog(@"adding top right to view");
         [self addSubview:topRightPoint];
     }
     if(![[self subviews] containsObject:bottomLeftPoint]){
@@ -219,7 +214,7 @@
             bottomRight = topLeftPoint;
         }
     }
-    NSLog(@"setting positions of points.");
+    
     // set positions
     [topLeftPoint setFrameOrigin:NSMakePoint(origin.x, origin.y)];
     [topRightPoint setFrameOrigin:NSMakePoint(origin.x + [element elementWidth] - EDTransformPointLength, origin.y)];
