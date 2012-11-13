@@ -35,7 +35,7 @@
 - (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph{
     self = [super initWithFrame:frame];
     if (self){
-        _numberLabels = [[NSMutableArray alloc] init];
+        _labels = [[NSMutableArray alloc] init];
         
         //generate id
         [self setViewID:[EDGraphView generateID]];
@@ -226,37 +226,112 @@
 
 #pragma mark labels
 - (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal{
-    NSTextField *numberField;
+    NSTextField *numberField, *labelField;
     // grid lines multiplied by 2 because the calculation only covers half the axis
-    //int numGridLines = [[gridInfoVertical objectForKey:EDKeyGridLinesCount] intValue]*2;
-    int numGridLines = [[gridInfoVertical objectForKey:EDKeyGridLinesCount] intValue];
-    float distanceIncrement = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
+    int numGridLinesVertical = [[gridInfoVertical objectForKey:EDKeyGridLinesCount] intValue];
+    int numGridLinesHorizontal = [[gridInfoHorizontal objectForKey:EDKeyGridLinesCount] intValue];
+    float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
+    float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
+ 
+    // draw y label
+    labelField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
+    [labelField setStringValue:[[NSString alloc] initWithFormat:@"y"]];
+    [labelField setBezeled:FALSE];
+    [labelField setDrawsBackground:FALSE];
+    [labelField setEditable:FALSE];
+    [labelField setSelectable:FALSE];
+    [labelField setFrameOrigin:NSMakePoint([self frame].size.width/2 + EDGraphVerticalLabelHorizontalOffset, 0 + EDGraphYLabelVerticalOffset)];
+    [self addSubview:labelField];
+    [_labels addObject:labelField];
     
-    // draw vertical labels
-    for (int i=1; i<numGridLines; i++) {
+    // draw x label
+    labelField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
+    [labelField setStringValue:[[NSString alloc] initWithFormat:@"x"]];
+    [labelField setBezeled:FALSE];
+    [labelField setDrawsBackground:FALSE];
+    [labelField setEditable:FALSE];
+    [labelField setSelectable:FALSE];
+    [labelField setFrameOrigin:NSMakePoint([self frame].size.width + EDGraphHorizontalLabelHorizontalOffset + EDGraphXLabelHorizontalOffset, [self frame].size.height/2 + EDGraphHorizontalLabelVerticalOffset)];
+    [self addSubview:labelField];
+    [_labels addObject:labelField];
+    
+    // draw positive x labels
+    for (int i=1; i<numGridLinesHorizontal; i++) {
         numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
-        [numberField setStringValue:[[NSString alloc] initWithFormat:@"%d", i]];
+        [numberField setStringValue:[[NSString alloc] initWithFormat:@"%d", i * [[gridInfoHorizontal objectForKey:EDKeyGridFactor] intValue]]];
         [numberField setBezeled:FALSE];
         [numberField setDrawsBackground:FALSE];
         [numberField setEditable:FALSE];
         [numberField setSelectable:FALSE];
     
-        //[path moveToPoint:NSMakePoint([self frame].size.width/2 - EDGraphTickLength, i*distanceIncrement)];
-        //[path lineToPoint:NSMakePoint([self frame].size.width/2 + EDGraphTickLength, i*distanceIncrement)];
         [self addSubview:numberField];
         
         // position it
-        [numberField setFrameOrigin:NSMakePoint([self frame].size.width/2, distanceIncrement * i)];
+        [numberField setFrameOrigin:NSMakePoint([self frame].size.width/2 + (distanceIncrementHorizontal * i + EDGraphHorizontalLabelHorizontalOffset), [self frame].size.height/2 + EDGraphHorizontalLabelVerticalOffset)];
         
         // add to list
-        [_numberLabels addObject:numberField];
+        [_labels addObject:numberField];
+    }
+    
+    // draw negative x labels
+    for (int i=1; i<numGridLinesHorizontal; i++) {
+        numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
+        [numberField setStringValue:[[NSString alloc] initWithFormat:@"-%d", i * [[gridInfoHorizontal objectForKey:EDKeyGridFactor] intValue]]];
+        [numberField setBezeled:FALSE];
+        [numberField setDrawsBackground:FALSE];
+        [numberField setEditable:FALSE];
+        [numberField setSelectable:FALSE];
+    
+        [self addSubview:numberField];
+        
+        // position it
+        [numberField setFrameOrigin:NSMakePoint([self frame].size.width/2 - (distanceIncrementHorizontal * i - EDGraphHorizontalLabelHorizontalOffset + EDGraphHorizontalLabelHorizontalNegativeOffset), [self frame].size.height/2 + EDGraphHorizontalLabelVerticalOffset)];
+        
+        // add to list
+        [_labels addObject:numberField];
+    }
+    
+    // draw positive y labels
+    for (int i=1; i<numGridLinesVertical; i++) {
+        numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
+        [numberField setStringValue:[[NSString alloc] initWithFormat:@"%d", i * [[gridInfoVertical objectForKey:EDKeyGridFactor] intValue]]];
+        [numberField setBezeled:FALSE];
+        [numberField setDrawsBackground:FALSE];
+        [numberField setEditable:FALSE];
+        [numberField setSelectable:FALSE];
+    
+        [self addSubview:numberField];
+        
+        // position it
+        [numberField setFrameOrigin:NSMakePoint([self frame].size.width/2 + EDGraphVerticalLabelHorizontalOffset, [self frame].size.height/2 - (distanceIncrementVertical * i + EDGraphVerticalLabelVerticalOffset))];
+        
+        // add to list
+        [_labels addObject:numberField];
+    }
+    
+    // draw negative y labels
+    for (int i=1; i<numGridLinesVertical; i++) {
+        numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
+        [numberField setStringValue:[[NSString alloc] initWithFormat:@"-%d", i * [[gridInfoVertical objectForKey:EDKeyGridFactor] intValue]]];
+        [numberField setBezeled:FALSE];
+        [numberField setDrawsBackground:FALSE];
+        [numberField setEditable:FALSE];
+        [numberField setSelectable:FALSE];
+    
+        [self addSubview:numberField];
+        
+        // position it
+        [numberField setFrameOrigin:NSMakePoint([self frame].size.width/2 + EDGraphVerticalLabelHorizontalOffset, [self frame].size.height/2 + (distanceIncrementVertical * i - EDGraphVerticalLabelVerticalOffset))];
+        
+        // add to list
+        [_labels addObject:numberField];
     }
     
 }
 
 - (void)removeLabels{
     // remove all labels from view
-    for (NSTextField *numberField in _numberLabels){
+    for (NSTextField *numberField in _labels){
         [numberField removeFromSuperview];
     }
     

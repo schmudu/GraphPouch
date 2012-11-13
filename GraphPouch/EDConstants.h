@@ -101,6 +101,13 @@ extern NSString *const EDKeyDistanceIncrement;
 extern NSString *const EDKeyGridFactor;
 extern NSString *const EDKeyGridLinesCount;
 extern float const EDGraphTickLength;
+extern float const EDGraphVerticalLabelHorizontalOffset;
+extern float const EDGraphVerticalLabelVerticalOffset;
+extern float const EDGraphHorizontalLabelHorizontalOffset;
+extern float const EDGraphHorizontalLabelVerticalOffset;
+extern float const EDGraphHorizontalLabelHorizontalNegativeOffset;
+extern float const EDGraphXLabelHorizontalOffset;
+extern float const EDGraphYLabelVerticalOffset;
 
 // graph points
 extern NSString *const EDGraphPointAttributeVisible;
