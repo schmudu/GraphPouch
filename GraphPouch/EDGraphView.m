@@ -20,6 +20,7 @@
 - (NSArray *)getLowestIntegralFactors:(int)number;
 - (NSMutableDictionary *)calculateGridIncrement:(int)maxValue length:(float)length;
 - (void)drawCoordinateAxes;
+- (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal;
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
 - (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
@@ -54,13 +55,16 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    //NSLog(@"going to redraw in rect: x:%f y:%f width:%f height:%f", dirtyRect.origin.x, dirtyRect.origin.y, dirtyRect.size.width, dirtyRect.size.height);
     // cleanup
     [self removeLabels];
     
+    NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];
+    NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
+    
     // stroke grid
+#warning refactor these if statements out
     if (([(EDGraph *)[self dataObj] hasLabels]) || ([(EDGraph *)[self dataObj] hasTickMarks]) || ([(EDGraph *)[self dataObj] hasGridLines])) {
-        NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];
-        NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
         
         if ([(EDGraph *)[self dataObj] hasGridLines]) {
             [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults];
@@ -73,7 +77,6 @@
         if ([(EDGraph *)[self dataObj] hasLabels]) {
             [self drawLabels:verticalResults horizontal:horizontalResults];
         }
-    
     }
     
     // stroke coordinate axes
@@ -87,6 +90,10 @@
         [NSBezierPath fillRect:[self bounds]];
     }
     
+    // draw points
+    if ([[(EDGraph *)[self dataObj] points] count]) {
+        [self drawPoints:verticalResults horizontal:horizontalResults];
+    }
 }
 
 - (void)drawCoordinateAxes{
@@ -333,6 +340,30 @@
     // remove all labels from view
     for (NSTextField *numberField in _labels){
         [numberField removeFromSuperview];
+    }
+    
+}
+
+- (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal{
+    float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
+    float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
+    [[NSColor blackColor] setFill];
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    for (EDPoint *point in [(EDGraph *)[self dataObj] points]) {
+        if ([point isVisible]) {
+            //NSLog(@"drawing point: visible:%d", [point isVisible]);
+            //[[NSBezierPath bezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + [point locationX] * distanceIncrementHorizontal - EDGraphPointDiameter/2, [self frame].size.height/2 + [point locationY] * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)] fill];
+            //path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + [point locationX] * distanceIncrementHorizontal - EDGraphPointDiameter/2, [self frame].size.height/2 + [point locationY] * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
+            //[NSBezierPath fillRect:NSMakeRect(0, 0, 10, 10)];
+            //[path fill];
+            //[path appendBezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + [point locationX] * distanceIncrementHorizontal - EDGraphPointDiameter/2, [self frame].size.height/2 + [point locationY] * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
+            NSLog(@"self frame height:%f", [self frame].size.height);
+            [path appendBezierPathWithOvalInRect:NSMakeRect(0,15,EDGraphPointDiameter, EDGraphPointDiameter)];
+            [path fill]; 
+        }
+        else {
+            //NSLog(@"not drawing point.");
+        }
     }
     
 }

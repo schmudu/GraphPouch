@@ -108,6 +108,7 @@ float const EDGraphHorizontalLabelVerticalOffset                = 5;
 float const EDGraphHorizontalLabelHorizontalNegativeOffset      = 6;
 float const EDGraphXLabelHorizontalOffset                       = -6;
 float const EDGraphYLabelVerticalOffset                         = 2;
+float const EDGraphPointDiameter                                = 10;
 
 // graph points
 NSString * const EDGraphPointAttributeVisible                   = @"isVisible";

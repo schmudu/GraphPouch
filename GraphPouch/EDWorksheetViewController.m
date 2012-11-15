@@ -16,6 +16,7 @@
 @interface EDWorksheetViewController ()
 - (void)deselectAllElements:(NSNotification *)note;
 - (void)deleteSelectedElements:(NSNotification *)note;
+- (void)onWindowResized:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetViewController
@@ -42,6 +43,9 @@
     
     // initialize view to display all of the worksheet elements
     [(EDWorksheetView *)[self view] drawLoadedObjects];
+    
+    // listen
+    [_nc addObserver:self selector:@selector(onWindowResized:) name:EDEventWindowDidResize object:_documentController];
 }
 
 - (void)deselectAllElements:(NSNotification *)note{
@@ -54,6 +58,7 @@
     [_nc removeObserver:self name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
     [_nc removeObserver:self name:EDEventDeleteKeyPressedWithoutModifiers object:[self view]];
     [_nc removeObserver:self name:EDEventMenuAlignTop object:nil];
+    [_nc removeObserver:self name:EDEventWindowDidResize object:_documentController];
 }
 
 - (void)deleteSelectedElements:(NSNotification *)note{
@@ -87,4 +92,8 @@
     NSLog(@"need to align elements to the top.");
 }
 
+#pragma mark window
+- (void)onWindowResized:(NSNotification *)note{
+    //NSLog(@"window was resized: width:%f height:%f", [[self view] frame].size.width, [[self view] frame].size.height);
+}
 @end

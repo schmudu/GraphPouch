@@ -550,7 +550,6 @@
 
 #pragma mark transform rect
 - (void)drawTransformRect:(EDElement *)element{
-    NSLog(@"drawing transform rect.");
     // create new transform rect
     EDTransformRect *newTransformRect = [[EDTransformRect alloc] initWithFrame:[self frame] element:element];
     

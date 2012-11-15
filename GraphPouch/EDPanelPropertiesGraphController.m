@@ -46,6 +46,7 @@
     [self setElementLabel:labelX attribute:EDElementAttributeLocationX];
     [self setElementLabel:labelY attribute:EDElementAttributeLocationY];
     [self setElementHasCoordinateAxes];
+    [self setElementCheckbox:checkboxHasLabels attribute:EDGraphAttributeLabels];
     [self setElementCheckbox:checkboxGrid attribute:EDGraphAttributeGridLines];
     [self setElementCheckbox:checkboxHasTickMarks attribute:EDGraphAttributeTickMarks];
     
@@ -220,15 +221,27 @@
         [checkboxHasTickMarks setState:NSOffState];
         [checkboxHasTickMarks setEnabled:FALSE];
         [self changeSelectedElementsAttribute:EDGraphAttributeTickMarks newValue:[[NSNumber alloc] initWithBool:[checkboxHasTickMarks state]]];
+        
+        [checkboxHasLabels setEnabled:FALSE];
+        [checkboxHasLabels setState:NSOffState];
+        [self changeSelectedElementsAttribute:EDGraphAttributeLabels newValue:[[NSNumber alloc] initWithBool:[checkboxHasLabels state]]];
     }
     else if([checkboxHasCoordinates state] == NSOnState){
         [checkboxHasTickMarks setEnabled:TRUE];
+        [checkboxHasLabels setEnabled:TRUE];
     }
     else if([checkboxHasCoordinates state] == NSMixedState){
         [checkboxHasCoordinates setState:NSOnState];
+        
+        // turn on tick marks too
         [checkboxHasTickMarks setEnabled:TRUE];
         [checkboxHasTickMarks setState:NSOnState];
         [self changeSelectedElementsAttribute:EDGraphAttributeTickMarks newValue:[[NSNumber alloc] initWithBool:[checkboxHasTickMarks state]]];
+        
+        // turn on labels too
+        [checkboxHasLabels setEnabled:TRUE];
+        [checkboxHasLabels setState:NSOnState];
+        [self changeSelectedElementsAttribute:EDGraphAttributeLabels newValue:[[NSNumber alloc] initWithBool:[checkboxHasLabels state]]];
     }
     
     [self changeSelectedElementsAttribute:EDGraphAttributeCoordinateAxes newValue:[[NSNumber alloc] initWithBool:[checkboxHasCoordinates state]]];
