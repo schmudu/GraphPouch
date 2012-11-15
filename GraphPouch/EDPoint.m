@@ -42,6 +42,13 @@
     return FALSE;
 }
 
+- (BOOL)matchesPointByCoordinate:(EDPoint *)otherPoint{
+    if (([self locationX] == [otherPoint locationX]) && ([self locationY] == [otherPoint locationY])){
+        return TRUE;
+    }
+    return FALSE;
+}
+
 - (void)copyAttributes:(EDPoint *)otherPoint{
     [self setIsVisible:[otherPoint isVisible]];
     [self setLocationX:[otherPoint locationX]];

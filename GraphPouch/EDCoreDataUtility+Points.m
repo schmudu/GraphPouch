@@ -10,7 +10,7 @@
 #import "EDPoint.h"
 #import "EDGraph.h"
 #import "NSManagedObject+EasyFetching.h"
-#import "NSMutableArray+Utilities.h"
+#import "NSMutableArray+EDPoint.h"
 #import "EDConstants.h"
 #import "NSSet+Points.h"
 
@@ -32,15 +32,13 @@
     
     // add all points in first graph
     for (EDPoint *point in [[selectedGraphs objectAtIndex:0] points]){
-        //[commonPoints setObject:point forKey:point];
         [commonPoints addObject:point];
     }
     
     //iterate through graphs
     for (EDGraph *graph in selectedGraphs){
         for (EDPoint *commonPoint in commonPoints){
-            //NSLog(@"checking if common points:%@ contains point:%@ result:%d", commonPoints, graphPoint, [commonPoints containsPoint:graphPoint]);
-            if (![[graph points] containsPoint:commonPoint]){
+            if (![[graph points] containsPointByCoordinate:commonPoint]){
                 // no match so remove from common points
                 [commonPointsToRemove addObject:commonPoint];
             }

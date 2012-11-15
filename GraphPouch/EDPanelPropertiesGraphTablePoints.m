@@ -9,7 +9,7 @@
 #import "EDPanelPropertiesGraphTablePoints.h"
 #import "EDCoreDataUtility.h"
 #import "EDPoint.h"
-#import "NSMutableArray+Utilities.h"
+#import "NSMutableArray+EDPoint.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility+Points.h"
 

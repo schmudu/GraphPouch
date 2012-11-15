@@ -11,7 +11,7 @@
 #import "EDConstants.h"
 #import "NSObject+Document.h"
 #import "NSManagedObject+EasyFetching.h"
-#import "NSMutableArray+Utilities.h"
+#import "NSMutableArray+EDPoint.h"
 
 @interface EDCoreDataUtility()
 @end

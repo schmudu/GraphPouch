@@ -11,5 +11,6 @@
 
 @interface NSSet (Points)
 
+- (BOOL)containsPointByCoordinate:(EDPoint *)matchPoint;
 - (BOOL)containsPoint:(EDPoint *)matchPoint;
 @end

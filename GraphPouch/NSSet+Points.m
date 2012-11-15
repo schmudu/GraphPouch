@@ -19,4 +19,13 @@
     }
     return FALSE;
 }
+
+- (BOOL)containsPointByCoordinate:(EDPoint *)matchPoint{
+    for (EDPoint *point in self){
+        if ([matchPoint matchesPointByCoordinate:point]) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
 @end

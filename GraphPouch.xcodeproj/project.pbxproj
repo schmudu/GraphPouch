@@ -32,9 +32,9 @@
 		CD2DD5BC1646BC42006557FC /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5BB1646BC42006557FC /* EDGraph.m */; };
 		CD2DD5CF16470906006557FC /* EDPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5CE16470906006557FC /* EDPoint.m */; };
 		CD2DD5D416474144006557FC /* EDPanelPropertiesGraphTablePoints.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5D316474144006557FC /* EDPanelPropertiesGraphTablePoints.m */; };
-		CD2DD5DB1648813F006557FC /* NSMutableArray+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5DA1648813F006557FC /* NSMutableArray+Utilities.m */; };
 		CD2DD5F3164C7478006557FC /* EDCoreDataUtility+Points.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5F2164C7478006557FC /* EDCoreDataUtility+Points.m */; };
 		CD2DD5FF164D86CC006557FC /* NSSet+Points.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5FE164D86CC006557FC /* NSSet+Points.m */; };
+		CD2DD6401655AD8B006557FC /* NSMutableArray+EDPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD63F1655AD8B006557FC /* NSMutableArray+EDPoint.m */; };
 		CD3A4FE516359FC90042B6DD /* EDPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3A4FE416359FC90042B6DD /* EDPage.m */; };
 		CD3F0A9C15BDF93400AB7567 /* EDGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9915BDF93400AB7567 /* EDGraphView.m */; };
 		CD3F0A9D15BDF93400AB7567 /* EDGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */; };
@@ -114,12 +114,12 @@
 		CD2DD5CE16470906006557FC /* EDPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPoint.m; sourceTree = "<group>"; };
 		CD2DD5D216474144006557FC /* EDPanelPropertiesGraphTablePoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesGraphTablePoints.h; sourceTree = "<group>"; };
 		CD2DD5D316474144006557FC /* EDPanelPropertiesGraphTablePoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesGraphTablePoints.m; sourceTree = "<group>"; };
-		CD2DD5D91648813F006557FC /* NSMutableArray+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Utilities.h"; sourceTree = "<group>"; };
-		CD2DD5DA1648813F006557FC /* NSMutableArray+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Utilities.m"; sourceTree = "<group>"; };
 		CD2DD5F1164C7478006557FC /* EDCoreDataUtility+Points.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Points.h"; sourceTree = "<group>"; };
 		CD2DD5F2164C7478006557FC /* EDCoreDataUtility+Points.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EDCoreDataUtility+Points.m"; sourceTree = "<group>"; };
 		CD2DD5FD164D86CB006557FC /* NSSet+Points.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+Points.h"; sourceTree = "<group>"; };
 		CD2DD5FE164D86CC006557FC /* NSSet+Points.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+Points.m"; sourceTree = "<group>"; };
+		CD2DD63E1655AD8B006557FC /* NSMutableArray+EDPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+EDPoint.h"; sourceTree = "<group>"; };
+		CD2DD63F1655AD8B006557FC /* NSMutableArray+EDPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+EDPoint.m"; sourceTree = "<group>"; };
 		CD3A4FE316359FC90042B6DD /* EDPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPage.h; sourceTree = "<group>"; };
 		CD3A4FE416359FC90042B6DD /* EDPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPage.m; sourceTree = "<group>"; };
 		CD3F0A9815BDF93400AB7567 /* EDGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphView.h; sourceTree = "<group>"; };
@@ -351,8 +351,8 @@
 				CD2DD5CE16470906006557FC /* EDPoint.m */,
 				CDE6D62E15DE774000E5695F /* EDElement.h */,
 				CDE6D62F15DE774000E5695F /* EDElement.m */,
-				CD2DD5D91648813F006557FC /* NSMutableArray+Utilities.h */,
-				CD2DD5DA1648813F006557FC /* NSMutableArray+Utilities.m */,
+				CD2DD63E1655AD8B006557FC /* NSMutableArray+EDPoint.h */,
+				CD2DD63F1655AD8B006557FC /* NSMutableArray+EDPoint.m */,
 				CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */,
 				CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */,
 				CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */,
@@ -692,9 +692,9 @@
 				CD2DD5BC1646BC42006557FC /* EDGraph.m in Sources */,
 				CD2DD5CF16470906006557FC /* EDPoint.m in Sources */,
 				CD2DD5D416474144006557FC /* EDPanelPropertiesGraphTablePoints.m in Sources */,
-				CD2DD5DB1648813F006557FC /* NSMutableArray+Utilities.m in Sources */,
 				CD2DD5F3164C7478006557FC /* EDCoreDataUtility+Points.m in Sources */,
 				CD2DD5FF164D86CC006557FC /* NSSet+Points.m in Sources */,
+				CD2DD6401655AD8B006557FC /* NSMutableArray+EDPoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

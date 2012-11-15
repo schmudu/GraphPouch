@@ -27,5 +27,6 @@
 - (void)mouseDraggedBySelection:(NSEvent *)theEvent snapInfo:(NSDictionary *)snapInfo;
 - (void)mouseUpBySelection:(NSEvent *)theEvent;
 - (void)mouseDownBySelection:(NSEvent *)theEvent;
-
+- (void)onContextChanged:(NSNotification *)note;
+    
 @end

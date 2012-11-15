@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "EDPoint.h"
 
-@interface NSMutableArray (Utilities)
+@interface NSMutableArray (EDPoint)
 - (BOOL)containsPoint:(EDPoint *)point;
+- (BOOL)containsPointByCoordinate:(EDPoint *)point;
 - (void)removePoint:(EDPoint *)point;
-
+- (void)removePointByCoordinate:(EDPoint *)point;
+    
 @end
