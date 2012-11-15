@@ -351,20 +351,10 @@
     NSBezierPath *path = [NSBezierPath bezierPath];
     for (EDPoint *point in [(EDGraph *)[self dataObj] points]) {
         if ([point isVisible]) {
-            //NSLog(@"drawing point: visible:%d", [point isVisible]);
-            //[[NSBezierPath bezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + [point locationX] * distanceIncrementHorizontal - EDGraphPointDiameter/2, [self frame].size.height/2 + [point locationY] * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)] fill];
-            //path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + [point locationX] * distanceIncrementHorizontal - EDGraphPointDiameter/2, [self frame].size.height/2 + [point locationY] * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
-            //[NSBezierPath fillRect:NSMakeRect(0, 0, 10, 10)];
-            //[path fill];
-            //[path appendBezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + [point locationX] * distanceIncrementHorizontal - EDGraphPointDiameter/2, [self frame].size.height/2 + [point locationY] * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
-            NSLog(@"self frame height:%f", [self frame].size.height);
-            [path appendBezierPathWithOvalInRect:NSMakeRect(0,15,EDGraphPointDiameter, EDGraphPointDiameter)];
+            path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
             [path fill]; 
         }
-        else {
-            //NSLog(@"not drawing point.");
-        }
     }
-    
+    [self setNeedsDisplayInRect:[self frame]];
 }
 @end
