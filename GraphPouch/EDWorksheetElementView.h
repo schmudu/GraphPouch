@@ -28,5 +28,6 @@
 - (void)mouseUpBySelection:(NSEvent *)theEvent;
 - (void)mouseDownBySelection:(NSEvent *)theEvent;
 - (void)onContextChanged:(NSNotification *)note;
-    
+- (void)updateDisplayBasedOnContext;
+
 @end

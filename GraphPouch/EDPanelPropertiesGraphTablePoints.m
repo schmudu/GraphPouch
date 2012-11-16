@@ -66,7 +66,13 @@
         returnValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[sortedArray objectAtIndex:row] locationY]];
     }
     else if ([columnIdentifier isEqualToString:@"visible"]) {
-        returnValue = [[NSNumber alloc] initWithBool:[(EDPoint *)[sortedArray objectAtIndex:row] isVisible]];
+        if (![(EDPoint *)[sortedArray objectAtIndex:row] matchesHaveSameVisibility]) {
+            // if all graphs don't have same property then show mixed state
+            returnValue = [[NSNumber alloc] initWithInt:NSMixedState];
+        }
+        else {
+            returnValue = [[NSNumber alloc] initWithBool:[(EDPoint *)[sortedArray objectAtIndex:row] isVisible]];
+        }
     }
     
     
@@ -97,6 +103,7 @@
         [newAttribute setObject:object forKey:EDValue];
     }
     else if ([columnIdentifier isEqualToString:@"visible"]) {
+        NSLog(@"setting visible attribute to:%@", object);
         [newAttribute setValue:EDGraphPointAttributeVisible forKey:EDKey];
         [newAttribute setObject:object forKey:EDValue];
     }

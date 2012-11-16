@@ -13,6 +13,8 @@
 
 @implementation EDPoint
 
+@synthesize matchesHaveSameVisibility;
+
 @dynamic locationX;
 @dynamic isVisible;
 @dynamic locationY;

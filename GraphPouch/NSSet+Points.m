@@ -11,6 +11,15 @@
 
 @implementation NSSet (Points)
 
+- (EDPoint *)findPointByCoordinate:(EDPoint *)matchPoint{
+    for (EDPoint *point in self){
+        if ([matchPoint matchesPointByCoordinate:point]) {
+            return point;
+        }
+    }
+    return nil;
+}
+
 - (BOOL)containsPoint:(EDPoint *)matchPoint{
     for (EDPoint *point in self){
         if ([matchPoint matchesPoint:point]) {

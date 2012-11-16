@@ -54,13 +54,14 @@
 }
 
 - (void)onContextChanged:(NSNotification *)note{
-    [super onContextChanged:note];
+    //[super onContextChanged:note];
     
     // also check if the points changed
 #warning optomize: see if point is within this graph rather than redisplaying everyone
-    [self setNeedsDisplay:TRUE];
+    [super updateDisplayBasedOnContext];
 }
-    - (void)drawRect:(NSRect)dirtyRect
+
+- (void)drawRect:(NSRect)dirtyRect
 {
     //NSLog(@"going to redraw in rect: x:%f y:%f width:%f height:%f", dirtyRect.origin.x, dirtyRect.origin.y, dirtyRect.size.width, dirtyRect.size.height);
     // cleanup

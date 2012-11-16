@@ -32,15 +32,35 @@
     
     // add all points in first graph
     for (EDPoint *point in [[selectedGraphs objectAtIndex:0] points]){
+        // reset all matches are visible to TRUE
+        [point setMatchesHaveSameVisibility:TRUE];
+         
         [commonPoints addObject:point];
     }
     
     //iterate through graphs
+    EDPoint *pointFound;
+    /*
     for (EDGraph *graph in selectedGraphs){
         for (EDPoint *commonPoint in commonPoints){
-            if (![[graph points] containsPointByCoordinate:commonPoint]){
+            if (![[graph points] containsPoint:commonPoint]){
                 // no match so remove from common points
                 [commonPointsToRemove addObject:commonPoint];
+            }
+        }
+    }*/
+    for (EDGraph *graph in selectedGraphs){
+        for (EDPoint *commonPoint in commonPoints){
+            pointFound = [[graph points] findPointByCoordinate:commonPoint];
+            
+            if (!pointFound) {
+                [commonPointsToRemove addObject:commonPoint];
+            }
+            else {
+                // point was found now see if it was an exact match
+                if (![pointFound matchesPoint:commonPoint]) {
+                    [commonPoint setMatchesHaveSameVisibility:FALSE];
+                }
             }
         }
     }

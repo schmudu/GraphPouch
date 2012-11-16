@@ -81,16 +81,14 @@
 																	<string key="NSFrameSize">{252, 17}</string>
 																	<reference key="NSSuperview" ref="645334946"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="356398240"/>
+																	<reference key="NSNextKeyView" ref="753094011"/>
 																	<string key="NSReuseIdentifierKey">_NS:16</string>
 																	<reference key="NSTableView" ref="503575084"/>
 																</object>
-																<object class="_NSCornerView" key="NSCornerView" id="356398240">
-																	<reference key="NSNextResponder" ref="1023586222"/>
+																<object class="_NSCornerView" key="NSCornerView">
+																	<nil key="NSNextResponder"/>
 																	<int key="NSvFlags">-2147483392</int>
 																	<string key="NSFrame">{{224, 0}, {16, 17}}</string>
-																	<reference key="NSSuperview" ref="1023586222"/>
-																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="753094011"/>
 																	<string key="NSReuseIdentifierKey">_NS:19</string>
 																</object>
@@ -204,7 +202,7 @@
 																		</object>
 																		<object class="NSButtonCell" key="NSDataCell" id="894220590">
 																			<int key="NSCellFlags">67239424</int>
-																			<int key="NSCellFlags2">134217728</int>
+																			<int key="NSCellFlags2">150994944</int>
 																			<string key="NSContents"/>
 																			<reference key="NSSupport" ref="853635957"/>
 																			<string key="NSCellIdentifier">_NS:9</string>
@@ -303,7 +301,6 @@
 														<reference key="NSBGColor" ref="727741394"/>
 														<int key="NScvFlags">4</int>
 													</object>
-													<reference ref="356398240"/>
 												</array>
 												<string key="NSFrame">{{20, 18}, {254, 212}}</string>
 												<reference key="NSSuperview" ref="7230525"/>
@@ -315,7 +312,6 @@
 												<reference key="NSHScroller" ref="810162224"/>
 												<reference key="NSContentView" ref="753094011"/>
 												<reference key="NSHeaderClipView" ref="645334946"/>
-												<reference key="NSCornerView" ref="356398240"/>
 												<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 											</object>
 											<object class="NSButton" id="960473295">
@@ -324,6 +320,7 @@
 												<string key="NSFrame">{{223, 226}, {48, 32}}</string>
 												<reference key="NSSuperview" ref="7230525"/>
 												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="48521245">

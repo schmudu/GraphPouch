@@ -15,6 +15,7 @@
 
 @property float locationX;
 @property BOOL isVisible;
+@property BOOL matchesHaveSameVisibility;
 @property float locationY;
 @property (nonatomic, retain) EDGraph *graph;
 
