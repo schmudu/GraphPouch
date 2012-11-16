@@ -64,7 +64,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    //NSLog(@"going to redraw in rect: x:%f y:%f width:%f height:%f", dirtyRect.origin.x, dirtyRect.origin.y, dirtyRect.size.width, dirtyRect.size.height);
     // cleanup
     [self removeLabels];
     
@@ -91,12 +90,7 @@
     
     // color background
     if ([[self dataObj] isSelectedElement]){
-        //[[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
-        [[NSColor redColor] set];
-        [NSBezierPath fillRect:[self bounds]];
-    }
-    else {
-        [[NSColor blueColor] set];
+        [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
         [NSBezierPath fillRect:[self bounds]];
     }
     
