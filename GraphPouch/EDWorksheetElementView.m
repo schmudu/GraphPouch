@@ -82,7 +82,7 @@
 #pragma mark mouse down
 - (void)mouseDown:(NSEvent *)theEvent{
 #warning CAREFUL: SOME code you change here needs to change in the "mouseDownBySelection" method
-    // set worksheet view as getAllSelectedWorksheetElements
+     // set worksheet view as getAllSelectedWorksheetElements
     [[self window] makeFirstResponder:[self superview]];
     
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];

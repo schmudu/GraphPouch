@@ -86,20 +86,29 @@
 }
 
 #pragma mark drawing
+NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView, void *context) {
+    // order view by isSelected
+    EDWorksheetElementView *firstElement;
+    EDWorksheetElementView *secondElement;
+    
+    if ([firstView isKindOfClass:[EDWorksheetElementView class]]) {
+        firstElement = (EDWorksheetElementView *)firstView;
+        if ([secondView isKindOfClass:[EDWorksheetElementView class]]) {
+            secondElement = (EDWorksheetElementView *)secondView;
+            // set ordering
+            if ([[firstElement dataObj] selected] && (![[secondElement dataObj] selected])){
+                return NSOrderedDescending;
+            }
+        }
+    }
+    return NSOrderedAscending;
+}
+
 - (BOOL)isFlipped{
     return TRUE;
 }
 
 - (void)drawLoadedObjects{
-    /*
-    // this draws the objects loaded from the persistence store
-    NSArray *graphs = [_coreData getAllGraphs];
-    for (EDGraph *myGraph in graphs){
-        [self drawGraph:myGraph];
-    }
-    
-#warning add other elements here
-     */
     [self drawAllElements];
     
 }
@@ -285,6 +294,9 @@
 }
 
 - (void)onElementMouseDown:(NSNotification *)note{
+    // order views
+    [self sortSubviewsUsingFunction:&viewCompareBySelection context:nil];
+    
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];

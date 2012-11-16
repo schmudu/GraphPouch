@@ -91,7 +91,12 @@
     
     // color background
     if ([[self dataObj] isSelectedElement]){
-        [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
+        //[[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
+        [[NSColor redColor] set];
+        [NSBezierPath fillRect:[self bounds]];
+    }
+    else {
+        [[NSColor blueColor] set];
         [NSBezierPath fillRect:[self bounds]];
     }
     
