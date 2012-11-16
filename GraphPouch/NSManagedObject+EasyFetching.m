@@ -19,7 +19,7 @@
     [NSEntityDescription entityForName:NSStringFromClass(self) inManagedObjectContext:context];
 }
 
-+ (NSArray *)findAllObjects;
++ (NSArray *)getAllObjects;
 {
     NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity = [self entityDescriptionInContext:context];
@@ -35,7 +35,7 @@
 }
 
 
-+ (NSManagedObject *)findCurrentPage{
++ (NSManagedObject *)getCurrentPage{
     NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity;
     
@@ -67,7 +67,7 @@
     return [filteredResults lastObject];
 }
 
-+ (NSArray *)findAllSelectedObjects{
++ (NSArray *)getAllSelectedObjects{
     NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity;
     
@@ -95,7 +95,7 @@
     return filteredResults;
 }
 
-+ (NSArray *)findAllUnselectedObjects{
++ (NSArray *)getAllUnselectedObjects{
     NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity;
     
@@ -123,7 +123,7 @@
     return filteredResults;
 }
 
-+ (NSArray *)findAllUnselectedObjectsOrderedByPageNumber{
++ (NSArray *)getAllUnselectedObjectsOrderedByPageNumber{
     NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity;
     
@@ -157,7 +157,7 @@
     return filteredResults;
 }
 
-+ (NSArray *)findAllObjectsOrderedByPageNumber{
++ (NSArray *)getAllObjectsOrderedByPageNumber{
     NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -179,7 +179,7 @@
     return results;
 }
 
-+ (NSArray *)findAllSelectedObjectsOrderedByPageNumber{
++ (NSArray *)getAllSelectedObjectsOrderedByPageNumber{
     NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];

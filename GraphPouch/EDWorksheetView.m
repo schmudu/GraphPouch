@@ -70,7 +70,7 @@
         _elementsWithTransformRects = [[NSMutableDictionary alloc] init];
         
         // find current page
-        EDPage *newPage = (EDPage *)[EDPage findCurrentPage];
+        EDPage *newPage = (EDPage *)[EDPage getCurrentPage];
         _currentPage = newPage;
         
         // listen
@@ -204,7 +204,7 @@
 
 #pragma mark listeners
 - (void)onContextChanged:(NSNotification *)note{
-    EDPage *newPage = (EDPage *)[EDPage findCurrentPage];
+    EDPage *newPage = (EDPage *)[EDPage getCurrentPage];
     if (newPage == _currentPage) {
         // only redraw the objects on page
         NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
@@ -495,7 +495,7 @@
 #pragma mark elements
 - (void)drawAllElements{
     // draw all elements for the current page
-    EDPage *currentPage = (EDPage *)[EDPage findCurrentPage];
+    EDPage *currentPage = (EDPage *)[EDPage getCurrentPage];
     
     // draw all graphs
     for (EDGraph *graph in [currentPage graphs]){

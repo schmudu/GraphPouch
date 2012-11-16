@@ -11,13 +11,13 @@
 @interface NSManagedObject (EasyFetching)
 
 + (NSEntityDescription *)entityDescriptionInContext:(NSManagedObjectContext *)context;
-+ (NSArray *)findAllObjects;
-+ (NSArray *)findAllObjectsOrderedByPageNumber;
-+ (NSArray *)findAllSelectedObjects;
-+ (NSArray *)findAllUnselectedObjects;
-+ (NSArray *)findAllUnselectedObjectsOrderedByPageNumber;
-+ (NSManagedObject *)findCurrentPage;
-+ (NSArray *)findAllSelectedObjectsOrderedByPageNumber;
++ (NSArray *)getAllObjects;
++ (NSArray *)getAllObjectsOrderedByPageNumber;
++ (NSArray *)getAllSelectedObjects;
++ (NSArray *)getAllUnselectedObjects;
++ (NSArray *)getAllUnselectedObjectsOrderedByPageNumber;
++ (NSManagedObject *)getCurrentPage;
++ (NSArray *)getAllSelectedObjectsOrderedByPageNumber;
 + (NSManagedObjectContext *)getContext;
 + (void)printAll;
 

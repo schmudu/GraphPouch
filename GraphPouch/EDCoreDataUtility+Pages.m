@@ -46,7 +46,7 @@
     NSArray *fetchedObjects;
     
     // get all selected pages ordered by page number
-    fetchedObjects = [EDPage findAllObjectsOrderedByPageNumber];
+    fetchedObjects = [EDPage getAllObjectsOrderedByPageNumber];
     
     NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(SELF == %@)", page];
     NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];;
@@ -59,7 +59,7 @@
     NSArray *fetchedObjects;
     
     // get all selected pages ordered by page number
-    fetchedObjects = [EDPage findAllSelectedObjectsOrderedByPageNumber];
+    fetchedObjects = [EDPage getAllSelectedObjectsOrderedByPageNumber];
     if ([fetchedObjects count] > 0) {
         return [fetchedObjects lastObject];
     }
@@ -69,7 +69,7 @@
 - (NSMutableArray *)getAllSelectedPages{
     // gets all pages
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
-    NSArray *fetchedGraphs = [EDPage findAllSelectedObjects];
+    NSArray *fetchedGraphs = [EDPage getAllSelectedObjects];
     
     [allObjects addObjectsFromArray:fetchedGraphs];
     
@@ -89,7 +89,7 @@
 
 - (void)correctPageNumbersAfterDelete{
     // gets all pages
-    NSArray *fetchedPages = [EDPage findAllObjectsOrderedByPageNumber];
+    NSArray *fetchedPages = [EDPage getAllObjectsOrderedByPageNumber];
     int currentPageNumber = 1;
     
     // iterate through pages
@@ -408,12 +408,12 @@
 }
 
 - (EDPage *)getCurrentPage{
-    return (EDPage *)[EDPage findCurrentPage];
+    return (EDPage *)[EDPage getCurrentPage];
 }
 
 - (void)setPageAsCurrent:(EDPage *)page{
     // unset previous current page
-    EDPage *previousPage = (EDPage *)[EDPage findCurrentPage];
+    EDPage *previousPage = (EDPage *)[EDPage getCurrentPage];
     
     // if already set then do nothing
     if (previousPage == page){

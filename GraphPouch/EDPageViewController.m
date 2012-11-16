@@ -70,7 +70,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
     /*
     NSArray *pages = [_coreData getAllPages];
-    NSArray *selectedPages = [EDPage findAllSelectedObjects];
+    NSArray *selectedPages = [EDPage getAllSelectedObjects];
     
     // do not delete if there will be no pages left
     if (([pages count] - [selectedPages count]) < 1) 

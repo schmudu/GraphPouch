@@ -53,25 +53,26 @@
     
     // Get common points
     NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    /*
     // sort
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDElementAttributeLocationX ascending:TRUE];
     NSArray *descriptorArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     NSArray *sortedArray = [commonPoints sortedArrayUsingDescriptors:descriptorArray];
-    
+    */
     // return value based on column identifier
     if ([columnIdentifier isEqualToString:@"x"]) {
-        returnValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[sortedArray objectAtIndex:row] locationX]];
+        returnValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[commonPoints objectAtIndex:row] locationX]];
     }
     else if ([columnIdentifier isEqualToString:@"y"]) {
-        returnValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[sortedArray objectAtIndex:row] locationY]];
+        returnValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[commonPoints objectAtIndex:row] locationY]];
     }
     else if ([columnIdentifier isEqualToString:@"visible"]) {
-        if (![(EDPoint *)[sortedArray objectAtIndex:row] matchesHaveSameVisibility]) {
+        if (![(EDPoint *)[commonPoints objectAtIndex:row] matchesHaveSameVisibility]) {
             // if all graphs don't have same property then show mixed state
             returnValue = [[NSNumber alloc] initWithInt:NSMixedState];
         }
         else {
-            returnValue = [[NSNumber alloc] initWithBool:[(EDPoint *)[sortedArray objectAtIndex:row] isVisible]];
+            returnValue = [[NSNumber alloc] initWithBool:[(EDPoint *)[commonPoints objectAtIndex:row] isVisible]];
         }
     }
     
@@ -103,11 +104,11 @@
         [newAttribute setObject:object forKey:EDValue];
     }
     else if ([columnIdentifier isEqualToString:@"visible"]) {
-        NSLog(@"setting visible attribute to:%@", object);
         [newAttribute setValue:EDGraphPointAttributeVisible forKey:EDKey];
         [newAttribute setObject:object forKey:EDValue];
     }
     
+    // set the attribute for the graph that holds this point
     // set the common points
     [[EDCoreDataUtility sharedCoreDataUtility] setAllCommonPointsforSelectedGraphs:newPoint attribute:newAttribute];
 }

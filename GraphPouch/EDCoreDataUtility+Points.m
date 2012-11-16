@@ -19,7 +19,7 @@
 #pragma mark graph points
 - (NSArray *)getAllCommonPointsforSelectedGraphs{
     // get all selected graphs
-    NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
+    NSArray *selectedGraphs = [EDGraph getAllSelectedObjects];
     
     // return if empty
     if ([selectedGraphs count] == 0){
@@ -40,15 +40,16 @@
     
     //iterate through graphs
     EDPoint *pointFound;
-    /*
     for (EDGraph *graph in selectedGraphs){
         for (EDPoint *commonPoint in commonPoints){
+            // points must be an exact match
             if (![[graph points] containsPoint:commonPoint]){
                 // no match so remove from common points
                 [commonPointsToRemove addObject:commonPoint];
             }
         }
-    }*/
+    }
+    /*
     for (EDGraph *graph in selectedGraphs){
         for (EDPoint *commonPoint in commonPoints){
             pointFound = [[graph points] findPointByCoordinate:commonPoint];
@@ -63,7 +64,7 @@
                 }
             }
         }
-    }
+    }*/
     
     // remove points that weren't common to all graphs
     for (EDPoint *point in commonPointsToRemove){
@@ -80,7 +81,7 @@
 
 - (NSArray *)getOneCommonPointFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint{
     // get all selected graphs
-    NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
+    NSArray *selectedGraphs = [EDGraph getAllSelectedObjects];
     
     // return if empty
     if ([selectedGraphs count] == 0){
@@ -93,6 +94,7 @@
     //iterate through graphs
     for (EDGraph *graph in selectedGraphs){
         for (EDPoint *point in [graph points]){
+            //if ([matchPoint matchesPointByCoordinate:point]){
             if ([matchPoint matchesPoint:point]){
                 // only match one point
                 [matchingPoints addObject:point];
@@ -110,7 +112,7 @@
     // find points with the same attributes
     for (EDPoint *point in commonPoints){
         // if all attributes match then change the designated attribute
-        if ([pointToChange matchesPoint:point]){
+        if ([pointToChange matchesPointByCoordinate:point]){
             if ([[attributes valueForKey:EDKey] isEqualToString:EDElementAttributeLocationX]) {
                 [point setLocationX:[[attributes objectForKey:EDValue] floatValue]];
             }
@@ -125,7 +127,6 @@
 }
 
 - (void)removeCommonPointsforSelectedGraphsMatchingPoints:(NSArray *)pointsToRemove{
-   // NSArray *commonPoints = [self getAllCommonPointsforSelectedGraphs];
     NSArray *matchingPoints;
     
     // find points with the same attributes

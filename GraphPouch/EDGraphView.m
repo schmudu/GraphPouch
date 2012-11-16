@@ -54,11 +54,12 @@
 }
 
 - (void)onContextChanged:(NSNotification *)note{
-    //[super onContextChanged:note];
+    [super onContextChanged:note];
     
     // also check if the points changed
 #warning optomize: see if point is within this graph rather than redisplaying everyone
-    [super updateDisplayBasedOnContext];
+    //[super updateDisplayBasedOnContext];
+    [self setNeedsDisplay:TRUE];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -71,20 +72,16 @@
     NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
     
     // stroke grid
-#warning refactor these if statements out
-    if (([(EDGraph *)[self dataObj] hasLabels]) || ([(EDGraph *)[self dataObj] hasTickMarks]) || ([(EDGraph *)[self dataObj] hasGridLines])) {
-        
-        if ([(EDGraph *)[self dataObj] hasGridLines]) {
-            [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults];
-        }
-        
-        if ([(EDGraph *)[self dataObj] hasTickMarks]) {
-            [self drawTickMarks:verticalResults horizontal:horizontalResults];
-        }
-        
-        if ([(EDGraph *)[self dataObj] hasLabels]) {
-            [self drawLabels:verticalResults horizontal:horizontalResults];
-        }
+    if ([(EDGraph *)[self dataObj] hasGridLines]) {
+        [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults];
+    }
+    
+    if ([(EDGraph *)[self dataObj] hasTickMarks]) {
+        [self drawTickMarks:verticalResults horizontal:horizontalResults];
+    }
+    
+    if ([(EDGraph *)[self dataObj] hasLabels]) {
+        [self drawLabels:verticalResults horizontal:horizontalResults];
     }
     
     // stroke coordinate axes

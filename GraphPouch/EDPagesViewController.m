@@ -263,7 +263,7 @@
 #pragma mark pages events
 - (void)onDeleteKeyPressed:(NSNotification *)note{
     NSArray *pages = [_coreData getAllPages];
-    NSArray *selectedPages = [EDPage findAllSelectedObjects];
+    NSArray *selectedPages = [EDPage getAllSelectedObjects];
     
     // do not delete if there will be no pages left
     if (([pages count] - [selectedPages count]) < 1) 
@@ -343,7 +343,7 @@
 
 - (void)updatePageNumbersOfDraggedPages:(int)endSection{
     // get selected pages
-    NSArray *selectedPages = [EDPage findAllSelectedObjects];
+    NSArray *selectedPages = [EDPage getAllSelectedObjects];
     
     // if no unselected pages then exit
     if ([selectedPages count] == 0) {
@@ -406,7 +406,7 @@
 #pragma mark keyboard
 - (void)onShortcutCut:(NSNotification *)note{
     NSArray *selectedPageViews = [self getSelectedPageViews];
-    NSArray *allPages = [EDPage findAllObjects];
+    NSArray *allPages = [EDPage getAllObjects];
     
     // if there will no pages left if all pages are cut, then do not allow this operation
     if ([allPages count] - [selectedPageViews count] < 1) 
@@ -444,7 +444,7 @@
     NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
     
     // get last selected object
-    NSArray *selectedPages = [EDPage findAllSelectedObjectsOrderedByPageNumber];
+    NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber];
     EDPage *lastSelectedPage = (EDPage *)[selectedPages lastObject];
     int insertPosition, startInsertPosition;
     if (lastSelectedPage){
@@ -452,7 +452,7 @@
     }
     else {
         // append pages 
-        startInsertPosition = [[EDPage findAllObjects] count] + 1;
+        startInsertPosition = [[EDPage getAllObjects] count] + 1;
     }
     
     // save position

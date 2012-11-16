@@ -167,6 +167,10 @@
 
 #pragma mark mouse dragged
 - (void)mouseDragged:(NSEvent *)theEvent{
+    // do not drag if it is not selected
+    if (![(EDGraph *)[self dataObj] isSelectedElement]) 
+        return;
+        
     BOOL didSnapX = FALSE, didSnapY = FALSE, didSnapBack = FALSE;
     
     // check 

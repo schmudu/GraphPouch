@@ -133,7 +133,7 @@
 - (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSMutableArray *elements = [[NSMutableArray alloc] init];
-    NSArray *graphs = [EDGraph findAllSelectedObjects];
+    NSArray *graphs = [EDGraph getAllSelectedObjects];
     BOOL diff = FALSE;
     int i = 0;
     float value = 0;
@@ -162,7 +162,7 @@
 - (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSMutableArray *elements = [[NSMutableArray alloc] init];
-    NSArray *graphs = [EDGraph findAllSelectedObjects];
+    NSArray *graphs = [EDGraph getAllSelectedObjects];
     BOOL diff = FALSE;
     int i = 0;
     float value = 0;
@@ -268,7 +268,7 @@
 #pragma mark graph points
 - (IBAction)addNewPoint:(id)sender{
     // get currently selected graphs
-    NSArray *selectedGraphs = [EDGraph findAllSelectedObjects];
+    NSArray *selectedGraphs = [EDGraph getAllSelectedObjects];
     
     // create new point for each graph
     for (EDGraph *graph in selectedGraphs){

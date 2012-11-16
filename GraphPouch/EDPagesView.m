@@ -188,7 +188,7 @@
     NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
     
     // get first and last selected objects
-    NSArray *selectedPages = [EDPage findAllSelectedObjectsOrderedByPageNumber];
+    NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber];
     EDPage *firstSelectedPage = (EDPage *)[selectedPages objectAtIndex:0];
     EDPage *lastSelectedPage = (EDPage *)[selectedPages lastObject];
     

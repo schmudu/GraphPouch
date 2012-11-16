@@ -87,7 +87,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 - (NSMutableArray *)getAllSelectedWorksheetElements{
     // gets all selected objects
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
-    NSArray *fetchedGraphs = [EDGraph findAllSelectedObjects];
+    NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects];
     
 #warning add other elements here
     [allObjects addObjectsFromArray:fetchedGraphs];
@@ -101,7 +101,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     NSArray *fetchedObjects;
     
     // get all selected graphs
-    fetchedObjects = [EDGraph findAllSelectedObjects];
+    fetchedObjects = [EDGraph getAllSelectedObjects];
     
 #warning add other elements here
     if ([fetchedObjects count] > 0) {
@@ -112,7 +112,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 }
 
 - (void)clearSelectedWorksheetElements{
-    NSArray *fetchedObjects = [EDGraph findAllSelectedObjects];
+    NSArray *fetchedObjects = [EDGraph getAllSelectedObjects];
     if (fetchedObjects == nil) {
         // Handle the error
     }
