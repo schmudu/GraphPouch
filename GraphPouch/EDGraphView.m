@@ -349,6 +349,7 @@
 }
 
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal{
+    NSTextField *pointLabel;
     float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
     [[NSColor blackColor] setFill];
@@ -358,8 +359,18 @@
             path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
             [path fill]; 
             if ([point showLabel]){
-#error start here and show label
-                NSLog(@"need to show label.");
+                pointLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 40, 20)];
+                [pointLabel setStringValue:[[NSString alloc] initWithFormat:@"(%f, %f)", [point locationX], [point locationY]]];
+                [pointLabel setBezeled:FALSE];
+                [pointLabel setDrawsBackground:FALSE];
+                [pointLabel setEditable:FALSE];
+                [pointLabel setSelectable:FALSE];
+            
+                [self addSubview:pointLabel];
+                
+                // position it
+                [pointLabel setFrameOrigin:NSMakePoint([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2)];
+                [_labels addObject:pointLabel];
             }
         }
     }
