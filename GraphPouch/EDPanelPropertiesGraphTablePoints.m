@@ -53,12 +53,7 @@
     
     // Get common points
     NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
-    /*
-    // sort
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDElementAttributeLocationX ascending:TRUE];
-    NSArray *descriptorArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    NSArray *sortedArray = [commonPoints sortedArrayUsingDescriptors:descriptorArray];
-    */
+    
     // return value based on column identifier
     if ([columnIdentifier isEqualToString:@"x"]) {
         returnValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[commonPoints objectAtIndex:row] locationX]];
@@ -73,6 +68,15 @@
         }
         else {
             returnValue = [[NSNumber alloc] initWithBool:[(EDPoint *)[commonPoints objectAtIndex:row] isVisible]];
+        }
+    }
+    else if ([columnIdentifier isEqualToString:@"label"]) {
+        if (![(EDPoint *)[commonPoints objectAtIndex:row] matchesHaveSameLabel]) {
+            // if all graphs don't have same property then show mixed state
+            returnValue = [[NSNumber alloc] initWithInt:NSMixedState];
+        }
+        else {
+            returnValue = [[NSNumber alloc] initWithBool:[(EDPoint *)[commonPoints objectAtIndex:row] showLabel]];
         }
     }
     
@@ -105,6 +109,10 @@
     }
     else if ([columnIdentifier isEqualToString:@"visible"]) {
         [newAttribute setValue:EDGraphPointAttributeVisible forKey:EDKey];
+        [newAttribute setObject:object forKey:EDValue];
+    }
+    else if ([columnIdentifier isEqualToString:@"label"]) {
+        [newAttribute setValue:EDGraphPointAttributeShowLabel forKey:EDKey];
         [newAttribute setObject:object forKey:EDValue];
     }
     

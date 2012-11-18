@@ -112,6 +112,7 @@ extern float const EDGraphPointDiameter;
 
 // graph points
 extern NSString *const EDGraphPointAttributeVisible;
+extern NSString *const EDGraphPointAttributeShowLabel;
 
 // window
 extern NSString *const EDEventWindowDidResize;

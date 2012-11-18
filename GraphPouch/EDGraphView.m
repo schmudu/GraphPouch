@@ -357,6 +357,10 @@
         if ([point isVisible]) {
             path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
             [path fill]; 
+            if ([point showLabel]){
+#error start here and show label
+                NSLog(@"need to show label.");
+            }
         }
     }
     [self setNeedsDisplayInRect:[self frame]];

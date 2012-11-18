@@ -165,16 +165,15 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)drawGuide:(NSPoint)startPoint endPoint:(NSPoint)endPoint{
-    NSLog(@"drawing guide.");
-        NSBezierPath *aPath;
-        aPath = [NSBezierPath bezierPath];
-        [aPath setLineWidth:EDGuideWidth];
-        CGFloat dashedLined[] = {10.0, 10.0};
-        [aPath setLineDash:dashedLined count:2 phase:0];
-        [[NSColor blueColor] setStroke];
-        [aPath moveToPoint:startPoint];
-        [aPath lineToPoint:endPoint];
-        [aPath stroke];
+    NSBezierPath *aPath;
+    aPath = [NSBezierPath bezierPath];
+    [aPath setLineWidth:EDGuideWidth];
+    CGFloat dashedLined[] = {10.0, 10.0};
+    [aPath setLineDash:dashedLined count:2 phase:0];
+    [[NSColor blueColor] setStroke];
+    [aPath moveToPoint:startPoint];
+    [aPath lineToPoint:endPoint];
+    [aPath stroke];
 }
 
 - (void)drawGraph:(EDGraph *)graph{
@@ -295,7 +294,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)onElementMouseDown:(NSNotification *)note{
-    NSLog(@"element mouse down: mouse is down:%d", _mouseIsDown);
     // order views
     [self sortSubviewsUsingFunction:&viewCompareBySelection context:nil];
     
@@ -341,7 +339,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)onElementMouseUp:(NSNotification *)note{
-    NSLog(@"mouse up");
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];
@@ -402,7 +399,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)removeGuides{
-    NSLog(@"setting guides to nil.");
     _guides = nil;
 }
                                              

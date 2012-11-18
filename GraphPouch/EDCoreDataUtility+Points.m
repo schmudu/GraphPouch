@@ -34,12 +34,13 @@
     for (EDPoint *point in [[selectedGraphs objectAtIndex:0] points]){
         // reset all matches are visible to TRUE
         [point setMatchesHaveSameVisibility:TRUE];
-         
+        [point setMatchesHaveSameLabel:TRUE];
+        
         [commonPoints addObject:point];
     }
     
     //iterate through graphs
-    EDPoint *pointFound;
+    //EDPoint *pointFound;
     for (EDGraph *graph in selectedGraphs){
         for (EDPoint *commonPoint in commonPoints){
             // points must be an exact match
@@ -121,6 +122,9 @@
             }
             else if ([[attributes valueForKey:EDKey] isEqualToString:EDGraphPointAttributeVisible]) {
                 [point setIsVisible:[[attributes objectForKey:EDValue] boolValue]];
+            }
+            else if ([[attributes valueForKey:EDKey] isEqualToString:EDGraphPointAttributeShowLabel]) {
+                [point setShowLabel:[[attributes objectForKey:EDValue] boolValue]];
             }
         }
     }
