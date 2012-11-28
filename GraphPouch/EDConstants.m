@@ -113,6 +113,10 @@ float const EDGraphPointDiameter                                = 10;
 // graph points
 NSString * const EDGraphPointAttributeVisible                   = @"isVisible";
 NSString * const EDGraphPointAttributeShowLabel                 = @"showLabel";
+float const EDGraphPointLabelHeight                             = 20;
+float const EDGraphPointLabelWidth                              = 60;
+float const EDGraphPointLabelVerticalOffset                     = 3;
+float const EDGraphPointLabelHorizontalOffset                   = 5;
 
 // window
 NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";

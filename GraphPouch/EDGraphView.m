@@ -350,17 +350,37 @@
 
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal{
     NSTextField *pointLabel;
+    NSNumberFormatter *labelFormatter = [[NSNumberFormatter alloc] init];
     float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
     [[NSColor blackColor] setFill];
+    
+    // set label constants
+    [labelFormatter setMaximumFractionDigits:2];
+    [labelFormatter setMinimumFractionDigits:0];
+    [labelFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    
     NSBezierPath *path = [NSBezierPath bezierPath];
     for (EDPoint *point in [(EDGraph *)[self dataObj] points]) {
         if ([point isVisible]) {
             path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
             [path fill]; 
             if ([point showLabel]){
-                pointLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 40, 20)];
-                [pointLabel setStringValue:[[NSString alloc] initWithFormat:@"(%f, %f)", [point locationX], [point locationY]]];
+                // figure out offset position
+                float verticalOffset, horizontalOffset;
+                
+                if ([point locationX] > 0) 
+                    horizontalOffset = EDGraphPointLabelHorizontalOffset;
+                else 
+                    horizontalOffset = -1 * (EDGraphPointLabelHorizontalOffset + EDGraphPointLabelWidth);
+                
+                if ([point locationY] > 0) 
+                    verticalOffset = -1 * (EDGraphPointLabelVerticalOffset + EDGraphPointLabelHeight);
+                else 
+                    verticalOffset = EDGraphPointLabelVerticalOffset;
+                
+                pointLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, EDGraphPointLabelWidth, EDGraphPointLabelHeight)];
+                [pointLabel setStringValue:[[NSString alloc] initWithFormat:@"(%@,%@)", [labelFormatter stringFromNumber:[NSNumber numberWithFloat:[point locationX]]], [labelFormatter stringFromNumber:[NSNumber numberWithFloat:[point locationY]]]]];
                 [pointLabel setBezeled:FALSE];
                 [pointLabel setDrawsBackground:FALSE];
                 [pointLabel setEditable:FALSE];
@@ -369,7 +389,8 @@
                 [self addSubview:pointLabel];
                 
                 // position it
-                [pointLabel setFrameOrigin:NSMakePoint([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2)];
+                //[pointLabel setFrameOrigin:NSMakePoint([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2)];
+                [pointLabel setFrameOrigin:NSMakePoint([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal + horizontalOffset,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical + verticalOffset)];
                 [_labels addObject:pointLabel];
             }
         }

@@ -113,6 +113,10 @@ extern float const EDGraphPointDiameter;
 // graph points
 extern NSString *const EDGraphPointAttributeVisible;
 extern NSString *const EDGraphPointAttributeShowLabel;
+extern float const EDGraphPointLabelWidth;
+extern float const EDGraphPointLabelHeight;
+extern float const EDGraphPointLabelVerticalOffset;
+extern float const EDGraphPointLabelHorizontalOffset;
 
 // window
 extern NSString *const EDEventWindowDidResize;
