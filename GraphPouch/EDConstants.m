@@ -30,6 +30,7 @@ NSString * const EDPreferencePropertyPanel                      = @"EDPreference
 NSString * const EDEntityNameGraph                              = @"EDGraph";
 NSString * const EDEntityNamePage                               = @"EDPage";
 NSString * const EDEntityNamePoint                              = @"EDPoint";
+NSString * const EDEntityNameEquation                           = @"EDEquation";
 
 // worksheet events
 NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";
@@ -84,6 +85,7 @@ NSString * const EDGraphAttributeCoordinateAxes                 = @"hasCoordinat
 NSString * const EDGraphAttributeEquation                       = @"equation";
 NSString * const EDGraphAttributeGridLines                      = @"hasGridLines";
 NSString * const EDGraphAttributePoints                         = @"points";
+NSString * const EDGraphAttributeEquations                      = @"equations";
 NSString * const EDGraphSelectedBackgroundColor                 = @"aaaaff";
 float const EDGraphSelectedBackgroundAlpha                      = 0.2;
 float const EDGraphDefaultHeight                                = 30.0;
@@ -178,4 +180,9 @@ NSString * const EDTransformCornerUpperLeft                     = @"EDTransformC
 NSString * const EDTransformCornerUpperRight                    = @"EDTransformCornerUpperRight";
 NSString * const EDTransformCornerBottomLeft                    = @"EDTransformCornerBottomLeft";
 NSString * const EDTransformCornerBottomRight                   = @"EDTransformCornerBottomRight";
+
+// equations
+NSString * const EDEquationAttributeEquation                    = @"EDEquationAttributeEquation";
+NSString * const EDEquationAttributeShowLabel                   = @"EDEquationAttributeShowLabel";
+NSString * const EDEquationAttributeIsVisible                   = @"EDEquationAttributeIsVisible";
 @end

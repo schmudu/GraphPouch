@@ -7,12 +7,18 @@
         <attribute name="locationY" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="selected" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
-    <entity name="EDGraph" representedClassName="EDGraph" parentEntity="EDElement" syncable="YES">
+    <entity name="EDEquation" representedClassName="EDEquation" syncable="YES">
         <attribute name="equation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isVisible" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="showLabel" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="graph" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDGraph" inverseName="equations" inverseEntity="EDGraph" syncable="YES"/>
+    </entity>
+    <entity name="EDGraph" representedClassName="EDGraph" parentEntity="EDElement" syncable="YES">
         <attribute name="hasCoordinateAxes" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="hasGridLines" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="hasLabels" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="hasTickMarks" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <relationship name="equations" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDEquation" inverseName="graph" inverseEntity="EDEquation" syncable="YES"/>
         <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="graphs" inverseEntity="EDPage" syncable="YES"/>
         <relationship name="points" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDPoint" inverseName="graph" inverseEntity="EDPoint" syncable="YES"/>
     </entity>
@@ -34,5 +40,6 @@
         <element name="EDGraph" positionX="160" positionY="192" width="128" height="150"/>
         <element name="EDPage" positionX="160" positionY="192" width="128" height="105"/>
         <element name="EDPoint" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="EDEquation" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>

@@ -382,7 +382,7 @@
                 labelHeight = [labelString heightForWidth:labelWidth attributes:nil];
                 
                 // reset width and height based off calculations
-                [pointLabel setFrameSize:NSMakeSize(EDGraphPointLabelWidth, labelHeight)];
+                //[pointLabel setFrameSize:NSMakeSize(EDGraphPointLabelWidth, labelHeight)];
                 
                 // configure horizontal offset, based off dynamic text width
                 if ([point locationX] > 0) 

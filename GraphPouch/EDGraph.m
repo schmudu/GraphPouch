@@ -9,19 +9,20 @@
 #import "EDGraph.h"
 #import "EDPage.h"
 #import "EDPoint.h"
+#import "EDEquation.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
 #import "NSManagedObject+EasyFetching.h"
 
 @implementation EDGraph
 
-@dynamic equation;
 @dynamic hasCoordinateAxes;
 @dynamic hasGridLines;
 @dynamic hasTickMarks;
 @dynamic hasLabels;
 @dynamic page;
 @dynamic points;
+@dynamic equations;
 
 #pragma mark encoding, decoding this object
 
@@ -29,7 +30,6 @@
     // create entity but don't insert it anywhere
     self = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
     if(self){
-        [self setEquation:[aDecoder decodeObjectForKey:EDGraphAttributeEquation]];
         [self setHasLabels:[aDecoder decodeBoolForKey:EDGraphAttributeLabels]];
         [self setHasGridLines:[aDecoder decodeBoolForKey:EDGraphAttributeGridLines]];
         [self setHasTickMarks:[aDecoder decodeBoolForKey:EDGraphAttributeTickMarks]];
@@ -55,12 +55,27 @@
             // set relationship
             [self addPointsObject:newPoint];
         }
+        
+        EDEquation *newEquation;
+        NSSet *equations = [aDecoder decodeObjectForKey:EDGraphAttributeEquations];
+        
+        for (EDEquation *equation in equations){
+            // create a equation and set it for this graph
+            newEquation = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]];
+            
+            //set attributes
+            [newEquation setEquation:[equation equation]];
+            [newEquation setShowLabel:[equation showLabel]];
+            [newEquation setIsVisible:[equation isVisible]];
+            
+            // set relationship
+            [self addEquationsObject:newEquation];
+        }
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
-    [aCoder encodeObject:[self equation] forKey:EDGraphAttributeEquation];
     [aCoder encodeBool:[self hasLabels] forKey:EDGraphAttributeLabels];
     [aCoder encodeBool:[self hasGridLines] forKey:EDGraphAttributeGridLines];
     [aCoder encodeBool:[self hasTickMarks] forKey:EDGraphAttributeTickMarks];
@@ -71,6 +86,7 @@
     [aCoder encodeFloat:[self elementWidth] forKey:EDElementAttributeWidth];
     [aCoder encodeFloat:[self elementHeight] forKey:EDElementAttributeHeight];
     [aCoder encodeObject:[self points] forKey:EDGraphAttributePoints];
+    [aCoder encodeObject:[self equations] forKey:EDGraphAttributeEquations];
     //[aCoder encodeObject:[self page] forKey:EDGraphAttributePage];
 }
 @end

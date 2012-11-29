@@ -30,6 +30,7 @@ extern NSString *const EDPreferencePropertyPanel;
 extern NSString *const EDEntityNameGraph;
 extern NSString *const EDEntityNamePage;
 extern NSString *const EDEntityNamePoint;
+extern NSString *const EDEntityNameEquation;
 
 // worksheet events
 extern NSString *const EDEventWorksheetClicked;
@@ -72,12 +73,12 @@ extern float const EDGuideShowThreshold;
 
 // attributes
 extern NSString *const EDGraphAttributeLabels;
-extern NSString *const EDGraphAttributeEquation;
 extern NSString *const EDGraphAttributeGridLines;
 extern NSString *const EDElementAttributeSelected;
 extern NSString *const EDGraphAttributeTickMarks;
 extern NSString *const EDGraphAttributeCoordinateAxes;
 extern NSString *const EDGraphAttributePoints;
+extern NSString *const EDGraphAttributeEquations;
 extern NSString *const EDElementAttributeLocationX;
 extern NSString *const EDElementAttributeLocationY;
 extern NSString *const EDElementAttributeWidth;
@@ -178,4 +179,9 @@ extern NSString *const EDTransformCornerUpperLeft;
 extern NSString *const EDTransformCornerUpperRight;
 extern NSString *const EDTransformCornerBottomLeft;
 extern NSString *const EDTransformCornerBottomRight;
+
+// equations
+extern NSString *const EDEquationAttributeIsVisible;
+extern NSString *const EDEquationAttributeShowLabel;
+extern NSString *const EDEquationAttributeEquation;
 @end

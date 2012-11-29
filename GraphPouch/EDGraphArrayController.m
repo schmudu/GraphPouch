@@ -15,7 +15,6 @@
     id newObj = [super newObject];
     
     // default values
-    [newObj setValue:[[NSString alloc] initWithString:@"default_equation123"] forKey:EDGraphAttributeEquation];
     [newObj setValue:[[NSNumber alloc] initWithBool:GRAPH_INIT_TICK_MARKS] forKey:EDGraphAttributeTickMarks];
     [newObj setValue:[[NSNumber alloc] initWithBool:GRAPH_INIT_HAS_GRID_LINES] forKey:EDGraphAttributeGridLines];
     [newObj setValue:[[NSNumber alloc] initWithFloat:0] forKey:EDElementAttributeLocationX];

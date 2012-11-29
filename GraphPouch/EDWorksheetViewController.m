@@ -77,7 +77,6 @@
     
     // set graph attributes
     [newGraph setPage:currentPage];
-    [newGraph setEquation:[[NSString alloc] initWithFormat:@"some equation"]];
     [newGraph setHasGridLines:TRUE];
     [newGraph setHasTickMarks:TRUE];
     [newGraph setSelected:FALSE];
