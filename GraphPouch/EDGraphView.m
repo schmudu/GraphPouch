@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
+#import "NS(Attributed)String+Geometrics.h"
 #import "EDCoreDataUtility.h"
 #import "EDGraphView.h"
 #import "EDElement.h"
@@ -380,6 +381,8 @@
                     verticalOffset = EDGraphPointLabelVerticalOffset;
                 
                 pointLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, EDGraphPointLabelWidth, EDGraphPointLabelHeight)];
+                NSString *labelString = [[NSString alloc] initWithFormat:[labelFormatter stringFromNumber:[NSNumber numberWithFloat:[point locationX]]]];
+                NSLog(@"text view frame: %f", [labelString widthForHeight:[pointLabel frame].size.height attributes:nil]);
                 [pointLabel setStringValue:[[NSString alloc] initWithFormat:@"(%@,%@)", [labelFormatter stringFromNumber:[NSNumber numberWithFloat:[point locationX]]], [labelFormatter stringFromNumber:[NSNumber numberWithFloat:[point locationY]]]]];
                 [pointLabel setBezeled:FALSE];
                 [pointLabel setDrawsBackground:FALSE];
@@ -389,7 +392,6 @@
                 [self addSubview:pointLabel];
                 
                 // position it
-                //[pointLabel setFrameOrigin:NSMakePoint([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2)];
                 [pointLabel setFrameOrigin:NSMakePoint([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal + horizontalOffset,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical + verticalOffset)];
                 [_labels addObject:pointLabel];
             }
