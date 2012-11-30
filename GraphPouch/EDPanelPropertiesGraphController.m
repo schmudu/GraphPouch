@@ -40,6 +40,10 @@
 }
 
 - (void)initWindowAfterLoaded{
+    if (!equationController) {
+        equationController = [[EDSheetPropertiesGraphEquationController alloc] init];
+        NSLog(@"creating equation controller.");
+    }
     // this method will only be called if only graphs are shown
     // get all of the graphs selected
     [self setElementLabel:labelHeight attribute:EDElementAttributeHeight];
@@ -302,12 +306,11 @@
 }
 
 - (IBAction)addNewEquation:(id)sender{
-    NSLog(@"add new equation: window:%@", [[self view] window]);
-    [NSApp beginSheet:sheetEquation modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+    [NSApp beginSheet:[equationController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
-    [sheetEquation orderOut:self];
+    [[equationController window] orderOut:self];
 }
 
 - (IBAction)removeEquation:(id)sender{

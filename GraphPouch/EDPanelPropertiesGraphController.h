@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDPanelViewController.h"
+#import "EDSheetPropertiesGraphEquationController.h"
 
 @interface EDPanelPropertiesGraphController : EDPanelViewController <NSTextFieldDelegate>{
     IBOutlet NSTextField *labelWidth;
@@ -22,6 +23,7 @@
     IBOutlet NSButton *buttonRemovePoints;
     IBOutlet NSButton *buttonRemoveEquation;
     IBOutlet NSWindow *sheetEquation;
+    EDSheetPropertiesGraphEquationController *equationController;
 }
 
 - (IBAction)toggleHasCoordinateAxes:(id)sender;
