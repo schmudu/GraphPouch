@@ -24,6 +24,7 @@
 - (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue;
 - (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key;
 - (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key;
+- (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 @end
 
 @implementation EDPanelPropertiesGraphController
@@ -299,4 +300,18 @@
     [[EDCoreDataUtility sharedCoreDataUtility] removeCommonPointsforSelectedGraphsMatchingPoints:selectedPoints];
     
 }
+
+- (IBAction)addNewEquation:(id)sender{
+    NSLog(@"add new equation: window:%@", [[self view] window]);
+    [NSApp beginSheet:sheetEquation modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+}
+
+- (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
+    [sheetEquation orderOut:self];
+}
+
+- (IBAction)removeEquation:(id)sender{
+    NSLog(@"remove equation.");
+}
+#pragma mark graph points
 @end

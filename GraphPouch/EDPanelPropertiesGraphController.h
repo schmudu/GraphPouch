@@ -20,12 +20,16 @@
     IBOutlet NSButton *checkboxHasLabels;
     IBOutlet NSTableView *tablePoints;
     IBOutlet NSButton *buttonRemovePoints;
+    IBOutlet NSButton *buttonRemoveEquation;
+    IBOutlet NSWindow *sheetEquation;
 }
 
 - (IBAction)toggleHasCoordinateAxes:(id)sender;
 - (IBAction)toggleHasGrid:(id)sender;
 - (IBAction)toggleHasTickMarks:(id)sender;
 - (IBAction)toggleHasLabels:(id)sender;
+- (IBAction)addNewEquation:(id)sender;
+- (IBAction)removeEquation:(id)sender;
 - (IBAction)addNewPoint:(id)sender;
 - (IBAction)removePoints:(id)sender;
 @end
