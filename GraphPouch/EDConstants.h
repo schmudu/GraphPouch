@@ -184,4 +184,18 @@ extern NSString *const EDTransformCornerBottomRight;
 extern NSString *const EDEquationAttributeIsVisible;
 extern NSString *const EDEquationAttributeShowLabel;
 extern NSString *const EDEquationAttributeEquation;
+
+// tokens
+typedef enum{
+    EDTokenTypeNumber,
+    EDTokenTypeOperator,
+    EDTokenTypeIdentifier,
+    EDTokenTypeParenthesis,
+    EDTokenTypeFunction,
+} EDTokenType;
+
+typedef enum{
+    EDRight,
+    EDLeft
+} EDAssociation;
 @end
