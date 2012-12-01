@@ -58,6 +58,7 @@
 		CDA8555816236EF9006FCD62 /* EDContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA8555716236EF9006FCD62 /* EDContentView.m */; };
 		CDAA9105166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDAA9104166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib */; };
 		CDAA910916696680009B75A2 /* EDSheetPropertiesGraphEquationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAA910816696680009B75A2 /* EDSheetPropertiesGraphEquationController.m */; };
+		CDAA91171669B224009B75A2 /* EDScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAA91161669B224009B75A2 /* EDScanner.m */; };
 		CDAC3748161112E700545F1E /* NSMutableDictionary+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAC3747161112E700545F1E /* NSMutableDictionary+Utilities.m */; };
 		CDD46E531603BE3C00EDD75C /* NSColor+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */; };
 		CDD46E611607D1F200EDD75C /* EDTransformRect.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E601607D1F200EDD75C /* EDTransformRect.m */; };
@@ -168,6 +169,8 @@
 		CDAA9104166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDSheetPropertiesGraphEquation.xib; sourceTree = "<group>"; };
 		CDAA910716696680009B75A2 /* EDSheetPropertiesGraphEquationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDSheetPropertiesGraphEquationController.h; sourceTree = "<group>"; };
 		CDAA910816696680009B75A2 /* EDSheetPropertiesGraphEquationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDSheetPropertiesGraphEquationController.m; sourceTree = "<group>"; };
+		CDAA91151669B224009B75A2 /* EDScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDScanner.h; sourceTree = "<group>"; };
+		CDAA91161669B224009B75A2 /* EDScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDScanner.m; sourceTree = "<group>"; };
 		CDAC3746161112E700545F1E /* NSMutableDictionary+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Utilities.h"; sourceTree = "<group>"; };
 		CDAC3747161112E700545F1E /* NSMutableDictionary+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Utilities.m"; sourceTree = "<group>"; };
 		CDD46E511603BE3C00EDD75C /* NSColor+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Utilities.h"; sourceTree = "<group>"; };
@@ -317,6 +320,7 @@
 		CD2DD5D0164740F9006557FC /* Graph */ = {
 			isa = PBXGroup;
 			children = (
+				CDAA91141669B1E2009B75A2 /* Equation */,
 				CD1EBD6715FED65A00BEEA4D /* EDPanelPropertiesGraph.xib */,
 				CD1EBD7215FED75900BEEA4D /* EDPanelPropertiesGraphController.h */,
 				CD1EBD7315FED75900BEEA4D /* EDPanelPropertiesGraphController.m */,
@@ -355,16 +359,11 @@
 		CD3F0AF715C4775900AB7567 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CD1422C515C7590700F55819 /* EDCoreDataUtility.h */,
-				CD1422C615C7590700F55819 /* EDCoreDataUtility.m */,
-				CD2DD576163ED449006557FC /* EDCoreDataUtility+Pages.h */,
-				CD2DD577163ED449006557FC /* EDCoreDataUtility+Pages.m */,
-				CD2DD5F1164C7478006557FC /* EDCoreDataUtility+Points.h */,
-				CD2DD5F2164C7478006557FC /* EDCoreDataUtility+Points.m */,
-				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
-				CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */,
-				CD1C57AB161B9AB200534D49 /* EDPageArrayController.h */,
-				CD1C57AC161B9AB200534D49 /* EDPageArrayController.m */,
+				CDAA91101669B128009B75A2 /* ArrayController */,
+				CDAA910E1669B0E4009B75A2 /* CoreData */,
+				CDAA91111669B153009B75A2 /* MutableArray */,
+				CDAA91121669B15A009B75A2 /* MutableDictionary */,
+				CDAA91131669B186009B75A2 /* NSObject */,
 				CD3A4FE316359FC90042B6DD /* EDPage.h */,
 				CD3A4FE416359FC90042B6DD /* EDPage.m */,
 				CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */,
@@ -376,18 +375,6 @@
 				CD2DD5CE16470906006557FC /* EDPoint.m */,
 				CDE6D62E15DE774000E5695F /* EDElement.h */,
 				CDE6D62F15DE774000E5695F /* EDElement.m */,
-				CD2DD63E1655AD8B006557FC /* NSMutableArray+EDPoint.h */,
-				CD2DD63F1655AD8B006557FC /* NSMutableArray+EDPoint.m */,
-				CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */,
-				CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */,
-				CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */,
-				CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */,
-				CDAC3746161112E700545F1E /* NSMutableDictionary+Utilities.h */,
-				CDAC3747161112E700545F1E /* NSMutableDictionary+Utilities.m */,
-				CD5EE20016012A690027EFC6 /* NSObject+Document.h */,
-				CD5EE20116012A690027EFC6 /* NSObject+Document.m */,
-				CDD46E6616092F2E00EDD75C /* NSObject+Worksheet.h */,
-				CDD46E6716092F2E00EDD75C /* NSObject+Worksheet.m */,
 				CD2DD5FD164D86CB006557FC /* NSSet+Points.h */,
 				CD2DD5FE164D86CC006557FC /* NSSet+Points.m */,
 			);
@@ -526,6 +513,72 @@
 				CD47113015BA1647008AACC3 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CDAA910E1669B0E4009B75A2 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				CD1422C515C7590700F55819 /* EDCoreDataUtility.h */,
+				CD1422C615C7590700F55819 /* EDCoreDataUtility.m */,
+				CD2DD576163ED449006557FC /* EDCoreDataUtility+Pages.h */,
+				CD2DD577163ED449006557FC /* EDCoreDataUtility+Pages.m */,
+				CD2DD5F1164C7478006557FC /* EDCoreDataUtility+Points.h */,
+				CD2DD5F2164C7478006557FC /* EDCoreDataUtility+Points.m */,
+				CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */,
+				CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */,
+				CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */,
+				CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		CDAA91101669B128009B75A2 /* ArrayController */ = {
+			isa = PBXGroup;
+			children = (
+				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
+				CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */,
+				CD1C57AB161B9AB200534D49 /* EDPageArrayController.h */,
+				CD1C57AC161B9AB200534D49 /* EDPageArrayController.m */,
+			);
+			name = ArrayController;
+			sourceTree = "<group>";
+		};
+		CDAA91111669B153009B75A2 /* MutableArray */ = {
+			isa = PBXGroup;
+			children = (
+				CD2DD63E1655AD8B006557FC /* NSMutableArray+EDPoint.h */,
+				CD2DD63F1655AD8B006557FC /* NSMutableArray+EDPoint.m */,
+			);
+			name = MutableArray;
+			sourceTree = "<group>";
+		};
+		CDAA91121669B15A009B75A2 /* MutableDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				CDAC3746161112E700545F1E /* NSMutableDictionary+Utilities.h */,
+				CDAC3747161112E700545F1E /* NSMutableDictionary+Utilities.m */,
+			);
+			name = MutableDictionary;
+			sourceTree = "<group>";
+		};
+		CDAA91131669B186009B75A2 /* NSObject */ = {
+			isa = PBXGroup;
+			children = (
+				CD5EE20016012A690027EFC6 /* NSObject+Document.h */,
+				CD5EE20116012A690027EFC6 /* NSObject+Document.m */,
+				CDD46E6616092F2E00EDD75C /* NSObject+Worksheet.h */,
+				CDD46E6716092F2E00EDD75C /* NSObject+Worksheet.m */,
+			);
+			name = NSObject;
+			sourceTree = "<group>";
+		};
+		CDAA91141669B1E2009B75A2 /* Equation */ = {
+			isa = PBXGroup;
+			children = (
+				CDAA91151669B224009B75A2 /* EDScanner.h */,
+				CDAA91161669B224009B75A2 /* EDScanner.m */,
+			);
+			name = Equation;
 			sourceTree = "<group>";
 		};
 		CDC3C82415F96368009A8BFD /* Formatters */ = {
@@ -725,6 +778,7 @@
 				CD2CA46516670282000ED9FF /* NS(Attributed)String+Geometrics.m in Sources */,
 				CD2CA47016680DC8000ED9FF /* EDEquation.m in Sources */,
 				CDAA910916696680009B75A2 /* EDSheetPropertiesGraphEquationController.m in Sources */,
+				CDAA91171669B224009B75A2 /* EDScanner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

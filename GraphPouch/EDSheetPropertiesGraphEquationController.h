@@ -8,6 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface EDSheetPropertiesGraphEquationController : NSWindowController
+@interface EDSheetPropertiesGraphEquationController : NSWindowController <NSTextFieldDelegate, NSWindowDelegate>{
+    IBOutlet NSButton *buttonCancel;
+    IBOutlet NSButton *buttonSubmit;
+    IBOutlet NSTextField *fieldEquation;
+}
+
+- (IBAction)onButtonPressedCancel:(id)sender;
+- (IBAction)onButtonPressedSubmit:(id)sender;
+//- (void)initializeSheet;
 
 @end

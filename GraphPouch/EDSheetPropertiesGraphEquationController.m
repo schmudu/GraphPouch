@@ -9,7 +9,7 @@
 #import "EDSheetPropertiesGraphEquationController.h"
 
 @interface EDSheetPropertiesGraphEquationController ()
-
+- (void)setEquationButtonState;
 @end
 
 @implementation EDSheetPropertiesGraphEquationController
@@ -31,4 +31,36 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
+- (void)windowDidBecomeKey:(NSNotification *)notification{
+    [self setEquationButtonState];
+}
+
+- (IBAction)onButtonPressedCancel:(id)sender{
+    [NSApp endSheet:[self window]];
+}
+
+- (IBAction)onButtonPressedSubmit:(id)sender{
+    // validate equation
+    NSString *equationStr = [fieldEquation stringValue];
+    
+    // if invalid then show error message
+    
+    // if valid then close sheet and create/modify equation object
+    NSLog(@"submit button pressed.");
+}
+
+#pragma mark textfield
+- (void)controlTextDidChange:(NSNotification *)obj{
+    [self setEquationButtonState];
+}
+
+- (void)setEquationButtonState{
+    // disable submit button if input is empty
+    if ([[fieldEquation stringValue] isEqualToString:@""]) {
+        [buttonSubmit setEnabled:FALSE];
+    }
+    else {
+        [buttonSubmit setEnabled:TRUE];
+    }
+}
 @end
