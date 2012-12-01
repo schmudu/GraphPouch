@@ -22,7 +22,6 @@
     IBOutlet NSTableView *tablePoints;
     IBOutlet NSButton *buttonRemovePoints;
     IBOutlet NSButton *buttonRemoveEquation;
-    IBOutlet NSWindow *sheetEquation;
     EDSheetPropertiesGraphEquationController *equationController;
 }
 

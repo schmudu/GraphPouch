@@ -7,9 +7,11 @@
 //
 
 #import "EDSheetPropertiesGraphEquationController.h"
+#import "EDScanner.h"
 
 @interface EDSheetPropertiesGraphEquationController ()
 - (void)setEquationButtonState;
+- (BOOL)validEquation:(NSString *)potentialEquation;
 @end
 
 @implementation EDSheetPropertiesGraphEquationController
@@ -32,6 +34,9 @@
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification{
+    // do this after sheet is loaded
+    [[self window] makeFirstResponder:fieldEquation];
+    
     [self setEquationButtonState];
 }
 
@@ -42,7 +47,7 @@
 - (IBAction)onButtonPressedSubmit:(id)sender{
     // validate equation
     NSString *equationStr = [fieldEquation stringValue];
-    
+    BOOL validateResult = [self validEquation:equationStr];
     // if invalid then show error message
     
     // if valid then close sheet and create/modify equation object
@@ -61,6 +66,25 @@
     }
     else {
         [buttonSubmit setEnabled:TRUE];
+    }
+}
+
+#pragma mark validate
+- (BOOL)validEquation:(NSString *)potentialEquation{
+    int i = 0;
+    NSString *currentChar;
+    
+    // read in equation
+    [EDScanner scanString:potentialEquation];
+    
+    while (i<[potentialEquation length]){
+        // get current character
+        currentChar = [EDScanner currentChar];
+        NSLog(@"current char:%@", currentChar);
+        
+        // increment
+        [EDScanner increment];
+        i++;
     }
 }
 @end

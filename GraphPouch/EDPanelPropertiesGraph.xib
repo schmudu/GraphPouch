@@ -24,7 +24,6 @@
 			<string>NSView</string>
 			<string>NSTableColumn</string>
 			<string>NSTextField</string>
-			<string>NSWindowTemplate</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -73,7 +72,7 @@
 																<string key="NSFrameSize">{252, 190}</string>
 																<reference key="NSSuperview" ref="753094011"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="45311825"/>
+																<reference key="NSNextKeyView" ref="645334946"/>
 																<string key="NSReuseIdentifierKey">_NS:13</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTableHeaderView" key="NSHeaderView" id="176472092">
@@ -339,7 +338,7 @@
 												<string key="NSFrame">{{20, 18}, {254, 208}}</string>
 												<reference key="NSSuperview" ref="7230525"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="645334946"/>
+												<reference key="NSNextKeyView" ref="753094011"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<int key="NSsFlags">133682</int>
 												<reference key="NSVScroller" ref="45311825"/>
@@ -362,7 +361,7 @@
 																<string key="NSFrameSize">{252, 141}</string>
 																<reference key="NSSuperview" ref="162383899"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="700452261"/>
+																<reference key="NSNextKeyView" ref="869064881"/>
 																<string key="NSReuseIdentifierKey">_NS:13</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTableHeaderView" key="NSHeaderView" id="51385652">
@@ -552,7 +551,7 @@
 												<string key="NSFrame">{{20, 268}, {254, 159}}</string>
 												<reference key="NSSuperview" ref="7230525"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="869064881"/>
+												<reference key="NSNextKeyView" ref="162383899"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<int key="NSsFlags">133682</int>
 												<reference key="NSVScroller" ref="700452261"/>
@@ -988,7 +987,7 @@
 										<string key="NSFrameSize">{294, 658}</string>
 										<reference key="NSSuperview" ref="127320872"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="654376390"/>
+										<reference key="NSNextKeyView" ref="587354762"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 									</object>
 								</array>
@@ -1031,7 +1030,7 @@
 						<string key="NSFrameSize">{311, 675}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="587354762"/>
+						<reference key="NSNextKeyView" ref="127320872"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">133122</int>
 						<reference key="NSVScroller" ref="587354762"/>
@@ -1053,27 +1052,6 @@
 			</object>
 			<object class="NSCustomObject" id="591431056">
 				<string key="NSClassName">EDPanelPropertiesGraphTablePoints</string>
-			</object>
-			<object class="NSWindowTemplate" id="1003694779">
-				<int key="NSWindowStyleMask">7</int>
-				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{163, 199}, {308, 254}}</string>
-				<int key="NSWTFlags">611845120</int>
-				<string key="NSWindowTitle">Equation</string>
-				<string key="NSWindowClass">NSWindow</string>
-				<nil key="NSViewClass"/>
-				<nil key="NSUserInterfaceItemIdentifier"/>
-				<object class="NSView" key="NSWindowView" id="451107789">
-					<reference key="NSNextResponder"/>
-					<int key="NSvFlags">256</int>
-					<string key="NSFrameSize">{308, 254}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
-					<string key="NSReuseIdentifierKey">_NS:20</string>
-				</object>
-				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
-				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
-				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -1237,14 +1215,6 @@
 						<reference key="destination" ref="990864858"/>
 					</object>
 					<int key="connectionID">2366</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">sheetEquation</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="1003694779"/>
-					</object>
-					<int key="connectionID">2369</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3024,19 +2994,6 @@
 						<reference key="object" ref="183576869"/>
 						<reference key="parent" ref="7230525"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2367</int>
-						<reference key="object" ref="1003694779"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="451107789"/>
-						</array>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2368</int>
-						<reference key="object" ref="451107789"/>
-						<reference key="parent" ref="1003694779"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -3206,9 +3163,6 @@
 				<string key="2359.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2360.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2361.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2367.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="NO" key="2367.NSWindowTemplate.visibleAtLaunch"/>
-				<string key="2368.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="260.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="260.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="261.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

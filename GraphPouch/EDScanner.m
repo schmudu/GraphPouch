@@ -9,5 +9,24 @@
 #import "EDScanner.h"
 
 @implementation EDScanner
+static NSString *inputString;
+static int charIndex=0;
+
++ (void)scanString:(NSString *)p_str{
+    inputString = [[NSString alloc] initWithString:p_str];
+}
+
++ (NSString *)currentChar{
+    unichar myChar = [inputString characterAtIndex:charIndex];
+    return [NSString stringWithFormat:@"%C", myChar];
+}
+
++ (int)charCount{
+    return [inputString length];
+}
+
++ (void)increment{
+    charIndex++;
+}
 
 @end

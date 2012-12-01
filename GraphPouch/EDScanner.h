@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface EDScanner : NSObject
+@interface EDScanner : NSObject{
+}
 
++ (void)scanString:(NSString *)p_str;
++ (NSString *)currentChar;
++ (int)charCount;
++ (void)increment;
 @end
