@@ -12,8 +12,13 @@
 #import "EDConstants.h"
 
 @implementation EDTokenizer
-static NSString *str;
-static NSString *c;
+
++ (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error{
+    NSMutableDictionary *errorDictionary = [[NSMutableDictionary alloc] init];
+    [errorDictionary setValue:@"some error" forKey:NSLocalizedDescriptionKey];
+    *error = [[NSError alloc] initWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDictionary];
+    return nil;
+}
 
 + (BOOL)isValidToken:(EDToken *)token{
     regex_t regex;
@@ -31,7 +36,7 @@ static NSString *c;
         [token setType:EDTokenTypeNumber];
         return TRUE;
     }
-    
+    return FALSE;
 }
 
 @end

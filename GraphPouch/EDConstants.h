@@ -198,4 +198,10 @@ typedef enum{
     EDRight,
     EDLeft
 } EDAssociation;
+
+
+// errors
+extern NSString *const EDErrorDomain;
+extern int const EDErrorTokenizer;
+
 @end

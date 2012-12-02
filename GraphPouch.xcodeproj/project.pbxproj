@@ -61,6 +61,7 @@
 		CDAA91171669B224009B75A2 /* EDScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAA91161669B224009B75A2 /* EDScanner.m */; };
 		CDAA91221669BBE1009B75A2 /* EDTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAA91211669BBE1009B75A2 /* EDTokenizer.m */; };
 		CDAA91261669BC90009B75A2 /* EDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAA91251669BC90009B75A2 /* EDToken.m */; };
+		CDAA912D166B9767009B75A2 /* EDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAA912C166B9767009B75A2 /* EDStack.m */; };
 		CDAC3748161112E700545F1E /* NSMutableDictionary+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAC3747161112E700545F1E /* NSMutableDictionary+Utilities.m */; };
 		CDD46E531603BE3C00EDD75C /* NSColor+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */; };
 		CDD46E611607D1F200EDD75C /* EDTransformRect.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E601607D1F200EDD75C /* EDTransformRect.m */; };
@@ -177,6 +178,8 @@
 		CDAA91211669BBE1009B75A2 /* EDTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTokenizer.m; sourceTree = "<group>"; };
 		CDAA91241669BC90009B75A2 /* EDToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDToken.h; sourceTree = "<group>"; };
 		CDAA91251669BC90009B75A2 /* EDToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDToken.m; sourceTree = "<group>"; };
+		CDAA912B166B9767009B75A2 /* EDStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDStack.h; sourceTree = "<group>"; };
+		CDAA912C166B9767009B75A2 /* EDStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDStack.m; sourceTree = "<group>"; };
 		CDAC3746161112E700545F1E /* NSMutableDictionary+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Utilities.h"; sourceTree = "<group>"; };
 		CDAC3747161112E700545F1E /* NSMutableDictionary+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Utilities.m"; sourceTree = "<group>"; };
 		CDD46E511603BE3C00EDD75C /* NSColor+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Utilities.h"; sourceTree = "<group>"; };
@@ -381,6 +384,8 @@
 				CD2DD5CE16470906006557FC /* EDPoint.m */,
 				CDE6D62E15DE774000E5695F /* EDElement.h */,
 				CDE6D62F15DE774000E5695F /* EDElement.m */,
+				CDAA912B166B9767009B75A2 /* EDStack.h */,
+				CDAA912C166B9767009B75A2 /* EDStack.m */,
 				CD2DD5FD164D86CB006557FC /* NSSet+Points.h */,
 				CD2DD5FE164D86CC006557FC /* NSSet+Points.m */,
 			);
@@ -791,6 +796,7 @@
 				CDAA91171669B224009B75A2 /* EDScanner.m in Sources */,
 				CDAA91221669BBE1009B75A2 /* EDTokenizer.m in Sources */,
 				CDAA91261669BC90009B75A2 /* EDToken.m in Sources */,
+				CDAA912D166B9767009B75A2 /* EDStack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

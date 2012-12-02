@@ -8,6 +8,7 @@
 
 #import "EDSheetPropertiesGraphEquationController.h"
 #import "EDScanner.h"
+#import "EDTokenizer.h"
 
 @interface EDSheetPropertiesGraphEquationController ()
 - (void)setEquationButtonState;
@@ -71,6 +72,12 @@
 
 #pragma mark validate
 - (BOOL)validEquation:(NSString *)potentialEquation{
+    NSError *error;
+    NSMutableArray *tokens = [EDTokenizer tokenize:potentialEquation error:&error];
+    if (!tokens) {
+        NSLog(@"error received:%@", [[error userInfo] valueForKey:NSLocalizedDescriptionKey]);
+    }
+    /*
     int i = 0;
     NSString *currentChar;
     
@@ -86,5 +93,6 @@
         [EDScanner increment];
         i++;
     }
+     */
 }
 @end

@@ -185,4 +185,9 @@ NSString * const EDTransformCornerBottomRight                   = @"EDTransformC
 NSString * const EDEquationAttributeEquation                    = @"EDEquationAttributeEquation";
 NSString * const EDEquationAttributeShowLabel                   = @"EDEquationAttributeShowLabel";
 NSString * const EDEquationAttributeIsVisible                   = @"EDEquationAttributeIsVisible";
+
+// errors
+NSString * const EDErrorDomain                                  = @"com.edcodia.graphpouch";
+int const EDErrorTokenizer                                      = 1;
+
 @end

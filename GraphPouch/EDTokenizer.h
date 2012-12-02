@@ -10,9 +10,9 @@
 #import "EDToken.h"
 
 @interface EDTokenizer : NSObject
-+ (NSMutableArray *)tokenize:(NSString *)str;
++ (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error;
 + (NSMutableArray *)insertImpliedMultiplication:(NSMutableArray *)tokens;
 + (NSMutableArray *)insertImpliedParenthesis:(NSMutableArray *)tokens;
-+ (BOOL)isValidToken:(EDToken *)Token;
-+ (BOOL)isValidExpression:(NSMutableArray *)tokens withError:(NSError **)error;
++ (BOOL)isValidToken:(EDToken *)Token error:(NSError **)error;
++ (BOOL)isValidExpression:(NSMutableArray *)tokens withError:(NSError *)error;
 @end
