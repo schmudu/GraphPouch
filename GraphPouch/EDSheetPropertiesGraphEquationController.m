@@ -77,22 +77,5 @@
     if (!tokens) {
         NSLog(@"error received:%@", [[error userInfo] valueForKey:NSLocalizedDescriptionKey]);
     }
-    /*
-    int i = 0;
-    NSString *currentChar;
-    
-    // read in equation
-    [EDScanner scanString:potentialEquation];
-    
-    while (i<[potentialEquation length]){
-        // get current character
-        currentChar = [EDScanner currentChar];
-        NSLog(@"current char:%@", currentChar);
-        
-        // increment
-        [EDScanner increment];
-        i++;
-    }
-     */
 }
 @end

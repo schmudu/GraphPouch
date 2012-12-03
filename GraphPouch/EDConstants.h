@@ -195,8 +195,8 @@ typedef enum{
 } EDTokenType;
 
 typedef enum{
-    EDRight,
-    EDLeft
+    EDAssociationRight,
+    EDAssociationLeft
 } EDAssociation;
 
 

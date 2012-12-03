@@ -10,10 +10,69 @@
 #import "EDToken.h"
 #import <regex.h>
 #import "EDConstants.h"
+#import "EDScanner.h"
+#import "EDStack.h"
 
 @implementation EDTokenizer
 
-+ (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error{
++ (EDStack *)tokenize:(NSString *)str error:(NSError **)error{
+    int i = 0;
+    NSString *currentChar;
+    EDToken *currentToken, *potentialToken;
+    EDStack *tokenStack = [[EDStack alloc] init];
+    currentToken = [[EDToken alloc] init];
+    
+    // read in equation
+    [EDScanner scanString:str];
+    
+    while (i<[str length]){
+        // get current character
+        currentChar = [EDScanner currentChar];
+        
+        // append chracter
+        [currentToken appendChar:currentChar];
+        
+        if ([EDTokenizer isValidToken:currentToken]) {
+            // save token
+            potentialToken = currentToken;
+            
+            // increment scanner
+            [EDScanner increment];
+            i++;
+        }
+        else {
+            if (potentialToken) {
+                // push last valid token
+                EDToken *newToken = [potentialToken copy];
+                [tokenStack push:newToken];
+                
+                // release potential token
+                potentialToken = nil;
+                
+                // create new token
+                currentToken = [[EDToken alloc] init];
+            }
+            else{
+                NSMutableDictionary *errorDictionary = [[NSMutableDictionary alloc] init];
+                [errorDictionary setValue:[[NSString alloc] initWithFormat:@"Could not recognize character at position:%d",i+1] forKey:NSLocalizedDescriptionKey];
+                *error = [[NSError alloc] initWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDictionary];
+                return nil;
+            }
+        }
+        
+    }
+    
+    if (potentialToken){
+        // add last token
+        [tokenStack push:potentialToken];
+        return tokenStack;
+    }
+    else {
+        if ([tokenStack count] > 0) {
+            return tokenStack;
+        }
+    }
+        
     NSMutableDictionary *errorDictionary = [[NSMutableDictionary alloc] init];
     [errorDictionary setValue:@"some error" forKey:NSLocalizedDescriptionKey];
     *error = [[NSError alloc] initWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDictionary];

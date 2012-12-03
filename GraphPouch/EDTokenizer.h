@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "EDToken.h"
+#import "EDStack.h"
 
 @interface EDTokenizer : NSObject
-+ (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error;
++ (EDStack *)tokenize:(NSString *)str error:(NSError **)error;
 + (NSMutableArray *)insertImpliedMultiplication:(NSMutableArray *)tokens;
 + (NSMutableArray *)insertImpliedParenthesis:(NSMutableArray *)tokens;
 + (BOOL)isValidToken:(EDToken *)Token error:(NSError **)error;

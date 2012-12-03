@@ -10,22 +10,19 @@
 #import "EDConstants.h"
 
 @interface EDToken : NSObject{
-@private
-    NSMutableDictionary *attributes;
-}
+} 
 @property EDTokenType type;
 @property BOOL valid;
 @property int precedence;
 @property EDAssociation association;
-    
+@property NSString *value;
+
 
 + (EDToken *)multiplierToken;
 + (EDToken *)leftParenToken;
 + (EDToken *)rightParentToken;
 - (void)appendChar:(NSString *)c;
 - (int)length;
-- (NSString *)value;
-- (void)setValue:(NSString *)value;
 - (EDToken *)copy;
 
 @end

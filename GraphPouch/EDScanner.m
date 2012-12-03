@@ -14,6 +14,7 @@ static int charIndex=0;
 
 + (void)scanString:(NSString *)p_str{
     inputString = [[NSString alloc] initWithString:p_str];
+    charIndex = 0;
 }
 
 + (NSString *)currentChar{
