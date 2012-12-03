@@ -157,6 +157,7 @@ extern NSString *const EDEventPageClickedWithoutModifier;
 extern NSString *const EDEventPageViewMouseDown;
 
 // keyboard mapping
+extern int const        EDKeycodeQuit;
 extern int const        EDKeycodeDelete;
 extern int const        EDKeycodeCopy;
 extern int const        EDKeycodeCut;
@@ -184,6 +185,7 @@ extern NSString *const EDTransformCornerBottomRight;
 extern NSString *const EDEquationAttributeIsVisible;
 extern NSString *const EDEquationAttributeShowLabel;
 extern NSString *const EDEquationAttributeEquation;
+extern NSString *const EDEventQuitDuringEquationSheet;
 
 // tokens
 typedef enum{

@@ -16,5 +16,6 @@
 - (void)push:(id)anObject;
 - (id)pop;
 - (void)clear;
+- (void)printAll:(NSString *)key;
 
 @end

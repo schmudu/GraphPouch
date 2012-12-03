@@ -34,7 +34,7 @@
         
         if ([EDTokenizer isValidToken:currentToken]) {
             // save token
-            potentialToken = currentToken;
+            potentialToken = [currentToken copy];
             
             // increment scanner
             [EDScanner increment];
@@ -59,7 +59,6 @@
                 return nil;
             }
         }
-        
     }
     
     if (potentialToken){
@@ -93,6 +92,17 @@
     if (!reti) {
         // set type to number
         [token setType:EDTokenTypeNumber];
+        return TRUE;
+    }
+    
+    // operators
+    reti = regcomp(&regex, "^[*|\\/|+|-]$", REG_EXTENDED);
+    if (reti) 
+        return FALSE;
+    reti = regexec(&regex, cStr, 0, NULL, 0);
+    if (!reti) {
+        // set type to number
+        [token setType:EDTokenTypeFunction];
         return TRUE;
     }
     return FALSE;

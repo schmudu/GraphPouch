@@ -158,6 +158,7 @@ NSString * const EDEventPageClickedWithoutModifier              = @"EDEventPageC
 NSString * const EDEventPageViewMouseDown                       = @"EDEventPageViewMouseDown";
 
 // keyboard
+int const EDKeycodeQuit                                         = 12;
 int const EDKeycodeDelete                                       = 51;
 int const EDKeycodeCopy                                         = 8;
 int const EDKeycodeCut                                          = 7;
@@ -185,6 +186,7 @@ NSString * const EDTransformCornerBottomRight                   = @"EDTransformC
 NSString * const EDEquationAttributeEquation                    = @"EDEquationAttributeEquation";
 NSString * const EDEquationAttributeShowLabel                   = @"EDEquationAttributeShowLabel";
 NSString * const EDEquationAttributeIsVisible                   = @"EDEquationAttributeIsVisible";
+NSString * const EDEventQuitDuringEquationSheet                 = @"EDEventQuitDuringEquationSheet";
 
 // errors
 NSString * const EDErrorDomain                                  = @"com.edcodia.graphpouch";

@@ -12,6 +12,7 @@
 
 @interface EDSheetPropertiesGraphEquationController ()
 - (void)setEquationButtonState;
+- (void)onQuitShortcutPressed:(NSNotification *)note;
 - (BOOL)validEquation:(NSString *)potentialEquation;
 @end
 
@@ -28,9 +29,16 @@
     return self;
 }
 
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:EDEventQuitDuringEquationSheet];
+}
+
 - (void)windowDidLoad
 {
     [super windowDidLoad];
+    
+    // listen
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onQuitShortcutPressed:) name:EDEventQuitDuringEquationSheet object:[self window]];
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
@@ -73,9 +81,22 @@
 #pragma mark validate
 - (BOOL)validEquation:(NSString *)potentialEquation{
     NSError *error;
-    NSMutableArray *tokens = [EDTokenizer tokenize:potentialEquation error:&error];
+    EDStack *tokens = [EDTokenizer tokenize:potentialEquation error:&error];
     if (!tokens) {
         NSLog(@"error received:%@", [[error userInfo] valueForKey:NSLocalizedDescriptionKey]);
     }
+    else{
+        // print out all tokens
+        [tokens printAll:@"value"];
+    }
+    return TRUE;
+}
+
+#pragma mark keyboard
+- (void)onQuitShortcutPressed:(NSNotification *)note{
+    [NSApp endSheet:[self window]];
+    
+    // terminate app
+    [NSApp terminate:nil];
 }
 @end

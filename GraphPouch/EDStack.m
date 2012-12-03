@@ -38,4 +38,12 @@
     [_stack removeAllObjects];
     count = 0;
 }
+
+- (void)printAll:(NSString *)key{
+    int j = 0;
+    for (id obj in _stack){
+        NSLog(@"index: %d obj: %@", j, [obj valueForKey:key]);
+        j++;
+    }
+}
 @end
