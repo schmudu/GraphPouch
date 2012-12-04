@@ -31,6 +31,7 @@ extern NSString *const EDEntityNameGraph;
 extern NSString *const EDEntityNamePage;
 extern NSString *const EDEntityNamePoint;
 extern NSString *const EDEntityNameEquation;
+extern NSString *const EDEntityNameToken;
 
 // worksheet events
 extern NSString *const EDEventWorksheetClicked;

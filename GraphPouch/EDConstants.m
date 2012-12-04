@@ -31,6 +31,7 @@ NSString * const EDEntityNameGraph                              = @"EDGraph";
 NSString * const EDEntityNamePage                               = @"EDPage";
 NSString * const EDEntityNamePoint                              = @"EDPoint";
 NSString * const EDEntityNameEquation                           = @"EDEquation";
+NSString * const EDEntityNameToken                              = @"EDToken";
 
 // worksheet events
 NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";

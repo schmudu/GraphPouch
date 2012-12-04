@@ -91,7 +91,7 @@
     reti = regexec(&regex, cStr, 0, NULL, 0);
     if (!reti) {
         // set type to number
-        [token setType:EDTokenTypeNumber];
+        [token setTypeRaw:EDTokenTypeNumber];
         return TRUE;
     }
     
@@ -102,7 +102,7 @@
     reti = regexec(&regex, cStr, 0, NULL, 0);
     if (!reti) {
         // set type to number
-        [token setType:EDTokenTypeFunction];
+        [token setTypeRaw:EDTokenTypeFunction];
         return TRUE;
     }
     return FALSE;
