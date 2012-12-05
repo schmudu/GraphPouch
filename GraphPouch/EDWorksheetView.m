@@ -158,8 +158,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             if ([[closestHorizontalGuide valueForKey:EDKeyGuideDiff] floatValue] < EDGuideShowThreshold) {
                 [self drawGuide:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], 0) endPoint:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], [self frame].size.height)];
             }
-            
-            //NSLog(@"going to draw guides for transform: vertical guide:%f", [[closestVerticalGuide valueForKey:EDKeyClosestGuide] floatValue]);
         }
     }
 }
@@ -188,11 +186,14 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     
     // set location
     [graphView setFrameOrigin:NSMakePoint([[graph valueForKey:EDElementAttributeLocationX] floatValue], [[graph valueForKey:EDElementAttributeLocationY] floatValue])];
+    
+    // draw graph attributes
+    [graphView drawLabelAttributes];
+    
     [self addSubview:graphView];
     [graphView setNeedsDisplay:TRUE];
     
     // draw transform rect if selected
-    //if ([[graphView dataObj] selected]){
     if ([[[graphView dataObj] valueForKey:EDElementAttributeSelected] boolValue]){
         [self drawTransformRect:(EDElement *)[graphView dataObj]];
     }
@@ -222,7 +223,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         for (EDElement *myElement in insertedArray){
             // draw graph if it's located on this page
             if (([[myElement className] isEqualToString:EDEntityNameGraph]) && (newPage == [(EDGraph *)myElement page])) {
-                //NSLog(@"equal?%d graph page?:%@", (newPage == [(EDGraph *)myElement page]), [(EDGraph *)myElement page]);
                 [self drawGraph:(EDGraph *)myElement];
             }
     #warning add other elements here, need drawLabel, drawLine
@@ -659,16 +659,18 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     EDWorksheetElementView *elementView = [self findElementViewViaTransformRect:[note object]];
     NSPoint origin = NSMakePoint([[[note userInfo] valueForKey:EDKeyLocationX] floatValue], [[[note userInfo] valueForKey:EDKeyLocationY] floatValue]);
     
-    //change element view
+    // change element view
     [elementView setFrameOrigin:origin];
     [elementView setFrameSize:NSMakeSize([[[note userInfo] valueForKey:EDKeyWidth] floatValue], [[[note userInfo] valueForKey:EDKeyHeight] floatValue])];
+    
+    // remove any labels (aka text views) in elements while resizing (performance issue);
+    [elementView removeLabels];
     
     // signal to board to redraw guides
     _mouseIsDown = TRUE;
     
     // set transform points so that drawRect can reference them
     _transformRectDragPoint = NSMakePoint([[[note userInfo] valueForKey:EDKeyTransformDragPointX] floatValue], [[[note userInfo] valueForKey:EDKeyTransformDragPointY] floatValue]);
-    //NSLog(@"need to draw guide for point x:%f y%f", [[[note userInfo] valueForKey:EDKeyTransformDragPointX] floatValue], [[[note userInfo] valueForKey:EDKeyTransformDragPointY] floatValue]);
     [self setNeedsDisplay:TRUE];
 }
 

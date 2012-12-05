@@ -63,6 +63,10 @@
     // Drawing code here.
 }
 
+- (void)drawAttributes{
+    
+}
+
 - (BOOL)isFlipped{
     return TRUE;
 }
@@ -361,11 +365,11 @@
     
     BOOL hasChanged = FALSE;
     int i = 0;
-    NSObject *element;
+    NSManagedObject *element;
     
     // search through updated array and see if this element has changed
     while ((i<[updatedArray count]) && (!hasChanged)){    
-            element = [updatedArray objectAtIndex:i];
+        element = [updatedArray objectAtIndex:i];
             if (element == [self dataObj]) {
                 hasChanged = TRUE;
                 [self updateDisplayBasedOnContext];

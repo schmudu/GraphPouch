@@ -22,10 +22,10 @@
 - (NSMutableDictionary *)calculateGridIncrement:(int)maxValue length:(float)length;
 - (void)drawCoordinateAxes;
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
+- (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal;
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
 - (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
-- (void)removeLabels;
 @end
 
 @implementation EDGraphView
@@ -54,20 +54,15 @@
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:context];
 }
 
-- (void)onContextChanged:(NSNotification *)note{
-    [super onContextChanged:note];
+- (void)updateDisplayBasedOnContext{
+    // this is called whenever the context for this object changes
+    [super updateDisplayBasedOnContext];
     
-    // also check if the points changed
-#warning optomize: see if point is within this graph rather than redisplaying everyone
-    //[super updateDisplayBasedOnContext];
-    [self setNeedsDisplay:TRUE];
+    [self drawLabelAttributes];
 }
-
+    
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // cleanup
-    [self removeLabels];
-    
     NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];
     NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
     
@@ -78,10 +73,6 @@
     
     if ([(EDGraph *)[self dataObj] hasTickMarks]) {
         [self drawTickMarks:verticalResults horizontal:horizontalResults];
-    }
-    
-    if ([(EDGraph *)[self dataObj] hasLabels]) {
-        [self drawLabels:verticalResults horizontal:horizontalResults];
     }
     
     // stroke coordinate axes
@@ -98,6 +89,20 @@
     // draw points
     if ([[(EDGraph *)[self dataObj] points] count]) {
         [self drawPoints:verticalResults horizontal:horizontalResults];
+    }
+}
+
+- (void)drawLabelAttributes{
+    NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];
+    NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
+    
+    if ([(EDGraph *)[self dataObj] hasLabels]) {
+        [self drawLabels:verticalResults horizontal:horizontalResults];
+    }
+    
+    // draw points
+    if ([[(EDGraph *)[self dataObj] points] count]) {
+        [self drawPointLabels:verticalResults horizontal:horizontalResults];
     }
 }
 
@@ -350,6 +355,29 @@
 }
 
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal{
+    float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
+    float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
+    float originX, originY;
+    
+    // set origin points
+    originX = [self frame].size.width/2;
+    originY = [self frame].size.height/2;
+    
+    // set point color
+    [[NSColor blackColor] setFill];
+    
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    for (EDPoint *point in [(EDGraph *)[self dataObj] points]) {
+        if ([point isVisible]) {
+            // draw point
+            path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
+            [path fill]; 
+        }
+    }
+    //[self setNeedsDisplayInRect:[self frame]];
+}
+
+- (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal{
     NSTextField *pointLabel;
     NSNumberFormatter *labelFormatter = [[NSNumberFormatter alloc] init];
     float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
@@ -368,12 +396,9 @@
     [labelFormatter setMinimumFractionDigits:0];
     [labelFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     
-    NSBezierPath *path = [NSBezierPath bezierPath];
     for (EDPoint *point in [(EDGraph *)[self dataObj] points]) {
         if ([point isVisible]) {
             // draw point
-            path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
-            [path fill]; 
             if ([point showLabel]){
                 // create label
                 NSString *labelString = [[NSString alloc] initWithFormat:@"(%@,%@)", [labelFormatter stringFromNumber:[NSNumber numberWithFloat:[point locationX]]], [labelFormatter stringFromNumber:[NSNumber numberWithFloat:[point locationY]]]];

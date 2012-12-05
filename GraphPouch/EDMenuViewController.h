@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EDWorksheetView.h"
 #import "EDWorksheetViewController.h"
 
 @interface EDMenuViewController : NSObject <NSMenuDelegate>{

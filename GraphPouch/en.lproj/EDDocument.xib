@@ -115,15 +115,15 @@
 										<object class="NSCustomView" id="1017139771">
 											<reference key="NSNextResponder" ref="668718214"/>
 											<int key="NSvFlags">274</int>
-											<string key="NSFrameSize">{590, 620}</string>
+											<string key="NSFrameSize">{575, 605}</string>
 											<reference key="NSSuperview" ref="668718214"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="739011583"/>
+											<reference key="NSNextKeyView" ref="981661087"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<string key="NSClassName">EDWorksheetView</string>
 										</object>
 									</array>
-									<string key="NSFrame">{{1, 1}, {590, 620}}</string>
+									<string key="NSFrame">{{1, 1}, {575, 605}}</string>
 									<reference key="NSSuperview" ref="257841340"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1017139771"/>
@@ -143,9 +143,10 @@
 								<object class="NSScroller" id="981661087">
 									<reference key="NSNextResponder" ref="257841340"/>
 									<int key="NSvFlags">256</int>
-									<string key="NSFrame">{{576, 1}, {15, 614}}</string>
+									<string key="NSFrame">{{576, 1}, {15, 605}}</string>
 									<reference key="NSSuperview" ref="257841340"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="739011583"/>
 									<string key="NSReuseIdentifierKey">_NS:26</string>
 									<reference key="NSTarget" ref="257841340"/>
 									<string key="NSAction">_doScroller:</string>
@@ -155,10 +156,10 @@
 								<object class="NSScroller" id="739011583">
 									<reference key="NSNextResponder" ref="257841340"/>
 									<int key="NSvFlags">256</int>
-									<string key="NSFrame">{{1, 606}, {584, 15}}</string>
+									<string key="NSFrame">{{1, 606}, {575, 15}}</string>
 									<reference key="NSSuperview" ref="257841340"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="981661087"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:30</string>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="257841340"/>
@@ -190,7 +191,7 @@
 											<string key="NSFrameSize">{138, 596}</string>
 											<reference key="NSSuperview" ref="302567203"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="495829339"/>
+											<reference key="NSNextKeyView" ref="257841340"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 										</object>
 									</array>
@@ -237,7 +238,7 @@
 							<string key="NSFrame">{{-1, 0}, {140, 598}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="302567203"/>
+							<reference key="NSNextKeyView" ref="495829339"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133634</int>
 							<reference key="NSVScroller" ref="495829339"/>
