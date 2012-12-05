@@ -195,6 +195,7 @@ typedef enum{
     EDTokenTypeIdentifier,
     EDTokenTypeParenthesis,
     EDTokenTypeFunction,
+    EDTokenTypeConstant
 } EDTokenType;
 
 typedef enum{

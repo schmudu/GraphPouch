@@ -22,6 +22,9 @@
     EDStack *tokenStack = [[EDStack alloc] init];
     currentToken = [[EDToken alloc] init];
     
+    // strip white space
+    str = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
     // read in equation
     [EDScanner scanString:str];
     
@@ -85,7 +88,7 @@
     const char *cStr = [str cStringUsingEncoding:NSASCIIStringEncoding];
     
     // numbers
-    reti = regcomp(&regex, "^[0-9]+$", REG_EXTENDED);
+    reti = regcomp(&regex, "^([0-9]+|\\.|\\.[0-9]+|[0-9]+\\.|[0-9]+\\.[0-9]+)$", REG_EXTENDED);
     if (reti) 
         return FALSE;
     reti = regexec(&regex, cStr, 0, NULL, 0);
@@ -95,8 +98,41 @@
         return TRUE;
     }
     
-    // operators
-    reti = regcomp(&regex, "^[*|\\/|+|-]$", REG_EXTENDED);
+    // constants
+    reti = regcomp(&regex, "^(p|pi)$", REG_EXTENDED);
+    if (reti) 
+        return FALSE;
+    reti = regexec(&regex, cStr, 0, NULL, 0);
+    if (!reti) {
+        // set type to number
+        [token setTypeRaw:EDTokenTypeConstant];
+        return TRUE;
+    }
+    
+    // identifiers
+    reti = regcomp(&regex, "^(x)$", REG_EXTENDED);
+    if (reti) 
+        return FALSE;
+    reti = regexec(&regex, cStr, 0, NULL, 0);
+    if (!reti) {
+        // set type to number
+        [token setTypeRaw:EDTokenTypeIdentifier];
+        return TRUE;
+    }
+    
+    // parenthesis
+    reti = regcomp(&regex, "^(\\(|\\))$", REG_EXTENDED);
+    if (reti) 
+        return FALSE;
+    reti = regexec(&regex, cStr, 0, NULL, 0);
+    if (!reti) {
+        // set type to number
+        [token setTypeRaw:EDTokenTypeParenthesis];
+        return TRUE;
+    }
+    
+    // functions
+    reti = regcomp(&regex, "^(s|si|sin|c|co|cos)$", REG_EXTENDED);
     if (reti) 
         return FALSE;
     reti = regexec(&regex, cStr, 0, NULL, 0);
@@ -105,6 +141,40 @@
         [token setTypeRaw:EDTokenTypeFunction];
         return TRUE;
     }
+    
+    // operators
+    reti = regcomp(&regex, "^[\\*|\\/|\\+|\\-|\\^]$", REG_EXTENDED);
+    if (reti) 
+        return FALSE;
+    reti = regexec(&regex, cStr, 0, NULL, 0);
+    if (!reti) {
+        // set type to number
+        [token setTypeRaw:EDTokenTypeFunction];
+        
+        if ([str isEqualToString:@"+"]){
+            [token setAssociationRaw:EDAssociationLeft];
+            [token setPrecedence:[NSNumber numberWithInt:2]];
+        }
+        else if ([str isEqualToString:@"-"]){
+            [token setAssociationRaw:EDAssociationLeft];
+            [token setPrecedence:[NSNumber numberWithInt:2]];
+        }
+        else if ([str isEqualToString:@"*"]){
+            [token setAssociationRaw:EDAssociationLeft];
+            [token setPrecedence:[NSNumber numberWithInt:3]];
+        }
+        else if ([str isEqualToString:@"/"]){
+            [token setAssociationRaw:EDAssociationLeft];
+            [token setPrecedence:[NSNumber numberWithInt:3]];
+        }
+        else if ([str isEqualToString:@"^"]){
+            [token setAssociationRaw:EDAssociationRight];
+            [token setPrecedence:[NSNumber numberWithInt:4]];
+        }
+        return TRUE;
+    }
+    
+    [token setIsValid:FALSE];
     return FALSE;
 }
 
