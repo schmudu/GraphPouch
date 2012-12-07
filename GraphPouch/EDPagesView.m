@@ -157,6 +157,10 @@
 }
 
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender{
+    // if drag section is -1 then do not allow drag
+    if (_highlightedDragSection == -1)
+        return NO;
+        
     // if there is only one page or less do not allow drag
     if ([[[EDCoreDataUtility sharedCoreDataUtility] getAllPages] count] <= 1) 
         return NO;

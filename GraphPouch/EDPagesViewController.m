@@ -159,6 +159,7 @@
     
     for (NSManagedObject *addedObject in insertedArray){
         if ([[addedObject className] isEqualToString:EDEntityNamePage]) {
+            NSLog(@"drawing new page.");
             [self drawPage:(EDPage *)addedObject];
         }
     }

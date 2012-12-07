@@ -15,11 +15,11 @@
 
 @implementation EDTokenizer
 
-+ (EDStack *)tokenize:(NSString *)str error:(NSError **)error{
++ (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error{
     int i = 0;
     NSString *currentChar;
     EDToken *currentToken, *potentialToken;
-    EDStack *tokenStack = [[EDStack alloc] init];
+    NSMutableArray *tokenStack = [[NSMutableArray alloc] init];
     currentToken = [[EDToken alloc] init];
     
     // strip white space
@@ -47,7 +47,7 @@
             if (potentialToken) {
                 // push last valid token
                 EDToken *newToken = [potentialToken copy];
-                [tokenStack push:newToken];
+                [tokenStack addObject:newToken];
                 
                 // release potential token
                 potentialToken = nil;
@@ -66,7 +66,7 @@
     
     if (potentialToken){
         // add last token
-        [tokenStack push:potentialToken];
+        [tokenStack addObject:potentialToken];
         return tokenStack;
     }
     else {
@@ -143,7 +143,7 @@
     }
     
     // operators
-    reti = regcomp(&regex, "^[\\*|\\/|\\+|\\-|\\^]$", REG_EXTENDED);
+    reti = regcomp(&regex, "^(\\+|\\-|\\*|\\/|\\^)$", REG_EXTENDED);
     if (reti) 
         return FALSE;
     reti = regexec(&regex, cStr, 0, NULL, 0);
@@ -178,4 +178,26 @@
     return FALSE;
 }
 
++ (BOOL)isValidExpression:(NSMutableArray *)tokens withError:(NSError **)error{
+    EDToken *currentToken, *previousToken;
+    int i=0;
+    regex_t regex;
+    int reti;
+    NSString *str;
+    const char *cStr;
+    
+    while (i<[tokens count]){
+        // get current token
+        currentToken = [tokens objectAtIndex:i];
+        
+        if (([currentToken typeRaw] == EDTokenTypeFunction) && ([[currentToken value] isEqualToString:@"c"])){
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Cannot evaluate expression 'c'. Did you mean 'cos'?" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+            return FALSE;
+        }
+        
+        i++;
+    }
+}
 @end

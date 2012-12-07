@@ -210,6 +210,7 @@
 
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender{
     //NSPasteboard *pb = [sender draggingPasteboard];
+    
     if(![self readFromPasteboard:_pb]){
         return NO;
     }
@@ -217,7 +218,6 @@
 }
 
 - (void)concludeDragOperation:(id<NSDraggingInfo>)sender{
-    NSLog(@"conclude drag operation.");
     _highlighted = FALSE;
     [self setNeedsDisplay:TRUE];
 }

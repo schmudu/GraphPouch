@@ -12,6 +12,7 @@
     IBOutlet NSButton *buttonCancel;
     IBOutlet NSButton *buttonSubmit;
     IBOutlet NSTextField *fieldEquation;
+    IBOutlet NSTextField *errorField;
 }
 
 - (IBAction)onButtonPressedCancel:(id)sender;

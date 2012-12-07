@@ -14,6 +14,8 @@
 - (void)setEquationButtonState;
 - (void)onQuitShortcutPressed:(NSNotification *)note;
 - (BOOL)validEquation:(NSString *)potentialEquation;
+- (void)showError:(NSError *)error;
+- (void)clearError;
 @end
 
 @implementation EDSheetPropertiesGraphEquationController
@@ -66,6 +68,7 @@
 #pragma mark textfield
 - (void)controlTextDidChange:(NSNotification *)obj{
     [self setEquationButtonState];
+    [self clearError];
 }
 
 - (void)setEquationButtonState{
@@ -81,15 +84,30 @@
 #pragma mark validate
 - (BOOL)validEquation:(NSString *)potentialEquation{
     NSError *error;
-    EDStack *tokens = [EDTokenizer tokenize:potentialEquation error:&error];
-    if (!tokens) {
-        NSLog(@"error received:%@", [[error userInfo] valueForKey:NSLocalizedDescriptionKey]);
+    NSMutableArray *tokens = [EDTokenizer tokenize:potentialEquation error:&error];
+    //if (!tokens) {
+    //NSLog(@"tokens:%@ error received?:%@", tokens, error);
+    if (error) {
+        [self showError:error];
+        return FALSE;
+        //NSLog(@"error received:%@", [[error userInfo] valueForKey:NSLocalizedDescriptionKey]);
     }
     else{
         // print out all tokens
-        [tokens printAll:@"value"];
+        //[tokens printAll:@"value"];
+        
+        // validate expression
+        [EDTokenizer isValidExpression:tokens withError:&error];
     }
     return TRUE;
+}
+
+- (void)clearError{
+    [errorField setStringValue:@""];
+}
+
+- (void)showError:(NSError *)error{
+    [errorField setStringValue:[[error userInfo] valueForKey:NSLocalizedDescriptionKey]];
 }
 
 #pragma mark keyboard
