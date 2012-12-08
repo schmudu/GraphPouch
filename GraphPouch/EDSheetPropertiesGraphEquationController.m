@@ -98,6 +98,10 @@
         
         // validate expression
         [EDTokenizer isValidExpression:tokens withError:&error];
+        if (error) {
+            [self showError:error];
+            return FALSE;
+        }
     }
     return TRUE;
 }
