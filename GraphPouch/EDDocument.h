@@ -21,6 +21,7 @@
     IBOutlet NSView *worksheetView;
     EDPanelPropertiesController *propertyController;
     EDMenuController *menuController;
+    NSManagedObjectContext *_context;
 }
 
 - (id)getInstance;

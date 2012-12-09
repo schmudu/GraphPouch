@@ -54,7 +54,7 @@
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         
         // listen
-        [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
+        //[_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
     }
     
     return self;
@@ -71,12 +71,29 @@
     [_nc removeObserver:self name:EDEventWindowDidResize object:_documentController];
 }
 
-- (void)postInitialize{
-    NSArray *pages = [_coreData getAllPages];
- 
+- (void)postInitialize:(NSManagedObjectContext *)context{
     // disable autoresize
     [[self view] setAutoresizesSubviews:FALSE];
     
+    // init view
+    [(EDPagesView *)[self view] postInitialize];
+ 
+    // init context
+    _context = context;
+    
+    // listen
+    [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+    
+    // listen
+    [_nc addObserver:self selector:@selector(onShortcutCopy:) name:EDEventShortcutCopy object:[self view]];
+    [_nc addObserver:self selector:@selector(onShortcutCut:) name:EDEventShortcutCut object:[self view]];
+    [_nc addObserver:self selector:@selector(onShortcutPaste:) name:EDEventShortcutPaste object:[self view]];
+    [_nc addObserver:self selector:@selector(onPagesViewClicked:) name:EDEventPagesViewClicked object:[self view]];
+    [_nc addObserver:self selector:@selector(onDeleteKeyPressed:) name:EDEventPagesDeletePressed object:[self view]];
+    [_nc addObserver:self selector:@selector(onPagesViewFinishedDragged:) name:EDEventPageViewsFinishedDrag object:[self view]];
+    [_nc addObserver:self selector:@selector(onWindowResized:) name:EDEventWindowDidResize object:_documentController];
+    
+    NSArray *pages = [_coreData getAllPages];
     // if no pages then we need to create one
     if([pages count] == 0){
         [self addNewPage];
@@ -88,17 +105,6 @@
         }
     }
     
-    // init view
-    [(EDPagesView *)[self view] postInitialize];
-    
-    // listen
-    [_nc addObserver:self selector:@selector(onShortcutCopy:) name:EDEventShortcutCopy object:[self view]];
-    [_nc addObserver:self selector:@selector(onShortcutCut:) name:EDEventShortcutCut object:[self view]];
-    [_nc addObserver:self selector:@selector(onShortcutPaste:) name:EDEventShortcutPaste object:[self view]];
-    [_nc addObserver:self selector:@selector(onPagesViewClicked:) name:EDEventPagesViewClicked object:[self view]];
-    [_nc addObserver:self selector:@selector(onDeleteKeyPressed:) name:EDEventPagesDeletePressed object:[self view]];
-    [_nc addObserver:self selector:@selector(onPagesViewFinishedDragged:) name:EDEventPageViewsFinishedDrag object:[self view]];
-    [_nc addObserver:self selector:@selector(onWindowResized:) name:EDEventWindowDidResize object:_documentController];
 }
 
 #pragma mark page CRUD
@@ -127,7 +133,8 @@
 - (void)addNewPage{
     // create new page
     NSArray *pages = [_coreData getAllPages];
-    EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+    //EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+    EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:_context];
     
     // if no other pages then set this page to be the first one
     if ([pages count] == 0) {
@@ -159,7 +166,6 @@
     
     for (NSManagedObject *addedObject in insertedArray){
         if ([[addedObject className] isEqualToString:EDEntityNamePage]) {
-            NSLog(@"drawing new page.");
             [self drawPage:(EDPage *)addedObject];
         }
     }

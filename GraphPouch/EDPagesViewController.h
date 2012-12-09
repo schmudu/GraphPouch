@@ -16,7 +16,8 @@
     NSMutableArray *_pageControllers;
     IBOutlet EDDocument *_documentController;
     int _startDragSection;
+    NSManagedObjectContext *_context;
 }
-- (void)postInitialize;
+- (void)postInitialize:(NSManagedObjectContext *)context;
 - (void)addNewPage;
 @end

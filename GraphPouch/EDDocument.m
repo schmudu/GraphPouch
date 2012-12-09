@@ -33,6 +33,7 @@
     if (self) {
         //Init code
         EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
+        _context = [self managedObjectContext];
         [coreData setContext: [self managedObjectContext]];
         propertyController = [[EDPanelPropertiesController alloc] init];
         menuController = [[EDMenuController alloc] init];
@@ -62,7 +63,7 @@
     [super windowControllerDidLoadNib:aController];
     [worksheetController setView:worksheetView];
     [worksheetController postInitialize];
-    [pagesController postInitialize];
+    [pagesController postInitialize:_context];
     
     // post init property panel
     [propertyController postInitialize];
