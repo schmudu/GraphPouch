@@ -14,6 +14,6 @@
     NSManagedObjectContext *_context;
     EDCoreDataUtility *_coreData;
 }
-- (void)initWindowAfterLoaded;
+- (void)initWindowAfterLoaded:(NSManagedObjectContext *)context;
 
 @end

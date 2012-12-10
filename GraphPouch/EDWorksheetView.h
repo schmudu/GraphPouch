@@ -23,6 +23,7 @@
     EDPage *_currentPage;
 }
 
+- (void)postInitialize:(NSManagedObjectContext *)context;
 - (void)drawLoadedObjects;
 - (NSMutableDictionary *)guides;
 

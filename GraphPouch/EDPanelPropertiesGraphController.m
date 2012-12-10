@@ -39,7 +39,8 @@
     return self;
 }
 
-- (void)initWindowAfterLoaded{
+- (void)initWindowAfterLoaded:(NSManagedObjectContext *)context{
+    _context = context;
     if (!equationController) {
         equationController = [[EDSheetPropertiesGraphEquationController alloc] init];
         NSLog(@"creating equation controller.");
@@ -54,6 +55,12 @@
     [self setElementCheckbox:checkboxHasLabels attribute:EDGraphAttributeLabels];
     [self setElementCheckbox:checkboxGrid attribute:EDGraphAttributeGridLines];
     [self setElementCheckbox:checkboxHasTickMarks attribute:EDGraphAttributeTickMarks];
+    
+    // initialize table points datasource and delegate
+    tablePointsController = [[EDPanelPropertiesGraphTablePoints alloc] initWithContext:_context];
+    
+    [tablePoints setDelegate:tablePointsController];
+    [tablePoints setDataSource:tablePointsController];
     
     // set button state
     if ([tablePoints numberOfSelectedRows] == 0) {
@@ -123,7 +130,7 @@
 - (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue{
     EDElement *newElement, *currentElement;
     int i = 0;
-    NSMutableArray *elements = [_coreData getAllSelectedWorksheetElements];
+    NSMutableArray *elements = [_coreData getAllSelectedWorksheetElements:_context];
     while (i < [elements count]) {
      currentElement = [elements objectAtIndex:i];
         
@@ -138,7 +145,7 @@
 - (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSMutableArray *elements = [[NSMutableArray alloc] init];
-    NSArray *graphs = [EDGraph getAllSelectedObjects];
+    NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
     BOOL diff = FALSE;
     int i = 0;
     float value = 0;
@@ -167,7 +174,7 @@
 - (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSMutableArray *elements = [[NSMutableArray alloc] init];
-    NSArray *graphs = [EDGraph getAllSelectedObjects];
+    NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
     BOOL diff = FALSE;
     int i = 0;
     float value = 0;
@@ -273,11 +280,11 @@
 #pragma mark graph points
 - (IBAction)addNewPoint:(id)sender{
     // get currently selected graphs
-    NSArray *selectedGraphs = [EDGraph getAllSelectedObjects];
+    NSArray *selectedGraphs = [EDGraph getAllSelectedObjects:_context];
     
     // create new point for each graph
     for (EDGraph *graph in selectedGraphs){
-        EDPoint *newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+        EDPoint *newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
         // set relationship
         [graph addPointsObject:newPoint];
     }
@@ -293,7 +300,7 @@
     }];
     
     // get all the common points
-    NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs:_context];
     NSMutableArray *selectedPoints = [[NSMutableArray alloc] init];
     
     // pull the indexed objects from the common points and place into an array
@@ -301,8 +308,7 @@
         [selectedPoints addObject:[commonPoints objectAtIndex:[index intValue]]];
     }
     // remove all points from selected graphs that have the same attributes
-    [[EDCoreDataUtility sharedCoreDataUtility] removeCommonPointsforSelectedGraphsMatchingPoints:selectedPoints];
-    
+    [[EDCoreDataUtility sharedCoreDataUtility] removeCommonPointsforSelectedGraphsMatchingPoints:selectedPoints context:_context];
 }
 
 - (IBAction)addNewEquation:(id)sender{

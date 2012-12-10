@@ -11,24 +11,21 @@
 #import "EDPoint.h"
 
 @interface EDCoreDataUtility : NSObject{
-@private
-    NSManagedObjectContext *_context;
 }
 
 + (EDCoreDataUtility *)sharedCoreDataUtility;
-- (void)setContext:(NSManagedObjectContext *)moc;
-- (void)save;
-- (NSManagedObjectContext *)context;
-
+- (void)save:(NSManagedObjectContext *)context;
+    
 // objects
-- (NSMutableArray *)getAllWorksheetElements;
-- (NSManagedObject *)getObject:(NSManagedObject *)object;
+- (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context;
+- (NSManagedObject *)getObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context;
     
 // selection
-- (NSMutableArray *)getAllSelectedWorksheetElements;
-- (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements;
-- (void)clearSelectedWorksheetElements;
-- (void)deleteSelectedWorksheetElements;
+- (NSArray *)getAllGraphs:(NSManagedObjectContext *)context;
+- (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context;
+- (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context;
+- (void)clearSelectedWorksheetElements:(NSManagedObjectContext *)context;
+- (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context;
 
 // graphs
 - (NSArray *)getAllGraphs;

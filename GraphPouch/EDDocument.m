@@ -15,6 +15,7 @@
 #import "EDPanelPropertiesController.h"
 #import "NSObject+Document.h"
 #import "EDConstants.h"
+#import "EDWorksheetView.h"
 
 @interface EDDocument()
 - (void)onMainWindowClosed:(NSNotification *)note;
@@ -34,7 +35,6 @@
         //Init code
         EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
         _context = [self managedObjectContext];
-        [coreData setContext: [self managedObjectContext]];
         propertyController = [[EDPanelPropertiesController alloc] init];
         menuController = [[EDMenuController alloc] init];
         
@@ -45,10 +45,6 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    /*
-    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:EDEventWindowWillClose];
-    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:EDEventShortcutNewPage];
-     */
 }
 
 - (NSString *)windowNibName
@@ -61,12 +57,13 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
+    [(EDWorksheetView *)worksheetView postInitialize:_context];
     [worksheetController setView:worksheetView];
-    [worksheetController postInitialize];
+    [worksheetController postInitialize:_context];
     [pagesController postInitialize:_context];
     
     // post init property panel
-    [propertyController postInitialize];
+    [propertyController postInitialize:_context];
     
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMainWindowClosed:) name:EDEventWindowWillClose object:[self windowForSheet]];
@@ -83,8 +80,7 @@
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window{
     // have the undo manager linked to the managed object context
-    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    return [[coreData context] undoManager];
+    return [_context undoManager];
 }
 
 - (void)togglePropertiesPanel:(id)sender{

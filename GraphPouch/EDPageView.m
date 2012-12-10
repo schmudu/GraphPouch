@@ -33,14 +33,13 @@
         _pb = [NSPasteboard generalPasteboard];
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
     }
     return self;
 }
 
 - (void)dealloc{
     [self unregisterDraggedTypes];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -63,7 +62,11 @@
 }
 
 - (void)setDataObj:(EDPage *)pageObj{
+    _context = [pageObj managedObjectContext];
     _dataObj = pageObj;
+    
+    // listen
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 
 #pragma mark mouse
@@ -174,7 +177,7 @@
 
 #pragma mark current
 - (void)setPageAsCurrent{
-    [_coreData setPageAsCurrent:_dataObj];
+    [_coreData setPageAsCurrent:_dataObj context:_context];
 }
 
 #pragma mark dragging source

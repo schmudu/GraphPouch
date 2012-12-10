@@ -14,4 +14,5 @@
     IBOutlet NSButton *buttonPointRemove;
 }
 
+- (id)initWithContext:(NSManagedObjectContext *)context;
 @end

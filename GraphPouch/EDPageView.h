@@ -16,6 +16,7 @@
     NSEvent *_mouseDownEvent;
     NSPasteboard *_pb;
     BOOL _highlighted;
+    NSManagedObjectContext *_context;
 }
 - (EDPage *)dataObj;
 - (void)setDataObj:(EDPage *)pageObj;

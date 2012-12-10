@@ -19,9 +19,8 @@
     [NSEntityDescription entityForName:NSStringFromClass(self) inManagedObjectContext:context];
 }
 
-+ (NSArray *)getAllObjects;
++ (NSArray *)getAllObjects:(NSManagedObjectContext *)context;
 {
-    NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity = [self entityDescriptionInContext:context];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];
@@ -35,8 +34,7 @@
 }
 
 
-+ (NSManagedObject *)getCurrentPage{
-    NSManagedObjectContext *context = [self getContext];
++ (NSManagedObject *)getCurrentPage:(NSManagedObjectContext *)context{
     NSEntityDescription *entity;
     
     entity = [self entityDescriptionInContext:context];
@@ -67,8 +65,7 @@
     return [filteredResults lastObject];
 }
 
-+ (NSArray *)getAllSelectedObjects{
-    NSManagedObjectContext *context = [self getContext];
++ (NSArray *)getAllSelectedObjects:(NSManagedObjectContext *)context{
     NSEntityDescription *entity;
     
     entity = [self entityDescriptionInContext:context];
@@ -95,8 +92,7 @@
     return filteredResults;
 }
 
-+ (NSArray *)getAllUnselectedObjects{
-    NSManagedObjectContext *context = [self getContext];
++ (NSArray *)getAllUnselectedObjects:(NSManagedObjectContext *)context{
     NSEntityDescription *entity;
     
     entity = [self entityDescriptionInContext:context];
@@ -123,8 +119,7 @@
     return filteredResults;
 }
 
-+ (NSArray *)getAllUnselectedObjectsOrderedByPageNumber{
-    NSManagedObjectContext *context = [self getContext];
++ (NSArray *)getAllUnselectedObjectsOrderedByPageNumber:(NSManagedObjectContext *)context{
     NSEntityDescription *entity;
     
     entity = [self entityDescriptionInContext:context];
@@ -157,8 +152,7 @@
     return filteredResults;
 }
 
-+ (NSArray *)getAllObjectsOrderedByPageNumber{
-    NSManagedObjectContext *context = [self getContext];
++ (NSArray *)getAllObjectsOrderedByPageNumber:(NSManagedObjectContext *)context{
     NSEntityDescription *entity;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
@@ -179,8 +173,7 @@
     return results;
 }
 
-+ (NSArray *)getAllSelectedObjectsOrderedByPageNumber{
-    NSManagedObjectContext *context = [self getContext];
++ (NSArray *)getAllSelectedObjectsOrderedByPageNumber:(NSManagedObjectContext *)context{
     NSEntityDescription *entity;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
@@ -202,18 +195,9 @@
     return results;
 }
 
-#pragma mark context
-+ (NSManagedObjectContext *)getContext{
-    // by default return document context
-    if ([[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]) {
-        return [[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext];
-    }
-    return [[EDCoreDataUtility sharedCoreDataUtility] context];
-}
 #pragma mark print
-+ (void)printAll{
++ (void)printAll:(NSManagedObjectContext *)context{
     // print out all pages
-    NSManagedObjectContext *context = [self getContext];
     NSEntityDescription *entity = [self entityDescriptionInContext:context];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];

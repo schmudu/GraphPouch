@@ -27,11 +27,8 @@
 {
     self = [super initWithWindow:window];
     if (self) {
-        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
-        _context = [_coreData context];
         _nc = [NSNotificationCenter defaultCenter];
                
-        [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     }
     
     return self;
@@ -61,18 +58,21 @@
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window{
     // have the undo manager linked to the managed object context
-    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    return [[coreData context] undoManager];
+    return [_context undoManager];
 }
 
-- (void)postInitialize
+- (void)postInitialize:(NSManagedObjectContext *)context
 {
+    _context = context;
+    
     //[super windowDidLoad];
     // init panel if needed
     if([[NSUserDefaults standardUserDefaults] boolForKey:EDPreferencePropertyPanel]){
         [self showWindow:self];
         [self setCorrectView];
     }
+    
+    [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 
 - (void)togglePropertiesPanel:(id)sender{
@@ -101,7 +101,7 @@
     EDPanelViewController *viewController;
     
     // get all the selected objects
-    NSMutableDictionary *selectedTypes = [_coreData getAllTypesOfSelectedWorksheetElements];
+    NSMutableDictionary *selectedTypes = [_coreData getAllTypesOfSelectedWorksheetElements:_context];
     
 #warning add other elements here, need to check for other entities
     if([selectedTypes valueForKey:EDEntityNameGraph]){
@@ -122,12 +122,12 @@
     // if so then do nothing except update panel
     if ((viewController == graphController) && ([[self window] contentView] == [graphController view])) {
         // still need to update panel properties
-        [viewController initWindowAfterLoaded];
+        [viewController initWindowAfterLoaded:_context];
         return;
     }
     else if ((viewController == documentController) && ([[self window] contentView] == [documentController view])) {
         // still need to update panel properties
-        [viewController initWindowAfterLoaded];
+        [viewController initWindowAfterLoaded:_context];
         return;
     }
 #warning need to clean this up
@@ -149,7 +149,7 @@
     [[self window] setContentView:[viewController view]];
     
     // window init after loaded
-    [viewController initWindowAfterLoaded];
+    [viewController initWindowAfterLoaded:_context];
 }
 
 - (void)menuWillOpen:(NSMenu *)menu{

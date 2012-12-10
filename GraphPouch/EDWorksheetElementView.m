@@ -24,31 +24,16 @@
 @end
 
 @implementation EDWorksheetElementView
-@synthesize viewID;
 @synthesize dataObj;
-
-+ (NSString *)generateID{
-    NSDate *now = [[NSDate alloc] init];
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateFormat:@"yyyyMMDDHHmmssA"];
-    NSString *dateString = [format stringFromDate:now];
-    NSString *returnStr = [[[NSString alloc] initWithFormat:@"element"] stringByAppendingString:dateString];
-    //NSLog(@"creating id of: %@", returnStr);
-    return returnStr;
-}
 
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-        NSManagedObjectContext *context = [self currentContext];
         _didSnapToSourceX = FALSE;
         _didSnapToSourceY = FALSE;
         
-        // listen
-        _nc = [NSNotificationCenter defaultCenter];
-        [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
     }
     
     return self;
@@ -90,7 +75,7 @@
     [[self window] makeFirstResponder:[self superview]];
     
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    [coreData getAllWorksheetElements];
+    [coreData getAllWorksheetElements:_context];
     
     NSUInteger flags = [theEvent modifierFlags];
  
@@ -131,7 +116,7 @@
 
 - (void)mouseDownBySelection:(NSEvent *)theEvent{
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    [coreData getAllWorksheetElements];
+    [coreData getAllWorksheetElements:_context];
     
     NSUInteger flags = [theEvent modifierFlags];
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];

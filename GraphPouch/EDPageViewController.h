@@ -14,6 +14,7 @@
     IBOutlet NSTextField *pageLabel;
     EDPage *_pageData;
     EDCoreDataUtility *_coreData;
+    NSManagedObjectContext *_context;
 }
 - (EDPage *)dataObj;
 - (void)deselectPage;

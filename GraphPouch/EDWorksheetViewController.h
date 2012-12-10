@@ -16,8 +16,9 @@
     NSNotificationCenter *_nc;
     EDCoreDataUtility *_coreData;
     IBOutlet EDDocument *_documentController;
+    NSManagedObjectContext *_context;
 }
-- (void)postInitialize;
+- (void)postInitialize:(NSManagedObjectContext *)context;
 - (void)addNewGraph;
 
 @end

@@ -34,7 +34,10 @@
     return self;
 }
 
-- (void)postInitialize{
+- (void)postInitialize:(NSManagedObjectContext *)context{
+    
+    _context = context;
+    
     // listeners
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventWorksheetClicked object:[self view]];
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
@@ -49,7 +52,7 @@
 
 - (void)deselectAllElements:(NSNotification *)note{
     // clear all the selected elements
-    [[EDCoreDataUtility sharedCoreDataUtility] clearSelectedWorksheetElements];
+    [[EDCoreDataUtility sharedCoreDataUtility] clearSelectedWorksheetElements:_context];
 }
 
 - (void)dealloc{
@@ -61,15 +64,15 @@
 }
 
 - (void)deleteSelectedElements:(NSNotification *)note{
-    [_coreData deleteSelectedWorksheetElements];
+    [_coreData deleteSelectedWorksheetElements:_context];
 }
 
 #pragma mark graphs
 - (void)addNewGraph{
     // create new graph
-    EDPage *currentPage = [_coreData getCurrentPage];
+    EDPage *currentPage = [_coreData getCurrentPage:_context];
     
-    EDGraph *newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+    EDGraph *newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
     
     // add graph to page
     [currentPage addGraphsObject:newGraph];

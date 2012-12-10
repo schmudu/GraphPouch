@@ -37,13 +37,15 @@
 - (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph{
     self = [super initWithFrame:frame];
     if (self){
+        _context = [myGraph managedObjectContext];
         _labels = [[NSMutableArray alloc] init];
-        
-        //generate id
-        [self setViewID:[EDGraphView generateID]];
         
         // set model info
         [self setDataObj:myGraph];
+        
+        // listen
+        _nc = [NSNotificationCenter defaultCenter];
+        [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     }
     return self;
 }

@@ -28,7 +28,8 @@
     return TRUE;
 }*/
 
-- (void)postInitialize{
+- (void)postInitialize:(NSManagedObjectContext *)context{
+    _context = context;
     _pb = [NSPasteboard generalPasteboard];
     [self registerForDraggedTypes:[NSArray arrayWithObjects:EDUTIPage,nil]];
 }
@@ -130,7 +131,7 @@
 - (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender{
     NSPoint pagesPoint = [[[self window] contentView] convertPoint:[sender draggingLocation] toView:self];
     EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    int pageCount = [[coreData getAllPages] count];
+    int pageCount = [[coreData getAllPages:_context] count];
  
     if (pageCount <= 1) {
         // if there is only one page or less do not highlight
@@ -162,7 +163,7 @@
         return NO;
         
     // if there is only one page or less do not allow drag
-    if ([[[EDCoreDataUtility sharedCoreDataUtility] getAllPages] count] <= 1) 
+    if ([[[EDCoreDataUtility sharedCoreDataUtility] getAllPages:_context] count] <= 1) 
         return NO;
     
     // going to insert pages from PagesViewController after we have removed pages
@@ -192,7 +193,7 @@
     NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
     
     // get first and last selected objects
-    NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber];
+    NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
     EDPage *firstSelectedPage = (EDPage *)[selectedPages objectAtIndex:0];
     EDPage *lastSelectedPage = (EDPage *)[selectedPages lastObject];
     

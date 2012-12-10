@@ -60,7 +60,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
-        _context = [_coreData context];
         
         _mouseIsDown = FALSE;
         _elementIsBeingModified = FALSE;
@@ -69,6 +68,7 @@
         _transformRects = [[NSMutableDictionary alloc] init];
         _elementsWithTransformRects = [[NSMutableDictionary alloc] init];
         
+        /*
         // find current page
         EDPage *newPage = (EDPage *)[EDPage getCurrentPage];
         _currentPage = newPage;
@@ -76,9 +76,22 @@
         // listen
         _nc = [NSNotificationCenter defaultCenter];
         [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+         */
     }
     
     return self;
+}
+
+- (void)postInitialize:(NSManagedObjectContext *)context{
+    _context = context;
+    
+    // find current page
+    EDPage *newPage = (EDPage *)[EDPage getCurrentPage:context];
+    _currentPage = newPage;
+    
+    // listen
+    _nc = [NSNotificationCenter defaultCenter];
+    [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
 }
 
 - (void)dealloc{
@@ -214,7 +227,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 #pragma mark listeners
 - (void)onContextChanged:(NSNotification *)note{
-    EDPage *newPage = (EDPage *)[EDPage getCurrentPage];
+    EDPage *newPage = (EDPage *)[EDPage getCurrentPage:_context];
     if (newPage == _currentPage) {
         // only redraw the objects on page
         NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
@@ -299,7 +312,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
-    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];
+    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse down
@@ -322,7 +335,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 - (void)onElementMouseDragged:(NSNotification *)note{
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
-    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];
+    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
@@ -341,7 +354,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 - (void)onElementMouseUp:(NSNotification *)note{
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
-    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];
+    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
@@ -507,7 +520,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 #pragma mark elements
 - (void)drawAllElements{
     // draw all elements for the current page
-    EDPage *currentPage = (EDPage *)[EDPage getCurrentPage];
+    EDPage *currentPage = (EDPage *)[EDPage getCurrentPage:_context];
     
     // draw all graphs
     for (EDGraph *graph in [currentPage graphs]){
@@ -536,7 +549,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 - (NSMutableArray *)getAllSelectedWorksheetElementsViews{
     // get all the selected worksheet elements
     NSMutableArray *results = [[NSMutableArray alloc] init];
-    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];
+    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
         // only add if it's a worksheet element
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
@@ -550,7 +563,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 - (NSMutableArray *)getAllUnselectedWorksheetElementsViews{
     // get all the selected worksheet elements
     NSMutableArray *results = [[NSMutableArray alloc] init];
-    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements];
+    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
         if(([myElement isWorksheetElement]) && (![selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             [results addObject:myElement];

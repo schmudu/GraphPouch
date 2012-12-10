@@ -14,8 +14,9 @@
     NSPasteboard *_pb;
     EDPage *_startDragPageData;
     int _highlightedDragSection;
+    NSManagedObjectContext *_context;
 }
 
-- (void)postInitialize;
+- (void)postInitialize:(NSManagedObjectContext *)context;
 - (void)setPageViewStartDragInfo:(EDPage *)pageData;
 @end

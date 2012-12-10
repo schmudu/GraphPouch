@@ -28,7 +28,7 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder{
     // create entity but don't insert it anywhere
-    self = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
+    self = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
     if(self){
         [self setHasLabels:[aDecoder decodeBoolForKey:EDGraphAttributeLabels]];
         [self setHasGridLines:[aDecoder decodeBoolForKey:EDGraphAttributeGridLines]];
@@ -45,7 +45,7 @@
         
         for (EDPoint *point in points){
             // create a point and set it for this graph
-            newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]];
+            newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:nil] insertIntoManagedObjectContext:nil];
             
             //set attributes
             [newPoint setLocationX:[point locationX]];
@@ -61,7 +61,7 @@
         
         for (EDEquation *equation in equations){
             // create a equation and set it for this graph
-            newEquation = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]];
+            newEquation = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:nil] insertIntoManagedObjectContext:nil];
             
             //set attributes
             [newEquation setEquation:[equation equation]];

@@ -26,10 +26,12 @@
     self = [super initWithNibName:@"EDPageView" bundle:nil];
     if (self) {
         _pageData = page;
+        _context = [page managedObjectContext];
+        
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         
         // listen
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDeleteKeyPressed:) name:EDEventPagesDeletePressed object:[self view]];
     }
     
@@ -37,7 +39,7 @@
 }
 
 - (void) dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageClickedWithoutModifier object:[self view]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageViewStartDrag object:[self view]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPagesDeletePressed object:[self view]];

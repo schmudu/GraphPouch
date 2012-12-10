@@ -17,9 +17,9 @@
 @implementation EDCoreDataUtility (Points)
 
 #pragma mark graph points
-- (NSArray *)getAllCommonPointsforSelectedGraphs{
+- (NSArray *)getAllCommonPointsforSelectedGraphs:(NSManagedObjectContext *)context{
     // get all selected graphs
-    NSArray *selectedGraphs = [EDGraph getAllSelectedObjects];
+    NSArray *selectedGraphs = [EDGraph getAllSelectedObjects:context];
     
     // return if empty
     if ([selectedGraphs count] == 0){
@@ -80,9 +80,9 @@
     return sortedArray;
 }
 
-- (NSArray *)getOneCommonPointFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint{
+- (NSArray *)getOneCommonPointFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint context:(NSManagedObjectContext *)context{
     // get all selected graphs
-    NSArray *selectedGraphs = [EDGraph getAllSelectedObjects];
+    NSArray *selectedGraphs = [EDGraph getAllSelectedObjects:context];
     
     // return if empty
     if ([selectedGraphs count] == 0){
@@ -107,8 +107,8 @@
     return matchingPoints;
 }
 
-- (void)setAllCommonPointsforSelectedGraphs:(EDPoint *)pointToChange attribute:(NSDictionary *)attributes{
-    NSArray *commonPoints = [self getOneCommonPointFromSelectedGraphsMatchingPoint:pointToChange];
+- (void)setAllCommonPointsforSelectedGraphs:(EDPoint *)pointToChange attribute:(NSDictionary *)attributes context:(NSManagedObjectContext *)context{
+    NSArray *commonPoints = [self getOneCommonPointFromSelectedGraphsMatchingPoint:pointToChange context:context];
     
     // find points with the same attributes
     for (EDPoint *point in commonPoints){
@@ -130,12 +130,12 @@
     }
 }
 
-- (void)removeCommonPointsforSelectedGraphsMatchingPoints:(NSArray *)pointsToRemove{
+- (void)removeCommonPointsforSelectedGraphsMatchingPoints:(NSArray *)pointsToRemove context:(NSManagedObjectContext *)context{
     NSArray *matchingPoints;
     
     // find points with the same attributes
     for (EDPoint *deletePoint in pointsToRemove){
-        matchingPoints = [self getOneCommonPointFromSelectedGraphsMatchingPoint:deletePoint];
+        matchingPoints = [self getOneCommonPointFromSelectedGraphsMatchingPoint:deletePoint context:context];
             
         // delete all of the points
         for (EDPoint *matchingPoint in matchingPoints){
@@ -143,7 +143,7 @@
             [[matchingPoint graph] removePointsObject:matchingPoint];
             
             // remove object
-            [_context deleteObject:matchingPoint];
+            [context deleteObject:matchingPoint];
         }
     }
 }

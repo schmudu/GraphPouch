@@ -13,9 +13,9 @@
 @implementation EDCoreDataUtility (Pages)
 
 #pragma mark pages
-- (NSArray *)getAllPages{
+- (NSArray *)getAllPages:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
-    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
     // Setup the fetch request   
     NSFetchRequest *request = [[NSFetchRequest alloc] init];   
@@ -28,7 +28,7 @@
     
     // Fetch the records and handle an error   
     NSError *error;   
-    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    NSArray *fetchResults = [context executeFetchRequest:request error:&error];   
     //NSLog(@"fetch: %@", mutableFetchResults);
     
     /*
@@ -41,45 +41,45 @@
     return fetchResults;
 }
 
-- (EDPage *)getPage:(EDPage *)page{
+- (EDPage *)getPage:(EDPage *)page context:(NSManagedObjectContext *)context{
     // this method returns the page object that matches the page number
     NSArray *fetchedObjects;
     
     // get all selected pages ordered by page number
-    fetchedObjects = [EDPage getAllObjectsOrderedByPageNumber];
+    fetchedObjects = [EDPage getAllObjectsOrderedByPageNumber:context];
     
     NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(SELF == %@)", page];
     NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];;
     return [filteredResults objectAtIndex:0];
 }
 
-- (EDPage *)getLastSelectedPage{
+- (EDPage *)getLastSelectedPage:(NSManagedObjectContext *)context{
     
     // this method returns a dictionary of the types of selected objects
     NSArray *fetchedObjects;
     
     // get all selected pages ordered by page number
-    fetchedObjects = [EDPage getAllSelectedObjectsOrderedByPageNumber];
+    fetchedObjects = [EDPage getAllSelectedObjectsOrderedByPageNumber:context];
     if ([fetchedObjects count] > 0) {
         return [fetchedObjects lastObject];
     }
     return nil;
 }
 
-- (NSMutableArray *)getAllSelectedPages{
+- (NSMutableArray *)getAllSelectedPages:(NSManagedObjectContext *)context{
     // gets all pages
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
-    NSArray *fetchedGraphs = [EDPage getAllSelectedObjects];
+    NSArray *fetchedGraphs = [EDPage getAllSelectedObjects:context];
     
     [allObjects addObjectsFromArray:fetchedGraphs];
     
     return allObjects;
 }
 
-- (void)deleteSelectedPages{
-    NSMutableArray *selectedPages = [self getAllSelectedPages];
+- (void)deleteSelectedPages:(NSManagedObjectContext *)context{
+    NSMutableArray *selectedPages = [self getAllSelectedPages:context];
     for (EDPage *page in selectedPages){
-        [_context deleteObject:page];
+        [context deleteObject:page];
     }
     
     // save
@@ -87,9 +87,9 @@
     //[_context save:&error];
 }
 
-- (void)correctPageNumbersAfterDelete{
+- (void)correctPageNumbersAfterDelete:(NSManagedObjectContext *)context{
     // gets all pages
-    NSArray *fetchedPages = [EDPage getAllObjectsOrderedByPageNumber];
+    NSArray *fetchedPages = [EDPage getAllObjectsOrderedByPageNumber:context];
     int currentPageNumber = 1;
     
     // iterate through pages
@@ -103,8 +103,8 @@
     }
 }
 
-- (void)updatePageNumbersStartingAt:(int)startPageNumber byDifference:(int)difference endNumber:(int)endPageNumber{
-    NSArray *pages = [self getPagesWithPageNumberGreaterThanOrEqualTo:startPageNumber lessThan:endPageNumber];
+- (void)updatePageNumbersStartingAt:(int)startPageNumber byDifference:(int)difference endNumber:(int)endPageNumber context:(NSManagedObjectContext *)context{
+    NSArray *pages = [self getPagesWithPageNumberGreaterThanOrEqualTo:startPageNumber lessThan:endPageNumber context:context];
     
     // iterate through pages
     for (EDPage *currentPage in pages){
@@ -113,18 +113,17 @@
     }
 }
 
-//- (void)removeObject:(NSManagedObject *)object{
-- (void)removePage:(EDPage *)page{
+- (void)removePage:(EDPage *)page context:(NSManagedObjectContext *)context{
     // fetch page
-    NSManagedObject *managedObj = [self getPage:page];
+    NSManagedObject *managedObj = [self getPage:page context:context];
     
     // fetch object
-    [_context deleteObject:managedObj];
+    [context deleteObject:managedObj];
 }
 
-- (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber{
+- (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
-    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
     // Setup the fetch request   
     NSFetchRequest *request = [[NSFetchRequest alloc] init];   
@@ -137,7 +136,7 @@
     
     // Fetch the records and handle an error   
     NSError *error;   
-    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    NSArray *fetchResults = [context executeFetchRequest:request error:&error];   
     //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
     NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", beginPageNumber];
@@ -154,9 +153,9 @@
     return startFilteredResults;
 }
 
-- (NSArray *)getPagesWithPageNumberGreaterThan:(int)beginPageNumber{
+- (NSArray *)getPagesWithPageNumberGreaterThan:(int)beginPageNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
-    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
     // Setup the fetch request   
     NSFetchRequest *request = [[NSFetchRequest alloc] init];   
@@ -169,7 +168,7 @@
     
     // Fetch the records and handle an error   
     NSError *error;   
-    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    NSArray *fetchResults = [context executeFetchRequest:request error:&error];   
     //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
     NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber > %ld", beginPageNumber];
@@ -186,9 +185,9 @@
     return startFilteredResults;
 }
 
-- (NSArray *)getUnselectedPagesWithPageNumberLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber{
+- (NSArray *)getUnselectedPagesWithPageNumberLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
-    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
     // Setup the fetch request   
     NSFetchRequest *request = [[NSFetchRequest alloc] init];   
@@ -201,7 +200,7 @@
     
     // Fetch the records and handle an error   
     NSError *error;   
-    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    NSArray *fetchResults = [context executeFetchRequest:request error:&error];   
     //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
     NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber < %ld", upperNumber];
@@ -224,9 +223,9 @@
     return unselectedFilteredResults;
 }
 
-- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber{
+- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
-    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
     // Setup the fetch request   
     NSFetchRequest *request = [[NSFetchRequest alloc] init];   
@@ -239,7 +238,7 @@
     
     // Fetch the records and handle an error   
     NSError *error;   
-    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    NSArray *fetchResults = [context executeFetchRequest:request error:&error];   
     //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
     NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", lowerNumber];
@@ -259,9 +258,9 @@
     return selectedFilteredResults;
 }
 
-- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber{
+- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
-    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
     // Setup the fetch request   
     NSFetchRequest *request = [[NSFetchRequest alloc] init];   
@@ -274,7 +273,7 @@
     
     // Fetch the records and handle an error   
     NSError *error;   
-    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    NSArray *fetchResults = [context executeFetchRequest:request error:&error];   
     //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
     NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", lowerNumber];
@@ -297,9 +296,9 @@
     return selectedFilteredResults;
 }
 
-- (NSArray *)getSelectedPagesWithPageNumberLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber{
+- (NSArray *)getSelectedPagesWithPageNumberLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
-    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
     // Setup the fetch request   
     NSFetchRequest *request = [[NSFetchRequest alloc] init];   
@@ -312,7 +311,7 @@
     
     // Fetch the records and handle an error   
     NSError *error;   
-    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    NSArray *fetchResults = [context executeFetchRequest:request error:&error];   
     //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
     NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber < %ld", upperNumber];
@@ -334,9 +333,9 @@
     return selectedFilteredResults;
 }
 
-- (NSArray *)getSelectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber{
+- (NSArray *)getSelectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
-    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
     // Setup the fetch request   
     NSFetchRequest *request = [[NSFetchRequest alloc] init];   
@@ -349,7 +348,7 @@
     
     // Fetch the records and handle an error   
     NSError *error;   
-    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    NSArray *fetchResults = [context executeFetchRequest:request error:&error];   
     //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
     NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", lowerNumber];
@@ -374,9 +373,9 @@
 
 
 
-- (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber lessThan:(int)endPageNumber{
+- (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber lessThan:(int)endPageNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
-    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context];   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
     // Setup the fetch request   
     NSFetchRequest *request = [[NSFetchRequest alloc] init];   
@@ -389,7 +388,7 @@
     
     // Fetch the records and handle an error   
     NSError *error;   
-    NSArray *fetchResults = [_context executeFetchRequest:request error:&error];   
+    NSArray *fetchResults = [context executeFetchRequest:request error:&error];   
     //NSLog(@"getAllPagesWithPageNumberGreaterThan: fetch: %@", fetchResults);
     
     NSPredicate *beginSearchFilter = [NSPredicate predicateWithFormat:@"pageNumber >= %ld", beginPageNumber];
@@ -407,13 +406,13 @@
     return endFilteredResults;
 }
 
-- (EDPage *)getCurrentPage{
-    return (EDPage *)[EDPage getCurrentPage];
+- (EDPage *)getCurrentPage:(NSManagedObjectContext *)context{
+    return (EDPage *)[EDPage getCurrentPage:context];
 }
 
-- (void)setPageAsCurrent:(EDPage *)page{
+- (void)setPageAsCurrent:(EDPage *)page context:(NSManagedObjectContext *)context{
     // unset previous current page
-    EDPage *previousPage = (EDPage *)[EDPage getCurrentPage];
+    EDPage *previousPage = (EDPage *)[EDPage getCurrentPage:context];
     
     // if already set then do nothing
     if (previousPage == page){
@@ -424,7 +423,7 @@
     }
     
     // set parameter as current page
-    EDPage *newPage = [self getPage:page];
+    EDPage *newPage = [self getPage:page context:context];
     [newPage setCurrentPage:TRUE];
 }
 

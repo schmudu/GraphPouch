@@ -14,19 +14,19 @@
 
 @implementation EDPanelViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil context:(NSManagedObjectContext *)context
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        _context = context;
         _coreData = [EDCoreDataUtility sharedCoreDataUtility];
-        _context = [_coreData context];
         _nc = [NSNotificationCenter defaultCenter];
     }
     
     return self;
 }
 
-- (void)initWindowAfterLoaded{
+- (void)initWindowAfterLoaded:(NSManagedObjectContext *)context{
     NSLog(@"init window base class.");
 }
 

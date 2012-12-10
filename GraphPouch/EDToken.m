@@ -22,7 +22,7 @@
 
 #warning need to write initWithCoder
 - (id)init{
-    self = [[EDToken alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameToken inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
+    self = [[EDToken alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameToken inManagedObjectContext:nil] insertIntoManagedObjectContext:nil];
     if (self){
         [self setValue:[NSString stringWithFormat:@""]];
     }

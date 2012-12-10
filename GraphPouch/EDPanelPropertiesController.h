@@ -23,7 +23,7 @@
 
 - (void)togglePropertiesPanel:(id)sender;
 - (void)setCorrectView;
-- (void)postInitialize;
+- (void)postInitialize:(NSManagedObjectContext *)context;
 - (BOOL)panelIsOpen;
 - (void)closePanel;
     

@@ -19,11 +19,11 @@
 
 @implementation EDPanelPropertiesGraphTablePoints
 
-- (id)init{
+- (id)initWithContext:(NSManagedObjectContext *)context{
     self = [super init];
     if (self){
         // init
-        _context = [[EDCoreDataUtility sharedCoreDataUtility] context];
+        _context = context;
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -36,7 +36,7 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    NSArray *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    NSArray *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs:_context];
     if (!commonPointsForSelectedGraphs) {
         return 0;
     }
@@ -52,7 +52,7 @@
     NSString *columnIdentifier = [tableColumn identifier];
     
     // Get common points
-    NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs:_context];
     
     // return value based on column identifier
     if ([columnIdentifier isEqualToString:@"x"]) {
@@ -90,11 +90,11 @@
     NSString *columnIdentifier = [tableColumn identifier];
     
     // Get common points
-    NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs];
+    NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs:_context];
     
     // set attribute of EDPoint
     EDPoint *currentPoint = (EDPoint *)[commonPoints objectAtIndex:row];
-    EDPoint *newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
+    EDPoint *newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:_context] insertIntoManagedObjectContext:nil];
     NSMutableDictionary *newAttribute = [[NSMutableDictionary alloc] init];
     
     [newPoint copyAttributes:currentPoint];
@@ -118,7 +118,7 @@
     
     // set the attribute for the graph that holds this point
     // set the common points
-    [[EDCoreDataUtility sharedCoreDataUtility] setAllCommonPointsforSelectedGraphs:newPoint attribute:newAttribute];
+    [[EDCoreDataUtility sharedCoreDataUtility] setAllCommonPointsforSelectedGraphs:newPoint attribute:newAttribute context:_context];
 }
 
 #pragma mark table delegate

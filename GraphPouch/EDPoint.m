@@ -24,7 +24,7 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder{
     // create entity but don't insert it anywhere
-    self = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
+    self = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
     if(self){
         [self setIsVisible:[aDecoder decodeBoolForKey:EDGraphPointAttributeVisible]];
         [self setShowLabel:[aDecoder decodeBoolForKey:EDGraphPointAttributeShowLabel]];
@@ -66,7 +66,7 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone{
-    id copy = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
+    id copy = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:nil] insertIntoManagedObjectContext:nil];
     if (copy) 
     {
         // Copy NSObject subclasses
