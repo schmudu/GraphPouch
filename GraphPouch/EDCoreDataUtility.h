@@ -13,21 +13,20 @@
 @interface EDCoreDataUtility : NSObject{
 }
 
-+ (EDCoreDataUtility *)sharedCoreDataUtility;
-- (void)save:(NSManagedObjectContext *)context;
++ (void)save:(NSManagedObjectContext *)context;
     
 // objects
-- (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context;
-- (NSManagedObject *)getObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context;
++ (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context;
++ (NSManagedObject *)getObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context;
     
 // selection
-- (NSArray *)getAllGraphs:(NSManagedObjectContext *)context;
-- (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context;
-- (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context;
-- (void)clearSelectedWorksheetElements:(NSManagedObjectContext *)context;
-- (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context;
+//+ (NSArray *)getAllGraphs:(NSManagedObjectContext *)context;
++ (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context;
++ (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context;
++ (void)clearSelectedWorksheetElements:(NSManagedObjectContext *)context;
++ (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context;
 
 // graphs
-- (NSArray *)getAllGraphs;
+//- (NSArray *)getAllGraphs;
 
 @end

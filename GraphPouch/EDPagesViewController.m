@@ -51,10 +51,9 @@
     if (self) {
         _pageControllers = [[NSMutableArray alloc] init];
         _nc = [NSNotificationCenter defaultCenter];
-        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         
         // listen
-        //[_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_coreData context]];
+        //[_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[EDCoreDataUtility context]];
     }
     
     return self;
@@ -93,7 +92,7 @@
     [_nc addObserver:self selector:@selector(onPagesViewFinishedDragged:) name:EDEventPageViewsFinishedDrag object:[self view]];
     [_nc addObserver:self selector:@selector(onWindowResized:) name:EDEventWindowDidResize object:_documentController];
     
-    NSArray *pages = [_coreData getAllPages:_context];
+    NSArray *pages = [EDCoreDataUtility getAllPages:_context];
     // if no pages then we need to create one
     if([pages count] == 0){
         [self addNewPage];
@@ -126,14 +125,14 @@
     
 - (void)removePageViews:(NSArray *)pageViews{
     for (EDPageView *pageView in pageViews){
-        [_coreData removePage:[pageView dataObj] context:_context];
+        [EDCoreDataUtility removePage:[pageView dataObj] context:_context];
     }
 }
 
 - (void)addNewPage{
     // create new page
-    NSArray *pages = [_coreData getAllPages:_context];
-    //EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[_coreData context]] insertIntoManagedObjectContext:[_coreData context]];
+    NSArray *pages = [EDCoreDataUtility getAllPages:_context];
+    //EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[EDCoreDataUtility context]] insertIntoManagedObjectContext:[EDCoreDataUtility context]];
     EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
     
     // if no other pages then set this page to be the first one
@@ -142,9 +141,9 @@
         [newPage setCurrentPage:TRUE];
     }
     else {
-        EDPage *lastPage = [_coreData getLastSelectedPage:_context];
+        EDPage *lastPage = [EDCoreDataUtility getLastSelectedPage:_context];
         if (lastPage) {
-            NSArray *pagesNeedUpdating = [_coreData getPagesWithPageNumberGreaterThan:[[lastPage pageNumber] intValue] context:_context];
+            NSArray *pagesNeedUpdating = [EDCoreDataUtility getPagesWithPageNumberGreaterThan:[[lastPage pageNumber] intValue] context:_context];
             
             //update page numbers 
             for (EDPage *page in pagesNeedUpdating){
@@ -269,17 +268,17 @@
 
 #pragma mark pages events
 - (void)onDeleteKeyPressed:(NSNotification *)note{
-    NSArray *pages = [_coreData getAllPages:_context];
+    NSArray *pages = [EDCoreDataUtility getAllPages:_context];
     NSArray *selectedPages = [EDPage getAllSelectedObjects:_context];
     
     // do not delete if there will be no pages left
     if (([pages count] - [selectedPages count]) < 1) 
         return;
     
-    [_coreData deleteSelectedPages:_context];
+    [EDCoreDataUtility deleteSelectedPages:_context];
     
     // correct page numbers
-    [_coreData correctPageNumbersAfterDelete:_context];
+    [EDCoreDataUtility correctPageNumbersAfterDelete:_context];
 }
 
 - (void)correctPagePositionsAfterUpdate{
@@ -298,7 +297,7 @@
 
 - (void)updatePageNumbersOfUndraggedPagesLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber{
     // get selected pages
-    NSArray *unselectedPages = [_coreData getUnselectedPagesWithPageNumberLessThan:upperNumber greaterThanOrEqualTo:lowerNumber context:_context];
+    NSArray *unselectedPages = [EDCoreDataUtility getUnselectedPagesWithPageNumberLessThan:upperNumber greaterThanOrEqualTo:lowerNumber context:_context];
     
     // if no unselected pages then exit
     if ([unselectedPages count] == 0) {
@@ -317,14 +316,14 @@
     // iterate through pages and set their page number accordingly
     NSArray *selectedPages;
     for (EDPage *page in sortedArray){
-        selectedPages= [_coreData getSelectedPagesWithPageNumberLessThan:[[page pageNumber] intValue] greaterThanOrEqualTo:lowerNumber context:_context];
+        selectedPages= [EDCoreDataUtility getSelectedPagesWithPageNumberLessThan:[[page pageNumber] intValue] greaterThanOrEqualTo:lowerNumber context:_context];
         [page setPageNumber:[[NSNumber alloc] initWithInt:([[page pageNumber] intValue] - [selectedPages count])]];
     }
 }
 
 - (void)updatePageNumbersOfUndraggedPagesGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber{
     // get selected pages
-    NSArray *unselectedPages = [_coreData getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:lowerNumber lessThan:upperNumber context:_context];
+    NSArray *unselectedPages = [EDCoreDataUtility getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:lowerNumber lessThan:upperNumber context:_context];
     
     // if no unselected pages then exit
     if ([unselectedPages count] == 0) {
@@ -343,7 +342,7 @@
     // iterate through pages and set their page number accordingly
     NSArray *selectedPages;
     for (EDPage *page in sortedArray){
-        selectedPages= [_coreData getSelectedPagesWithPageNumberGreaterThanOrEqualTo:[[page pageNumber] intValue] lessThan:(upperNumber+1) context:_context];       
+        selectedPages= [EDCoreDataUtility getSelectedPagesWithPageNumberGreaterThanOrEqualTo:[[page pageNumber] intValue] lessThan:(upperNumber+1) context:_context];       
         [page setPageNumber:[[NSNumber alloc] initWithInt:([[page pageNumber] intValue] + [selectedPages count])]];
     }
 }
@@ -402,7 +401,7 @@
         [self updatePageNumbersOfUndraggedPagesGreaterThanOrEqualTo:destinationSection lessThan:lastSelectedPageSection];
         
         // update dragged pages
-        NSArray *selectedPagesLessThanDestination = [_coreData getSelectedPagesWithPageNumberLessThan:destinationSection greaterThanOrEqualTo:firstSelectedPageSection context:_context];
+        NSArray *selectedPagesLessThanDestination = [EDCoreDataUtility getSelectedPagesWithPageNumberLessThan:destinationSection greaterThanOrEqualTo:firstSelectedPageSection context:_context];
         [self updatePageNumbersOfDraggedPages:(destinationSection - [selectedPagesLessThanDestination count])];
     }
     else {
@@ -427,7 +426,7 @@
     [self removePageViews:selectedPageViews];
     
     // update page numbers
-    [_coreData correctPageNumbersAfterDelete:_context];
+    [EDCoreDataUtility correctPageNumbersAfterDelete:_context];
     
     // update location
     [self correctPagePositionsAfterUpdate];
@@ -476,7 +475,7 @@
         }
         
         // retrieve pages that we will need to update after inserting the pasted pages
-        NSArray *postPages = [_coreData getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:startInsertPosition context:_context];
+        NSArray *postPages = [EDCoreDataUtility getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:startInsertPosition context:_context];
         
         // update each page view with it's new position
         for (EDPage *page in postPages){
@@ -490,7 +489,7 @@
 
 #pragma mark view frame
 - (void)updateViewFrameSize{
-    NSArray *pages = [_coreData getAllPages:_context];
+    NSArray *pages = [EDCoreDataUtility getAllPages:_context];
     
     // update frame height
     NSRect originalFrame = [[self view] frame];

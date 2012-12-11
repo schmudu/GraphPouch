@@ -7,13 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-//#import "EDDocument.h"
-#import "EDCoreDataUtility.h"
+#import "EDPage.h"
 
 @interface EDWorksheetView : NSView{
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;
-    EDCoreDataUtility *_coreData;
     NSMutableDictionary *_guides;
     NSMutableDictionary *_transformRects;
     NSMutableDictionary *_elementsWithTransformRects;

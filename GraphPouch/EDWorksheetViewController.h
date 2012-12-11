@@ -7,14 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EDCoreDataUtility.h"
 #import "EDDocument.h"
 
 //@class EDWorksheetView;
 
 @interface EDWorksheetViewController : NSViewController{
     NSNotificationCenter *_nc;
-    EDCoreDataUtility *_coreData;
     IBOutlet EDDocument *_documentController;
     NSManagedObjectContext *_context;
 }

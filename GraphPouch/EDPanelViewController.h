@@ -7,12 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EDCoreDataUtility.h"
 
 @interface EDPanelViewController : NSViewController{
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;
-    EDCoreDataUtility *_coreData;
 }
 - (void)initWindowAfterLoaded:(NSManagedObjectContext *)context;
 

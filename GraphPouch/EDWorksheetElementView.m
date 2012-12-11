@@ -74,8 +74,7 @@
      // set worksheet view as getAllSelectedWorksheetElements
     [[self window] makeFirstResponder:[self superview]];
     
-    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    [coreData getAllWorksheetElements:_context];
+    [EDCoreDataUtility getAllWorksheetElements:_context];
     
     NSUInteger flags = [theEvent modifierFlags];
  
@@ -115,8 +114,7 @@
 }
 
 - (void)mouseDownBySelection:(NSEvent *)theEvent{
-    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    [coreData getAllWorksheetElements:_context];
+    [EDCoreDataUtility getAllWorksheetElements:_context];
     
     NSUInteger flags = [theEvent modifierFlags];
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];

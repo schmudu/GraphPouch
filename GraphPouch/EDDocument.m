@@ -33,7 +33,6 @@
     self = [super init];
     if (self) {
         //Init code
-        EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
         _context = [self managedObjectContext];
         propertyController = [[EDPanelPropertiesController alloc] init];
         menuController = [[EDMenuController alloc] init];

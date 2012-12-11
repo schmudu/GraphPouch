@@ -12,7 +12,6 @@
 
 @interface EDPagesViewController : NSViewController{
     NSNotificationCenter *_nc;
-    EDCoreDataUtility *_coreData;
     NSMutableArray *_pageControllers;
     IBOutlet EDDocument *_documentController;
     int _startDragSection;

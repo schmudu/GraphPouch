@@ -26,7 +26,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _nc = [NSNotificationCenter defaultCenter];
-        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
         
         // listen
     }
@@ -52,7 +51,7 @@
 
 - (void)deselectAllElements:(NSNotification *)note{
     // clear all the selected elements
-    [[EDCoreDataUtility sharedCoreDataUtility] clearSelectedWorksheetElements:_context];
+    [EDCoreDataUtility clearSelectedWorksheetElements:_context];
 }
 
 - (void)dealloc{
@@ -64,13 +63,13 @@
 }
 
 - (void)deleteSelectedElements:(NSNotification *)note{
-    [_coreData deleteSelectedWorksheetElements:_context];
+    [EDCoreDataUtility deleteSelectedWorksheetElements:_context];
 }
 
 #pragma mark graphs
 - (void)addNewGraph{
     // create new graph
-    EDPage *currentPage = [_coreData getCurrentPage:_context];
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
     
     EDGraph *newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
     

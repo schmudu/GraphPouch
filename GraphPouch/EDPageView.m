@@ -31,8 +31,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         _pb = [NSPasteboard generalPasteboard];
-        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
-        
     }
     return self;
 }
@@ -177,7 +175,7 @@
 
 #pragma mark current
 - (void)setPageAsCurrent{
-    [_coreData setPageAsCurrent:_dataObj context:_context];
+    [EDCoreDataUtility setPageAsCurrent:_dataObj context:_context];
 }
 
 #pragma mark dragging source

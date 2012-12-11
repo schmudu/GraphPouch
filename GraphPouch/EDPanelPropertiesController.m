@@ -28,7 +28,6 @@
     self = [super initWithWindow:window];
     if (self) {
         _nc = [NSNotificationCenter defaultCenter];
-        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
     }
     
     return self;
@@ -101,7 +100,7 @@
     EDPanelViewController *viewController;
     
     // get all the selected objects
-    NSMutableDictionary *selectedTypes = [_coreData getAllTypesOfSelectedWorksheetElements:_context];
+    NSMutableDictionary *selectedTypes = [EDCoreDataUtility getAllTypesOfSelectedWorksheetElements:_context];
     
 #warning add other elements here, need to check for other entities
     if([selectedTypes valueForKey:EDEntityNameGraph]){

@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "EDPanelPropertiesDocumentController.h"
 #import "EDPanelPropertiesGraphController.h"
-#import "EDCoreDataUtility.h"
 
 
 @interface EDPanelPropertiesController : NSWindowController <NSMenuDelegate, NSWindowDelegate>{
@@ -18,7 +17,6 @@
     EDPanelPropertiesGraphController *graphController;
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;
-    EDCoreDataUtility *_coreData;
 }
 
 - (void)togglePropertiesPanel:(id)sender;

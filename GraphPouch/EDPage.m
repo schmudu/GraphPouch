@@ -23,7 +23,6 @@
 #pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
     // create entity but don't insert it anywhere
-    //self = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[[EDCoreDataUtility sharedCoreDataUtility] context]] insertIntoManagedObjectContext:nil];
     self = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
     if(self){
         [self setCurrentPage:[aDecoder decodeBoolForKey:EDPageAttributeCurrent]];

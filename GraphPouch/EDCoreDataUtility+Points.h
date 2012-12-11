@@ -12,8 +12,8 @@
 @interface EDCoreDataUtility (Points)
 
 // points
-- (NSArray *)getAllCommonPointsforSelectedGraphs:(NSManagedObjectContext *)context;
-- (NSArray *)getOneCommonPointFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint context:(NSManagedObjectContext *)context;
-- (void)setAllCommonPointsforSelectedGraphs:(EDPoint *)pointToChange attribute:(NSDictionary *)attributes context:(NSManagedObjectContext *)context;
-- (void)removeCommonPointsforSelectedGraphsMatchingPoints:(NSArray *)pointsToRemove context:(NSManagedObjectContext *)context;
++ (NSArray *)getAllCommonPointsforSelectedGraphs:(NSManagedObjectContext *)context;
++ (NSArray *)getOneCommonPointFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint context:(NSManagedObjectContext *)context;
++ (void)setAllCommonPointsforSelectedGraphs:(EDPoint *)pointToChange attribute:(NSDictionary *)attributes context:(NSManagedObjectContext *)context;
++ (void)removeCommonPointsforSelectedGraphsMatchingPoints:(NSArray *)pointsToRemove context:(NSManagedObjectContext *)context;
 @end

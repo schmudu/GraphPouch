@@ -13,7 +13,7 @@
 @interface EDPageViewController : NSViewController{
     IBOutlet NSTextField *pageLabel;
     EDPage *_pageData;
-    EDCoreDataUtility *_coreData;
+    EDCoreDataUtility *EDCoreDataUtility;
     NSManagedObjectContext *_context;
 }
 - (EDPage *)dataObj;

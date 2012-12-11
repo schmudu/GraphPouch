@@ -130,8 +130,7 @@
 
 - (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender{
     NSPoint pagesPoint = [[[self window] contentView] convertPoint:[sender draggingLocation] toView:self];
-    EDCoreDataUtility *coreData = [EDCoreDataUtility sharedCoreDataUtility];
-    int pageCount = [[coreData getAllPages:_context] count];
+    int pageCount = [[EDCoreDataUtility getAllPages:_context] count];
  
     if (pageCount <= 1) {
         // if there is only one page or less do not highlight
@@ -163,7 +162,7 @@
         return NO;
         
     // if there is only one page or less do not allow drag
-    if ([[[EDCoreDataUtility sharedCoreDataUtility] getAllPages:_context] count] <= 1) 
+    if ([[EDCoreDataUtility getAllPages:_context] count] <= 1) 
         return NO;
     
     // going to insert pages from PagesViewController after we have removed pages

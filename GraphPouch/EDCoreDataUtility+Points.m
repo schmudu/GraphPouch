@@ -17,7 +17,7 @@
 @implementation EDCoreDataUtility (Points)
 
 #pragma mark graph points
-- (NSArray *)getAllCommonPointsforSelectedGraphs:(NSManagedObjectContext *)context{
++ (NSArray *)getAllCommonPointsforSelectedGraphs:(NSManagedObjectContext *)context{
     // get all selected graphs
     NSArray *selectedGraphs = [EDGraph getAllSelectedObjects:context];
     
@@ -80,7 +80,7 @@
     return sortedArray;
 }
 
-- (NSArray *)getOneCommonPointFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint context:(NSManagedObjectContext *)context{
++ (NSArray *)getOneCommonPointFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint context:(NSManagedObjectContext *)context{
     // get all selected graphs
     NSArray *selectedGraphs = [EDGraph getAllSelectedObjects:context];
     
@@ -107,7 +107,7 @@
     return matchingPoints;
 }
 
-- (void)setAllCommonPointsforSelectedGraphs:(EDPoint *)pointToChange attribute:(NSDictionary *)attributes context:(NSManagedObjectContext *)context{
++ (void)setAllCommonPointsforSelectedGraphs:(EDPoint *)pointToChange attribute:(NSDictionary *)attributes context:(NSManagedObjectContext *)context{
     NSArray *commonPoints = [self getOneCommonPointFromSelectedGraphsMatchingPoint:pointToChange context:context];
     
     // find points with the same attributes
@@ -130,7 +130,7 @@
     }
 }
 
-- (void)removeCommonPointsforSelectedGraphsMatchingPoints:(NSArray *)pointsToRemove context:(NSManagedObjectContext *)context{
++ (void)removeCommonPointsforSelectedGraphsMatchingPoints:(NSArray *)pointsToRemove context:(NSManagedObjectContext *)context{
     NSArray *matchingPoints;
     
     // find points with the same attributes

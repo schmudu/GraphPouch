@@ -59,8 +59,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
-        
         _mouseIsDown = FALSE;
         _elementIsBeingModified = FALSE;
         
@@ -312,7 +310,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
-    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements:_context];
+    NSArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse down
@@ -335,7 +333,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 - (void)onElementMouseDragged:(NSNotification *)note{
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
-    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements:_context];
+    NSArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
@@ -354,7 +352,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 - (void)onElementMouseUp:(NSNotification *)note{
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
-    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements:_context];
+    NSArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
@@ -549,7 +547,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 - (NSMutableArray *)getAllSelectedWorksheetElementsViews{
     // get all the selected worksheet elements
     NSMutableArray *results = [[NSMutableArray alloc] init];
-    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements:_context];
+    NSArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
         // only add if it's a worksheet element
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
@@ -563,7 +561,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 - (NSMutableArray *)getAllUnselectedWorksheetElementsViews{
     // get all the selected worksheet elements
     NSMutableArray *results = [[NSMutableArray alloc] init];
-    NSArray *selectedElements = [_coreData getAllSelectedWorksheetElements:_context];
+    NSArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
         if(([myElement isWorksheetElement]) && (![selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             [results addObject:myElement];

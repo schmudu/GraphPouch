@@ -36,7 +36,7 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    NSArray *commonPointsForSelectedGraphs = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs:_context];
+    NSArray *commonPointsForSelectedGraphs = [EDCoreDataUtility getAllCommonPointsforSelectedGraphs:_context];
     if (!commonPointsForSelectedGraphs) {
         return 0;
     }
@@ -52,7 +52,7 @@
     NSString *columnIdentifier = [tableColumn identifier];
     
     // Get common points
-    NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs:_context];
+    NSArray *commonPoints = [EDCoreDataUtility getAllCommonPointsforSelectedGraphs:_context];
     
     // return value based on column identifier
     if ([columnIdentifier isEqualToString:@"x"]) {
@@ -90,7 +90,7 @@
     NSString *columnIdentifier = [tableColumn identifier];
     
     // Get common points
-    NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs:_context];
+    NSArray *commonPoints = [EDCoreDataUtility getAllCommonPointsforSelectedGraphs:_context];
     
     // set attribute of EDPoint
     EDPoint *currentPoint = (EDPoint *)[commonPoints objectAtIndex:row];
@@ -118,7 +118,7 @@
     
     // set the attribute for the graph that holds this point
     // set the common points
-    [[EDCoreDataUtility sharedCoreDataUtility] setAllCommonPointsforSelectedGraphs:newPoint attribute:newAttribute context:_context];
+    [EDCoreDataUtility setAllCommonPointsforSelectedGraphs:newPoint attribute:newAttribute context:_context];
 }
 
 #pragma mark table delegate

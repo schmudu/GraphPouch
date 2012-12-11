@@ -17,24 +17,14 @@
 @end
 
 @implementation EDCoreDataUtility
-static EDCoreDataUtility *sharedCoreDataUtility = nil;
 
-+ (EDCoreDataUtility *)sharedCoreDataUtility
-{
-    if (sharedCoreDataUtility == nil) {
-        
-        sharedCoreDataUtility = [[super allocWithZone:NULL] init];
-    }
-    return sharedCoreDataUtility;
-}
-
-- (void)save:(NSManagedObjectContext *)context{
++ (void)save:(NSManagedObjectContext *)context{
     NSError *error;
     BOOL errorFromSave = [context save:&error];
     NSLog(@"error from save:%@", error);
 }
 
-- (NSManagedObject *)getObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context{
++ (NSManagedObject *)getObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context{
     // this method returns the page object that matches the page number
     NSArray *fetchedObjects;
     
@@ -43,9 +33,10 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return [filteredResults objectAtIndex:0];
 }
 
-- (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context{
++ (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context{
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
-    NSArray *graphObjects = [self getAllGraphs:context];
+    //NSArray *graphObjects = [self getAllGraphs:context];
+    NSArray *graphObjects = [EDGraph getAllObjects:context];
     
 #warning add other elements here
     [allObjects addObjectsFromArray:graphObjects];
@@ -53,6 +44,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return allObjects;
 }
 #pragma mark worksheet
+/*
 - (NSArray *)getAllGraphs:(NSManagedObjectContext *)context{
    // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:context];   
@@ -72,11 +64,10 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
         // Handle the error.   
         // This is a serious error and should advise the user to restart the application   
     }   
-     */
     return fetchResults;
-}
+}*/
 
-- (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context{
++ (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context{
     // gets all selected objects
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
@@ -87,7 +78,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return allObjects;
 }
 
-- (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
++ (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
     // this method returns a dictionary of the types of selected objects
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSArray *fetchedObjects;
@@ -102,7 +93,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     return results;
 }
 
-- (void)clearSelectedWorksheetElements:(NSManagedObjectContext *)context{
++ (void)clearSelectedWorksheetElements:(NSManagedObjectContext *)context{
     NSArray *fetchedObjects = [EDGraph getAllSelectedObjects:context];
     if (fetchedObjects == nil) {
         // Handle the error
@@ -114,7 +105,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     }
 }
 
-- (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context{
++ (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context{
     NSMutableArray *selectedElements = [self getAllSelectedWorksheetElements:context];
     for (EDElement *element in selectedElements){
         [context deleteObject:element];

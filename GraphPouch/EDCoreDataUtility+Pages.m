@@ -13,7 +13,7 @@
 @implementation EDCoreDataUtility (Pages)
 
 #pragma mark pages
-- (NSArray *)getAllPages:(NSManagedObjectContext *)context{
++ (NSArray *)getAllPages:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
@@ -41,7 +41,7 @@
     return fetchResults;
 }
 
-- (EDPage *)getPage:(EDPage *)page context:(NSManagedObjectContext *)context{
++ (EDPage *)getPage:(EDPage *)page context:(NSManagedObjectContext *)context{
     // this method returns the page object that matches the page number
     NSArray *fetchedObjects;
     
@@ -53,7 +53,7 @@
     return [filteredResults objectAtIndex:0];
 }
 
-- (EDPage *)getLastSelectedPage:(NSManagedObjectContext *)context{
++ (EDPage *)getLastSelectedPage:(NSManagedObjectContext *)context{
     
     // this method returns a dictionary of the types of selected objects
     NSArray *fetchedObjects;
@@ -66,7 +66,7 @@
     return nil;
 }
 
-- (NSMutableArray *)getAllSelectedPages:(NSManagedObjectContext *)context{
++ (NSMutableArray *)getAllSelectedPages:(NSManagedObjectContext *)context{
     // gets all pages
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *fetchedGraphs = [EDPage getAllSelectedObjects:context];
@@ -76,7 +76,7 @@
     return allObjects;
 }
 
-- (void)deleteSelectedPages:(NSManagedObjectContext *)context{
++ (void)deleteSelectedPages:(NSManagedObjectContext *)context{
     NSMutableArray *selectedPages = [self getAllSelectedPages:context];
     for (EDPage *page in selectedPages){
         [context deleteObject:page];
@@ -87,7 +87,7 @@
     //[_context save:&error];
 }
 
-- (void)correctPageNumbersAfterDelete:(NSManagedObjectContext *)context{
++ (void)correctPageNumbersAfterDelete:(NSManagedObjectContext *)context{
     // gets all pages
     NSArray *fetchedPages = [EDPage getAllObjectsOrderedByPageNumber:context];
     int currentPageNumber = 1;
@@ -103,7 +103,7 @@
     }
 }
 
-- (void)updatePageNumbersStartingAt:(int)startPageNumber byDifference:(int)difference endNumber:(int)endPageNumber context:(NSManagedObjectContext *)context{
++ (void)updatePageNumbersStartingAt:(int)startPageNumber byDifference:(int)difference endNumber:(int)endPageNumber context:(NSManagedObjectContext *)context{
     NSArray *pages = [self getPagesWithPageNumberGreaterThanOrEqualTo:startPageNumber lessThan:endPageNumber context:context];
     
     // iterate through pages
@@ -113,7 +113,7 @@
     }
 }
 
-- (void)removePage:(EDPage *)page context:(NSManagedObjectContext *)context{
++ (void)removePage:(EDPage *)page context:(NSManagedObjectContext *)context{
     // fetch page
     NSManagedObject *managedObj = [self getPage:page context:context];
     
@@ -121,7 +121,7 @@
     [context deleteObject:managedObj];
 }
 
-- (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber context:(NSManagedObjectContext *)context{
++ (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
@@ -153,7 +153,7 @@
     return startFilteredResults;
 }
 
-- (NSArray *)getPagesWithPageNumberGreaterThan:(int)beginPageNumber context:(NSManagedObjectContext *)context{
++ (NSArray *)getPagesWithPageNumberGreaterThan:(int)beginPageNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
@@ -185,7 +185,7 @@
     return startFilteredResults;
 }
 
-- (NSArray *)getUnselectedPagesWithPageNumberLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber context:(NSManagedObjectContext *)context{
++ (NSArray *)getUnselectedPagesWithPageNumberLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
@@ -223,7 +223,7 @@
     return unselectedFilteredResults;
 }
 
-- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber context:(NSManagedObjectContext *)context{
++ (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
@@ -258,7 +258,7 @@
     return selectedFilteredResults;
 }
 
-- (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber context:(NSManagedObjectContext *)context{
++ (NSArray *)getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
@@ -296,7 +296,7 @@
     return selectedFilteredResults;
 }
 
-- (NSArray *)getSelectedPagesWithPageNumberLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber context:(NSManagedObjectContext *)context{
++ (NSArray *)getSelectedPagesWithPageNumberLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
@@ -333,7 +333,7 @@
     return selectedFilteredResults;
 }
 
-- (NSArray *)getSelectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber context:(NSManagedObjectContext *)context{
++ (NSArray *)getSelectedPagesWithPageNumberGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
@@ -373,7 +373,7 @@
 
 
 
-- (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber lessThan:(int)endPageNumber context:(NSManagedObjectContext *)context{
++ (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber lessThan:(int)endPageNumber context:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
     
@@ -406,11 +406,11 @@
     return endFilteredResults;
 }
 
-- (EDPage *)getCurrentPage:(NSManagedObjectContext *)context{
++ (EDPage *)getCurrentPage:(NSManagedObjectContext *)context{
     return (EDPage *)[EDPage getCurrentPage:context];
 }
 
-- (void)setPageAsCurrent:(EDPage *)page context:(NSManagedObjectContext *)context{
++ (void)setPageAsCurrent:(EDPage *)page context:(NSManagedObjectContext *)context{
     // unset previous current page
     EDPage *previousPage = (EDPage *)[EDPage getCurrentPage:context];
     

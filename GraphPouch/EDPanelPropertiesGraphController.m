@@ -131,7 +131,7 @@
 - (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue{
     EDElement *newElement, *currentElement;
     int i = 0;
-    NSMutableArray *elements = [_coreData getAllSelectedWorksheetElements:_context];
+    NSMutableArray *elements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
     while (i < [elements count]) {
      currentElement = [elements objectAtIndex:i];
         
@@ -301,7 +301,7 @@
     }];
     
     // get all the common points
-    NSArray *commonPoints = [[EDCoreDataUtility sharedCoreDataUtility] getAllCommonPointsforSelectedGraphs:_context];
+    NSArray *commonPoints = [EDCoreDataUtility getAllCommonPointsforSelectedGraphs:_context];
     NSMutableArray *selectedPoints = [[NSMutableArray alloc] init];
     
     // pull the indexed objects from the common points and place into an array
@@ -309,7 +309,7 @@
         [selectedPoints addObject:[commonPoints objectAtIndex:[index intValue]]];
     }
     // remove all points from selected graphs that have the same attributes
-    [[EDCoreDataUtility sharedCoreDataUtility] removeCommonPointsforSelectedGraphsMatchingPoints:selectedPoints context:_context];
+    [EDCoreDataUtility removeCommonPointsforSelectedGraphsMatchingPoints:selectedPoints context:_context];
 }
 
 - (IBAction)addNewEquation:(id)sender{
