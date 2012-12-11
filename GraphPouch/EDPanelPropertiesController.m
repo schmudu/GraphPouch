@@ -28,7 +28,7 @@
     self = [super initWithWindow:window];
     if (self) {
         _nc = [NSNotificationCenter defaultCenter];
-               
+        _coreData = [EDCoreDataUtility sharedCoreDataUtility];
     }
     
     return self;
@@ -145,11 +145,11 @@
     [[self window] setContentView:nil];
     [[self window] setFrame:windowFrame display:TRUE animate:TRUE];
     
-    // set content of the window
-    [[self window] setContentView:[viewController view]];
-    
     // window init after loaded
     [viewController initWindowAfterLoaded:_context];
+    
+    // set content of the window
+    [[self window] setContentView:[viewController view]];
 }
 
 - (void)menuWillOpen:(NSMenu *)menu{
@@ -172,6 +172,7 @@
 #pragma mark context changed
 
 - (void)onContextChanged:(NSNotification *)note{
+    NSLog(@"context changed.");
     // set the correct view if window is showing
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         [self setCorrectView];

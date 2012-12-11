@@ -24,7 +24,7 @@
     if (self){
         // init
         _context = context;
-        
+        NSLog(@"table points init: context: %@", context);
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     }

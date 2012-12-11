@@ -39,6 +39,13 @@
     count = 0;
 }
 
+- (id)getLastObject{
+    if([_stack count] > 0){
+        return [_stack objectAtIndex:([_stack count]-1)];
+    }
+    return nil;
+}
+
 - (void)printAll:(NSString *)key{
     int j = 0;
     for (id obj in _stack){

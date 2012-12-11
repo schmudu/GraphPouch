@@ -45,7 +45,7 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
 
 - (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context{
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
-    NSArray *graphObjects = [self getAllGraphs];
+    NSArray *graphObjects = [self getAllGraphs:context];
     
 #warning add other elements here
     [allObjects addObjectsFromArray:graphObjects];
@@ -94,7 +94,6 @@ static EDCoreDataUtility *sharedCoreDataUtility = nil;
     
     // get all selected graphs
     fetchedObjects = [EDGraph getAllSelectedObjects:context];
-    
 #warning add other elements here
     if ([fetchedObjects count] > 0) {
         [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDEntityNameGraph]; 

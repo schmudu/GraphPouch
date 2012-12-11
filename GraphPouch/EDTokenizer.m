@@ -252,4 +252,33 @@
     }
     return TRUE;
 }
+
++ (NSMutableArray *)insertImpliedMultiplication:(NSMutableArray *)tokens{
+    EDToken *multiplyToken, *currentToken, *previousToken;
+    int i=0;
+    while (i<[tokens count]){
+        currentToken = [tokens objectAtIndex:i];
+        if(previousToken){
+            // insert token between number and identifier
+            if(([previousToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
+                multiplyToken = [EDToken multiplierToken];
+                [tokens insertObject:multiplyToken atIndex:i];
+            }
+            
+            // insert token between number and function
+            if(([previousToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeFunction)){
+                multiplyToken = [EDToken multiplierToken];
+                [tokens insertObject:multiplyToken atIndex:i];
+            }
+            
+            // insert token between right paren and function
+            if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken value] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeFunction)){
+                multiplyToken = [EDToken multiplierToken];
+                [tokens insertObject:multiplyToken atIndex:i];
+            }
+        }
+        i++;
+    }
+    return tokens;
+}
 @end

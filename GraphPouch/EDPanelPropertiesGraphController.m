@@ -57,6 +57,7 @@
     [self setElementCheckbox:checkboxHasTickMarks attribute:EDGraphAttributeTickMarks];
     
     // initialize table points datasource and delegate
+    NSLog(@"init graph panel properties controller.");
     tablePointsController = [[EDPanelPropertiesGraphTablePoints alloc] initWithContext:_context];
     
     [tablePoints setDelegate:tablePointsController];
