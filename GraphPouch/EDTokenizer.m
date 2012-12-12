@@ -277,6 +277,55 @@
                 [tokens insertObject:multiplyToken atIndex:i];
             }
         }
+        previousToken = currentToken;
+        i++;
+    }
+    return tokens;
+}
+
++ (NSMutableArray *)insertImpliedParenthesis:(NSMutableArray *)tokens{
+    EDToken *currentToken, *previousToken, *nextToken;
+    int i=0;
+    while (i<[tokens count]){
+        currentToken = [tokens objectAtIndex:i];
+        
+        // get next token
+        if (i<[tokens count]-1) {
+            nextToken = [tokens objectAtIndex:(i+1)];
+        }
+        else {
+            nextToken = nil;
+        }
+        
+        if(previousToken){
+            if(nextToken){
+                // if pattern: function number identifier, add paren
+                if(([previousToken typeRaw] == EDTokenTypeFunction) && ([currentToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
+                    [tokens insertObject:[EDToken leftParenToken] atIndex:i];
+                    [tokens insertObject:[EDToken rightParentToken] atIndex:i+3];
+                }
+            }
+            else {
+                // if pattern: function number, add paren
+                if(([previousToken typeRaw] == EDTokenTypeFunction) && ([currentToken typeRaw] == EDTokenTypeNumber)){
+                    [tokens insertObject:[EDToken leftParenToken] atIndex:i];
+                    [tokens insertObject:[EDToken rightParentToken] atIndex:i+2];
+                }
+                
+                // if pattern: function identifier, add paren
+                if(([previousToken typeRaw] == EDTokenTypeFunction) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
+                    [tokens insertObject:[EDToken leftParenToken] atIndex:i];
+                    [tokens insertObject:[EDToken rightParentToken] atIndex:i+2];
+                }
+                
+                // if pattern: function constant, add paren
+                if(([previousToken typeRaw] == EDTokenTypeFunction) && ([currentToken typeRaw] == EDTokenTypeConstant)){
+                    [tokens insertObject:[EDToken leftParenToken] atIndex:i];
+                    [tokens insertObject:[EDToken rightParentToken] atIndex:i+2];
+                }
+            }
+        }
+        previousToken = currentToken;
         i++;
     }
     return tokens;

@@ -11,5 +11,6 @@
 @interface EDParser : NSObject
 
 - (NSMutableArray *)parse:(NSMutableArray *)tokens error:(NSError **)error;
+- (NSMutableArray *)calculate:(NSMutableArray *)stack error:(NSError **)error;
 
 @end
