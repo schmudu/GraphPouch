@@ -81,7 +81,7 @@ static EDStack *operator;
                 // if operator is a function then pop it to the output queue
                 if ([operator count]>0){
                     EDToken *potentialFunctionToken;
-                    potentialFunctionToken = (EDToken *)[operator getObjectAtIndex:[operator count]-1];
+                    potentialFunctionToken = (EDToken *)[operator getLastObject];
                     if((potentialFunctionToken) && ([potentialFunctionToken typeRaw] == EDTokenTypeFunction)){
                         // pop off the last one
                         [operator pop];

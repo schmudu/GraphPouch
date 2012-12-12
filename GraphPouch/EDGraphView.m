@@ -56,10 +56,31 @@
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:context];
 }
 
+- (void)onContextChanged:(NSNotification *)note{
+    // this enables undo method to work
+    NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
+    
+    BOOL hasChanged = FALSE;
+    int i = 0;
+    NSManagedObject *element;
+    
+    // search through updated array and see if this element has changed
+    while ((i<[updatedArray count]) && (!hasChanged)){    
+        element = [updatedArray objectAtIndex:i];
+        // if data object changed or any of the points, update graph
+        if ((element == [self dataObj]) || ([[[self dataObj] points] containsObject:element])) {
+            hasChanged = TRUE;
+            [self updateDisplayBasedOnContext];
+        }
+        i++;
+    }
+}
+
 - (void)updateDisplayBasedOnContext{
     // this is called whenever the context for this object changes
     [super updateDisplayBasedOnContext];
-    
+ 
+    [self removeLabels];
     [self drawLabelAttributes];
 }
     
