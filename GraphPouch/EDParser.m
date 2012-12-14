@@ -107,4 +107,78 @@ static EDStack *operator;
     
     return output;
 }
+
+- (float)calculate:(NSMutableArray *)stack error:(NSError **)error{
+    EDStack *result = [[EDStack alloc] init];
+    float answer=0, firstNum=0, secondNum=0, idValue=2;
+    EDToken *firstNumToken, *secondNumToken, *resultToken, *idToken;
+    
+    for (EDToken *token in output){
+        if([token typeRaw] == EDTokenTypeNumber){
+            [result push:token];
+        }
+        else if ([token typeRaw] == EDTokenTypeIdentifier) {
+            idToken = [[EDToken alloc] init];
+            [idToken setValue:[NSString stringWithFormat:@"%f", idValue]];
+            [result push:idToken];
+        }
+        else if ([token typeRaw] == EDTokenTypeConstant) {
+#warning need to figure out the constants
+            idToken = [[EDToken alloc] init];
+            [idToken setValue:[NSString stringWithFormat:@"%f", idValue]];
+            [result push:idToken];
+        }
+        else if ([token typeRaw] == EDTokenTypeFunction){
+            firstNum = [[(EDToken *)[result pop] value] doubleValue];
+            if ([[token value] isEqualToString:@"sin"])
+                answer = sinf(firstNum * M_PI/180);
+            else if ([[token value] isEqualToString:@"cos"])
+                answer = cosf(firstNum * M_PI/180);
+            
+            resultToken = [[EDToken alloc] init];
+            [resultToken setValue:[NSString stringWithFormat:@"%f", answer]];
+            [result push:resultToken];
+        }
+        else {
+            // token is operator
+            if([result count] < 2){
+                NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+                [errorDetail setValue:[NSString stringWithFormat:@"Not enough numerical terms to use operator"] forKey:NSLocalizedDescriptionKey];
+                *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                return 0;
+            }
+            else {
+                secondNumToken = (EDToken *)[result pop];
+                firstNumToken = (EDToken *)[result pop];
+                
+                if(([firstNumToken typeRaw] != EDTokenTypeNumber) || ([secondNumToken typeRaw] != EDTokenTypeNumber)){
+                    NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+                    [errorDetail setValue:[NSString stringWithFormat:@"Not enough numerical terms to use operator"] forKey:NSLocalizedDescriptionKey];
+                    *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                    return 0;
+                }
+                else {
+                    secondNum = [[secondNumToken value] doubleValue];
+                    firstNum = [[firstNumToken value] doubleValue];
+                    
+                    if ([[token value] isEqualToString:@"+"])
+                        answer = firstNum + secondNum;
+                    else if ([[token value] isEqualToString:@"-"])
+                        answer = firstNum - secondNum;
+                    else if ([[token value] isEqualToString:@"*"])
+                        answer = firstNum * secondNum;
+                    else if ([[token value] isEqualToString:@"/"])
+                        answer = firstNum / secondNum;
+                    else if ([[token value] isEqualToString:@"^"])
+                        answer = pow(firstNum,secondNum);
+                    
+                    resultToken = [[EDToken alloc] init];
+                    [resultToken setValue:[NSString stringWithFormat:@"%f", answer]];
+                    [result push:resultToken];
+                }
+            }
+        }
+    }
+    return [[(EDToken *)[result getLastObject] value] floatValue];
+}
 @end
