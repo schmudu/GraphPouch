@@ -10,7 +10,7 @@
 
 @interface EDParser : NSObject
 
-- (NSMutableArray *)parse:(NSMutableArray *)tokens error:(NSError **)error;
-- (float)calculate:(NSMutableArray *)stack error:(NSError **)error;
++ (NSMutableArray *)parse:(NSMutableArray *)tokens error:(NSError **)error;
++ (float)calculate:(NSMutableArray *)stack error:(NSError **)error context:(NSManagedObjectContext *)context;
 
 @end

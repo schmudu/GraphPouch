@@ -47,7 +47,7 @@
 
 + (EDToken *)multiplierToken:(NSManagedObjectContext *)context{
     EDToken *token = [[EDToken alloc]initWithContext:context];
-    [token setTypeRaw:EDTokenTypeFunction];
+    [token setTypeRaw:EDTokenTypeOperator];
     [token setIsValid:TRUE];
     [token setPrecedence:[NSNumber numberWithInt:3]];
     [token setAssociationRaw:EDAssociationLeft];
@@ -57,20 +57,16 @@
 
 + (EDToken *)leftParenToken:(NSManagedObjectContext *)context{
     EDToken *token = [[EDToken alloc] initWithContext:context];
-    [token setTypeRaw:EDTokenTypeFunction];
+    [token setTypeRaw:EDTokenTypeParenthesis];
     [token setIsValid:TRUE];
-    [token setPrecedence:[NSNumber numberWithInt:3]];
-    [token setAssociationRaw:EDAssociationLeft];
     [token setValue:[[NSMutableString alloc] initWithString:@"("]];
     return token;
 }
 
 + (EDToken *)rightParentToken:(NSManagedObjectContext *)context{
     EDToken *token = [[EDToken alloc] initWithContext:context];
-    [token setTypeRaw:EDTokenTypeFunction];
+    [token setTypeRaw:EDTokenTypeParenthesis];
     [token setIsValid:TRUE];
-    [token setPrecedence:[NSNumber numberWithInt:3]];
-    [token setAssociationRaw:EDAssociationLeft];
     [token setValue:[[NSMutableString alloc] initWithString:@")"]];
     return token;
 }

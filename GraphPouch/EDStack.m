@@ -22,6 +22,7 @@
 
 - (void)push:(id)anObject{
     [_stack addObject:anObject];
+    count++;
 }
 
 - (id)pop{

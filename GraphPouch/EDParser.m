@@ -12,7 +12,7 @@
 
 @implementation EDParser
 
-- (NSMutableArray *)parse:(NSMutableArray *)tokens error:(NSError **)error{
++ (NSMutableArray *)parse:(NSMutableArray *)tokens error:(NSError **)error{
     NSMutableArray *output;
     EDStack *operator;
     int i=0;
@@ -99,16 +99,18 @@
     }
  
     // push all objects from operator stack to output
+    NSLog(@"operator:%@ count:%d", operator, [operator count]);
     while (0<[operator count]) {
         currentToken = [operator pop];
         [output addObject:currentToken];
         NSLog(@"pushing operator token onto output%@", [currentToken value]);
     }
     
+    NSLog(@"parser returning output:%@", output);
     return output;
 }
 
-- (float)calculate:(NSMutableArray *)stack error:(NSError **)error context:(NSManagedObjectContext *)context{
++ (float)calculate:(NSMutableArray *)stack error:(NSError **)error context:(NSManagedObjectContext *)context{
     EDStack *result = [[EDStack alloc] init];
     float answer=0, firstNum=0, secondNum=0, idValue=2;
     EDToken *firstNumToken, *secondNumToken, *resultToken, *idToken;

@@ -149,8 +149,8 @@
     reti = regexec(&regex, cStr, 0, NULL, 0);
     if (!reti) {
         // set type to number
-        [token setTypeRaw:EDTokenTypeFunction];
-        
+        [token setTypeRaw:EDTokenTypeOperator];
+        [token setValue:[NSString stringWithFormat:@"%@", str]];
         if ([str isEqualToString:@"+"]){
             [token setAssociationRaw:EDAssociationLeft];
             [token setPrecedence:[NSNumber numberWithInt:2]];
@@ -300,7 +300,7 @@
         if(previousToken){
             if(nextToken){
                 // if pattern: function number identifier, add paren
-                if(([previousToken typeRaw] == EDTokenTypeFunction) && ([currentToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
+                if(([previousToken typeRaw] == EDTokenTypeFunction) && ([currentToken typeRaw] == EDTokenTypeNumber) && ([nextToken typeRaw] == EDTokenTypeIdentifier)){
                     [tokens insertObject:[EDToken leftParenToken:context] atIndex:i];
                     [tokens insertObject:[EDToken rightParentToken:context] atIndex:i+3];
                 }

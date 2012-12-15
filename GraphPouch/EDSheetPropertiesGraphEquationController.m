@@ -9,6 +9,7 @@
 #import "EDSheetPropertiesGraphEquationController.h"
 #import "EDScanner.h"
 #import "EDTokenizer.h"
+#import "EDParser.h"
 
 @interface EDSheetPropertiesGraphEquationController ()
 - (void)setEquationButtonState;
@@ -100,7 +101,6 @@
             NSLog(@"i:%d token:%@", i, token);
             i++;
         }
-        //[tokens printAll:@"value"];
         
         // validate expression
         [EDTokenizer isValidExpression:tokens withError:&error context:_context];
@@ -108,6 +108,56 @@
             [self showError:error];
             return FALSE;
         }
+        
+        // insert implied parenthesis
+        [EDTokenizer insertImpliedParenthesis:tokens context:_context];
+        
+        // print out all tokens
+        /*
+        NSLog(@"====after insert parenthesis");
+        i =0;
+        for (EDToken *token in tokens){
+            NSLog(@"i:%d token:%@", i, token);
+            i++;
+        }*/
+        
+        // insert implied multiplication
+        [EDTokenizer insertImpliedMultiplication:tokens context:_context];
+        
+        /*
+        // print out all tokens
+        NSLog(@"====after insert implied multiplication");
+        i =0;
+        for (EDToken *token in tokens){
+            NSLog(@"i:%d token:%@", i, token);
+            i++;
+        }*/
+        
+        // parse expression
+        NSMutableArray *parsedTokens;
+        parsedTokens = [EDParser parse:tokens error:&error];
+        if (error) {
+            [self showError:error];
+            return FALSE;
+        }
+        
+        // print out all tokens
+        NSLog(@"====after parsed");
+        i =0;
+        for (EDToken *token in parsedTokens){
+            NSLog(@"i:%d token:%@", i, token);
+            i++;
+        }
+        
+        // calculate expression
+        float result = [EDParser calculate:parsedTokens error:&error context:_context];
+        if (error) {
+            [self showError:error];
+            return FALSE;
+        }
+        
+        // print result
+        NSLog(@"====after parsed: result:%f", result);
     }
     return TRUE;
 }
