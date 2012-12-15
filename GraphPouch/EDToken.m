@@ -21,8 +21,8 @@
 @dynamic equation;
 
 #warning need to write initWithCoder
-- (id)init{
-    self = [[EDToken alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameToken inManagedObjectContext:nil] insertIntoManagedObjectContext:nil];
+- (id)initWithContext:(NSManagedObjectContext *)context{
+    self = [[EDToken alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameToken inManagedObjectContext:context] insertIntoManagedObjectContext:nil];
     if (self){
         [self setValue:[NSString stringWithFormat:@""]];
     }
@@ -45,8 +45,8 @@
     return (EDTokenType)[[self association] intValue];
 }
 
-+ (EDToken *)multiplierToken{
-    EDToken *token = [[EDToken alloc] init];
++ (EDToken *)multiplierToken:(NSManagedObjectContext *)context{
+    EDToken *token = [[EDToken alloc]initWithContext:context];
     [token setTypeRaw:EDTokenTypeFunction];
     [token setIsValid:TRUE];
     [token setPrecedence:[NSNumber numberWithInt:3]];
@@ -55,8 +55,8 @@
     return token;
 }
 
-+ (EDToken *)leftParenToken{
-    EDToken *token = [[EDToken alloc] init];
++ (EDToken *)leftParenToken:(NSManagedObjectContext *)context{
+    EDToken *token = [[EDToken alloc] initWithContext:context];
     [token setTypeRaw:EDTokenTypeFunction];
     [token setIsValid:TRUE];
     [token setPrecedence:[NSNumber numberWithInt:3]];
@@ -65,8 +65,8 @@
     return token;
 }
 
-+ (EDToken *)rightParentToken{
-    EDToken *token = [[EDToken alloc] init];
++ (EDToken *)rightParentToken:(NSManagedObjectContext *)context{
+    EDToken *token = [[EDToken alloc] initWithContext:context];
     [token setTypeRaw:EDTokenTypeFunction];
     [token setIsValid:TRUE];
     [token setPrecedence:[NSNumber numberWithInt:3]];
@@ -84,8 +84,8 @@
 }
 
 
-- (EDToken *)copy{
-    EDToken *token = [[EDToken alloc] init];
+- (EDToken *)copy:(NSManagedObjectContext *)context{
+    EDToken *token = [[EDToken alloc] initWithContext:context];
     [token setTypeRaw:[self typeRaw]];
     [token setIsValid:[self isValid]];
     [token setPrecedence:[self precedence]];

@@ -21,12 +21,13 @@
 @property (nonatomic, retain) NSNumber * association;
 @property (nonatomic, retain) EDEquation *equation;
 
-+ (EDToken *)multiplierToken;
-+ (EDToken *)leftParenToken;
-+ (EDToken *)rightParentToken;
+- (id)initWithContext:(NSManagedObjectContext *)context;
++ (EDToken *)multiplierToken:(NSManagedObjectContext *)context;
++ (EDToken *)leftParenToken:(NSManagedObjectContext *)context;
++ (EDToken *)rightParentToken:(NSManagedObjectContext *)context;
 - (void)appendChar:(NSString *)c;
 - (int)length;
-- (EDToken *)copy;
+- (EDToken *)copy:(NSManagedObjectContext *)context;
 - (void)setTypeRaw:(EDTokenType)type;
 - (EDTokenType)typeRaw;
 - (void)setAssociationRaw:(EDAssociation)association;

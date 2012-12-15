@@ -58,7 +58,6 @@
     NSArray *fetchResults = [context executeFetchRequest:request error:&error];   
     //NSLog(@"fetch: %@", mutableFetchResults);
     
-    /*
     // handle error
     if (!mutableFetchResults) {   
         // Handle the error.   

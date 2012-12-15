@@ -20,12 +20,11 @@
 
 @implementation EDSheetPropertiesGraphEquationController
 
-//- (id)initWithWindow:(NSWindow *)window
-- (id)init
+- (id)initWithContext:(NSManagedObjectContext *)context;
 {
-    //self = [super initWithWindow:window];
     self = [super initWithWindowNibName:@"EDSheetPropertiesGraphEquation"];
     if (self) {
+        _context = context;
     }
     
     return self;
@@ -84,7 +83,8 @@
 #pragma mark validate
 - (BOOL)validEquation:(NSString *)potentialEquation{
     NSError *error;
-    NSMutableArray *tokens = [EDTokenizer tokenize:potentialEquation error:&error];
+    int i = 0;
+    NSMutableArray *tokens = [EDTokenizer tokenize:potentialEquation error:&error context:_context];
     //if (!tokens) {
     //NSLog(@"tokens:%@ error received?:%@", tokens, error);
     if (error) {
@@ -94,10 +94,16 @@
     }
     else{
         // print out all tokens
+        NSLog(@"====after tokenize");
+        i =0;
+        for (EDToken *token in tokens){
+            NSLog(@"i:%d token:%@", i, token);
+            i++;
+        }
         //[tokens printAll:@"value"];
         
         // validate expression
-        [EDTokenizer isValidExpression:tokens withError:&error];
+        [EDTokenizer isValidExpression:tokens withError:&error context:_context];
         if (error) {
             [self showError:error];
             return FALSE;

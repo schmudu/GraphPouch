@@ -42,7 +42,7 @@
 - (void)initWindowAfterLoaded:(NSManagedObjectContext *)context{
     _context = context;
     if (!equationController) {
-        equationController = [[EDSheetPropertiesGraphEquationController alloc] init];
+        equationController = [[EDSheetPropertiesGraphEquationController alloc] initWithContext:_context];
         NSLog(@"creating equation controller.");
     }
     // this method will only be called if only graphs are shown

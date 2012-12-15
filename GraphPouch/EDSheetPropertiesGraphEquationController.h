@@ -13,10 +13,12 @@
     IBOutlet NSButton *buttonSubmit;
     IBOutlet NSTextField *fieldEquation;
     IBOutlet NSTextField *errorField;
+    NSManagedObjectContext *_context;
 }
 
 - (IBAction)onButtonPressedCancel:(id)sender;
 - (IBAction)onButtonPressedSubmit:(id)sender;
+- (id)initWithContext:(NSManagedObjectContext *)context;
 //- (void)initializeSheet;
 
 @end

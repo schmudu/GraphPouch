@@ -11,10 +11,10 @@
 #import "EDStack.h"
 
 @implementation EDParser
-static NSMutableArray *tokens, *output;
-static EDStack *operator;
 
 - (NSMutableArray *)parse:(NSMutableArray *)tokens error:(NSError **)error{
+    NSMutableArray *output;
+    EDStack *operator;
     int i=0;
     EDToken *currentToken, *operatorToken, *previousToken;
     output = [NSMutableArray array];
@@ -108,23 +108,23 @@ static EDStack *operator;
     return output;
 }
 
-- (float)calculate:(NSMutableArray *)stack error:(NSError **)error{
+- (float)calculate:(NSMutableArray *)stack error:(NSError **)error context:(NSManagedObjectContext *)context{
     EDStack *result = [[EDStack alloc] init];
     float answer=0, firstNum=0, secondNum=0, idValue=2;
     EDToken *firstNumToken, *secondNumToken, *resultToken, *idToken;
     
-    for (EDToken *token in output){
+    for (EDToken *token in stack){
         if([token typeRaw] == EDTokenTypeNumber){
             [result push:token];
         }
         else if ([token typeRaw] == EDTokenTypeIdentifier) {
-            idToken = [[EDToken alloc] init];
+            idToken = [[EDToken alloc] initWithContext:context];
             [idToken setValue:[NSString stringWithFormat:@"%f", idValue]];
             [result push:idToken];
         }
         else if ([token typeRaw] == EDTokenTypeConstant) {
 #warning need to figure out the constants
-            idToken = [[EDToken alloc] init];
+            idToken = [[EDToken alloc] initWithContext:context];
             [idToken setValue:[NSString stringWithFormat:@"%f", idValue]];
             [result push:idToken];
         }
@@ -135,7 +135,7 @@ static EDStack *operator;
             else if ([[token value] isEqualToString:@"cos"])
                 answer = cosf(firstNum * M_PI/180);
             
-            resultToken = [[EDToken alloc] init];
+            resultToken = [[EDToken alloc] initWithContext:context];
             [resultToken setValue:[NSString stringWithFormat:@"%f", answer]];
             [result push:resultToken];
         }
@@ -172,7 +172,7 @@ static EDStack *operator;
                     else if ([[token value] isEqualToString:@"^"])
                         answer = pow(firstNum,secondNum);
                     
-                    resultToken = [[EDToken alloc] init];
+                    resultToken = [[EDToken alloc]initWithContext:context];
                     [resultToken setValue:[NSString stringWithFormat:@"%f", answer]];
                     [result push:resultToken];
                 }

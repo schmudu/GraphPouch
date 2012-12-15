@@ -15,12 +15,12 @@
 
 @implementation EDTokenizer
 
-+ (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error{
++ (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error context:(NSManagedObjectContext *)context{
     int i = 0;
     NSString *currentChar;
     EDToken *currentToken, *potentialToken;
     NSMutableArray *tokenStack = [[NSMutableArray alloc] init];
-    currentToken = [[EDToken alloc] init];
+    currentToken = [[EDToken alloc] initWithContext:context];
     
     // strip white space
     str = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -35,9 +35,9 @@
         // append chracter
         [currentToken appendChar:currentChar];
         
-        if ([EDTokenizer isValidToken:currentToken]) {
+        if ([EDTokenizer isValidToken:currentToken error:error]) {
             // save token
-            potentialToken = [currentToken copy];
+            potentialToken = [currentToken copy:context];
             
             // increment scanner
             [EDScanner increment];
@@ -46,14 +46,14 @@
         else {
             if (potentialToken) {
                 // push last valid token
-                EDToken *newToken = [potentialToken copy];
+                EDToken *newToken = [potentialToken copy:context];
                 [tokenStack addObject:newToken];
                 
                 // release potential token
                 potentialToken = nil;
                 
                 // create new token
-                currentToken = [[EDToken alloc] init];
+                currentToken = [[EDToken alloc] initWithContext:context];
             }
             else{
                 NSMutableDictionary *errorDictionary = [[NSMutableDictionary alloc] init];
@@ -81,7 +81,7 @@
     return nil;
 }
 
-+ (BOOL)isValidToken:(EDToken *)token{
++ (BOOL)isValidToken:(EDToken *)token error:(NSError **)error{
     regex_t regex;
     int reti;
     NSString *str = [[NSString alloc] initWithString:[token value]];
@@ -178,7 +178,7 @@
     return FALSE;
 }
 
-+ (BOOL)isValidExpression:(NSMutableArray *)tokens withError:(NSError **)error{
++ (BOOL)isValidExpression:(NSMutableArray *)tokens withError:(NSError **)error context:(NSManagedObjectContext *)context{
     EDToken *currentToken, *previousToken;
     int i=0;
     regex_t regex;
@@ -253,7 +253,7 @@
     return TRUE;
 }
 
-+ (NSMutableArray *)insertImpliedMultiplication:(NSMutableArray *)tokens{
++ (NSMutableArray *)insertImpliedMultiplication:(NSMutableArray *)tokens context:(NSManagedObjectContext *)context{
     EDToken *multiplyToken, *currentToken, *previousToken;
     int i=0;
     while (i<[tokens count]){
@@ -261,19 +261,19 @@
         if(previousToken){
             // insert token between number and identifier
             if(([previousToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
-                multiplyToken = [EDToken multiplierToken];
+                multiplyToken = [EDToken multiplierToken:context];
                 [tokens insertObject:multiplyToken atIndex:i];
             }
             
             // insert token between number and function
             if(([previousToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeFunction)){
-                multiplyToken = [EDToken multiplierToken];
+                multiplyToken = [EDToken multiplierToken:context];
                 [tokens insertObject:multiplyToken atIndex:i];
             }
             
             // insert token between right paren and function
             if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken value] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeFunction)){
-                multiplyToken = [EDToken multiplierToken];
+                multiplyToken = [EDToken multiplierToken:context];
                 [tokens insertObject:multiplyToken atIndex:i];
             }
         }
@@ -283,7 +283,7 @@
     return tokens;
 }
 
-+ (NSMutableArray *)insertImpliedParenthesis:(NSMutableArray *)tokens{
++ (NSMutableArray *)insertImpliedParenthesis:(NSMutableArray *)tokens context:(NSManagedObjectContext *)context{
     EDToken *currentToken, *previousToken, *nextToken;
     int i=0;
     while (i<[tokens count]){
@@ -301,27 +301,27 @@
             if(nextToken){
                 // if pattern: function number identifier, add paren
                 if(([previousToken typeRaw] == EDTokenTypeFunction) && ([currentToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
-                    [tokens insertObject:[EDToken leftParenToken] atIndex:i];
-                    [tokens insertObject:[EDToken rightParentToken] atIndex:i+3];
+                    [tokens insertObject:[EDToken leftParenToken:context] atIndex:i];
+                    [tokens insertObject:[EDToken rightParentToken:context] atIndex:i+3];
                 }
             }
             else {
                 // if pattern: function number, add paren
                 if(([previousToken typeRaw] == EDTokenTypeFunction) && ([currentToken typeRaw] == EDTokenTypeNumber)){
-                    [tokens insertObject:[EDToken leftParenToken] atIndex:i];
-                    [tokens insertObject:[EDToken rightParentToken] atIndex:i+2];
+                    [tokens insertObject:[EDToken leftParenToken:context] atIndex:i];
+                    [tokens insertObject:[EDToken rightParentToken:context] atIndex:i+2];
                 }
                 
                 // if pattern: function identifier, add paren
                 if(([previousToken typeRaw] == EDTokenTypeFunction) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
-                    [tokens insertObject:[EDToken leftParenToken] atIndex:i];
-                    [tokens insertObject:[EDToken rightParentToken] atIndex:i+2];
+                    [tokens insertObject:[EDToken leftParenToken:context] atIndex:i];
+                    [tokens insertObject:[EDToken rightParentToken:context] atIndex:i+2];
                 }
                 
                 // if pattern: function constant, add paren
                 if(([previousToken typeRaw] == EDTokenTypeFunction) && ([currentToken typeRaw] == EDTokenTypeConstant)){
-                    [tokens insertObject:[EDToken leftParenToken] atIndex:i];
-                    [tokens insertObject:[EDToken rightParentToken] atIndex:i+2];
+                    [tokens insertObject:[EDToken leftParenToken:context] atIndex:i];
+                    [tokens insertObject:[EDToken rightParentToken:context] atIndex:i+2];
                 }
             }
         }

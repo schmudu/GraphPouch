@@ -11,9 +11,9 @@
 #import "EDStack.h"
 
 @interface EDTokenizer : NSObject
-+ (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error;
-+ (NSMutableArray *)insertImpliedMultiplication:(NSMutableArray *)tokens;
-+ (NSMutableArray *)insertImpliedParenthesis:(NSMutableArray *)tokens;
-+ (BOOL)isValidToken:(EDToken *)Token error:(NSError **)error;
-+ (BOOL)isValidExpression:(NSMutableArray *)tokens withError:(NSError **)error;
++ (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error context:(NSManagedObjectContext *)context;
++ (NSMutableArray *)insertImpliedMultiplication:(NSMutableArray *)tokens context:(NSManagedObjectContext *)context;
++ (NSMutableArray *)insertImpliedParenthesis:(NSMutableArray *)tokens context:(NSManagedObjectContext *)context;
++ (BOOL)isValidToken:(EDToken *)token error:(NSError **)error;
++ (BOOL)isValidExpression:(NSMutableArray *)tokens withError:(NSError **)error context:(NSManagedObjectContext *)context;
 @end
