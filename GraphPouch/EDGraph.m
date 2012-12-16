@@ -7,6 +7,7 @@
 //
 
 #import "EDGraph.h"
+#import "EDToken.h"
 #import "EDPage.h"
 #import "EDPoint.h"
 #import "EDEquation.h"
@@ -45,13 +46,16 @@
         
         for (EDPoint *point in points){
             // create a point and set it for this graph
+            newPoint = [point initWithCoder:aDecoder];
+            /*
             newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:nil] insertIntoManagedObjectContext:nil];
+            
             
             //set attributes
             [newPoint setLocationX:[point locationX]];
             [newPoint setLocationY:[point locationY]];
             [newPoint setIsVisible:[point isVisible]];
-            
+            */
             // set relationship
             [self addPointsObject:newPoint];
         }
@@ -60,14 +64,20 @@
         NSSet *equations = [aDecoder decodeObjectForKey:EDGraphAttributeEquations];
         
         for (EDEquation *equation in equations){
+            newEquation = [equation initWithCoder:aDecoder];
+            /*
             // create a equation and set it for this graph
-            newEquation = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:nil] insertIntoManagedObjectContext:nil];
+            newEquation = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
             
             //set attributes
             [newEquation setEquation:[equation equation]];
             [newEquation setShowLabel:[equation showLabel]];
             [newEquation setIsVisible:[equation isVisible]];
             
+            for (EDToken *token in [equation tokens]){
+                
+            }
+            */
             // set relationship
             [self addEquationsObject:newEquation];
         }

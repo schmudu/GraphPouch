@@ -20,7 +20,27 @@
 @dynamic association;
 @dynamic equation;
 
-#warning need to write initWithCoder
+#pragma mark encoding, decoding this object
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    self = [[EDToken alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameToken inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
+    if(self){
+        [self setIsValid:[aDecoder decodeBoolForKey:EDTokenAttributeIsValid]];
+        [self setPrecedence:[aDecoder decodeObjectForKey:EDTokenAttributePrecedence]];
+        [self setValue:[aDecoder decodeObjectForKey:EDTokenAttributeValue]];
+        [self setType:[aDecoder decodeObjectForKey:EDTokenAttributeType]];
+        [self setAssociation:[aDecoder decodeObjectForKey:EDTokenAttributeAssociation]];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeBool:[self isValid] forKey:EDTokenAttributeIsValid];
+    [aCoder encodeObject:[self precedence] forKey:EDTokenAttributePrecedence];
+    [aCoder encodeObject:[self value] forKey:EDTokenAttributeValue];
+    [aCoder encodeObject:[self type] forKey:EDTokenAttributeType];
+    [aCoder encodeObject:[self association] forKey:EDTokenAttributeAssociation];
+}
+
 - (id)initWithContext:(NSManagedObjectContext *)context{
     self = [[EDToken alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameToken inManagedObjectContext:context] insertIntoManagedObjectContext:nil];
     if (self){

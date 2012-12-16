@@ -10,11 +10,16 @@
 #import "EDScanner.h"
 #import "EDTokenizer.h"
 #import "EDParser.h"
+#import "EDEquation.h"
+#import "EDToken.h"
+#import "EDGraph.h"
+#import "NSManagedObject+EasyFetching.m"
 
 @interface EDSheetPropertiesGraphEquationController ()
+- (void)addTokensToNewEquationInSelectedGraphs:(NSMutableDictionary *)dict;
 - (void)setEquationButtonState;
 - (void)onQuitShortcutPressed:(NSNotification *)note;
-- (BOOL)validEquation:(NSString *)potentialEquation;
+- (NSMutableDictionary *)validEquation:(NSString *)potentialEquation;
 - (void)showError:(NSError *)error;
 - (void)clearError;
 @end
@@ -26,6 +31,7 @@
     self = [super initWithWindowNibName:@"EDSheetPropertiesGraphEquation"];
     if (self) {
         _context = context;
+        _newEquation = FALSE;
     }
     
     return self;
@@ -33,6 +39,10 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:EDEventQuitDuringEquationSheet];
+}
+
+- (void)initializeSheet:(BOOL)newSheet{
+    _newEquation = newSheet;
 }
 
 - (void)windowDidLoad
@@ -58,11 +68,22 @@
 - (IBAction)onButtonPressedSubmit:(id)sender{
     // validate equation
     NSString *equationStr = [fieldEquation stringValue];
-    BOOL validateResult = [self validEquation:equationStr];
-    // if invalid then show error message
+    NSMutableDictionary *result = [self validEquation:equationStr];
     
-    // if valid then close sheet and create/modify equation object
-    NSLog(@"submit button pressed.");
+    // if valid then end sheet
+    if ([[result valueForKey:EDKeyValidEquation] boolValue]){
+        // if new equation then add to selected graphs
+        if (_newEquation) {
+            // add equation to dictionary
+            [result setObject:equationStr forKey:EDKeyEquation];
+            [self addTokensToNewEquationInSelectedGraphs:result];
+        }
+        else {
+            NSLog(@"need to update selected equation.");
+        }
+        
+        [NSApp endSheet:[self window]];
+    }
 }
 
 #pragma mark textfield
@@ -82,31 +103,34 @@
 }
 
 #pragma mark validate
-- (BOOL)validEquation:(NSString *)potentialEquation{
+- (NSMutableDictionary *)validEquation:(NSString *)potentialEquation{
+    NSMutableDictionary *results = [NSMutableDictionary dictionary];
     NSError *error;
+    NSMutableArray *parsedTokens;
     int i = 0;
     NSMutableArray *tokens = [EDTokenizer tokenize:potentialEquation error:&error context:_context];
-    //if (!tokens) {
-    //NSLog(@"tokens:%@ error received?:%@", tokens, error);
+    
     if (error) {
         [self showError:error];
-        return FALSE;
-        //NSLog(@"error received:%@", [[error userInfo] valueForKey:NSLocalizedDescriptionKey]);
+        [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
+        return results;
     }
     else{
         // print out all tokens
+        /*
         NSLog(@"====after tokenize");
         i =0;
         for (EDToken *token in tokens){
             NSLog(@"i:%d token:%@", i, token);
             i++;
-        }
+        }*/
         
         // validate expression
         [EDTokenizer isValidExpression:tokens withError:&error context:_context];
         if (error) {
             [self showError:error];
-            return FALSE;
+            [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
+            return results;
         }
         
         // insert implied parenthesis
@@ -134,32 +158,36 @@
         }*/
         
         // parse expression
-        NSMutableArray *parsedTokens;
         parsedTokens = [EDParser parse:tokens error:&error];
         if (error) {
             [self showError:error];
-            return FALSE;
+            [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
+            return results;
         }
         
         // print out all tokens
+        /*
         NSLog(@"====after parsed");
         i =0;
         for (EDToken *token in parsedTokens){
             NSLog(@"i:%d token:%@", i, token);
             i++;
-        }
+        }*/
         
         // calculate expression
         float result = [EDParser calculate:parsedTokens error:&error context:_context];
         if (error) {
             [self showError:error];
-            return FALSE;
+            [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
+            return results;
         }
         
         // print result
-        NSLog(@"====after parsed: result:%f", result);
+        //NSLog(@"====after parsed: result:%f", result);
     }
-    return TRUE;
+    [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyValidEquation];
+    [results setObject:parsedTokens forKey:EDKeyParsedTokens];
+    return results;
 }
 
 - (void)clearError{
@@ -176,5 +204,40 @@
     
     // terminate app
     [NSApp terminate:nil];
+}
+
+#pragma mark model
+- (void)addTokensToNewEquationInSelectedGraphs:(NSMutableDictionary *)dict{
+    NSMutableArray *parsedTokens = [dict objectForKey:EDKeyParsedTokens];
+    NSString *equationStr = [dict objectForKey:EDKeyEquation];
+    EDToken *newToken;
+    EDEquation *newEquation;
+    
+    
+    // get currently selected graphs
+    NSArray *selectedGraphs = [EDGraph getAllSelectedObjects:_context];
+    
+    for (EDGraph *graph in selectedGraphs){
+        // create an equation
+        newEquation = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+        
+        int i=0;
+        for (EDToken *token in parsedTokens){
+            // create new token and set relationship
+            newToken = [token copy:_context];
+            
+            // insert into context
+            [_context insertObject:newToken];
+            
+            [newEquation addTokensObject:newToken];
+            i++;
+        }
+        
+        // test print all tokens
+        [newEquation printAllTokens];
+        
+        // set relationship
+        [graph addEquationsObject:newEquation];
+    }
 }
 @end

@@ -12,7 +12,7 @@
         <attribute name="isVisible" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="showLabel" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="graph" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDGraph" inverseName="equations" inverseEntity="EDGraph" syncable="YES"/>
-        <relationship name="stack" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="EDToken" inverseName="equation" inverseEntity="EDToken" syncable="YES"/>
+        <relationship name="tokens" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="EDToken" inverseName="equation" inverseEntity="EDToken" syncable="YES"/>
     </entity>
     <entity name="EDGraph" representedClassName="EDGraph" parentEntity="EDElement" syncable="YES">
         <attribute name="hasCoordinateAxes" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
@@ -42,7 +42,7 @@
         <attribute name="precedence" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="equation" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDEquation" inverseName="stack" inverseEntity="EDEquation" syncable="YES"/>
+        <relationship name="equation" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDEquation" inverseName="tokens" inverseEntity="EDEquation" syncable="YES"/>
     </entity>
     <elements>
         <element name="EDElement" positionX="160" positionY="192" width="128" height="120"/>

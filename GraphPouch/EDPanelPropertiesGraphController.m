@@ -312,8 +312,10 @@
     [EDCoreDataUtility removeCommonPointsforSelectedGraphsMatchingPoints:selectedPoints context:_context];
 }
 
+#pragma mark equation sheet
 - (IBAction)addNewEquation:(id)sender{
     [NSApp beginSheet:[equationController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+    [equationController initializeSheet:TRUE];
 }
 
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{

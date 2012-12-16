@@ -184,13 +184,26 @@ NSString * const EDTransformCornerBottomLeft                    = @"EDTransformC
 NSString * const EDTransformCornerBottomRight                   = @"EDTransformCornerBottomRight";
 
 // equations
-NSString * const EDEquationAttributeEquation                    = @"EDEquationAttributeEquation";
-NSString * const EDEquationAttributeShowLabel                   = @"EDEquationAttributeShowLabel";
-NSString * const EDEquationAttributeIsVisible                   = @"EDEquationAttributeIsVisible";
+NSString * const EDEquationAttributeEquation                    = @"equation";
+NSString * const EDEquationAttributeShowLabel                   = @"showLabel";
+NSString * const EDEquationAttributeIsVisible                   = @"isVisible";
+NSString * const EDEquationAttributeTokens                      = @"tokens";
 NSString * const EDEventQuitDuringEquationSheet                 = @"EDEventQuitDuringEquationSheet";
 
 // errors
 NSString * const EDErrorDomain                                  = @"com.edcodia.graphpouch";
 int const EDErrorTokenizer                                      = 1;
+
+// tokenize
+NSString * const EDKeyValidEquation                             = @"EDKeyValidEquation";
+NSString * const EDKeyParsedTokens                              = @"EDKeyParsedTokens";
+NSString * const EDKeyEquation                                  = @"EDKeyEquation";
+
+NSString *const EDTokenAttributeIsValid                         = @"isValid";
+NSString *const EDTokenAttributePrecedence                      = @"precedence";
+NSString *const EDTokenAttributeValue                           = @"value";
+NSString *const EDTokenAttributeType                            = @"type";
+NSString *const EDTokenAttributeAssociation                     = @"association";
+NSString *const EDTokenAttributeEquation                        = @"equation";
 
 @end

@@ -186,6 +186,7 @@ extern NSString *const EDTransformCornerBottomRight;
 extern NSString *const EDEquationAttributeIsVisible;
 extern NSString *const EDEquationAttributeShowLabel;
 extern NSString *const EDEquationAttributeEquation;
+extern NSString *const EDEquationAttributeTokens;
 extern NSString *const EDEventQuitDuringEquationSheet;
 
 // tokens
@@ -203,6 +204,15 @@ typedef enum{
     EDAssociationLeft
 } EDAssociation;
 
+extern NSString *const EDKeyValidEquation;
+extern NSString *const EDKeyParsedTokens;
+extern NSString *const EDKeyEquation;
+extern NSString *const EDTokenAttributeIsValid;
+extern NSString *const EDTokenAttributePrecedence;
+extern NSString *const EDTokenAttributeValue;
+extern NSString *const EDTokenAttributeType;
+extern NSString *const EDTokenAttributeAssociation;
+extern NSString *const EDTokenAttributeEquation;
 
 // errors
 extern NSString *const EDErrorDomain;
