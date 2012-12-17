@@ -21,6 +21,7 @@
 
 - (void)printAllTokens;
 - (BOOL)matchesEquation:(EDEquation *)otherEquation;
+- (void)copyAttributes:(EDEquation *)otherEquation;
 @end
 
 @interface EDEquation (CoreDataGeneratedAccessors)
@@ -35,4 +36,5 @@
 - (void)removeTokensObject:(EDToken *)value;
 - (void)addTokens:(NSOrderedSet *)values;
 - (void)removeTokens:(NSOrderedSet *)values;
+- (void)removeAllTokens;
 @end

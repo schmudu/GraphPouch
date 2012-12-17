@@ -8,11 +8,9 @@
 
 #import "EDPanelPropertiesGraphTableEquation.h"
 #import "EDCoreDataUtility.h"
-#import "EDPoint.h"
-#import "NSMutableArray+EDPoint.h"
 #import "EDConstants.h"
-#import "EDCoreDataUtility+Points.h"
 #import "EDCoreDataUtility+Equations.h"
+#import "EDEquation.h"
 
 @interface EDPanelPropertiesGraphTableEquation()
 - (void)onContextChanged:(NSNotification *)note;
@@ -36,11 +34,12 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    NSArray *commonPointsForSelectedGraphs = [EDCoreDataUtility getAllCommonPointsforSelectedGraphs:_context];
-    if (!commonPointsForSelectedGraphs) {
+    //NSArray *commonEquationsForSelectedGraphs = [EDCoreDataUtility getAllCommonEquationsforSelectedGraphs:_context];
+    NSArray *commonEquationsForSelectedGraphs = [EDCoreDataUtility getCommonEquationsforSelectedGraphs:_context];
+    if (!commonEquationsForSelectedGraphs) {
         return 0;
     }
-    return [commonPointsForSelectedGraphs count];
+    return [commonEquationsForSelectedGraphs count];
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
@@ -51,63 +50,49 @@
     // than keeping a reference to the table column object.
     NSString *columnIdentifier = [tableColumn identifier];
     
-    // Get common points
-    NSArray *commonPoints = [EDCoreDataUtility getAllCommonPointsforSelectedGraphs:_context];
+    // Get common equations
+    NSArray *commonEquations = [EDCoreDataUtility getCommonEquationsforSelectedGraphs:_context];
     
     // return value based on column identifier
-    if ([columnIdentifier isEqualToString:@"x"]) {
-        returnValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[commonPoints objectAtIndex:row] locationX]];
-    }
-    else if ([columnIdentifier isEqualToString:@"y"]) {
-        returnValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[commonPoints objectAtIndex:row] locationY]];
+    if ([columnIdentifier isEqualToString:@"equation"]) {
+        returnValue = [NSString stringWithFormat:@"%@",[(EDEquation *)[commonEquations objectAtIndex:row] equation]];
     }
     else if ([columnIdentifier isEqualToString:@"visible"]) {
-        if (![(EDPoint *)[commonPoints objectAtIndex:row] matchesHaveSameVisibility]) {
-            // if all graphs don't have same property then show mixed state
-            returnValue = [[NSNumber alloc] initWithInt:NSMixedState];
-        }
-        else {
-            returnValue = [[NSNumber alloc] initWithBool:[(EDPoint *)[commonPoints objectAtIndex:row] isVisible]];
-        }
+        returnValue = [[NSNumber alloc] initWithBool:[(EDEquation *)[commonEquations objectAtIndex:row] isVisible]];
     }
     else if ([columnIdentifier isEqualToString:@"label"]) {
-        if (![(EDPoint *)[commonPoints objectAtIndex:row] matchesHaveSameLabel]) {
-            // if all graphs don't have same property then show mixed state
-            returnValue = [[NSNumber alloc] initWithInt:NSMixedState];
-        }
-        else {
-            returnValue = [[NSNumber alloc] initWithBool:[(EDPoint *)[commonPoints objectAtIndex:row] showLabel]];
-        }
+        returnValue = [[NSNumber alloc] initWithBool:[(EDEquation *)[commonEquations objectAtIndex:row] showLabel]];
     }
     
     
     return returnValue; 
 }
 
+/*
 - (void)tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
     // The column identifier string is the easiest way to identify a table column. Much easier
     // than keeping a reference to the table column object.
     NSString *columnIdentifier = [tableColumn identifier];
     
     // Get common points
-    NSArray *commonPoints = [EDCoreDataUtility getAllCommonPointsforSelectedGraphs:_context];
+    NSArray *commonEquations = [EDCoreDataUtility getCommonEquationsforSelectedGraphs:_context];
     
-    // set attribute of EDPoint
-    EDPoint *currentPoint = (EDPoint *)[commonPoints objectAtIndex:row];
-    EDPoint *newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:_context] insertIntoManagedObjectContext:nil];
+    // set attribute of EDEquation
+    EDEquation *currentEquation = (EDEquation *)[commonEquations objectAtIndex:row];
+    EDEquation *newEquation = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:_context] insertIntoManagedObjectContext:nil];
     NSMutableDictionary *newAttribute = [[NSMutableDictionary alloc] init];
     
-    [newPoint copyAttributes:currentPoint];
+    [newEquation copyAttributes:currentEquation];
     
-    if ([columnIdentifier isEqualToString:@"x"]) {
-        [newAttribute setValue:EDElementAttributeLocationX forKey:EDKey];
-        [newAttribute setObject:object forKey:EDValue];
-    }
-    else if ([columnIdentifier isEqualToString:@"y"]) {
-        [newAttribute setValue:EDElementAttributeLocationY forKey:EDKey];
+    if ([columnIdentifier isEqualToString:@"equation"]) {
+        [newAttribute setValue:EDEquationAttributeEquation forKey:EDKey];
         [newAttribute setObject:object forKey:EDValue];
     }
     else if ([columnIdentifier isEqualToString:@"visible"]) {
+        [newAttribute setValue:EDEquationAttributeIsVisible forKey:EDKey];
+        [newAttribute setObject:object forKey:EDValue];
+    }
+    else if ([columnIdentifier isEqualToString:@""]) {
         [newAttribute setValue:EDGraphPointAttributeVisible forKey:EDKey];
         [newAttribute setObject:object forKey:EDValue];
     }
@@ -119,21 +104,21 @@
     // set the attribute for the graph that holds this point
     // set the common points
     [EDCoreDataUtility setAllCommonPointsforSelectedGraphs:newPoint attribute:newAttribute context:_context];
-}
+}*/
 
 #pragma mark table delegate
 - (void)tableViewSelectionDidChange:(NSNotification *)notification{
     // if nothing selected
-    if ([pointsTable numberOfSelectedRows] == 0) {
-        [buttonPointRemove setEnabled:FALSE];
+    if ([equationTable numberOfSelectedRows] == 0) {
+        [buttonEquationRemove setEnabled:FALSE];
     }
     else{
-        [buttonPointRemove setEnabled:TRUE];
+        [buttonEquationRemove setEnabled:TRUE];
     }
 }
 
 - (void)onContextChanged:(NSNotification *)note{
-    [pointsTable reloadData];
+    [equationTable reloadData];
     //NSLog(@"context changed.");
 }
 

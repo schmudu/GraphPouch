@@ -11,7 +11,7 @@
 @interface EDPanelPropertiesGraphTableEquation : NSObject <NSTableViewDataSource, NSTableViewDelegate>{
     NSManagedObjectContext *_context;
     IBOutlet NSTableView *equationTable;
-    IBOutlet NSButton *buttonPointRemove;
+    IBOutlet NSButton *buttonEquationRemove;
 }
 
 - (id)initWithContext:(NSManagedObjectContext *)context;

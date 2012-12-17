@@ -67,6 +67,7 @@
     }
     
     // initialize table equation datasource and delegate
+    
     tableEquationController = [[EDPanelPropertiesGraphTableEquation alloc] initWithContext:_context];
     [tableEquation setDelegate:tableEquationController];
     [tableEquation setDataSource:tableEquationController];

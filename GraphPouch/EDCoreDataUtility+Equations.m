@@ -12,6 +12,7 @@
 #import "NSManagedObject+EasyFetching.h"
 #import "NSMutableArray+EDEquation.h"
 #import "NSSet+Equations.h"
+#import "EDToken.h"
 
 @implementation EDCoreDataUtility (Equations)
 
@@ -30,8 +31,10 @@
     
     // add all points in first graph
     for (EDEquation *equation in [[selectedGraphs objectAtIndex:0] equations]){
+        //[equation setMatchesHaveSameVisibility:TRUE];
         [commonEquations addObject:equation];
     }
+    
     //iterate through graphs
     for (EDGraph *graph in selectedGraphs){
         for (EDEquation *commonEquation in commonEquations){
@@ -105,37 +108,48 @@
     // find points with the same attributes
     for (EDEquation *equation in commonEquations){
         // if all attributes match then change the designated attribute
-        if ([pointToChange matchesPointByCoordinate:point]){
-            if ([[attributes valueForKey:EDKey] isEqualToString:EDElementAttributeLocationX]) {
-                [point setLocationX:[[attributes objectForKey:EDValue] floatValue]];
+        if ([equationToChange matchesEquation:equation]){
+            // set string value
+            if ([[attributes valueForKey:EDKey] isEqualToString:EDEquationAttributeEquation]) {
+                [equation setValue:[[attributes objectForKey:EDValue] string]];
+                
+                // need to set all the tokens also
+                [equation removeAllTokens];
+                
+                // copy all tokens from equation that changed to other equations
+                EDToken *tokenCopy;
+                for (EDToken *token in [equationToChange tokens]){
+                    // copy token
+                    tokenCopy = [token copy:context];
+                    
+                    // add to equation
+                    [equation addTokensObject:tokenCopy];
+                }
             }
-            else if ([[attributes valueForKey:EDKey] isEqualToString:EDElementAttributeLocationY]) {
-                [point setLocationY:[[attributes objectForKey:EDValue] floatValue]];
+            else if ([[attributes valueForKey:EDKey] isEqualToString:EDEquationAttributeIsVisible]) {
+                [equation setIsVisible:[[attributes objectForKey:EDValue] boolValue]];
             }
-            else if ([[attributes valueForKey:EDKey] isEqualToString:EDGraphPointAttributeVisible]) {
-                [point setIsVisible:[[attributes objectForKey:EDValue] boolValue]];
-            }
-            else if ([[attributes valueForKey:EDKey] isEqualToString:EDGraphPointAttributeShowLabel]) {
-                [point setShowLabel:[[attributes objectForKey:EDValue] boolValue]];
+            else if ([[attributes valueForKey:EDKey] isEqualToString:EDEquationAttributeShowLabel]) {
+                [equation setShowLabel:[[attributes objectForKey:EDValue] boolValue]];
             }
         }
     }
 }
 
 + (void)removeCommonEquationsforSelectedGraphsMatchingEquations:(NSArray *)equationsToRemove context:(NSManagedObjectContext *)context{
-    NSArray *matchingPoints;
+    NSArray *matchingEquations;
     
     // find points with the same attributes
-    for (EDPoint *deletePoint in pointsToRemove){
-        matchingPoints = [self getOneCommonPointFromSelectedGraphsMatchingPoint:deletePoint context:context];
+    for (EDEquation *deleteEquation in equationsToRemove){
+        matchingEquations = [self getOneCommonEquationFromSelectedGraphsMatchingEquation:deleteEquation context:context];
             
         // delete all of the points
-        for (EDPoint *matchingPoint in matchingPoints){
+        for (EDEquation *matchingEquation in matchingEquations){
             // destroy relationship
-            [[matchingPoint graph] removePointsObject:matchingPoint];
+            [[matchingEquation graph] removeEquationsObject:matchingEquation];
             
             // remove object
-            [context deleteObject:matchingPoint];
+            [context deleteObject:matchingEquation];
         }
     }
 }
