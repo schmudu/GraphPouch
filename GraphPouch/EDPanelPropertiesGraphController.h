@@ -10,6 +10,7 @@
 #import "EDPanelViewController.h"
 #import "EDSheetPropertiesGraphEquationController.h"
 #import "EDPanelPropertiesGraphTablePoints.h"
+#import "EDPanelPropertiesGraphTableEquation.h"
 
 @interface EDPanelPropertiesGraphController : EDPanelViewController <NSTextFieldDelegate>{
     IBOutlet NSTextField *labelWidth;
@@ -21,10 +22,12 @@
     IBOutlet NSButton *checkboxHasTickMarks;
     IBOutlet NSButton *checkboxHasLabels;
     IBOutlet NSTableView *tablePoints;
+    IBOutlet NSTableView *tableEquation;
     IBOutlet NSButton *buttonRemovePoints;
     IBOutlet NSButton *buttonRemoveEquation;
     EDSheetPropertiesGraphEquationController *equationController;
     EDPanelPropertiesGraphTablePoints *tablePointsController;
+    EDPanelPropertiesGraphTableEquation *tableEquationController;
 }
 
 - (IBAction)toggleHasCoordinateAxes:(id)sender;

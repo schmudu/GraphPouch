@@ -57,9 +57,7 @@
     [self setElementCheckbox:checkboxHasTickMarks attribute:EDGraphAttributeTickMarks];
     
     // initialize table points datasource and delegate
-    NSLog(@"init graph panel properties controller.");
     tablePointsController = [[EDPanelPropertiesGraphTablePoints alloc] initWithContext:_context];
-    
     [tablePoints setDelegate:tablePointsController];
     [tablePoints setDataSource:tablePointsController];
     
@@ -67,6 +65,17 @@
     if ([tablePoints numberOfSelectedRows] == 0) {
         [buttonRemovePoints setEnabled:FALSE];
     }
+    
+    // initialize table equation datasource and delegate
+    tableEquationController = [[EDPanelPropertiesGraphTableEquation alloc] initWithContext:_context];
+    [tableEquation setDelegate:tableEquationController];
+    [tableEquation setDataSource:tableEquationController];
+    
+    // set button state
+    if ([tableEquation numberOfSelectedRows] == 0) {
+        [buttonRemoveEquation setEnabled:FALSE];
+    }
+    
 }
 #pragma mark keyboard
 - (void)keyDown:(NSEvent *)theEvent{

@@ -20,6 +20,7 @@
 @property (nonatomic, retain) NSOrderedSet *tokens;
 
 - (void)printAllTokens;
+- (BOOL)matchesEquation:(EDEquation *)otherEquation;
 @end
 
 @interface EDEquation (CoreDataGeneratedAccessors)

@@ -57,6 +57,23 @@
     }
 }
 
+- (BOOL)matchesEquation:(EDEquation *)otherEquation{
+    // enumerate tokens and if value is the same then same equation
+    EDToken *otherEquationToken, *thisToken;
+    int i = 0;
+    
+    // if every token matches then we have a match
+    while (i < [[self tokens] count]){
+        thisToken = [[self tokens] objectAtIndex:i];
+        otherEquationToken = [[otherEquation tokens] objectAtIndex:i];
+        
+        if (![[thisToken value] isEqualToString:[otherEquationToken value]]) {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
 - (void)addTokensObject:(EDToken *)value{
     NSMutableOrderedSet* tempSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self tokens]];
     [tempSet addObject:value];
