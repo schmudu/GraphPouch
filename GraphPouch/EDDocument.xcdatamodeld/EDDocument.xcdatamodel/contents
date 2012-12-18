@@ -9,8 +9,8 @@
     </entity>
     <entity name="EDEquation" representedClassName="EDEquation" syncable="YES">
         <attribute name="equation" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isVisible" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="showLabel" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isVisible" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="showLabel" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <relationship name="graph" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDGraph" inverseName="equations" inverseEntity="EDGraph" syncable="YES"/>
         <relationship name="tokens" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="EDToken" inverseName="equation" inverseEntity="EDToken" syncable="YES"/>
     </entity>
