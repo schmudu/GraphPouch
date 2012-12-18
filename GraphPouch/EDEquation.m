@@ -90,6 +90,7 @@
         if (![[thisToken value] isEqualToString:[otherEquationToken value]]) {
             return FALSE;
         }
+        i++;
     }
     return TRUE;
 }

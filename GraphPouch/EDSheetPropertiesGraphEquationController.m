@@ -233,6 +233,10 @@
             i++;
         }
         
+        [newEquation setEquation:equationStr];
+        [newEquation setShowLabel:TRUE];
+        [newEquation setIsVisible:TRUE];
+        
         // test print all tokens
         [newEquation printAllTokens];
         

@@ -384,7 +384,7 @@
 																</object>
 																<array class="NSMutableArray" key="NSTableColumns">
 																	<object class="NSTableColumn" id="1073060829">
-																		<string key="NSIdentifier">x</string>
+																		<string key="NSIdentifier">equation</string>
 																		<double key="NSWidth">144.94921875</double>
 																		<double key="NSMinWidth">40</double>
 																		<double key="NSMaxWidth">1000</double>
@@ -1054,6 +1054,9 @@
 			<object class="NSCustomObject" id="591431056">
 				<string key="NSClassName">EDPanelPropertiesGraphTablePoints</string>
 			</object>
+			<object class="NSCustomObject" id="307440894">
+				<string key="NSClassName">EDPanelPropertiesGraphTableEquation</string>
+			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
@@ -1352,6 +1355,30 @@
 						<reference key="destination" ref="503575084"/>
 					</object>
 					<int key="connectionID">1269</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">dataSource</string>
+						<reference key="source" ref="304541330"/>
+						<reference key="destination" ref="307440894"/>
+					</object>
+					<int key="connectionID">2380</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">buttonEquationRemove</string>
+						<reference key="source" ref="307440894"/>
+						<reference key="destination" ref="990864858"/>
+					</object>
+					<int key="connectionID">2378</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">equationTable</string>
+						<reference key="source" ref="307440894"/>
+						<reference key="destination" ref="304541330"/>
+					</object>
+					<int key="connectionID">2379</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3003,6 +3030,11 @@
 						<reference key="object" ref="183576869"/>
 						<reference key="parent" ref="7230525"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2375</int>
+						<reference key="object" ref="307440894"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -3172,6 +3204,7 @@
 				<string key="2359.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2360.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2361.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2375.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="260.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="260.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="261.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3225,7 +3258,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2374</int>
+			<int key="maxID">2381</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3359,6 +3392,28 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/EDPanelPropertiesGraphController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">EDPanelPropertiesGraphTableEquation</string>
+					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="buttonEquationRemove">NSButton</string>
+						<string key="equationTable">NSTableView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="buttonEquationRemove">
+							<string key="name">buttonEquationRemove</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="equationTable">
+							<string key="name">equationTable</string>
+							<string key="candidateClassName">NSTableView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/EDPanelPropertiesGraphTableEquation.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

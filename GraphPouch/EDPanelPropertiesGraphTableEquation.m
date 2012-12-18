@@ -107,6 +107,7 @@
 }*/
 
 #pragma mark table delegate
+/*
 - (void)tableViewSelectionDidChange:(NSNotification *)notification{
     // if nothing selected
     if ([equationTable numberOfSelectedRows] == 0) {
@@ -115,7 +116,7 @@
     else{
         [buttonEquationRemove setEnabled:TRUE];
     }
-}
+}*/
 
 - (void)onContextChanged:(NSNotification *)note{
     [equationTable reloadData];

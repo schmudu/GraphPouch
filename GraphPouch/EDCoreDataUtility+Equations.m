@@ -41,7 +41,7 @@
             // points must be an exact match
             if (![[graph equations] containsEquation:commonEquation]){
                 // no match so remove from common points
-                [commonEquations removeObject:commonEquation];
+                [commonEquationsToRemove addObject:commonEquation];
             }
         }
     }
@@ -68,11 +68,14 @@
     }
     
     // sort common points by x
+    /*
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDElementAttributeLocationX ascending:TRUE];
     NSArray *descriptorArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     NSArray *sortedArray = [commonEquations sortedArrayUsingDescriptors:descriptorArray];
     
     return sortedArray;
+    */
+    return commonEquations;
 }
 
 + (NSArray *)getOneCommonEquationFromSelectedGraphsMatchingEquation:(EDEquation *)matchEquation context:(NSManagedObjectContext *)context{
