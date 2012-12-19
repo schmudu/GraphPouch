@@ -14,6 +14,9 @@
 
 @implementation EDEquation
 
+@synthesize matchesHaveSameVisibility;
+@synthesize matchesHaveSameLabel;
+
 @dynamic equation;
 @dynamic isVisible;
 @dynamic showLabel;

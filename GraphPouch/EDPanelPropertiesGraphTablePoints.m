@@ -24,7 +24,7 @@
     if (self){
         // init
         _context = context;
-        NSLog(@"table points init: context: %@", context);
+        
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     }
@@ -36,7 +36,7 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    NSArray *commonPointsForSelectedGraphs = [EDCoreDataUtility getAllCommonPointsforSelectedGraphs:_context];
+    NSArray *commonPointsForSelectedGraphs = [EDCoreDataUtility getCommonPointsforSelectedGraphs:_context];
     if (!commonPointsForSelectedGraphs) {
         return 0;
     }
@@ -52,8 +52,7 @@
     NSString *columnIdentifier = [tableColumn identifier];
     
     // Get common points
-    NSArray *commonPoints = [EDCoreDataUtility getAllCommonPointsforSelectedGraphs:_context];
-    
+    NSArray *commonPoints = [EDCoreDataUtility getCommonPointsforSelectedGraphs:_context];
     // return value based on column identifier
     if ([columnIdentifier isEqualToString:@"x"]) {
         returnValue = [[NSNumber alloc] initWithFloat:[(EDPoint *)[commonPoints objectAtIndex:row] locationX]];
@@ -90,7 +89,7 @@
     NSString *columnIdentifier = [tableColumn identifier];
     
     // Get common points
-    NSArray *commonPoints = [EDCoreDataUtility getAllCommonPointsforSelectedGraphs:_context];
+    NSArray *commonPoints = [EDCoreDataUtility getCommonPointsforSelectedGraphs:_context];
     
     // set attribute of EDPoint
     EDPoint *currentPoint = (EDPoint *)[commonPoints objectAtIndex:row];

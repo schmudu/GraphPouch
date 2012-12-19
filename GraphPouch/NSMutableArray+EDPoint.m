@@ -12,6 +12,7 @@
 @implementation NSMutableArray (EDPoint)
 
 
+/*
 - (BOOL)containsPointByCoordinate:(EDPoint *)point{
     // iterate through dictionary
     for (EDPoint *currentPoint in self){
@@ -21,7 +22,7 @@
         } 
     }
     return FALSE;
-}
+}*/
 
 - (BOOL)containsPoint:(EDPoint *)point{
     // iterate through dictionary
@@ -50,6 +51,7 @@
     }
 }
 
+/*
 - (void)removePointByCoordinate:(EDPoint *)point{
     NSMutableArray *removeObjects = [[NSMutableArray alloc] init];
     // iterate through dictionary
@@ -64,5 +66,5 @@
     for (EDPoint *removePoint in removeObjects){
         [self removeObject:removePoint];
     }
-}
+}*/
 @end

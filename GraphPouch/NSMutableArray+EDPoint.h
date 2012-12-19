@@ -11,8 +11,8 @@
 
 @interface NSMutableArray (EDPoint)
 - (BOOL)containsPoint:(EDPoint *)point;
-- (BOOL)containsPointByCoordinate:(EDPoint *)point;
+//- (BOOL)containsPointByCoordinate:(EDPoint *)point;
 - (void)removePoint:(EDPoint *)point;
-- (void)removePointByCoordinate:(EDPoint *)point;
+//- (void)removePointByCoordinate:(EDPoint *)point;
     
 @end

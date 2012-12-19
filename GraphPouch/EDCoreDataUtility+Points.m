@@ -17,7 +17,7 @@
 @implementation EDCoreDataUtility (Points)
 
 #pragma mark graph points
-+ (NSArray *)getAllCommonPointsforSelectedGraphs:(NSManagedObjectContext *)context{
++ (NSArray *)getCommonPointsforSelectedGraphs:(NSManagedObjectContext *)context{
     // get all selected graphs
     NSArray *selectedGraphs = [EDGraph getAllSelectedObjects:context];
     
@@ -40,7 +40,7 @@
     }
     
     //iterate through graphs
-    //EDPoint *pointFound;
+    /*
     for (EDGraph *graph in selectedGraphs){
         for (EDPoint *commonPoint in commonPoints){
             // points must be an exact match
@@ -49,23 +49,28 @@
                 [commonPointsToRemove addObject:commonPoint];
             }
         }
-    }
-    /*
+    }*/
+    
+    EDPoint *pointFound;
     for (EDGraph *graph in selectedGraphs){
         for (EDPoint *commonPoint in commonPoints){
-            pointFound = [[graph points] findPointByCoordinate:commonPoint];
+            pointFound = [[graph points] findPoint:commonPoint];
             
             if (!pointFound) {
                 [commonPointsToRemove addObject:commonPoint];
             }
             else {
                 // point was found now see if it was an exact match
-                if (![pointFound matchesPoint:commonPoint]) {
+                if ([pointFound isVisible] != [commonPoint isVisible]) {
                     [commonPoint setMatchesHaveSameVisibility:FALSE];
+                }
+                
+                if ([pointFound showLabel] != [commonPoint showLabel]) {
+                    [commonPoint setMatchesHaveSameLabel:FALSE];
                 }
             }
         }
-    }*/
+    }
     
     // remove points that weren't common to all graphs
     for (EDPoint *point in commonPointsToRemove){
@@ -113,7 +118,8 @@
     // find points with the same attributes
     for (EDPoint *point in commonPoints){
         // if all attributes match then change the designated attribute
-        if ([pointToChange matchesPointByCoordinate:point]){
+        //if ([pointToChange matchesPointByCoordinate:point]){
+        if ([pointToChange matchesPoint:point]){
             if ([[attributes valueForKey:EDKey] isEqualToString:EDElementAttributeLocationX]) {
                 [point setLocationX:[[attributes objectForKey:EDValue] floatValue]];
             }

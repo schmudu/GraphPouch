@@ -58,10 +58,22 @@
         returnValue = [NSString stringWithFormat:@"%@",[(EDEquation *)[commonEquations objectAtIndex:row] equation]];
     }
     else if ([columnIdentifier isEqualToString:@"visible"]) {
-        returnValue = [[NSNumber alloc] initWithBool:[(EDEquation *)[commonEquations objectAtIndex:row] isVisible]];
+        if (![(EDEquation *)[commonEquations objectAtIndex:row] matchesHaveSameVisibility]) {
+            // if all graphs don't have same property then show mixed state
+            returnValue = [[NSNumber alloc] initWithInt:NSMixedState];
+        }
+        else {
+            returnValue = [[NSNumber alloc] initWithBool:[(EDEquation *)[commonEquations objectAtIndex:row] isVisible]];
+        }
     }
     else if ([columnIdentifier isEqualToString:@"label"]) {
-        returnValue = [[NSNumber alloc] initWithBool:[(EDEquation *)[commonEquations objectAtIndex:row] showLabel]];
+        if (![(EDEquation *)[commonEquations objectAtIndex:row] matchesHaveSameLabel]) {
+            // if all graphs don't have same property then show mixed state
+            returnValue = [[NSNumber alloc] initWithInt:NSMixedState];
+        }
+        else {
+            returnValue = [[NSNumber alloc] initWithBool:[(EDEquation *)[commonEquations objectAtIndex:row] showLabel]];
+        }
     }
     
     

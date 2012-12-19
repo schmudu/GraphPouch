@@ -26,7 +26,7 @@
 }
 
 - (void)initWindowAfterLoaded:(NSManagedObjectContext *)context{
-    NSLog(@"init window base class.");
+    // init code
 }
 
 @end

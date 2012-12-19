@@ -22,6 +22,6 @@
 @property (nonatomic, retain) EDGraph *graph;
 
 - (BOOL)matchesPoint:(EDPoint *)otherPoint;
-- (BOOL)matchesPointByCoordinate:(EDPoint *)otherPoint;
+//- (BOOL)matchesPointByCoordinate:(EDPoint *)otherPoint;
 - (void)copyAttributes:(EDPoint *)otherPoint;
 @end

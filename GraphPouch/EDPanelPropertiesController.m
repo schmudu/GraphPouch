@@ -171,7 +171,6 @@
 #pragma mark context changed
 
 - (void)onContextChanged:(NSNotification *)note{
-    NSLog(@"context changed.");
     // set the correct view if window is showing
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         [self setCorrectView];

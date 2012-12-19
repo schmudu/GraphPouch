@@ -31,50 +31,37 @@
     
     // add all points in first graph
     for (EDEquation *equation in [[selectedGraphs objectAtIndex:0] equations]){
-        //[equation setMatchesHaveSameVisibility:TRUE];
+        [equation setMatchesHaveSameVisibility:TRUE];
+        [equation setMatchesHaveSameLabel:TRUE];
         [commonEquations addObject:equation];
     }
     
-    //iterate through graphs
+    EDEquation *equationFound;
     for (EDGraph *graph in selectedGraphs){
         for (EDEquation *commonEquation in commonEquations){
-            // points must be an exact match
-            if (![[graph equations] containsEquation:commonEquation]){
-                // no match so remove from common points
-                [commonEquationsToRemove addObject:commonEquation];
-            }
-        }
-    }
-    /*
-    for (EDGraph *graph in selectedGraphs){
-        for (EDPoint *commonPoint in commonPoints){
-            pointFound = [[graph points] findPointByCoordinate:commonPoint];
+            equationFound = [[graph equations] findEquation:commonEquation];
             
-            if (!pointFound) {
-                [commonPointsToRemove addObject:commonPoint];
+            if (!equationFound) {
+                [commonEquationsToRemove addObject:commonEquation];
             }
             else {
                 // point was found now see if it was an exact match
-                if (![pointFound matchesPoint:commonPoint]) {
-                    [commonPoint setMatchesHaveSameVisibility:FALSE];
+                if ([equationFound isVisible] != [commonEquation isVisible]) {
+                    [commonEquation setMatchesHaveSameVisibility:FALSE];
+                }
+                
+                if ([equationFound showLabel] != [commonEquation showLabel]) {
+                    [commonEquation setMatchesHaveSameLabel:FALSE];
                 }
             }
         }
-    }*/
+    }
     
     // remove points that weren't common to all graphs
     for (EDEquation *equation in commonEquationsToRemove){
         [commonEquations removeEquation:equation];
     }
     
-    // sort common points by x
-    /*
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDElementAttributeLocationX ascending:TRUE];
-    NSArray *descriptorArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    NSArray *sortedArray = [commonEquations sortedArrayUsingDescriptors:descriptorArray];
-    
-    return sortedArray;
-    */
     return commonEquations;
 }
 

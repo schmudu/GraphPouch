@@ -310,7 +310,7 @@
     }];
     
     // get all the common points
-    NSArray *commonPoints = [EDCoreDataUtility getAllCommonPointsforSelectedGraphs:_context];
+    NSArray *commonPoints = [EDCoreDataUtility getCommonPointsforSelectedGraphs:_context];
     NSMutableArray *selectedPoints = [[NSMutableArray alloc] init];
     
     // pull the indexed objects from the common points and place into an array

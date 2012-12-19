@@ -16,6 +16,8 @@
 @property (nonatomic, retain) NSString * equation;
 @property BOOL isVisible;
 @property BOOL showLabel;
+@property BOOL matchesHaveSameVisibility;
+@property BOOL matchesHaveSameLabel;
 @property (nonatomic, retain) EDGraph *graph;
 @property (nonatomic, retain) NSOrderedSet *tokens;
 
