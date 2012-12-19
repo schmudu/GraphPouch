@@ -53,20 +53,6 @@
     [self setEquation:[otherEquation equation]];
     [self setIsVisible:[otherEquation isVisible]];
     [self setShowLabel:[otherEquation showLabel]];
-    [self setGraph:[otherEquation graph]];
-    
-    // clear tokens
-    [otherEquation removeAllTokens];
-    
-    // copy this equation's tokens
-    EDToken *tokenCopy;
-    for (EDToken *token in [self tokens]){
-        // copy token
-        tokenCopy = [token copy:[self managedObjectContext]];
-        
-        // add to equation
-        [otherEquation addTokensObject:tokenCopy];
-    }
 }
 
 - (void)printAllTokens{
@@ -78,21 +64,10 @@
 }
 
 - (BOOL)matchesEquation:(EDEquation *)otherEquation{
-    // enumerate tokens and if value is the same then same equation
-    EDToken *otherEquationToken, *thisToken;
-    int i = 0;
+    if ([[self equation] isEqualToString:[otherEquation equation]])
+        return TRUE;
     
-    // if every token matches then we have a match
-    while (i < [[self tokens] count]){
-        thisToken = [[self tokens] objectAtIndex:i];
-        otherEquationToken = [[otherEquation tokens] objectAtIndex:i];
-        
-        if (![[thisToken value] isEqualToString:[otherEquationToken value]]) {
-            return FALSE;
-        }
-        i++;
-    }
-    return TRUE;
+    return FALSE;
 }
 
 /*

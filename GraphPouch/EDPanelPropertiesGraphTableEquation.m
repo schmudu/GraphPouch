@@ -68,7 +68,6 @@
     return returnValue; 
 }
 
-/*
 - (void)tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
     // The column identifier string is the easiest way to identify a table column. Much easier
     // than keeping a reference to the table column object.
@@ -84,16 +83,13 @@
     
     [newEquation copyAttributes:currentEquation];
     
+    /*
     if ([columnIdentifier isEqualToString:@"equation"]) {
         [newAttribute setValue:EDEquationAttributeEquation forKey:EDKey];
         [newAttribute setObject:object forKey:EDValue];
-    }
-    else if ([columnIdentifier isEqualToString:@"visible"]) {
+    }*/
+    if ([columnIdentifier isEqualToString:@"visible"]) {
         [newAttribute setValue:EDEquationAttributeIsVisible forKey:EDKey];
-        [newAttribute setObject:object forKey:EDValue];
-    }
-    else if ([columnIdentifier isEqualToString:@""]) {
-        [newAttribute setValue:EDGraphPointAttributeVisible forKey:EDKey];
         [newAttribute setObject:object forKey:EDValue];
     }
     else if ([columnIdentifier isEqualToString:@"label"]) {
@@ -103,8 +99,9 @@
     
     // set the attribute for the graph that holds this point
     // set the common points
-    [EDCoreDataUtility setAllCommonPointsforSelectedGraphs:newPoint attribute:newAttribute context:_context];
-}*/
+    //[EDCoreDataUtility setAllCommonPointsforSelectedGraphs:newPoint attribute:newAttribute context:_context];
+    [EDCoreDataUtility setAllCommonEquationsforSelectedGraphs:newEquation attribute:newAttribute context:_context];
+}
 
 #pragma mark table delegate
 /*
