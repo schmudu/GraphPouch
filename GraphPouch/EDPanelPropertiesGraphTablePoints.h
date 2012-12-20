@@ -10,9 +10,9 @@
 
 @interface EDPanelPropertiesGraphTablePoints : NSObject <NSTableViewDataSource, NSTableViewDelegate>{
     NSManagedObjectContext *_context;
-    IBOutlet NSTableView *pointsTable;
-    IBOutlet NSButton *buttonPointRemove;
+    NSTableView *pointsTable;
+    NSButton *buttonPointRemove;
 }
 
-- (id)initWithContext:(NSManagedObjectContext *)context;
+- (id)initWithContext:(NSManagedObjectContext *)context table:(NSTableView *)table removeButton:(NSButton *)button;
 @end

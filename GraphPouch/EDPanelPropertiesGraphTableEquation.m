@@ -17,11 +17,13 @@
 @end
 
 @implementation EDPanelPropertiesGraphTableEquation
-- (id)initWithContext:(NSManagedObjectContext *)context{
+- (id)initWithContext:(NSManagedObjectContext *)context table:(NSTableView *)table removeButton:(NSButton *)button{
     self = [super init];
     if (self){
         // init
         _context = context;
+        equationTable = table;
+        buttonEquationRemove = button;
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -34,7 +36,6 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    //NSArray *commonEquationsForSelectedGraphs = [EDCoreDataUtility getAllCommonEquationsforSelectedGraphs:_context];
     NSArray *commonEquationsForSelectedGraphs = [EDCoreDataUtility getCommonEquationsforSelectedGraphs:_context];
     if (!commonEquationsForSelectedGraphs) {
         return 0;
@@ -116,7 +117,6 @@
 }
 
 #pragma mark table delegate
-/*
 - (void)tableViewSelectionDidChange:(NSNotification *)notification{
     // if nothing selected
     if ([equationTable numberOfSelectedRows] == 0) {
@@ -125,11 +125,10 @@
     else{
         [buttonEquationRemove setEnabled:TRUE];
     }
-}*/
+}
 
 - (void)onContextChanged:(NSNotification *)note{
     [equationTable reloadData];
-    //NSLog(@"context changed.");
 }
 
 @end

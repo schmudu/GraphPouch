@@ -19,11 +19,13 @@
 
 @implementation EDPanelPropertiesGraphTablePoints
 
-- (id)initWithContext:(NSManagedObjectContext *)context{
+- (id)initWithContext:(NSManagedObjectContext *)context table:(NSTableView *)table removeButton:(NSButton *)button{
     self = [super init];
     if (self){
         // init
         _context = context;
+        pointsTable = table;
+        buttonPointRemove = button;
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -122,6 +124,7 @@
 
 #pragma mark table delegate
 - (void)tableViewSelectionDidChange:(NSNotification *)notification{
+    NSLog(@"table points:%@", pointsTable);
     // if nothing selected
     if ([pointsTable numberOfSelectedRows] == 0) {
         [buttonPointRemove setEnabled:FALSE];

@@ -10,9 +10,9 @@
 
 @interface EDPanelPropertiesGraphTableEquation : NSObject <NSTableViewDataSource, NSTableViewDelegate>{
     NSManagedObjectContext *_context;
-    IBOutlet NSTableView *equationTable;
-    IBOutlet NSButton *buttonEquationRemove;
+    NSTableView *equationTable;
+    NSButton *buttonEquationRemove;
 }
 
-- (id)initWithContext:(NSManagedObjectContext *)context;
+- (id)initWithContext:(NSManagedObjectContext *)context table:(NSTableView *)table removeButton:(NSButton *)button;
 @end

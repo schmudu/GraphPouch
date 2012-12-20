@@ -15,6 +15,7 @@
 #import "NSColor+Utilities.h"
 #import "NSManagedObject+EasyFetching.h"
 #import "EDCoreDataUtility+Points.h"
+#import "EDCoreDataUtility+Equations.h"
 
 @interface EDPanelPropertiesGraphController ()
 - (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute;
@@ -57,7 +58,7 @@
     [self setElementCheckbox:checkboxHasTickMarks attribute:EDGraphAttributeTickMarks];
     
     // initialize table points datasource and delegate
-    tablePointsController = [[EDPanelPropertiesGraphTablePoints alloc] initWithContext:_context];
+    tablePointsController = [[EDPanelPropertiesGraphTablePoints alloc] initWithContext:_context table:tablePoints removeButton:buttonRemovePoints];
     [tablePoints setDelegate:tablePointsController];
     [tablePoints setDataSource:tablePointsController];
     
@@ -67,7 +68,7 @@
     }
     
     // initialize table equation datasource and delegate
-    tableEquationController = [[EDPanelPropertiesGraphTableEquation alloc] initWithContext:_context];
+    tableEquationController = [[EDPanelPropertiesGraphTableEquation alloc] initWithContext:_context table:tableEquation removeButton:buttonRemoveEquation];
     [tableEquation setDelegate:tableEquationController];
     [tableEquation setDataSource:tableEquationController];
     
@@ -76,9 +77,22 @@
         [buttonRemoveEquation setEnabled:FALSE];
     }
     
-    // min/max graph
-    [buttonMaxX addItemsWithTitles:(NSArray *)];
+    // min/max graph values
+    NSArray *minValues = [NSArray arrayWithObjects:[[NSNumber numberWithInt:0] stringValue],[[NSNumber numberWithInt:-1] stringValue],[[NSNumber numberWithInt:-5] stringValue],[[NSNumber numberWithInt:-10] stringValue],[[NSNumber numberWithInt:-25] stringValue],[[NSNumber numberWithInt:-100] stringValue],[[NSNumber numberWithInt:-1000] stringValue], nil];
+    NSArray *maxValues = [NSArray arrayWithObjects:[[NSNumber numberWithInt:0] stringValue],[[NSNumber numberWithInt:1] stringValue],[[NSNumber numberWithInt:5] stringValue],[[NSNumber numberWithInt:10] stringValue],[[NSNumber numberWithInt:25] stringValue],[[NSNumber numberWithInt:100] stringValue],[[NSNumber numberWithInt:1000] stringValue], nil];
     
+    // clear items/then add items
+    [buttonMaxX removeAllItems];
+    [buttonMaxX addItemsWithTitles:maxValues];
+    [buttonMaxY removeAllItems];
+    [buttonMaxY addItemsWithTitles:maxValues];
+    [buttonMinX removeAllItems];
+    [buttonMinX addItemsWithTitles:minValues];
+    [buttonMinY removeAllItems];
+    [buttonMinY addItemsWithTitles:minValues];
+    
+    // automatically set button value to graph max/min value
+#warning need to add this once we add it to the model
 }
 #pragma mark keyboard
 - (void)keyDown:(NSEvent *)theEvent{
@@ -335,7 +349,24 @@
 }
 
 - (IBAction)removeEquation:(id)sender{
-    NSLog(@"remove equation.");
+    // get all selected points and their attributes
+    NSMutableArray *selectedIndices = [[NSMutableArray alloc] init];
+    NSIndexSet *selectedIndexSet = [tableEquation selectedRowIndexes];
+    
+    [selectedIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [selectedIndices addObject:[[NSNumber alloc] initWithInt:idx]];
+    }];
+    
+    // get all the common points
+    NSArray *commonEquations = [EDCoreDataUtility getCommonEquationsforSelectedGraphs:_context];
+    NSMutableArray *selectedEquations = [[NSMutableArray alloc] init];
+    
+    // pull the indexed objects from the common points and place into an array
+    for (NSNumber *index in selectedIndices){
+        [selectedEquations addObject:[commonEquations objectAtIndex:[index intValue]]];
+    }
+    // remove all points from selected graphs that have the same attributes
+    [EDCoreDataUtility removeCommonEquationsforSelectedGraphsMatchingEquations:selectedEquations context:_context];
 }
 #pragma mark graph points
 @end
