@@ -10,6 +10,7 @@
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
 #import "EDCoreDataUtility+Pages.h"
+#import "NSColor+Utilities.h"
 
 @interface EDPageView()
 - (void)onContextChanged:(NSNotification *)note;
@@ -43,15 +44,19 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSRect bounds = NSMakeRect(40, 0, EDPageImageViewWidth, EDPageImageViewHeight);
+    NSBezierPath *path;
     
     if ([_dataObj selected]) {
-        [[NSColor blueColor] setFill];
+        //[[NSColor blueColor] setFill];
+        [[NSColor colorWithHexColorString:@"5555ff" alpha:0.2] setFill];
+        path = [NSBezierPath bezierPathWithRoundedRect:bounds xRadius:5 yRadius:5];
+        [path fill];
     }
     else {
         [[NSColor redColor] setFill];
+        [NSBezierPath fillRect:bounds];
     }
     
-    [NSBezierPath fillRect:bounds];
 }
 
 #pragma mark data
