@@ -19,13 +19,15 @@
 
 @interface EDPanelPropertiesGraphController ()
 - (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute;
-- (void)setElementHasCoordinateAxes;
+- (void)setGraphPopUpValues;
 - (void)setElementCheckbox:(NSButton *)checkbox attribute:(NSString *)attribute;
 - (void)setLabelState:(NSTextField *)label hasChange:(BOOL)diff value:(float)labelValue;
 - (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue;
 - (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key;
 - (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key;
+- (NSMutableDictionary *)checkForSameIntValueInLabelsForKey:(NSString *)key;
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)setGraphPopUpValues;
 @end
 
 @implementation EDPanelPropertiesGraphController
@@ -52,7 +54,8 @@
     [self setElementLabel:labelWidth attribute:EDElementAttributeWidth];
     [self setElementLabel:labelX attribute:EDElementAttributeLocationX];
     [self setElementLabel:labelY attribute:EDElementAttributeLocationY];
-    [self setElementHasCoordinateAxes];
+    [self setGraphPopUpValues];
+    [self setElementCheckbox:checkboxHasCoordinates attribute:EDGraphAttributeCoordinateAxes];
     [self setElementCheckbox:checkboxHasLabels attribute:EDGraphAttributeLabels];
     [self setElementCheckbox:checkboxGrid attribute:EDGraphAttributeGridLines];
     [self setElementCheckbox:checkboxHasTickMarks attribute:EDGraphAttributeTickMarks];
@@ -76,24 +79,8 @@
     if ([tableEquation numberOfSelectedRows] == 0) {
         [buttonRemoveEquation setEnabled:FALSE];
     }
-    
-    // min/max graph values
-    NSArray *minValues = [NSArray arrayWithObjects:[[NSNumber numberWithInt:0] stringValue],[[NSNumber numberWithInt:-1] stringValue],[[NSNumber numberWithInt:-5] stringValue],[[NSNumber numberWithInt:-10] stringValue],[[NSNumber numberWithInt:-25] stringValue],[[NSNumber numberWithInt:-100] stringValue],[[NSNumber numberWithInt:-1000] stringValue], nil];
-    NSArray *maxValues = [NSArray arrayWithObjects:[[NSNumber numberWithInt:0] stringValue],[[NSNumber numberWithInt:1] stringValue],[[NSNumber numberWithInt:5] stringValue],[[NSNumber numberWithInt:10] stringValue],[[NSNumber numberWithInt:25] stringValue],[[NSNumber numberWithInt:100] stringValue],[[NSNumber numberWithInt:1000] stringValue], nil];
-    
-    // clear items/then add items
-    [buttonMaxX removeAllItems];
-    [buttonMaxX addItemsWithTitles:maxValues];
-    [buttonMaxY removeAllItems];
-    [buttonMaxY addItemsWithTitles:maxValues];
-    [buttonMinX removeAllItems];
-    [buttonMinX addItemsWithTitles:minValues];
-    [buttonMinY removeAllItems];
-    [buttonMinY addItemsWithTitles:minValues];
-    
-    // automatically set button value to graph max/min value
-#warning need to add this once we add it to the model
 }
+
 #pragma mark keyboard
 - (void)keyDown:(NSEvent *)theEvent{
     NSLog(@"key down.");
@@ -125,7 +112,6 @@
 }
 
 - (void)setElementHasCoordinateAxes{
-#warning need to set tick marks checkbox as well
     // find if there are differences in values of selected objects
     NSMutableDictionary *results = [self checkForSameBoolValueInLabelsForKey:EDGraphAttributeCoordinateAxes];
     
@@ -178,7 +164,6 @@
     float value = 0;
     EDElement *currentElement;
     
-#warning add other elements here
     [elements addObjectsFromArray:graphs];
     while ((i < [elements count]) && (!diff)) {
         currentElement = [elements objectAtIndex:i];
@@ -198,7 +183,7 @@
     return results;
 }
 
-- (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key{
+- (NSMutableDictionary *)checkForSameIntValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSMutableArray *elements = [[NSMutableArray alloc] init];
     NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
@@ -208,6 +193,34 @@
     EDElement *currentElement;
     
 #warning add other elements here
+    [elements addObjectsFromArray:graphs];
+    while ((i < [elements count]) && (!diff)) {
+        currentElement = [elements objectAtIndex:i];
+        // if not the first and current width is not the same as previous width
+        if((i != 0) && (value != [[currentElement valueForKey:key] intValue])){
+            diff = TRUE;
+        }
+        else {
+            value = [[currentElement valueForKey:key] intValue];
+        }
+        i++;
+    }
+    
+    // set results
+    [results setValue:[[NSNumber alloc] initWithFloat:value] forKey:EDKeyValue];
+    [results setValue:[[NSNumber alloc] initWithBool:diff] forKey:EDKeyDiff];
+    return results;
+}
+
+- (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key{
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    NSMutableArray *elements = [[NSMutableArray alloc] init];
+    NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
+    BOOL diff = FALSE;
+    int i = 0;
+    float value = 0;
+    EDElement *currentElement;
+    
     [elements addObjectsFromArray:graphs];
     while ((i < [elements count]) && (!diff)) {
         currentElement = [elements objectAtIndex:i];
@@ -369,4 +382,43 @@
     [EDCoreDataUtility removeCommonEquationsforSelectedGraphsMatchingEquations:selectedEquations context:_context];
 }
 #pragma mark graph points
+
+#pragma mark min/max values
+- (void)setGraphPopUpValues{
+    // min/max graph values
+    NSArray *minValues = [NSArray arrayWithObjects:[NSString stringWithFormat:@""], [[NSNumber numberWithInt:0] stringValue],[[NSNumber numberWithInt:-1] stringValue],[[NSNumber numberWithInt:-5] stringValue],[[NSNumber numberWithInt:-10] stringValue],[[NSNumber numberWithInt:-25] stringValue],[[NSNumber numberWithInt:-100] stringValue],[[NSNumber numberWithInt:-1000] stringValue], nil];
+    NSArray *maxValues = [NSArray arrayWithObjects:[NSString stringWithFormat:@""], [[NSNumber numberWithInt:0] stringValue],[[NSNumber numberWithInt:1] stringValue],[[NSNumber numberWithInt:5] stringValue],[[NSNumber numberWithInt:10] stringValue],[[NSNumber numberWithInt:25] stringValue],[[NSNumber numberWithInt:100] stringValue],[[NSNumber numberWithInt:1000] stringValue], nil];
+    
+    // clear items/then add items
+    [buttonMaxX removeAllItems];
+    [buttonMaxX addItemsWithTitles:maxValues];
+    [buttonMaxY removeAllItems];
+    [buttonMaxY addItemsWithTitles:maxValues];
+    [buttonMinX removeAllItems];
+    [buttonMinX addItemsWithTitles:minValues];
+    [buttonMinY removeAllItems];
+    [buttonMinY addItemsWithTitles:minValues];
+    
+    // find if there are differences in values of selected objects
+    NSMutableDictionary *resultsMinX = [self checkForSameIntValueInLabelsForKey:EDGraphAttributeMinValueX];
+    NSMutableDictionary *resultsMinY = [self checkForSameIntValueInLabelsForKey:EDGraphAttributeMinValueY];
+    NSMutableDictionary *resultsMaxX = [self checkForSameIntValueInLabelsForKey:EDGraphAttributeMaxValueX];
+    NSMutableDictionary *resultsMaxY = [self checkForSameIntValueInLabelsForKey:EDGraphAttributeMaxValueY];
+    
+    NSLog(@"same min X:%d", [[resultsMinX valueForKey:EDKeyDiff] boolValue]);
+    // set state
+    /*
+    if ([[resultsMinX valueForKey:EDKeyDiff] boolValue]) {
+        [checkboxHasCoordinates setState:NSMixedState];
+    }
+    else {
+        if ([[results valueForKey:EDKeyValue] boolValue]) 
+            [checkboxHasCoordinates setState:NSOnState];
+        else
+            [checkboxHasCoordinates setState:NSOffState];
+    }
+     */
+    // automatically set button value to graph max/min value
+}
+
 @end
