@@ -76,6 +76,9 @@
         [buttonRemoveEquation setEnabled:FALSE];
     }
     
+    // min/max graph
+    [buttonMaxX addItemsWithTitles:(NSArray *)];
+    
 }
 #pragma mark keyboard
 - (void)keyDown:(NSEvent *)theEvent{

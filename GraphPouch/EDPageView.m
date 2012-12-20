@@ -43,20 +43,24 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSRect bounds = NSMakeRect(40, 0, EDPageImageViewWidth, EDPageImageViewHeight);
+    NSRect bounds = NSMakeRect(40, (EDPageViewSelectionHeight - EDPageImageViewHeight)/2, EDPageImageViewWidth, EDPageImageViewHeight);
+    NSRect selectionBounds = NSMakeRect(40 - (EDPageViewSelectionWidth - EDPageImageViewWidth)/2, 0, EDPageViewSelectionWidth, EDPageViewSelectionHeight);
+    
     NSBezierPath *path;
     
     if ([_dataObj selected]) {
-        //[[NSColor blueColor] setFill];
-        [[NSColor colorWithHexColorString:@"5555ff" alpha:0.2] setFill];
-        path = [NSBezierPath bezierPathWithRoundedRect:bounds xRadius:5 yRadius:5];
+        [[NSColor colorWithHexColorString:EDPageViewSelectionColor alpha:EDPageViewSelectionAlpha] setFill];
+        path = [NSBezierPath bezierPathWithRoundedRect:selectionBounds xRadius:5 yRadius:5];
         [path fill];
     }
-    else {
-        [[NSColor redColor] setFill];
-        [NSBezierPath fillRect:bounds];
-    }
     
+    // page view
+    [[NSColor whiteColor] setFill];
+    [NSBezierPath fillRect:bounds];
+    
+    // page drop shadow
+    [[NSColor colorWithHexColorString:@"000000" alpha:0.4] setStroke];
+    [NSBezierPath strokeRect:bounds];
 }
 
 #pragma mark data

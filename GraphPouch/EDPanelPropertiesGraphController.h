@@ -25,6 +25,10 @@
     IBOutlet NSTableView *tableEquation;
     IBOutlet NSButton *buttonRemovePoints;
     IBOutlet NSButton *buttonRemoveEquation;
+    IBOutlet NSPopUpButton *buttonMinX;
+    IBOutlet NSPopUpButton *buttonMinY;
+    IBOutlet NSPopUpButton *buttonMaxX;
+    IBOutlet NSPopUpButton *buttonMaxY;
     EDSheetPropertiesGraphEquationController *equationController;
     EDPanelPropertiesGraphTablePoints *tablePointsController;
     EDPanelPropertiesGraphTableEquation *tableEquationController;
