@@ -42,4 +42,8 @@
 - (IBAction)removeEquation:(id)sender;
 - (IBAction)addNewPoint:(id)sender;
 - (IBAction)removePoints:(id)sender;
+- (IBAction)changeValueMinX:(id)sender;
+- (IBAction)changeValueMinY:(id)sender;
+- (IBAction)changeValueMaxX:(id)sender;
+- (IBAction)changeValueMaxY:(id)sender;
 @end

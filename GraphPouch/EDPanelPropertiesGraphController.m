@@ -27,7 +27,13 @@
 - (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key;
 - (NSMutableDictionary *)checkForSameIntValueInLabelsForKey:(NSString *)key;
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
-- (void)setGraphPopUpValues;
+- (NSArray *)maxValuesWithoutZero;
+- (NSArray *)maxValuesWithMixed;
+- (NSArray *)maxValues;
+- (NSArray *)minValuesWithoutZero;
+- (NSArray *)minValuesWithMixed;
+- (NSArray *)minValues;
+- (void)setPopUpButton:(NSPopUpButton *)button info:(NSMutableDictionary *)dict oppositeButton:(NSPopUpButton *)oppositeButton;
 @end
 
 @implementation EDPanelPropertiesGraphController
@@ -384,41 +390,102 @@
 #pragma mark graph points
 
 #pragma mark min/max values
+- (NSArray *)minValuesWithoutZero{
+   return [NSArray arrayWithObjects:[[NSNumber numberWithInt:-1] stringValue],[[NSNumber numberWithInt:-5] stringValue],[[NSNumber numberWithInt:-10] stringValue],[[NSNumber numberWithInt:-25] stringValue],[[NSNumber numberWithInt:-100] stringValue],[[NSNumber numberWithInt:-1000] stringValue], nil];
+}
+
+- (NSArray *)minValuesWithMixed{
+   return [NSArray arrayWithObjects:[NSString stringWithFormat:@""], [[NSNumber numberWithInt:0] stringValue],[[NSNumber numberWithInt:-1] stringValue],[[NSNumber numberWithInt:-5] stringValue],[[NSNumber numberWithInt:-10] stringValue],[[NSNumber numberWithInt:-25] stringValue],[[NSNumber numberWithInt:-100] stringValue],[[NSNumber numberWithInt:-1000] stringValue], nil];
+}
+
+- (NSArray *)minValues{
+   return [NSArray arrayWithObjects:[[NSNumber numberWithInt:0] stringValue],[[NSNumber numberWithInt:-1] stringValue],[[NSNumber numberWithInt:-5] stringValue],[[NSNumber numberWithInt:-10] stringValue],[[NSNumber numberWithInt:-25] stringValue],[[NSNumber numberWithInt:-100] stringValue],[[NSNumber numberWithInt:-1000] stringValue], nil];
+}
+
+- (NSArray *)maxValues{
+    return [NSArray arrayWithObjects:[[NSNumber numberWithInt:0] stringValue],[[NSNumber numberWithInt:1] stringValue],[[NSNumber numberWithInt:5] stringValue],[[NSNumber numberWithInt:10] stringValue],[[NSNumber numberWithInt:25] stringValue],[[NSNumber numberWithInt:100] stringValue],[[NSNumber numberWithInt:1000] stringValue], nil];
+}
+
+- (NSArray *)maxValuesWithoutZero{
+    return [NSArray arrayWithObjects:[[NSNumber numberWithInt:1] stringValue],[[NSNumber numberWithInt:5] stringValue],[[NSNumber numberWithInt:10] stringValue],[[NSNumber numberWithInt:25] stringValue],[[NSNumber numberWithInt:100] stringValue],[[NSNumber numberWithInt:1000] stringValue], nil];
+}
+
+- (NSArray *)maxValuesWithMixed{
+    return [NSArray arrayWithObjects:[NSString stringWithFormat:@""], [[NSNumber numberWithInt:0] stringValue],[[NSNumber numberWithInt:1] stringValue],[[NSNumber numberWithInt:5] stringValue],[[NSNumber numberWithInt:10] stringValue],[[NSNumber numberWithInt:25] stringValue],[[NSNumber numberWithInt:100] stringValue],[[NSNumber numberWithInt:1000] stringValue], nil];
+}
+
 - (void)setGraphPopUpValues{
-    // min/max graph values
-    NSArray *minValues = [NSArray arrayWithObjects:[NSString stringWithFormat:@""], [[NSNumber numberWithInt:0] stringValue],[[NSNumber numberWithInt:-1] stringValue],[[NSNumber numberWithInt:-5] stringValue],[[NSNumber numberWithInt:-10] stringValue],[[NSNumber numberWithInt:-25] stringValue],[[NSNumber numberWithInt:-100] stringValue],[[NSNumber numberWithInt:-1000] stringValue], nil];
-    NSArray *maxValues = [NSArray arrayWithObjects:[NSString stringWithFormat:@""], [[NSNumber numberWithInt:0] stringValue],[[NSNumber numberWithInt:1] stringValue],[[NSNumber numberWithInt:5] stringValue],[[NSNumber numberWithInt:10] stringValue],[[NSNumber numberWithInt:25] stringValue],[[NSNumber numberWithInt:100] stringValue],[[NSNumber numberWithInt:1000] stringValue], nil];
-    
-    // clear items/then add items
-    [buttonMaxX removeAllItems];
-    [buttonMaxX addItemsWithTitles:maxValues];
-    [buttonMaxY removeAllItems];
-    [buttonMaxY addItemsWithTitles:maxValues];
-    [buttonMinX removeAllItems];
-    [buttonMinX addItemsWithTitles:minValues];
-    [buttonMinY removeAllItems];
-    [buttonMinY addItemsWithTitles:minValues];
-    
     // find if there are differences in values of selected objects
     NSMutableDictionary *resultsMinX = [self checkForSameIntValueInLabelsForKey:EDGraphAttributeMinValueX];
     NSMutableDictionary *resultsMinY = [self checkForSameIntValueInLabelsForKey:EDGraphAttributeMinValueY];
     NSMutableDictionary *resultsMaxX = [self checkForSameIntValueInLabelsForKey:EDGraphAttributeMaxValueX];
     NSMutableDictionary *resultsMaxY = [self checkForSameIntValueInLabelsForKey:EDGraphAttributeMaxValueY];
     
-    NSLog(@"same min X:%d", [[resultsMinX valueForKey:EDKeyDiff] boolValue]);
-    // set state
-    /*
-    if ([[resultsMinX valueForKey:EDKeyDiff] boolValue]) {
-        [checkboxHasCoordinates setState:NSMixedState];
-    }
-    else {
-        if ([[results valueForKey:EDKeyValue] boolValue]) 
-            [checkboxHasCoordinates setState:NSOnState];
-        else
-            [checkboxHasCoordinates setState:NSOffState];
-    }
-     */
-    // automatically set button value to graph max/min value
+    // add items to buttons
+    [buttonMinX removeAllItems];
+    [buttonMinX addItemsWithTitles:[self minValues]];
+    [buttonMinY removeAllItems];
+    [buttonMinY addItemsWithTitles:[self minValues]];
+    [buttonMaxX removeAllItems];
+    [buttonMaxX addItemsWithTitles:[self maxValues]];
+    [buttonMaxY removeAllItems];
+    [buttonMaxY addItemsWithTitles:[self maxValues]];
+    
+    // set state based on pop up buttons
+    [self setPopUpButton:buttonMinX info:resultsMinX oppositeButton:buttonMaxX];
+    [self setPopUpButton:buttonMaxX info:resultsMaxX oppositeButton:buttonMinX];
+    [self setPopUpButton:buttonMinY info:resultsMinY oppositeButton:buttonMaxY];
+    [self setPopUpButton:buttonMaxY info:resultsMaxY oppositeButton:buttonMinY];
 }
 
+- (void)setPopUpButton:(NSPopUpButton *)button info:(NSMutableDictionary *)dict oppositeButton:(NSPopUpButton *)oppositeButton{
+    if ([[dict valueForKey:EDKeyDiff] boolValue]) {
+        // add mixed value to pop up list
+        [button insertItemWithTitle:@"" atIndex:0];
+        
+        // set mixed value
+        [button selectItem:[button itemAtIndex:[button indexOfItemWithTitle:@""]]];
+    }
+    else {
+        if ([[dict valueForKey:EDKeyValue] intValue] == 0) {
+            // if button is equal to 0 then the opposite button cannot have the option of being 0
+            [oppositeButton removeItemWithTitle:@"0"];
+        }
+        
+        // automatically set button value to graph max/min value
+        [button selectItem:[button itemAtIndex:[button indexOfItemWithTitle:[NSString stringWithFormat:@"%d",[[dict valueForKey:EDKeyValue] intValue]]]]];
+    }
+}
+
+- (IBAction)changeValueMinX:(id)sender{
+    // do nothing if mixed value selected
+    if ([[[buttonMinX selectedItem] title] isEqualToString:@""])
+        return;
+    
+    [self changeSelectedElementsAttribute:EDGraphAttributeMinValueX newValue:[NSNumber numberWithInt:[[[buttonMinX selectedItem] title] intValue]]];
+}
+
+- (IBAction)changeValueMinY:(id)sender{
+    // do nothing if mixed value selected
+    if ([[[buttonMinY selectedItem] title] isEqualToString:@""])
+        return;
+    
+    [self changeSelectedElementsAttribute:EDGraphAttributeMinValueY newValue:[NSNumber numberWithInt:[[[buttonMinY selectedItem] title] intValue]]];
+}
+
+- (IBAction)changeValueMaxX:(id)sender{
+    // do nothing if mixed value selected
+    if ([[[buttonMaxX selectedItem] title] isEqualToString:@""])
+        return;
+    
+    [self changeSelectedElementsAttribute:EDGraphAttributeMaxValueX newValue:[NSNumber numberWithInt:[[[buttonMaxX selectedItem] title] intValue]]];
+}
+
+- (IBAction)changeValueMaxY:(id)sender{
+    // do nothing if mixed value selected
+    if ([[[buttonMaxY selectedItem] title] isEqualToString:@""])
+        return;
+    
+    [self changeSelectedElementsAttribute:EDGraphAttributeMaxValueY newValue:[NSNumber numberWithInt:[[[buttonMaxY selectedItem] title] intValue]]];
+}
 @end

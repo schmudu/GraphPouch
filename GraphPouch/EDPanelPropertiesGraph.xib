@@ -1667,6 +1667,38 @@
 					<int key="connectionID">3863</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">changeValueMaxX:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="998318440"/>
+					</object>
+					<int key="connectionID">3864</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">changeValueMaxY:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="591267730"/>
+					</object>
+					<int key="connectionID">3865</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">changeValueMinX:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="636373060"/>
+					</object>
+					<int key="connectionID">3866</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">changeValueMinY:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="837744664"/>
+					</object>
+					<int key="connectionID">3867</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="852605627"/>
@@ -4546,7 +4578,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">3863</int>
+			<int key="maxID">3867</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4572,6 +4604,10 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="addNewEquation:">id</string>
 						<string key="addNewPoint:">id</string>
+						<string key="changeValueMaxX:">id</string>
+						<string key="changeValueMaxY:">id</string>
+						<string key="changeValueMinX:">id</string>
+						<string key="changeValueMinY:">id</string>
 						<string key="removeEquation:">id</string>
 						<string key="removePoints:">id</string>
 						<string key="toggleHasCoordinateAxes:">id</string>
@@ -4586,6 +4622,22 @@
 						</object>
 						<object class="IBActionInfo" key="addNewPoint:">
 							<string key="name">addNewPoint:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="changeValueMaxX:">
+							<string key="name">changeValueMaxX:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="changeValueMaxY:">
+							<string key="name">changeValueMaxY:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="changeValueMinX:">
+							<string key="name">changeValueMinX:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="changeValueMinY:">
+							<string key="name">changeValueMinY:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="removeEquation:">
