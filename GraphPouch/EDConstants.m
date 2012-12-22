@@ -118,6 +118,7 @@ float const EDGraphYLabelVerticalOffset                         = 2;
 float const EDGraphPointDiameter                                = 10;
 NSString * const EDKeyRatioHorizontal                           = @"EDKeyRatioHorizontal";
 NSString * const EDKeyRatioVertical                             = @"EDKeyRatioVertical";
+float const EDGraphMargin                                       = 10;
 
 // graph points
 NSString * const EDGraphPointAttributeVisible                   = @"isVisible";

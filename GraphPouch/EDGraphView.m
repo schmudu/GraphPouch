@@ -5,6 +5,10 @@
 //  Created by PATRICK LEE on 7/22/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
+//  The graph view has a width of [self frame] - (2 * (EDGraphMargin + EDCoordinateArrowWidth)
+//  [self frame] is the width of the frame of the view
+//  EDGraphMargin defines the space in which labels can be drawn next to the coordinate axes
+//  EDCoordinateArrowWidth defines the width of the arrow that could potentially be drawn on the very edge of the graph
 
 #import "NS(Attributed)String+Geometrics.h"
 #import "EDCoreDataUtility.h"
@@ -18,6 +22,9 @@
 #import "EDPoint.h"
 
 @interface EDGraphView()
+- (float)height;
+- (float)width;
+- (float)margin;
 - (NSArray *)getLowestIntegralFactors:(int)number;
 - (NSMutableDictionary *)calculateGridIncrement:(int)maxValue length:(float)length;
 - (NSMutableDictionary *)calculateGraphOrigin;
@@ -55,6 +62,18 @@
     NSManagedObjectContext *context = [self currentContext];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:context];
+}
+
+- (float)margin{
+    return EDGraphMargin + EDCoordinateArrowWidth;
+}
+
+- (float)height{
+    return [self frame].size.height - 2 * [self margin];
+}
+
+- (float)width{
+    return [self frame].size.width - 2 * [self margin];
 }
 
 - (void)onContextChanged:(NSNotification *)note{
@@ -133,42 +152,42 @@
 
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo{
     NSBezierPath *path = [NSBezierPath bezierPath];
-    float height = [self frame].size.height;
-    float width = [self frame].size.width;
-    float originVerticalPosition = [self frame].size.height/2 + ([[originInfo valueForKey:EDKeyRatioVertical] floatValue] * [self frame].size.height/2);
-    float originHorizontalPosition = [self frame].size.width/2 + ([[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] * [self frame].size.width/2);
+    float originVerticalPosition = [self height]/2 + ([[originInfo valueForKey:EDKeyRatioVertical] floatValue] * [self height]/2) + [self margin];
+    float originHorizontalPosition = [self width]/2 - ([[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] * [self width]/2) + [self margin];
     [[NSColor blackColor] setStroke];
     
     //NSLog(@"drawing x-axis at vert pos:%f new pos:%f", height/2, originVerticalPosition);
     //draw x-axis
-    [path moveToPoint:NSMakePoint(0, originVerticalPosition)];
-    [path lineToPoint:NSMakePoint(width, originVerticalPosition)];
-    //[path moveToPoint:NSMakePoint(0, height/2)];
-    //[path lineToPoint:NSMakePoint(width, height/2)];
+    [path moveToPoint:NSMakePoint([self margin], originVerticalPosition)];
+    [path lineToPoint:NSMakePoint([self width] + [self margin], originVerticalPosition)];
     
-    // draw x-axis arrow negative
-    [path moveToPoint:NSMakePoint(0 + EDCoordinateArrowLength, originVerticalPosition + EDCoordinateArrowWidth)];
-    [path lineToPoint:NSMakePoint(0 , originVerticalPosition)];
-    [path lineToPoint:NSMakePoint(0 + EDCoordinateArrowLength, originVerticalPosition - EDCoordinateArrowWidth)];
+    // draw x-axis arrow negative, unless min == 0
+    if ([[[self dataObj] minValueX] intValue] != 0){
+        [path moveToPoint:NSMakePoint([self margin] + EDCoordinateArrowLength, originVerticalPosition + EDCoordinateArrowWidth)];
+        [path lineToPoint:NSMakePoint([self margin] , originVerticalPosition)];
+        [path lineToPoint:NSMakePoint([self margin] + EDCoordinateArrowLength, originVerticalPosition - EDCoordinateArrowWidth)];
+    }
     
     // draw x-axis arrow
-    [path moveToPoint:NSMakePoint(width - EDCoordinateArrowLength, originVerticalPosition + EDCoordinateArrowWidth)];
-    [path lineToPoint:NSMakePoint(width , originVerticalPosition)];
-    [path lineToPoint:NSMakePoint(width - EDCoordinateArrowLength, originVerticalPosition - EDCoordinateArrowWidth)];
+    [path moveToPoint:NSMakePoint([self width] + [self margin] - EDCoordinateArrowLength, originVerticalPosition + EDCoordinateArrowWidth)];
+    [path lineToPoint:NSMakePoint([self width] + [self margin], originVerticalPosition)];
+    [path lineToPoint:NSMakePoint([self width] + [self margin] - EDCoordinateArrowLength, originVerticalPosition - EDCoordinateArrowWidth)];
     
     // draw y-axis
-    [path moveToPoint:NSMakePoint(originHorizontalPosition, 0)];
-    [path lineToPoint:NSMakePoint(originHorizontalPosition, height)];
+    [path moveToPoint:NSMakePoint(originHorizontalPosition, 0 + [self margin])];
+    [path lineToPoint:NSMakePoint(originHorizontalPosition, [self height] + [self margin])];
     
     // draw y-axis arrow
-    [path moveToPoint:NSMakePoint(originHorizontalPosition - EDCoordinateArrowWidth, 0 + EDCoordinateArrowLength)];
-    [path lineToPoint:NSMakePoint(originHorizontalPosition, 0)];
-    [path lineToPoint:NSMakePoint(originHorizontalPosition + EDCoordinateArrowWidth, 0 + EDCoordinateArrowLength)];
+    [path moveToPoint:NSMakePoint(originHorizontalPosition - EDCoordinateArrowWidth, [self margin] + EDCoordinateArrowLength)];
+    [path lineToPoint:NSMakePoint(originHorizontalPosition, [self margin])];
+    [path lineToPoint:NSMakePoint(originHorizontalPosition + EDCoordinateArrowWidth, [self margin] + EDCoordinateArrowLength)];
     
     // draw y-axis arrow negative
-    [path moveToPoint:NSMakePoint(originHorizontalPosition - EDCoordinateArrowWidth, height - EDCoordinateArrowLength)];
-    [path lineToPoint:NSMakePoint(originHorizontalPosition, height)];
-    [path lineToPoint:NSMakePoint(originHorizontalPosition + EDCoordinateArrowWidth, height - EDCoordinateArrowLength)];
+    if ([[[self dataObj] minValueY] intValue] != 0){
+        [path moveToPoint:NSMakePoint(originHorizontalPosition - EDCoordinateArrowWidth, [self height] + [self margin] - EDCoordinateArrowLength)];
+        [path lineToPoint:NSMakePoint(originHorizontalPosition, [self height] + [self margin])];
+        [path lineToPoint:NSMakePoint(originHorizontalPosition + EDCoordinateArrowWidth, [self height] + [self margin] - EDCoordinateArrowLength)];
+    }
     
     [path setLineWidth:EDGraphDefaultCoordinateLineWidth];
     [path stroke];
