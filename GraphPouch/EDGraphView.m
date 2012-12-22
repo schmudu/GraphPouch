@@ -20,6 +20,7 @@
 @interface EDGraphView()
 - (NSArray *)getLowestIntegralFactors:(int)number;
 - (NSMutableDictionary *)calculateGridIncrement:(int)maxValue length:(float)length;
+- (NSMutableDictionary *)calculateGraphOrigin;
 - (void)drawCoordinateAxes;
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
 - (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
@@ -86,6 +87,7 @@
     
 - (void)drawRect:(NSRect)dirtyRect
 {
+    NSDictionary *originResults = [self calculateGraphOrigin];
     NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];
     NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
     
@@ -167,34 +169,6 @@
     [path stroke];
 }
 
-- (NSMutableDictionary *)calculateGridIncrement:(int)maxValue length:(float)length{
-    // start by default with one grid line per unit
-    float distanceIncrement = length/maxValue;
-    NSArray *factors = [self getLowestIntegralFactors:maxValue];
-    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    
-    // check if distance falls within bounds
-    for (NSNumber *factor in factors){
-        distanceIncrement = length/[factor floatValue];
-        
-        // if grid distance falls within the bounds of the thresholds then return that value
-        if ((distanceIncrement < EDGridIncrementalMaximum) && (distanceIncrement > EDGridIncrementalMinimum)){
-            // get number of grid lines
-            //numGridLines = maxValue/[factor intValue];
-            [results setObject:[[NSNumber alloc] initWithInt:[factor intValue]] forKey:EDKeyGridLinesCount];
-            [results setObject:[[NSNumber alloc] initWithFloat:distanceIncrement] forKey:EDKeyDistanceIncrement];
-            [results setObject:[[NSNumber alloc] initWithInt:(maxValue/[factor floatValue])] forKey:EDKeyGridFactor];
-            return results;
-        }
-    }
-    // by default return grid the size of the maximum value
-    [results setObject:[[NSNumber alloc] initWithInt:maxValue] forKey:EDKeyGridLinesCount];
-    [results setObject:[[NSNumber alloc] initWithFloat:(length/maxValue)] forKey:EDKeyDistanceIncrement];
-    [results setObject:[[NSNumber alloc] initWithInt:1] forKey:EDKeyGridFactor];
-    
-    return results;
-}
-
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal{
     NSBezierPath *path = [NSBezierPath bezierPath];
     
@@ -261,6 +235,45 @@
             [results addObject:[[NSNumber alloc] initWithInt:i]];
         }
     }
+    return results;
+}
+#pragma mark calculations
+- (NSMutableDictionary *)calculateGridIncrement:(int)maxValue length:(float)length{
+    // start by default with one grid line per unit
+    float distanceIncrement = length/maxValue;
+    NSArray *factors = [self getLowestIntegralFactors:maxValue];
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    
+    // check if distance falls within bounds
+    for (NSNumber *factor in factors){
+        distanceIncrement = length/[factor floatValue];
+        
+        // if grid distance falls within the bounds of the thresholds then return that value
+        if ((distanceIncrement < EDGridIncrementalMaximum) && (distanceIncrement > EDGridIncrementalMinimum)){
+            // get number of grid lines
+            //numGridLines = maxValue/[factor intValue];
+            [results setObject:[[NSNumber alloc] initWithInt:[factor intValue]] forKey:EDKeyGridLinesCount];
+            [results setObject:[[NSNumber alloc] initWithFloat:distanceIncrement] forKey:EDKeyDistanceIncrement];
+            [results setObject:[[NSNumber alloc] initWithInt:(maxValue/[factor floatValue])] forKey:EDKeyGridFactor];
+            return results;
+        }
+    }
+    // by default return grid the size of the maximum value
+    [results setObject:[[NSNumber alloc] initWithInt:maxValue] forKey:EDKeyGridLinesCount];
+    [results setObject:[[NSNumber alloc] initWithFloat:(length/maxValue)] forKey:EDKeyDistanceIncrement];
+    [results setObject:[[NSNumber alloc] initWithInt:1] forKey:EDKeyGridFactor];
+    
+    return results;
+}
+
+- (NSMutableDictionary *)calculateGraphOrigin{
+    NSMutableDictionary *results = [NSMutableDictionary dictionary];
+    
+    int absDistanceHoriz = abs([[(EDGraph *)[self dataObj] minValueX] intValue]) + abs([[(EDGraph *)[self dataObj] maxValueX] intValue]);
+    int absDistanceVertical = abs([[(EDGraph *)[self dataObj] minValueY] intValue]) + abs([[(EDGraph *)[self dataObj] maxValueY] intValue]);
+    float ratioHoriz = ([[(EDGraph *)[self dataObj] minValueX] floatValue] + [[(EDGraph *)[self dataObj] maxValueX] floatValue])/absDistanceHoriz;
+    float ratioVertical = ([[(EDGraph *)[self dataObj] minValueY] floatValue]+ [[(EDGraph *)[self dataObj] maxValueY] floatValue])/absDistanceVertical;
+    NSLog(@"horiz ratio:%f vertical ratio:%f", ratioHoriz, ratioVertical);
     return results;
 }
 

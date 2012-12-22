@@ -20,6 +20,10 @@
 @property BOOL hasGridLines;
 @property BOOL hasTickMarks;
 @property BOOL hasLabels;
+@property (nonatomic, retain) NSNumber *minValueX;
+@property (nonatomic, retain) NSNumber *minValueY;
+@property (nonatomic, retain) NSNumber *maxValueX;
+@property (nonatomic, retain) NSNumber *maxValueY;
 @property (nonatomic, retain) EDPage *page;
 @property (nonatomic, retain) NSSet *points;
 @property (nonatomic, retain) NSSet *equations;

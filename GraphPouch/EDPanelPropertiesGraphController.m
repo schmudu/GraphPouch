@@ -454,6 +454,7 @@
         
         // automatically set button value to graph max/min value
         [button selectItem:[button itemAtIndex:[button indexOfItemWithTitle:[NSString stringWithFormat:@"%d",[[dict valueForKey:EDKeyValue] intValue]]]]];
+        //[button selectItem:[button itemAtIndex:[button indexOfItemWithTitle:[NSString stringWithFormat:@"%d",0]]]];
     }
 }
 

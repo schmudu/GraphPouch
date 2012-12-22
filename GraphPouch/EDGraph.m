@@ -24,6 +24,10 @@
 @dynamic page;
 @dynamic points;
 @dynamic equations;
+@dynamic minValueX;
+@dynamic minValueY;
+@dynamic maxValueX;
+@dynamic maxValueY;
 
 #pragma mark encoding, decoding this object
 
@@ -48,14 +52,14 @@
             // create a point and set it for this graph
             newPoint = [point initWithCoder:aDecoder];
             /*
-            newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:nil] insertIntoManagedObjectContext:nil];
-            
-            
-            //set attributes
-            [newPoint setLocationX:[point locationX]];
-            [newPoint setLocationY:[point locationY]];
-            [newPoint setIsVisible:[point isVisible]];
-            */
+             newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:nil] insertIntoManagedObjectContext:nil];
+             
+             
+             //set attributes
+             [newPoint setLocationX:[point locationX]];
+             [newPoint setLocationY:[point locationY]];
+             [newPoint setIsVisible:[point isVisible]];
+             */
             // set relationship
             [self addPointsObject:newPoint];
         }
@@ -66,18 +70,18 @@
         for (EDEquation *equation in equations){
             newEquation = [equation initWithCoder:aDecoder];
             /*
-            // create a equation and set it for this graph
-            newEquation = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
-            
-            //set attributes
-            [newEquation setEquation:[equation equation]];
-            [newEquation setShowLabel:[equation showLabel]];
-            [newEquation setIsVisible:[equation isVisible]];
-            
-            for (EDToken *token in [equation tokens]){
-                
-            }
-            */
+             // create a equation and set it for this graph
+             newEquation = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
+             
+             //set attributes
+             [newEquation setEquation:[equation equation]];
+             [newEquation setShowLabel:[equation showLabel]];
+             [newEquation setIsVisible:[equation isVisible]];
+             
+             for (EDToken *token in [equation tokens]){
+             
+             }
+             */
             // set relationship
             [self addEquationsObject:newEquation];
         }
