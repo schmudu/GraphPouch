@@ -115,6 +115,8 @@ extern float const EDGraphHorizontalLabelHorizontalNegativeOffset;
 extern float const EDGraphXLabelHorizontalOffset;
 extern float const EDGraphYLabelVerticalOffset;
 extern float const EDGraphPointDiameter;
+extern NSString *const EDKeyRatioHorizontal;
+extern NSString *const EDKeyRatioVertical;
 
 // graph points
 extern NSString *const EDGraphPointAttributeVisible;

@@ -21,10 +21,10 @@
 - (NSArray *)getLowestIntegralFactors:(int)number;
 - (NSMutableDictionary *)calculateGridIncrement:(int)maxValue length:(float)length;
 - (NSMutableDictionary *)calculateGraphOrigin;
-- (void)drawCoordinateAxes;
+- (void)drawCoordinateAxes:(NSDictionary *)originInfo;
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
 - (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
-- (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal;
+- (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal ratios:(NSDictionary *)ratios;
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
 - (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
 @end
@@ -93,7 +93,7 @@
     
     // stroke grid
     if ([(EDGraph *)[self dataObj] hasGridLines]) {
-        [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults];
+        [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults ratios:originResults];
     }
     
     if ([(EDGraph *)[self dataObj] hasTickMarks]) {
@@ -102,7 +102,7 @@
     
     // stroke coordinate axes
     if ([(EDGraph *)[self dataObj] hasCoordinateAxes]) {
-        [self drawCoordinateAxes];
+        [self drawCoordinateAxes:originResults];
     }
     
     // color background
@@ -131,45 +131,50 @@
     }
 }
 
-- (void)drawCoordinateAxes{
+- (void)drawCoordinateAxes:(NSDictionary *)originInfo{
     NSBezierPath *path = [NSBezierPath bezierPath];
     float height = [self frame].size.height;
     float width = [self frame].size.width;
+    float originVerticalPosition = [self frame].size.height/2 + ([[originInfo valueForKey:EDKeyRatioVertical] floatValue] * [self frame].size.height/2);
+    float originHorizontalPosition = [self frame].size.width/2 + ([[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] * [self frame].size.width/2);
     [[NSColor blackColor] setStroke];
     
+    //NSLog(@"drawing x-axis at vert pos:%f new pos:%f", height/2, originVerticalPosition);
     //draw x-axis
-    [path moveToPoint:NSMakePoint(0, height/2)];
-    [path lineToPoint:NSMakePoint(width, height/2)];
+    [path moveToPoint:NSMakePoint(0, originVerticalPosition)];
+    [path lineToPoint:NSMakePoint(width, originVerticalPosition)];
+    //[path moveToPoint:NSMakePoint(0, height/2)];
+    //[path lineToPoint:NSMakePoint(width, height/2)];
     
     // draw x-axis arrow negative
-    [path moveToPoint:NSMakePoint(0 + EDCoordinateArrowLength, height/2 + EDCoordinateArrowWidth)];
-    [path lineToPoint:NSMakePoint(0 , height/2)];
-    [path lineToPoint:NSMakePoint(0 + EDCoordinateArrowLength, height/2 - EDCoordinateArrowWidth)];
+    [path moveToPoint:NSMakePoint(0 + EDCoordinateArrowLength, originVerticalPosition + EDCoordinateArrowWidth)];
+    [path lineToPoint:NSMakePoint(0 , originVerticalPosition)];
+    [path lineToPoint:NSMakePoint(0 + EDCoordinateArrowLength, originVerticalPosition - EDCoordinateArrowWidth)];
     
     // draw x-axis arrow
-    [path moveToPoint:NSMakePoint(width - EDCoordinateArrowLength, height/2 + EDCoordinateArrowWidth)];
-    [path lineToPoint:NSMakePoint(width , height/2)];
-    [path lineToPoint:NSMakePoint(width - EDCoordinateArrowLength, height/2 - EDCoordinateArrowWidth)];
+    [path moveToPoint:NSMakePoint(width - EDCoordinateArrowLength, originVerticalPosition + EDCoordinateArrowWidth)];
+    [path lineToPoint:NSMakePoint(width , originVerticalPosition)];
+    [path lineToPoint:NSMakePoint(width - EDCoordinateArrowLength, originVerticalPosition - EDCoordinateArrowWidth)];
     
     // draw y-axis
-    [path moveToPoint:NSMakePoint(width/2, 0)];
-    [path lineToPoint:NSMakePoint(width/2, height)];
+    [path moveToPoint:NSMakePoint(originHorizontalPosition, 0)];
+    [path lineToPoint:NSMakePoint(originHorizontalPosition, height)];
     
     // draw y-axis arrow
-    [path moveToPoint:NSMakePoint(width/2 - EDCoordinateArrowWidth, 0 + EDCoordinateArrowLength)];
-    [path lineToPoint:NSMakePoint(width/2, 0)];
-    [path lineToPoint:NSMakePoint(width/2 + EDCoordinateArrowWidth, 0 + EDCoordinateArrowLength)];
+    [path moveToPoint:NSMakePoint(originHorizontalPosition - EDCoordinateArrowWidth, 0 + EDCoordinateArrowLength)];
+    [path lineToPoint:NSMakePoint(originHorizontalPosition, 0)];
+    [path lineToPoint:NSMakePoint(originHorizontalPosition + EDCoordinateArrowWidth, 0 + EDCoordinateArrowLength)];
     
     // draw y-axis arrow negative
-    [path moveToPoint:NSMakePoint(width/2 - EDCoordinateArrowWidth, height - EDCoordinateArrowLength)];
-    [path lineToPoint:NSMakePoint(width/2, height)];
-    [path lineToPoint:NSMakePoint(width/2 + EDCoordinateArrowWidth, height - EDCoordinateArrowLength)];
+    [path moveToPoint:NSMakePoint(originHorizontalPosition - EDCoordinateArrowWidth, height - EDCoordinateArrowLength)];
+    [path lineToPoint:NSMakePoint(originHorizontalPosition, height)];
+    [path lineToPoint:NSMakePoint(originHorizontalPosition + EDCoordinateArrowWidth, height - EDCoordinateArrowLength)];
     
     [path setLineWidth:EDGraphDefaultCoordinateLineWidth];
     [path stroke];
 }
 
-- (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal{
+- (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal ratios:(NSDictionary *)ratios{
     NSBezierPath *path = [NSBezierPath bezierPath];
     
     // grid lines multiplied by 2 because the calculation only covers half the axis
@@ -273,7 +278,9 @@
     int absDistanceVertical = abs([[(EDGraph *)[self dataObj] minValueY] intValue]) + abs([[(EDGraph *)[self dataObj] maxValueY] intValue]);
     float ratioHoriz = ([[(EDGraph *)[self dataObj] minValueX] floatValue] + [[(EDGraph *)[self dataObj] maxValueX] floatValue])/absDistanceHoriz;
     float ratioVertical = ([[(EDGraph *)[self dataObj] minValueY] floatValue]+ [[(EDGraph *)[self dataObj] maxValueY] floatValue])/absDistanceVertical;
-    NSLog(@"horiz ratio:%f vertical ratio:%f", ratioHoriz, ratioVertical);
+    
+    [results setValue:[NSNumber numberWithFloat:ratioHoriz] forKey:EDKeyRatioHorizontal];
+    [results setValue:[NSNumber numberWithFloat:ratioVertical] forKey:EDKeyRatioVertical];
     return results;
 }
 
