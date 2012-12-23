@@ -25,8 +25,8 @@
 - (float)height;
 - (float)width;
 - (float)margin;
-- (NSArray *)getLowestIntegralFactors:(int)number;
-- (NSMutableDictionary *)calculateGridIncrement:(int)maxValue length:(float)length;
+- (NSArray *)getLowestFactors:(int)number;
+- (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length;
 - (NSMutableDictionary *)calculateGraphOrigin;
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo;
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
@@ -107,17 +107,23 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSDictionary *originResults = [self calculateGraphOrigin];
-    NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];
-    NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
+    float maxValueY = [[[self dataObj] maxValueY] floatValue] - [[[self dataObj] minValueY] floatValue];
+    float maxValueX = [[[self dataObj] maxValueX] floatValue] - [[[self dataObj] minValueX] floatValue];
+    NSDictionary *horizontalResults = [self calculateGridIncrement:[[[self dataObj] maxValueX] floatValue] minValue:[[[self dataObj] minValueX] floatValue] originRatio:[[originResults valueForKey:EDKeyRatioHorizontal] floatValue] length:[self width]];
+    NSDictionary *verticalResults = [self calculateGridIncrement:[[[self dataObj] maxValueY] floatValue] minValue:[[[self dataObj] minValueY] floatValue] originRatio:[[originResults valueForKey:EDKeyRatioVertical] floatValue] length:[self height]];
+    //NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
+    //NSDictionary *horizontalResults = [self calculateGridIncrement:maxValueX length:[self width]];
     
     // stroke grid
+    
     if ([(EDGraph *)[self dataObj] hasGridLines]) {
         [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults ratios:originResults];
     }
     
+    /*
     if ([(EDGraph *)[self dataObj] hasTickMarks]) {
         [self drawTickMarks:verticalResults horizontal:horizontalResults];
-    }
+    }*/
     
     // stroke coordinate axes
     if ([(EDGraph *)[self dataObj] hasCoordinateAxes]) {
@@ -131,12 +137,14 @@
     }
     
     // draw points
+    /*
     if ([[(EDGraph *)[self dataObj] points] count]) {
         [self drawPoints:verticalResults horizontal:horizontalResults];
-    }
+    }*/
 }
 
 - (void)drawLabelAttributes{
+    /*
     NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];
     NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
     
@@ -147,7 +155,7 @@
     // draw points
     if ([[(EDGraph *)[self dataObj] points] count]) {
         [self drawPointLabels:verticalResults horizontal:horizontalResults];
-    }
+    }*/
 }
 
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo{
@@ -196,6 +204,7 @@
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal ratios:(NSDictionary *)ratios{
     NSBezierPath *path = [NSBezierPath bezierPath];
     
+#error start here, include origin calculation
     // grid lines multiplied by 2 because the calculation only covers half the axis
     int numGridLines = [[gridInfoVertical objectForKey:EDKeyGridLinesCount] intValue]*2;
     float distanceIncrement = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
@@ -251,8 +260,14 @@
     [path stroke];
 }
 
-- (NSArray *)getLowestIntegralFactors:(int)number{
+- (NSArray *)getLowestFactors:(int)number{
     NSMutableArray *results = [[NSMutableArray alloc] init];
+    // add decimals (.1, .2, etc)
+    for (float i=.1; i<=1; i=i+.1){
+        [results addObject:[[NSNumber alloc] initWithFloat:i]];
+    }
+    
+    // add integers
     for (int i=1; i<=(number/2); i++){
         // if mod == 0
         if((number % i) == 0){
@@ -262,31 +277,37 @@
     return results;
 }
 #pragma mark calculations
-- (NSMutableDictionary *)calculateGridIncrement:(int)maxValue length:(float)length{
+- (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length{
     // start by default with one grid line per unit
-    float distanceIncrement = length/maxValue;
-    NSArray *factors = [self getLowestIntegralFactors:maxValue];
+    float distanceIncrement, numGridLines, maxAxisValue;
+    NSArray *factors = [self getLowestFactors:maxValue];
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    
+    // ratio defines which side is going to define the increment
+    NSLog(@"ratio:%f max:%f min:%f", ratio, maxValue, minValue);
+    if (ratio>0) 
+        maxAxisValue = fabsf(maxValue);
+    else
+        maxAxisValue = fabsf(minValue);
     
     // check if distance falls within bounds
     for (NSNumber *factor in factors){
-        distanceIncrement = length/[factor floatValue];
+        numGridLines = maxAxisValue/[factor floatValue];
+        distanceIncrement = length/numGridLines;
         
         // if grid distance falls within the bounds of the thresholds then return that value
         if ((distanceIncrement < EDGridIncrementalMaximum) && (distanceIncrement > EDGridIncrementalMinimum)){
-            // get number of grid lines
-            //numGridLines = maxValue/[factor intValue];
-            [results setObject:[[NSNumber alloc] initWithInt:[factor intValue]] forKey:EDKeyGridLinesCount];
+            [results setObject:[[NSNumber alloc] initWithFloat:[factor floatValue]] forKey:EDKeyGridFactor];
             [results setObject:[[NSNumber alloc] initWithFloat:distanceIncrement] forKey:EDKeyDistanceIncrement];
-            [results setObject:[[NSNumber alloc] initWithInt:(maxValue/[factor floatValue])] forKey:EDKeyGridFactor];
+            [results setObject:[[NSNumber alloc] initWithInt:numGridLines] forKey:EDKeyGridLinesCount];
+            //NSLog(@"results:%@", results);
             return results;
         }
     }
     // by default return grid the size of the maximum value
-    [results setObject:[[NSNumber alloc] initWithInt:maxValue] forKey:EDKeyGridLinesCount];
+    [results setObject:[[NSNumber alloc] initWithInt:length] forKey:EDKeyGridLinesCount];
     [results setObject:[[NSNumber alloc] initWithFloat:(length/maxValue)] forKey:EDKeyDistanceIncrement];
     [results setObject:[[NSNumber alloc] initWithInt:1] forKey:EDKeyGridFactor];
-    
     return results;
 }
 
