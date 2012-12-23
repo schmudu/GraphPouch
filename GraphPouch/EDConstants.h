@@ -118,6 +118,9 @@ extern float const EDGraphPointDiameter;
 extern NSString *const EDKeyRatioHorizontal;
 extern NSString *const EDKeyRatioVertical;
 extern float const EDGraphMargin;
+extern float const EDGraphInnerMargin;
+extern NSString *const EDKeyOriginPositionHorizontal;
+extern NSString *const EDKeyOriginPositionVertical;
 
 // graph points
 extern NSString *const EDGraphPointAttributeVisible;
