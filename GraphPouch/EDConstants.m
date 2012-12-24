@@ -122,6 +122,8 @@ float const EDGraphMargin                                       = 20;
 float const EDGraphInnerMargin                                  = 10;
 NSString * const EDKeyOriginPositionHorizontal                  = @"EDKeyOriginPositionHorizontal";
 NSString * const EDKeyOriginPositionVertical                    = @"EDKeyOriginPositionVertical";
+NSString * const EDKeyNumberGridLinesPositive                   = @"EDKeyNumberGridLinesPositive";
+NSString * const EDKeyNumberGridLinesNegative                   = @"EDKeyNumberGridLinesNegative";
 
 // graph points
 NSString * const EDGraphPointAttributeVisible                   = @"isVisible";

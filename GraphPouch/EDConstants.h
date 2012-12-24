@@ -121,6 +121,8 @@ extern float const EDGraphMargin;
 extern float const EDGraphInnerMargin;
 extern NSString *const EDKeyOriginPositionHorizontal;
 extern NSString *const EDKeyOriginPositionVertical;
+extern NSString *const EDKeyNumberGridLinesPositive;
+extern NSString *const EDKeyNumberGridLinesNegative;
 
 // graph points
 extern NSString *const EDGraphPointAttributeVisible;
