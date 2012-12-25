@@ -5,7 +5,7 @@
 //  Created by PATRICK LEE on 7/22/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
-//  The graph view has a width of [self frame] - (2 * (EDGraphMargin + EDCoordinateArrowWidth)
+//  The graph view has a width of [self frame] - (2 * (EDGraphMargin + EDCoordinateArrowWidth + EDGraphInnerMargin))
 //  [self frame] is the width of the frame of the view
 //  EDGraphMargin defines the space in which labels can be drawn next to the coordinate axes
 //  EDCoordinateArrowWidth defines the width of the arrow that could potentially be drawn on the very edge of the graph
@@ -70,6 +70,7 @@
 - (float)graphMargin{
     // defines margin where graph is actually drawn
     return EDGraphMargin + EDCoordinateArrowWidth + EDCoordinateArrowLength + EDGraphInnerMargin;
+    //return EDGraphMargin + EDCoordinateArrowLength + EDGraphInnerMargin;
 }
 
 - (float)margin{
@@ -78,12 +79,14 @@
 
 - (float)graphHeight{
     // defines height of graph that doesn't touch the arrows
-    return [self height] - 2 * EDCoordinateArrowLength - 2 * EDGraphInnerMargin; 
+    return [self height] - 2 * EDCoordinateArrowLength - 2 * EDGraphInnerMargin - 2 * EDCoordinateArrowWidth; 
+    //return [self height] - 2 * EDCoordinateArrowLength - 2 * EDGraphInnerMargin;
 }
 
 - (float)graphWidth{
     // defines width of graph that doesn't touch the arrows
-    return [self width] - 2 * EDCoordinateArrowLength - 2 * EDGraphInnerMargin; 
+    return [self width] - 2 * EDCoordinateArrowLength - 2 * EDGraphInnerMargin - 2 * EDCoordinateArrowWidth; 
+    //return [self width] - 2 * EDCoordinateArrowLength - 2 * EDGraphInnerMargin;
 }
 
 - (float)height{
@@ -219,18 +222,26 @@
 
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     NSBezierPath *path = [NSBezierPath bezierPath];
+    NSBezierPath *outlinePath = [NSBezierPath bezierPath];
     int numGridLines = [[gridInfoVertical objectForKey:EDKeyNumberGridLinesPositive] intValue];
     float distanceIncrement = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     float originPosVertical = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
     float originPosHorizontal = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
     
+    // draw top/bottom of grid
+    [[NSColor redColor] setStroke];
+    //NSLog(@"drawing top border at vert position:%f vertical origin:%f", [self graphMargin], originPosVertical);
+    [outlinePath moveToPoint:NSMakePoint([self graphMargin], [self graphMargin])];
+    [outlinePath lineToPoint:NSMakePoint([self graphMargin] + [self graphWidth], [self graphMargin])];
+    [outlinePath moveToPoint:NSMakePoint([self graphMargin], [self graphMargin] + [self graphHeight])];
+    [outlinePath lineToPoint:NSMakePoint([self graphMargin] + [self graphWidth], [self graphMargin] + [self graphHeight])];
+    [outlinePath stroke];
+    
     // set stroke
     [[NSColor colorWithHexColorString:EDGridColor alpha:EDGridAlpha] setStroke];
     
     // draw positive horizontal lines starting from origin
-    for (int i=1; i<=numGridLines; i++) {
-        //[path moveToPoint:NSMakePoint([self graphMargin], i*distanceIncrement + originPosVertical)];
-        //[path moveToPoint:NSMakePoint([self graphMargin], originPosVertical - i*distanceIncrement)];
+    for (int i=0; i<=numGridLines; i++) {
         if ([[[self dataObj] minValueX] intValue] == 0){
             [path moveToPoint:NSMakePoint([self margin], originPosVertical - i*distanceIncrement)];
             [path lineToPoint:NSMakePoint([self margin] + [self graphWidth], originPosVertical - i*distanceIncrement)];
@@ -242,6 +253,24 @@
         else{
             [path moveToPoint:NSMakePoint([self graphMargin], originPosVertical - i*distanceIncrement)];
             [path lineToPoint:NSMakePoint([self graphMargin] + [self graphWidth], originPosVertical - i*distanceIncrement)];
+            //NSLog(@"draw vertical position at:%f", originPosVertical - i*distanceIncrement);
+        }
+    }
+    
+    // draw negative horizontal lines starting from origin
+    numGridLines = abs([[gridInfoVertical objectForKey:EDKeyNumberGridLinesNegative] intValue]);
+    for (int i=1; i<numGridLines; i++) {
+        if ([[[self dataObj] minValueX] intValue] == 0){
+            [path moveToPoint:NSMakePoint([self margin], originPosVertical + i*distanceIncrement)];
+            [path lineToPoint:NSMakePoint([self margin] + [self graphWidth], originPosVertical + i*distanceIncrement)];
+        }
+        else if ([[[self dataObj] maxValueX] intValue] == 0){
+            [path moveToPoint:NSMakePoint([self graphMargin], originPosVertical + i*distanceIncrement)];
+            [path lineToPoint:NSMakePoint([self margin] + [self width], originPosVertical + i*distanceIncrement)];
+        }
+        else{
+            [path moveToPoint:NSMakePoint([self graphMargin], originPosVertical + i*distanceIncrement)];
+            [path lineToPoint:NSMakePoint([self graphMargin] + [self graphWidth], originPosVertical + i*distanceIncrement)];
         }
     }
     
@@ -255,6 +284,7 @@
         [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphMargin] )];
         [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphHeight] + [self graphMargin])];
     }
+    
     [path stroke];
 }
 
@@ -289,9 +319,12 @@
 
 - (NSArray *)getLowestFactors:(int)number{
     NSMutableArray *results = [[NSMutableArray alloc] init];
-    // add decimals (.1, .2, etc)
-    for (float i=.1; i<=1; i=i+.1){
-        [results addObject:[[NSNumber alloc] initWithFloat:i]];
+    // only add decimals if number is 1
+    if (number == 1) {
+        // add decimals (.1, .2, etc)
+        for (float i=.1; i<=1; i=i+.1){
+            [results addObject:[[NSNumber alloc] initWithFloat:i]];
+        }
     }
     
     // add integers
@@ -305,9 +338,9 @@
 }
 #pragma mark calculations
 - (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length{
+    //NSLog(@"calculate grid increment: ratio:%f", ratio);
     // start by default with one grid line per unit
     float distanceIncrement, numGridLines, maxAxisValue, lengthPositive, lengthNegative, referenceLength, numGridLinesPositive, numGridLinesNegative;
-    NSArray *factors = [self getLowestFactors:maxValue];
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     
     
@@ -325,18 +358,24 @@
         maxAxisValue = fabsf(minValue);
     }
     
-    NSLog(@"ratio:%f max:%f min:%f length:%f", ratio, maxValue, minValue, referenceLength);
+    // get factors
+    NSArray *factors = [self getLowestFactors:maxAxisValue];
+    
+    //NSLog(@"ratio:%f max:%f min:%f length:%f numGridLines:%d,", ratio, maxValue, minValue, referenceLength);
     // check if distance falls within bounds
+    
     for (NSNumber *factor in factors){
         numGridLines = maxAxisValue/[factor floatValue];
         distanceIncrement = referenceLength/numGridLines;
         
-        // if grid distance falls within the bounds of the thresholds then return that value
-        if ((distanceIncrement < EDGridIncrementalMaximum) && (distanceIncrement > EDGridIncrementalMinimum)){
-            // define number of grid lines
-            numGridLinesNegative = minValue/[factor floatValue];
-            numGridLinesPositive = maxValue/[factor floatValue];
+        // define number of grid lines
+        numGridLinesNegative = fabs(minValue)/[factor floatValue];
+        numGridLinesPositive = maxValue/[factor floatValue];
             
+        
+        // if grid distance falls within the bounds of the thresholds then return that value
+        //NSLog(@"ratio:%f factor:%f distanceIncrement:%f grid negative:%f grid positive:%f graph height:%f length positive:%f length negative:%f", ratio, [factor floatValue], distanceIncrement, numGridLinesNegative, numGridLinesPositive, [self graphHeight], lengthPositive, lengthNegative);
+        if ((distanceIncrement < EDGridIncrementalMaximum) && (distanceIncrement > EDGridIncrementalMinimum)){
             [results setObject:[[NSNumber alloc] initWithFloat:[factor floatValue]] forKey:EDKeyGridFactor];
             [results setObject:[[NSNumber alloc] initWithFloat:distanceIncrement] forKey:EDKeyDistanceIncrement];
             //[results setObject:[[NSNumber alloc] initWithInt:numGridLines] forKey:EDKeyGridLinesCount];
@@ -365,8 +404,10 @@
     int absDistanceVertical = abs([[(EDGraph *)[self dataObj] minValueY] intValue]) + abs([[(EDGraph *)[self dataObj] maxValueY] intValue]);
     float ratioHoriz = ([[(EDGraph *)[self dataObj] minValueX] floatValue] + [[(EDGraph *)[self dataObj] maxValueX] floatValue])/absDistanceHoriz;
     float ratioVertical = ([[(EDGraph *)[self dataObj] minValueY] floatValue]+ [[(EDGraph *)[self dataObj] maxValueY] floatValue])/absDistanceVertical;
-    float originVerticalPosition = [self graphHeight]/2 + (ratioVertical * [self height]/2) + [self graphMargin];
-    float originHorizontalPosition = [self graphWidth]/2 - (ratioHoriz * [self width]/2) + [self graphMargin];
+    float originVerticalPosition = [self graphHeight]/2 + (ratioVertical * [self graphHeight]/2) + [self graphMargin];
+    float originHorizontalPosition = [self graphWidth]/2 - (ratioHoriz * [self graphWidth]/2) + [self graphMargin];
+    //float originVerticalPosition = [self graphHeight]/2 + (ratioVertical * [self height]/2) + [self graphMargin];
+    //float originHorizontalPosition = [self graphWidth]/2 - (ratioHoriz * [self width]/2) + [self graphMargin];
     //float originHorizontalPosition = [self graphWidth]/2 - (ratioHoriz * [self width]/2) + [self margin];
     
     [results setValue:[NSNumber numberWithFloat:ratioHoriz] forKey:EDKeyRatioHorizontal];
