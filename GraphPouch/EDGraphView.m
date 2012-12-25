@@ -243,17 +243,16 @@
     // draw positive horizontal lines starting from origin
     for (int i=0; i<=numGridLines; i++) {
         if ([[[self dataObj] minValueX] intValue] == 0){
-            [path moveToPoint:NSMakePoint([self margin], originPosVertical - i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([self margin] + [self graphWidth], originPosVertical - i*distanceIncrement)];
+            [path moveToPoint:NSMakePoint([self graphMargin], originPosVertical - i*distanceIncrement)];
+            [path lineToPoint:NSMakePoint([self graphMargin] + [self graphWidth], originPosVertical - i*distanceIncrement)];
         }
         else if ([[[self dataObj] maxValueX] intValue] == 0){
             [path moveToPoint:NSMakePoint([self graphMargin], originPosVertical - i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([self margin] + [self width], originPosVertical - i*distanceIncrement)];
+            [path lineToPoint:NSMakePoint([self graphMargin] + [self graphWidth], originPosVertical - i*distanceIncrement)];
         }
         else{
             [path moveToPoint:NSMakePoint([self graphMargin], originPosVertical - i*distanceIncrement)];
             [path lineToPoint:NSMakePoint([self graphMargin] + [self graphWidth], originPosVertical - i*distanceIncrement)];
-            //NSLog(@"draw vertical position at:%f", originPosVertical - i*distanceIncrement);
         }
     }
     
