@@ -291,12 +291,12 @@
     numGridLines = abs([[gridInfoVertical objectForKey:EDKeyNumberGridLinesNegative] intValue]);
     for (int i=1; i<numGridLines; i++) {
         if ([[[self dataObj] minValueX] intValue] == 0){
-            [path moveToPoint:NSMakePoint([self margin], originPosVertical + i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([self margin] + [self graphWidth], originPosVertical + i*distanceIncrement)];
+            [path moveToPoint:NSMakePoint([self graphMargin], originPosVertical + i*distanceIncrement)];
+            [path lineToPoint:NSMakePoint([self graphMargin] + [self graphWidth], originPosVertical + i*distanceIncrement)];
         }
         else if ([[[self dataObj] maxValueX] intValue] == 0){
             [path moveToPoint:NSMakePoint([self graphMargin], originPosVertical + i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([self margin] + [self width], originPosVertical + i*distanceIncrement)];
+            [path lineToPoint:NSMakePoint([self graphMargin] + [self graphWidth], originPosVertical + i*distanceIncrement)];
         }
         else{
             [path moveToPoint:NSMakePoint([self graphMargin], originPosVertical + i*distanceIncrement)];
@@ -313,11 +313,11 @@
     for (int i=0; i<=numGridLines; i++) {
         if ([[[self dataObj] minValueY] intValue] == 0){
             [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphWidth] + [self graphMargin])];
+            [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphHeight] + [self graphMargin])];
         }
         else if ([[[self dataObj] maxValueY] intValue] == 0){
             [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphWidth] + [self graphMargin])];
+            [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphHeight] + [self graphMargin])];
         }
         else{
             [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphMargin])];
@@ -330,11 +330,11 @@
     for (int i=0; i<=numGridLines; i++) {
         if ([[[self dataObj] minValueY] intValue] == 0){
             [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [self graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [self graphWidth] + [self graphMargin])];
+            [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [self graphHeight] + [self graphMargin])];
         }
         else if ([[[self dataObj] maxValueY] intValue] == 0){
             [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [self graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [self graphWidth] + [self graphMargin])];
+            [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [self graphHeight] + [self graphMargin])];
         }
         else{
             [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [self graphMargin])];
