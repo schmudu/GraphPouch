@@ -445,8 +445,8 @@
     numGridLinesPositive = maxValue;
     
     // by default return grid the size of the maximum value
-    [results setObject:[[NSNumber alloc] initWithInt:length] forKey:EDKeyGridLinesCount];
-    [results setObject:[[NSNumber alloc] initWithFloat:(length/maxValue)] forKey:EDKeyDistanceIncrement];
+    //[results setObject:[[NSNumber alloc] initWithInt:length] forKey:EDKeyGridLinesCount];
+    [results setObject:[[NSNumber alloc] initWithFloat:(referenceLength/maxValue)] forKey:EDKeyDistanceIncrement];
     [results setObject:[[NSNumber alloc] initWithInt:1] forKey:EDKeyGridFactor];
     [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesNegative] forKey:EDKeyNumberGridLinesNegative];
     [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesPositive] forKey:EDKeyNumberGridLinesPositive];
