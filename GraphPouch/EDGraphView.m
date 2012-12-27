@@ -35,7 +35,7 @@
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
 - (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
-- (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
+- (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
 @end
 
@@ -136,10 +136,9 @@
         [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults origin:originInfo];
     }
     
-    /*
     if ([(EDGraph *)[self dataObj] hasTickMarks]) {
-        [self drawTickMarks:verticalResults horizontal:horizontalResults];
-    }*/
+        [self drawTickMarks:verticalResults horizontal:horizontalResults origin:originInfo];
+    }
     
     // stroke coordinate axes
     if ([(EDGraph *)[self dataObj] hasCoordinateAxes]) {
@@ -345,32 +344,49 @@
     [path stroke];
 }
 
-- (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal{
+- (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     NSBezierPath *path = [NSBezierPath bezierPath];
-    [path setLineWidth:EDGraphDefaultCoordinateLineWidth];
     
-    // grid lines multiplied by 2 because the calculation only covers half the axis
-    int numGridLines = [[gridInfoVertical objectForKey:EDKeyGridLinesCount] intValue]*2;
+    int numGridLines = [[gridInfoVertical objectForKey:EDKeyNumberGridLinesPositive] intValue];
     float distanceIncrement = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
+    float originPosVertical = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
+    float originPosHorizontal = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
+    
+    [path setLineWidth:EDGraphDefaultCoordinateLineWidth];
     
     // set stroke
     [[NSColor blackColor] setStroke];
     
-    // draw vertical lines
-    for (int i=1; i<numGridLines; i++) {
-        [path moveToPoint:NSMakePoint([self frame].size.width/2 - EDGraphTickLength, i*distanceIncrement)];
-        [path lineToPoint:NSMakePoint([self frame].size.width/2 + EDGraphTickLength, i*distanceIncrement)];
+    // draw positive tick marks along y-axis
+    for (int i=0; i<=numGridLines; i++) {
+        [path moveToPoint:NSMakePoint(originPosHorizontal + EDGraphTickLength, originPosVertical - i*distanceIncrement)];
+        [path lineToPoint:NSMakePoint(originPosHorizontal - EDGraphTickLength, originPosVertical - i*distanceIncrement)];
     }
     
-    // grid lines multiplied by 2 because the calculation only covers half the axis
-    numGridLines = [[gridInfoHorizontal objectForKey:EDKeyGridLinesCount] intValue]*2;
+    numGridLines = [[gridInfoVertical objectForKey:EDKeyNumberGridLinesNegative] intValue];
+    
+    // draw negative tick marks along y-axis
+    for (int i=0; i<=numGridLines; i++) {
+        [path moveToPoint:NSMakePoint(originPosHorizontal + EDGraphTickLength, originPosVertical + i*distanceIncrement)];
+        [path lineToPoint:NSMakePoint(originPosHorizontal - EDGraphTickLength, originPosVertical + i*distanceIncrement)];
+    }
+    
     distanceIncrement = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
+    numGridLines = [[gridInfoHorizontal objectForKey:EDKeyNumberGridLinesPositive] intValue];
     
-    // draw horizontal lines
-    for (int i=1; i<numGridLines; i++) {
-        [path moveToPoint:NSMakePoint(i*distanceIncrement, [self frame].size.height/2 - EDGraphTickLength)];
-        [path lineToPoint:NSMakePoint(i*distanceIncrement, [self frame].size.height/2 + EDGraphTickLength)];
+    // draw positive tick marks along x-axis
+    for (int i=0; i<=numGridLines; i++) {
+        [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, originPosVertical + EDGraphTickLength)];
+        [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, originPosVertical - EDGraphTickLength)];
     }
+    
+    numGridLines = [[gridInfoHorizontal objectForKey:EDKeyNumberGridLinesNegative] intValue];
+    // draw negative tick marks along x-axis
+    for (int i=0; i<=numGridLines; i++) {
+        [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, originPosVertical + EDGraphTickLength)];
+        [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, originPosVertical - EDGraphTickLength)];
+    }
+    
     [path stroke];
 }
 
