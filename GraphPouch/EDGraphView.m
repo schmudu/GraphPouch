@@ -33,7 +33,7 @@
 - (NSMutableDictionary *)calculateGraphOrigin;
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo;
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
-- (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
+- (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
@@ -158,18 +158,21 @@
 }
 
 - (void)drawLabelAttributes{
-    /*
-    NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];
-    NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
+    NSDictionary *originInfo = [self calculateGraphOrigin];
+    NSDictionary *horizontalResults = [self calculateGridIncrement:[[[self dataObj] maxValueX] floatValue] minValue:[[[self dataObj] minValueX] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] length:[self graphWidth]];
+    NSDictionary *verticalResults = [self calculateGridIncrement:[[[self dataObj] maxValueY] floatValue] minValue:[[[self dataObj] minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:[self graphHeight]];
+    //NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];
+    //NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
     
+    /*
     if ([(EDGraph *)[self dataObj] hasLabels]) {
         [self drawLabels:verticalResults horizontal:horizontalResults];
-    }
+    }*/
     
     // draw points
     if ([[(EDGraph *)[self dataObj] points] count]) {
-        [self drawPointLabels:verticalResults horizontal:horizontalResults];
-    }*/
+        [self drawPointLabels:verticalResults horizontal:horizontalResults origin:originInfo];
+    }
 }
 
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo{
@@ -620,16 +623,16 @@
     }
 }
 
-- (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal{
+- (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     NSTextField *pointLabel;
     NSNumberFormatter *labelFormatter = [[NSNumberFormatter alloc] init];
     float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
-    float horizontalOffset, labelHeight, labelWidth, originX, originY, pointLocX, pointLocY;
+    float horizontalOffset, labelHeight, labelWidth, pointLocX, pointLocY;
     
     // set origin points
-    originX = [self frame].size.width/2;
-    originY = [self frame].size.height/2;
+    float originY = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
+    float originX = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
     
     // set point color
     [[NSColor blackColor] setFill];
@@ -648,9 +651,6 @@
                 pointLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, EDGraphPointLabelWidth, EDGraphPointLabelHeight)];
                 labelWidth = [labelString widthForHeight:[pointLabel frame].size.height attributes:nil];
                 labelHeight = [labelString heightForWidth:labelWidth attributes:nil];
-                
-                // reset width and height based off calculations
-                //[pointLabel setFrameSize:NSMakeSize(EDGraphPointLabelWidth, labelHeight)];
                 
                 // configure horizontal offset, based off dynamic text width
                 if ([point locationX] > 0) 
