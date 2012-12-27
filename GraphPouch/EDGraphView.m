@@ -32,7 +32,7 @@
 - (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length;
 - (NSMutableDictionary *)calculateGraphOrigin;
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo;
-- (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
+- (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
@@ -152,10 +152,9 @@
     }
     
     // draw points
-    /*
     if ([[(EDGraph *)[self dataObj] points] count]) {
-        [self drawPoints:verticalResults horizontal:horizontalResults];
-    }*/
+        [self drawPoints:verticalResults horizontal:horizontalResults origin:originInfo];
+    }
 }
 
 - (void)drawLabelAttributes{
@@ -599,14 +598,14 @@
     
 }
 
-- (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal{
+- (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
-    float originX, originY;
+    //float originX, originY;
     
     // set origin points
-    originX = [self frame].size.width/2;
-    originY = [self frame].size.height/2;
+    float originVerticalPosition = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
+    float originHorizontalPosition = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
     
     // set point color
     [[NSColor blackColor] setFill];
@@ -615,11 +614,10 @@
     for (EDPoint *point in [(EDGraph *)[self dataObj] points]) {
         if ([point isVisible]) {
             // draw point
-            path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect([self frame].size.width/2 + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,[self frame].size.height/2 - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
+            path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(originHorizontalPosition + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,originVerticalPosition - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
             [path fill]; 
         }
     }
-    //[self setNeedsDisplayInRect:[self frame]];
 }
 
 - (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal{
