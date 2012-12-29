@@ -36,7 +36,7 @@
 - (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
-- (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal;
+- (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 @end
 
 @implementation EDGraphView
@@ -161,13 +161,10 @@
     NSDictionary *originInfo = [self calculateGraphOrigin];
     NSDictionary *horizontalResults = [self calculateGridIncrement:[[[self dataObj] maxValueX] floatValue] minValue:[[[self dataObj] minValueX] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] length:[self graphWidth]];
     NSDictionary *verticalResults = [self calculateGridIncrement:[[[self dataObj] maxValueY] floatValue] minValue:[[[self dataObj] minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:[self graphHeight]];
-    //NSDictionary *verticalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.height/2];
-    //NSDictionary *horizontalResults = [self calculateGridIncrement:EDGridMaximum length:[self frame].size.width/2];
     
-    /*
     if ([(EDGraph *)[self dataObj] hasLabels]) {
-        [self drawLabels:verticalResults horizontal:horizontalResults];
-    }*/
+        [self drawLabels:verticalResults horizontal:horizontalResults origin:originInfo];
+    }
     
     // draw points
     if ([[(EDGraph *)[self dataObj] points] count]) {
@@ -413,7 +410,6 @@
 }
 #pragma mark calculations
 - (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length{
-    //NSLog(@"calculate grid increment: ratio:%f", ratio);
     // start by default with one grid line per unit
     float distanceIncrement, numGridLines, maxAxisValue, lengthPositive, lengthNegative, referenceLength, numGridLinesPositive, numGridLinesNegative;
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
@@ -436,9 +432,7 @@
     // get factors
     NSArray *factors = [self getLowestFactors:maxAxisValue];
     
-    //NSLog(@"ratio:%f max:%f min:%f length:%f numGridLines:%d,", ratio, maxValue, minValue, referenceLength);
     // check if distance falls within bounds
-    
     for (NSNumber *factor in factors){
         numGridLines = maxAxisValue/[factor floatValue];
         distanceIncrement = referenceLength/numGridLines;
@@ -449,7 +443,6 @@
             
         
         // if grid distance falls within the bounds of the thresholds then return that value
-        //NSLog(@"ratio:%f factor:%f distanceIncrement:%f grid negative:%f grid positive:%f graph height:%f length positive:%f length negative:%f", ratio, [factor floatValue], distanceIncrement, numGridLinesNegative, numGridLinesPositive, [self graphHeight], lengthPositive, lengthNegative);
         if ((distanceIncrement < EDGridIncrementalMaximum) && (distanceIncrement > EDGridIncrementalMinimum)){
             [results setObject:[[NSNumber alloc] initWithFloat:[factor floatValue]] forKey:EDKeyGridFactor];
             [results setObject:[[NSNumber alloc] initWithFloat:distanceIncrement] forKey:EDKeyDistanceIncrement];
@@ -463,7 +456,6 @@
     numGridLinesPositive = maxValue;
     
     // by default return grid the size of the maximum value
-    //[results setObject:[[NSNumber alloc] initWithInt:length] forKey:EDKeyGridLinesCount];
     [results setObject:[[NSNumber alloc] initWithFloat:(referenceLength/maxValue)] forKey:EDKeyDistanceIncrement];
     [results setObject:[[NSNumber alloc] initWithInt:1] forKey:EDKeyGridFactor];
     [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesNegative] forKey:EDKeyNumberGridLinesNegative];
@@ -489,14 +481,19 @@
 }
 
 #pragma mark labels
-- (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal{
+- (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     NSTextField *numberField, *labelField;
+    
     // grid lines multiplied by 2 because the calculation only covers half the axis
-    int numGridLinesVertical = [[gridInfoVertical objectForKey:EDKeyGridLinesCount] intValue];
-    int numGridLinesHorizontal = [[gridInfoHorizontal objectForKey:EDKeyGridLinesCount] intValue];
+    int numGridLinesVertical = [[gridInfoVertical objectForKey:EDKeyNumberGridLinesPositive] intValue];
+    int numGridLinesHorizontal = [[gridInfoHorizontal objectForKey:EDKeyNumberGridLinesPositive] intValue];
     float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
- 
+    
+    // set origin points
+    float originVerticalPosition = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
+    float originHorizontalPosition = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
+    
     // draw y label
     labelField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
     [labelField setStringValue:[[NSString alloc] initWithFormat:@"y"]];
@@ -504,7 +501,7 @@
     [labelField setDrawsBackground:FALSE];
     [labelField setEditable:FALSE];
     [labelField setSelectable:FALSE];
-    [labelField setFrameOrigin:NSMakePoint([self frame].size.width/2 + EDGraphVerticalLabelHorizontalOffset, 0 + EDGraphYLabelVerticalOffset)];
+    [labelField setFrameOrigin:NSMakePoint(originHorizontalPosition + EDGraphVerticalLabelHorizontalOffset + EDCoordinateArrowWidth, EDGraphMargin + EDGraphYLabelVerticalOffset)];
     [self addSubview:labelField];
     [_labels addObject:labelField];
     
@@ -515,13 +512,13 @@
     [labelField setDrawsBackground:FALSE];
     [labelField setEditable:FALSE];
     [labelField setSelectable:FALSE];
-    [labelField setFrameOrigin:NSMakePoint([self frame].size.width + EDGraphHorizontalLabelHorizontalOffset + EDGraphXLabelHorizontalOffset, [self frame].size.height/2 + EDGraphHorizontalLabelVerticalOffset)];
+    [labelField setFrameOrigin:NSMakePoint([self frame].size.width + EDGraphHorizontalLabelHorizontalOffset + EDGraphXLabelHorizontalOffset - EDGraphMargin, originVerticalPosition + EDGraphHorizontalLabelVerticalOffset)];
     [self addSubview:labelField];
     [_labels addObject:labelField];
     
     // draw positive x labels
-    for (int i=1; i<numGridLinesHorizontal; i++) {
-        numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
+    for (int i=1; i<=numGridLinesHorizontal; i++) {
+        numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 40, 20)];
         [numberField setStringValue:[[NSString alloc] initWithFormat:@"%d", i * [[gridInfoHorizontal objectForKey:EDKeyGridFactor] intValue]]];
         [numberField setBezeled:FALSE];
         [numberField setDrawsBackground:FALSE];
@@ -531,15 +528,16 @@
         [self addSubview:numberField];
         
         // position it
-        [numberField setFrameOrigin:NSMakePoint([self frame].size.width/2 + (distanceIncrementHorizontal * i + EDGraphHorizontalLabelHorizontalOffset), [self frame].size.height/2 + EDGraphHorizontalLabelVerticalOffset)];
+        [numberField setFrameOrigin:NSMakePoint(originHorizontalPosition + (distanceIncrementHorizontal * i + EDGraphHorizontalLabelHorizontalOffset), originVerticalPosition + EDGraphHorizontalLabelVerticalOffset)];
         
         // add to list
         [_labels addObject:numberField];
     }
     
     // draw negative x labels
-    for (int i=1; i<numGridLinesHorizontal; i++) {
-        numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
+    numGridLinesHorizontal = [[gridInfoHorizontal objectForKey:EDKeyNumberGridLinesNegative] intValue];
+    for (int i=1; i<=numGridLinesHorizontal; i++) {
+        numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 40, 20)];
         [numberField setStringValue:[[NSString alloc] initWithFormat:@"-%d", i * [[gridInfoHorizontal objectForKey:EDKeyGridFactor] intValue]]];
         [numberField setBezeled:FALSE];
         [numberField setDrawsBackground:FALSE];
@@ -549,15 +547,15 @@
         [self addSubview:numberField];
         
         // position it
-        [numberField setFrameOrigin:NSMakePoint([self frame].size.width/2 - (distanceIncrementHorizontal * i - EDGraphHorizontalLabelHorizontalOffset + EDGraphHorizontalLabelHorizontalNegativeOffset), [self frame].size.height/2 + EDGraphHorizontalLabelVerticalOffset)];
+        [numberField setFrameOrigin:NSMakePoint(originHorizontalPosition - (distanceIncrementHorizontal * i - EDGraphHorizontalLabelHorizontalOffset + EDGraphHorizontalLabelHorizontalNegativeOffset), originVerticalPosition + EDGraphHorizontalLabelVerticalOffset)];
         
         // add to list
         [_labels addObject:numberField];
     }
     
     // draw positive y labels
-    for (int i=1; i<numGridLinesVertical; i++) {
-        numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
+    for (int i=1; i<=numGridLinesVertical; i++) {
+        numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 40, 20)];
         [numberField setStringValue:[[NSString alloc] initWithFormat:@"%d", i * [[gridInfoVertical objectForKey:EDKeyGridFactor] intValue]]];
         [numberField setBezeled:FALSE];
         [numberField setDrawsBackground:FALSE];
@@ -567,15 +565,16 @@
         [self addSubview:numberField];
         
         // position it
-        [numberField setFrameOrigin:NSMakePoint([self frame].size.width/2 + EDGraphVerticalLabelHorizontalOffset, [self frame].size.height/2 - (distanceIncrementVertical * i + EDGraphVerticalLabelVerticalOffset))];
+        [numberField setFrameOrigin:NSMakePoint(originHorizontalPosition + EDGraphVerticalLabelHorizontalOffset, originVerticalPosition - (distanceIncrementVertical * i + EDGraphVerticalLabelVerticalOffset))];
         
         // add to list
         [_labels addObject:numberField];
     }
     
     // draw negative y labels
-    for (int i=1; i<numGridLinesVertical; i++) {
-        numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
+    numGridLinesVertical = [[gridInfoVertical objectForKey:EDKeyNumberGridLinesNegative] intValue];
+    for (int i=1; i<=numGridLinesVertical; i++) {
+        numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 40, 20)];
         [numberField setStringValue:[[NSString alloc] initWithFormat:@"-%d", i * [[gridInfoVertical objectForKey:EDKeyGridFactor] intValue]]];
         [numberField setBezeled:FALSE];
         [numberField setDrawsBackground:FALSE];
@@ -585,7 +584,7 @@
         [self addSubview:numberField];
         
         // position it
-        [numberField setFrameOrigin:NSMakePoint([self frame].size.width/2 + EDGraphVerticalLabelHorizontalOffset, [self frame].size.height/2 + (distanceIncrementVertical * i - EDGraphVerticalLabelVerticalOffset))];
+        [numberField setFrameOrigin:NSMakePoint(originHorizontalPosition + EDGraphVerticalLabelHorizontalOffset, originVerticalPosition + (distanceIncrementVertical * i - EDGraphVerticalLabelVerticalOffset))];
         
         // add to list
         [_labels addObject:numberField];
