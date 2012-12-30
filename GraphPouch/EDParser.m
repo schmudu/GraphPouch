@@ -99,20 +99,20 @@
     }
  
     // push all objects from operator stack to output
-    NSLog(@"operator:%@ count:%d", operator, [operator count]);
+    //NSLog(@"operator:%@ count:%d", operator, [operator count]);
     while (0<[operator count]) {
         currentToken = [operator pop];
         [output addObject:currentToken];
-        NSLog(@"pushing operator token onto output%@", [currentToken value]);
+        //NSLog(@"pushing operator token onto output%@", [currentToken value]);
     }
     
-    NSLog(@"parser returning output:%@", output);
+    //NSLog(@"parser returning output:%@", output);
     return output;
 }
 
-+ (float)calculate:(NSMutableArray *)stack error:(NSError **)error context:(NSManagedObjectContext *)context{
++ (float)calculate:(NSArray *)stack error:(NSError **)error context:(NSManagedObjectContext *)context varValue:(float)value{
     EDStack *result = [[EDStack alloc] init];
-    float answer=0, firstNum=0, secondNum=0, idValue=2;
+    float answer=0, firstNum=0, secondNum=0, idValue=value;
     EDToken *firstNumToken, *secondNumToken, *resultToken, *idToken;
     
     for (EDToken *token in stack){

@@ -20,6 +20,8 @@
 #import "EDConstants.h"
 #import "NSColor+Utilities.h"
 #import "EDPoint.h"
+#import "EDEquation.h"
+#import "EDParser.h"
 
 @interface EDGraphView()
 - (float)graphHeight;
@@ -33,6 +35,7 @@
 - (NSMutableDictionary *)calculateGraphOrigin;
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo;
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
+- (void)drawEquations:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawPointLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
@@ -154,6 +157,11 @@
     // draw points
     if ([[(EDGraph *)[self dataObj] points] count]) {
         [self drawPoints:verticalResults horizontal:horizontalResults origin:originInfo];
+    }
+    
+    // draw equations
+    if ([[(EDGraph *)[self dataObj] equations] count]) {
+        [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
     }
 }
 
@@ -598,6 +606,16 @@
         [numberField removeFromSuperview];
     }
     
+}
+
+- (void)drawEquations:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
+    NSError *error;
+    for (EDEquation *equation in [[self dataObj] equations]){
+        if ([equation isVisible]){
+            // draw equation along graph
+            NSLog(@"going to draw an equation: calculation:%f", [EDParser calculate:[[equation tokens] array] error:&error context:_context varValue:2]);
+        }
+    }
 }
 
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{

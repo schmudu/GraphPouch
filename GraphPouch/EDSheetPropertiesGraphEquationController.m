@@ -175,12 +175,13 @@
         }*/
         
         // calculate expression
+        /*
         float result = [EDParser calculate:parsedTokens error:&error context:_context];
         if (error) {
             [self showError:error];
             [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
             return results;
-        }
+        }*/
         
         // print result
         //NSLog(@"====after parsed: result:%f", result);
