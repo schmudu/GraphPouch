@@ -610,12 +610,76 @@
 
 - (void)drawEquations:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     NSError *error;
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    float diffX, marginDiff, pointStart=[self graphMargin], pointEnd=[self width] - [self graphMargin], ratioHorizontal, ratioVertical, valueX, valueY, positionVertical;
+    
+    // set origin points
+    float originVerticalPosition = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
+    float originHorizontalPosition = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
+ 
+    // ratio positive/negative vertical
+    float ratioYPositive, ratioYNegative;
+    ratioYPositive = [[[self dataObj] maxValueY] floatValue]/([[[self dataObj] maxValueY] floatValue] + fabsf([[[self dataObj] minValueY] floatValue]));
+    ratioYNegative = 1 - ratioYPositive;
+    
+    // set stroke
+    [[NSColor redColor] setStroke];
+    
     for (EDEquation *equation in [[self dataObj] equations]){
         if ([equation isVisible]){
             // draw equation along graph
-            NSLog(@"going to draw an equation: calculation:%f", [EDParser calculate:[[equation tokens] array] error:&error context:_context varValue:2]);
+            //NSLog(@"going to draw an equation: calculation:%f start:%f end:%f", [EDParser calculate:[[equation tokens] array] error:&error context:_context varValue:2], pointStart, pointEnd);
+            for (float i=pointStart; i<pointEnd; i++){
+                diffX = i - originHorizontalPosition;
+                
+                // based on position find x
+                if (diffX < 0){
+                    // x is negative
+                    marginDiff = [self graphMargin] - originHorizontalPosition;
+                    ratioHorizontal = diffX/marginDiff;
+                    valueX = ratioHorizontal * [[[self dataObj] minValueX] floatValue];
+                }
+                else if (diffX == 0){
+                    valueX = 0;
+                }
+                else{
+                    // x is positive
+                    marginDiff = [self width] - [self graphMargin] - originHorizontalPosition;
+                    ratioHorizontal = diffX/marginDiff;
+                    valueX = ratioHorizontal * [[[self dataObj] maxValueX] floatValue];
+                }
+                valueY = [EDParser calculate:[[equation tokens] array] error:&error context:_context varValue:valueX];
+                //NSLog(@"positive x: ratio horizontal:%f valueX:%f valueY:%f", ratioHorizontal, valueX, valueY);
+                
+                // based on value find y position
+                if (valueY < 0){
+                    // y is negative
+                    ratioVertical = valueY/[[[self dataObj] minValueY] floatValue];
+                    positionVertical = originVerticalPosition + ratioVertical * ([self graphHeight] * ratioYNegative);
+                }
+                else if (valueY == 0){
+                    positionVertical = originVerticalPosition;
+                }
+                else{
+                    // y is positive
+                    ratioVertical = valueY/[[[self dataObj] maxValueY] floatValue];
+                    positionVertical = originVerticalPosition - ratioVertical * ([self graphHeight] * ratioYPositive);
+                    NSLog(@"ratio vertical:%f positionVertical:%f ratioYPositive:%f valueX:%f valueY:%f", ratioVertical, positionVertical, ratioYPositive, valueX, valueY);
+                }
+                
+                if (i == pointStart) {
+                    [path moveToPoint:NSMakePoint(i, positionVertical)];
+                }
+                else {
+                    [path lineToPoint:NSMakePoint(i, positionVertical)];
+                }
+                     
+                //NSLog(@"valueX:%f y:%f pos vertical:%f", valueX, valueY, positionVertical);
+            }
         }
     }
+    
+    [path stroke];
 }
 
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
