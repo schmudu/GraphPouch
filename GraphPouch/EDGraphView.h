@@ -12,6 +12,7 @@
 
 @interface EDGraphView : EDWorksheetElementView{
     NSMutableArray *_labels;
+    NSMutableArray *_equations;
 }
 
 - (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph;

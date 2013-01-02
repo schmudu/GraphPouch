@@ -69,6 +69,7 @@
 		CDAA912D166B9767009B75A2 /* EDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAA912C166B9767009B75A2 /* EDStack.m */; };
 		CDAC3748161112E700545F1E /* NSMutableDictionary+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAC3747161112E700545F1E /* NSMutableDictionary+Utilities.m */; };
 		CDB6829A1684D1A900702EAA /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB682991684D1A900702EAA /* EDGraph.m */; };
+		CDB682ED1694E80700702EAA /* EDEquationView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB682EC1694E80700702EAA /* EDEquationView.m */; };
 		CDD46E531603BE3C00EDD75C /* NSColor+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */; };
 		CDD46E611607D1F200EDD75C /* EDTransformRect.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E601607D1F200EDD75C /* EDTransformRect.m */; };
 		CDD46E651607D22F00EDD75C /* EDTransformPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E641607D22F00EDD75C /* EDTransformPoint.m */; };
@@ -200,6 +201,8 @@
 		CDAC3747161112E700545F1E /* NSMutableDictionary+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Utilities.m"; sourceTree = "<group>"; };
 		CDB682981684D1A900702EAA /* EDGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraph.h; sourceTree = "<group>"; };
 		CDB682991684D1A900702EAA /* EDGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraph.m; sourceTree = "<group>"; };
+		CDB682EB1694E80700702EAA /* EDEquationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDEquationView.h; sourceTree = "<group>"; };
+		CDB682EC1694E80700702EAA /* EDEquationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDEquationView.m; sourceTree = "<group>"; };
 		CDD46E511603BE3C00EDD75C /* NSColor+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Utilities.h"; sourceTree = "<group>"; };
 		CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Utilities.m"; sourceTree = "<group>"; };
 		CDD46E5F1607D1F200EDD75C /* EDTransformRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformRect.h; sourceTree = "<group>"; };
@@ -458,6 +461,8 @@
 		CD3F0AFF15C4784000AB7567 /* Graph */ = {
 			isa = PBXGroup;
 			children = (
+				CDB682EB1694E80700702EAA /* EDEquationView.h */,
+				CDB682EC1694E80700702EAA /* EDEquationView.m */,
 				CD3F0A9815BDF93400AB7567 /* EDGraphView.h */,
 				CD3F0A9915BDF93400AB7567 /* EDGraphView.m */,
 				CD3F0A9A15BDF93400AB7567 /* EDGraphViewController.h */,
@@ -833,6 +838,7 @@
 				CD26366F167EB41D00424487 /* NSMutableArray+EDEquation.m in Sources */,
 				CD263672167EBCA200424487 /* NSSet+Equations.m in Sources */,
 				CDB6829A1684D1A900702EAA /* EDGraph.m in Sources */,
+				CDB682ED1694E80700702EAA /* EDEquationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

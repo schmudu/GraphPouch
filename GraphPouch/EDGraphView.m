@@ -22,6 +22,7 @@
 #import "EDPoint.h"
 #import "EDEquation.h"
 #import "EDParser.h"
+#import "EDEquationView.h"
 
 @interface EDGraphView()
 - (float)graphHeight;
@@ -40,6 +41,8 @@
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
+- (void)removeLabels;
+- (void)removeEquations;
 @end
 
 @implementation EDGraphView
@@ -53,6 +56,7 @@
     if (self){
         _context = [myGraph managedObjectContext];
         _labels = [[NSMutableArray alloc] init];
+        _equations = [[NSMutableArray alloc] init];
         
         // set model info
         [self setDataObj:myGraph];
@@ -131,10 +135,10 @@
     NSDictionary *originInfo = [self calculateGraphOrigin];
     NSDictionary *horizontalResults = [self calculateGridIncrement:[[[self dataObj] maxValueX] floatValue] minValue:[[[self dataObj] minValueX] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] length:[self graphWidth]];
     NSDictionary *verticalResults = [self calculateGridIncrement:[[[self dataObj] maxValueY] floatValue] minValue:[[[self dataObj] minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:[self graphHeight]];
-    /*
+    
     if ([[(EDGraph *)[self dataObj] equations] count]) {
         [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
-    }*/
+    }
 }
     
 - (void)drawRect:(NSRect)dirtyRect
@@ -169,9 +173,10 @@
     }
     
     // draw equations
+    /*
     if ([[(EDGraph *)[self dataObj] equations] count]) {
         [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
-    }
+    }*/
 }
 
 - (void)drawLabelAttributes{
@@ -614,12 +619,19 @@
     for (NSTextField *numberField in _labels){
         [numberField removeFromSuperview];
     }
-    
+}
+
+- (void)removeEquations{
+    // remove all labels from view
+    for (NSView *equationView in _equations){
+        [equationView removeFromSuperview];
+    }
 }
 
 - (void)drawEquations:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     BOOL firstPointDrawnForEquation = true;
     NSError *error;
+    EDEquationView *equationView;
     NSBezierPath *path = [NSBezierPath bezierPath];
     float diffX, marginDiff, pointStart=[self graphMargin], pointEnd=[self graphMargin] + [self graphWidth], ratioHorizontal, ratioVertical, valueX, valueY, positionVertical;
     
@@ -637,6 +649,13 @@
     
     for (EDEquation *equation in [[self dataObj] equations]){
         if ([equation isVisible]){
+            // add equation view
+            equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect([self graphMargin], [self graphMargin], [self graphWidth], [self graphHeight])];
+            [self addSubview:equationView];
+            
+            // add to list that will remove them all later
+            [_equations addObject:equationView];
+            
             // draw equation along graph
             for (float i=pointStart; i<=pointEnd; i=i+EDGraphEquationIncrement){
                 diffX = i - originHorizontalPosition;
