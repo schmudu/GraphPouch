@@ -609,9 +609,10 @@
 }
 
 - (void)drawEquations:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
+    BOOL firstPointDrawnForEquation = true;
     NSError *error;
     NSBezierPath *path = [NSBezierPath bezierPath];
-    float diffX, marginDiff, pointStart=[self graphMargin], pointEnd=[self width] - [self graphMargin], ratioHorizontal, ratioVertical, valueX, valueY, positionVertical;
+    float diffX, marginDiff, pointStart=[self graphMargin], pointEnd=[self graphMargin] + [self graphWidth], ratioHorizontal, ratioVertical, valueX, valueY, positionVertical;
     
     // set origin points
     float originVerticalPosition = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
@@ -628,7 +629,6 @@
     for (EDEquation *equation in [[self dataObj] equations]){
         if ([equation isVisible]){
             // draw equation along graph
-            //NSLog(@"going to draw an equation: calculation:%f start:%f end:%f", [EDParser calculate:[[equation tokens] array] error:&error context:_context varValue:2], pointStart, pointEnd);
             for (float i=pointStart; i<pointEnd; i++){
                 diffX = i - originHorizontalPosition;
                 
@@ -644,12 +644,15 @@
                 }
                 else{
                     // x is positive
-                    marginDiff = [self width] - [self graphMargin] - originHorizontalPosition;
+                    marginDiff = [self graphMargin] + [self graphWidth] - originHorizontalPosition;
                     ratioHorizontal = diffX/marginDiff;
                     valueX = ratioHorizontal * [[[self dataObj] maxValueX] floatValue];
                 }
                 valueY = [EDParser calculate:[[equation tokens] array] error:&error context:_context varValue:valueX];
-                //NSLog(@"positive x: ratio horizontal:%f valueX:%f valueY:%f", ratioHorizontal, valueX, valueY);
+                
+                // if y is greater than max or less than min than break from loop
+                if ((valueY > [[[self dataObj] maxValueY] floatValue]) || (valueY < [[[self dataObj] minValueY] floatValue]))
+                    continue;
                 
                 // based on value find y position
                 if (valueY < 0){
@@ -664,18 +667,19 @@
                     // y is positive
                     ratioVertical = valueY/[[[self dataObj] maxValueY] floatValue];
                     positionVertical = originVerticalPosition - ratioVertical * ([self graphHeight] * ratioYPositive);
-                    NSLog(@"ratio vertical:%f positionVertical:%f ratioYPositive:%f valueX:%f valueY:%f", ratioVertical, positionVertical, ratioYPositive, valueX, valueY);
                 }
                 
-                if (i == pointStart) {
+                if (firstPointDrawnForEquation) {
                     [path moveToPoint:NSMakePoint(i, positionVertical)];
+                    firstPointDrawnForEquation = false;
                 }
                 else {
                     [path lineToPoint:NSMakePoint(i, positionVertical)];
                 }
-                     
-                //NSLog(@"valueX:%f y:%f pos vertical:%f", valueX, valueY, positionVertical);
             }
+            
+            // reset equation
+            firstPointDrawnForEquation = true;
         }
     }
     
