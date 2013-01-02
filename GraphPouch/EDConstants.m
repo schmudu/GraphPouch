@@ -124,6 +124,7 @@ NSString * const EDKeyOriginPositionHorizontal                  = @"EDKeyOriginP
 NSString * const EDKeyOriginPositionVertical                    = @"EDKeyOriginPositionVertical";
 NSString * const EDKeyNumberGridLinesPositive                   = @"EDKeyNumberGridLinesPositive";
 NSString * const EDKeyNumberGridLinesNegative                   = @"EDKeyNumberGridLinesNegative";
+float const EDGraphEquationIncrement                            = .25;
 
 // graph points
 NSString * const EDGraphPointAttributeVisible                   = @"isVisible";

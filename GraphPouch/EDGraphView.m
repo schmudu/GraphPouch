@@ -112,7 +112,7 @@
     while ((i<[updatedArray count]) && (!hasChanged)){    
         element = [updatedArray objectAtIndex:i];
         // if data object changed or any of the points, update graph
-        if ((element == [self dataObj]) || ([[[self dataObj] points] containsObject:element])) {
+        if ((element == [self dataObj]) || ([[[self dataObj] points] containsObject:element])|| ([[[self dataObj] equations] containsObject:element])) {
             hasChanged = TRUE;
             [self updateDisplayBasedOnContext];
         }
@@ -126,6 +126,15 @@
  
     [self removeLabels];
     [self drawLabelAttributes];
+    
+    // draw equations
+    NSDictionary *originInfo = [self calculateGraphOrigin];
+    NSDictionary *horizontalResults = [self calculateGridIncrement:[[[self dataObj] maxValueX] floatValue] minValue:[[[self dataObj] minValueX] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] length:[self graphWidth]];
+    NSDictionary *verticalResults = [self calculateGridIncrement:[[[self dataObj] maxValueY] floatValue] minValue:[[[self dataObj] minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:[self graphHeight]];
+    /*
+    if ([[(EDGraph *)[self dataObj] equations] count]) {
+        [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
+    }*/
 }
     
 - (void)drawRect:(NSRect)dirtyRect
@@ -629,7 +638,7 @@
     for (EDEquation *equation in [[self dataObj] equations]){
         if ([equation isVisible]){
             // draw equation along graph
-            for (float i=pointStart; i<pointEnd; i++){
+            for (float i=pointStart; i<=pointEnd; i=i+EDGraphEquationIncrement){
                 diffX = i - originHorizontalPosition;
                 
                 // based on position find x
