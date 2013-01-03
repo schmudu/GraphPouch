@@ -30,5 +30,6 @@
 - (void)updateDisplayBasedOnContext;
 - (void)drawLabelAttributes;
 - (void)removeLabels;
+- (void)removeEquations;
 
 @end

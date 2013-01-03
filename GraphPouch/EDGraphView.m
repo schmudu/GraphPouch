@@ -136,6 +136,7 @@
     NSDictionary *horizontalResults = [self calculateGridIncrement:[[[self dataObj] maxValueX] floatValue] minValue:[[[self dataObj] minValueX] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] length:[self graphWidth]];
     NSDictionary *verticalResults = [self calculateGridIncrement:[[[self dataObj] maxValueY] floatValue] minValue:[[[self dataObj] minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:[self graphHeight]];
     
+    [self removeEquations];
     if ([[(EDGraph *)[self dataObj] equations] count]) {
         [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
     }
@@ -629,23 +630,8 @@
 }
 
 - (void)drawEquations:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
-    BOOL firstPointDrawnForEquation = true;
-    NSError *error;
     EDEquationView *equationView;
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    float diffX, marginDiff, pointStart=[self graphMargin], pointEnd=[self graphMargin] + [self graphWidth], ratioHorizontal, ratioVertical, valueX, valueY, positionVertical;
     
-    // set origin points
-    float originVerticalPosition = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
-    float originHorizontalPosition = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
- 
-    // ratio positive/negative vertical
-    float ratioYPositive, ratioYNegative;
-    ratioYPositive = [[[self dataObj] maxValueY] floatValue]/([[[self dataObj] maxValueY] floatValue] + fabsf([[[self dataObj] minValueY] floatValue]));
-    ratioYNegative = 1 - ratioYPositive;
-    
-    // set stroke
-    [[NSColor redColor] setStroke];
     
     for (EDEquation *equation in [[self dataObj] equations]){
         if ([equation isVisible]){
@@ -656,64 +642,8 @@
             
             // add to list that will remove them all later
             [_equations addObject:equationView];
-            
-            /*
-            // draw equation along graph
-            for (float i=pointStart; i<=pointEnd; i=i+EDGraphEquationIncrement){
-                diffX = i - originHorizontalPosition;
-                
-                // based on position find x
-                if (diffX < 0){
-                    // x is negative
-                    marginDiff = [self graphMargin] - originHorizontalPosition;
-                    ratioHorizontal = diffX/marginDiff;
-                    valueX = ratioHorizontal * [[[self dataObj] minValueX] floatValue];
-                }
-                else if (diffX == 0){
-                    valueX = 0;
-                }
-                else{
-                    // x is positive
-                    marginDiff = [self graphMargin] + [self graphWidth] - originHorizontalPosition;
-                    ratioHorizontal = diffX/marginDiff;
-                    valueX = ratioHorizontal * [[[self dataObj] maxValueX] floatValue];
-                }
-                valueY = [EDParser calculate:[[equation tokens] array] error:&error context:_context varValue:valueX];
-                
-                // if y is greater than max or less than min than break from loop
-                if ((valueY > [[[self dataObj] maxValueY] floatValue]) || (valueY < [[[self dataObj] minValueY] floatValue]))
-                    continue;
-                
-                // based on value find y position
-                if (valueY < 0){
-                    // y is negative
-                    ratioVertical = valueY/[[[self dataObj] minValueY] floatValue];
-                    positionVertical = originVerticalPosition + ratioVertical * ([self graphHeight] * ratioYNegative);
-                }
-                else if (valueY == 0){
-                    positionVertical = originVerticalPosition;
-                }
-                else{
-                    // y is positive
-                    ratioVertical = valueY/[[[self dataObj] maxValueY] floatValue];
-                    positionVertical = originVerticalPosition - ratioVertical * ([self graphHeight] * ratioYPositive);
-                }
-                
-                if (firstPointDrawnForEquation) {
-                    [path moveToPoint:NSMakePoint(i, positionVertical)];
-                    firstPointDrawnForEquation = false;
-                }
-                else {
-                    [path lineToPoint:NSMakePoint(i, positionVertical)];
-                }
-            }*/
-            
-            // reset equation
-            firstPointDrawnForEquation = true;
         }
     }
-    
-    [path stroke];
 }
 
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{

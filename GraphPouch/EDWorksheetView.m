@@ -677,6 +677,9 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     // remove any labels (aka text views) in elements while resizing (performance issue);
     [elementView removeLabels];
     
+    // remove graphs while resizing (performance)
+    [elementView removeEquations];
+    
     // signal to board to redraw guides
     _mouseIsDown = TRUE;
     

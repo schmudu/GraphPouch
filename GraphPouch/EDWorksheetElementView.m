@@ -67,6 +67,15 @@
     [self setNeedsDisplay:TRUE];
 }
 
+#pragma mark drawing
+- (void)removeLabels{
+    
+}
+
+- (void)removeEquations{
+    
+}
+
 #pragma mark mouse events
 #pragma mark mouse down
 - (void)mouseDown:(NSEvent *)theEvent{
