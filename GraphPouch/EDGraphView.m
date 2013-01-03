@@ -650,12 +650,14 @@
     for (EDEquation *equation in [[self dataObj] equations]){
         if ([equation isVisible]){
             // add equation view
-            equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect([self graphMargin], [self graphMargin], [self graphWidth], [self graphHeight])];
+            equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect([self graphMargin], [self graphMargin], [self graphWidth], [self graphHeight]) equation:equation];
+            [equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
             [self addSubview:equationView];
             
             // add to list that will remove them all later
             [_equations addObject:equationView];
             
+            /*
             // draw equation along graph
             for (float i=pointStart; i<=pointEnd; i=i+EDGraphEquationIncrement){
                 diffX = i - originHorizontalPosition;
@@ -704,7 +706,7 @@
                 else {
                     [path lineToPoint:NSMakePoint(i, positionVertical)];
                 }
-            }
+            }*/
             
             // reset equation
             firstPointDrawnForEquation = true;

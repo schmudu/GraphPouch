@@ -7,26 +7,119 @@
 //
 
 #import "EDEquationView.h"
+#import "EDConstants.h"
+#import "NSColor+Utilities.h"
+#import "EDParser.h"
+
+@interface EDEquationView()
+- (float)graphMargin;
+- (float)margin;
+@end
 
 @implementation EDEquationView
 
-- (id)initWithFrame:(NSRect)frame
+- (id)initWithFrame:(NSRect)frame equation:(EDEquation *)equation
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
+        _equation = equation;
     }
     
     return self;
 }
 
+- (BOOL)isFlipped{
+    return TRUE;
+}
+
+- (float)graphMargin{
+    // defines margin where graph is actually drawn
+#warning duplicate method as EDGraphView
+    return EDGraphMargin + EDCoordinateArrowWidth + EDCoordinateArrowLength + EDGraphInnerMargin;
+}
+
+- (float)margin{
+#warning duplicate method as EDGraphView
+    return EDGraphMargin + EDCoordinateArrowWidth;
+}
+
+- (void)setGraphOrigin:(NSDictionary *)originInfo verticalInfo:(NSDictionary *)verticalInfo horizontalInfo:(NSDictionary *)horizontalInfo graph:(EDGraph *)graph context:(NSManagedObjectContext *)context{
+    _infoOrigin = originInfo;
+    _infoVertical = verticalInfo;
+    _infoHorizontal = horizontalInfo;
+    _graph = graph;
+    _context = context;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
-    [[NSColor redColor] set];
-    //NSLog(@"drawing equation view.");
-    //[NSBezierPath fillRect:[self frame]];
-    [NSBezierPath fillRect:NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height)];
-    NSLog(@"frame: x:%f y:%f width:%f", [self frame].origin.x, [self frame].origin.y, [self frame].size.width);
+    BOOL firstPointDrawnForEquation = true;
+    NSError *error;
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    float diffX, marginDiff, ratioHorizontal, ratioVertical, valueX, valueY, positionVertical;
+    
+    // set origin points
+    float originVerticalPosition = [[_infoOrigin valueForKey:EDKeyOriginPositionVertical] floatValue] - [self graphMargin];
+    float originHorizontalPosition = [[_infoOrigin valueForKey:EDKeyOriginPositionHorizontal] floatValue] - [self graphMargin];
+    
+    // ratio positive/negative vertical
+    float ratioYPositive, ratioYNegative;
+    ratioYPositive = [[_graph maxValueY] floatValue]/([[_graph maxValueY] floatValue] + fabsf([[_graph minValueY] floatValue]));
+    ratioYNegative = 1 - ratioYPositive;
+    
+    // set stroke
+    [[NSColor redColor] setStroke];
+    
+    // draw equation along graph
+    for (float i=0; i<=[self frame].size.width; i=i+EDGraphEquationIncrement){
+        diffX = i - originHorizontalPosition;
+        
+        // based on position find x
+        if (diffX < 0){
+            // x is negative
+            ratioHorizontal = -1 * diffX/originHorizontalPosition;
+            valueX = ratioHorizontal * [[_graph minValueX] floatValue];
+        }
+        else if (diffX == 0){
+            valueX = 0;
+        }
+        else{
+            // x is positive
+            marginDiff = [self frame].size.width - originHorizontalPosition;
+            ratioHorizontal = diffX/marginDiff;
+            valueX = ratioHorizontal * [[_graph maxValueX] floatValue];
+        }
+        valueY = [EDParser calculate:[[_equation tokens] array] error:&error context:_context varValue:valueX];
+        
+        // if y is greater than max or less than min than break from loop
+        if ((valueY > [[_graph maxValueY] floatValue]) || (valueY < [[_graph minValueY] floatValue]))
+            continue;
+        
+        // based on value find y position
+        if (valueY < 0){
+            // y is negative
+            ratioVertical = valueY/[[_graph minValueY] floatValue];
+            positionVertical = originVerticalPosition + ratioVertical * ([self frame].size.height * ratioYNegative);
+        }
+        else if (valueY == 0){
+            positionVertical = originVerticalPosition;
+        }
+        else{
+            // y is positive
+            ratioVertical = valueY/[[_graph maxValueY] floatValue];
+            positionVertical = originVerticalPosition - ratioVertical * ([self frame].size.height * ratioYPositive);
+        }
+        
+        if (firstPointDrawnForEquation) {
+            [path moveToPoint:NSMakePoint(i, positionVertical)];
+            firstPointDrawnForEquation = false;
+        }
+        else {
+            [path lineToPoint:NSMakePoint(i, positionVertical)];
+        }
+    }
+
+    [path stroke];
 }
 
 @end
