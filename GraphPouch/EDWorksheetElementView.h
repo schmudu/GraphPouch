@@ -28,7 +28,7 @@
 - (void)mouseDownBySelection:(NSEvent *)theEvent;
 - (void)onContextChanged:(NSNotification *)note;
 - (void)updateDisplayBasedOnContext;
-- (void)drawLabelAttributes;
+- (void)drawElementAttributes;
 - (void)removeLabels;
 - (void)removeEquations;
 

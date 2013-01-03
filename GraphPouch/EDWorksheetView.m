@@ -121,7 +121,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 - (void)drawLoadedObjects{
     [self drawAllElements];
-    
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -199,7 +198,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [graphView setFrameOrigin:NSMakePoint([[graph valueForKey:EDElementAttributeLocationX] floatValue], [[graph valueForKey:EDElementAttributeLocationY] floatValue])];
     
     // draw graph attributes
-    [graphView drawLabelAttributes];
+    [graphView drawElementAttributes];
     
     [self addSubview:graphView];
     [graphView setNeedsDisplay:TRUE];

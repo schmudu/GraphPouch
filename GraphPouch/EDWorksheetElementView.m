@@ -21,6 +21,8 @@
 - (void)mouseDraggedBehavior:(NSEvent *)theEvent dragSource:(BOOL)isDragSource snapInfo:(NSDictionary *)snapInfo;
 - (void)notifyMouseDownListeners:(NSEvent *)theEvent;
 - (void)dispatchMouseDragNotification:(NSEvent *)theEvent snapInfo:(NSDictionary *)snapInfo;
+- (void)removeElements;
+- (void)addElements;
 @end
 
 @implementation EDWorksheetElementView
@@ -48,7 +50,7 @@
     // Drawing code here.
 }
 
-- (void)drawAttributes{
+- (void)drawElementAttributes{
     
 }
 
@@ -68,12 +70,20 @@
 }
 
 #pragma mark drawing
-- (void)removeLabels{
-    
+- (void)removeLabels{}
+
+- (void)removeEquations{}
+
+- (void)removeElements{
+    // method called to remove performance-heavy elements
+    // useful during mouse dragging
+    NSLog(@"remove elements.");
 }
 
-- (void)removeEquations{
-    
+- (void)addElements{
+    // method called to add performance-heavy elements
+    // useful after mouse dragging has completed
+    NSLog(@"add elements.");
 }
 
 #pragma mark mouse events
@@ -168,6 +178,9 @@
         return;
         
     BOOL didSnapX = FALSE, didSnapY = FALSE, didSnapBack = FALSE;
+    
+    // remove performance heavy elements
+    [self removeElements];
     
     // check 
     NSPoint newDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
@@ -289,7 +302,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDragged object:self userInfo:notificationDictionary];
 }
 
-//- (void)mouseDraggedBySelection:(NSEvent *)theEvent{
 - (void)mouseDraggedBySelection:(NSEvent *)theEvent snapInfo:(NSDictionary *)snapInfo{
     BOOL originalSourceSnapX = [[snapInfo valueForKey:EDKeyDidSnapX] boolValue];
     BOOL originalSourceSnapY = [[snapInfo valueForKey:EDKeyDidSnapY] boolValue];
@@ -298,6 +310,9 @@
     // check 
     NSPoint newDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
     NSPoint thisOrigin = [self frame].origin;
+    
+    // remove performance heavy elements
+    [self removeElements];
     
     // if original source did snap back then modify location by that distance
     if (originalSourceDidSnapBack){
@@ -327,6 +342,10 @@
 #pragma mark mouse up
 - (void)mouseUp:(NSEvent *)theEvent{
     [self mouseUpBehavior:theEvent];
+    
+    // add performance heavy elements that were removed during dragging
+    [self addElements];
+    
     // notify listeners
     NSMutableDictionary *notificationDictionary = [[NSMutableDictionary alloc] init];
     [notificationDictionary setValue:theEvent forKey:EDEventKey];
@@ -334,6 +353,9 @@
 }
 
 - (void)mouseUpBySelection:(NSEvent *)theEvent{
+    // add performance heavy elements that were removed during dragging
+    [self addElements];
+    
     [self mouseUpBehavior:theEvent];
 }
 
