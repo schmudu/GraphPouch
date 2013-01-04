@@ -10,10 +10,9 @@
 #import "EDConstants.h"
 #import "NSColor+Utilities.h"
 #import "EDParser.h"
+#import "EDGraphView.h"
 
 @interface EDEquationView()
-- (float)graphMargin;
-- (float)margin;
 @end
 
 @implementation EDEquationView
@@ -32,17 +31,6 @@
     return TRUE;
 }
 
-- (float)graphMargin{
-    // defines margin where graph is actually drawn
-#warning duplicate method as EDGraphView
-    return EDGraphMargin + EDCoordinateArrowWidth + EDCoordinateArrowLength + EDGraphInnerMargin;
-}
-
-- (float)margin{
-#warning duplicate method as EDGraphView
-    return EDGraphMargin + EDCoordinateArrowWidth;
-}
-
 - (void)setGraphOrigin:(NSDictionary *)originInfo verticalInfo:(NSDictionary *)verticalInfo horizontalInfo:(NSDictionary *)horizontalInfo graph:(EDGraph *)graph context:(NSManagedObjectContext *)context{
     _infoOrigin = originInfo;
     _infoVertical = verticalInfo;
@@ -59,8 +47,8 @@
     float diffX, marginDiff, ratioHorizontal, ratioVertical, valueX, valueY, positionVertical;
     
     // set origin points
-    float originVerticalPosition = [[_infoOrigin valueForKey:EDKeyOriginPositionVertical] floatValue] - [self graphMargin];
-    float originHorizontalPosition = [[_infoOrigin valueForKey:EDKeyOriginPositionHorizontal] floatValue] - [self graphMargin];
+    float originVerticalPosition = [[_infoOrigin valueForKey:EDKeyOriginPositionVertical] floatValue] - [EDGraphView graphMargin];
+    float originHorizontalPosition = [[_infoOrigin valueForKey:EDKeyOriginPositionHorizontal] floatValue] - [EDGraphView graphMargin];
     
     // ratio positive/negative vertical
     float ratioYPositive, ratioYNegative;

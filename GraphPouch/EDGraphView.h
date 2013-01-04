@@ -16,5 +16,7 @@
 }
 
 - (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph;
++ (float)graphMargin;
++ (float)margin;
 
 @end
