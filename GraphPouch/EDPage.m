@@ -23,7 +23,7 @@
 #pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
     // create entity but don't insert it anywhere
-    self = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
+    self = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]] insertIntoManagedObjectContext:nil];
     if(self){
         [self setCurrentPage:[aDecoder decodeBoolForKey:EDPageAttributeCurrent]];
         [self setPageNumber:[[NSNumber alloc] initWithInt:[aDecoder decodeInt32ForKey:EDPageAttributePageNumber]]];
@@ -32,50 +32,14 @@
         
         EDGraph *newGraph;
         //EDPoint *newPoint;
-        EDEquation *newEquation;
         NSSet *graphs = [aDecoder decodeObjectForKey:EDPageAttributeGraphs];
         
         for (EDGraph *graph in graphs){
             // create a graph and set it for this page
-            newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
+            newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]] insertIntoManagedObjectContext:nil];
             
             newGraph = [graph initWithCoder:aDecoder];
-            /*
-            //set attributes
-            [newGraph setElementHeight:[graph elementHeight]];
-            [newGraph setElementWidth:[graph elementWidth]];
-            [newGraph setHasGridLines:[graph hasGridLines]];
-            [newGraph setHasTickMarks:[graph hasTickMarks]];
-            [newGraph setLocationX:[graph locationX]];
-            [newGraph setLocationY:[graph locationY]];
-            [newGraph setSelected:[graph selected]];
- 
-            // set points for graph
-            for (EDPoint *point in [graph points]){
-                // create a point and set it for this graph
-                newPoint = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
-                [newPoint setIsVisible:[point isVisible]];
-                [newPoint setShowLabel:[point showLabel]];
-                [newPoint setLocationX:[point locationX]];
-                [newPoint setLocationY:[point locationY]];
-                
-                // set graph relationship
-                [newGraph addPointsObject:newPoint];
-            }
             
-            // set equations for graph
-            for (EDEquation *equation in [graph equations]){
-                // create a point and set it for this graph
-                newEquation = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
-                [newEquation setIsVisible:[equation isVisible]];
-                [newEquation setShowLabel:[equation showLabel]];
-                [newEquation setEquation:[equation equation]];
-                
-                // set graph relationship
-                [newGraph addEquationsObject:newEquation];
-            }
-            
-             */
             // set relationship
             [self addGraphsObject:newGraph];
         }

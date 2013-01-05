@@ -56,7 +56,7 @@
     
     // return value based on column identifier
     if ([columnIdentifier isEqualToString:@"equation"]) {
-        returnValue = [NSString stringWithFormat:@"%@",[(EDEquation *)[commonEquations objectAtIndex:row] equation]];
+        returnValue = [NSString stringWithFormat:@"y=%@",[(EDEquation *)[commonEquations objectAtIndex:row] equation]];
     }
     else if ([columnIdentifier isEqualToString:@"visible"]) {
         if (![(EDEquation *)[commonEquations objectAtIndex:row] matchesHaveSameVisibility]) {
@@ -67,6 +67,7 @@
             returnValue = [[NSNumber alloc] initWithBool:[(EDEquation *)[commonEquations objectAtIndex:row] isVisible]];
         }
     }
+    /*
     else if ([columnIdentifier isEqualToString:@"label"]) {
         if (![(EDEquation *)[commonEquations objectAtIndex:row] matchesHaveSameLabel]) {
             // if all graphs don't have same property then show mixed state
@@ -75,7 +76,7 @@
         else {
             returnValue = [[NSNumber alloc] initWithBool:[(EDEquation *)[commonEquations objectAtIndex:row] showLabel]];
         }
-    }
+    }*/
     
     
     return returnValue; 
@@ -105,10 +106,11 @@
         [newAttribute setValue:EDEquationAttributeIsVisible forKey:EDKey];
         [newAttribute setObject:object forKey:EDValue];
     }
+    /*
     else if ([columnIdentifier isEqualToString:@"label"]) {
         [newAttribute setValue:EDGraphPointAttributeShowLabel forKey:EDKey];
         [newAttribute setObject:object forKey:EDValue];
-    }
+    }*/
     
     // set the attribute for the graph that holds this point
     // set the common points

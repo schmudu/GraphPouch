@@ -11,6 +11,7 @@
 #import "EDCoreDataUtility.h"
 #import "EDCoreDataUtility+Pages.h"
 #import "NSColor+Utilities.h"
+#import "NSCoder+Context.h"
 
 @interface EDPageView()
 - (void)onContextChanged:(NSNotification *)note;
@@ -284,6 +285,9 @@
 #pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
     if((self=[super init])){
+        //set context for decoder
+        [aDecoder setContext:_context];
+        
         _highlighted = [aDecoder decodeBoolForKey:EDPageViewAttributeHighlighted];
         _dataObj = [aDecoder decodeObjectForKey:EDPageViewAttributeDataObject];
     }

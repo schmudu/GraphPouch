@@ -25,7 +25,7 @@
 
 #pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
-    self = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
+    self = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:[[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]] insertIntoManagedObjectContext:nil];
     if(self){
         [self setEquation:[aDecoder decodeObjectForKey:EDEquationAttributeEquation]];
         [self setShowLabel:[aDecoder decodeBoolForKey:EDEquationAttributeShowLabel]];

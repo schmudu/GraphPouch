@@ -76,7 +76,7 @@
 																<string key="NSFrameSize">{263, 114}</string>
 																<reference key="NSSuperview" ref="753094011"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="645334946"/>
+																<reference key="NSNextKeyView" ref="45311825"/>
 																<string key="NSReuseIdentifierKey">_NS:13</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTableHeaderView" key="NSHeaderView" id="176472092">
@@ -317,6 +317,7 @@
 														<string key="NSFrame">{{1, 196}, {252, 15}}</string>
 														<reference key="NSSuperview" ref="1023586222"/>
 														<reference key="NSWindow"/>
+														<reference key="NSNextKeyView"/>
 														<string key="NSReuseIdentifierKey">_NS:60</string>
 														<int key="NSsFlags">1</int>
 														<reference key="NSTarget" ref="1023586222"/>
@@ -342,7 +343,7 @@
 												<string key="NSFrame">{{20, 18}, {265, 132}}</string>
 												<reference key="NSSuperview" ref="7230525"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="753094011"/>
+												<reference key="NSNextKeyView" ref="645334946"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<int key="NSsFlags">133682</int>
 												<reference key="NSVScroller" ref="45311825"/>
@@ -365,7 +366,7 @@
 																<string key="NSFrameSize">{263, 114}</string>
 																<reference key="NSSuperview" ref="162383899"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="869064881"/>
+																<reference key="NSNextKeyView" ref="700452261"/>
 																<string key="NSReuseIdentifierKey">_NS:13</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTableHeaderView" key="NSHeaderView" id="51385652">
@@ -388,7 +389,7 @@
 																<array class="NSMutableArray" key="NSTableColumns">
 																	<object class="NSTableColumn" id="1073060829">
 																		<string key="NSIdentifier">equation</string>
-																		<double key="NSWidth">144.94921875</double>
+																		<double key="NSWidth">211.20703125</double>
 																		<double key="NSMinWidth">40</double>
 																		<double key="NSMaxWidth">1000</double>
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -418,7 +419,7 @@
 																	</object>
 																	<object class="NSTableColumn" id="139016902">
 																		<string key="NSIdentifier">visible</string>
-																		<double key="NSWidth">54.7890625</double>
+																		<double key="NSWidth">45.7890625</double>
 																		<double key="NSMinWidth">10</double>
 																		<double key="NSMaxWidth">3.4028234663852886e+38</double>
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -433,40 +434,6 @@
 																			<int key="NSCellFlags">67239424</int>
 																			<int key="NSCellFlags2">150994944</int>
 																			<string key="NSContents"/>
-																			<reference key="NSSupport" ref="853635957"/>
-																			<string key="NSCellIdentifier">_NS:9</string>
-																			<reference key="NSControlView" ref="304541330"/>
-																			<int key="NSButtonFlags">1215582719</int>
-																			<int key="NSButtonFlags2">2</int>
-																			<reference key="NSNormalImage" ref="195727306"/>
-																			<reference key="NSAlternateImage" ref="288905603"/>
-																			<string key="NSAlternateContents"/>
-																			<string key="NSKeyEquivalent"/>
-																			<int key="NSPeriodicDelay">200</int>
-																			<int key="NSPeriodicInterval">25</int>
-																		</object>
-																		<int key="NSResizingMask">3</int>
-																		<bool key="NSIsResizeable">YES</bool>
-																		<bool key="NSIsEditable">YES</bool>
-																		<reference key="NSTableView" ref="304541330"/>
-																	</object>
-																	<object class="NSTableColumn" id="150467679">
-																		<string key="NSIdentifier">label</string>
-																		<double key="NSWidth">54</double>
-																		<double key="NSMinWidth">10</double>
-																		<double key="NSMaxWidth">3.4028234663852886e+38</double>
-																		<object class="NSTableHeaderCell" key="NSHeaderCell">
-																			<int key="NSCellFlags">75628096</int>
-																			<int key="NSCellFlags2">134219776</int>
-																			<string key="NSContents">label</string>
-																			<reference key="NSSupport" ref="26"/>
-																			<reference key="NSBackgroundColor" ref="648356804"/>
-																			<reference key="NSTextColor" ref="654187831"/>
-																		</object>
-																		<object class="NSButtonCell" key="NSDataCell" id="728184075">
-																			<int key="NSCellFlags">67239424</int>
-																			<int key="NSCellFlags2">16777216</int>
-																			<string key="NSContents">Check</string>
 																			<reference key="NSSupport" ref="853635957"/>
 																			<string key="NSCellIdentifier">_NS:9</string>
 																			<reference key="NSControlView" ref="304541330"/>
@@ -555,7 +522,7 @@
 												<string key="NSFrame">{{20, 195}, {265, 132}}</string>
 												<reference key="NSSuperview" ref="7230525"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="162383899"/>
+												<reference key="NSNextKeyView" ref="869064881"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<int key="NSsFlags">133682</int>
 												<reference key="NSVScroller" ref="700452261"/>
@@ -1377,7 +1344,7 @@
 										<string key="NSFrameSize">{294, 658}</string>
 										<reference key="NSSuperview" ref="127320872"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="587354762"/>
+										<reference key="NSNextKeyView" ref="392393645"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 									</object>
 								</array>
@@ -1420,7 +1387,7 @@
 						<string key="NSFrameSize">{311, 675}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="127320872"/>
+						<reference key="NSNextKeyView" ref="587354762"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">133122</int>
 						<reference key="NSVScroller" ref="587354762"/>
@@ -3549,7 +3516,6 @@
 						<reference key="object" ref="304541330"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="139016902"/>
-							<reference ref="150467679"/>
 							<reference ref="1073060829"/>
 						</array>
 						<reference key="parent" ref="621850285"/>
@@ -3579,19 +3545,6 @@
 						<int key="objectID">2258</int>
 						<reference key="object" ref="29156249"/>
 						<reference key="parent" ref="139016902"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2252</int>
-						<reference key="object" ref="150467679"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="728184075"/>
-						</array>
-						<reference key="parent" ref="304541330"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">2259</int>
-						<reference key="object" ref="728184075"/>
-						<reference key="parent" ref="150467679"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2375</int>
@@ -4391,12 +4344,10 @@
 				<string key="2249.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2250.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2251.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2252.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2253.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2255.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2256.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2258.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2259.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2375.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="2556.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2556.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

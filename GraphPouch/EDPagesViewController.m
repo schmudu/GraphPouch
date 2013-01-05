@@ -394,7 +394,8 @@
     // do not insert if dragged section not valid
     if (destinationSection != -1) {
         // remove pages that were dragged
-        [self removePageViews:pageViews];
+        //[self removePageViews:pageViews];
+//#error I think i need to add the pages here
         
         // update undragged pages
         [self updatePageNumbersOfUndraggedPagesLessThan:destinationSection greaterThanOrEqualTo:firstSelectedPageSection];

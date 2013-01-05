@@ -276,6 +276,12 @@
                 multiplyToken = [EDToken multiplierToken:context];
                 [tokens insertObject:multiplyToken atIndex:i];
             }
+            
+            // insert token between right paren and left paren
+            if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken value] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeParenthesis) && ([[currentToken value] isEqualToString:@"("])){
+                multiplyToken = [EDToken multiplierToken:context];
+                [tokens insertObject:multiplyToken atIndex:i];
+            }
         }
         previousToken = currentToken;
         i++;

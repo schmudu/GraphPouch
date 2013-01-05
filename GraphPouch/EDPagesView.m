@@ -197,6 +197,8 @@
     EDPage *lastSelectedPage = (EDPage *)[selectedPages lastObject];
     
     NSArray *objects = [_pb readObjectsForClasses:classes options:nil];
+    
+    // add pages that were stored in the pasteboard
     if ([objects count] > 0) {
         
         NSMutableDictionary *userDict = [[NSMutableDictionary alloc] init];

@@ -70,6 +70,7 @@
 		CDAC3748161112E700545F1E /* NSMutableDictionary+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAC3747161112E700545F1E /* NSMutableDictionary+Utilities.m */; };
 		CDB6829A1684D1A900702EAA /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB682991684D1A900702EAA /* EDGraph.m */; };
 		CDB682ED1694E80700702EAA /* EDEquationView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB682EC1694E80700702EAA /* EDEquationView.m */; };
+		CDC649DC1697917F003FADE8 /* NSCoder+Context.m in Sources */ = {isa = PBXBuildFile; fileRef = CDC649DB1697917F003FADE8 /* NSCoder+Context.m */; };
 		CDD46E531603BE3C00EDD75C /* NSColor+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */; };
 		CDD46E611607D1F200EDD75C /* EDTransformRect.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E601607D1F200EDD75C /* EDTransformRect.m */; };
 		CDD46E651607D22F00EDD75C /* EDTransformPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E641607D22F00EDD75C /* EDTransformPoint.m */; };
@@ -203,6 +204,8 @@
 		CDB682991684D1A900702EAA /* EDGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraph.m; sourceTree = "<group>"; };
 		CDB682EB1694E80700702EAA /* EDEquationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDEquationView.h; sourceTree = "<group>"; };
 		CDB682EC1694E80700702EAA /* EDEquationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDEquationView.m; sourceTree = "<group>"; };
+		CDC649DA1697917F003FADE8 /* NSCoder+Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCoder+Context.h"; sourceTree = "<group>"; };
+		CDC649DB1697917F003FADE8 /* NSCoder+Context.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCoder+Context.m"; sourceTree = "<group>"; };
 		CDD46E511603BE3C00EDD75C /* NSColor+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Utilities.h"; sourceTree = "<group>"; };
 		CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Utilities.m"; sourceTree = "<group>"; };
 		CDD46E5F1607D1F200EDD75C /* EDTransformRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformRect.h; sourceTree = "<group>"; };
@@ -393,10 +396,11 @@
 		CD3F0AF715C4775900AB7567 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CDAA91101669B128009B75A2 /* ArrayController */,
-				CDAA910E1669B0E4009B75A2 /* CoreData */,
-				CDAA91111669B153009B75A2 /* MutableArray */,
-				CDAA91121669B15A009B75A2 /* MutableDictionary */,
+				CDAA91101669B128009B75A2 /* NSArrayController */,
+				CDC649D816979114003FADE8 /* NSCoder */,
+				CDAA910E1669B0E4009B75A2 /* NSCoreData */,
+				CDAA91111669B153009B75A2 /* NSMutableArray */,
+				CDAA91121669B15A009B75A2 /* NSMutableDictionary */,
 				CDAA91131669B186009B75A2 /* NSObject */,
 				CD3A4FE316359FC90042B6DD /* EDPage.h */,
 				CD3A4FE416359FC90042B6DD /* EDPage.m */,
@@ -557,7 +561,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		CDAA910E1669B0E4009B75A2 /* CoreData */ = {
+		CDAA910E1669B0E4009B75A2 /* NSCoreData */ = {
 			isa = PBXGroup;
 			children = (
 				CD1422C515C7590700F55819 /* EDCoreDataUtility.h */,
@@ -573,10 +577,10 @@
 				CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */,
 				CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */,
 			);
-			name = CoreData;
+			name = NSCoreData;
 			sourceTree = "<group>";
 		};
-		CDAA91101669B128009B75A2 /* ArrayController */ = {
+		CDAA91101669B128009B75A2 /* NSArrayController */ = {
 			isa = PBXGroup;
 			children = (
 				CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */,
@@ -584,10 +588,10 @@
 				CD1C57AB161B9AB200534D49 /* EDPageArrayController.h */,
 				CD1C57AC161B9AB200534D49 /* EDPageArrayController.m */,
 			);
-			name = ArrayController;
+			name = NSArrayController;
 			sourceTree = "<group>";
 		};
-		CDAA91111669B153009B75A2 /* MutableArray */ = {
+		CDAA91111669B153009B75A2 /* NSMutableArray */ = {
 			isa = PBXGroup;
 			children = (
 				CD2DD63E1655AD8B006557FC /* NSMutableArray+EDPoint.h */,
@@ -595,16 +599,16 @@
 				CD26366D167EB41D00424487 /* NSMutableArray+EDEquation.h */,
 				CD26366E167EB41D00424487 /* NSMutableArray+EDEquation.m */,
 			);
-			name = MutableArray;
+			name = NSMutableArray;
 			sourceTree = "<group>";
 		};
-		CDAA91121669B15A009B75A2 /* MutableDictionary */ = {
+		CDAA91121669B15A009B75A2 /* NSMutableDictionary */ = {
 			isa = PBXGroup;
 			children = (
 				CDAC3746161112E700545F1E /* NSMutableDictionary+Utilities.h */,
 				CDAC3747161112E700545F1E /* NSMutableDictionary+Utilities.m */,
 			);
-			name = MutableDictionary;
+			name = NSMutableDictionary;
 			sourceTree = "<group>";
 		};
 		CDAA91131669B186009B75A2 /* NSObject */ = {
@@ -640,6 +644,15 @@
 				CD1EBD8B160013D200BEEA4D /* EDFormatterDecimalSigned.m */,
 			);
 			name = Formatters;
+			sourceTree = "<group>";
+		};
+		CDC649D816979114003FADE8 /* NSCoder */ = {
+			isa = PBXGroup;
+			children = (
+				CDC649DA1697917F003FADE8 /* NSCoder+Context.h */,
+				CDC649DB1697917F003FADE8 /* NSCoder+Context.m */,
+			);
+			name = NSCoder;
 			sourceTree = "<group>";
 		};
 		CDD46E4E1603BE1200EDD75C /* Categories */ = {
@@ -839,6 +852,7 @@
 				CD263672167EBCA200424487 /* NSSet+Equations.m in Sources */,
 				CDB6829A1684D1A900702EAA /* EDGraph.m in Sources */,
 				CDB682ED1694E80700702EAA /* EDEquationView.m in Sources */,
+				CDC649DC1697917F003FADE8 /* NSCoder+Context.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
