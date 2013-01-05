@@ -83,8 +83,8 @@
     [newGraph setSelected:FALSE];
     [newGraph setLocationX:50];
     [newGraph setLocationY:150];
-    [newGraph setElementWidth:70];
-    [newGraph setElementHeight:70];
+    [newGraph setElementWidth:300];
+    [newGraph setElementHeight:300];
 }
 
 #pragma mark align

@@ -9,6 +9,7 @@
 #import "EDCoreDataUtility+Pages.h"
 #import "EDConstants.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "EDCoreDataUtility.h"
 
 @implementation EDCoreDataUtility (Pages)
 
@@ -426,6 +427,9 @@
     // set parameter as current page
     EDPage *newPage = [self getPage:page context:context];
     [newPage setCurrentPage:TRUE];
+    
+    // clear any selection of worksheet elements
+    [EDCoreDataUtility clearSelectedWorksheetElements:context];
 }
 
 
