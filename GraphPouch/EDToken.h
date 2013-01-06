@@ -12,7 +12,7 @@
 
 @class EDEquation;
 
-@interface EDToken : NSManagedObject <NSCoding>
+@interface EDToken : NSManagedObject <NSCoding, NSPasteboardReading, NSPasteboardReading>
 
 @property BOOL isValid;
 @property (nonatomic, retain) NSNumber * precedence;

@@ -36,10 +36,10 @@
         
         for (EDToken *token in tokens){
             // create a point and set it for this graph
-            newToken = [token initWithCoder:aDecoder];
+            //newToken = [token initWithCoder:aDecoder];
             
             // set relationship
-            [self addTokensObject:newToken];
+            [self addTokensObject:token];
         }
     }
     return self;
@@ -217,5 +217,33 @@ static NSString *const kItemsKey = @"tokens";
         [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
         [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:kItemsKey];
     }
+}
+
+#pragma mark pasteboard writing protocol
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    NSArray *writableTypes = nil;
+    if (!writableTypes){
+        writableTypes = [[NSArray alloc] initWithObjects:EDUTIEquation, nil];
+    }
+    return writableTypes;
+}
+
+- (id)pasteboardPropertyListForType:(NSString *)type{
+    //return self;
+    return [NSKeyedArchiver archivedDataWithRootObject:self];
+}
+
+- (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
+    return 0;
+}
+
+#pragma mark pasteboard reading protocol
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
+    // encode object
+    return NSPasteboardReadingAsKeyedArchive;
+}
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    return [NSArray arrayWithObject:EDUTIEquation];
 }
 @end

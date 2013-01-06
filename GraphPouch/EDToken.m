@@ -111,4 +111,31 @@
     return token;
 }
 
+#pragma mark pasteboard writing protocol
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    NSArray *writableTypes = nil;
+    if (!writableTypes){
+        writableTypes = [[NSArray alloc] initWithObjects:EDUTIToken, nil];
+    }
+    return writableTypes;
+}
+
+- (id)pasteboardPropertyListForType:(NSString *)type{
+    //return self;
+    return [NSKeyedArchiver archivedDataWithRootObject:self];
+}
+
+- (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
+    return 0;
+}
+
+#pragma mark pasteboard reading protocol
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
+    // encode object
+    return NSPasteboardReadingAsKeyedArchive;
+}
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    return [NSArray arrayWithObject:EDUTIToken];
+}
 @end

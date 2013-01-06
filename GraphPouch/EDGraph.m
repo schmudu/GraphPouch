@@ -85,9 +85,6 @@
         NSSet *points = [aDecoder decodeObjectForKey:EDGraphAttributePoints];
         
         for (EDPoint *point in points){
-            // create a point and set it for this graph
-            //newPoint = [point initWithCoder:aDecoder];
-            
             // set relationship
             [self addPointsObject:point];
         }
@@ -96,8 +93,6 @@
         NSSet *equations = [aDecoder decodeObjectForKey:EDGraphAttributeEquations];
         
         for (EDEquation *equation in equations){
-            //newEquation = [equation initWithCoder:aDecoder];
-            
             // set relationship
             [self addEquationsObject:equation];
         }

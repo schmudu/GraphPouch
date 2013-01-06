@@ -11,7 +11,7 @@
 
 @class EDGraph, EDToken;
 
-@interface EDEquation : NSManagedObject <NSCoding>
+@interface EDEquation : NSManagedObject <NSCoding, NSPasteboardReading, NSPasteboardReading>
 
 @property (nonatomic, retain) NSString * equation;
 @property BOOL isVisible;

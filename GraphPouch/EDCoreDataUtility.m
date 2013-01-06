@@ -13,6 +13,8 @@
 #import "NSObject+Document.h"
 #import "NSManagedObject+EasyFetching.h"
 #import "NSMutableArray+EDPoint.h"
+#import "EDEquation.h"
+#import "EDToken.h"
 
 @interface EDCoreDataUtility()
 @end
@@ -73,10 +75,8 @@
 + (void)insertWorksheetElements:(NSArray *)elements context:(NSManagedObjectContext *)context{
     EDGraph *newGraph;
     //NSLog(@"need to insert elements:%@", elements);
-    /*
-    NSArray *graphs = [EDGraph getAllObjects:context];
-    NSLog(@"before graphs:%@", graphs);
-     */
+    NSArray *tokens = [EDToken getAllObjects:context];
+    NSLog(@"before tokens:%@", tokens);
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     // insert objects into context
     for (EDElement *element in elements){
@@ -96,13 +96,33 @@
                 // set relationship
                 [point setGraph:newGraph];
             }
+            
+            // get all points that need to be modified
+            NSArray *tokens;
+            NSArray *equations = [[NSArray alloc] initWithArray:[[newGraph equations] allObjects]];
+            for (EDEquation *equation in equations){
+                // insert into context
+                [context insertObject:equation];
+                
+                // set relationship
+                [equation setGraph:newGraph];
+                
+                // insert tokens as well
+                tokens = [[NSArray alloc] initWithArray:[[equation tokens] array]];
+                //for (EDToken *token in tokens){
+                for (EDToken *token in tokens){
+                    // insert token
+                    [context insertObject:(NSManagedObject *)token];
+                    
+                    // set relationship
+                    [equation addTokensObject:token];
+                }
+            }
             //NSLog(@"does it have points?:%@", [(EDGraph *)element points]);
         }
     }
-    /*
-    graphs = [EDGraph getAllObjects:context];
-    NSLog(@"after: graphs:%@", graphs);
-     */
+    tokens = [EDToken getAllObjects:context];
+    NSLog(@"after tokens:%@", tokens);
 }
 
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
@@ -136,15 +156,15 @@
     NSMutableArray *selectedElements = [self getAllSelectedWorksheetElements:context];
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     
-    //NSArray *graphs = [EDGraph getAllObjects:context];
-    //NSLog(@"before delete graphs:%@", graphs);
+    NSArray *equations = [EDEquation getAllObjects:context];
+    NSLog(@"before delete equations:%@", equations);
     for (EDElement *element in selectedElements){
         if ([element isKindOfClass:[EDGraph class]]) {
             [currentPage removeGraphsObject:(EDGraph *)element];
         }
         [context deleteObject:element];
     }
-    //graphs = [EDGraph getAllObjects:context];
-    //NSLog(@"after delete graphs:%@", graphs);
+    equations = [EDEquation getAllObjects:context];
+    NSLog(@"after delete equations:%@", equations);
 }
 @end

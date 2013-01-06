@@ -136,10 +136,10 @@
     
     NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
     //NSLog(@"after: pasteboard:%@", objects);
-    NSArray *points = [EDPoint getAllObjects:_context];
-    NSLog(@"before points:%@", points);
+    //NSArray *points = [EDPoint getAllObjects:_context];
+    //NSLog(@"before points:%@", points);
     [EDCoreDataUtility insertWorksheetElements:objects context:_context];
-    points = [EDPoint getAllObjects:_context];
-    NSLog(@"after points:%@", points);
+    //points = [EDPoint getAllObjects:_context];
+    //NSLog(@"after points:%@", points);
 }
 @end
