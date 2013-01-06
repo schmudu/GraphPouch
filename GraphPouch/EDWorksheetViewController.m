@@ -12,6 +12,7 @@
 #import "EDGraph.h"
 #import "EDCoreDataUtility+Pages.h"
 #import "EDPoint.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @interface EDWorksheetViewController ()
 - (void)deselectAllElements:(NSNotification *)note;
@@ -113,7 +114,11 @@
     //NSLog(@"before: going to cut elements from core data: copied:%@", copiedElements);
     
     // delete elements from core data
+    //NSArray *points = [EDPoint getAllObjects:_context];
+    //NSLog(@"before points:%@", points);
     [EDCoreDataUtility deleteSelectedWorksheetElements:_context];
+    //points = [EDPoint getAllObjects:_context];
+    //NSLog(@"after points:%@", points);
     //NSLog(@"after: going to cut elements from core data: copied:%@", copiedElements);
     
     // test
@@ -131,6 +136,10 @@
     
     NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
     //NSLog(@"after: pasteboard:%@", objects);
+    NSArray *points = [EDPoint getAllObjects:_context];
+    NSLog(@"before points:%@", points);
     [EDCoreDataUtility insertWorksheetElements:objects context:_context];
+    points = [EDPoint getAllObjects:_context];
+    NSLog(@"after points:%@", points);
 }
 @end

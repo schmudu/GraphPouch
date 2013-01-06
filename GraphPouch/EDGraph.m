@@ -54,7 +54,6 @@
     [graph setLocationY:[self locationY]];
     [graph setSelected:[self selected]];
     
-#error need to start here...i believe i'm copying wrong
     // copy points
     for (EDPoint *point in [self points]){
         [graph addPointsObject:point];
@@ -82,25 +81,25 @@
         [self setElementWidth:[aDecoder decodeFloatForKey:EDElementAttributeWidth]];
         [self setElementHeight:[aDecoder decodeFloatForKey:EDElementAttributeHeight]];
         
-        EDPoint *newPoint;
+        //EDPoint *newPoint;
         NSSet *points = [aDecoder decodeObjectForKey:EDGraphAttributePoints];
         
         for (EDPoint *point in points){
             // create a point and set it for this graph
-            newPoint = [point initWithCoder:aDecoder];
+            //newPoint = [point initWithCoder:aDecoder];
             
             // set relationship
-            [self addPointsObject:newPoint];
+            [self addPointsObject:point];
         }
         
-        EDEquation *newEquation;
+        //EDEquation *newEquation;
         NSSet *equations = [aDecoder decodeObjectForKey:EDGraphAttributeEquations];
         
         for (EDEquation *equation in equations){
-            newEquation = [equation initWithCoder:aDecoder];
+            //newEquation = [equation initWithCoder:aDecoder];
             
             // set relationship
-            [self addEquationsObject:newEquation];
+            [self addEquationsObject:equation];
         }
     }
     return self;

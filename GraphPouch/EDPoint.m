@@ -64,23 +64,8 @@
         && ([self locationY] == [otherPoint locationY])){ 
             return TRUE;
     }
-        /*
-    if (([self locationX] == [otherPoint locationX]) 
-        && ([self locationY] == [otherPoint locationY]) 
-        && ([self isVisible] == [otherPoint isVisible])
-        && ([self showLabel] == [otherPoint showLabel])){
-            return TRUE;
-    }*/
     return FALSE;
 }
-
-/*
-- (BOOL)matchesPointByCoordinate:(EDPoint *)otherPoint{
-    if (([self locationX] == [otherPoint locationX]) && ([self locationY] == [otherPoint locationY])){
-        return TRUE;
-    }
-    return FALSE;
-}*/
 
 - (void)copyAttributes:(EDPoint *)otherPoint{
     [self setShowLabel:[otherPoint showLabel]];

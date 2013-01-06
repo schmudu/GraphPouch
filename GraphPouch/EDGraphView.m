@@ -647,6 +647,7 @@
 }
 
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
+    NSLog(@"begin draw points");
     float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
     //float originX, originY;
@@ -666,6 +667,7 @@
             [path fill]; 
         }
     }
+    NSLog(@"end draw points");
 }
 
 - (void)drawPointsWithLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{

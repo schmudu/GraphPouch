@@ -87,14 +87,16 @@
             newGraph = (EDGraph *)element;
             [newGraph setPage:currentPage];
             
-            for (EDPoint *point in [newGraph  points]){
+            // get all points that need to be modified
+            NSArray *points = [[NSArray alloc] initWithArray:[[newGraph points] allObjects]];
+            for (EDPoint *point in points){
                 // insert into context
                 [context insertObject:point];
                 
                 // set relationship
                 [point setGraph:newGraph];
             }
-            NSLog(@"does it have points?:%@", [(EDGraph *)element points]);
+            //NSLog(@"does it have points?:%@", [(EDGraph *)element points]);
         }
     }
     /*
@@ -134,15 +136,15 @@
     NSMutableArray *selectedElements = [self getAllSelectedWorksheetElements:context];
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     
-    NSArray *graphs = [EDGraph getAllObjects:context];
-    NSLog(@"before delete graphs:%@", graphs);
+    //NSArray *graphs = [EDGraph getAllObjects:context];
+    //NSLog(@"before delete graphs:%@", graphs);
     for (EDElement *element in selectedElements){
         if ([element isKindOfClass:[EDGraph class]]) {
             [currentPage removeGraphsObject:(EDGraph *)element];
         }
         [context deleteObject:element];
     }
-    graphs = [EDGraph getAllObjects:context];
-    NSLog(@"after delete graphs:%@", graphs);
+    //graphs = [EDGraph getAllObjects:context];
+    //NSLog(@"after delete graphs:%@", graphs);
 }
 @end
