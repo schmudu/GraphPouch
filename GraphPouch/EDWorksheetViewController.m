@@ -17,6 +17,8 @@
 - (void)deselectAllElements:(NSNotification *)note;
 - (void)deleteSelectedElements:(NSNotification *)note;
 - (void)onWindowResized:(NSNotification *)note;
+- (void)cutSelectedElements:(NSNotification *)note;
+- (void)pasteElements:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetViewController
@@ -42,6 +44,8 @@
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
     [_nc addObserver:self selector:@selector(deleteSelectedElements:) name:EDEventDeleteKeyPressedWithoutModifiers object:[self view]];
     [_nc addObserver:self selector:@selector(alignElementsToTop:) name:EDEventMenuAlignTop object:nil];
+    [_nc addObserver:self selector:@selector(cutSelectedElements:) name:EDEventShortcutCut object:[self view]];
+    [_nc addObserver:self selector:@selector(pasteElements:) name:EDEventShortcutPaste object:[self view]];
     
     // initialize view to display all of the worksheet elements
     [(EDWorksheetView *)[self view] drawLoadedObjects];
@@ -60,6 +64,8 @@
     [_nc removeObserver:self name:EDEventDeleteKeyPressedWithoutModifiers object:[self view]];
     [_nc removeObserver:self name:EDEventMenuAlignTop object:nil];
     [_nc removeObserver:self name:EDEventWindowDidResize object:_documentController];
+    [_nc removeObserver:self name:EDEventShortcutCut object:[self view]];
+    [_nc removeObserver:self name:EDEventShortcutPaste object:[self view]];
 }
 
 - (void)deleteSelectedElements:(NSNotification *)note{
@@ -95,5 +101,36 @@
 #pragma mark window
 - (void)onWindowResized:(NSNotification *)note{
     //NSLog(@"window was resized: width:%f height:%f", [[self view] frame].size.width, [[self view] frame].size.height);
+}
+
+#pragma mark keyboard shortcuts
+- (void)cutSelectedElements:(NSNotification *)note{
+    // copy elements to pasteboard
+    NSMutableArray *copiedElements = [EDCoreDataUtility copySelectedWorksheetElements:_context];
+    
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] writeObjects:copiedElements];
+    //NSLog(@"before: going to cut elements from core data: copied:%@", copiedElements);
+    
+    // delete elements from core data
+    [EDCoreDataUtility deleteSelectedWorksheetElements:_context];
+    //NSLog(@"after: going to cut elements from core data: copied:%@", copiedElements);
+    
+    // test
+    /*
+    NSArray *classes = [NSArray arrayWithObject:[EDGraph class]];
+    
+    NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+    NSLog(@"after: pasteboard:%@", objects);
+     */
+}
+
+- (void)pasteElements:(NSNotification *)note{
+#warning add other elements here, need to add other classes
+    NSArray *classes = [NSArray arrayWithObject:[EDGraph class]];
+    
+    NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+    //NSLog(@"after: pasteboard:%@", objects);
+    [EDCoreDataUtility insertWorksheetElements:objects context:_context];
 }
 @end

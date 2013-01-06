@@ -14,22 +14,26 @@
 @class EDPoint;
 @class EDEquation;
 
-@interface EDGraph : EDElement <NSCoding>
+@interface EDGraph : EDElement <NSPasteboardReading, NSPasteboardWriting, NSCoding>
 
 @property BOOL hasCoordinateAxes;
 @property BOOL hasGridLines;
 @property BOOL hasTickMarks;
 @property BOOL hasLabels;
+@property (nonatomic, retain) EDPage *page;
 @property (nonatomic, retain) NSNumber *minValueX;
 @property (nonatomic, retain) NSNumber *minValueY;
 @property (nonatomic, retain) NSNumber *maxValueX;
 @property (nonatomic, retain) NSNumber *maxValueY;
-@property (nonatomic, retain) EDPage *page;
 @property (nonatomic, retain) NSSet *points;
 @property (nonatomic, retain) NSSet *equations;
 @end
 
 @interface EDGraph (CoreDataGeneratedAccessors)
+
+- (EDGraph *)initWithContext:(NSManagedObjectContext *)context;
+- (EDGraph *)copy:(NSManagedObjectContext *)context;
+
 // points
 - (void)addPointsObject:(EDPoint *)value;
 - (void)removePointsObject:(EDPoint *)value;

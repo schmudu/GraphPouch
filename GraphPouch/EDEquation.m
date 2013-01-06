@@ -45,6 +45,27 @@
     return self;
 }
 
+- (EDEquation *)initWithContext:(NSManagedObjectContext *)context{
+    self = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:context] insertIntoManagedObjectContext:nil];
+    if (self){
+        // init code
+    }
+    return self;
+}
+
+- (EDEquation *)copy:(NSManagedObjectContext *)context{
+    EDEquation *equation = [[EDEquation alloc] initWithContext:context];
+    [equation setEquation:[self equation]];
+    [equation setIsVisible:[self isVisible]];
+    [equation setShowLabel:[self showLabel]];
+    
+    // copy tokens
+    for (EDToken *token in [self tokens]){
+        [equation addTokensObject:[token copy:context]];
+    }
+    return equation;
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeBool:[self isVisible] forKey:EDEquationAttributeIsVisible];
     [aCoder encodeBool:[self showLabel] forKey:EDEquationAttributeShowLabel];

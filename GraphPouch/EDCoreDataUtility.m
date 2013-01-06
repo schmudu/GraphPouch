@@ -7,6 +7,7 @@
 //
 
 #import "EDCoreDataUtility.h"
+#import "EDCoreDataUtility+Pages.h"
 #import "EDGraph.h"
 #import "EDConstants.h"
 #import "NSObject+Document.h"
@@ -43,28 +44,20 @@
     
     return allObjects;
 }
+
 #pragma mark worksheet
-/*
-- (NSArray *)getAllGraphs:(NSManagedObjectContext *)context{
-   // Define our table/entity to use   
-    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:context];   
++ (NSMutableArray *)copySelectedWorksheetElements:(NSManagedObjectContext *)context{
+    // copy all selected objects
+    NSMutableArray *allObjects = [[NSMutableArray alloc] init];
+    NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
     
-    // Setup the fetch request   
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];   
-    [request setEntity:entity];   
+    for (EDGraph *graph in fetchedGraphs){
+        [allObjects addObject:[graph copy:context]];
+    }
+#warning add other elements here
     
-    // Fetch the records and handle an error   
-    NSError *error;   
-    NSArray *fetchResults = [context executeFetchRequest:request error:&error];   
-    //NSLog(@"fetch: %@", mutableFetchResults);
-    
-    // handle error
-    if (!mutableFetchResults) {   
-        // Handle the error.   
-        // This is a serious error and should advise the user to restart the application   
-    }   
-    return fetchResults;
-}*/
+    return allObjects;
+}
 
 + (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context{
     // gets all selected objects
@@ -75,6 +68,39 @@
     [allObjects addObjectsFromArray:fetchedGraphs];
     
     return allObjects;
+}
+
++ (void)insertWorksheetElements:(NSArray *)elements context:(NSManagedObjectContext *)context{
+    EDGraph *newGraph;
+    //NSLog(@"need to insert elements:%@", elements);
+    /*
+    NSArray *graphs = [EDGraph getAllObjects:context];
+    NSLog(@"before graphs:%@", graphs);
+     */
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
+    // insert objects into context
+    for (EDElement *element in elements){
+        [context insertObject:element];
+        
+        // set element to this page
+        if ([element isKindOfClass:[EDGraph class]]){
+            newGraph = (EDGraph *)element;
+            [newGraph setPage:currentPage];
+            
+            for (EDPoint *point in [newGraph  points]){
+                // insert into context
+                [context insertObject:point];
+                
+                // set relationship
+                [point setGraph:newGraph];
+            }
+            NSLog(@"does it have points?:%@", [(EDGraph *)element points]);
+        }
+    }
+    /*
+    graphs = [EDGraph getAllObjects:context];
+    NSLog(@"after: graphs:%@", graphs);
+     */
 }
 
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
@@ -106,9 +132,17 @@
 
 + (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context{
     NSMutableArray *selectedElements = [self getAllSelectedWorksheetElements:context];
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
+    
+    NSArray *graphs = [EDGraph getAllObjects:context];
+    NSLog(@"before delete graphs:%@", graphs);
     for (EDElement *element in selectedElements){
+        if ([element isKindOfClass:[EDGraph class]]) {
+            [currentPage removeGraphsObject:(EDGraph *)element];
+        }
         [context deleteObject:element];
     }
+    graphs = [EDGraph getAllObjects:context];
+    NSLog(@"after delete graphs:%@", graphs);
 }
-
 @end

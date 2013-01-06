@@ -18,6 +18,7 @@ extern NSString *const EDValue;
 // UTI
 extern NSString *const EDUTIPage;
 extern NSString *const EDUTIGraph;
+extern NSString *const EDUTIGraphView;
 
 // num
 extern float const EDNumberMax;

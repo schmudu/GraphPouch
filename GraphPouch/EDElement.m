@@ -16,5 +16,4 @@
 @dynamic locationY;
 @dynamic elementWidth;
 @dynamic elementHeight;
-
 @end

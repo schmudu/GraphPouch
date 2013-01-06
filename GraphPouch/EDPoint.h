@@ -21,7 +21,8 @@
 @property float locationY;
 @property (nonatomic, retain) EDGraph *graph;
 
+- (EDPoint *)initWithContext:(NSManagedObjectContext *)context;
+- (EDPoint *)copy:(NSManagedObjectContext *)context;
 - (BOOL)matchesPoint:(EDPoint *)otherPoint;
-//- (BOOL)matchesPointByCoordinate:(EDPoint *)otherPoint;
 - (void)copyAttributes:(EDPoint *)otherPoint;
 @end

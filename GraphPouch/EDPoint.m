@@ -24,7 +24,7 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder{
     // create entity but don't insert it anywhere
-    self = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
+    self = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:[[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]] insertIntoManagedObjectContext:nil];
     if(self){
         [self setIsVisible:[aDecoder decodeBoolForKey:EDGraphPointAttributeVisible]];
         [self setShowLabel:[aDecoder decodeBoolForKey:EDGraphPointAttributeShowLabel]];
@@ -32,6 +32,24 @@
         [self setLocationY:[aDecoder decodeFloatForKey:EDElementAttributeLocationY]];
     }
     return self;
+}
+
+- (EDPoint *)initWithContext:(NSManagedObjectContext *)context{
+    self = [[EDPoint alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePoint inManagedObjectContext:context] insertIntoManagedObjectContext:nil];
+    if (self){
+        // init code
+    }
+    return self;
+}
+
+- (EDPoint *)copy:(NSManagedObjectContext *)context{
+    EDPoint *point = [[EDPoint alloc] initWithContext:context];
+    [point setLocationX:[self locationX]];
+    [point setLocationY:[self locationY]];
+    [point setIsVisible:[self isVisible]];
+    [point setShowLabel:[self showLabel]];
+    
+    return point;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{

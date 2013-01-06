@@ -222,8 +222,26 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     }
 }
 
+- (BOOL)performKeyEquivalent:(NSEvent *)theEvent{
+    if ([theEvent keyCode] == EDKeycodeCopy) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
+        return YES;
+    }
+    else if ([theEvent keyCode] == EDKeycodeCut) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCut object:self];
+        return YES;
+    }
+    else if ([theEvent keyCode] == EDKeycodePaste) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutPaste object:self];
+        return YES;
+    }
+    return NO;
+}
+
 #pragma mark listeners
 - (void)onContextChanged:(NSNotification *)note{
+    //NSArray *graphs = [EDGraph getAllObjects:_context];
+    //NSLog(@"worksheet context changed: graphs:%@", graphs);
     EDPage *newPage = (EDPage *)[EDPage getCurrentPage:_context];
     if (newPage == _currentPage) {
         // only redraw the objects on page

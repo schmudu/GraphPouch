@@ -21,16 +21,53 @@
 @dynamic hasGridLines;
 @dynamic hasTickMarks;
 @dynamic hasLabels;
-@dynamic page;
 @dynamic points;
+@dynamic page;
 @dynamic equations;
 @dynamic minValueX;
 @dynamic minValueY;
 @dynamic maxValueX;
 @dynamic maxValueY;
 
-#pragma mark encoding, decoding this object
 
+- (EDGraph *)initWithContext:(NSManagedObjectContext *)context{
+    self = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:context] insertIntoManagedObjectContext:nil];
+    if (self){
+        // init code
+    }
+    return self;
+}
+
+- (EDGraph *)copy:(NSManagedObjectContext *)context{
+    EDGraph *graph = [[EDGraph alloc] initWithContext:context];
+    [graph setHasCoordinateAxes:[self hasCoordinateAxes]];
+    [graph setHasGridLines:[self hasGridLines]];
+    [graph setHasLabels:[self hasLabels]];
+    [graph setHasTickMarks:[self hasTickMarks]];
+    [graph setMinValueX:[self minValueX]];
+    [graph setMinValueY:[self minValueY]];
+    [graph setMaxValueX:[self maxValueX]];
+    [graph setMaxValueY:[self maxValueY]];
+    [graph setElementWidth:[self elementWidth]];
+    [graph setElementHeight:[self elementHeight]];
+    [graph setLocationX:[self locationX]];
+    [graph setLocationY:[self locationY]];
+    [graph setSelected:[self selected]];
+    
+#error need to start here...i believe i'm copying wrong
+    // copy points
+    for (EDPoint *point in [self points]){
+        [graph addPointsObject:point];
+    }
+    
+    // copy equations
+    for (EDEquation *equation in [self equations]){
+        [graph addEquationsObject:equation];
+    }
+    return graph;
+}
+
+#pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
     // create entity but don't insert it anywhere
     self = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]] insertIntoManagedObjectContext:nil];
@@ -43,6 +80,7 @@
         [self setLocationX:[aDecoder decodeFloatForKey:EDElementAttributeLocationX]];
         [self setLocationY:[aDecoder decodeFloatForKey:EDElementAttributeLocationY]];
         [self setElementWidth:[aDecoder decodeFloatForKey:EDElementAttributeWidth]];
+        [self setElementHeight:[aDecoder decodeFloatForKey:EDElementAttributeHeight]];
         
         EDPoint *newPoint;
         NSSet *points = [aDecoder decodeObjectForKey:EDGraphAttributePoints];
@@ -81,4 +119,34 @@
     [aCoder encodeObject:[self points] forKey:EDGraphAttributePoints];
     [aCoder encodeObject:[self equations] forKey:EDGraphAttributeEquations];
 }
+
+
+#pragma mark pasteboard writing protocol
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    NSArray *writableTypes = nil;
+    if (!writableTypes){
+        writableTypes = [[NSArray alloc] initWithObjects:EDUTIGraph, nil];
+    }
+    return writableTypes;
+}
+
+- (id)pasteboardPropertyListForType:(NSString *)type{
+    //return self;
+    return [NSKeyedArchiver archivedDataWithRootObject:self];
+}
+
+- (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
+    return 0;
+}
+
+#pragma mark pasteboard reading protocol
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
+    // encode object
+    return NSPasteboardReadingAsKeyedArchive;
+}
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    return [NSArray arrayWithObject:EDUTIGraph];
+}
+
 @end

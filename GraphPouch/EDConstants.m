@@ -14,6 +14,7 @@ int const GRAPH_INIT_HAS_GRID_LINES     = FALSE;
 // UTI
 NSString * const EDUTIPage                                      = @"com.edcodia.graphpouch.page";
 NSString * const EDUTIGraph                                     = @"com.edcodia.graphpouch.graph";
+NSString * const EDUTIGraphView                                 = @"com.edcodia.graphpouch.graphView";
 
 // General
 NSString * const EDKey                                          = @"EDKey";

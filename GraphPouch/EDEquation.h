@@ -28,6 +28,8 @@
 
 @interface EDEquation (CoreDataGeneratedAccessors)
 
+- (EDEquation *)initWithContext:(NSManagedObjectContext *)context;
+- (EDEquation *)copy;
 - (void)insertObject:(EDToken *)value inTokensAtIndex:(NSUInteger)idx;
 - (void)removeObjectFromTokensAtIndex:(NSUInteger)idx;
 - (void)insertTokens:(NSArray *)value atIndexes:(NSIndexSet *)indexes;

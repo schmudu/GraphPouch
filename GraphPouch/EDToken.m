@@ -22,7 +22,8 @@
 
 #pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
-    self = [[EDToken alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameToken inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
+    //self = [[EDToken alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameToken inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
+    self = [[EDToken alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameToken inManagedObjectContext:[[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]] insertIntoManagedObjectContext:nil];
     if(self){
         [self setIsValid:[aDecoder decodeBoolForKey:EDTokenAttributeIsValid]];
         [self setPrecedence:[aDecoder decodeObjectForKey:EDTokenAttributePrecedence]];

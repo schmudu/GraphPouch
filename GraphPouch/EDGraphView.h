@@ -10,7 +10,7 @@
 #import "EDWorksheetElementView.h"
 @class EDGraph;
 
-@interface EDGraphView : EDWorksheetElementView{
+@interface EDGraphView : EDWorksheetElementView {
     NSMutableArray *_labels;
     NSMutableArray *_equations;
 }
