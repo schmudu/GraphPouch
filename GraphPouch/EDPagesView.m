@@ -23,9 +23,24 @@
     return TRUE;
 }
 
+#pragma mark first responder
+- (BOOL)becomeFirstResponder{
+    [self setNeedsDisplay:TRUE];
+    return YES;
+}
+
+- (BOOL)resignFirstResponder{
+    [self setNeedsDisplay:TRUE];
+    return YES;
+}
+
 /*
 - (BOOL)acceptsFirstResponder{
-    return TRUE;
+    NSLog(@"pages: accept responder:%@", [[self window] firstResponder]);
+    if ([[self window] firstResponder] == self) {
+        return YES;
+    }
+    return NO;
 }*/
 
 - (void)postInitialize:(NSManagedObjectContext *)context{
@@ -43,6 +58,10 @@
     if ((_highlighted) && (_highlightedDragSection > 0)) {
         NSRect highlightRect = NSMakeRect(EDPageViewDragPosX, (_highlightedDragSection - 1) * EDPageViewIncrementPosY - EDPageViewDragOffsetY, EDPageViewDragWidth, EDPageViewDragLength);
         [NSBezierPath fillRect:highlightRect];
+    }
+    
+    if ([[self window] firstResponder] == self) {
+        NSLog(@"pages: need to draw outline showing key view.");
     }
 }
 
@@ -82,6 +101,7 @@
 }
 #pragma mark keyboard
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent{
+    NSLog(@"pages view key equivalent.");
     if ([theEvent keyCode] == EDKeycodeCopy) {
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
         return YES;
@@ -105,7 +125,6 @@
 #pragma mark mouse
 - (void)mouseDown:(NSEvent *)theEvent{
     [[self window] makeFirstResponder:self];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesViewClicked object:self];
 }
 

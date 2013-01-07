@@ -170,6 +170,10 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             }
         }
     }
+    
+    if ([[self window] firstResponder] == self) {
+        NSLog(@"worksheet: need to draw outline showing key view.");
+    }
 }
 
 - (void)drawGuide:(NSPoint)startPoint endPoint:(NSPoint)endPoint{
@@ -209,12 +213,26 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     }
 }
 
-#pragma mark keyboard
+#pragma mark first responder
+- (BOOL)becomeFirstResponder{
+    [self setNeedsDisplay:TRUE];
+    return YES;
+}
+
+- (BOOL)resignFirstResponder{
+    [self setNeedsDisplay:TRUE];
+    return YES;
+}
+
 /*
 - (BOOL)acceptsFirstResponder{
-    return TRUE;
+    if ([[self window] firstResponder] == self) {
+        return YES;
+    }
+    return NO;
 }*/
 
+#pragma mark keyboard
 - (void)keyDown:(NSEvent *)theEvent{
     NSUInteger flags = [theEvent modifierFlags];
     if(flags == EDKeyModifierNone && [theEvent keyCode] == EDKeycodeDelete){
@@ -223,6 +241,11 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent{
+    if ((![[self window] isKeyWindow]) || ([[self window] firstResponder] != self)){
+        return NO;
+    }
+    
+    NSLog(@"worksheet view key equivalent: first responder:%@", [[self window] firstResponder]);
     if ([theEvent keyCode] == EDKeycodeCopy) {
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
         return YES;
