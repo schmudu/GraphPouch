@@ -80,8 +80,10 @@
         valueY = [EDParser calculate:[[_equation tokens] array] error:&error context:_context varValue:valueX];
         
         // if y is greater than max or less than min than break from loop
+        /*
         if ((valueY > [[_graph maxValueY] floatValue]) || (valueY < [[_graph minValueY] floatValue]))
             continue;
+         */
         
         // based on value find y position
         if (valueY < 0){

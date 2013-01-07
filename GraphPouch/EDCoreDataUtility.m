@@ -76,7 +76,6 @@
     EDGraph *newGraph;
     //NSLog(@"need to insert elements:%@", elements);
     NSArray *tokens = [EDToken getAllObjects:context];
-    NSLog(@"before tokens:%@", tokens);
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     // insert objects into context
     for (EDElement *element in elements){
@@ -100,6 +99,7 @@
             // get all points that need to be modified
             NSArray *tokens;
             NSArray *equations = [[NSArray alloc] initWithArray:[[newGraph equations] allObjects]];
+            
             for (EDEquation *equation in equations){
                 // insert into context
                 [context insertObject:equation];
@@ -109,20 +109,23 @@
                 
                 // insert tokens as well
                 tokens = [[NSArray alloc] initWithArray:[[equation tokens] array]];
+                
+                // clear any previous tokens
+#warning question: i wonder if i have to do this with any ordered set?
+                [equation removeTokens:[equation tokens]];
+                
                 //for (EDToken *token in tokens){
                 for (EDToken *token in tokens){
                     // insert token
-                    [context insertObject:(NSManagedObject *)token];
+                    [context insertObject:token];
                     
                     // set relationship
                     [equation addTokensObject:token];
                 }
             }
-            //NSLog(@"does it have points?:%@", [(EDGraph *)element points]);
         }
     }
     tokens = [EDToken getAllObjects:context];
-    NSLog(@"after tokens:%@", tokens);
 }
 
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
