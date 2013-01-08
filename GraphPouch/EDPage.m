@@ -30,18 +30,11 @@
         [self setSelected:[aDecoder decodeBoolForKey:EDPageAttributeSelected]];
         
         
-        EDGraph *newGraph;
-        //EDPoint *newPoint;
+#warning add other elements here
         NSSet *graphs = [aDecoder decodeObjectForKey:EDPageAttributeGraphs];
-        
         for (EDGraph *graph in graphs){
-            // create a graph and set it for this page
-            newGraph = [[EDGraph alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameGraph inManagedObjectContext:[[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]] insertIntoManagedObjectContext:nil];
-            
-            newGraph = [graph initWithCoder:aDecoder];
-            
             // set relationship
-            [self addGraphsObject:newGraph];
+            [self addGraphsObject:graph];
         }
     }
     return self;
@@ -52,5 +45,33 @@
     [aCoder encodeInt:[[self pageNumber] intValue] forKey:EDPageAttributePageNumber];
     [aCoder encodeBool:[self selected] forKey:EDPageAttributeSelected];
     [aCoder encodeObject:[self graphs] forKey:EDPageAttributeGraphs];
+}
+
+#pragma mark pasteboard writing protocol
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    NSArray *writableTypes = nil;
+    if (!writableTypes){
+        writableTypes = [[NSArray alloc] initWithObjects:EDUTIPage, nil];
+    }
+    return writableTypes;
+}
+
+- (id)pasteboardPropertyListForType:(NSString *)type{
+    //return self;
+    return [NSKeyedArchiver archivedDataWithRootObject:self];
+}
+
+- (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
+    return 0;
+}
+
+#pragma mark pasteboard reading protocol
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard{
+    // encode object
+    return NSPasteboardReadingAsKeyedArchive;
+}
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard{
+    return [NSArray arrayWithObject:EDUTIPage];
 }
 @end

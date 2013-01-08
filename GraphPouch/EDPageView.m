@@ -257,7 +257,7 @@
 - (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{
     NSArray *writableTypes = nil;
     if (!writableTypes){
-        writableTypes = [[NSArray alloc] initWithObjects:EDUTIPage, nil];
+        writableTypes = [[NSArray alloc] initWithObjects:EDUTIPageView, nil];
     }
     return writableTypes;
 }
@@ -278,7 +278,7 @@
 }
 
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard{
-    return [NSArray arrayWithObject:EDUTIPage];
+    return [NSArray arrayWithObject:EDUTIPageView];
 }
 
 #pragma mark encoding, decoding this object

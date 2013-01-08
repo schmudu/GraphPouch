@@ -19,6 +19,7 @@ extern float const EDSelectedViewStrokeWidth;
 
 // UTI
 extern NSString *const EDUTIPage;
+extern NSString *const EDUTIPageView;
 extern NSString *const EDUTIGraph;
 extern NSString *const EDUTIGraphView;
 extern NSString *const EDUTIToken;

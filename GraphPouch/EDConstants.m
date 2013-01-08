@@ -13,6 +13,7 @@ int const GRAPH_INIT_HAS_GRID_LINES     = FALSE;
 @implementation EDConstants
 // UTI
 NSString * const EDUTIPage                                      = @"com.edcodia.graphpouch.page";
+NSString * const EDUTIPageView                                  = @"com.edcodia.graphpouch.pageview";
 NSString * const EDUTIGraph                                     = @"com.edcodia.graphpouch.graph";
 NSString * const EDUTIGraphView                                 = @"com.edcodia.graphpouch.graphView";
 NSString * const EDUTIToken                                     = @"com.edcodia.graphpouch.token";

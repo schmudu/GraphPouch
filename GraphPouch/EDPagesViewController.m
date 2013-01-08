@@ -19,7 +19,7 @@
 @interface EDPagesViewController ()
 - (void)onContextChanged:(NSNotification *)note;
 - (void)insertPageViews:(NSMutableArray *)pageViews toPage:(int)pageNumber;
-- (void)removePageViews:(NSArray *)pageViews;
+- (void)removePages:(NSArray *)pages;
 - (void)drawPage:(EDPage *)page;
 - (void)removePage:(EDPage *)page;
 - (void)correctPagePositionsAfterUpdate;
@@ -39,7 +39,7 @@
 - (void)onShortcutCut:(NSNotification *)note;
 - (void)onShortcutPaste:(NSNotification *)note;
 - (void)updateViewFrameSize;
-- (NSArray *)getSelectedPageViews;
+- (NSArray *)getSelectedPages;
 - (BOOL)readFromPasteboard;
 @end
 
@@ -123,9 +123,9 @@
     }
 }
     
-- (void)removePageViews:(NSArray *)pageViews{
-    for (EDPageView *pageView in pageViews){
-        [EDCoreDataUtility removePage:[pageView dataObj] context:_context];
+- (void)removePages:(NSArray *)pages{
+    for (EDPage *page in pages){
+        [EDCoreDataUtility removePage:page context:_context];
     }
 }
 
@@ -240,7 +240,7 @@
 #pragma mark page events
 - (void)onPageViewStartDrag:(NSNotification *)note{
     [(EDPagesView *)[self view] setPageViewStartDragInfo:[[note userInfo] objectForKey:EDKeyPageViewData]];
-    NSArray *selectedPageViews = [self getSelectedPageViews];
+    NSArray *selectedPageViews = [self getSelectedPages];
     
     // copy all page views that are selected to the pasteboard
     [[NSPasteboard generalPasteboard] clearContents];
@@ -372,17 +372,17 @@
     }
 }
 
-- (NSArray *)getSelectedPageViews{
-    NSMutableArray *selectedPageViews = [[NSMutableArray alloc] init];
+- (NSArray *)getSelectedPages{
+    NSMutableArray *selectedPages = [[NSMutableArray alloc] init];
     
      // iterate through page controllers and add to array if it's selected
     for (EDPageViewController *pageController in _pageControllers){
         if ([[(EDPageView *)[pageController view] dataObj] selected] == TRUE) {
-            [selectedPageViews addObject:[pageController view]];
+            [selectedPages addObject:[(EDPageView *)[pageController view] dataObj]];
         }
     }
     
-    return selectedPageViews;
+    return selectedPages;
 }
 
 - (void)onPagesViewFinishedDragged:(NSNotification *)note{
@@ -394,7 +394,7 @@
     // do not insert if dragged section not valid
     if (destinationSection != -1) {
         // remove pages that were dragged
-        //[self removePageViews:pageViews];
+        //[self removePages:pageViews];
 //#error I think i need to add the pages here
         
         // update undragged pages
@@ -412,21 +412,24 @@
 
 #pragma mark keyboard
 - (void)onShortcutCut:(NSNotification *)note{
-    NSArray *selectedPageViews = [self getSelectedPageViews];
+    NSArray *selectedPages = [EDPage getAllSelectedObjects:_context];
     NSArray *allPages = [EDPage getAllObjects:_context];
     
     // if there will no pages left if all pages are cut, then do not allow this operation
-    if ([allPages count] - [selectedPageViews count] < 1) 
+    if ([allPages count] - [selectedPages count] < 1) 
         return;
     
     // copy all page views that are selected to the pasteboard
     [[NSPasteboard generalPasteboard] clearContents];
-    [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPageViews]];
+    [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPages]];
     
     // now cut all selected views
-    [self removePageViews:selectedPageViews];
-    
-    // update page numbers
+    NSArray *pages = [EDPage getAllObjects:_context];
+    NSLog(@"pages before remove:%@", pages);
+    [self removePages:selectedPages];
+    pages = [EDPage getAllObjects:_context];
+    NSLog(@"pages after remove:%@", pages);
+     // update page numbers
     [EDCoreDataUtility correctPageNumbersAfterDelete:_context];
     
     // update location
@@ -434,7 +437,7 @@
 }
 
 - (void)onShortcutCopy:(NSNotification *)note{
-    NSArray *selectedPageViews = [self getSelectedPageViews];
+    NSArray *selectedPageViews = [self getSelectedPages];
     
     // copy all page views that are selected to the pasteboard
     [[NSPasteboard generalPasteboard] clearContents];

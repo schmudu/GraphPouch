@@ -11,7 +11,7 @@
 
 @class EDGraph;
 
-@interface EDPage : NSManagedObject <NSCoding>
+@interface EDPage : NSManagedObject <NSCoding, NSPasteboardReading, NSPasteboardWriting>
 
 @property BOOL currentPage, selected;
 @property (nonatomic, retain) NSNumber *pageNumber;
