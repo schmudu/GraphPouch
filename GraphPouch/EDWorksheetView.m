@@ -267,8 +267,8 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 #pragma mark listeners
 - (void)onContextChanged:(NSNotification *)note{
-    //NSArray *graphs = [EDGraph getAllObjects:_context];
-    //NSLog(@"worksheet context changed: graphs:%@", graphs);
+    NSArray *graphs = [EDGraph getAllObjects:_context];
+    NSLog(@"worksheet context changed: graphs:%@", graphs);
     EDPage *newPage = (EDPage *)[EDPage getCurrentPage:_context];
     if (newPage == _currentPage) {
         // only redraw the objects on page

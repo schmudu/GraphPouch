@@ -412,23 +412,40 @@
 
 #pragma mark keyboard
 - (void)onShortcutCut:(NSNotification *)note{
-    NSArray *selectedPages = [EDPage getAllSelectedObjects:_context];
+    NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
     NSArray *allPages = [EDPage getAllObjects:_context];
     
     // if there will no pages left if all pages are cut, then do not allow this operation
     if ([allPages count] - [selectedPages count] < 1) 
         return;
     
+    // get last selected page which we will use to designate which page should be used
+    int lastSelectedPageNumber = [[(EDPage *)[selectedPages lastObject] pageNumber] intValue]; 
+    
+    // set page after selected pages as the currently viewed page
+    NSArray *pagesAfterLastSelectedPage = [EDCoreDataUtility getPagesWithPageNumberGreaterThan:lastSelectedPageNumber context:_context];
+    
+    if ([pagesAfterLastSelectedPage count] > 0){
+        // set the next unselected page as current
+        [EDCoreDataUtility setPageAsCurrent:(EDPage *)[pagesAfterLastSelectedPage objectAtIndex:0] context:_context];
+    }
+    else {
+        // set the previous unselected page as current
+        NSArray *pagesBeforeLastSelectedPage = [EDCoreDataUtility getUnselectedPagesWithPageNumberLessThan:lastSelectedPageNumber greaterThanOrEqualTo:0 context:_context];
+        [EDCoreDataUtility setPageAsCurrent:(EDPage *)[pagesBeforeLastSelectedPage lastObject] context:_context];
+    }
+    
     // copy all page views that are selected to the pasteboard
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPages]];
     
     // now cut all selected views
-    NSArray *pages = [EDPage getAllObjects:_context];
-    NSLog(@"pages before remove:%@", pages);
+    //NSArray *pages = [EDPage getAllObjects:_context];
+    //NSLog(@"pages before remove:%@", pages);
     [self removePages:selectedPages];
-    pages = [EDPage getAllObjects:_context];
-    NSLog(@"pages after remove:%@", pages);
+    //pages = [EDPage getAllObjects:_context];
+    //NSLog(@"pages after remove:%@", pages);
+    
      // update page numbers
     [EDCoreDataUtility correctPageNumbersAfterDelete:_context];
     
@@ -451,7 +468,6 @@
 
 #pragma mark pasteboard
 - (BOOL)readFromPasteboard{
-    NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
     
     // get last selected object
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
@@ -468,16 +484,21 @@
     // save position
     insertPosition = startInsertPosition;
     
+    NSArray *pages = [EDPage getAllObjects:_context];
+    NSLog(@"pages before insert:%@", pages);
+    NSArray *classes = [NSArray arrayWithObject:[EDPage class]];
     NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
     // update page numbers of inserted objects
     if ([objects count] > 0) {
         // cycle through objects and insert after last selected page
-        for (EDPageView *pageView in objects){
+        for (EDPage *page in objects){
+#warning need to insert page into context and set up the relationships?
+            [_context insertObject:page];
+            
             // update each page view with it's new position
-            [[pageView dataObj] setPageNumber:[[NSNumber alloc] initWithInt:insertPosition]];
+            [page setPageNumber:[[NSNumber alloc] initWithInt:insertPosition]];
             insertPosition++;
         }
-        
         // retrieve pages that we will need to update after inserting the pasted pages
         NSArray *postPages = [EDCoreDataUtility getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:startInsertPosition context:_context];
         
@@ -486,6 +507,8 @@
             [page setPageNumber:[[NSNumber alloc] initWithInt:insertPosition]];
             insertPosition++;
         }
+        pages = [EDPage getAllObjects:_context];
+        NSLog(@"pages after insert:%@", pages);
         return YES;
     }
     return NO;

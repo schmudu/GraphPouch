@@ -280,7 +280,6 @@
     [outlinePath moveToPoint:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin] + [self graphHeight])];
     [outlinePath lineToPoint:NSMakePoint([EDGraphView graphMargin] + [self graphWidth], [EDGraphView graphMargin] + [self graphHeight])];
     
-    
     // draw right/left side of grid
     [outlinePath moveToPoint:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
     [outlinePath lineToPoint:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin] + [self graphHeight])];
@@ -310,7 +309,7 @@
     
     // draw negative horizontal lines starting from origin
     numGridLines = abs([[gridInfoVertical objectForKey:EDKeyNumberGridLinesNegative] intValue]);
-    for (int i=1; i<numGridLines; i++) {
+    for (int i=0; i<=numGridLines; i++) {
         if ([[[self dataObj] minValueX] intValue] == 0){
             [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical + i*distanceIncrement)];
             [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + [self graphWidth], originPosVertical + i*distanceIncrement)];
