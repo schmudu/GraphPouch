@@ -17,6 +17,7 @@
 #import "NSObject+Worksheet.h"
 #import "NSMutableDictionary+Utilities.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "NSColor+Utilities.h"
 
 @interface EDWorksheetView()
 - (void)drawGraph:(EDGraph *)graph;
@@ -171,8 +172,11 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         }
     }
     
+    
     if ([[self window] firstResponder] == self) {
-        NSLog(@"worksheet: need to draw outline showing key view.");
+        [[NSColor colorWithHexColorString:EDSelectedViewColor] setStroke];
+        [NSBezierPath setDefaultLineWidth:EDSelectedViewStrokeWidth];
+        [NSBezierPath strokeRect:[self frame]];
     }
 }
 

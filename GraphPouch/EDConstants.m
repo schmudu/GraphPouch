@@ -21,6 +21,8 @@ NSString * const EDUTIEquation                                  = @"com.edcodia.
 // General
 NSString * const EDKey                                          = @"EDKey";
 NSString * const EDValue                                        = @"EDValue";
+NSString * const EDSelectedViewColor                            = @"3E8DD3";
+float const EDSelectedViewStrokeWidth                            = 2.0;
 
 // numbers
 float const EDNumberMax                                         = 9999999;

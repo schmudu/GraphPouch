@@ -12,6 +12,7 @@
 #import "EDCoreDataUtility.h"
 #import "EDCoreDataUtility+Pages.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "NSColor+Utilities.h"
 
 @interface EDPagesView()
 - (int)getHighlightedDragSection:(int)totalPages pageDragged:(int)pageDragged mousePosition:(float)yPos;
@@ -61,7 +62,9 @@
     }
     
     if ([[self window] firstResponder] == self) {
-        NSLog(@"pages: need to draw outline showing key view.");
+        [[NSColor colorWithHexColorString:EDSelectedViewColor] setStroke];
+        [NSBezierPath setDefaultLineWidth:EDSelectedViewStrokeWidth];
+        [NSBezierPath strokeRect:NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height-EDSelectedViewStrokeWidth)];
     }
 }
 

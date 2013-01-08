@@ -14,6 +14,8 @@ FOUNDATION_EXPORT int const GRAPH_INIT_HAS_GRID_LINES;
 // General
 extern NSString *const EDKey;
 extern NSString *const EDValue;
+extern NSString *const EDSelectedViewColor;
+extern float const EDSelectedViewStrokeWidth;
 
 // UTI
 extern NSString *const EDUTIPage;
