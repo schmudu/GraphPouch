@@ -414,6 +414,7 @@
 - (void)onShortcutCut:(NSNotification *)note{
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
     NSArray *allPages = [EDPage getAllObjects:_context];
+    NSError *error;
     
     // if there will no pages left if all pages are cut, then do not allow this operation
     if ([allPages count] - [selectedPages count] < 1) 
@@ -428,11 +429,17 @@
     if ([pagesAfterLastSelectedPage count] > 0){
         // set the next unselected page as current
         [EDCoreDataUtility setPageAsCurrent:(EDPage *)[pagesAfterLastSelectedPage objectAtIndex:0] context:_context];
+        
+        // save so that context changes and worksheet view updates
+        [_context save:&error];
     }
     else {
         // set the previous unselected page as current
         NSArray *pagesBeforeLastSelectedPage = [EDCoreDataUtility getUnselectedPagesWithPageNumberLessThan:lastSelectedPageNumber greaterThanOrEqualTo:0 context:_context];
         [EDCoreDataUtility setPageAsCurrent:(EDPage *)[pagesBeforeLastSelectedPage lastObject] context:_context];
+        
+        // save so that context changes and worksheet view updates
+        [_context save:&error];
     }
     
     // copy all page views that are selected to the pasteboard
@@ -440,11 +447,7 @@
     [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPages]];
     
     // now cut all selected views
-    //NSArray *pages = [EDPage getAllObjects:_context];
-    //NSLog(@"pages before remove:%@", pages);
     [self removePages:selectedPages];
-    //pages = [EDPage getAllObjects:_context];
-    //NSLog(@"pages after remove:%@", pages);
     
      // update page numbers
     [EDCoreDataUtility correctPageNumbersAfterDelete:_context];
