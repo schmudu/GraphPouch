@@ -111,23 +111,8 @@
     
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] writeObjects:copiedElements];
-    //NSLog(@"before: going to cut elements from core data: copied:%@", copiedElements);
     
-    // delete elements from core data
-    //NSArray *points = [EDPoint getAllObjects:_context];
-    //NSLog(@"before points:%@", points);
     [EDCoreDataUtility deleteSelectedWorksheetElements:_context];
-    //points = [EDPoint getAllObjects:_context];
-    //NSLog(@"after points:%@", points);
-    //NSLog(@"after: going to cut elements from core data: copied:%@", copiedElements);
-    
-    // test
-    /*
-    NSArray *classes = [NSArray arrayWithObject:[EDGraph class]];
-    
-    NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
-    NSLog(@"after: pasteboard:%@", objects);
-     */
 }
 
 - (void)pasteElements:(NSNotification *)note{
@@ -135,11 +120,6 @@
     NSArray *classes = [NSArray arrayWithObject:[EDGraph class]];
     
     NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
-    //NSLog(@"after: pasteboard:%@", objects);
-    //NSArray *points = [EDPoint getAllObjects:_context];
-    //NSLog(@"before points:%@", points);
     [EDCoreDataUtility insertWorksheetElements:objects context:_context];
-    //points = [EDPoint getAllObjects:_context];
-    //NSLog(@"after points:%@", points);
 }
 @end

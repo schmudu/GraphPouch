@@ -40,7 +40,6 @@
 - (void)onShortcutPaste:(NSNotification *)note;
 - (void)updateViewFrameSize;
 - (NSArray *)getSelectedPages;
-- (BOOL)readFromPasteboard;
 @end
 
 @implementation EDPagesViewController
@@ -412,9 +411,9 @@
 
 #pragma mark keyboard
 - (void)onShortcutCut:(NSNotification *)note{
+    NSError *error;
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
     NSArray *allPages = [EDPage getAllObjects:_context];
-    NSError *error;
     
     // if there will no pages left if all pages are cut, then do not allow this operation
     if ([allPages count] - [selectedPages count] < 1) 
@@ -431,7 +430,11 @@
         [EDCoreDataUtility setPageAsCurrent:(EDPage *)[pagesAfterLastSelectedPage objectAtIndex:0] context:_context];
         
         // save so that context changes and worksheet view updates
-        [_context save:&error];
+        [EDCoreDataUtility save:_context];
+        /*
+        if (![_context save:&error]){
+            NSLog(@"ERROR: Saving context in EDPagesViewController: Code 1:%@", error);
+        }*/
     }
     else {
         // set the previous unselected page as current
@@ -439,7 +442,11 @@
         [EDCoreDataUtility setPageAsCurrent:(EDPage *)[pagesBeforeLastSelectedPage lastObject] context:_context];
         
         // save so that context changes and worksheet view updates
-        [_context save:&error];
+        [EDCoreDataUtility save:_context];
+        /*
+        if (![_context save:&error]){
+            NSLog(@"ERROR: Saving context in EDPagesViewController: Code 2:%@", error);
+        }*/
     }
     
     // copy all page views that are selected to the pasteboard
@@ -465,57 +472,33 @@
 }
 
 - (void)onShortcutPaste:(NSNotification *)note{
-    // read objects from pasteboard
-    [self readFromPasteboard];
-}
-
-#pragma mark pasteboard
-- (BOOL)readFromPasteboard{
-    
     // get last selected object
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
     EDPage *lastSelectedPage = (EDPage *)[selectedPages lastObject];
-    int insertPosition, startInsertPosition;
+    int insertPosition;
     if (lastSelectedPage){
-        startInsertPosition = [[lastSelectedPage pageNumber] intValue] + 1;
+        insertPosition = [[lastSelectedPage pageNumber] intValue] + 1;
     }
     else {
         // append pages 
-        startInsertPosition = [[EDPage getAllObjects:_context] count] + 1;
+        insertPosition = [[EDPage getAllObjects:_context] count] + 1;
     }
     
-    // save position
-    insertPosition = startInsertPosition;
-    
-    NSArray *pages = [EDPage getAllObjects:_context];
-    NSLog(@"pages before insert:%@", pages);
+    NSArray *objects = [EDGraph getAllObjects:_context];
+    NSLog(@"graphs before insert:%ld", [objects count]);
     NSArray *classes = [NSArray arrayWithObject:[EDPage class]];
-    NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
-    // update page numbers of inserted objects
-    if ([objects count] > 0) {
-        // cycle through objects and insert after last selected page
-        for (EDPage *page in objects){
-#warning need to insert page into context and set up the relationships?
-            [_context insertObject:page];
-            
-            // update each page view with it's new position
-            [page setPageNumber:[[NSNumber alloc] initWithInt:insertPosition]];
-            insertPosition++;
-        }
-        // retrieve pages that we will need to update after inserting the pasted pages
-        NSArray *postPages = [EDCoreDataUtility getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:startInsertPosition context:_context];
-        
-        // update each page view with it's new position
-        for (EDPage *page in postPages){
-            [page setPageNumber:[[NSNumber alloc] initWithInt:insertPosition]];
-            insertPosition++;
-        }
-        pages = [EDPage getAllObjects:_context];
-        NSLog(@"pages after insert:%@", pages);
-        return YES;
-    }
-    return NO;
+    NSArray *pages = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+    
+    // retrieve pages that we will need to update after inserting the pasted pages
+    NSArray *pagesToUpdate = [EDCoreDataUtility getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:insertPosition context:_context];
+    
+    [EDCoreDataUtility insertPages:pages atPosition:insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:_context];
+    objects = [EDGraph getAllObjects:_context];
+    NSLog(@"graphs after insert:%ld", [objects count]);
 }
+
+#pragma mark pasteboard
+
 
 #pragma mark view frame
 - (void)updateViewFrameSize{

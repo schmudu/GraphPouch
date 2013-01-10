@@ -42,7 +42,7 @@
 }
 
 - (void)dealloc{
-    [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[self currentContext]];
+    //[_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[self currentContext]];
 }
 
 - (void)drawRect:(NSRect)dirtyRect

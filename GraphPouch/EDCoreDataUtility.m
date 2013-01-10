@@ -23,8 +23,31 @@
 
 + (void)save:(NSManagedObjectContext *)context{
     NSError *error;
-    BOOL errorFromSave = [context save:&error];
-    NSLog(@"error from save:%@", error);
+    if ([[[context persistentStoreCoordinator] persistentStores] count] == 0) {
+        //add store
+        if (![[context persistentStoreCoordinator] addPersistentStoreWithType:NSInMemoryStoreType configuration:nil URL:nil options:nil error:&error]) {
+            
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }    
+    }
+    else if ([[[context persistentStoreCoordinator] persistentStores] count] == 2) {
+        // delete in memory store and continue operating with file store
+        NSArray *stores = [[context persistentStoreCoordinator] persistentStores];
+        for (NSPersistentStore *store in stores){
+            if ([[store type] isEqualToString:@"InMemory"]) {
+                // delete store
+                [[context persistentStoreCoordinator] removePersistentStore:store error:&error];
+                
+                // do i have to copy objects out of store?
+                NSLog(@"deleting in memory store.");
+            }
+        }
+    }
+    BOOL successfulSave = [context save:&error];
+    if (!successfulSave) {
+        NSLog(@"error:%@, %@", error, [error userInfo]);
+    }
 }
 
 + (NSManagedObject *)getObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context{

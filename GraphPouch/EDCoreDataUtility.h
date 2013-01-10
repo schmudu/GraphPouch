@@ -13,8 +13,6 @@
 @interface EDCoreDataUtility : NSObject{
 }
 
-+ (void)save:(NSManagedObjectContext *)context;
-    
 // objects
 + (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context;
 + (NSManagedObject *)getObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context;
@@ -28,7 +26,6 @@
 + (void)insertWorksheetElements:(NSArray *)elements context:(NSManagedObjectContext *)context;
 + (NSMutableArray *)copySelectedWorksheetElements:(NSManagedObjectContext *)context;
     
-// graphs
-//- (NSArray *)getAllGraphs;
-
+// save
++ (void)save:(NSManagedObjectContext *)context;
 @end
