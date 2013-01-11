@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface EDWindow : NSWindow 
+@interface EDWindow : NSWindow{
+    NSManagedObjectContext *_context;
+}
+
+- (void)postInitialize:(NSManagedObjectContext *)context;
 
 @end

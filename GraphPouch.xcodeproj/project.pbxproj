@@ -81,6 +81,7 @@
 		CDE6D66E15E4413100E5695F /* EDAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D66D15E4413100E5695F /* EDAppController.m */; };
 		CDE6D67015E4429800E5695F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDE6D66F15E4429800E5695F /* Preferences.xib */; };
 		CDE6D67715E4454B00E5695F /* EDPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D67615E4454B00E5695F /* EDPreferenceController.m */; };
+		CDF62E3416A0DAA500DCDD2D /* EDPanelProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */; };
 		CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */; };
 /* End PBXBuildFile section */
 
@@ -224,6 +225,8 @@
 		CDE6D66F15E4429800E5695F /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		CDE6D67515E4454B00E5695F /* EDPreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPreferenceController.h; sourceTree = "<group>"; };
 		CDE6D67615E4454B00E5695F /* EDPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPreferenceController.m; sourceTree = "<group>"; };
+		CDF62E3216A0DAA500DCDD2D /* EDPanelProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelProperties.h; sourceTree = "<group>"; };
+		CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelProperties.m; sourceTree = "<group>"; };
 		CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+EasyFetching.h"; sourceTree = "<group>"; };
 		CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+EasyFetching.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -331,6 +334,8 @@
 		CD1EBD4C15FECFEC00BEEA4D /* Properties */ = {
 			isa = PBXGroup;
 			children = (
+				CDF62E3216A0DAA500DCDD2D /* EDPanelProperties.h */,
+				CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */,
 				CD1EBD6515FED65A00BEEA4D /* EDPanelProperties.xib */,
 				CD1EBD5915FED4B800BEEA4D /* EDPanelPropertiesController.h */,
 				CD1EBD5A15FED4B800BEEA4D /* EDPanelPropertiesController.m */,
@@ -859,6 +864,7 @@
 				CD263672167EBCA200424487 /* NSSet+Equations.m in Sources */,
 				CDB6829A1684D1A900702EAA /* EDGraph.m in Sources */,
 				CDB682ED1694E80700702EAA /* EDEquationView.m in Sources */,
+				CDF62E3416A0DAA500DCDD2D /* EDPanelProperties.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

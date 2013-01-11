@@ -16,9 +16,11 @@
 #import "NSObject+Document.h"
 #import "EDConstants.h"
 #import "EDWorksheetView.h"
+#import "EDWindow.h"
 
 @interface EDDocument()
 - (void)onMainWindowClosed:(NSNotification *)note;
+- (void)onShortcutSavePressed:(NSNotification *)note;
 @end
 
 @implementation EDDocument
@@ -60,6 +62,10 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[_context parentContext]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventWindowWillClose object:[self windowForSheet]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutSave object:mainWindow];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutSave object:propertyController];
 }
 
 - (NSString *)windowNibName
@@ -76,12 +82,14 @@
     [worksheetController setView:worksheetView];
     [worksheetController postInitialize:_context];
     [pagesController postInitialize:_context];
-    
+    [mainWindow postInitialize:_context];
     // post init property panel
     [propertyController postInitialize:_context];
     
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMainWindowClosed:) name:EDEventWindowWillClose object:[self windowForSheet]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onShortcutSavePressed:) name:EDEventShortcutSave object:mainWindow];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onShortcutSavePressed:) name:EDEventShortcutSave object:propertyController];
 }
 
 - (void)awakeFromNib{
@@ -125,5 +133,10 @@
 
 - (void)windowDidResize:(NSNotification *)notification{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWindowDidResize object:self];
+}
+
+#pragma mark keyboard
+- (void)onShortcutSavePressed:(NSNotification *)note{
+    [EDCoreDataUtility save:_context];
 }
 @end

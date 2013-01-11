@@ -60,6 +60,7 @@ NSString * const EDEventShortcutNewPage                         = @"EDEventShort
 NSString * const EDEventShortcutCopy                            = @"EDEventShortcutCopy";
 NSString * const EDEventShortcutCut                             = @"EDEventShortcutCut";
 NSString * const EDEventShortcutPaste                           = @"EDEventShortcutPaste";
+NSString * const EDEventShortcutSave                            = @"EDEventShortcutSave";
 
 // guides
 NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
@@ -186,6 +187,8 @@ NSString * const EDEventPageClickedWithoutModifier              = @"EDEventPageC
 NSString * const EDEventPageViewMouseDown                       = @"EDEventPageViewMouseDown";
 
 // keyboard
+
+int const EDKeycodeSave                                         = 1;
 int const EDKeycodeQuit                                         = 12;
 int const EDKeycodeDelete                                       = 51;
 int const EDKeycodeCopy                                         = 8;

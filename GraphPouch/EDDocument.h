@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "EDPanelPropertiesController.h"
 #import "EDMenuController.h"
+#import "EDWindow.h"
 
 @class EDWorksheetView;
 @class EDWorksheetViewController;
@@ -19,6 +20,7 @@
     IBOutlet EDWorksheetViewController *worksheetController;
     IBOutlet EDPagesViewController *pagesController;
     IBOutlet NSView *worksheetView;
+    IBOutlet EDWindow *mainWindow;
     EDPanelPropertiesController *propertyController;
     EDMenuController *menuController;
     NSManagedObjectContext *_context;

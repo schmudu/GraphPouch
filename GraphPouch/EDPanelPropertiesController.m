@@ -15,6 +15,7 @@
 @interface EDPanelPropertiesController ()
 - (void)setCorrectView;
 - (void)onContextChanged:(NSNotification *)note;
+- (void)onShortcutPastePressed:(NSNotification *)note;
 @end
 
 @implementation EDPanelPropertiesController
@@ -41,6 +42,7 @@
 
 - (void)dealloc{
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+    [_nc removeObserver:self name:EDEventShortcutPaste object:[self window]];
 }
 
 - (void)closePanel{
@@ -72,6 +74,7 @@
     }
     
     [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+    [_nc addObserver:self selector:@selector(onShortcutPastePressed:) name:EDEventShortcutSave object:[self window]];
 }
 
 - (void)togglePropertiesPanel:(id)sender{
@@ -169,7 +172,6 @@
 }
 
 #pragma mark context changed
-
 - (void)onContextChanged:(NSNotification *)note{
     // set the correct view if window is showing
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
@@ -177,4 +179,8 @@
     }
 }
 
+#pragma mark keyboard
+- (void)onShortcutPastePressed:(NSNotification *)note{
+    [_nc postNotificationName:EDEventShortcutSave object:self];
+}
 @end
