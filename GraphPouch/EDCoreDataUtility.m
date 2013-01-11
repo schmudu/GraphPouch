@@ -20,30 +20,23 @@
 @end
 
 @implementation EDCoreDataUtility
++ (NSManagedObjectContext *)createContext:(NSManagedObjectContext *)startContext{
+    // this method will create a child context that will be used throught the program
+    // this is so the nspersistentdocumentcontroller won't complain when we save
+    NSManagedObjectContext *rootContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    [rootContext setPersistentStoreCoordinator:[startContext persistentStoreCoordinator]];
+    NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    //[childContext setPersistentStoreCoordinator:[startContext persistentStoreCoordinator]];
+    
+    // set root as parent
+    [childContext setParentContext:rootContext];
+    
+    NSLog(@"root context:%@ child context:%@", rootContext, childContext);
+    return childContext;
+}
 
 + (void)save:(NSManagedObjectContext *)context{
     NSError *error;
-    if ([[[context persistentStoreCoordinator] persistentStores] count] == 0) {
-        //add store
-        if (![[context persistentStoreCoordinator] addPersistentStoreWithType:NSInMemoryStoreType configuration:nil URL:nil options:nil error:&error]) {
-            
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }    
-    }
-    else if ([[[context persistentStoreCoordinator] persistentStores] count] == 2) {
-        // delete in memory store and continue operating with file store
-        NSArray *stores = [[context persistentStoreCoordinator] persistentStores];
-        for (NSPersistentStore *store in stores){
-            if ([[store type] isEqualToString:@"InMemory"]) {
-                // delete store
-                [[context persistentStoreCoordinator] removePersistentStore:store error:&error];
-                
-                // do i have to copy objects out of store?
-                NSLog(@"deleting in memory store.");
-            }
-        }
-    }
     BOOL successfulSave = [context save:&error];
     if (!successfulSave) {
         NSLog(@"error:%@, %@", error, [error userInfo]);

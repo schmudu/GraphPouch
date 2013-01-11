@@ -32,8 +32,11 @@
     NSLog(@"init document");
     self = [super init];
     if (self) {
+        // Create a parent context
+        
         //Init code
-        _context = [self managedObjectContext];
+        //_context = [self managedObjectContext];
+        _context = [EDCoreDataUtility createContext:[self managedObjectContext]];
         propertyController = [[EDPanelPropertiesController alloc] init];
         menuController = [[EDMenuController alloc] init];
         
