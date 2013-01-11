@@ -11,6 +11,10 @@ int const GRAPH_INIT_TICK_MARKS         = FALSE;
 int const GRAPH_INIT_HAS_GRID_LINES     = FALSE; 
 
 @implementation EDConstants
+// Context
+NSString * const EDKeyContextChild                              = @"EDKeyContextChild";
+NSString * const EDKeyContextRoot                               = @"EDKeyContextRoot";
+
 // UTI
 NSString * const EDUTIPage                                      = @"com.edcodia.graphpouch.page";
 NSString * const EDUTIPageView                                  = @"com.edcodia.graphpouch.pageview";

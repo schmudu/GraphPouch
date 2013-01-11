@@ -11,6 +11,10 @@ FOUNDATION_EXPORT int const GRAPH_INIT_HAS_GRID_LINES;
 #import <Foundation/Foundation.h>
 
 @interface EDConstants : NSObject
+// Context
+extern NSString *const EDKeyContextChild;
+extern NSString *const EDKeyContextRoot;
+
 // General
 extern NSString *const EDKey;
 extern NSString *const EDValue;

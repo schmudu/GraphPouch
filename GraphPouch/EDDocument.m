@@ -36,13 +36,26 @@
         
         //Init code
         //_context = [self managedObjectContext];
-        _context = [EDCoreDataUtility createContext:[self managedObjectContext]];
+        NSDictionary *contexts;
+        contexts = [EDCoreDataUtility createContext:[self managedObjectContext]];
+        
+        // set context that the rest of the application will modify
+        _context = [contexts objectForKey:EDKeyContextChild];
+        
+        // set managed object context for this persistent document will write to
+        [self setManagedObjectContext:[contexts objectForKey:EDKeyContextRoot]];
+        
         propertyController = [[EDPanelPropertiesController alloc] init];
         menuController = [[EDMenuController alloc] init];
         
         // listen
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_context parentContext]];
     }
     return self;
+}
+
+- (void)onContextChanged:(NSNotification *)note{
+    NSLog(@"change in context.");
 }
 
 - (void)dealloc{

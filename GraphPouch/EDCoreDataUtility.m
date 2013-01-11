@@ -20,19 +20,25 @@
 @end
 
 @implementation EDCoreDataUtility
-+ (NSManagedObjectContext *)createContext:(NSManagedObjectContext *)startContext{
++ (NSMutableDictionary *)createContext:(NSManagedObjectContext *)startContext{
+    NSMutableDictionary *contexts = [[NSMutableDictionary alloc] init];
     // this method will create a child context that will be used throught the program
     // this is so the nspersistentdocumentcontroller won't complain when we save
     NSManagedObjectContext *rootContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [rootContext setPersistentStoreCoordinator:[startContext persistentStoreCoordinator]];
     NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    //[childContext setPersistentStoreCoordinator:[startContext persistentStoreCoordinator]];
     
     // set root as parent
     [childContext setParentContext:rootContext];
     
+    // set root as context for coordinator
+    //[[startContext persistentStoreCoordinator] 
+    
     NSLog(@"root context:%@ child context:%@", rootContext, childContext);
-    return childContext;
+    
+    [contexts setObject:childContext forKey:EDKeyContextChild];
+    [contexts setObject:rootContext forKey:EDKeyContextRoot];
+    return contexts;
 }
 
 + (void)save:(NSManagedObjectContext *)context{

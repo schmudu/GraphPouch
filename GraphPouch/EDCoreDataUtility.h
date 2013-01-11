@@ -13,7 +13,7 @@
 @interface EDCoreDataUtility : NSObject{
 }
 // create context
-+ (NSManagedObjectContext *)createContext:(NSManagedObjectContext *)startContext;
++ (NSMutableDictionary *)createContext:(NSManagedObjectContext *)startContext;
     
 // objects
 + (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context;
