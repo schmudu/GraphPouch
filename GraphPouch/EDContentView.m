@@ -7,6 +7,7 @@
 //
 
 #import "EDContentView.h"
+#import "EDConstants.h"
 
 @implementation EDContentView
 
@@ -30,4 +31,10 @@
     // Drawing code here.
 }
 
+- (BOOL)performKeyEquivalent:(NSEvent *)theEvent{
+    if ([theEvent keyCode] == EDKeycodeSave) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutSave object:self];
+    }
+    return [super performKeyEquivalent:theEvent];
+}
 @end

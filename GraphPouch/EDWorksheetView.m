@@ -246,7 +246,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent{
     if ((![[self window] isKeyWindow]) || ([[self window] firstResponder] != self)){
-        return NO;
+        return [super performKeyEquivalent:theEvent];
     }
     
     NSLog(@"worksheet view key equivalent: first responder:%@", [[self window] firstResponder]);
@@ -262,7 +262,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutPaste object:self];
         return YES;
     }
-    return NO;
+    return [super performKeyEquivalent:theEvent];
 }
 
 #pragma mark listeners

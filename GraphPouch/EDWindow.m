@@ -21,10 +21,4 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWindowWillClose object:self];
 }
 
-- (BOOL)performKeyEquivalent:(NSEvent *)theEvent{
-    if ([theEvent keyCode] == EDKeycodeSave) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutSave object:self];
-    }
-    return NO;
-}
 @end

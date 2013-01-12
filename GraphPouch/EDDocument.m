@@ -51,13 +51,8 @@
         menuController = [[EDMenuController alloc] init];
         
         // listen
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:[_context parentContext]];
     }
     return self;
-}
-
-- (void)onContextChanged:(NSNotification *)note{
-    NSLog(@"change in context.");
 }
 
 - (void)dealloc{
