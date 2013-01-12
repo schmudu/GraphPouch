@@ -16,18 +16,10 @@
 + (NSMutableDictionary *)createContext:(NSManagedObjectContext *)startContext;
     
 // objects
-+ (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context;
 + (NSManagedObject *)getObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context;
     
 // selection
 //+ (NSArray *)getAllGraphs:(NSManagedObjectContext *)context;
-+ (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context;
-+ (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context;
-+ (void)clearSelectedWorksheetElements:(NSManagedObjectContext *)context;
-+ (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context;
-+ (void)insertWorksheetElements:(NSArray *)elements context:(NSManagedObjectContext *)context;
-+ (NSMutableArray *)copySelectedWorksheetElements:(NSManagedObjectContext *)context;
-    
 // save
 + (void)save:(NSManagedObjectContext *)context;
 @end

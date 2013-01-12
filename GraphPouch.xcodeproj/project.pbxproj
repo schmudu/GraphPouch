@@ -82,6 +82,7 @@
 		CDE6D67015E4429800E5695F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDE6D66F15E4429800E5695F /* Preferences.xib */; };
 		CDE6D67715E4454B00E5695F /* EDPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D67615E4454B00E5695F /* EDPreferenceController.m */; };
 		CDF62E3416A0DAA500DCDD2D /* EDPanelProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */; };
+		CDF62E4616A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */; };
 		CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */; };
 /* End PBXBuildFile section */
 
@@ -227,6 +228,8 @@
 		CDE6D67615E4454B00E5695F /* EDPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPreferenceController.m; sourceTree = "<group>"; };
 		CDF62E3216A0DAA500DCDD2D /* EDPanelProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelProperties.h; sourceTree = "<group>"; };
 		CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelProperties.m; sourceTree = "<group>"; };
+		CDF62E4416A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Worksheet.h"; sourceTree = "<group>"; };
+		CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EDCoreDataUtility+Worksheet.m"; sourceTree = "<group>"; };
 		CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+EasyFetching.h"; sourceTree = "<group>"; };
 		CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+EasyFetching.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -585,6 +588,8 @@
 				CD2DD577163ED449006557FC /* EDCoreDataUtility+Pages.m */,
 				CD2DD5F1164C7478006557FC /* EDCoreDataUtility+Points.h */,
 				CD2DD5F2164C7478006557FC /* EDCoreDataUtility+Points.m */,
+				CDF62E4416A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.h */,
+				CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */,
 				CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */,
 				CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */,
 				CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */,
@@ -865,6 +870,7 @@
 				CDB6829A1684D1A900702EAA /* EDGraph.m in Sources */,
 				CDB682ED1694E80700702EAA /* EDEquationView.m in Sources */,
 				CDF62E3416A0DAA500DCDD2D /* EDPanelProperties.m in Sources */,
+				CDF62E4616A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

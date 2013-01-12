@@ -13,6 +13,7 @@
 #import "EDGraph.h"
 #import "EDEquation.h"
 #import "EDToken.h"
+#import "EDCoreDataUtility+Worksheet.h"
 
 @implementation EDCoreDataUtility (Pages)
 
@@ -445,7 +446,6 @@
             
             // update each page view with it's new position
             [page setPageNumber:[[NSNumber alloc] initWithInt:startInsertPosition]];
-            
             
             // get all graphs that need to be modified
             NSArray *graphs = [[NSArray alloc] initWithArray:[[page graphs] allObjects]];

@@ -16,6 +16,7 @@
 #import "NSManagedObject+EasyFetching.h"
 #import "EDCoreDataUtility+Points.h"
 #import "EDCoreDataUtility+Equations.h"
+#import "EDCoreDataUtility+Worksheet.h"
 
 @interface EDPanelPropertiesGraphController ()
 - (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute;

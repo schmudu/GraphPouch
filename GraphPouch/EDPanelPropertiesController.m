@@ -11,6 +11,7 @@
 #import "EDConstants.h"
 #import "EDPanelViewController.h"
 #import "NSObject+Document.h"
+#import "EDCoreDataUtility+Worksheet.h"
 
 @interface EDPanelPropertiesController ()
 - (void)setCorrectView;

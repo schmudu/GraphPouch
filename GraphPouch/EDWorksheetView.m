@@ -18,6 +18,7 @@
 #import "NSMutableDictionary+Utilities.h"
 #import "NSManagedObject+EasyFetching.h"
 #import "NSColor+Utilities.h"
+#import "EDCoreDataUtility+Worksheet.h"
 
 @interface EDWorksheetView()
 - (void)drawGraph:(EDGraph *)graph;

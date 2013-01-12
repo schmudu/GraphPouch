@@ -13,6 +13,7 @@
 #import "EDCoreDataUtility+Pages.h"
 #import "EDPoint.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "EDCoreDataUtility+Worksheet.h"
 
 @interface EDWorksheetViewController ()
 - (void)deselectAllElements:(NSNotification *)note;

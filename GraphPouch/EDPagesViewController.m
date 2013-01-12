@@ -467,8 +467,10 @@
         insertPosition = (int)[[EDPage getAllObjects:_context] count] + 1;
     }
     
+    /*
     NSArray *objects = [EDGraph getAllObjects:_context];
     NSLog(@"graphs before insert:%ld", [objects count]);
+     */
     NSArray *classes = [NSArray arrayWithObject:[EDPage class]];
     NSArray *pages = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
     
@@ -476,8 +478,10 @@
     NSArray *pagesToUpdate = [EDCoreDataUtility getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:insertPosition context:_context];
     
     [EDCoreDataUtility insertPages:pages atPosition:insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:_context];
+    /*
     objects = [EDGraph getAllObjects:_context];
     NSLog(@"graphs after insert:%ld", [objects count]);
+     */
 }
 
 #pragma mark pasteboard

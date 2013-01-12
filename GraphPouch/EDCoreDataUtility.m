@@ -7,14 +7,7 @@
 //
 
 #import "EDCoreDataUtility.h"
-#import "EDCoreDataUtility+Pages.h"
-#import "EDGraph.h"
 #import "EDConstants.h"
-#import "NSObject+Document.h"
-#import "NSManagedObject+EasyFetching.h"
-#import "NSMutableArray+EDPoint.h"
-#import "EDEquation.h"
-#import "EDToken.h"
 
 @interface EDCoreDataUtility()
 @end
@@ -58,98 +51,4 @@
     return [filteredResults objectAtIndex:0];
 }
 
-+ (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context{
-    NSMutableArray *allObjects = [[NSMutableArray alloc] init];
-    //NSArray *graphObjects = [self getAllGraphs:context];
-    NSArray *graphObjects = [EDGraph getAllObjects:context];
-    
-#warning add other elements here
-    [allObjects addObjectsFromArray:graphObjects];
-    
-    return allObjects;
-}
-
-#pragma mark worksheet
-+ (NSMutableArray *)copySelectedWorksheetElements:(NSManagedObjectContext *)context{
-    // copy all selected objects
-    NSMutableArray *allObjects = [[NSMutableArray alloc] init];
-    NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
-    
-    for (EDGraph *graph in fetchedGraphs){
-        [allObjects addObject:[graph copy:context]];
-    }
-#warning add other elements here
-    
-    return allObjects;
-}
-
-+ (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context{
-    // gets all selected objects
-    NSMutableArray *allObjects = [[NSMutableArray alloc] init];
-    NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
-    
-#warning add other elements here
-    [allObjects addObjectsFromArray:fetchedGraphs];
-    
-    return allObjects;
-}
-
-+ (void)insertWorksheetElements:(NSArray *)elements context:(NSManagedObjectContext *)context{
-    EDGraph *newGraph;
-    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
-    
-    // insert objects into context
-    for (EDElement *element in elements){
-        [context insertObject:element];
-        
-        // set element to this page
-        if ([element isKindOfClass:[EDGraph class]]){
-            newGraph = (EDGraph *)element;
-            [newGraph setPage:currentPage];
-        }
-    }
-}
-
-+ (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
-    // this method returns a dictionary of the types of selected objects
-    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    NSArray *fetchedObjects;
-    
-    // get all selected graphs
-    fetchedObjects = [EDGraph getAllSelectedObjects:context];
-#warning add other elements here
-    if ([fetchedObjects count] > 0) {
-        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDEntityNameGraph]; 
-    }
-    
-    return results;
-}
-
-+ (void)clearSelectedWorksheetElements:(NSManagedObjectContext *)context{
-    NSArray *fetchedObjects = [EDGraph getAllSelectedObjects:context];
-    if (fetchedObjects == nil) {
-        // Handle the error
-    }
-    else{
-        for (EDGraph *elem in fetchedObjects){
-            [elem setSelected:FALSE];
-        }
-    }
-}
-
-+ (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context{
-    NSMutableArray *selectedElements = [self getAllSelectedWorksheetElements:context];
-    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
-    
-    NSArray *equations = [EDEquation getAllObjects:context];
-    NSLog(@"before delete equations:%@", equations);
-    for (EDElement *element in selectedElements){
-        if ([element isKindOfClass:[EDGraph class]]) {
-            [currentPage removeGraphsObject:(EDGraph *)element];
-        }
-        [context deleteObject:element];
-    }
-    equations = [EDEquation getAllObjects:context];
-    NSLog(@"after delete equations:%@", equations);
-}
 @end

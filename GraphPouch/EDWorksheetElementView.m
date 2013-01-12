@@ -13,7 +13,7 @@
 #import "EDGraph.h"
 #import "NSManagedObject+EasyFetching.h"
 #import "NSManagedObject+Attributes.h"
-#import "EDCoreDataUtility.h"
+#import "EDCoreDataUtility+Worksheet.h"
 #import "NSObject+Document.h"
 
 @interface EDWorksheetElementView()
