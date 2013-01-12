@@ -104,7 +104,6 @@
 }
 #pragma mark keyboard
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent{
-    NSLog(@"pages view key equivalent.");
     if ([theEvent keyCode] == EDKeycodeCopy) {
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
         return YES;
@@ -152,7 +151,7 @@
 
 - (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender{
     NSPoint pagesPoint = [[[self window] contentView] convertPoint:[sender draggingLocation] toView:self];
-    int pageCount = [[EDCoreDataUtility getAllPages:_context] count];
+    int pageCount = (int)[[EDCoreDataUtility getAllPages:_context] count];
  
     if (pageCount <= 1) {
         // if there is only one page or less do not highlight

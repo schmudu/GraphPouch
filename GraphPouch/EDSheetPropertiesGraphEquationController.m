@@ -107,7 +107,6 @@
     NSMutableDictionary *results = [NSMutableDictionary dictionary];
     NSError *error;
     NSMutableArray *parsedTokens;
-    int i = 0;
     NSMutableArray *tokens = [EDTokenizer tokenize:potentialEquation error:&error context:_context];
     
     if (error) {

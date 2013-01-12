@@ -97,7 +97,7 @@
 }
 
 - (int)length{
-    return [[self value] length];
+    return (int)[[self value] length];
 }
 
 

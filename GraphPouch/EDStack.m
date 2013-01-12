@@ -30,7 +30,7 @@
     if ([_stack count]>0) {
         obj = [_stack lastObject];
         [_stack removeLastObject];
-        count = [_stack count];
+        count = (int)[_stack count];
     }
     return obj;
 }

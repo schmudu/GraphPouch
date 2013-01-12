@@ -153,7 +153,7 @@
         }
         else {
             // nothing is selected so add page to the end of the list
-            [newPage setPageNumber:[[NSNumber alloc] initWithInt:([pages count] + 1)]];
+            [newPage setPageNumber:[[NSNumber alloc] initWithInt:((int)[pages count] + 1)]];
         }
     }
 }
@@ -316,7 +316,7 @@
     NSArray *selectedPages;
     for (EDPage *page in sortedArray){
         selectedPages= [EDCoreDataUtility getSelectedPagesWithPageNumberLessThan:[[page pageNumber] intValue] greaterThanOrEqualTo:lowerNumber context:_context];
-        [page setPageNumber:[[NSNumber alloc] initWithInt:([[page pageNumber] intValue] - [selectedPages count])]];
+        [page setPageNumber:[[NSNumber alloc] initWithInt:([[page pageNumber] intValue] - (int)[selectedPages count])]];
     }
 }
 
@@ -342,7 +342,7 @@
     NSArray *selectedPages;
     for (EDPage *page in sortedArray){
         selectedPages= [EDCoreDataUtility getSelectedPagesWithPageNumberGreaterThanOrEqualTo:[[page pageNumber] intValue] lessThan:(upperNumber+1) context:_context];       
-        [page setPageNumber:[[NSNumber alloc] initWithInt:([[page pageNumber] intValue] + [selectedPages count])]];
+        [page setPageNumber:[[NSNumber alloc] initWithInt:([[page pageNumber] intValue] + (int)[selectedPages count])]];
     }
 }
 
@@ -385,24 +385,19 @@
 }
 
 - (void)onPagesViewFinishedDragged:(NSNotification *)note{
-    NSMutableArray *pageViews = [[note userInfo] objectForKey:EDKeyPagesViewDraggedViews];
     int destinationSection = [[[note userInfo] valueForKey:EDKeyPagesViewHighlightedDragSection] intValue];
     int firstSelectedPageSection = [[(EDPage *)[[note userInfo] valueForKey:EDKeySelectedPageFirst] pageNumber] intValue];
     int lastSelectedPageSection = [[(EDPage *)[[note userInfo] valueForKey:EDKeySelectedPageLast] pageNumber] intValue];
     
     // do not insert if dragged section not valid
     if (destinationSection != -1) {
-        // remove pages that were dragged
-        //[self removePages:pageViews];
-//#error I think i need to add the pages here
-        
         // update undragged pages
         [self updatePageNumbersOfUndraggedPagesLessThan:destinationSection greaterThanOrEqualTo:firstSelectedPageSection];
         [self updatePageNumbersOfUndraggedPagesGreaterThanOrEqualTo:destinationSection lessThan:lastSelectedPageSection];
         
         // update dragged pages
         NSArray *selectedPagesLessThanDestination = [EDCoreDataUtility getSelectedPagesWithPageNumberLessThan:destinationSection greaterThanOrEqualTo:firstSelectedPageSection context:_context];
-        [self updatePageNumbersOfDraggedPages:(destinationSection - [selectedPagesLessThanDestination count])];
+        [self updatePageNumbersOfDraggedPages:(destinationSection - (int)[selectedPagesLessThanDestination count])];
     }
     else {
         // nothing to insert, user dragged to undraggable location
@@ -411,7 +406,6 @@
 
 #pragma mark keyboard
 - (void)onShortcutCut:(NSNotification *)note{
-    NSError *error;
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
     NSArray *allPages = [EDPage getAllObjects:_context];
     
@@ -431,10 +425,6 @@
         
         // save so that context changes and worksheet view updates
         [EDCoreDataUtility save:_context];
-        /*
-        if (![_context save:&error]){
-            NSLog(@"ERROR: Saving context in EDPagesViewController: Code 1:%@", error);
-        }*/
     }
     else {
         // set the previous unselected page as current
@@ -443,10 +433,6 @@
         
         // save so that context changes and worksheet view updates
         [EDCoreDataUtility save:_context];
-        /*
-        if (![_context save:&error]){
-            NSLog(@"ERROR: Saving context in EDPagesViewController: Code 2:%@", error);
-        }*/
     }
     
     // copy all page views that are selected to the pasteboard
@@ -481,7 +467,7 @@
     }
     else {
         // append pages 
-        insertPosition = [[EDPage getAllObjects:_context] count] + 1;
+        insertPosition = (int)[[EDPage getAllObjects:_context] count] + 1;
     }
     
     NSArray *objects = [EDGraph getAllObjects:_context];

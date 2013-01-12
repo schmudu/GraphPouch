@@ -73,7 +73,7 @@
                 // if operator stack is empty and no match then mismatching parenthesis
                 if(!match){
                     NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-                    [errorDetail setValue:[NSString stringWithFormat:@"No matching parenthesis found",[currentToken value]] forKey:NSLocalizedDescriptionKey];
+                    [errorDetail setValue:[NSString stringWithFormat:@"No matching parenthesis found"] forKey:NSLocalizedDescriptionKey];
                     *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                     return nil;
                 }

@@ -342,7 +342,7 @@
     NSIndexSet *selectedIndexSet = [tablePoints selectedRowIndexes];
     
     [selectedIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [selectedIndices addObject:[[NSNumber alloc] initWithInt:idx]];
+        [selectedIndices addObject:[[NSNumber alloc] initWithInt:(int)idx]];
     }];
     
     // get all the common points
@@ -373,7 +373,7 @@
     NSIndexSet *selectedIndexSet = [tableEquation selectedRowIndexes];
     
     [selectedIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [selectedIndices addObject:[[NSNumber alloc] initWithInt:idx]];
+        [selectedIndices addObject:[[NSNumber alloc] initWithInt:(int)idx]];
     }];
     
     // get all the common points

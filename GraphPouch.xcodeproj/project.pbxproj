@@ -755,7 +755,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = ED;
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Patrick Lee";
 			};
 			buildConfigurationList = CD47111715BA1646008AACC3 /* Build configuration list for PBXProject "GraphPouch" */;
@@ -956,6 +956,7 @@
 		CD47114215BA1647008AACC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GraphPouch/GraphPouch-Prefix.pch";
 				INFOPLIST_FILE = "GraphPouch/GraphPouch-Info.plist";
@@ -968,6 +969,7 @@
 		CD47114315BA1647008AACC3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GraphPouch/GraphPouch-Prefix.pch";
 				INFOPLIST_FILE = "GraphPouch/GraphPouch-Info.plist";

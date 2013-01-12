@@ -23,7 +23,7 @@ static int charIndex=0;
 }
 
 + (int)charCount{
-    return [inputString length];
+    return (int)[inputString length];
 }
 
 + (void)increment{

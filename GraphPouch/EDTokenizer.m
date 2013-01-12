@@ -219,7 +219,7 @@
         }
         
         if ([currentToken typeRaw] == EDTokenTypeNumber){
-            str = [NSString stringWithFormat:[currentToken value]];
+            str = [NSString stringWithFormat:@"%@",[currentToken value]];
             cStr = [str cStringUsingEncoding:NSASCIIStringEncoding];
             reti = regcomp(&regex, "^[0-9]+\\.$", REG_EXTENDED);
             if (reti) return FALSE;

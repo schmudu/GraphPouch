@@ -132,7 +132,7 @@
         [viewController initWindowAfterLoaded:_context];
         return;
     }
-#warning need to clean this up
+    
     //Compute the new window frame
     NSSize currentSize = [[[self window] contentView] frame].size;
     NSSize newSize = [[viewController view] frame].size;

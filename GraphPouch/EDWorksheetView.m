@@ -228,14 +228,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     return YES;
 }
 
-/*
-- (BOOL)acceptsFirstResponder{
-    if ([[self window] firstResponder] == self) {
-        return YES;
-    }
-    return NO;
-}*/
-
 #pragma mark keyboard
 - (void)keyDown:(NSEvent *)theEvent{
     NSUInteger flags = [theEvent modifierFlags];
@@ -249,7 +241,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         return [super performKeyEquivalent:theEvent];
     }
     
-    NSLog(@"worksheet view key equivalent: first responder:%@", [[self window] firstResponder]);
     if ([theEvent keyCode] == EDKeycodeCopy) {
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
         return YES;

@@ -11,6 +11,8 @@
 #import "NSManagedObject+EasyFetching.h"
 #import "EDCoreDataUtility.h"
 #import "EDGraph.h"
+#import "EDEquation.h"
+#import "EDToken.h"
 
 @implementation EDCoreDataUtility (Pages)
 
@@ -455,29 +457,34 @@
                 // set relationship
                 [graph setPage:page];
                 
-                /*
-                // insert tokens as well
-                tokens = [[NSArray alloc] initWithArray:[[equation tokens] array]];
-                
-                // clear any previous tokens
-#warning question: i wonder if i have to do this with any ordered set?
-                [equation removeTokens:[equation tokens]];
-                
-                //for (EDToken *token in tokens){
-                for (EDToken *token in tokens){
-                    // insert token
-                    [context insertObject:token];
+                NSArray *equations = [[NSArray alloc] initWithArray:[[graph equations] allObjects]];
+                for (EDEquation *equation in equations){
+                    [context insertObject:equation];
                     
-                    // set relationship
-                    [equation addTokensObject:token];
-                }*/ 
+                    [equation setGraph:graph];
+                    
+                    // insert tokens as well
+                    NSArray *tokens = [[NSArray alloc] initWithArray:[[equation tokens] array]];
+                    
+                    // clear any previous tokens
+                    [equation removeTokens:[equation tokens]];
+                    
+                    for (EDToken *token in tokens){
+                        // insert token
+                        [context insertObject:token];
+                        
+                        // set relationship
+                        [equation addTokensObject:token];
+                    }
+                    
+                }
             }
             startInsertPosition++;
         }
         
         // update each page view with it's new position
         for (EDPage *page in pagesToUpdate){
-            [page setPageNumber:[[NSNumber alloc] initWithInt:(insertPosition + [pages count])]];
+            [page setPageNumber:[[NSNumber alloc] initWithInt:(insertPosition + (int)[pages count])]];
             insertPosition++;
         }
     }
