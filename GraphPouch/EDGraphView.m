@@ -662,7 +662,7 @@
         if ([point isVisible]) {
             // draw point
             path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(originHorizontalPosition + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,originVerticalPosition - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
-            [path fill]; 
+            [path fill];
         }
     }
 }

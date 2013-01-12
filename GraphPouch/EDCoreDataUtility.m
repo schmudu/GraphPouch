@@ -96,9 +96,8 @@
 
 + (void)insertWorksheetElements:(NSArray *)elements context:(NSManagedObjectContext *)context{
     EDGraph *newGraph;
-    //NSLog(@"need to insert elements:%@", elements);
-    NSArray *tokens = [EDToken getAllObjects:context];
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
+    
     // insert objects into context
     for (EDElement *element in elements){
         [context insertObject:element];
@@ -107,47 +106,8 @@
         if ([element isKindOfClass:[EDGraph class]]){
             newGraph = (EDGraph *)element;
             [newGraph setPage:currentPage];
-            
-            // get all points that need to be modified
-            NSArray *points = [[NSArray alloc] initWithArray:[[newGraph points] allObjects]];
-            for (EDPoint *point in points){
-                // insert into context
-                [context insertObject:point];
-                
-                // set relationship
-                [point setGraph:newGraph];
-            }
-            
-            // get all points that need to be modified
-            NSArray *tokens;
-            NSArray *equations = [[NSArray alloc] initWithArray:[[newGraph equations] allObjects]];
-            
-            for (EDEquation *equation in equations){
-                // insert into context
-                [context insertObject:equation];
-                
-                // set relationship
-                [equation setGraph:newGraph];
-                
-                // insert tokens as well
-                tokens = [[NSArray alloc] initWithArray:[[equation tokens] array]];
-                
-                // clear any previous tokens
-#warning question: i wonder if i have to do this with any ordered set?
-                [equation removeTokens:[equation tokens]];
-                
-                //for (EDToken *token in tokens){
-                for (EDToken *token in tokens){
-                    // insert token
-                    [context insertObject:token];
-                    
-                    // set relationship
-                    [equation addTokensObject:token];
-                }
-            }
         }
     }
-    tokens = [EDToken getAllObjects:context];
 }
 
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
