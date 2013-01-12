@@ -40,6 +40,7 @@
 - (void)onShortcutPaste:(NSNotification *)note;
 - (void)updateViewFrameSize;
 - (NSArray *)getSelectedPages;
+- (void)removeSelectedPages:(BOOL)copyToPasteboard;
 @end
 
 @implementation EDPagesViewController
@@ -266,20 +267,6 @@
 }
 
 #pragma mark pages events
-- (void)onDeleteKeyPressed:(NSNotification *)note{
-    NSArray *pages = [EDCoreDataUtility getAllPages:_context];
-    NSArray *selectedPages = [EDPage getAllSelectedObjects:_context];
-    
-    // do not delete if there will be no pages left
-    if (([pages count] - [selectedPages count]) < 1) 
-        return;
-    
-    [EDCoreDataUtility deleteSelectedPages:_context];
-    
-    // correct page numbers
-    [EDCoreDataUtility correctPageNumbersAfterDelete:_context];
-}
-
 - (void)correctPagePositionsAfterUpdate{
     // move pages to correct position based on page label
     for (EDPageViewController *pageController in _pageControllers){
@@ -405,7 +392,15 @@
 }
 
 #pragma mark keyboard
+- (void)onDeleteKeyPressed:(NSNotification *)note{
+    [self removeSelectedPages:FALSE];
+}
+
 - (void)onShortcutCut:(NSNotification *)note{
+    [self removeSelectedPages:TRUE];
+}
+- (void)removeSelectedPages:(BOOL)copyToPasteboard{
+    // copyToPasteboard designates whether pages should be copied to pasteboard
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
     NSArray *allPages = [EDPage getAllObjects:_context];
     
@@ -436,8 +431,10 @@
     }
     
     // copy all page views that are selected to the pasteboard
-    [[NSPasteboard generalPasteboard] clearContents];
-    [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPages]];
+    if (copyToPasteboard) {
+        [[NSPasteboard generalPasteboard] clearContents];
+        [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPages]];
+    }
     
     // now cut all selected views
     [self removePages:selectedPages];
