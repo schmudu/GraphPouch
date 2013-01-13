@@ -35,6 +35,7 @@
 - (NSArray *)minValuesWithMixed;
 - (NSArray *)minValues;
 - (void)setPopUpButton:(NSPopUpButton *)button info:(NSMutableDictionary *)dict oppositeButton:(NSPopUpButton *)oppositeButton;
+- (void)onDoubleClickEquation:(id)sender;
 @end
 
 @implementation EDPanelPropertiesGraphController
@@ -86,6 +87,10 @@
     if ([tableEquation numberOfSelectedRows] == 0) {
         [buttonRemoveEquation setEnabled:FALSE];
     }
+    
+    //listen
+    [tableEquation setTarget:self];
+    [tableEquation setDoubleAction:@selector(onDoubleClickEquation:)];
 }
 
 #pragma mark keyboard
@@ -361,7 +366,7 @@
 #pragma mark equation sheet
 - (IBAction)addNewEquation:(id)sender{
     [NSApp beginSheet:[equationController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
-    [equationController initializeSheet:TRUE];
+    [equationController initializeSheet:nil index:-1];
 }
 
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
@@ -388,6 +393,19 @@
     // remove all points from selected graphs that have the same attributes
     [EDCoreDataUtility removeCommonEquationsforSelectedGraphsMatchingEquations:selectedEquations context:_context];
 }
+
+- (void)onDoubleClickEquation:(id)sender{
+    // only allow double click on equation
+    if ([(NSTableView *)sender clickedColumn] != 0) {
+        return;
+    }
+    NSArray *commonEquations = [EDCoreDataUtility getCommonEquationsforSelectedGraphs:_context];
+    
+    // return value based on column identifier
+    [NSApp beginSheet:[equationController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+    [equationController initializeSheet:[(EDEquation *)[commonEquations objectAtIndex:[(NSTableView *)sender clickedRow]] equation] index:(int)[(NSTableView *)sender clickedRow]];
+}
+
 #pragma mark graph points
 
 #pragma mark min/max values

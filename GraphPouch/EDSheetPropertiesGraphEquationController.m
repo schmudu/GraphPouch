@@ -14,8 +14,10 @@
 #import "EDToken.h"
 #import "EDGraph.h"
 #import "NSManagedObject+EasyFetching.m"
+#import "EDCoreDataUtility+Equations.h"
 
 @interface EDSheetPropertiesGraphEquationController ()
+- (void)updateTokensInEquationInSelectedGraphs:(NSMutableDictionary *)dict equations:(NSArray *)equations;
 - (void)addTokensToNewEquationInSelectedGraphs:(NSMutableDictionary *)dict;
 - (void)setEquationButtonState;
 - (void)onQuitShortcutPressed:(NSNotification *)note;
@@ -31,7 +33,7 @@
     self = [super initWithWindowNibName:@"EDSheetPropertiesGraphEquation"];
     if (self) {
         _context = context;
-        _newEquation = FALSE;
+        _newEquation = [[NSString alloc] init];
     }
     
     return self;
@@ -41,8 +43,14 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:EDEventQuitDuringEquationSheet];
 }
 
-- (void)initializeSheet:(BOOL)newSheet{
-    _newEquation = newSheet;
+- (void)initializeSheet:(NSString *)equation index:(int)index{
+    if (equation == nil) {
+        [fieldEquation setStringValue:[[NSString alloc] initWithFormat:@"Enter equation"]];
+    }
+    else{
+        [fieldEquation setStringValue:equation];
+    }
+    _equationIndex = index;
 }
 
 - (void)windowDidLoad
@@ -72,14 +80,19 @@
     
     // if valid then end sheet
     if ([[result valueForKey:EDKeyValidEquation] boolValue]){
+        // set equation string
+        [result setObject:equationStr forKey:EDKeyEquation];
+        
         // if new equation then add to selected graphs
-        if (_newEquation) {
+        if (_equationIndex == -1) {
             // add equation to dictionary
-            [result setObject:equationStr forKey:EDKeyEquation];
             [self addTokensToNewEquationInSelectedGraphs:result];
         }
         else {
-            NSLog(@"need to update selected equation.");
+            NSArray *commonEquations = [EDCoreDataUtility getCommonEquationsforSelectedGraphs:_context];
+            
+            // update equation
+            [self updateTokensInEquationInSelectedGraphs:result equations:commonEquations];
         }
         
         [NSApp endSheet:[self window]];
@@ -241,6 +254,35 @@
         
         // set relationship
         [graph addEquationsObject:newEquation];
+    }
+}
+
+- (void)updateTokensInEquationInSelectedGraphs:(NSMutableDictionary *)dict equations:(NSArray *)equationsToUpdate{
+    NSMutableArray *parsedTokens = [dict objectForKey:EDKeyParsedTokens];
+    NSString *equationStr = [dict objectForKey:EDKeyEquation];
+    EDToken *newToken;
+    
+    for (EDEquation *equation in equationsToUpdate){
+        // clear all other tokens
+        [equation removeAllTokens];
+        
+        int i=0;
+        for (EDToken *token in parsedTokens){
+            // create new token and set relationship
+            newToken = [token copy:_context];
+            
+            // insert into context
+            [_context insertObject:newToken];
+            
+            [equation addTokensObject:newToken];
+            i++;
+        }
+        
+        // set string
+        [equation setEquation:equationStr];
+        
+        // test print all tokens
+        //[equation printAllTokens];
     }
 }
 @end

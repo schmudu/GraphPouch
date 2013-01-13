@@ -97,20 +97,10 @@
     
     [newEquation copyAttributes:currentEquation];
     
-    /*
-    if ([columnIdentifier isEqualToString:@"equation"]) {
-        [newAttribute setValue:EDEquationAttributeEquation forKey:EDKey];
-        [newAttribute setObject:object forKey:EDValue];
-    }*/
     if ([columnIdentifier isEqualToString:@"visible"]) {
         [newAttribute setValue:EDEquationAttributeIsVisible forKey:EDKey];
         [newAttribute setObject:object forKey:EDValue];
     }
-    /*
-    else if ([columnIdentifier isEqualToString:@"label"]) {
-        [newAttribute setValue:EDGraphPointAttributeShowLabel forKey:EDKey];
-        [newAttribute setObject:object forKey:EDValue];
-    }*/
     
     // set the attribute for the graph that holds this point
     // set the common points
