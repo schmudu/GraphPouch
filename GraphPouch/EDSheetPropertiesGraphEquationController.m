@@ -84,7 +84,7 @@
         [result setObject:equationStr forKey:EDKeyEquation];
         
         // if new equation then add to selected graphs
-        if (_equationIndex == -1) {
+        if (_equationIndex == EDEquationSheetIndexInvalid) {
             // add equation to dictionary
             [self addTokensToNewEquationInSelectedGraphs:result];
         }
@@ -103,6 +103,18 @@
 - (void)controlTextDidChange:(NSNotification *)obj{
     [self setEquationButtonState];
     [self clearError];
+}
+
+-(void)controlTextDidEndEditing:(NSNotification *)notification
+{
+    // See if it was due to a return
+    if ( [[[notification userInfo] objectForKey:@"NSTextMovement"] intValue] == NSReturnTextMovement )
+    {
+        // if button submit is true then submit equation
+        if ([buttonSubmit isEnabled] == TRUE){
+            [self onButtonPressedSubmit:nil];
+        }
+    }
 }
 
 - (void)setEquationButtonState{

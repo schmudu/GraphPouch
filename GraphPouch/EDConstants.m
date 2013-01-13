@@ -219,6 +219,7 @@ NSString * const EDEquationAttributeShowLabel                   = @"showLabel";
 NSString * const EDEquationAttributeIsVisible                   = @"isVisible";
 NSString * const EDEquationAttributeTokens                      = @"tokens";
 NSString * const EDEventQuitDuringEquationSheet                 = @"EDEventQuitDuringEquationSheet";
+int const EDEquationSheetIndexInvalid                           = -1;
 
 // errors
 NSString * const EDErrorDomain                                  = @"com.edcodia.graphpouch";

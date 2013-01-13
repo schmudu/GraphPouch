@@ -16,7 +16,10 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventQuitDuringEquationSheet object:self];
         return TRUE;
     }
-    return FALSE;
+    return [super performKeyEquivalent:theEvent];
 }
 
+- (void)keyDown:(NSEvent *)theEvent{
+    NSLog(@"key down: sheet");
+}
 @end
