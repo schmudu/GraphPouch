@@ -95,6 +95,14 @@
         for (EDEquation *equation in equations){
             // set relationship
             [self addEquationsObject:equation];
+            
+            NSOrderedSet *tokens = [equation tokens];
+        
+            for (EDToken *token in tokens){
+                // set relationship
+                [equation addTokensObject:token];
+            }
+            
         }
     }
     return self;

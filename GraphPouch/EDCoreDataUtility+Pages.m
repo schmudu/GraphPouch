@@ -441,7 +441,6 @@
     if ([pages count] > 0) {
         // cycle through objects and insert after last selected page
         for (EDPage *page in pages){
-#warning need to insert page into context and set up the relationships?
             [context insertObject:page];
             
             // update each page view with it's new position

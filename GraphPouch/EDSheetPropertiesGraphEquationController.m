@@ -262,11 +262,12 @@
         [newEquation setEquation:equationStr];
         
         // test print all tokens
-        [newEquation printAllTokens];
+        //[newEquation printAllTokens];
         
         // set relationship
         [graph addEquationsObject:newEquation];
     }
+    NSLog(@"end of add tokens: tokens root:%@ child root:%@", [EDToken getAllObjects:[_context parentContext]], [EDToken getAllObjects:_context]);
 }
 
 - (void)updateTokensInEquationInSelectedGraphs:(NSMutableDictionary *)dict equations:(NSArray *)equationsToUpdate{

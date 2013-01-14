@@ -54,7 +54,6 @@
     _context = context;
     if (!equationController) {
         equationController = [[EDSheetPropertiesGraphEquationController alloc] initWithContext:_context];
-        NSLog(@"creating equation controller.");
     }
     // this method will only be called if only graphs are shown
     // get all of the graphs selected

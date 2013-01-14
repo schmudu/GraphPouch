@@ -4,37 +4,28 @@
    version = "1.0">
    <FileBreakpoints>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "GraphPouch/EDPage.m"
-         timestampString = "379028332.125407"
+         filePath = "GraphPouch/EDToken.m"
+         timestampString = "379877428.611691"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "81"
-         endingLineNumber = "81">
+         startingLineNumber = "146"
+         endingLineNumber = "146">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "GraphPouch/EDPageView.m"
-         timestampString = "379123749.927115"
+         filePath = "GraphPouch/EDDocument.m"
+         timestampString = "379879690.717966"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "294"
-         endingLineNumber = "294"
-         landmarkName = "-encodeWithCoder:"
+         startingLineNumber = "66"
+         endingLineNumber = "66"
+         landmarkName = "-onParentContextWillSave:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
-   <ExceptionBreakpoints>
-      <ExceptionBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         scope = "0"
-         stopOnStyle = "0">
-      </ExceptionBreakpoint>
-   </ExceptionBreakpoints>
 </Bucket>

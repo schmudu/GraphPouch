@@ -2,8 +2,8 @@
 //  EDToken.h
 //  GraphPouch
 //
-//  Created by PATRICK LEE on 12/4/12.
-//  Copyright (c) 2012 Patrick Lee. All rights reserved.
+//  Created by PATRICK LEE on 1/14/13.
+//  Copyright (c) 2013 Patrick Lee. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -12,13 +12,13 @@
 
 @class EDEquation;
 
-@interface EDToken : NSManagedObject <NSCoding, NSPasteboardReading, NSPasteboardReading>
+@interface EDToken : NSManagedObject
 
+@property (nonatomic, retain) NSNumber * association;
 @property BOOL isValid;
 @property (nonatomic, retain) NSNumber * precedence;
-@property (nonatomic, retain) NSString * value;
 @property (nonatomic, retain) NSNumber * type;
-@property (nonatomic, retain) NSNumber * association;
+@property (nonatomic, retain) NSString * tokenValue;
 @property (nonatomic, retain) EDEquation *equation;
 
 - (id)initWithContext:(NSManagedObjectContext *)context;
@@ -28,6 +28,7 @@
 - (void)appendChar:(NSString *)c;
 - (int)length;
 - (EDToken *)copy:(NSManagedObjectContext *)context;
+- (void)copyToken:(EDToken *)sourceToken;
 - (void)setTypeRaw:(EDTokenType)type;
 - (EDTokenType)typeRaw;
 - (void)setAssociationRaw:(EDAssociation)association;

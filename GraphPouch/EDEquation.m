@@ -31,13 +31,10 @@
         [self setShowLabel:[aDecoder decodeBoolForKey:EDEquationAttributeShowLabel]];
         [self setIsVisible:[aDecoder decodeBoolForKey:EDEquationAttributeIsVisible]];
         
-        EDToken *newToken;
+        //EDToken *newToken;
         NSSet *tokens = [aDecoder decodeObjectForKey:EDEquationAttributeTokens];
         
         for (EDToken *token in tokens){
-            // create a point and set it for this graph
-            //newToken = [token initWithCoder:aDecoder];
-            
             // set relationship
             [self addTokensObject:token];
         }

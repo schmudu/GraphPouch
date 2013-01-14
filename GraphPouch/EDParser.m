@@ -51,7 +51,7 @@
             }
         }
         else if ([currentToken typeRaw] == EDTokenTypeParenthesis) {
-            if([[currentToken value] isEqualToString:@"("]){
+            if([[currentToken tokenValue] isEqualToString:@"("]){
                 // push to stack
                 [operator push:currentToken];
             }
@@ -63,7 +63,7 @@
                     operatorToken = (EDToken *)[operator pop];
                     
                     // if not open paren then push to output
-                    if(![[operatorToken value] isEqualToString:@"("]){
+                    if(![[operatorToken tokenValue] isEqualToString:@"("]){
                         [output addObject:operatorToken];
                     }
                     else 
@@ -103,7 +103,7 @@
     while (0<[operator count]) {
         currentToken = [operator pop];
         [output addObject:currentToken];
-        //NSLog(@"pushing operator token onto output%@", [currentToken value]);
+        //NSLog(@"pushing operator token onto output%@", [currentToken tokenValue]);
     }
     
     //NSLog(@"parser returning output:%@", output);
@@ -121,24 +121,24 @@
         }
         else if ([token typeRaw] == EDTokenTypeIdentifier) {
             idToken = [[EDToken alloc] initWithContext:context];
-            [idToken setValue:[NSString stringWithFormat:@"%f", idValue]];
+            [idToken setTokenValue:[NSString stringWithFormat:@"%f", idValue]];
             [result push:idToken];
         }
         else if ([token typeRaw] == EDTokenTypeConstant) {
 #warning need to figure out the constants
             idToken = [[EDToken alloc] initWithContext:context];
-            [idToken setValue:[NSString stringWithFormat:@"%f", idValue]];
+            [idToken setTokenValue:[NSString stringWithFormat:@"%f", idValue]];
             [result push:idToken];
         }
         else if ([token typeRaw] == EDTokenTypeFunction){
-            firstNum = [[(EDToken *)[result pop] value] doubleValue];
-            if ([[token value] isEqualToString:@"sin"])
+            firstNum = [[(EDToken *)[result pop] tokenValue] doubleValue];
+            if ([[token tokenValue] isEqualToString:@"sin"])
                 answer = sinf(firstNum * M_PI/180);
-            else if ([[token value] isEqualToString:@"cos"])
+            else if ([[token tokenValue] isEqualToString:@"cos"])
                 answer = cosf(firstNum * M_PI/180);
             
             resultToken = [[EDToken alloc] initWithContext:context];
-            [resultToken setValue:[NSString stringWithFormat:@"%f", answer]];
+            [resultToken setTokenValue:[NSString stringWithFormat:@"%f", answer]];
             [result push:resultToken];
         }
         else {
@@ -160,27 +160,27 @@
                     return 0;
                 }
                 else {
-                    secondNum = [[secondNumToken value] doubleValue];
-                    firstNum = [[firstNumToken value] doubleValue];
+                    secondNum = [[secondNumToken tokenValue] doubleValue];
+                    firstNum = [[firstNumToken tokenValue] doubleValue];
                     
-                    if ([[token value] isEqualToString:@"+"])
+                    if ([[token tokenValue] isEqualToString:@"+"])
                         answer = firstNum + secondNum;
-                    else if ([[token value] isEqualToString:@"-"])
+                    else if ([[token tokenValue] isEqualToString:@"-"])
                         answer = firstNum - secondNum;
-                    else if ([[token value] isEqualToString:@"*"])
+                    else if ([[token tokenValue] isEqualToString:@"*"])
                         answer = firstNum * secondNum;
-                    else if ([[token value] isEqualToString:@"/"])
+                    else if ([[token tokenValue] isEqualToString:@"/"])
                         answer = firstNum / secondNum;
-                    else if ([[token value] isEqualToString:@"^"])
+                    else if ([[token tokenValue] isEqualToString:@"^"])
                         answer = pow(firstNum,secondNum);
                     
                     resultToken = [[EDToken alloc]initWithContext:context];
-                    [resultToken setValue:[NSString stringWithFormat:@"%f", answer]];
+                    [resultToken setTokenValue:[NSString stringWithFormat:@"%f", answer]];
                     [result push:resultToken];
                 }
             }
         }
     }
-    return [[(EDToken *)[result getLastObject] value] floatValue];
+    return [[(EDToken *)[result getLastObject] tokenValue] floatValue];
 }
 @end

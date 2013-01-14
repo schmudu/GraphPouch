@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11G63" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="EDElement" representedClassName="EDElement" syncable="YES">
         <attribute name="elementHeight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="elementWidth" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -44,8 +44,8 @@
         <attribute name="association" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="isValid" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="precedence" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="tokenValue" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="equation" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDEquation" inverseName="tokens" inverseEntity="EDEquation" syncable="YES"/>
     </entity>
     <elements>

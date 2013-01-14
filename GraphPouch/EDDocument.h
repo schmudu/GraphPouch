@@ -24,6 +24,7 @@
     EDPanelPropertiesController *propertyController;
     EDMenuController *menuController;
     NSManagedObjectContext *_context;
+    NSManagedObjectContext *_rootContext;
 }
 
 - (id)getInstance;

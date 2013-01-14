@@ -232,7 +232,7 @@ NSString * const EDKeyEquation                                  = @"EDKeyEquatio
 
 NSString *const EDTokenAttributeIsValid                         = @"isValid";
 NSString *const EDTokenAttributePrecedence                      = @"precedence";
-NSString *const EDTokenAttributeValue                           = @"value";
+NSString *const EDTokenAttributeValue                           = @"tokenValue";
 NSString *const EDTokenAttributeType                            = @"type";
 NSString *const EDTokenAttributeAssociation                     = @"association";
 NSString *const EDTokenAttributeEquation                        = @"equation";

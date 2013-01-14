@@ -84,7 +84,7 @@
 + (BOOL)isValidToken:(EDToken *)token error:(NSError **)error{
     regex_t regex;
     int reti;
-    NSString *str = [[NSString alloc] initWithString:[token value]];
+    NSString *str = [[NSString alloc] initWithString:[token tokenValue]];
     const char *cStr = [str cStringUsingEncoding:NSASCIIStringEncoding];
     
     // numbers
@@ -150,7 +150,7 @@
     if (!reti) {
         // set type to number
         [token setTypeRaw:EDTokenTypeOperator];
-        [token setValue:[NSString stringWithFormat:@"%@", str]];
+        [token setTokenValue:[NSString stringWithFormat:@"%@", str]];
         if ([str isEqualToString:@"+"]){
             [token setAssociationRaw:EDAssociationLeft];
             [token setPrecedence:[NSNumber numberWithInt:2]];
@@ -190,43 +190,43 @@
         // get current token
         currentToken = [tokens objectAtIndex:i];
         
-        if (([currentToken typeRaw] == EDTokenTypeFunction) && (([[currentToken value] isEqualToString:@"c"]) || ([[currentToken value] isEqualToString:@"co"]))){
+        if (([currentToken typeRaw] == EDTokenTypeFunction) && (([[currentToken tokenValue] isEqualToString:@"c"]) || ([[currentToken tokenValue] isEqualToString:@"co"]))){
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate expression '%@'. Did you mean 'cos'?",[currentToken value]] forKey:NSLocalizedDescriptionKey];
+            [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate expression '%@'. Did you mean 'cos'?",[currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
             return FALSE;
         }
         
-        if (([currentToken typeRaw] == EDTokenTypeFunction) && (([[currentToken value] isEqualToString:@"s"]) || ([[currentToken value] isEqualToString:@"si"]))){
+        if (([currentToken typeRaw] == EDTokenTypeFunction) && (([[currentToken tokenValue] isEqualToString:@"s"]) || ([[currentToken tokenValue] isEqualToString:@"si"]))){
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate expression '%@'. Did you mean 'sin'?",[currentToken value]] forKey:NSLocalizedDescriptionKey];
+            [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate expression '%@'. Did you mean 'sin'?",[currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
             return FALSE;
         }
         
-        if (([currentToken typeRaw] == EDTokenTypeFunction) && (([[currentToken value] isEqualToString:@"t"]) || ([[currentToken value] isEqualToString:@"ta"]))){
+        if (([currentToken typeRaw] == EDTokenTypeFunction) && (([[currentToken tokenValue] isEqualToString:@"t"]) || ([[currentToken tokenValue] isEqualToString:@"ta"]))){
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate expression '%@'. Did you mean 'tan'?",[currentToken value]] forKey:NSLocalizedDescriptionKey];
+            [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate expression '%@'. Did you mean 'tan'?",[currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
             return FALSE;
         }
         
-        if (([currentToken typeRaw] == EDTokenTypeFunction) && ([[currentToken value] isEqualToString:@"p"])){
+        if (([currentToken typeRaw] == EDTokenTypeFunction) && ([[currentToken tokenValue] isEqualToString:@"p"])){
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate expression '%@'. Did you mean 'pi'?",[currentToken value]] forKey:NSLocalizedDescriptionKey];
+            [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate expression '%@'. Did you mean 'pi'?",[currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
             return FALSE;
         }
         
         if ([currentToken typeRaw] == EDTokenTypeNumber){
-            str = [NSString stringWithFormat:@"%@",[currentToken value]];
+            str = [NSString stringWithFormat:@"%@",[currentToken tokenValue]];
             cStr = [str cStringUsingEncoding:NSASCIIStringEncoding];
             reti = regcomp(&regex, "^[0-9]+\\.$", REG_EXTENDED);
             if (reti) return FALSE;
             reti = regexec(&regex, cStr, 0, NULL, 0);
             if (!reti){
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-                [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate term '%@'.",[currentToken value]] forKey:NSLocalizedDescriptionKey];
+                [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate term '%@'.",[currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
                 *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                     return FALSE;        
             }
@@ -235,14 +235,14 @@
         if (previousToken) {
             if(([previousToken typeRaw] == EDTokenTypeFunction) && ([currentToken typeRaw] == EDTokenTypeFunction)){
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-                [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate two consecutive function terms: '%@' and '%@'", [previousToken value], [currentToken value]] forKey:NSLocalizedDescriptionKey];
+                [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate two consecutive function terms: '%@' and '%@'", [previousToken tokenValue], [currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
                 *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                 return FALSE;                 
             }
             
             if(([previousToken typeRaw] == EDTokenTypeOperator) && ([currentToken typeRaw] == EDTokenTypeOperator)){
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-                [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate two consecutive operators: '%@' and '%@'", [previousToken value], [currentToken value]] forKey:NSLocalizedDescriptionKey];
+                [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate two consecutive operators: '%@' and '%@'", [previousToken tokenValue], [currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
                 *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                 return FALSE;                 
             }
@@ -272,13 +272,13 @@
             }
             
             // insert token between right paren and function
-            if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken value] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeFunction)){
+            if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeFunction)){
                 multiplyToken = [EDToken multiplierToken:context];
                 [tokens insertObject:multiplyToken atIndex:i];
             }
             
             // insert token between right paren and left paren
-            if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken value] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeParenthesis) && ([[currentToken value] isEqualToString:@"("])){
+            if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeParenthesis) && ([[currentToken tokenValue] isEqualToString:@"("])){
                 multiplyToken = [EDToken multiplierToken:context];
                 [tokens insertObject:multiplyToken atIndex:i];
             }

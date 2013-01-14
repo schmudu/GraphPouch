@@ -18,6 +18,7 @@
     // this method will create a child context that will be used throught the program
     // this is so the nspersistentdocumentcontroller won't complain when we save
     NSManagedObjectContext *rootContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    
     [rootContext setPersistentStoreCoordinator:[startContext persistentStoreCoordinator]];
     NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     
@@ -27,10 +28,14 @@
     // set root as context for coordinator
     //[[startContext persistentStoreCoordinator] 
     
+    // set undo
+    [childContext setUndoManager:[startContext undoManager]];
+    
     NSLog(@"root context:%@ child context:%@", rootContext, childContext);
     
     [contexts setObject:childContext forKey:EDKeyContextChild];
     [contexts setObject:rootContext forKey:EDKeyContextRoot];
+    
     return contexts;
 }
 

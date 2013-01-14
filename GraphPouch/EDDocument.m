@@ -10,6 +10,7 @@
 #import "EDWorksheetViewController.h"
 #import "EDPagesViewController.h"
 #import "EDGraph.h"
+#import "EDToken.h"
 #import "EDCoreDataUtility.h"
 #import "EDMenuController.h"
 #import "EDPanelPropertiesController.h"
@@ -17,10 +18,12 @@
 #import "EDConstants.h"
 #import "EDWorksheetView.h"
 #import "EDWindow.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @interface EDDocument()
 - (void)onMainWindowClosed:(NSNotification *)note;
 - (void)onShortcutSavePressed:(NSNotification *)note;
+- (void)onRoottContextWillSave:(NSNotification *)note;
 @end
 
 @implementation EDDocument
@@ -43,6 +46,7 @@
         
         // set context that the rest of the application will modify
         _context = [contexts objectForKey:EDKeyContextChild];
+        _rootContext = [contexts objectForKey:EDKeyContextRoot];
         
         // set managed object context for this persistent document will write to
         [self setManagedObjectContext:[contexts objectForKey:EDKeyContextRoot]];
@@ -51,8 +55,54 @@
         menuController = [[EDMenuController alloc] init];
         
         // listen
+        //NSLog(@"init");
+        //[EDToken printAll:_context];
     }
     return self;
+}
+
+- (void)onRoottContextWillSave:(NSNotification *)note{
+#warning i REALLY don't like this.  For some reason the parent context is not saving the token attributes.  IsValid and TokenValue are being set to nil.  Consequently the data is not being saved to the persisten store (the file).
+    NSArray *correctTokens = [EDToken getAllObjects:_context];
+    NSArray *incorrectTokens = [EDToken getAllObjects:_rootContext];
+    NSManagedObjectID *objID;
+    EDToken *incorrectToken;
+    for (EDToken *correctToken in correctTokens){
+        // get object id
+        objID = [correctToken objectID];
+        
+        // find object in root context
+        incorrectToken = (EDToken *)[_rootContext objectRegisteredForID:objID];
+        
+        // copy attributes
+        [incorrectToken copyToken:correctToken];
+    }
+}
+
+- (void)onParentContextChanged:(NSNotification *)note{
+    NSArray *updatedObjects = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
+    NSArray *insertedObjects = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
+    //NSLog(@"parent context changed:\n===updated:%@ \n===inserted:%@", updatedObjects, insertedObjects);
+}
+
+- (void)onContextChanged:(NSNotification *)note{
+    NSArray *updatedObjects = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
+    NSArray *insertedObjects = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
+    //NSLog(@"context changed:\n===updated:%@ \n===inserted:%@", updatedObjects, insertedObjects);
+    // push changes to parent context
+    //NSLog(@"before change: tokens root:%@ child root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
+    [EDCoreDataUtility save:_context];
+    //[_rootContext mergeChangesFromContextDidSaveNotification:note];
+    NSLog(@"after change: tokens root:%@ child root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
+}
+
+- (void)onContextSaved:(NSNotification *)note{
+    //NSLog(@"===before save: tokens root:%@ child root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
+    //[EDCoreDataUtility save:_context];
+    //[_rootContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    [_rootContext mergeChangesFromContextDidSaveNotification:note];
+    //NSLog(@"===after save: tokens root:%@ child root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
+    //[_rootContext mergeChangesFromContextDidSaveNotification:[note object]];
 }
 
 - (void)dealloc{
@@ -89,6 +139,14 @@
 
 - (void)awakeFromNib{
     // code that happens before windowControllerDidLoadNib
+    //NSLog(@"awake from nib");
+    //[EDToken printAll:_context];
+    //NSLog(@"end: awake from nib");
+    // listen
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextSaved:) name:NSManagedObjectContextDidSaveNotification object:_context];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onParentContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_rootContext];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onRoottContextWillSave:) name:NSManagedObjectContextWillSaveNotification object:_rootContext];
 }
 
 + (BOOL)autosavesInPlace
@@ -132,6 +190,17 @@
 
 #pragma mark keyboard
 - (void)onShortcutSavePressed:(NSNotification *)note{
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onChildContextSaved:) name:NSManagedObjectContextWillSaveNotification object:_rootContext];
     [EDCoreDataUtility save:_context];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextWillSaveNotification object:_rootContext];
+    
 }
+
+#pragma mark model
+/*
+- (void)onChildContextSaved:(NSNotification *)note{
+    // merge changes to root 
+    [_rootContext mergeChangesFromContextDidSaveNotification:note];
+}*/
+
 @end
