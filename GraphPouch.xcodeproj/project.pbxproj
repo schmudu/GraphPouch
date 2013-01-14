@@ -84,6 +84,7 @@
 		CDF62E4F16A2810700DCDD2D /* EDFormatterEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4E16A2810700DCDD2D /* EDFormatterEquation.m */; };
 		CDF62E5716A2FB1600DCDD2D /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = CDF62E5616A2FB1600DCDD2D /* icon.iconset */; };
 		CDF62E5D16A4779B00DCDD2D /* EDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E5C16A4779A00DCDD2D /* EDToken.m */; };
+		CDF62E6916A49D0B00DCDD2D /* EDPointView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E6816A49D0B00DCDD2D /* EDPointView.m */; };
 		CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */; };
 /* End PBXBuildFile section */
 
@@ -233,6 +234,8 @@
 		CDF62E5616A2FB1600DCDD2D /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = icon.iconset; sourceTree = "<group>"; };
 		CDF62E5B16A4779800DCDD2D /* EDToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDToken.h; sourceTree = "<group>"; };
 		CDF62E5C16A4779A00DCDD2D /* EDToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDToken.m; sourceTree = "<group>"; };
+		CDF62E6716A49D0B00DCDD2D /* EDPointView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPointView.h; sourceTree = "<group>"; };
+		CDF62E6816A49D0B00DCDD2D /* EDPointView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPointView.m; sourceTree = "<group>"; };
 		CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+EasyFetching.h"; sourceTree = "<group>"; };
 		CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+EasyFetching.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -481,6 +484,8 @@
 				CDB682EC1694E80700702EAA /* EDEquationView.m */,
 				CD3F0A9815BDF93400AB7567 /* EDGraphView.h */,
 				CD3F0A9915BDF93400AB7567 /* EDGraphView.m */,
+				CDF62E6716A49D0B00DCDD2D /* EDPointView.h */,
+				CDF62E6816A49D0B00DCDD2D /* EDPointView.m */,
 				CD3F0A9A15BDF93400AB7567 /* EDGraphViewController.h */,
 				CD3F0A9B15BDF93400AB7567 /* EDGraphViewController.m */,
 			);
@@ -877,6 +882,7 @@
 				CDF62E4616A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m in Sources */,
 				CDF62E4F16A2810700DCDD2D /* EDFormatterEquation.m in Sources */,
 				CDF62E5D16A4779B00DCDD2D /* EDToken.m in Sources */,
+				CDF62E6916A49D0B00DCDD2D /* EDPointView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

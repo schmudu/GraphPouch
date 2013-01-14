@@ -29,7 +29,5 @@
 - (void)onContextChanged:(NSNotification *)note;
 - (void)updateDisplayBasedOnContext;
 - (void)drawElementAttributes;
-- (void)removeLabels;
-- (void)removeEquations;
-
+- (void)removeFeatures;
 @end

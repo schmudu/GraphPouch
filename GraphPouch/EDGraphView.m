@@ -23,6 +23,7 @@
 #import "EDEquation.h"
 #import "EDParser.h"
 #import "EDEquationView.h"
+#import "EDPointView.h"
 
 @interface EDGraphView()
 - (float)graphHeight;
@@ -33,7 +34,7 @@
 - (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length;
 - (NSMutableDictionary *)calculateGraphOrigin;
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo;
-- (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
+//- (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawEquations:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawPointsWithLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
@@ -41,6 +42,7 @@
 - (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)removeLabels;
 - (void)removeEquations;
+- (void)removePoints;
 @end
 
 @implementation EDGraphView
@@ -55,6 +57,7 @@
         _context = [myGraph managedObjectContext];
         _labels = [[NSMutableArray alloc] init];
         _equations = [[NSMutableArray alloc] init];
+        _points = [[NSMutableArray alloc] init];
         
         // set model info
         [self setDataObj:myGraph];
@@ -128,19 +131,8 @@
  
     [self removeLabels];
     [self removeEquations];
+    [self removePoints];
     [self drawElementAttributes];
-    
-    /*
-    // draw equations
-    NSDictionary *originInfo = [self calculateGraphOrigin];
-    NSDictionary *horizontalResults = [self calculateGridIncrement:[[[self dataObj] maxValueX] floatValue] minValue:[[[self dataObj] minValueX] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] length:[self graphWidth]];
-    NSDictionary *verticalResults = [self calculateGridIncrement:[[[self dataObj] maxValueY] floatValue] minValue:[[[self dataObj] minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:[self graphHeight]];
-    */
-    //[self removeEquations];
-    /*
-    if ([[(EDGraph *)[self dataObj] equations] count]) {
-        [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
-    }*/
 }
     
 - (void)drawRect:(NSRect)dirtyRect
@@ -168,11 +160,6 @@
         [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
         [NSBezierPath fillRect:[self bounds]];
     }
-    
-    // draw points
-    if ([[(EDGraph *)[self dataObj] points] count]) {
-        [self drawPoints:verticalResults horizontal:horizontalResults origin:originInfo];
-    }
 }
 
 - (void)drawElementAttributes{
@@ -180,6 +167,19 @@
     NSDictionary *horizontalResults = [self calculateGridIncrement:[[[self dataObj] maxValueX] floatValue] minValue:[[[self dataObj] minValueX] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] length:[self graphWidth]];
     NSDictionary *verticalResults = [self calculateGridIncrement:[[[self dataObj] maxValueY] floatValue] minValue:[[[self dataObj] minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:[self graphHeight]];
     
+    // draw equations
+    if ([[(EDGraph *)[self dataObj] equations] count]) {
+        [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
+    }
+    
+    
+    // draw points
+    /*
+    if ([[(EDGraph *)[self dataObj] points] count]) {
+        [self drawPoints:verticalResults horizontal:horizontalResults origin:originInfo];
+    }*/
+    
+    // draw labels
     if ([(EDGraph *)[self dataObj] hasLabels]) {
         [self drawLabels:verticalResults horizontal:horizontalResults origin:originInfo];
     }
@@ -187,11 +187,6 @@
     // draw points
     if ([[(EDGraph *)[self dataObj] points] count]) {
         [self drawPointsWithLabels:verticalResults horizontal:horizontalResults origin:originInfo];
-    }
-    
-    // draw equations
-    if ([[(EDGraph *)[self dataObj] equations] count]) {
-        [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
     }
 }
 
@@ -628,6 +623,13 @@
     }
 }
 
+- (void)removePoints{
+    // remove all labels from view
+    for (NSView *pointView in _points){
+        [pointView removeFromSuperview];
+    }
+}
+
 - (void)drawEquations:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     EDEquationView *equationView;
     
@@ -645,6 +647,7 @@
     }
 }
 
+/*
 - (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
@@ -665,10 +668,11 @@
             [path fill];
         }
     }
-}
+}*/
 
 - (void)drawPointsWithLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     NSTextField *pointLabel;
+    NSView *pointView;
     NSNumberFormatter *labelFormatter = [[NSNumberFormatter alloc] init];
     float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
@@ -689,6 +693,11 @@
     for (EDPoint *point in [(EDGraph *)[self dataObj] points]) {
         if ([point isVisible]) {
             // draw point
+            pointView = [[EDPointView alloc] initWithFrame:NSMakeRect(originX + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,originY - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
+            [self addSubview:pointView];
+            [_points addObject:pointView];
+            
+            // draw label
             if ([point showLabel]){
                 // create label
                 NSString *labelString = [[NSString alloc] initWithFormat:@"(%@,%@)", [labelFormatter stringFromNumber:[NSNumber numberWithFloat:[point locationX]]], [labelFormatter stringFromNumber:[NSNumber numberWithFloat:[point locationY]]]];
@@ -709,6 +718,8 @@
                 [pointLabel setSelectable:FALSE];
                 [self addSubview:pointLabel];
                 
+                // poisitin label in front of view
+                
                 // position it
                 pointLocX = ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal;
                 pointLocY = ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical;
@@ -721,14 +732,15 @@
 }
 
 #pragma mark dragging
-- (void)removeElements{
+- (void)removeFeatures{
     // method called to remove performance-heavy elements
     [self removeLabels];
     [self removeEquations];
+    [self removePoints];
 }
 
 
-- (void)addElements{
+- (void)addFeatures{
     // this method isn't need because when the context changes (e.g. dragged) the model changes and the elements update automatically
 }
 
