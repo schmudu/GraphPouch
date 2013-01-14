@@ -25,12 +25,10 @@
 }
 
 - (IBAction)addGraph:(id)sender{
-    //[[[NSDocumentController sharedDocumentController] currentDocument] addPage:nil];
-    //NSLog(@"going to add graph");
+    [[[NSDocumentController sharedDocumentController] currentDocument] addGraph:nil];
 }
 
 - (IBAction)addPage:(id)sender{
     [[[NSDocumentController sharedDocumentController] currentDocument] addPage:nil];
-    //[[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutNewPage object:self];
 }
 @end

@@ -61,6 +61,8 @@ NSString * const EDEventShortcutCopy                            = @"EDEventShort
 NSString * const EDEventShortcutCut                             = @"EDEventShortcutCut";
 NSString * const EDEventShortcutPaste                           = @"EDEventShortcutPaste";
 NSString * const EDEventShortcutSave                            = @"EDEventShortcutSave";
+NSString * const EDEventShortcutGraph                           = @"EDEventShortcutGraph";
+NSString * const EDEventShortcutPage                            = @"EDEventShortcutPage";
 
 // guides
 NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
@@ -194,6 +196,8 @@ int const EDKeycodeDelete                                       = 51;
 int const EDKeycodeCopy                                         = 8;
 int const EDKeycodeCut                                          = 7;
 int const EDKeycodePaste                                        = 9;
+int const EDKeycodeGraph                                        = 9;
+int const EDKeycodePage                                         = 9;
 int const EDKeyModifierNone                                     = 256;
 
 // transform
