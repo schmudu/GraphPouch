@@ -702,7 +702,17 @@
                 // create label
                 NSString *labelString = [[NSString alloc] initWithFormat:@"(%@,%@)", [labelFormatter stringFromNumber:[NSNumber numberWithFloat:[point locationX]]], [labelFormatter stringFromNumber:[NSNumber numberWithFloat:[point locationY]]]];
                 pointLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, EDGraphPointLabelWidth, EDGraphPointLabelHeight)];
-                labelWidth = [labelString widthForHeight:[pointLabel frame].size.height attributes:nil];
+                // reset width based on dynamic width
+                
+                [pointLabel setStringValue:labelString];
+                [pointLabel setBezeled:FALSE];
+                [pointLabel setDrawsBackground:FALSE];
+                [pointLabel setEditable:FALSE];
+                [pointLabel setSelectable:FALSE];
+                [pointLabel setFrameSize:NSMakeSize([pointLabel intrinsicContentSize].width + EDGraphPointLabelHorizontalOffset, [pointLabel frame].size.height)];
+                [self addSubview:pointLabel];
+                
+                labelWidth = [pointLabel intrinsicContentSize].width + EDGraphPointLabelHorizontalOffset;
                 labelHeight = [labelString heightForWidth:labelWidth attributes:nil];
                 
                 // configure horizontal offset, based off dynamic text width
@@ -710,15 +720,6 @@
                     horizontalOffset = EDGraphPointLabelHorizontalOffset;
                 else 
                     horizontalOffset = -1 * (EDGraphPointLabelHorizontalOffset + labelWidth);
-                
-                [pointLabel setStringValue:labelString];
-                [pointLabel setBezeled:FALSE];
-                [pointLabel setDrawsBackground:FALSE];
-                [pointLabel setEditable:FALSE];
-                [pointLabel setSelectable:FALSE];
-                [self addSubview:pointLabel];
-                
-                // poisitin label in front of view
                 
                 // position it
                 pointLocX = ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal;
