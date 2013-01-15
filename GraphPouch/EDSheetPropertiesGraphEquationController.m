@@ -210,6 +210,16 @@
         // print result
         //NSLog(@"====after parsed: result:%f", result);
     }
+    
+    // pass in value, other tests exist within calculate
+    float testResult = [EDParser calculate:parsedTokens error:&error context:_context varValue:5.0];
+    if (error) {
+        NSLog(@"error by calculating results.");
+        [self showError:error];
+        [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
+        return results;
+    }
+    
     [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyValidEquation];
     [results setObject:parsedTokens forKey:EDKeyParsedTokens];
     return results;

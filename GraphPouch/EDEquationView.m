@@ -61,7 +61,6 @@
     int endInt = (int)[self frame].size.width * EDGraphDependentVariableIncrement;
     float i;
     //NSLog(@"frame width int:%d frame float:%f", endInt, [self frame].size.width);
-    NSLog(@"equation view:draw rect");
     for (int j=0; j<endInt; j++){
         i = j/EDGraphDependentVariableIncrement;
         //NSLog(@"converted j:%f", j/100.0);

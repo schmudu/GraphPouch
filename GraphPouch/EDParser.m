@@ -145,9 +145,8 @@
         else {
             // token is operator
             if([result count] < 2){
-                    NSLog(@"error 1");
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-                [errorDetail setValue:[NSString stringWithFormat:@"Not enough numerical terms to use operator"] forKey:NSLocalizedDescriptionKey];
+                [errorDetail setValue:[NSString stringWithFormat:@"Missing terms to properly evaluate equation"] forKey:NSLocalizedDescriptionKey];
                 *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                 return 0;
             }
@@ -156,9 +155,8 @@
                 firstNumToken = (EDToken *)[result pop];
                 
                 if(([firstNumToken typeRaw] != EDTokenTypeNumber) || ([secondNumToken typeRaw] != EDTokenTypeNumber)){
-                    NSLog(@"error");
                     NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-                    [errorDetail setValue:[NSString stringWithFormat:@"Not enough numerical terms to use operator"] forKey:NSLocalizedDescriptionKey];
+                    [errorDetail setValue:[NSString stringWithFormat:@"Missing terms to properly evaluate equation"] forKey:NSLocalizedDescriptionKey];
                     *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                     return 0;
                 }
@@ -179,9 +177,10 @@
                     
                     resultToken = [[EDToken alloc]initWithContext:context];
                     
+                    /*
                     if ((value < 4.1) && ( value > 3.9)){
                         NSLog(@"value:%f answer:%f", value, answer);
-                    }
+                    }*/
                     if (isnan(answer) || isinf(answer)){
                         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                         [errorDetail setValue:[NSString stringWithFormat:@"Got infinity/divide_by_zero answer"] forKey:NSLocalizedDescriptionKey];
