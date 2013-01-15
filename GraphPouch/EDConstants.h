@@ -137,6 +137,7 @@ extern NSString *const EDKeyOriginPositionVertical;
 extern NSString *const EDKeyNumberGridLinesPositive;
 extern NSString *const EDKeyNumberGridLinesNegative;
 extern float const EDGraphEquationIncrement;
+extern float const EDGraphDependentVariableIncrement;
 
 // graph points
 extern NSString *const EDGraphPointAttributeVisible;
