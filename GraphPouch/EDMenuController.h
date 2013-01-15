@@ -15,5 +15,7 @@
 - (IBAction)togglePropertiesPanel:(id)sender;
 - (IBAction)addGraph:(id)sender;
 - (IBAction)addPage:(id)sender;
+- (IBAction)selectAll:(id)sender;
+- (IBAction)deselectAll:(id)sender;
 
 @end

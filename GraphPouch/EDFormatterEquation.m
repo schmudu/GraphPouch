@@ -26,7 +26,8 @@
     // powers
     // operators
     // variables
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^(|[0-9]|\\.|s|i|n|c|o|s|t|a|\\^|\\+|\\-|\\*|\\/|x|y)*$"
+    // parenthesis
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^(|[0-9]|\\.|s|i|n|c|o|s|t|a|\\^|\\+|\\-|\\*|\\/|x|y|\\(|\\))*$"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&regexError];
     NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:*partialStringPtr options:0 range:NSMakeRange(0, [*partialStringPtr length])];

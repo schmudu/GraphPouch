@@ -31,4 +31,11 @@
 - (IBAction)addPage:(id)sender{
     [[[NSDocumentController sharedDocumentController] currentDocument] addPage:nil];
 }
+- (IBAction)selectAll:(id)sender{
+    [[[NSDocumentController sharedDocumentController] currentDocument] selectAll:nil];
+}
+
+- (IBAction)deselectAll:(id)sender{
+    [[[NSDocumentController sharedDocumentController] currentDocument] deselectAll:nil];
+}
 @end

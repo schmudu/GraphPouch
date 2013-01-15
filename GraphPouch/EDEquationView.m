@@ -59,7 +59,7 @@
     [[NSColor redColor] setStroke];
     
     // draw equation along graph
-    for (float i=0; i<=[self frame].size.width; i=i+EDGraphEquationIncrement){
+    for (float i=0.0; i<=[self frame].size.width; i=i+EDGraphEquationIncrement){
         diffX = i - originHorizontalPosition;
         
         // based on position find x
@@ -78,7 +78,11 @@
             valueX = ratioHorizontal * [[_graph maxValueX] floatValue];
         }
         valueY = [EDParser calculate:[[_equation tokens] array] error:&error context:_context varValue:valueX];
-        
+        /*
+        if (error){
+            NSLog(@"we got an invalid number.");
+            error = nil;
+        }*/
         // if y is greater than max or less than min than break from loop
         /*
         if ((valueY > [[_graph maxValueY] floatValue]) || (valueY < [[_graph minValueY] floatValue]))
@@ -86,6 +90,10 @@
          */
         
         // based on value find y position
+        if (error){
+            // we received an error an cannot calculate this value
+            // do nothing
+        }
         if (valueY < 0){
             // y is negative
             ratioVertical = valueY/[[_graph minValueY] floatValue];
@@ -103,6 +111,13 @@
         if (firstPointDrawnForEquation) {
             [path moveToPoint:NSMakePoint(i, positionVertical)];
             firstPointDrawnForEquation = false;
+        }
+        else if (error){
+            // reset
+            error = nil;
+            
+            // set variable so that equation will not draw to next point
+            firstPointDrawnForEquation = true;
         }
         else {
             [path lineToPoint:NSMakePoint(i, positionVertical)];

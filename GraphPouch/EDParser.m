@@ -175,12 +175,22 @@
                         answer = pow(firstNum,secondNum);
                     
                     resultToken = [[EDToken alloc]initWithContext:context];
+                    if ((value>1.95) && (value<2.02)) {
+                        NSLog(@"x:%f answer:%f",value, answer);
+                    }
+                    if (isnan(answer) || isinf(answer)){
+                        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+                        [errorDetail setValue:[NSString stringWithFormat:@"Got infinity/divide_by_zero answer"] forKey:NSLocalizedDescriptionKey];
+                        *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                        return 0;
+                    }
                     [resultToken setTokenValue:[NSString stringWithFormat:@"%f", answer]];
                     [result push:resultToken];
                 }
             }
         }
     }
+    
     return [[(EDToken *)[result getLastObject] tokenValue] floatValue];
 }
 @end

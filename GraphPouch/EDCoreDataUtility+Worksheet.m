@@ -14,6 +14,7 @@
 #import "EDCoreDataUtility+Pages.h"
 #import "NSManagedObject+EasyFetching.h"
 #import "NSMutableArray+EDPoint.h"
+#import "EDElement.h"
 
 @implementation EDCoreDataUtility (Worksheet)
 
@@ -28,6 +29,19 @@
     return allObjects;
 }
 
+
++ (void)selectAllWorksheetElements:(NSManagedObjectContext *)context{
+    NSMutableArray *allObjects = [[NSMutableArray alloc] init];
+    NSArray *graphObjects = [EDGraph getAllObjects:context];
+
+#warning add other elements here
+    [allObjects addObjectsFromArray:graphObjects];
+
+    for (EDElement *element in allObjects){
+        // set every element as selected
+        [element setSelected:TRUE];
+    }
+}
 #pragma mark worksheet
 + (NSMutableArray *)copySelectedWorksheetElements:(NSManagedObjectContext *)context{
     // copy all selected objects

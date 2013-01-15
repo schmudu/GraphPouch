@@ -12,6 +12,7 @@
 #import "EDGraph.h"
 #import "EDToken.h"
 #import "EDCoreDataUtility.h"
+#import "EDCoreDataUtility+Worksheet.h"
 #import "EDMenuController.h"
 #import "EDPanelPropertiesController.h"
 #import "NSObject+Document.h"
@@ -43,7 +44,6 @@
         // Create a parent context
         
         //Init code
-        //_context = [self managedObjectContext];
         NSDictionary *contexts;
         contexts = [EDCoreDataUtility createContext:[self managedObjectContext]];
         
@@ -58,7 +58,6 @@
         menuController = [[EDMenuController alloc] init];
         
         // listen
-        //NSLog(@"init");
         //[EDToken printAll:_context];
     }
     return self;
@@ -194,6 +193,14 @@
     [EDCoreDataUtility save:_context];
     //[[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextWillSaveNotification object:_rootContext];
     
+}
+
+- (void)selectAll:(id)sender{
+    [EDCoreDataUtility selectAllWorksheetElements:_context];
+}
+
+- (void)deselectAll:(id)sender{
+    [EDCoreDataUtility clearSelectedWorksheetElements:_context];
 }
 
 #pragma mark model
