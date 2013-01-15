@@ -61,6 +61,7 @@
     int endInt = (int)[self frame].size.width * EDGraphDependentVariableIncrement;
     float i;
     //NSLog(@"frame width int:%d frame float:%f", endInt, [self frame].size.width);
+    NSLog(@"equation view:draw rect");
     for (int j=0; j<endInt; j++){
         i = j/EDGraphDependentVariableIncrement;
         //NSLog(@"converted j:%f", j/100.0);
@@ -82,17 +83,11 @@
             valueX = ratioHorizontal * [[_graph maxValueX] floatValue];
         }
         valueY = [EDParser calculate:[[_equation tokens] array] error:&error context:_context varValue:valueX];
-        /*
-        if (error){
-            NSLog(@"we got an invalid number.");
-            error = nil;
-        }*/
+     
         // if y is greater than max or less than min than break from loop
-        /*
-        if ((valueY > [[_graph maxValueY] floatValue]) || (valueY < [[_graph minValueY] floatValue]))
-            continue;
-         */
-        
+        //if ((valueY > [[_graph maxValueY] floatValue]) || (valueY < [[_graph minValueY] floatValue]))
+            //continue;
+     
         // based on value find y position
         if (error){
             // we received an error an cannot calculate this value
@@ -128,8 +123,9 @@
         }
     }
     
-    /*
+    
     // draw equation along graph
+    /*
     for (float i=0.0; i<=[self frame].size.width; i=i+EDGraphEquationIncrement){
         diffX = i - originHorizontalPosition;
         

@@ -146,7 +146,7 @@ float const EDGraphPointLabelHeight                             = 20;
 float const EDGraphPointLabelWidth                              = 60;
 float const EDGraphPointLabelVerticalOffset                     = 1;
 float const EDGraphPointLabelHorizontalOffset                   = 8;
-float const EDGraphDependentVariableIncrement                   = 10.0;        // the higher the number the more accurate the graphs, but worse performance
+float const EDGraphDependentVariableIncrement                   = 5.0;        // the higher the number the more accurate the graphs, but worse performance
 
 // window
 NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";

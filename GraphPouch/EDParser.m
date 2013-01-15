@@ -39,7 +39,7 @@
                     // add to output
                     [output addObject:operatorToken];
                     
-                    // push currentToekn to stack
+                    // push currentToken to stack
                     [operator push:currentToken];
                 }
                 else {
@@ -72,6 +72,7 @@
                 
                 // if operator stack is empty and no match then mismatching parenthesis
                 if(!match){
+                    NSLog(@"no matching paren found.");
                     NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                     [errorDetail setValue:[NSString stringWithFormat:@"No matching parenthesis found"] forKey:NSLocalizedDescriptionKey];
                     *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
@@ -114,7 +115,7 @@
     EDStack *result = [[EDStack alloc] init];
     float answer=0, firstNum=0, secondNum=0, idValue=value;
     EDToken *firstNumToken, *secondNumToken, *resultToken, *idToken;
-    
+    //NSLog(@"stack:%@", stack);
     for (EDToken *token in stack){
         if([token typeRaw] == EDTokenTypeNumber){
             [result push:token];
@@ -144,6 +145,7 @@
         else {
             // token is operator
             if([result count] < 2){
+                    NSLog(@"error 1");
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:[NSString stringWithFormat:@"Not enough numerical terms to use operator"] forKey:NSLocalizedDescriptionKey];
                 *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
@@ -154,6 +156,7 @@
                 firstNumToken = (EDToken *)[result pop];
                 
                 if(([firstNumToken typeRaw] != EDTokenTypeNumber) || ([secondNumToken typeRaw] != EDTokenTypeNumber)){
+                    NSLog(@"error");
                     NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                     [errorDetail setValue:[NSString stringWithFormat:@"Not enough numerical terms to use operator"] forKey:NSLocalizedDescriptionKey];
                     *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
@@ -176,6 +179,9 @@
                     
                     resultToken = [[EDToken alloc]initWithContext:context];
                     
+                    if ((value < 4.1) && ( value > 3.9)){
+                        NSLog(@"value:%f answer:%f", value, answer);
+                    }
                     if (isnan(answer) || isinf(answer)){
                         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                         [errorDetail setValue:[NSString stringWithFormat:@"Got infinity/divide_by_zero answer"] forKey:NSLocalizedDescriptionKey];
@@ -188,7 +194,6 @@
             }
         }
     }
-    
     return [[(EDToken *)[result getLastObject] tokenValue] floatValue];
 }
 @end
