@@ -161,25 +161,23 @@
         [EDTokenizer insertImpliedParenthesis:tokens context:_context];
         
         // print out all tokens
-        /*
         NSLog(@"====after insert parenthesis");
-        i =0;
+        int i =0;
         for (EDToken *token in tokens){
             NSLog(@"i:%d token:%@", i, token);
             i++;
-        }*/
+        }
         
         // insert implied multiplication
         [EDTokenizer insertImpliedMultiplication:tokens context:_context];
         
-        /*
         // print out all tokens
         NSLog(@"====after insert implied multiplication");
         i =0;
         for (EDToken *token in tokens){
             NSLog(@"i:%d token:%@", i, token);
             i++;
-        }*/
+        }
         
         // parse expression
         parsedTokens = [EDParser parse:tokens error:&error];
