@@ -16,6 +16,7 @@
 @property BOOL currentPage, selected;
 @property (nonatomic, retain) NSNumber *pageNumber;
 @property (nonatomic, retain) NSSet *graphs;
+- (BOOL)containsObject:(NSManagedObject *)object;
 @end
 
 @interface EDPage (CoreDataGeneratedAccessors)

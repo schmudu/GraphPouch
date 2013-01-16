@@ -151,4 +151,21 @@
     return [NSArray arrayWithObject:EDUTIGraph];
 }
 
+#pragma mark data structure
+- (BOOL)containsObject:(NSManagedObject *)object{
+    BOOL result = FALSE;
+    
+    // search through points
+    for (EDPoint *point in [self points]){
+        if (point == object)
+            return TRUE;
+    }
+    
+    // search through equations
+    for (EDEquation *equation in [self equations]){
+        if (equation == object)
+            return TRUE;
+    }
+    return result;
+}
 @end

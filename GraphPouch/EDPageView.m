@@ -180,9 +180,15 @@
 - (void)onContextChanged:(NSNotification *)note{
     // update if needed
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
+    NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
+    NSArray *removedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
+    NSMutableArray *allObjects = [NSMutableArray arrayWithArray:updatedArray];
+    [allObjects addObjectsFromArray:insertedArray];
+    [allObjects addObjectsFromArray:removedArray];
     
-    for (NSManagedObject *updatedObject in updatedArray){
-        if (updatedObject == [self dataObj]) {
+    // if any object was updated, removed or inserted on this page then this page needs to be updated
+    for (NSManagedObject *object in allObjects){
+        if ((object == [self dataObj]) || ([(EDPage *)[self dataObj] containsObject:object])){
             [self setNeedsDisplay:TRUE];
         }
     }

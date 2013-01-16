@@ -74,4 +74,17 @@
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard{
     return [NSArray arrayWithObject:EDUTIPage];
 }
+
+#pragma mark data structure
+- (BOOL)containsObject:(NSManagedObject *)object{
+    BOOL result = FALSE;
+    
+    // search through graphs
+    for (EDGraph *graph in [self graphs]){
+        if ((graph == object) || ([graph containsObject:object])){
+            return TRUE;
+        }
+    }
+    return result;
+}
 @end

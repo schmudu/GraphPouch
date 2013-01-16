@@ -254,48 +254,6 @@
 }
 
 + (NSMutableArray *)insertImpliedMultiplication:(NSMutableArray *)tokens context:(NSManagedObjectContext *)context{
-    /*
-    EDToken *multiplyToken, *currentToken, *previousToken;
-    int i=0;
-    while (i<[tokens count]){
-        currentToken = [tokens objectAtIndex:i];
-        if(previousToken){
-            // insert token between identifier and identifier
-            if(([previousToken typeRaw] == EDTokenTypeIdentifier) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
-                NSLog(@"inserting token.");
-                multiplyToken = [EDToken multiplierToken:context];
-                [tokens insertObject:multiplyToken atIndex:i];
-            }
-            
-            // insert token between number and identifier
-            if(([previousToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
-                multiplyToken = [EDToken multiplierToken:context];
-                [tokens insertObject:multiplyToken atIndex:i];
-            }
-            
-            // insert token between number and function
-            if(([previousToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeFunction)){
-                multiplyToken = [EDToken multiplierToken:context];
-                [tokens insertObject:multiplyToken atIndex:i];
-            }
-            
-            // insert token between right paren and function
-            if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeFunction)){
-                multiplyToken = [EDToken multiplierToken:context];
-                [tokens insertObject:multiplyToken atIndex:i];
-            }
-            
-            // insert token between right paren and left paren
-            if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeParenthesis) && ([[currentToken tokenValue] isEqualToString:@"("])){
-                multiplyToken = [EDToken multiplierToken:context];
-                [tokens insertObject:multiplyToken atIndex:i];
-            }
-        }
-        previousToken = currentToken;
-        i++;
-    }
-    return tokens;
-     */
     BOOL addedToken = FALSE;
     EDToken *multiplyToken, *currentToken, *previousToken;
     int i=0;
@@ -304,7 +262,6 @@
         if(previousToken){
             // insert token between identifier and identifier
             if(([previousToken typeRaw] == EDTokenTypeIdentifier) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
-                NSLog(@"inserting token.");
                 multiplyToken = [EDToken multiplierToken:context];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;

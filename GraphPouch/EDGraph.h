@@ -33,6 +33,7 @@
 
 - (EDGraph *)initWithContext:(NSManagedObjectContext *)context;
 - (EDGraph *)copy:(NSManagedObjectContext *)context;
+- (BOOL)containsObject:(NSManagedObject *)object;
 
 // points
 - (void)addPointsObject:(EDPoint *)value;
