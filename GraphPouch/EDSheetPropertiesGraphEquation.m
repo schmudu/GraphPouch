@@ -19,7 +19,7 @@
     return [super performKeyEquivalent:theEvent];
 }
 
-- (void)keyDown:(NSEvent *)theEvent{
-    NSLog(@"key down: sheet");
+- (void)cancelOperation:(id)sender{
+    [NSApp endSheet:self];
 }
 @end
