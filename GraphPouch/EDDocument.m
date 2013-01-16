@@ -131,6 +131,10 @@
     // post init property panel
     [propertyController postInitialize:_context];
     
+    // disable undo for the initiation process
+    [_context processPendingChanges];
+    [[_context undoManager] removeAllActions];
+    
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMainWindowClosed:) name:EDEventWindowWillClose object:[self windowForSheet]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onShortcutSavePressed:) name:EDEventShortcutSave object:mainWindow];
