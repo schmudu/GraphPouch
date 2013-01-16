@@ -179,7 +179,14 @@
 }
 
 - (void)onContextChanged:(NSNotification *)note{
-    // code of context changed
+    // update if needed
+    NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
+    
+    for (NSManagedObject *updatedObject in updatedArray){
+        if (updatedObject == [self dataObj]) {
+            [self setNeedsDisplay:TRUE];
+        }
+    }
 }
 
 #pragma mark current

@@ -63,6 +63,8 @@ extern NSString *const EDEventShortcutPaste;
 extern NSString *const EDEventShortcutSave;
 extern NSString *const EDEventShortcutGraph;
 extern NSString *const EDEventShortcutPage;
+extern NSString *const EDEventShortcutSelectAll;
+extern NSString *const EDEventShortcutDeselectAll;
 
 // guides
 extern NSString *const EDKeyGuideVertical;
@@ -197,6 +199,8 @@ extern int const        EDKeycodePaste;
 extern int const        EDKeycodeSave;
 extern int const        EDKeycodeGraph;
 extern int const        EDKeycodePage;
+extern int const        EDKeycodeAll;
+extern int const        EDKeycodeDeselect;
 extern int const        EDKeyModifierNone;
 
 // transform

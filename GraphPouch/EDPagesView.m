@@ -104,6 +104,19 @@
 }
 #pragma mark keyboard
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent{
+    // skip these shortcuts if this is not the key window and this is view is not the first responder
+    if ((![[self window] isKeyWindow]) || ([[self window] firstResponder] != self)){
+        return [super performKeyEquivalent:theEvent];
+    }
+    
+    if ([theEvent keyCode] == EDKeycodeDeselect) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutDeselectAll object:self];
+        return YES;
+    }
+    if ([theEvent keyCode] == EDKeycodeAll) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutSelectAll object:self];
+        return YES;
+    }
     if ([theEvent keyCode] == EDKeycodeCopy) {
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
         return YES;

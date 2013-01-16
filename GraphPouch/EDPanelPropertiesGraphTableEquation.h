@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface EDPanelPropertiesGraphTableEquation : NSObject <NSTableViewDataSource, NSTableViewDelegate>{
+//@interface EDPanelPropertiesGraphTableEquation : NSObject <NSTableViewDataSource, NSTableViewDelegate>{
+@interface EDPanelPropertiesGraphTableEquation : NSTableView <NSTableViewDataSource, NSTableViewDelegate>{
     NSManagedObjectContext *_context;
     NSTableView *equationTable;
     NSButton *buttonEquationRemove;

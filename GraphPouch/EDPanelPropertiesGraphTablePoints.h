@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface EDPanelPropertiesGraphTablePoints : NSObject <NSTableViewDataSource, NSTableViewDelegate>{
+@interface EDPanelPropertiesGraphTablePoints : NSTableView <NSTableViewDataSource, NSTableViewDelegate>{
     NSManagedObjectContext *_context;
     NSTableView *pointsTable;
     NSButton *buttonPointRemove;

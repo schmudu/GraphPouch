@@ -94,7 +94,7 @@
 
 #pragma mark keyboard
 - (void)keyDown:(NSEvent *)theEvent{
-    NSLog(@"key down.");
+    NSLog(@"panel controller: key down.");
 }
 
 #pragma mark labels

@@ -18,6 +18,42 @@
 @implementation EDCoreDataUtility (Pages)
 
 #pragma mark pages
++ (void)selectAllPages:(NSManagedObjectContext *)context{
+
+    // Define our table/entity to use   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
+    
+    // Setup the fetch request   
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];   
+    [request setEntity:entity];   
+    
+    // Fetch the records and handle an error
+    NSError *error;   
+    NSArray *pages = [context executeFetchRequest:request error:&error];
+    
+    for (EDPage *page in pages){
+        [page setSelected:TRUE];
+    }
+}
+
++ (void)deselectAllPages:(NSManagedObjectContext *)context{
+
+    // Define our table/entity to use   
+    NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
+    
+    // Setup the fetch request   
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];   
+    [request setEntity:entity];   
+    
+    // Fetch the records and handle an error
+    NSError *error;   
+    NSArray *pages = [context executeFetchRequest:request error:&error];
+    
+    for (EDPage *page in pages){
+        [page setSelected:FALSE];
+    }
+}
+
 + (NSArray *)getAllPages:(NSManagedObjectContext *)context{
     // Define our table/entity to use   
     NSEntityDescription *entity = [NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context];   
