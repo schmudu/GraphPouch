@@ -116,7 +116,6 @@
     
     // Start the drag
     [self dragImage:anImage at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:_pb source:self slideBack:YES];
-    
 }
 
 - (void)mouseDown:(NSEvent *)theEvent{
