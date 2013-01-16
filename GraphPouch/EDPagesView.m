@@ -223,7 +223,7 @@
 }*/
 
 - (BOOL)readFromPasteboard:(NSPasteboard *)pb{
-    NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];
+    NSArray *classes = [NSArray arrayWithObject:[EDPage class]];
     
     // get first and last selected objects
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
