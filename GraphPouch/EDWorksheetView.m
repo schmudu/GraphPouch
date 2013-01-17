@@ -83,6 +83,7 @@
 }
 
 - (void)postInitialize:(NSManagedObjectContext *)context{
+    //NSLog(@"worksheet frame: x:%f y:%f width:%f height:%f superview:%@", [self frame].origin.x, [self frame].origin.y, [self frame].size.width, [self frame].size.height, [(NSClipView *)[self superview] documentView]);
     _context = context;
     
     // find current page
@@ -174,11 +175,14 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     }
     
     
+    // draw shadow if needed to show selected
+    /*
     if ([[self window] firstResponder] == self) {
         [[NSColor colorWithHexColorString:EDSelectedViewColor] setStroke];
         [NSBezierPath setDefaultLineWidth:EDSelectedViewStrokeWidth];
-        [NSBezierPath strokeRect:[self frame]];
-    }
+        //[NSBezierPath strokeRect:[self frame]];
+        [NSBezierPath strokeRect:NSMakeRect([self frame].origin.x, [self frame].origin.y+EDMenuToolbarHeight, [self frame].size.width, [self frame].size.height)];
+    }*/
 }
 
 - (void)drawGuide:(NSPoint)startPoint endPoint:(NSPoint)endPoint{

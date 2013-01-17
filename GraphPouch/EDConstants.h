@@ -36,6 +36,9 @@ extern float const EDNumberMax;
 extern NSString *const EDPreferenceSnapToGuides;
 extern NSString *const EDPreferencePropertyPanel;
 
+// layout
+extern float const EDMenuToolbarHeight;
+
 // entity name
 extern NSString *const EDEntityNameGraph;
 extern NSString *const EDEntityNamePage;

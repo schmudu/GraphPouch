@@ -91,7 +91,7 @@
     
     NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(SELF == %@)", page];
     //NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(pageNumber == %d)", [[page pageNumber] intValue]];
-    NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];;
+    NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];
     return [filteredResults objectAtIndex:0];
 }
 

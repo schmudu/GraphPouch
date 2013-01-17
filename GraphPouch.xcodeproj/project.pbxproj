@@ -85,6 +85,9 @@
 		CDF62E5716A2FB1600DCDD2D /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = CDF62E5616A2FB1600DCDD2D /* icon.iconset */; };
 		CDF62E5D16A4779B00DCDD2D /* EDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E5C16A4779A00DCDD2D /* EDToken.m */; };
 		CDF62E6916A49D0B00DCDD2D /* EDPointView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E6816A49D0B00DCDD2D /* EDPointView.m */; };
+		CDF62E9916A762BD00DCDD2D /* EDCoreDataUtility+Graphs.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E9816A762BC00DCDD2D /* EDCoreDataUtility+Graphs.m */; };
+		CDF62E9C16A8ACBD00DCDD2D /* EDWorksheetScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E9B16A8ACBD00DCDD2D /* EDWorksheetScrollView.m */; };
+		CDF62E9F16A8B59A00DCDD2D /* EDWorksheetClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E9E16A8B59900DCDD2D /* EDWorksheetClipView.m */; };
 		CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */; };
 /* End PBXBuildFile section */
 
@@ -236,6 +239,12 @@
 		CDF62E5C16A4779A00DCDD2D /* EDToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDToken.m; sourceTree = "<group>"; };
 		CDF62E6716A49D0B00DCDD2D /* EDPointView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPointView.h; sourceTree = "<group>"; };
 		CDF62E6816A49D0B00DCDD2D /* EDPointView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPointView.m; sourceTree = "<group>"; };
+		CDF62E9716A762BC00DCDD2D /* EDCoreDataUtility+Graphs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Graphs.h"; sourceTree = "<group>"; };
+		CDF62E9816A762BC00DCDD2D /* EDCoreDataUtility+Graphs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EDCoreDataUtility+Graphs.m"; sourceTree = "<group>"; };
+		CDF62E9A16A8ACBC00DCDD2D /* EDWorksheetScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDWorksheetScrollView.h; sourceTree = "<group>"; };
+		CDF62E9B16A8ACBD00DCDD2D /* EDWorksheetScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDWorksheetScrollView.m; sourceTree = "<group>"; };
+		CDF62E9D16A8B59700DCDD2D /* EDWorksheetClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDWorksheetClipView.h; sourceTree = "<group>"; };
+		CDF62E9E16A8B59900DCDD2D /* EDWorksheetClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDWorksheetClipView.m; sourceTree = "<group>"; };
 		CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+EasyFetching.h"; sourceTree = "<group>"; };
 		CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+EasyFetching.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -445,6 +454,10 @@
 			children = (
 				CD41B54B15BB024C00640E73 /* EDWorksheetView.h */,
 				CD41B54C15BB024C00640E73 /* EDWorksheetView.m */,
+				CDF62E9A16A8ACBC00DCDD2D /* EDWorksheetScrollView.h */,
+				CDF62E9B16A8ACBD00DCDD2D /* EDWorksheetScrollView.m */,
+				CDF62E9D16A8B59700DCDD2D /* EDWorksheetClipView.h */,
+				CDF62E9E16A8B59900DCDD2D /* EDWorksheetClipView.m */,
 				CD41B54E15BB046B00640E73 /* EDWorksheetViewController.h */,
 				CD41B54F15BB046B00640E73 /* EDWorksheetViewController.m */,
 				CD3F0B0115C4784A00AB7567 /* Line */,
@@ -592,6 +605,8 @@
 			children = (
 				CD1422C515C7590700F55819 /* EDCoreDataUtility.h */,
 				CD1422C615C7590700F55819 /* EDCoreDataUtility.m */,
+				CDF62E9716A762BC00DCDD2D /* EDCoreDataUtility+Graphs.h */,
+				CDF62E9816A762BC00DCDD2D /* EDCoreDataUtility+Graphs.m */,
 				CD26366A167EB1F500424487 /* EDCoreDataUtility+Equations.h */,
 				CD26366B167EB1F500424487 /* EDCoreDataUtility+Equations.m */,
 				CD2DD576163ED449006557FC /* EDCoreDataUtility+Pages.h */,
@@ -883,6 +898,9 @@
 				CDF62E4F16A2810700DCDD2D /* EDFormatterEquation.m in Sources */,
 				CDF62E5D16A4779B00DCDD2D /* EDToken.m in Sources */,
 				CDF62E6916A49D0B00DCDD2D /* EDPointView.m in Sources */,
+				CDF62E9916A762BD00DCDD2D /* EDCoreDataUtility+Graphs.m in Sources */,
+				CDF62E9C16A8ACBD00DCDD2D /* EDWorksheetScrollView.m in Sources */,
+				CDF62E9F16A8B59A00DCDD2D /* EDWorksheetClipView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

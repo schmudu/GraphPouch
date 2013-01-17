@@ -124,7 +124,6 @@
 
 #pragma mark table delegate
 - (void)tableViewSelectionDidChange:(NSNotification *)notification{
-    NSLog(@"table points:%@", pointsTable);
     // if nothing selected
     if ([pointsTable numberOfSelectedRows] == 0) {
         [buttonPointRemove setEnabled:FALSE];

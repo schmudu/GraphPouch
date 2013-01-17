@@ -14,10 +14,12 @@
 @class EDWorksheetView;
 @class EDWorksheetViewController;
 @class EDPagesViewController;
+@class EDWorksheetScrollView;
 
 @interface EDDocument : NSPersistentDocument <NSWindowDelegate>{
     IBOutlet NSArrayController *elementsController;
     IBOutlet EDWorksheetViewController *worksheetController;
+    IBOutlet EDWorksheetScrollView *worksheetScrollView;
     IBOutlet EDPagesViewController *pagesController;
     IBOutlet NSView *worksheetView;
     IBOutlet EDWindow *mainWindow;

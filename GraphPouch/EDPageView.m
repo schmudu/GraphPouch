@@ -11,10 +11,12 @@
 #import "EDCoreDataUtility.h"
 #import "EDCoreDataUtility+Pages.h"
 #import "NSColor+Utilities.h"
+#import "EDCoreDataUtility+Graphs.h"
 
 @interface EDPageView()
 - (void)onContextChanged:(NSNotification *)note;
 - (void)setPageAsCurrent;
+- (void)drawGraphs;
 @end
 
 @implementation EDPageView
@@ -41,6 +43,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 
+#pragma mark drawing
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSRect bounds = NSMakeRect(40, (EDPageViewSelectionHeight - EDPageImageViewHeight)/2, EDPageImageViewWidth, EDPageImageViewHeight);
@@ -61,6 +64,14 @@
     // page drop shadow
     [[NSColor colorWithHexColorString:@"000000" alpha:0.4] setStroke];
     [NSBezierPath strokeRect:bounds];
+    
+    // draw tables
+    [self drawGraphs];
+}
+
+- (void)drawGraphs{
+    NSArray *graphs = [EDCoreDataUtility getGraphsForPage:[self dataObj] context:_context];
+    //NSLog(@"graph count:%ld", [graphs count]);
 }
 
 #pragma mark data
@@ -154,6 +165,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewMouseDown object:self userInfo:userInfo];
     
     //redraw page
+    NSLog(@"mouse down");
     [self setNeedsDisplay:TRUE];
 }
 
@@ -167,6 +179,7 @@
     [_dataObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDPageAttributeSelected];
     
     // redisplay
+    NSLog(@"redisplay.");
     [self setNeedsDisplay:TRUE];
 }
 
@@ -189,6 +202,7 @@
     // if any object was updated, removed or inserted on this page then this page needs to be updated
     for (NSManagedObject *object in allObjects){
         if ((object == [self dataObj]) || ([(EDPage *)[self dataObj] containsObject:object])){
+            NSLog(@"context changed: page no:%d", [[(EDPage *)[self dataObj] pageNumber] intValue]);
             [self setNeedsDisplay:TRUE];
         }
     }

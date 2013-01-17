@@ -8,6 +8,7 @@
 
 #import "EDDocument.h"
 #import "EDWorksheetViewController.h"
+#import "EDWorksheetScrollView.h"
 #import "EDPagesViewController.h"
 #import "EDGraph.h"
 #import "EDToken.h"
@@ -124,6 +125,7 @@
 {
     [super windowControllerDidLoadNib:aController];
     [(EDWorksheetView *)worksheetView postInitialize:_context];
+    [worksheetScrollView postInitialize];
     [worksheetController setView:worksheetView];
     [worksheetController postInitialize:_context];
     [pagesController postInitialize:_context];

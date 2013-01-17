@@ -36,6 +36,9 @@ float const EDNumberMax                                         = 9999999;
 NSString * const EDPreferenceSnapToGuides                       = @"EDPreferenceSnapToGuides";
 NSString * const EDPreferencePropertyPanel                      = @"EDPreferencePropertyPanel";
 
+//layout
+float const EDMenuToolbarHeight                                 = 89;
+
 // entity names
 NSString * const EDEntityNameGraph                              = @"EDGraph";
 NSString * const EDEntityNamePage                               = @"EDPage";
@@ -175,7 +178,7 @@ float const EDPageViewSelectionHeight                           = 90;
 float const EDPageViewOffsetY                                   = 30;
 float const EDPageViewIncrementPosY                             = 120;
 float const EDPageViewPosX                                      = 0;
-float const EDPageImageViewWidth                                = 60;
+float const EDPageImageViewWidth                                = 61.81;
 float const EDPageImageViewHeight                               = 80;
 float const EDPageViewDragPosX                                  = 30;
 float const EDPageViewDragOffsetY                               = -5;
