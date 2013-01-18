@@ -201,7 +201,7 @@
 													<string key="NSClassName">EDWorksheetView</string>
 												</object>
 											</array>
-											<string key="NSFrame">{{1, 1}, {598, 798}}</string>
+											<string key="NSFrame">{{1, 1}, {598, 764}}</string>
 											<reference key="NSSuperview" ref="296356420"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="147202369"/>
@@ -221,21 +221,22 @@
 										<object class="NSScroller" id="227518578">
 											<reference key="NSNextResponder" ref="296356420"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrame">{{583, 1}, {16, 798}}</string>
+											<string key="NSFrame">{{583, 1}, {16, 764}}</string>
 											<reference key="NSSuperview" ref="296356420"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:26</string>
+											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<reference key="NSTarget" ref="296356420"/>
 											<string key="NSAction">_doScroller:</string>
 											<double key="NSCurValue">1</double>
-											<double key="NSPercent">0.98453608247422686</double>
+											<double key="NSPercent">0.99738903394255873</double>
 										</object>
 										<object class="NSScroller" id="976226198">
 											<reference key="NSNextResponder" ref="296356420"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrame">{{1, 783}, {598, 16}}</string>
+											<string key="NSFrame">{{1, 749}, {598, 16}}</string>
 											<reference key="NSSuperview" ref="296356420"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="227518578"/>
@@ -248,12 +249,12 @@
 											<double key="NSPercent">0.9966666666666667</double>
 										</object>
 									</array>
-									<string key="NSFrame">{{0, 26}, {600, 800}}</string>
+									<string key="NSFrame">{{0, 34}, {600, 766}}</string>
 									<reference key="NSSuperview" ref="263211016"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="358702124"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
-									<int key="NSsFlags">133298</int>
+									<int key="NSsFlags">133362</int>
 									<reference key="NSVScroller" ref="227518578"/>
 									<reference key="NSHScroller" ref="976226198"/>
 									<reference key="NSContentView" ref="358702124"/>
