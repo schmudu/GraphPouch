@@ -71,7 +71,7 @@
             }*/
             [view setFrameOrigin:NSMakePoint(newOriginX, newOriginY)];
             //NSLog(@"self y:%f x:%f y%f scroll width:%f self width:%f", [self frame].origin.y, [view frame].origin.x, [self frame].origin.y, [view frame].size.width, [self frame].size.width);
-            NSLog(@"self y:%f self height:%f scroll y:%f scroll height:%f window height:%f", [self frame].origin.y, [self frame].size.height, [view frame].origin.y, [view frame].size.height, [[self window] frame].size.height);
+            NSLog(@"self y:%f self height:%f scroll y:%f scroll height:%f window height:%f", [self frame].origin.y, [self frame].size.height, [view frame].origin.y, [view frame].size.height, [[self window] frame].size.width);
         }
     }
 }

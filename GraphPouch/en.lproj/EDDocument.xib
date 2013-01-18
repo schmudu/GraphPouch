@@ -39,13 +39,13 @@
 			<object class="NSWindowTemplate" id="275939982">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{133, 235}, {737, 915}}</string>
+				<string key="NSWindowRect">{{133, 235}, {765, 915}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">Window</string>
 				<string key="NSWindowClass">EDWindow</string>
 				<string key="NSViewClass">View</string>
 				<nil key="NSUserInterfaceItemIdentifier"/>
-				<string key="NSWindowContentMinSize">{740, 915}</string>
+				<string key="NSWindowContentMinSize">{765, 915}</string>
 				<object class="NSView" key="NSWindowView" id="568628114">
 					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">261</int>
@@ -224,6 +224,7 @@
 											<string key="NSFrame">{{583, 1}, {16, 798}}</string>
 											<reference key="NSSuperview" ref="296356420"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:26</string>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<reference key="NSTarget" ref="296356420"/>
@@ -261,7 +262,7 @@
 									<double key="NSMagnification">1</double>
 								</object>
 							</array>
-							<string key="NSFrame">{{140, 0}, {600, 826}}</string>
+							<string key="NSFrame">{{140, 0}, {628, 826}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="296356420"/>
@@ -269,13 +270,13 @@
 							<string key="NSClassName">EDMainContentView</string>
 						</object>
 					</array>
-					<string key="NSFrameSize">{737, 915}</string>
+					<string key="NSFrameSize">{765, 915}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="835139896"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
-				<string key="NSMinSize">{740, 937}</string>
+				<string key="NSMinSize">{765, 937}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
