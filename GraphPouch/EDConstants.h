@@ -46,6 +46,10 @@ extern NSString *const EDEntityNamePoint;
 extern NSString *const EDEntityNameEquation;
 extern NSString *const EDEntityNameToken;
 
+// worksheet
+extern float const EDWorksheetViewHeight;
+extern float const EDWorksheetViewWidth;
+
 // worksheet events
 extern NSString *const EDEventWorksheetClicked;
 extern NSString *const EDEventMouseDown;
@@ -192,6 +196,7 @@ extern NSString *const EDPageAttributeGraphs;
 extern NSString *const EDGraphAttributePage;
 extern NSString *const EDEventPageClickedWithoutModifier;
 extern NSString *const EDEventPageViewMouseDown;
+extern float const EDPagesViewWidth;
 
 // keyboard mapping
 extern int const        EDKeycodeQuit;

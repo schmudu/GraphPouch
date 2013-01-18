@@ -7,6 +7,8 @@
 //
 
 #import "EDWorksheetClipView.h"
+#import "EDConstants.h"
+#import "NSColor+Utilities.h"
 
 @implementation EDWorksheetClipView
 
@@ -22,25 +24,16 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    [super drawRect:dirtyRect];
     // Drawing code here.
-        [[NSColor grayColor] setFill];
-        [NSBezierPath fillRect:[self bounds]];
-    /*
+    [[NSColor grayColor] setFill];
+    [NSBezierPath fillRect:[self bounds]];
+    
     if ([[self window] firstResponder] == [self documentView]) {
-        [[NSColor redColor] setFill];
-        [NSBezierPath fillRect:[self bounds]];
-        NSLog(@"draw rect clip view");
-        NSRect frame = NSMakeRect(10, 10, 50, 50);
-        //[[NSColor colorWithHexColorString:EDSelectedViewColor] setStroke];
-        //[NSBezierPath setDefaultLineWidth:EDSelectedViewStrokeWidth];
-        //[NSBezierPath strokeRect:[self frame]];
-        [[NSColor redColor] setFill];
-        [NSBezierPath fillRect:frame];
+        [[NSColor colorWithHexColorString:EDSelectedViewColor] setStroke];
+        [NSBezierPath setDefaultLineWidth:EDSelectedViewStrokeWidth];
+        [NSBezierPath strokeRect:[self bounds]];
     }
-    else{
-        [[NSColor blueColor] setFill];
-        [NSBezierPath fillRect:[self bounds]];
-    }*/
 }
 
 @end

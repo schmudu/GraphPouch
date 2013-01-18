@@ -191,6 +191,9 @@
 
 - (void)windowDidResize:(NSNotification *)notification{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWindowDidResize object:self];
+    
+    // notify scroll view that window resized
+    [worksheetScrollView windowDidResize];
 }
 
 #pragma mark keyboard

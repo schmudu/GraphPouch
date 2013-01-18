@@ -46,6 +46,10 @@ NSString * const EDEntityNamePoint                              = @"EDPoint";
 NSString * const EDEntityNameEquation                           = @"EDEquation";
 NSString * const EDEntityNameToken                              = @"EDToken";
 
+// worksheet
+float const EDWorksheetViewWidth                                = 600;
+float const EDWorksheetViewHeight                               = 766;
+
 // worksheet events
 NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";
 NSString * const EDEventMouseDown                               = @"EDEventMouseDown";
@@ -184,6 +188,7 @@ float const EDPageViewDragPosX                                  = 30;
 float const EDPageViewDragOffsetY                               = -5;
 float const EDPageViewDragWidth                                 = 80;
 float const EDPageViewDragLength                                = 10;
+float const EDPagesViewWidth                                    = 140;
 
 // page view
 NSString * const EDPageAttributePageNumber                      = @"pageNumber";
