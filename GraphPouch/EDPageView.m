@@ -165,7 +165,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewMouseDown object:self userInfo:userInfo];
     
     //redraw page
-    NSLog(@"mouse down");
     [self setNeedsDisplay:TRUE];
 }
 
@@ -179,7 +178,6 @@
     [_dataObj setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDPageAttributeSelected];
     
     // redisplay
-    NSLog(@"redisplay.");
     [self setNeedsDisplay:TRUE];
 }
 
@@ -202,7 +200,6 @@
     // if any object was updated, removed or inserted on this page then this page needs to be updated
     for (NSManagedObject *object in allObjects){
         if ((object == [self dataObj]) || ([(EDPage *)[self dataObj] containsObject:object])){
-            NSLog(@"context changed: page no:%d", [[(EDPage *)[self dataObj] pageNumber] intValue]);
             [self setNeedsDisplay:TRUE];
         }
     }

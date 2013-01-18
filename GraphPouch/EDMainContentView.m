@@ -10,6 +10,13 @@
 #import "EDWorksheetScrollView.h"
 #import "EDConstants.h"
 #import "NSColor+Utilities.h"
+#import "EDWorksheetView.h"
+
+@interface EDMainContentView()
+- (void)onWorksheetSelected:(NSNotification *)note;
+- (void)onWorksheetResignedFirstResponder:(NSNotification *)note;
+- (void)onWorksheetBecameFirstResponder:(NSNotification *)note;
+@end
 
 @implementation EDMainContentView
 
@@ -17,10 +24,21 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
     }
     
     return self;
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventWorksheetClicked object:_worksheetView];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventWorksheetViewResignFirstResponder object:_worksheetView];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventBecomeFirstResponder object:_worksheetView];
+}
+
+- (void)awakeFromNib{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWorksheetSelected:) name:EDEventWorksheetClicked object:_worksheetView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWorksheetResignedFirstResponder:) name:EDEventWorksheetViewResignFirstResponder object:_worksheetView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWorksheetBecameFirstResponder:) name:EDEventBecomeFirstResponder object:_worksheetView];
 }
 
 - (BOOL)isFlipped{
@@ -33,12 +51,17 @@
     [[NSColor grayColor] setFill];
     [NSBezierPath fillRect:[self bounds]];
     
-    /*
-     if ([[self window] firstResponder] == [self documentView]) {
+    
+    if ([[self window] firstResponder] == _worksheetView) {
         [[NSColor colorWithHexColorString:EDSelectedViewColor] setStroke];
         [NSBezierPath setDefaultLineWidth:EDSelectedViewStrokeWidth];
         [NSBezierPath strokeRect:[self bounds]];
-    }*/
+    }
+}
+
+- (void)mouseDown:(NSEvent *)theEvent{
+    // mouse click on content view is synonymous with click on worksheet
+    [_worksheetView mouseDown:theEvent];
 }
 
 -(void)windowDidResize{
@@ -48,31 +71,25 @@
             float worksheetWidth = [view frame].size.width;
             float worksheetHeight = [view frame].size.height;
             
-            /*
-            if (EDWorksheetViewHeight > [self frame].size.height)
-                worksheetHeight = EDWorksheetViewWidth;
-            else
-                worksheetHeight = [self frame].size.height;
-            
-            if (EDWorksheetViewWidth > [self frame].size.width)
-                worksheetWidth = EDWorksheetViewWidth;
-            else
-                worksheetWidth = [self frame].size.width;
-            */
-            //float newOriginX = ([view frame].size.width - [self frame].size.width)/2;
-            //float newOriginY = ([view frame].size.height - [self frame].size.height)/2;
             float newOriginX = ([self frame].size.width - worksheetWidth)/2;
             float newOriginY = ([self frame].size.height - worksheetHeight)/2;
             
-            // constraints
-            /*
-            if (newOriginY < 10){
-                newOriginY = 10;
-            }*/
             [view setFrameOrigin:NSMakePoint(newOriginX, newOriginY)];
-            //NSLog(@"self y:%f x:%f y%f scroll width:%f self width:%f", [self frame].origin.y, [view frame].origin.x, [self frame].origin.y, [view frame].size.width, [self frame].size.width);
-            NSLog(@"self y:%f self height:%f scroll y:%f scroll height:%f window height:%f", [self frame].origin.y, [self frame].size.height, [view frame].origin.y, [view frame].size.height, [[self window] frame].size.width);
         }
     }
 }
+
+#pragma mark events
+- (void)onWorksheetSelected:(NSNotification *)note{
+    [self setNeedsDisplay:TRUE];
+}
+
+- (void)onWorksheetResignedFirstResponder:(NSNotification *)note{
+    [self setNeedsDisplay:TRUE];
+}
+
+- (void)onWorksheetBecameFirstResponder:(NSNotification *)note{
+    [self setNeedsDisplay:TRUE];
+}
+
 @end

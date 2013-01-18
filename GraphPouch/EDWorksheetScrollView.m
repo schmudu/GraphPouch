@@ -51,11 +51,4 @@
 {
     // drawing code
 }
-
-- (void)windowDidResize{
-    //NSLog(@"window did resize: doc width:%f scroll frame width:%f origin x:%f self origin x:%f", [[self documentView] frame].size.width, [self frame].size.width, [[self contentView] frame].origin.x, [self frame].origin.x);
-    //NSLog(@"window did resize: doc width:%f doc x:%f", [[self documentView] frame].size.width, [[self documentView] frame].origin.x);
-    // center the content view
-    //[[self documentView] setFrameOrigin:NSMakePoint(([[self documentView] frame].size.width - [[self contentView] frame].size.width)/2, ([[self documentView] frame].size.height - [[self contentView] frame].size.height)/2)];
-}
 @end

@@ -132,6 +132,10 @@
     return NO;
 }
 - (void)keyDown:(NSEvent *)theEvent{
+    NSUInteger flags = [theEvent modifierFlags];
+    if(flags == EDKeyModifierNone && [theEvent keyCode] == EDKeycodeTab){
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTabPressedWithoutModifiers object:self];
+    }
     if ([theEvent keyCode] == EDKeycodeDelete) {
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
     }

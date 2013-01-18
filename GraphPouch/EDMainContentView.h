@@ -7,8 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDWorksheetView.h"
 
-@interface EDMainContentView : NSView
+@interface EDMainContentView : NSView{
+    IBOutlet EDWorksheetView *_worksheetView;
+}
 
 -(void)windowDidResize;
 @end

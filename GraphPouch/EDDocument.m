@@ -25,6 +25,8 @@
 @interface EDDocument()
 - (void)onMainWindowClosed:(NSNotification *)note;
 - (void)onShortcutSavePressed:(NSNotification *)note;
+- (void)onPagesViewTabKeyPressed:(NSNotification *)note;
+- (void)onWorksheetTabKeyPressed:(NSNotification *)note;
 - (void)onRootContextWillSave:(NSNotification *)note;
 - (void)correctTokenAttributes;
 - (void)onContextSaved:(NSNotification *)note;
@@ -112,6 +114,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:_context];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextWillSaveNotification object:_rootContext];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTabPressedWithoutModifiers object:worksheetView];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTabPressedWithoutModifiers object:pagesView];
 }
 
 - (NSString *)windowNibName
@@ -140,6 +144,8 @@
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMainWindowClosed:) name:EDEventWindowWillClose object:[self windowForSheet]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onShortcutSavePressed:) name:EDEventShortcutSave object:mainWindow];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWorksheetTabKeyPressed:) name:EDEventTabPressedWithoutModifiers object:worksheetView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPagesViewTabKeyPressed:) name:EDEventTabPressedWithoutModifiers object:pagesView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onShortcutSavePressed:) name:EDEventShortcutSave object:propertyController];
 }
 
@@ -193,11 +199,18 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWindowDidResize object:self];
     
     // notify scroll view that window resized
-    //[worksheetScrollView windowDidResize];
     [mainWorksheetView windowDidResize];
 }
 
 #pragma mark keyboard
+- (void)onWorksheetTabKeyPressed:(NSNotification *)note{
+    [mainWindow makeFirstResponder:pagesView];
+}
+
+- (void)onPagesViewTabKeyPressed:(NSNotification *)note{
+    [mainWindow makeFirstResponder:worksheetView];
+}
+
 - (void)onShortcutSavePressed:(NSNotification *)note{
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onChildContextSaved:) name:NSManagedObjectContextWillSaveNotification object:_rootContext];
     [EDCoreDataUtility save:_context];

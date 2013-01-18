@@ -57,8 +57,11 @@ NSString * const EDEventMouseDragged                            = @"EDEventMouse
 NSString * const EDEventMouseUp                                 = @"EDEventMouseUp";
 NSString * const EDEventUnselectedGraphClickedWithoutModifier   = @"EDEventUnselectedGraphClickedWithoutModifier";
 NSString * const EDEventDeleteKeyPressedWithoutModifiers        = @"EDEventDeleteKeyPressedWithoutModifiers";
+NSString * const EDEventTabPressedWithoutModifiers              = @"EDEventTabPressedWithoutModifiers";
+NSString * const EDEventBecomeFirstResponder                    = @"EDEventBecomeFirstResponder";
 NSString * const EDEventWorksheetElementSelected                = @"EDEventWorksheetElementSelected";
 NSString * const EDEventWorksheetElementDeselected              = @"EDEventWorksheetElementDeselected";
+NSString * const EDEventWorksheetViewResignFirstResponder       = @"EDEventWorksheetViewResignFirstResponder";
 NSString * const EDEventKey                                     = @"EDEvent";
 
 // menu
@@ -202,6 +205,7 @@ NSString * const EDEventPageViewMouseDown                       = @"EDEventPageV
 // keyboard
 
 int const EDKeycodeSave                                         = 1;
+int const EDKeycodeTab                                          = 48;
 int const EDKeycodeQuit                                         = 12;
 int const EDKeycodeDelete                                       = 51;
 int const EDKeycodeCopy                                         = 8;

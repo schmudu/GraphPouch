@@ -14,6 +14,5 @@
 }
 
 - (void)postInitialize;
-- (void)windowDidResize;
 
 @end

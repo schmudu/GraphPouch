@@ -224,19 +224,22 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 #pragma mark first responder
 - (BOOL)becomeFirstResponder{
-    [self setNeedsDisplay:TRUE];
+    [_nc postNotificationName:EDEventBecomeFirstResponder object:self];
     return YES;
 }
 
 - (BOOL)resignFirstResponder{
-    [self setNeedsDisplay:TRUE];
+    [_nc postNotificationName:EDEventWorksheetViewResignFirstResponder object:self];
     return YES;
 }
 
 #pragma mark keyboard
 - (void)keyDown:(NSEvent *)theEvent{
     NSUInteger flags = [theEvent modifierFlags];
-    if(flags == EDKeyModifierNone && [theEvent keyCode] == EDKeycodeDelete){
+    if(flags == EDKeyModifierNone && [theEvent keyCode] == EDKeycodeTab){
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTabPressedWithoutModifiers object:self];
+    }
+    else if(flags == EDKeyModifierNone && [theEvent keyCode] == EDKeycodeDelete){
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventDeleteKeyPressedWithoutModifiers object:self];
     }
 }

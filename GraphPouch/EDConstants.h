@@ -55,10 +55,13 @@ extern NSString *const EDEventWorksheetClicked;
 extern NSString *const EDEventMouseDown;
 extern NSString *const EDEventMouseDragged;
 extern NSString *const EDEventMouseUp;
+extern NSString *const EDEventTabPressedWithoutModifiers;
 extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
 extern NSString *const EDEventDeleteKeyPressedWithoutModifiers;
+extern NSString *const EDEventBecomeFirstResponder;
 extern NSString *const EDEventWorksheetElementSelected;
 extern NSString *const EDEventWorksheetElementDeselected;
+extern NSString *const EDEventWorksheetViewResignFirstResponder;
 extern NSString *const EDEventKey;
 
 // menu
@@ -200,6 +203,7 @@ extern float const EDPagesViewWidth;
 
 // keyboard mapping
 extern int const        EDKeycodeQuit;
+extern int const        EDKeycodeTab;
 extern int const        EDKeycodeDelete;
 extern int const        EDKeycodeCopy;
 extern int const        EDKeycodeCut;
