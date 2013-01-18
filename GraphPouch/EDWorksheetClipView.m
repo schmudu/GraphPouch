@@ -29,11 +29,6 @@
     [[NSColor grayColor] setFill];
     [NSBezierPath fillRect:[self bounds]];
     
-    if ([[self window] firstResponder] == [self documentView]) {
-        [[NSColor colorWithHexColorString:EDSelectedViewColor] setStroke];
-        [NSBezierPath setDefaultLineWidth:EDSelectedViewStrokeWidth];
-        [NSBezierPath strokeRect:[self bounds]];
-    }
 }
 
 @end

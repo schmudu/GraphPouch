@@ -88,6 +88,7 @@
 		CDF62E9916A762BD00DCDD2D /* EDCoreDataUtility+Graphs.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E9816A762BC00DCDD2D /* EDCoreDataUtility+Graphs.m */; };
 		CDF62E9C16A8ACBD00DCDD2D /* EDWorksheetScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E9B16A8ACBD00DCDD2D /* EDWorksheetScrollView.m */; };
 		CDF62E9F16A8B59A00DCDD2D /* EDWorksheetClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E9E16A8B59900DCDD2D /* EDWorksheetClipView.m */; };
+		CDF62EA816A8F3F800DCDD2D /* EDMainContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62EA716A8F3F700DCDD2D /* EDMainContentView.m */; };
 		CDF7D84F15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */; };
 /* End PBXBuildFile section */
 
@@ -245,6 +246,8 @@
 		CDF62E9B16A8ACBD00DCDD2D /* EDWorksheetScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDWorksheetScrollView.m; sourceTree = "<group>"; };
 		CDF62E9D16A8B59700DCDD2D /* EDWorksheetClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDWorksheetClipView.h; sourceTree = "<group>"; };
 		CDF62E9E16A8B59900DCDD2D /* EDWorksheetClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDWorksheetClipView.m; sourceTree = "<group>"; };
+		CDF62EA616A8F3F700DCDD2D /* EDMainContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMainContentView.h; sourceTree = "<group>"; };
+		CDF62EA716A8F3F700DCDD2D /* EDMainContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMainContentView.m; sourceTree = "<group>"; };
 		CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+EasyFetching.h"; sourceTree = "<group>"; };
 		CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+EasyFetching.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -454,6 +457,8 @@
 			children = (
 				CD41B54B15BB024C00640E73 /* EDWorksheetView.h */,
 				CD41B54C15BB024C00640E73 /* EDWorksheetView.m */,
+				CDF62EA616A8F3F700DCDD2D /* EDMainContentView.h */,
+				CDF62EA716A8F3F700DCDD2D /* EDMainContentView.m */,
 				CDF62E9A16A8ACBC00DCDD2D /* EDWorksheetScrollView.h */,
 				CDF62E9B16A8ACBD00DCDD2D /* EDWorksheetScrollView.m */,
 				CDF62E9D16A8B59700DCDD2D /* EDWorksheetClipView.h */,
@@ -901,6 +906,7 @@
 				CDF62E9916A762BD00DCDD2D /* EDCoreDataUtility+Graphs.m in Sources */,
 				CDF62E9C16A8ACBD00DCDD2D /* EDWorksheetScrollView.m in Sources */,
 				CDF62E9F16A8B59A00DCDD2D /* EDWorksheetClipView.m in Sources */,
+				CDF62EA816A8F3F800DCDD2D /* EDMainContentView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

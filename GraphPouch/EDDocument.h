@@ -10,6 +10,7 @@
 #import "EDPanelPropertiesController.h"
 #import "EDMenuController.h"
 #import "EDWindow.h"
+#import "EDMainContentView.h"
 
 @class EDWorksheetView;
 @class EDWorksheetViewController;
@@ -21,7 +22,8 @@
     IBOutlet EDWorksheetViewController *worksheetController;
     IBOutlet EDWorksheetScrollView *worksheetScrollView;
     IBOutlet EDPagesViewController *pagesController;
-    IBOutlet NSView *worksheetView;
+    IBOutlet EDWorksheetView *worksheetView;
+    IBOutlet EDMainContentView *mainWorksheetView;
     IBOutlet EDWindow *mainWindow;
     EDPanelPropertiesController *propertyController;
     EDMenuController *menuController;
