@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
+#import "EDGraph.h"
+#import "EDGraphView.h"
 #import "EDPageView.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
@@ -46,8 +48,8 @@
 #pragma mark drawing
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSRect bounds = NSMakeRect(40, (EDPageViewSelectionHeight - EDPageImageViewHeight)/2, EDPageImageViewWidth, EDPageImageViewHeight);
-    NSRect selectionBounds = NSMakeRect(40 - (EDPageViewSelectionWidth - EDPageImageViewWidth)/2, 0, EDPageViewSelectionWidth, EDPageViewSelectionHeight);
+    NSRect bounds = NSMakeRect(EDPageImageHorizontalBuffer, (EDPageViewSelectionHeight - EDPageImageViewHeight)/2, EDPageImageViewWidth, EDPageImageViewHeight);
+    NSRect selectionBounds = NSMakeRect(EDPageImageHorizontalBuffer - (EDPageViewSelectionWidth - EDPageImageViewWidth)/2, 0, EDPageViewSelectionWidth, EDPageViewSelectionHeight);
     
     NSBezierPath *path;
     
@@ -71,7 +73,25 @@
 
 - (void)drawGraphs{
     NSArray *graphs = [EDCoreDataUtility getGraphsForPage:[self dataObj] context:_context];
-    //NSLog(@"graph count:%ld", [graphs count]);
+    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
+    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
+    float graphWidth, graphHeight;
+    NSBezierPath *path;
+    
+    [[NSColor colorWithHexColorString:EDGraphBorderColor] setStroke];
+    
+    // for each of the graphs draw them
+    for (EDGraph *graph in graphs){
+        // draw graph in that position
+        graphWidth = xRatio * ([graph elementWidth] - [EDGraphView graphMargin] * 2);
+        graphHeight = xRatio * ([graph elementHeight] - [EDGraphView graphMargin] * 2);
+        path = [NSBezierPath bezierPathWithRect:NSMakeRect(xRatio * ([EDGraphView graphMargin] + [graph locationX]) + EDPageImageHorizontalBuffer,
+                                                           (EDPageViewSelectionHeight - EDPageImageViewHeight)/2 + yRatio * ([graph locationY] + [EDGraphView graphMargin]),
+                                                           graphWidth,
+                                                           graphHeight)];
+        [path setLineWidth:EDPageViewGraphBorderLineWidth];
+        [path stroke];
+    }
 }
 
 #pragma mark data

@@ -78,7 +78,6 @@
 + (float)graphMargin{
     // defines margin where graph is actually drawn
     return EDGraphMargin + EDCoordinateArrowWidth + EDCoordinateArrowLength + EDGraphInnerMargin;
-    //return EDGraphMargin + EDCoordinateArrowLength + EDGraphInnerMargin;
 }
 
 + (float)margin{

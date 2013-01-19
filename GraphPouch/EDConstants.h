@@ -99,6 +99,8 @@ extern float const EDGuideShowThreshold;
 
 // attributes
 extern NSString *const EDGraphAttributeLabels;
+extern NSString *const EDGraphBorderColor;
+extern float const EDPageViewGraphBorderLineWidth;
 extern NSString *const EDGraphAttributeGridLines;
 extern NSString *const EDElementAttributeSelected;
 extern NSString *const EDGraphAttributeTickMarks;
@@ -184,6 +186,7 @@ extern float const EDPageViewSelectionAlpha;
 extern float const EDPageViewOffsetY;
 extern float const EDPageViewIncrementPosY;
 extern float const EDPageViewPosX;
+extern float const EDPageImageHorizontalBuffer;
 extern float const EDPageImageViewWidth;
 extern float const EDPageImageViewHeight;
 extern float const EDPageViewDragPosX;
