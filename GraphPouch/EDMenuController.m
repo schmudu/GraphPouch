@@ -25,17 +25,25 @@
 }
 
 - (IBAction)addGraph:(id)sender{
-    [[[NSDocumentController sharedDocumentController] currentDocument] addGraph:nil];
+    [[[NSDocumentController sharedDocumentController] currentDocument] addGraph:sender];
 }
 
 - (IBAction)addPage:(id)sender{
-    [[[NSDocumentController sharedDocumentController] currentDocument] addPage:nil];
+    [[[NSDocumentController sharedDocumentController] currentDocument] addPage:sender];
 }
 - (IBAction)selectAll:(id)sender{
-    [[[NSDocumentController sharedDocumentController] currentDocument] selectAll:nil];
+    [[[NSDocumentController sharedDocumentController] currentDocument] selectAll:sender];
 }
 
 - (IBAction)deselectAll:(id)sender{
-    [[[NSDocumentController sharedDocumentController] currentDocument] deselectAll:nil];
+    [[[NSDocumentController sharedDocumentController] currentDocument] deselectAll:sender];
+}
+
+- (IBAction)nextPage:(id)sender{
+    [[[NSDocumentController sharedDocumentController] currentDocument] nextPage:sender];
+}
+
+- (IBAction)previousPage:(id)sender{
+    [[[NSDocumentController sharedDocumentController] currentDocument] previousPage:sender];
 }
 @end

@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDPage.h"
+#import "EDPageViewContainer.h"
 
 @interface EDPageView : NSView <NSPasteboardWriting, NSPasteboardReading, NSCoding>{
     EDPage *_dataObj;
@@ -15,6 +16,7 @@
     NSPasteboard *_pb;
     BOOL _highlighted;
     NSManagedObjectContext *_context;
+    EDPageViewContainer *_container;
 }
 - (EDPage *)dataObj;
 - (void)setDataObj:(EDPage *)pageObj;

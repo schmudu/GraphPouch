@@ -13,6 +13,8 @@
     EDPanelPropertiesController *propertiesController;
 }
 - (IBAction)togglePropertiesPanel:(id)sender;
+- (IBAction)nextPage:(id)sender;
+- (IBAction)previousPage:(id)sender;
 - (IBAction)addGraph:(id)sender;
 - (IBAction)addPage:(id)sender;
 - (IBAction)selectAll:(id)sender;

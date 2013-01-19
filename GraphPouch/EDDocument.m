@@ -5,9 +5,7 @@
 //  Created by PATRICK LEE on 7/20/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
-// test
-#import "EDElement.h"
-
+#import "EDCoreDataUtility+Pages.h"
 #import "EDDocument.h"
 #import "EDWorksheetViewController.h"
 #import "EDPagesViewController.h"
@@ -161,6 +159,21 @@
     [pagesController addNewPage];
 }
 
+- (IBAction)nextPage:(id)sender{
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    EDPage *nextPage = [EDCoreDataUtility getPageWithNumber:([[currentPage pageNumber] intValue]+1) context:_context];
+    
+    if (nextPage)
+        [EDCoreDataUtility setPageAsCurrent:nextPage context:_context];
+}
+
+- (IBAction)previousPage:(id)sender{
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    EDPage *nextPage = [EDCoreDataUtility getPageWithNumber:([[currentPage pageNumber] intValue]-1) context:_context];
+    
+    if (nextPage)
+        [EDCoreDataUtility setPageAsCurrent:nextPage context:_context];
+}
 #pragma mark graph
 - (IBAction)addGraph:(id)sender{
     [worksheetController addNewGraph];

@@ -82,6 +82,21 @@
     return fetchResults;
 }
 
++ (EDPage *)getPageWithNumber:(int)pageNumber context:(NSManagedObjectContext *)context{
+    // this method returns the page object that matches the page number
+    NSArray *fetchedObjects;
+    
+    // get all selected pages ordered by page number
+    fetchedObjects = [EDPage getAllObjectsOrderedByPageNumber:context];
+    
+    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(pageNumber == %d)", pageNumber];
+    NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];
+    if ([filteredResults count] == 0) {
+        return nil;
+    }
+    return [filteredResults objectAtIndex:0];
+}
+
 + (EDPage *)getPage:(EDPage *)page context:(NSManagedObjectContext *)context{
     // this method returns the page object that matches the page number
     NSArray *fetchedObjects;
@@ -90,7 +105,6 @@
     fetchedObjects = [EDPage getAllObjectsOrderedByPageNumber:context];
     
     NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(SELF == %@)", page];
-    //NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(pageNumber == %d)", [[page pageNumber] intValue]];
     NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];
     return [filteredResults objectAtIndex:0];
 }
@@ -460,9 +474,8 @@
     if (previousPage == page){
         return;
     }
-    else {
-        [previousPage setCurrentPage:FALSE];
-    }
+    // unset previous page as current
+    [previousPage setCurrentPage:FALSE];
     
     // set parameter as current page
     EDPage *newPage = [self getPage:page context:context];
@@ -470,6 +483,12 @@
     
     // clear any selection of worksheet elements
     [EDCoreDataUtility clearSelectedWorksheetElements:context];
+    
+    // clear any selection of pages
+    [EDCoreDataUtility deselectAllPages:context];
+    
+    // set this page as selected
+    [newPage setSelected:TRUE];
 }
 
 + (void)insertPages:(NSArray *)pages atPosition:(int)insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:(NSManagedObjectContext *) context{

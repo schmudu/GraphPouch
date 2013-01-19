@@ -14,11 +14,12 @@
 #import "EDCoreDataUtility+Pages.h"
 #import "NSColor+Utilities.h"
 #import "EDCoreDataUtility+Graphs.h"
+#import "EDPageViewContainer.h"
 
 @interface EDPageView()
 - (void)onContextChanged:(NSNotification *)note;
 - (void)setPageAsCurrent;
-- (void)drawGraphs;
+//- (void)drawGraphs;
 @end
 
 @implementation EDPageView
@@ -36,6 +37,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         _pb = [NSPasteboard generalPasteboard];
+        
     }
     return self;
 }
@@ -64,34 +66,8 @@
     [NSBezierPath fillRect:bounds];
     
     // page drop shadow
-    [[NSColor colorWithHexColorString:@"000000" alpha:0.4] setStroke];
+    [[NSColor colorWithHexColorString:@"bbbbbb" alpha:0.3] setStroke];
     [NSBezierPath strokeRect:bounds];
-    
-    // draw tables
-    [self drawGraphs];
-}
-
-- (void)drawGraphs{
-    NSArray *graphs = [EDCoreDataUtility getGraphsForPage:[self dataObj] context:_context];
-    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
-    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
-    float graphWidth, graphHeight;
-    NSBezierPath *path;
-    
-    [[NSColor colorWithHexColorString:EDGraphBorderColor] setStroke];
-    
-    // for each of the graphs draw them
-    for (EDGraph *graph in graphs){
-        // draw graph in that position
-        graphWidth = xRatio * ([graph elementWidth] - [EDGraphView graphMargin] * 2);
-        graphHeight = xRatio * ([graph elementHeight] - [EDGraphView graphMargin] * 2);
-        path = [NSBezierPath bezierPathWithRect:NSMakeRect(xRatio * ([EDGraphView graphMargin] + [graph locationX]) + EDPageImageHorizontalBuffer,
-                                                           (EDPageViewSelectionHeight - EDPageImageViewHeight)/2 + yRatio * ([graph locationY] + [EDGraphView graphMargin]),
-                                                           graphWidth,
-                                                           graphHeight)];
-        [path setLineWidth:EDPageViewGraphBorderLineWidth];
-        [path stroke];
-    }
 }
 
 #pragma mark data
@@ -102,6 +78,10 @@
 - (void)setDataObj:(EDPage *)pageObj{
     _context = [pageObj managedObjectContext];
     _dataObj = pageObj;
+    
+    // draw container subview
+    _container = [[EDPageViewContainer alloc] initWithFrame:NSMakeRect(EDPageImageHorizontalBuffer, (EDPageViewSelectionHeight - EDPageImageViewHeight)/2, EDPageImageViewWidth, EDPageImageViewHeight) page:pageObj];
+    [self addSubview:_container];
     
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];

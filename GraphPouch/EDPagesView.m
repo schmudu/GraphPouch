@@ -56,6 +56,10 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    // draw background color
+    [[NSColor colorWithHexColorString:@"dddddd"] setFill];
+    [NSBezierPath fillRect:[self bounds]];
+    
     if ((_highlighted) && (_highlightedDragSection > 0)) {
         NSRect highlightRect = NSMakeRect(EDPageViewDragPosX, (_highlightedDragSection - 1) * EDPageViewIncrementPosY - EDPageViewDragOffsetY, EDPageViewDragWidth, EDPageViewDragLength);
         [NSBezierPath fillRect:highlightRect];

@@ -49,6 +49,8 @@ NSString * const EDEntityNameToken                              = @"EDToken";
 // worksheet
 float const EDWorksheetViewWidth                                = 600;
 float const EDWorksheetViewHeight                               = 766;
+float const EDWorksheetShadowSize                               = 2.0;
+NSString * const EDWorksheetShadowColor                         = @"bbbbbb";
 
 // worksheet events
 NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";

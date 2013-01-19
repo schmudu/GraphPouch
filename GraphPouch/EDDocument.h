@@ -36,6 +36,8 @@
 - (BOOL)propertiesPanelIsOpen;
 - (IBAction)addPage:(id)sender;
 - (IBAction)addGraph:(id)sender;
+- (IBAction)nextPage:(id)sender;
+- (IBAction)previousPage:(id)sender;
 - (void)selectAll:(id)sender;
 - (void)deselectAll:(id)sender;
 @end

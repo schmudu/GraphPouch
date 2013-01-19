@@ -49,6 +49,8 @@ extern NSString *const EDEntityNameToken;
 // worksheet
 extern float const EDWorksheetViewHeight;
 extern float const EDWorksheetViewWidth;
+extern float const EDWorksheetShadowSize;
+extern NSString *const EDWorksheetShadowColor;
 
 // worksheet events
 extern NSString *const EDEventWorksheetClicked;

@@ -27,6 +27,7 @@
 + (void)updatePageNumbersStartingAt:(int)startPageNumber byDifference:(int)difference endNumber:(int)endPageNumber context:(NSManagedObjectContext *)context;
 + (EDPage *)getPage:(EDPage *)page context:(NSManagedObjectContext *)context;
 + (EDPage *)getCurrentPage:(NSManagedObjectContext *)context;
++ (EDPage *)getPageWithNumber:(int)pageNumber context:(NSManagedObjectContext *)context;
 + (void)setPageAsCurrent:(EDPage *)page context:(NSManagedObjectContext *)context;
 + (EDPage *)getLastSelectedPage:(NSManagedObjectContext *)context;
 + (void)insertPages:(NSArray *)pages atPosition:(int)insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:(NSManagedObjectContext *)context;
