@@ -7,7 +7,6 @@
 //
 
 #import "EDMainContentView.h"
-#import "EDWorksheetScrollView.h"
 #import "EDConstants.h"
 #import "NSColor+Utilities.h"
 #import "EDWorksheetView.h"
@@ -47,9 +46,14 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
-    [[NSColor grayColor] setFill];
+    [[NSColor colorWithHexColorString:@"cccccc"] setFill];
     [NSBezierPath fillRect:[self bounds]];
+    
+    // draw drop shadow of document
+    //[[NSColor colorWithHexColorString:@"666666"] setFill];
+    //NSBezierPath *documentOutline = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat w#>, <#CGFloat h#>) xRadius:5 yRadius:5];
+    
+    //[NSBezierPath round:NSMakeRect(0, 0, 50, 50)];
     
     
     if ([[self window] firstResponder] == _worksheetView) {
@@ -65,18 +69,14 @@
 }
 
 -(void)windowDidResize{
-    for (NSView *view in [self subviews]){
-        if ([view isKindOfClass:[EDWorksheetScrollView class]]){
-            // set new position based on constant width of document and new width
-            float worksheetWidth = [view frame].size.width;
-            float worksheetHeight = [view frame].size.height;
-            
-            float newOriginX = ([self frame].size.width - worksheetWidth)/2;
-            float newOriginY = ([self frame].size.height - worksheetHeight)/2;
-            
-            [view setFrameOrigin:NSMakePoint(newOriginX, newOriginY)];
-        }
-    }
+    // set new position based on constant width of document and new width
+    float worksheetWidth = [_worksheetView frame].size.width;
+    float worksheetHeight = [_worksheetView frame].size.height;
+    
+    float newOriginX = ([self frame].size.width - worksheetWidth)/2;
+    float newOriginY = ([self frame].size.height - worksheetHeight)/2;
+    
+    [_worksheetView setFrameOrigin:NSMakePoint(newOriginX, newOriginY)];
 }
 
 #pragma mark events

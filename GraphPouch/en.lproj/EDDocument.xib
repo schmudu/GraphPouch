@@ -39,7 +39,7 @@
 			<object class="NSWindowTemplate" id="275939982">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{133, 235}, {765, 915}}</string>
+				<string key="NSWindowRect">{{133, 235}, {806, 915}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">Window</string>
 				<string key="NSWindowClass">EDWindow</string>
@@ -53,7 +53,7 @@
 						<object class="NSButton" id="807704737">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{120, 847}, {48, 48}}</string>
+							<string key="NSFrame">{{128, 841}, {60, 60}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="204223611"/>
@@ -82,7 +82,7 @@
 						<object class="NSButton" id="835139896">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{34, 847}, {48, 48}}</string>
+							<string key="NSFrame">{{34, 841}, {60, 60}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="807704737"/>
@@ -182,95 +182,25 @@
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">18</int>
 							<array class="NSMutableArray" key="NSSubviews">
-								<object class="NSScrollView" id="296356420">
+								<object class="NSCustomView" id="562031203">
 									<reference key="NSNextResponder" ref="263211016"/>
 									<int key="NSvFlags">301</int>
-									<array class="NSMutableArray" key="NSSubviews">
-										<object class="NSClipView" id="358702124">
-											<reference key="NSNextResponder" ref="296356420"/>
-											<int key="NSvFlags">2304</int>
-											<array class="NSMutableArray" key="NSSubviews">
-												<object class="NSCustomView" id="147202369">
-													<reference key="NSNextResponder" ref="358702124"/>
-													<int key="NSvFlags">301</int>
-													<string key="NSFrameSize">{600, 766}</string>
-													<reference key="NSSuperview" ref="358702124"/>
-													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="976226198"/>
-													<string key="NSReuseIdentifierKey">_NS:9</string>
-													<string key="NSClassName">EDWorksheetView</string>
-												</object>
-											</array>
-											<string key="NSFrame">{{1, 1}, {598, 764}}</string>
-											<reference key="NSSuperview" ref="296356420"/>
-											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="147202369"/>
-											<string key="NSReuseIdentifierKey">_NS:11</string>
-											<reference key="NSDocView" ref="147202369"/>
-											<object class="NSColor" key="NSBGColor">
-												<int key="NSColorSpace">6</int>
-												<string key="NSCatalogName">System</string>
-												<string key="NSColorName">controlColor</string>
-												<object class="NSColor" key="NSColor">
-													<int key="NSColorSpace">3</int>
-													<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
-												</object>
-											</object>
-											<int key="NScvFlags">6</int>
-										</object>
-										<object class="NSScroller" id="227518578">
-											<reference key="NSNextResponder" ref="296356420"/>
-											<int key="NSvFlags">256</int>
-											<string key="NSFrame">{{583, 1}, {16, 764}}</string>
-											<reference key="NSSuperview" ref="296356420"/>
-											<reference key="NSWindow"/>
-											<string key="NSReuseIdentifierKey">_NS:26</string>
-											<bool key="NSEnabled">YES</bool>
-											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-											<reference key="NSTarget" ref="296356420"/>
-											<string key="NSAction">_doScroller:</string>
-											<double key="NSCurValue">1</double>
-											<double key="NSPercent">0.99738903394255873</double>
-										</object>
-										<object class="NSScroller" id="976226198">
-											<reference key="NSNextResponder" ref="296356420"/>
-											<int key="NSvFlags">256</int>
-											<string key="NSFrame">{{1, 749}, {598, 16}}</string>
-											<reference key="NSSuperview" ref="296356420"/>
-											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="227518578"/>
-											<string key="NSReuseIdentifierKey">_NS:30</string>
-											<bool key="NSEnabled">YES</bool>
-											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-											<int key="NSsFlags">1</int>
-											<reference key="NSTarget" ref="296356420"/>
-											<string key="NSAction">_doScroller:</string>
-											<double key="NSPercent">0.9966666666666667</double>
-										</object>
-									</array>
-									<string key="NSFrame">{{0, 34}, {600, 766}}</string>
+									<string key="NSFrame">{{33, 30}, {600, 766}}</string>
 									<reference key="NSSuperview" ref="263211016"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="358702124"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
-									<int key="NSsFlags">133362</int>
-									<reference key="NSVScroller" ref="227518578"/>
-									<reference key="NSHScroller" ref="976226198"/>
-									<reference key="NSContentView" ref="358702124"/>
-									<double key="NSMinMagnification">0.25</double>
-									<double key="NSMaxMagnification">4</double>
-									<double key="NSMagnification">1</double>
+									<string key="NSClassName">EDWorksheetView</string>
 								</object>
 							</array>
-							<string key="NSFrame">{{140, 0}, {628, 826}}</string>
+							<string key="NSFrame">{{140, 0}, {666, 826}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="296356420"/>
+							<reference key="NSNextKeyView" ref="562031203"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSClassName">EDMainContentView</string>
 						</object>
 					</array>
-					<string key="NSFrameSize">{765, 915}</string>
+					<string key="NSFrameSize">{806, 915}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="835139896"/>
@@ -374,22 +304,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">worksheetView</string>
-						<reference key="source" ref="512844837"/>
-						<reference key="destination" ref="147202369"/>
-					</object>
-					<int key="connectionID">100353</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">worksheetScrollView</string>
-						<reference key="source" ref="512844837"/>
-						<reference key="destination" ref="296356420"/>
-					</object>
-					<int key="connectionID">100354</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">mainWorksheetView</string>
 						<reference key="source" ref="512844837"/>
 						<reference key="destination" ref="263211016"/>
@@ -403,6 +317,14 @@
 						<reference key="destination" ref="310730408"/>
 					</object>
 					<int key="connectionID">100360</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">worksheetView</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="562031203"/>
+					</object>
+					<int key="connectionID">100363</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -445,14 +367,6 @@
 					<int key="connectionID">100296</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">nextKeyView</string>
-						<reference key="source" ref="204223611"/>
-						<reference key="destination" ref="147202369"/>
-					</object>
-					<int key="connectionID">100357</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">managedObjectContext: managedObjectContext</string>
 						<reference key="source" ref="831842768"/>
@@ -488,17 +402,17 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">_worksheetView</string>
 						<reference key="source" ref="263211016"/>
-						<reference key="destination" ref="147202369"/>
+						<reference key="destination" ref="562031203"/>
 					</object>
-					<int key="connectionID">100359</int>
+					<int key="connectionID">100364</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">nextKeyView</string>
-						<reference key="source" ref="147202369"/>
+						<reference key="source" ref="562031203"/>
 						<reference key="destination" ref="310730408"/>
 					</object>
-					<int key="connectionID">100358</int>
+					<int key="connectionID">100362</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -535,9 +449,9 @@
 						<reference key="object" ref="568628114"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="204223611"/>
-							<reference ref="807704737"/>
-							<reference ref="835139896"/>
 							<reference ref="263211016"/>
+							<reference ref="835139896"/>
+							<reference ref="807704737"/>
 						</array>
 						<reference key="parent" ref="275939982"/>
 					</object>
@@ -634,34 +548,14 @@
 						<int key="objectID">100348</int>
 						<reference key="object" ref="263211016"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="296356420"/>
+							<reference ref="562031203"/>
 						</array>
 						<reference key="parent" ref="568628114"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">100349</int>
-						<reference key="object" ref="296356420"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="147202369"/>
-							<reference ref="227518578"/>
-							<reference ref="976226198"/>
-						</array>
+						<int key="objectID">100361</int>
+						<reference key="object" ref="562031203"/>
 						<reference key="parent" ref="263211016"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100350</int>
-						<reference key="object" ref="147202369"/>
-						<reference key="parent" ref="296356420"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100351</int>
-						<reference key="object" ref="227518578"/>
-						<reference key="parent" ref="296356420"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100352</int>
-						<reference key="object" ref="976226198"/>
-						<reference key="parent" ref="296356420"/>
 					</object>
 				</array>
 			</object>
@@ -686,11 +580,7 @@
 				<string key="100315.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100319.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100348.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100349.CustomClassName">EDWorksheetScrollView</string>
-				<string key="100349.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100350.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100351.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100352.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="100361.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBWindowTemplateEditedContentRect">{{133, 170}, {507, 413}}</string>
 				<string key="6.CustomClassName">EDContentView</string>
@@ -700,7 +590,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">100360</int>
+			<int key="maxID">100364</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -736,7 +626,6 @@
 						<string key="pagesController">EDPagesViewController</string>
 						<string key="pagesView">EDPagesView</string>
 						<string key="worksheetController">EDWorksheetViewController</string>
-						<string key="worksheetScrollView">EDWorksheetScrollView</string>
 						<string key="worksheetView">EDWorksheetView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -763,10 +652,6 @@
 						<object class="IBToOneOutletInfo" key="worksheetController">
 							<string key="name">worksheetController</string>
 							<string key="candidateClassName">EDWorksheetViewController</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="worksheetScrollView">
-							<string key="name">worksheetScrollView</string>
-							<string key="candidateClassName">EDWorksheetScrollView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="worksheetView">
 							<string key="name">worksheetView</string>
@@ -838,14 +723,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/EDWindow.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">EDWorksheetScrollView</string>
-					<string key="superclassName">NSScrollView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/EDWorksheetScrollView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

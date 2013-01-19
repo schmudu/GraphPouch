@@ -105,7 +105,6 @@
                 tokens = [[NSArray alloc] initWithArray:[[equation tokens] array]];
                 
                 // clear any previous tokens
-#warning question: i wonder if i have to do this with any ordered set?
                 [equation removeTokens:[equation tokens]];
                 
                 //for (EDToken *token in tokens){

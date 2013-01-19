@@ -30,16 +30,16 @@
         bottomRightPoint = [EDTransformCornerPoint alloc];
         
         // align element with data attributes
-        [topLeftPoint initWithFrame:NSMakeRect([element locationX], [element locationY], EDTransformPointLength, EDTransformPointLength) 
+        topLeftPoint = [topLeftPoint initWithFrame:NSMakeRect([element locationX], [element locationY], EDTransformPointLength, EDTransformPointLength)
                       verticalPoint:(EDTransformCornerPoint *)topRightPoint 
                          horizPoint:(EDTransformCornerPoint *)bottomLeftPoint];
-        [topRightPoint initWithFrame:NSMakeRect([element locationX] + [element elementWidth] - EDTransformPointLength, [element locationY], EDTransformPointLength, EDTransformPointLength)
+        topRightPoint = [topRightPoint initWithFrame:NSMakeRect([element locationX] + [element elementWidth] - EDTransformPointLength, [element locationY], EDTransformPointLength, EDTransformPointLength)
                        verticalPoint:(EDTransformCornerPoint *)topLeftPoint 
                           horizPoint:(EDTransformCornerPoint *)bottomRightPoint];
-        [bottomLeftPoint initWithFrame:NSMakeRect([element locationX], [element locationY] + [element elementHeight] - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
+        bottomLeftPoint = [bottomLeftPoint initWithFrame:NSMakeRect([element locationX], [element locationY] + [element elementHeight] - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
                          verticalPoint:(EDTransformCornerPoint *)bottomRightPoint 
                             horizPoint:(EDTransformCornerPoint *)topLeftPoint];
-        [bottomRightPoint initWithFrame:NSMakeRect([element locationX] + [element elementWidth] - EDTransformPointLength, [element locationY] + [element elementHeight] - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
+        bottomRightPoint = [bottomRightPoint initWithFrame:NSMakeRect([element locationX] + [element elementWidth] - EDTransformPointLength, [element locationY] + [element elementHeight] - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
                           verticalPoint:(EDTransformCornerPoint *)bottomLeftPoint 
                              horizPoint:(EDTransformCornerPoint *)topRightPoint];
         // listen
@@ -105,7 +105,6 @@
     NSMutableDictionary *results = [self getDimensionsOfEvent:note];
     EDTransformCornerPoint *cornerPoint = (EDTransformCornerPoint *)[note object];
     
-    //NSLog(@"point being dragged: point x:%f minX:%f", [cornerPoint frame].origin.x, [[results valueForKey:EDKeyTransformDragPointX] floatValue]);
     // set variable to distinguish which corner is being referenced
     if ([cornerPoint frame].origin.x == [[results valueForKey:EDKeyTransformDragPointX] floatValue]) {
         if ([cornerPoint frame].origin.y == [[results valueForKey:EDKeyTransformDragPointY] floatValue])

@@ -158,7 +158,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         }
         else {
             // get all elements
-            NSMutableArray *elements = [self getAllSelectedWorksheetElementsViews];
             NSMutableDictionary *closestVerticalGuide = [self getClosestVerticalGuide:[_guides objectForKey:EDKeyGuideVertical] point:_transformRectDragPoint];
             NSMutableDictionary *closestHorizontalGuide = [self getClosestHorizontalGuide:[_guides objectForKey:EDKeyGuideHorizontal] point:_transformRectDragPoint];
             
@@ -173,16 +172,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             }
         }
     }
-    
-    
-    // draw shadow if needed to show selected
-    /*
-    if ([[self window] firstResponder] == self) {
-        [[NSColor colorWithHexColorString:EDSelectedViewColor] setStroke];
-        [NSBezierPath setDefaultLineWidth:EDSelectedViewStrokeWidth];
-        //[NSBezierPath strokeRect:[self frame]];
-        [NSBezierPath strokeRect:NSMakeRect([self frame].origin.x, [self frame].origin.y+EDMenuToolbarHeight, [self frame].size.width, [self frame].size.height)];
-    }*/
 }
 
 - (void)drawGuide:(NSPoint)startPoint endPoint:(NSPoint)endPoint{
@@ -266,8 +255,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 #pragma mark listeners
 - (void)onContextChanged:(NSNotification *)note{
-    NSArray *objects = [EDGraph getAllObjects:_context];
-    //NSLog(@"worksheet context changed: graphs:%@", objects);
     EDPage *newPage = (EDPage *)[EDPage getCurrentPage:_context];
     if (newPage == _currentPage) {
         // only redraw the objects on page
@@ -617,7 +604,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 #pragma mark transform rect
 - (void)drawTransformRect:(EDElement *)element{
     // create new transform rect
-    EDTransformRect *newTransformRect = [[EDTransformRect alloc] initWithFrame:[self frame] element:element];
+    EDTransformRect *newTransformRect = [[EDTransformRect alloc] initWithFrame:[self bounds] element:element];
     
     // add to dictionary
     [_transformRects setObject:newTransformRect forKey:[NSValue valueWithNonretainedObject:element]];
