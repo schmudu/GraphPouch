@@ -57,8 +57,12 @@
     [equation setShowLabel:[self showLabel]];
     
     // copy tokens
+    EDToken *newToken;
     for (EDToken *token in [self tokens]){
-        [equation addTokensObject:[token copy:context]];
+        newToken = [[EDToken alloc] initWithContext:context];
+        [context insertObject:newToken];
+        [newToken copy:token];
+        [equation addTokensObject:newToken];
     }
     return equation;
 }

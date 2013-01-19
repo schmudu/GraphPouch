@@ -27,8 +27,10 @@
 + (EDToken *)rightParentToken:(NSManagedObjectContext *)context;
 - (void)appendChar:(NSString *)c;
 - (int)length;
-- (EDToken *)copy:(NSManagedObjectContext *)context;
-- (void)copyToken:(EDToken *)sourceToken;
+//- (EDToken *)copy:(NSManagedObjectContext *)context;
+//- (EDToken *)copyTo:(EDToken *)destToken context:(NSManagedObjectContext *)context;
+//- (void)copyToken:(EDToken *)sourceToken;
+- (void)copy:(EDToken *)sourceToken;
 - (void)setTypeRaw:(EDTokenType)type;
 - (EDTokenType)typeRaw;
 - (void)setAssociationRaw:(EDAssociation)association;

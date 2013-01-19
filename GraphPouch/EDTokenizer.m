@@ -37,7 +37,8 @@
         
         if ([EDTokenizer isValidToken:currentToken error:error]) {
             // save token
-            potentialToken = [currentToken copy:context];
+            potentialToken = [[EDToken alloc] initWithContext:context];
+            [potentialToken copy:currentToken];
             
             // increment scanner
             [EDScanner increment];
@@ -46,7 +47,9 @@
         else {
             if (potentialToken) {
                 // push last valid token
-                EDToken *newToken = [potentialToken copy:context];
+                //EDToken *newToken = [potentialToken copy:context];
+                EDToken *newToken = [[EDToken alloc] initWithContext:context];
+                [newToken copy:potentialToken];
                 [tokenStack addObject:newToken];
                 
                 // release potential token

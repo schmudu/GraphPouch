@@ -5,6 +5,9 @@
 //  Created by PATRICK LEE on 10/2/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
+//testing
+#import "EDToken.h"
+#import "EDGraph.h"
 
 #import "EDGraph.h"
 #import "EDPagesViewController.h"
@@ -98,6 +101,8 @@
     [_nc addObserver:self selector:@selector(onPagesViewFinishedDragged:) name:EDEventPageViewsFinishedDrag object:[self view]];
     [_nc addObserver:self selector:@selector(onWindowResized:) name:EDEventWindowDidResize object:_documentController];
     
+#warning NOW: need to uncomment this
+    
     NSArray *pages = [EDCoreDataUtility getAllPages:_context];
     // if no pages then we need to create one
     if([pages count] == 0){
@@ -109,7 +114,15 @@
             [self drawPage:page];
         }
     }
-    
+#warning testing to fix error
+    /*
+    EDToken *testToken = [[EDToken alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameToken inManagedObjectContext:context] insertIntoManagedObjectContext:nil];
+    [context insertObject:testToken];
+    [testToken setTokenValue:[NSString stringWithFormat:@"something crazy"]];
+    [testToken setPrecedence:[NSNumber numberWithBool:TRUE]];
+    [testToken setAssociation:[NSNumber numberWithInt:5]];
+    [testToken setIsValid:TRUE];
+     */
 }
 
 #pragma mark page CRUD

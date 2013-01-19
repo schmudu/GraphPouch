@@ -102,7 +102,7 @@
 }
 
 
-- (void)copyToken:(EDToken *)sourceToken{
+- (void)copy:(EDToken *)sourceToken{
     [self setTypeRaw:[sourceToken typeRaw]];
     [self setIsValid:[sourceToken isValid]];
     [self setPrecedence:[sourceToken precedence]];
@@ -110,15 +110,16 @@
     [self setTokenValue:[sourceToken tokenValue]];
 }
 
-- (EDToken *)copy:(NSManagedObjectContext *)context{
-    EDToken *token = [[EDToken alloc] initWithContext:context];
-    [token setTypeRaw:[self typeRaw]];
-    [token setIsValid:[self isValid]];
-    [token setPrecedence:[self precedence]];
-    [token setAssociationRaw:[self associationRaw]];
-    [token setTokenValue:[self tokenValue]];
-    return token;
-}
+/*
+- (EDToken *)copyTo:(EDToken *)destToken context:(NSManagedObjectContext *)context{
+    //EDToken *token = [[EDToken alloc] initWithContext:context];
+    [destToken setTypeRaw:[self typeRaw]];
+    [destToken setIsValid:[self isValid]];
+    [destToken setPrecedence:[self precedence]];
+    [destToken setAssociationRaw:[self associationRaw]];
+    [destToken setTokenValue:[self tokenValue]];
+    return destToken;
+}*/
 
 #pragma mark pasteboard writing protocol
 - (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{

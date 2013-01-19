@@ -5,6 +5,8 @@
 //  Created by PATRICK LEE on 7/20/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
+// test
+#import "EDElement.h"
 
 #import "EDDocument.h"
 #import "EDWorksheetViewController.h"
@@ -28,7 +30,7 @@
 - (void)onPagesViewTabKeyPressed:(NSNotification *)note;
 - (void)onWorksheetTabKeyPressed:(NSNotification *)note;
 - (void)onRootContextWillSave:(NSNotification *)note;
-- (void)correctTokenAttributes;
+//- (void)correctTokenAttributes;
 - (void)onContextSaved:(NSNotification *)note;
 - (void)onContextChanged:(NSNotification *)note;
 @end
@@ -67,9 +69,10 @@
 }
 
 - (void)onRootContextWillSave:(NSNotification *)note{
-    [self correctTokenAttributes];
+    //[self correctTokenAttributes];
 }
 
+/*
 - (void)correctTokenAttributes{
 #warning i REALLY don't like this.  For some reason the parent context is not saving the token attributes.  IsValid and TokenValue are being set to nil.  Consequently the data is not being saved to the persisten store (the file).
     NSArray *correctTokens = [EDToken getAllObjects:_context];
@@ -86,7 +89,7 @@
         [incorrectToken copyToken:correctToken];
     }
     
-}
+}*/
 - (void)onContextChanged:(NSNotification *)note{
     /*
     NSArray *updatedObjects = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
@@ -94,9 +97,11 @@
     NSLog(@"context changed:\n===updated:%@ \n===inserted:%@", updatedObjects, insertedObjects);
      */
     // push changes to parent context
-    //NSLog(@"before change: tokens root:%@ child root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
+    //NSLog(@"\n\n===before change:\ntokens root:%@ \nchild root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
+    //NSLog(@"\n\n===before change:\ntokens root:%@ \nchild root:%@", [EDGraph getAllObjects:_rootContext], [EDGraph getAllObjects:_context]);
     [EDCoreDataUtility save:_context];
-    //NSLog(@"after change: tokens root:%@ child root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
+    //NSLog(@"\n\n===after change: \ntokens root:%@ \nchild root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
+    //NSLog(@"\n\n===after change: \ntokens root:%@ \nchild root:%@", [EDGraph getAllObjects:_rootContext], [EDGraph getAllObjects:_context]);
 }
 
 - (void)onContextSaved:(NSNotification *)note{

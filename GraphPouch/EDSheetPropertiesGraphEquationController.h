@@ -16,11 +16,12 @@
     NSManagedObjectContext *_context;
     NSString *_newEquation;
     int _equationIndex;
+    NSString *_equationOriginalString;
 }
 
 - (IBAction)onButtonPressedCancel:(id)sender;
 - (IBAction)onButtonPressedSubmit:(id)sender;
 - (id)initWithContext:(NSManagedObjectContext *)context;
 - (void)initializeSheet:(NSString *)equation index:(int)index;
-
+    
 @end

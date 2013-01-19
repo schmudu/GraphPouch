@@ -25,11 +25,11 @@
         return nil;
     }
     
-    // create dictionary of all the common points
+    // create dictionary of all the common equations
     NSMutableArray *commonEquations = [[NSMutableArray alloc] init];
     NSMutableArray *commonEquationsToRemove = [[NSMutableArray alloc] init];
     
-    // add all points in first graph
+    // add all equations in the first graph
     for (EDEquation *equation in [[selectedGraphs objectAtIndex:0] equations]){
         [equation setMatchesHaveSameVisibility:TRUE];
         [equation setMatchesHaveSameLabel:TRUE];
@@ -57,7 +57,7 @@
         }
     }
     
-    // remove points that weren't common to all graphs
+    // remove equations that weren't comon to all graphs
     for (EDEquation *equation in commonEquationsToRemove){
         [commonEquations removeEquation:equation];
     }
@@ -74,7 +74,7 @@
         return nil;
     }
     
-    // create dictionary of all the common points
+    // create dictionary of all the common equations
     NSMutableArray *matchingEquations = [[NSMutableArray alloc] init];
     
     //iterate through graphs
@@ -110,8 +110,11 @@
                 EDToken *tokenCopy;
                 for (EDToken *token in [equationToChange tokens]){
                     // copy token
-                    tokenCopy = [token copy:context];
-                    
+                    //tokenCopy = [token copy:context];
+                    tokenCopy = [[EDToken alloc] initWithContext:context];
+                    [context insertObject:tokenCopy];
+                    [tokenCopy copy:token];
+                        
                     // add to equation
                     [equation addTokensObject:tokenCopy];
                 }

@@ -365,6 +365,7 @@
 #pragma mark equation sheet
 - (IBAction)addNewEquation:(id)sender{
     [NSApp beginSheet:[equationController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+    //[equationController initializeSheet:nil index:EDEquationSheetIndexInvalid];
     [equationController initializeSheet:nil index:EDEquationSheetIndexInvalid];
 }
 
@@ -402,7 +403,8 @@
     
     // return value based on column identifier
     [NSApp beginSheet:[equationController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
-    [equationController initializeSheet:[(EDEquation *)[commonEquations objectAtIndex:[(NSTableView *)sender clickedRow]] equation] index:(int)[(NSTableView *)sender clickedRow]];
+    NSString *equation = [[commonEquations objectAtIndex:[(NSTableView *)sender clickedRow]] equation];
+    [equationController initializeSheet:equation index:(int)[(NSTableView *)sender clickedRow]];
 }
 
 #pragma mark graph points

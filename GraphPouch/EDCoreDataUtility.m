@@ -25,9 +25,6 @@
     // set root as parent
     [childContext setParentContext:rootContext];
     
-    // set root as context for coordinator
-    //[[startContext persistentStoreCoordinator] 
-    
     // set undo
     [childContext setUndoManager:[startContext undoManager]];
     

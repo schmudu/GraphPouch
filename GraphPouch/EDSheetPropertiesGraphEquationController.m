@@ -51,6 +51,7 @@
         [fieldEquation setStringValue:equation];
     }
     _equationIndex = index;
+    _equationOriginalString = equation;
 }
 
 - (void)windowDidLoad
@@ -89,7 +90,11 @@
             [self addTokensToNewEquationInSelectedGraphs:result];
         }
         else {
-            NSArray *commonEquations = [EDCoreDataUtility getCommonEquationsforSelectedGraphs:_context];
+            //NSArray *commonEquations = [EDCoreDataUtility getCommonEquationsforSelectedGraphs:_context];
+            EDEquation *matchEquation = [[EDEquation alloc] initWithContext:_context];
+            [matchEquation setEquation:_equationOriginalString];
+            
+            NSArray *commonEquations = [EDCoreDataUtility getOneCommonEquationFromSelectedGraphsMatchingEquation:matchEquation context:_context];
             
             // update equation
             [self updateTokensInEquationInSelectedGraphs:result equations:commonEquations];
@@ -260,10 +265,13 @@
         int i=0;
         for (EDToken *token in parsedTokens){
             // create new token and set relationship
-            newToken = [token copy:_context];
+            //newToken = [token copy:_context];
+            newToken = [[EDToken alloc] initWithContext:_context];
+            [_context insertObject:newToken];
+            [newToken copy:token];
             
             // insert into context
-            [_context insertObject:newToken];
+            //[_context insertObject:newToken];
             
             [newEquation addTokensObject:newToken];
             i++;
@@ -292,10 +300,13 @@
         int i=0;
         for (EDToken *token in parsedTokens){
             // create new token and set relationship
-            newToken = [token copy:_context];
+            //newToken = [token copy:_context];
+            newToken = [[EDToken alloc] initWithContext:_context];
+            [_context insertObject:newToken];
+            [newToken copy:token];
             
             // insert into context
-            [_context insertObject:newToken];
+            //[_context insertObject:newToken];
             
             [equation addTokensObject:newToken];
             i++;
