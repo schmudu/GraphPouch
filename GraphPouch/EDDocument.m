@@ -165,6 +165,8 @@
     
     if (nextPage)
         [EDCoreDataUtility setPageAsCurrent:nextPage context:_context];
+    else
+        [EDCoreDataUtility setPageAsCurrent:[EDCoreDataUtility getFirstPage:_context] context:_context];
 }
 
 - (IBAction)previousPage:(id)sender{
@@ -173,6 +175,8 @@
     
     if (nextPage)
         [EDCoreDataUtility setPageAsCurrent:nextPage context:_context];
+    else
+        [EDCoreDataUtility setPageAsCurrent:[EDCoreDataUtility getLastPage:_context] context:_context];
 }
 #pragma mark graph
 - (IBAction)addGraph:(id)sender{

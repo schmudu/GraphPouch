@@ -33,4 +33,6 @@
 + (void)insertPages:(NSArray *)pages atPosition:(int)insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:(NSManagedObjectContext *)context;
 + (void)selectAllPages:(NSManagedObjectContext *)context;
 + (void)deselectAllPages:(NSManagedObjectContext *)context;
++ (EDPage *)getLastPage:(NSManagedObjectContext *)context;
++ (EDPage *)getFirstPage:(NSManagedObjectContext *)context;
 @end

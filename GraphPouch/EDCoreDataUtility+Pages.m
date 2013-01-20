@@ -122,6 +122,30 @@
     return nil;
 }
 
++ (EDPage *)getLastPage:(NSManagedObjectContext *)context{
+    // this method returns a dictionary of the types of selected objects
+    NSArray *fetchedObjects;
+    
+    // get all selected pages ordered by page number
+    fetchedObjects = [EDPage getAllObjectsOrderedByPageNumber:context];
+    if ([fetchedObjects count] > 0) {
+        return [fetchedObjects lastObject];
+    }
+    return nil;
+}
+
++ (EDPage *)getFirstPage:(NSManagedObjectContext *)context{
+    // this method returns a dictionary of the types of selected objects
+    NSArray *fetchedObjects;
+    
+    // get all selected pages ordered by page number
+    fetchedObjects = [EDPage getAllObjectsOrderedByPageNumber:context];
+    if ([fetchedObjects count] > 0) {
+        return [fetchedObjects objectAtIndex:0];
+    }
+    return nil;
+}
+
 + (NSMutableArray *)getAllSelectedPages:(NSManagedObjectContext *)context{
     // gets all pages
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
