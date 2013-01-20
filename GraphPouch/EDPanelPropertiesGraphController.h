@@ -25,10 +25,17 @@
     IBOutlet NSTableView *tableEquation;
     IBOutlet NSButton *buttonRemovePoints;
     IBOutlet NSButton *buttonRemoveEquation;
+    
+#warning need to erase these next four
     IBOutlet NSPopUpButton *buttonMinX;
     IBOutlet NSPopUpButton *buttonMinY;
     IBOutlet NSPopUpButton *buttonMaxX;
     IBOutlet NSPopUpButton *buttonMaxY;
+    
+    IBOutlet NSTextField *labelMinX;
+    IBOutlet NSTextField *labelMinY;
+    IBOutlet NSTextField *labelMaxX;
+    IBOutlet NSTextField *labelMaxY;
     EDSheetPropertiesGraphEquationController *equationController;
     EDPanelPropertiesGraphTablePoints *tablePointsController;
     EDPanelPropertiesGraphTableEquation *tableEquationController;

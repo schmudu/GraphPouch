@@ -59,6 +59,8 @@
 		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
 		CD5EE20216012A690027EFC6 /* NSObject+Document.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE20116012A690027EFC6 /* NSObject+Document.m */; };
 		CD6DF301160D181900935BF2 /* EDTransformCornerPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */; };
+		CD82441516AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82441416AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m */; };
+		CD82441816AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82441716AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m */; };
 		CD841EE216AB451000421EB4 /* EDPageViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = CD841EE116AB451000421EB4 /* EDPageViewContainer.m */; };
 		CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */; };
 		CDA8555816236EF9006FCD62 /* EDContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA8555716236EF9006FCD62 /* EDContentView.m */; };
@@ -74,6 +76,8 @@
 		CDD46E611607D1F200EDD75C /* EDTransformRect.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E601607D1F200EDD75C /* EDTransformRect.m */; };
 		CDD46E651607D22F00EDD75C /* EDTransformPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E641607D22F00EDD75C /* EDTransformPoint.m */; };
 		CDD46E6816092F2F00EDD75C /* NSObject+Worksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E6716092F2E00EDD75C /* NSObject+Worksheet.m */; };
+		CDD6F3A616AC42A0002D8FF0 /* EDFormatterIntegerUnsigned.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD6F3A516AC42A0002D8FF0 /* EDFormatterIntegerUnsigned.m */; };
+		CDD6F3A916AC44CE002D8FF0 /* EDFormatterIntegerSigned.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD6F3A816AC44CE002D8FF0 /* EDFormatterIntegerSigned.m */; };
 		CDE6D61C15DC476B00E5695F /* NSManagedObject+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */; };
 		CDE6D63015DE774100E5695F /* EDElement.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D62F15DE774000E5695F /* EDElement.m */; };
 		CDE6D65615E111C700E5695F /* EDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D65515E111C700E5695F /* EDWindow.m */; };
@@ -192,6 +196,10 @@
 		CD5EE20116012A690027EFC6 /* NSObject+Document.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Document.m"; sourceTree = "<group>"; };
 		CD6DF2FF160D181900935BF2 /* EDTransformCornerPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformCornerPoint.h; sourceTree = "<group>"; };
 		CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformCornerPoint.m; sourceTree = "<group>"; };
+		CD82441316AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterIntegerSignedEqualOrLessThanZero.h; sourceTree = "<group>"; };
+		CD82441416AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterIntegerSignedEqualOrLessThanZero.m; sourceTree = "<group>"; };
+		CD82441616AC482E00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterIntegerUnsignedGreaterThanZero.h; sourceTree = "<group>"; };
+		CD82441716AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterIntegerUnsignedGreaterThanZero.m; sourceTree = "<group>"; };
 		CD841EE016AB451000421EB4 /* EDPageViewContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewContainer.h; sourceTree = "<group>"; };
 		CD841EE116AB451000421EB4 /* EDPageViewContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainer.m; sourceTree = "<group>"; };
 		CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowController.h; sourceTree = "<group>"; };
@@ -221,6 +229,10 @@
 		CDD46E641607D22F00EDD75C /* EDTransformPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformPoint.m; sourceTree = "<group>"; };
 		CDD46E6616092F2E00EDD75C /* NSObject+Worksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Worksheet.h"; sourceTree = "<group>"; };
 		CDD46E6716092F2E00EDD75C /* NSObject+Worksheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Worksheet.m"; sourceTree = "<group>"; };
+		CDD6F3A416AC42A0002D8FF0 /* EDFormatterIntegerUnsigned.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterIntegerUnsigned.h; sourceTree = "<group>"; };
+		CDD6F3A516AC42A0002D8FF0 /* EDFormatterIntegerUnsigned.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterIntegerUnsigned.m; sourceTree = "<group>"; };
+		CDD6F3A716AC44CE002D8FF0 /* EDFormatterIntegerSigned.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterIntegerSigned.h; sourceTree = "<group>"; };
+		CDD6F3A816AC44CE002D8FF0 /* EDFormatterIntegerSigned.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterIntegerSigned.m; sourceTree = "<group>"; };
 		CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Attributes.h"; sourceTree = "<group>"; };
 		CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Attributes.m"; sourceTree = "<group>"; };
 		CDE6D62E15DE774000E5695F /* EDElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDElement.h; sourceTree = "<group>"; };
@@ -695,6 +707,14 @@
 				CD1EBD88160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m */,
 				CD1EBD8A160013D200BEEA4D /* EDFormatterDecimalSigned.h */,
 				CD1EBD8B160013D200BEEA4D /* EDFormatterDecimalSigned.m */,
+				CDD6F3A716AC44CE002D8FF0 /* EDFormatterIntegerSigned.h */,
+				CDD6F3A816AC44CE002D8FF0 /* EDFormatterIntegerSigned.m */,
+				CD82441316AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.h */,
+				CD82441416AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m */,
+				CDD6F3A416AC42A0002D8FF0 /* EDFormatterIntegerUnsigned.h */,
+				CDD6F3A516AC42A0002D8FF0 /* EDFormatterIntegerUnsigned.m */,
+				CD82441616AC482E00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.h */,
+				CD82441716AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m */,
 			);
 			name = Formatters;
 			sourceTree = "<group>";
@@ -913,6 +933,10 @@
 				CDF62E9F16A8B59A00DCDD2D /* EDWorksheetClipView.m in Sources */,
 				CDF62EA816A8F3F800DCDD2D /* EDMainContentView.m in Sources */,
 				CD841EE216AB451000421EB4 /* EDPageViewContainer.m in Sources */,
+				CDD6F3A616AC42A0002D8FF0 /* EDFormatterIntegerUnsigned.m in Sources */,
+				CDD6F3A916AC44CE002D8FF0 /* EDFormatterIntegerSigned.m in Sources */,
+				CD82441516AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m in Sources */,
+				CD82441816AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

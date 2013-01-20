@@ -61,7 +61,13 @@
     [self setElementLabel:labelWidth attribute:EDElementAttributeWidth];
     [self setElementLabel:labelX attribute:EDElementAttributeLocationX];
     [self setElementLabel:labelY attribute:EDElementAttributeLocationY];
-    [self setGraphPopUpValues];
+    [self setElementLabel:labelMinX attribute:EDGraphAttributeMinValueX];
+    [self setElementLabel:labelMaxX attribute:EDGraphAttributeMaxValueX];
+    [self setElementLabel:labelMinY attribute:EDGraphAttributeMinValueY];
+    [self setElementLabel:labelMaxY attribute:EDGraphAttributeMaxValueY];
+    
+#warning delete this after change
+    //[self setGraphPopUpValues];
     [self setElementCheckbox:checkboxHasCoordinates attribute:EDGraphAttributeCoordinateAxes];
     [self setElementCheckbox:checkboxHasLabels attribute:EDGraphAttributeLabels];
     [self setElementCheckbox:checkboxGrid attribute:EDGraphAttributeGridLines];
