@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
+#import "EDSheetPropertiesGraphErrorController.h"
 #import "EDPanelPropertiesGraphController.h"
 #import "EDGraph.h"
 #import "EDPoint.h"
@@ -28,6 +29,7 @@
 - (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key;
 - (NSMutableDictionary *)checkForSameIntValueInLabelsForKey:(NSString *)key;
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)didEndSheetGraphErrorMinX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (NSArray *)maxValuesWithoutZero;
 - (NSArray *)maxValuesWithMixed;
 - (NSArray *)maxValues;
@@ -54,6 +56,9 @@
     _context = context;
     if (!equationController) {
         equationController = [[EDSheetPropertiesGraphEquationController alloc] initWithContext:_context];
+    }
+    if (!graphErrorController) {
+        graphErrorController = [[EDSheetPropertiesGraphErrorController alloc] initWithContext:_context];
     }
     // this method will only be called if only graphs are shown
     // get all of the graphs selected
@@ -272,6 +277,24 @@
     else if ([obj object] == labelHeight) {
         [self changeSelectedElementsAttribute:EDElementAttributeHeight newValue:[[NSNumber alloc] initWithFloat:[[labelHeight stringValue] floatValue]]];
     }
+    else if ([obj object] == labelMinX) {
+        // verify that max is not 0 and then min x is greater than -100
+        if ([[labelMinX stringValue] intValue] < EDGraphValueThresholdMin){
+            // if this object has already sent message then do nothing
+            if (_controlTextObj == labelMinX) {
+                // do nothing
+                _controlTextObj = nil;
+            }
+            else{
+                // save
+                _controlTextObj = [obj object];
+            
+                // launch error sheet
+                [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMinX:returnCode:contextInfo:) contextInfo:nil];
+                [graphErrorController initializeSheet:[NSString stringWithFormat:@"Minimum X value must be less than 0 and greater than -1000"]];
+            }
+        }
+    }
 }
 
 #pragma mark checkbox
@@ -371,7 +394,6 @@
 #pragma mark equation sheet
 - (IBAction)addNewEquation:(id)sender{
     [NSApp beginSheet:[equationController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
-    //[equationController initializeSheet:nil index:EDEquationSheetIndexInvalid];
     [equationController initializeSheet:nil index:EDEquationSheetIndexInvalid];
 }
 
@@ -414,6 +436,19 @@
 }
 
 #pragma mark graph points
+
+#pragma mark graph error sheet
+- (void)didEndSheetGraphErrorMinX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
+    [[graphErrorController window] orderOut:self];
+    //NSLog(@"saved object:%@", _controlTextObj);
+    //NSLog(@"first responder:%@ first responder?:%d", [[[self view] window] firstResponder],([[[self view] window] firstResponder] != labelMinX));
+    //[labelMinX selectText:nil];
+    [[[self view] window] makeFirstResponder:labelMinX];
+    
+    // clear saved object
+    _controlTextObj = nil;
+}
+
 
 #pragma mark min/max values
 - (NSArray *)minValuesWithoutZero{

@@ -61,6 +61,9 @@
 		CD6DF301160D181900935BF2 /* EDTransformCornerPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */; };
 		CD82441516AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82441416AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m */; };
 		CD82441816AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82441716AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m */; };
+		CD82441D16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD82441C16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib */; };
+		CD82442016AC543300BAAB0B /* EDSheetPropertiesGraphErrorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82441F16AC543300BAAB0B /* EDSheetPropertiesGraphErrorController.m */; };
+		CD82442316AC582F00BAAB0B /* EDSheetPropertiesGraphError.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82442216AC582E00BAAB0B /* EDSheetPropertiesGraphError.m */; };
 		CD841EE216AB451000421EB4 /* EDPageViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = CD841EE116AB451000421EB4 /* EDPageViewContainer.m */; };
 		CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */; };
 		CDA8555816236EF9006FCD62 /* EDContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA8555716236EF9006FCD62 /* EDContentView.m */; };
@@ -200,6 +203,11 @@
 		CD82441416AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterIntegerSignedEqualOrLessThanZero.m; sourceTree = "<group>"; };
 		CD82441616AC482E00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterIntegerUnsignedGreaterThanZero.h; sourceTree = "<group>"; };
 		CD82441716AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterIntegerUnsignedGreaterThanZero.m; sourceTree = "<group>"; };
+		CD82441C16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDSheetPropertiesGraphError.xib; sourceTree = "<group>"; };
+		CD82441E16AC543300BAAB0B /* EDSheetPropertiesGraphErrorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDSheetPropertiesGraphErrorController.h; sourceTree = "<group>"; };
+		CD82441F16AC543300BAAB0B /* EDSheetPropertiesGraphErrorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDSheetPropertiesGraphErrorController.m; sourceTree = "<group>"; };
+		CD82442116AC582E00BAAB0B /* EDSheetPropertiesGraphError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDSheetPropertiesGraphError.h; sourceTree = "<group>"; };
+		CD82442216AC582E00BAAB0B /* EDSheetPropertiesGraphError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDSheetPropertiesGraphError.m; sourceTree = "<group>"; };
 		CD841EE016AB451000421EB4 /* EDPageViewContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewContainer.h; sourceTree = "<group>"; };
 		CD841EE116AB451000421EB4 /* EDPageViewContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainer.m; sourceTree = "<group>"; };
 		CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowController.h; sourceTree = "<group>"; };
@@ -396,9 +404,9 @@
 			isa = PBXGroup;
 			children = (
 				CDAA91141669B1E2009B75A2 /* Equation */,
-				CD1EBD6715FED65A00BEEA4D /* EDPanelPropertiesGraph.xib */,
 				CDF62E4D16A2810700DCDD2D /* EDFormatterEquation.h */,
 				CDF62E4E16A2810700DCDD2D /* EDFormatterEquation.m */,
+				CD1EBD6715FED65A00BEEA4D /* EDPanelPropertiesGraph.xib */,
 				CD1EBD7215FED75900BEEA4D /* EDPanelPropertiesGraphController.h */,
 				CD1EBD7315FED75900BEEA4D /* EDPanelPropertiesGraphController.m */,
 				CDAA9104166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib */,
@@ -406,6 +414,11 @@
 				CD252E96166CFB9700163420 /* EDSheetPropertiesGraphEquation.m */,
 				CDAA910716696680009B75A2 /* EDSheetPropertiesGraphEquationController.h */,
 				CDAA910816696680009B75A2 /* EDSheetPropertiesGraphEquationController.m */,
+				CD82441C16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib */,
+				CD82442116AC582E00BAAB0B /* EDSheetPropertiesGraphError.h */,
+				CD82442216AC582E00BAAB0B /* EDSheetPropertiesGraphError.m */,
+				CD82441E16AC543300BAAB0B /* EDSheetPropertiesGraphErrorController.h */,
+				CD82441F16AC543300BAAB0B /* EDSheetPropertiesGraphErrorController.m */,
 				CD263666167E9B4B00424487 /* EDPanelPropertiesGraphTableEquation.h */,
 				CD263667167E9B4B00424487 /* EDPanelPropertiesGraphTableEquation.m */,
 				CD2DD5D216474144006557FC /* EDPanelPropertiesGraphTablePoints.h */,
@@ -852,6 +865,7 @@
 				CD1C57DF161E750400534D49 /* EDPageView.xib in Resources */,
 				CDAA9105166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib in Resources */,
 				CDF62E5716A2FB1600DCDD2D /* icon.iconset in Resources */,
+				CD82441D16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -937,6 +951,8 @@
 				CDD6F3A916AC44CE002D8FF0 /* EDFormatterIntegerSigned.m in Sources */,
 				CD82441516AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m in Sources */,
 				CD82441816AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m in Sources */,
+				CD82442016AC543300BAAB0B /* EDSheetPropertiesGraphErrorController.m in Sources */,
+				CD82442316AC582F00BAAB0B /* EDSheetPropertiesGraphError.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "EDPanelViewController.h"
 #import "EDSheetPropertiesGraphEquationController.h"
+#import "EDSheetPropertiesGraphErrorController.h"
 #import "EDPanelPropertiesGraphTablePoints.h"
 #import "EDPanelPropertiesGraphTableEquation.h"
 
@@ -36,7 +37,9 @@
     IBOutlet NSTextField *labelMinY;
     IBOutlet NSTextField *labelMaxX;
     IBOutlet NSTextField *labelMaxY;
+    id _controlTextObj;
     EDSheetPropertiesGraphEquationController *equationController;
+    EDSheetPropertiesGraphErrorController *graphErrorController;
     EDPanelPropertiesGraphTablePoints *tablePointsController;
     EDPanelPropertiesGraphTableEquation *tableEquationController;
 }

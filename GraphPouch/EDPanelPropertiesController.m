@@ -80,7 +80,6 @@
 
 - (void)togglePropertiesPanel:(id)sender{
     NSMenuItem *menuItem = (NSMenuItem *)sender;
-    NSLog(@"toggling property panel:%@ is open?:%d", [self window], [self isWindowLoaded]);
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         // close window
         [[self window] close];

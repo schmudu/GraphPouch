@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EDSheetPropertiesGraphEquationController.h"
 
 @interface EDSheetPropertiesGraphEquation : NSWindow
 
