@@ -32,13 +32,16 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-    
-    //[fieldError setStringValue:_errorMsg];
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
-
 - (void)initializeSheet:(NSString *)errorMessage{
+    _errorMsg = errorMessage;
     [fieldError setStringValue:errorMessage];
+}
+
+#pragma mark window delegate
+- (void)awakeFromNib{
+    // init error message
+    [fieldError setStringValue:_errorMsg];
 }
 @end

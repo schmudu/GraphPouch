@@ -2146,19 +2146,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">nextKeyView</string>
-						<reference key="source" ref="969552739"/>
-						<reference key="destination" ref="68891346"/>
-					</object>
-					<int key="connectionID">4149</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">formatter</string>
 						<reference key="source" ref="969552739"/>
 						<reference key="destination" ref="879983824"/>
 					</object>
 					<int key="connectionID">4161</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="969552739"/>
+						<reference key="destination" ref="565123107"/>
+					</object>
+					<int key="connectionID">4166</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2170,19 +2170,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">nextKeyView</string>
-						<reference key="source" ref="565123107"/>
-						<reference key="destination" ref="68891346"/>
-					</object>
-					<int key="connectionID">4134</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">formatter</string>
 						<reference key="source" ref="565123107"/>
 						<reference key="destination" ref="831567862"/>
 					</object>
 					<int key="connectionID">4156</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="565123107"/>
+						<reference key="destination" ref="68891346"/>
+					</object>
+					<int key="connectionID">4167</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -5682,7 +5682,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">4165</int>
+			<int key="maxID">4167</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

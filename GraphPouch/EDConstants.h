@@ -154,8 +154,10 @@ extern NSString *const EDKeyNumberGridLinesPositive;
 extern NSString *const EDKeyNumberGridLinesNegative;
 extern float const EDGraphEquationIncrement;
 extern float const EDGraphDependentVariableIncrement;
-extern int const EDGraphValueThresholdMax;
-extern int const EDGraphValueThresholdMin;
+extern int const EDGraphValueMinThresholdMin;
+extern int const EDGraphValueMinThresholdMax;
+extern int const EDGraphValueMaxThresholdMin;
+extern int const EDGraphValueMaxThresholdMax;
 
 // graph points
 extern NSString *const EDGraphPointAttributeVisible;

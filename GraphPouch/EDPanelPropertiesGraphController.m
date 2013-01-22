@@ -30,6 +30,7 @@
 - (NSMutableDictionary *)checkForSameIntValueInLabelsForKey:(NSString *)key;
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorMinX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)didEndSheetGraphErrorMaxX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (NSArray *)maxValuesWithoutZero;
 - (NSArray *)maxValuesWithMixed;
 - (NSArray *)maxValues;
@@ -278,8 +279,9 @@
         [self changeSelectedElementsAttribute:EDElementAttributeHeight newValue:[[NSNumber alloc] initWithFloat:[[labelHeight stringValue] floatValue]]];
     }
     else if ([obj object] == labelMinX) {
-        // verify that max is not 0 and then min x is greater than -100
-        if ([[labelMinX stringValue] intValue] < EDGraphValueThresholdMin){
+        // verify that value does not exceed max nor lower than min
+        // both values cannot be zero
+        if ((([[labelMinX stringValue] intValue] == 0) && ([[labelMaxX stringValue] intValue] == 0)) || ([[labelMinX stringValue] intValue] > EDGraphValueMinThresholdMax) || ([[labelMinX stringValue] intValue] < EDGraphValueMinThresholdMin)){
             // if this object has already sent message then do nothing
             if (_controlTextObj == labelMinX) {
                 // do nothing
@@ -289,10 +291,96 @@
                 // save
                 _controlTextObj = [obj object];
             
+                // error message
+                if (([[labelMinX stringValue] intValue] == 0) && ([[labelMaxX stringValue] intValue] == 0))
+                    [graphErrorController initializeSheet:[NSString stringWithFormat:@"Minimum X and Maximum X cannot both be 0."]];
+                else
+                    [graphErrorController initializeSheet:[NSString stringWithFormat:@"Minimum X value must be less than %d and greater than %d", EDGraphValueMinThresholdMax, EDGraphValueMinThresholdMin]];
+                
                 // launch error sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMinX:returnCode:contextInfo:) contextInfo:nil];
-                [graphErrorController initializeSheet:[NSString stringWithFormat:@"Minimum X value must be less than 0 and greater than -1000"]];
             }
+        }
+        else{
+            [self changeSelectedElementsAttribute:EDGraphAttributeMinValueX newValue:[[NSNumber alloc] initWithInt:[[labelMinX stringValue] intValue]]];
+        }
+    }
+    else if ([obj object] == labelMaxX) {
+        // verify that value does not exceed max nor lower than min
+        // both values cannot be zero
+        if ((([[labelMinX stringValue] intValue] == 0) && ([[labelMaxX stringValue] intValue] == 0)) || ([[labelMaxX stringValue] intValue] > EDGraphValueMaxThresholdMax) || ([[labelMaxX stringValue] intValue] < EDGraphValueMaxThresholdMin)){
+            // if this object has already sent message then do nothing
+            if (_controlTextObj == labelMaxX) {
+                // do nothing
+                _controlTextObj = nil;
+            }
+            else{
+                // save
+                _controlTextObj = [obj object];
+            
+                // error message
+                if (([[labelMinX stringValue] intValue] == 0) && ([[labelMaxX stringValue] intValue] == 0))
+                    [graphErrorController initializeSheet:[NSString stringWithFormat:@"Minimum X and Maximum X cannot both be 0."]];
+                else
+                    [graphErrorController initializeSheet:[NSString stringWithFormat:@"Maximum X value must be less than %d and greater than %d", EDGraphValueMaxThresholdMax, EDGraphValueMaxThresholdMin]];
+                
+                // launch error sheet
+                [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMaxX:returnCode:contextInfo:) contextInfo:nil];
+            }
+        }
+        else{
+            [self changeSelectedElementsAttribute:EDGraphAttributeMaxValueX newValue:[[NSNumber alloc] initWithInt:[[labelMaxX stringValue] intValue]]];
+        }
+    }
+    else if ([obj object] == labelMinY) {
+        // verify that max is not 0 and then min x is greater than -100
+        if ((([[labelMinY stringValue] intValue] == 0) && ([[labelMaxY stringValue] intValue] == 0)) || ([[labelMinY stringValue] intValue] > EDGraphValueMinThresholdMax) || ([[labelMinY stringValue] intValue] < EDGraphValueMinThresholdMin)){
+            // if this object has already sent message then do nothing
+            if (_controlTextObj == labelMinY) {
+                // do nothing
+                _controlTextObj = nil;
+            }
+            else{
+                // save
+                _controlTextObj = [obj object];
+            
+                if (([[labelMinY stringValue] intValue] == 0) && ([[labelMaxY stringValue] intValue] == 0))
+                    [graphErrorController initializeSheet:[NSString stringWithFormat:@"Minimum Y and Maximum Y cannot both be 0."]];
+                else
+                    [graphErrorController initializeSheet:[NSString stringWithFormat:@"Minimum Y value must be less than %d and greater than %d", EDGraphValueMinThresholdMax, EDGraphValueMinThresholdMin]];
+                
+                // launch error sheet
+                [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMinY:returnCode:contextInfo:) contextInfo:nil];
+            }
+        }
+        else{
+            [self changeSelectedElementsAttribute:EDGraphAttributeMinValueY newValue:[[NSNumber alloc] initWithInt:[[labelMinY stringValue] intValue]]];
+        }
+    }
+    else if ([obj object] == labelMaxY) {
+        // verify that max is not 0 and then min x is greater than -100
+        if ((([[labelMinY stringValue] intValue] == 0) && ([[labelMaxY stringValue] intValue] == 0)) || ([[labelMaxY stringValue] intValue] > EDGraphValueMaxThresholdMax) || ([[labelMaxY stringValue] intValue] < EDGraphValueMaxThresholdMin)){
+            // if this object has already sent message then do nothing
+            if (_controlTextObj == labelMaxY) {
+                // do nothing
+                _controlTextObj = nil;
+            }
+            else{
+                // save
+                _controlTextObj = [obj object];
+            
+                // launch error sheet
+                if (([[labelMinY stringValue] intValue] == 0) && ([[labelMaxY stringValue] intValue] == 0))
+                    [graphErrorController initializeSheet:[NSString stringWithFormat:@"Minimum Y and Maximum Y cannot both be 0."]];
+                else
+                    [graphErrorController initializeSheet:[NSString stringWithFormat:@"Maximum Y value must be less than %d and greater than %d", EDGraphValueMaxThresholdMax, EDGraphValueMaxThresholdMin]];
+                
+                // launch sheet
+                [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMaxY:returnCode:contextInfo:) contextInfo:nil];
+            }
+        }
+        else{
+            [self changeSelectedElementsAttribute:EDGraphAttributeMaxValueY newValue:[[NSNumber alloc] initWithInt:[[labelMaxY stringValue] intValue]]];
         }
     }
 }
@@ -440,10 +528,31 @@
 #pragma mark graph error sheet
 - (void)didEndSheetGraphErrorMinX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
     [[graphErrorController window] orderOut:self];
-    //NSLog(@"saved object:%@", _controlTextObj);
-    //NSLog(@"first responder:%@ first responder?:%d", [[[self view] window] firstResponder],([[[self view] window] firstResponder] != labelMinX));
-    //[labelMinX selectText:nil];
     [[[self view] window] makeFirstResponder:labelMinX];
+    
+    // clear saved object
+    _controlTextObj = nil;
+}
+
+- (void)didEndSheetGraphErrorMaxX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
+    [[graphErrorController window] orderOut:self];
+    [[[self view] window] makeFirstResponder:labelMaxX];
+    
+    // clear saved object
+    _controlTextObj = nil;
+}
+
+- (void)didEndSheetGraphErrorMinY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
+    [[graphErrorController window] orderOut:self];
+    [[[self view] window] makeFirstResponder:labelMinY];
+    
+    // clear saved object
+    _controlTextObj = nil;
+}
+
+- (void)didEndSheetGraphErrorMaxY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
+    [[graphErrorController window] orderOut:self];
+    [[[self view] window] makeFirstResponder:labelMaxY];
     
     // clear saved object
     _controlTextObj = nil;
