@@ -334,7 +334,7 @@
 														<array class="NSMutableArray" key="NSSubviews">
 															<reference ref="176472092"/>
 														</array>
-														<string key="NSFrame">{{1, 0}, {263, 17}}</string>
+														<string key="NSFrame">{{1, -0.5}, {263, 17}}</string>
 														<reference key="NSSuperview" ref="1023586222"/>
 														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="176472092"/>
@@ -520,7 +520,7 @@
 														<array class="NSMutableArray" key="NSSubviews">
 															<reference ref="51385652"/>
 														</array>
-														<string key="NSFrame">{{1, 0}, {263, 17}}</string>
+														<string key="NSFrame">{{1, -0.5}, {263, 17}}</string>
 														<reference key="NSSuperview" ref="621850285"/>
 														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="51385652"/>
@@ -1831,6 +1831,22 @@
 						<reference key="destination" ref="969552739"/>
 					</object>
 					<int key="connectionID">4165</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">labelScaleX</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="434751871"/>
+					</object>
+					<int key="connectionID">4168</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">labelScaleY</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="68891346"/>
+					</object>
+					<int key="connectionID">4169</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -5682,7 +5698,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">4167</int>
+			<int key="maxID">4169</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5809,6 +5825,8 @@
 						<string key="labelMaxY">NSTextField</string>
 						<string key="labelMinX">NSTextField</string>
 						<string key="labelMinY">NSTextField</string>
+						<string key="labelScaleX">NSTextField</string>
+						<string key="labelScaleY">NSTextField</string>
 						<string key="labelWidth">NSTextField</string>
 						<string key="labelX">NSTextField</string>
 						<string key="labelY">NSTextField</string>
@@ -5874,6 +5892,14 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="labelMinY">
 							<string key="name">labelMinY</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="labelScaleX">
+							<string key="name">labelScaleX</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="labelScaleY">
+							<string key="name">labelScaleY</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="labelWidth">

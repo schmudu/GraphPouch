@@ -31,6 +31,7 @@
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorMinX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorMaxX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)didEndSheetGraphErrorScaleX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (NSArray *)maxValuesWithoutZero;
 - (NSArray *)maxValuesWithMixed;
 - (NSArray *)maxValues;
@@ -71,6 +72,9 @@
     [self setElementLabel:labelMaxX attribute:EDGraphAttributeMaxValueX];
     [self setElementLabel:labelMinY attribute:EDGraphAttributeMinValueY];
     [self setElementLabel:labelMaxY attribute:EDGraphAttributeMaxValueY];
+    [self setElementLabel:labelScaleX attribute:EDGraphAttributeScaleX];
+    [self setElementLabel:labelScaleY attribute:EDGraphAttributeScaleY];
+    [self setElementLabel:labelScaleX attribute:EDGraphAttributeScaleX];
     
 #warning delete this after change
     //[self setGraphPopUpValues];
@@ -383,6 +387,30 @@
             [self changeSelectedElementsAttribute:EDGraphAttributeMaxValueY newValue:[[NSNumber alloc] initWithInt:[[labelMaxY stringValue] intValue]]];
         }
     }
+    else if ([obj object] == labelScaleX) {
+        // verify that value does not exceed max nor lower than min
+        // both values cannot be zero
+        if (([[labelScaleX stringValue] intValue] > EDGraphScaleMax) || ([[labelScaleX stringValue] intValue] < EDGraphScaleMin)){
+            // if this object has already sent message then do nothing
+            if (_controlTextObj == labelScaleX) {
+                // do nothing
+                _controlTextObj = nil;
+            }
+            else{
+                // save
+                _controlTextObj = [obj object];
+            
+                // error message
+                [graphErrorController initializeSheet:[NSString stringWithFormat:@"Scale X value must be less than %d and greater than %d", EDGraphScaleMax, EDGraphScaleMin]];
+                
+                // launch error sheet
+                [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorScaleX:returnCode:contextInfo:) contextInfo:nil];
+            }
+        }
+        else{
+            [self changeSelectedElementsAttribute:EDGraphAttributeMinValueX newValue:[[NSNumber alloc] initWithInt:[[labelMinX stringValue] intValue]]];
+        }
+    }
 }
 
 #pragma mark checkbox
@@ -558,6 +586,13 @@
     _controlTextObj = nil;
 }
 
+- (void)didEndSheetGraphErrorScaleX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
+    [[graphErrorController window] orderOut:self];
+    [[[self view] window] makeFirstResponder:labelScaleX];
+    
+    // clear saved object
+    _controlTextObj = nil;
+}
 
 #pragma mark min/max values
 - (NSArray *)minValuesWithoutZero{

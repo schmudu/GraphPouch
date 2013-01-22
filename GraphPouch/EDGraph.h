@@ -25,6 +25,10 @@
 @property (nonatomic, retain) NSNumber *minValueY;
 @property (nonatomic, retain) NSNumber *maxValueX;
 @property (nonatomic, retain) NSNumber *maxValueY;
+@property (nonatomic, retain) NSNumber *scaleX;
+@property (nonatomic, retain) NSNumber *scaleY;
+@property (nonatomic, retain) NSNumber *labelIntervalX;
+@property (nonatomic, retain) NSNumber *labelIntervalY;
 @property (nonatomic, retain) NSSet *points;
 @property (nonatomic, retain) NSSet *equations;
 @end

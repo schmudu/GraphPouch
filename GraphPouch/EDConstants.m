@@ -154,10 +154,12 @@ NSString * const EDKeyOriginPositionVertical                    = @"EDKeyOriginP
 NSString * const EDKeyNumberGridLinesPositive                   = @"EDKeyNumberGridLinesPositive";
 NSString * const EDKeyNumberGridLinesNegative                   = @"EDKeyNumberGridLinesNegative";
 float const EDGraphEquationIncrement                            = .25;
-int const EDGraphValueMinThresholdMin                          = -1000;
-int const EDGraphValueMinThresholdMax                          = 0;
-int const EDGraphValueMaxThresholdMin                          = 0;
-int const EDGraphValueMaxThresholdMax                          = 1000;
+int const EDGraphValueMinThresholdMin                           = -1000;
+int const EDGraphValueMinThresholdMax                           = 0;
+int const EDGraphValueMaxThresholdMin                           = 0;
+int const EDGraphValueMaxThresholdMax                           = 1000;
+int const EDGraphScaleMax                                       = 1000;
+int const EDGraphScaleMin                                       = 1;
 
 // graph points
 NSString * const EDGraphPointAttributeVisible                   = @"isVisible";
@@ -208,6 +210,10 @@ NSString * const EDPageAttributeSelected                        = @"selected";
 NSString * const EDPageAttributeCurrent                         = @"currentPage";
 NSString * const EDPageAttributeGraphs                          = @"graphs";
 NSString * const EDGraphAttributePage                           = @"page";
+NSString * const EDGraphAttributeScaleX                         = @"scaleX";
+NSString * const EDGraphAttributeScaleY                         = @"scaleY";
+NSString * const EDGraphAttributeLabelIntervalX                 = @"labelIntervalX";
+NSString * const EDGraphAttributeLabelIntervalY                 = @"labelIntervalY";
 NSString * const EDEventPageClickedWithoutModifier              = @"EDEventPageClickedWithoutModifier";
 NSString * const EDEventPageViewMouseDown                       = @"EDEventPageViewMouseDown";
 

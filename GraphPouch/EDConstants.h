@@ -158,6 +158,8 @@ extern int const EDGraphValueMinThresholdMin;
 extern int const EDGraphValueMinThresholdMax;
 extern int const EDGraphValueMaxThresholdMin;
 extern int const EDGraphValueMaxThresholdMax;
+extern int const EDGraphScaleMax;
+extern int const EDGraphScaleMin;
 
 // graph points
 extern NSString *const EDGraphPointAttributeVisible;
@@ -206,6 +208,10 @@ extern NSString *const EDPageAttributeSelected;
 extern NSString *const EDPageAttributeCurrent;
 extern NSString *const EDPageAttributeGraphs;
 extern NSString *const EDGraphAttributePage;
+extern NSString *const EDGraphAttributeScaleX;
+extern NSString *const EDGraphAttributeScaleY;
+extern NSString *const EDGraphAttributeLabelIntervalX;
+extern NSString *const EDGraphAttributeLabelIntervalY;
 extern NSString *const EDEventPageClickedWithoutModifier;
 extern NSString *const EDEventPageViewMouseDown;
 extern float const EDPagesViewWidth;

@@ -19,10 +19,14 @@
         <attribute name="hasGridLines" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="hasLabels" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="hasTickMarks" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="labelIntervalX" optional="YES" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
+        <attribute name="labelIntervalY" optional="YES" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
         <attribute name="maxValueX" optional="YES" attributeType="Integer 16" defaultValueString="10" syncable="YES"/>
         <attribute name="maxValueY" optional="YES" attributeType="Integer 16" defaultValueString="10" syncable="YES"/>
         <attribute name="minValueX" optional="YES" attributeType="Integer 16" defaultValueString="-10" syncable="YES"/>
         <attribute name="minValueY" optional="YES" attributeType="Integer 16" defaultValueString="-10" syncable="YES"/>
+        <attribute name="scaleX" optional="YES" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
+        <attribute name="scaleY" optional="YES" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
         <relationship name="equations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDEquation" inverseName="graph" inverseEntity="EDEquation" syncable="YES"/>
         <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="graphs" inverseEntity="EDPage" syncable="YES"/>
         <relationship name="points" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDPoint" inverseName="graph" inverseEntity="EDPoint" syncable="YES"/>
@@ -51,7 +55,7 @@
     <elements>
         <element name="EDElement" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDEquation" positionX="160" positionY="192" width="128" height="120"/>
-        <element name="EDGraph" positionX="160" positionY="192" width="128" height="210"/>
+        <element name="EDGraph" positionX="160" positionY="192" width="128" height="270"/>
         <element name="EDPage" positionX="160" positionY="192" width="128" height="105"/>
         <element name="EDPoint" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDToken" positionX="160" positionY="192" width="128" height="135"/>

@@ -37,6 +37,8 @@
     IBOutlet NSTextField *labelMinY;
     IBOutlet NSTextField *labelMaxX;
     IBOutlet NSTextField *labelMaxY;
+    IBOutlet NSTextField *labelScaleX;
+    IBOutlet NSTextField *labelScaleY;
     id _controlTextObj;
     EDSheetPropertiesGraphEquationController *equationController;
     EDSheetPropertiesGraphErrorController *graphErrorController;
