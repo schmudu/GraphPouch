@@ -214,7 +214,7 @@
 }
 
 - (void)selectAll:(id)sender{
-    [EDCoreDataUtility selectAllWorksheetElements:_context];
+    [EDCoreDataUtility selectAllWorksheetElementsOnCurrentPage:_context];
 }
 
 - (void)deselectAll:(id)sender{

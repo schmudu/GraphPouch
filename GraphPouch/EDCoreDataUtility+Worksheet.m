@@ -30,10 +30,12 @@
 }
 
 
-+ (void)selectAllWorksheetElements:(NSManagedObjectContext *)context{
++ (void)selectAllWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context{
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
-    NSArray *graphObjects = [EDGraph getAllObjects:context];
-
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
+    //NSArray *graphObjects = [EDGraph getAllObjects:context];
+    NSArray *graphObjects = [[currentPage graphs] allObjects];
+    
 #warning add other elements here
     [allObjects addObjectsFromArray:graphObjects];
 
