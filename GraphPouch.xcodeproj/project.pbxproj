@@ -258,7 +258,7 @@
 		CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EDCoreDataUtility+Worksheet.m"; sourceTree = "<group>"; };
 		CDF62E4D16A2810700DCDD2D /* EDFormatterEquation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterEquation.h; sourceTree = "<group>"; };
 		CDF62E4E16A2810700DCDD2D /* EDFormatterEquation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterEquation.m; sourceTree = "<group>"; };
-		CDF62E5616A2FB1600DCDD2D /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = icon.iconset; sourceTree = "<group>"; };
+		CDF62E5616A2FB1600DCDD2D /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icon.iconset; sourceTree = "<group>"; };
 		CDF62E5B16A4779800DCDD2D /* EDToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDToken.h; sourceTree = "<group>"; };
 		CDF62E5C16A4779A00DCDD2D /* EDToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDToken.m; sourceTree = "<group>"; };
 		CDF62E6716A49D0B00DCDD2D /* EDPointView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPointView.h; sourceTree = "<group>"; };

@@ -569,9 +569,9 @@ i"NSManagedObject+EasyFetching.h"
 i"EDCoreDataUtility+Pages.h"
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDPanelProperties.xib
-c0000000050B82A480000000000001B93
-t1354246728
-s7059
+c0000000050F0A8010000000000001C79
+t1357948929
+s7289
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDPanelPropertiesController.h
 c0000000050C7AF7A000000000000030A
@@ -610,9 +610,9 @@ s639
 i"EDPanelPropertiesDocumentController.h"
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDPanelPropertiesGraph.xib
-c0000000050E7BC240000000000035AED
-t1357364260
-s219885
+c0000000050FF11380000000000043448
+t1358893368
+s275528
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDPanelPropertiesGraphController.h
 c0000000050D40FCF00000000000006F7
@@ -754,9 +754,9 @@ i"EDSheetPropertiesGraphEquation.h"
 i"EDConstants.h"
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDSheetPropertiesGraphEquation.xib
-c0000000050C273D7000000000000919C
-t1354920919
-s37276
+c0000000050F6215A0000000000009DF0
+t1358307674
+s40432
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDSheetPropertiesGraphEquationController.h
 c0000000050CE29B900000000000002D0
@@ -776,6 +776,11 @@ i"EDEquation.h"
 i"EDToken.h"
 i"EDGraph.h"
 i"NSManagedObject+EasyFetching.m"
+
+N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDSheetPropertiesGraphError.xib
+c0000000050FCAB240000000000004E83
+t1358736164
+s20099
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDStack.h
 c0000000050C7AC80000000000000016F
@@ -1106,9 +1111,9 @@ t1342824135
 s436
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/en.lproj/EDDocument.xib
-c0000000050EB7B9A0000000000008518
-t1357609882
-s34072
+c0000000050FB6E990000000000008848
+t1358655129
+s34888
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/en.lproj/InfoPlist.strings
 c000000005009DEC7000000000000002D
@@ -1116,9 +1121,14 @@ t1342824135
 s45
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/en.lproj/MainMenu.xib
-c000000005084B5ED000000000001ED49
-t1350874605
-s126281
+c0000000050FB18100000000000021D1B
+t1358632976
+s138523
+
+N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/icon.iconset
+c0000000050FB6E990000000000000198
+t1358655129
+s408
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/images/Icon.png
 c0000000050EB4DE80000000000003AAE
@@ -1132,11 +1142,11 @@ s251
 i<Cocoa/Cocoa.h>
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app
-t1357941395
+t1357948929
 s102
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Info.plist
-t1357941395
+t1357948929
 s3480
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/MacOS/GraphPouch
@@ -1144,7 +1154,7 @@ t2
 s0
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/PkgInfo
-t1357941395
+t1357948929
 s8
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/EDDocument.momd
@@ -1160,7 +1170,7 @@ t2
 s0
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/EDPanelProperties.nib
-t1357941399
+t1357948929
 s1850
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/EDPanelPropertiesDocument.nib
@@ -1175,6 +1185,10 @@ N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents
 t2
 s0
 
+N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/EDSheetPropertiesGraphError.nib
+t2
+s0
+
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/Icon.png
 t1357941399
 s15022
@@ -1184,20 +1198,24 @@ t2
 s0
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/en.lproj/Credits.rtf
-t1357941399
+t1357948929
 s436
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/en.lproj/EDDocument.nib
-t1357941399
+t1357948929
 s8525
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/en.lproj/InfoPlist.strings
-t1357941399
+t1357948929
 s92
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/en.lproj/MainMenu.nib
-t1357941399
+t1357948929
 s24038
+
+N/Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/icon.iconset
+t2
+s0
 
 N/Users/patrick/Documents/dev/ios/GraphPouch/build/GraphPouch.build/Debug/GraphPouch.build/Objects-normal/x86_64/EDAppController.o
 t1357941398
@@ -1453,9 +1471,9 @@ t1357941397
 s10932700
 
 NGraphPouch/GraphPouch-Info.plist
-c0000000050EB4DE80000000000000C5C
-t1357598184
-s3164
+c0000000050F449FC0000000000000C58
+t1358187004
+s3160
 
 CCheck dependencies
 r0
@@ -3019,6 +3037,9 @@ o/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDSheetPropertiesGraphEq
 o    Recovery Suggestion: Ensure all plug-ins used to create this document have been loaded.
 lSLF07#2@56"CompileXIB GraphPouch/EDSheetPropertiesGraphEquation.xib379634199#379634200#0(496"2013-01-11 16:56:40.152 ibtool[1179:f07] Exception raised while decoding document objects - Could not instantiate class named IBNSLayoutConstraint/* com.apple.ibtool.errors *//Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDSheetPropertiesGraphEquation.xib: error: The document "EDSheetPropertiesGraphEquation.xib" could not be opened. An instance of IBNSLayoutConstraint could not be decoded.    Recovery Suggestion: Ensure all plug-ins used to create this document have been loaded.1(4@128"The document "EDSheetPropertiesGraphEquation.xib" could not be opened. An instance of IBNSLayoutConstraint could not be decoded.379634200#18446744073709551615#0#0(6@89"/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDSheetPropertiesGraphEquation.xib376613719#0#0#0#0#0"0(0#0#89"/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDSheetPropertiesGraphEquation.xib4317974528#409"    cd /Users/patrick/Documents/dev/ios/GraphPouch    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/EDSheetPropertiesGraphEquation.nib /Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDSheetPropertiesGraphEquation.xib --sdk /Developer/SDKs/MacOSX10.6.sdk1#
 
+CCompileXIB /Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDSheetPropertiesGraphError.xib
+r0
+
 CCompileXIB /Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/Preferences.xib
 s379634199.473752
 e379634199.704581
@@ -3075,6 +3096,9 @@ xCpResource
 xbuild/Debug/GraphPouch.app/Contents/Resources/en.lproj/Credits.rtf
 xGraphPouch/en.lproj/Credits.rtf
 lSLF07#2@36"Copy GraphPouch/en.lproj/Credits.rtf379634199#379634199#0(0"0(0#0#75"/Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/en.lproj/Credits.rtf4317974528#388"    cd /Users/patrick/Documents/dev/ios/GraphPouch    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -resolve-src-symlinks /Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/en.lproj/Credits.rtf /Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/en.lproj0#
+
+CCpResource build/Debug/GraphPouch.app/Contents/Resources/icon.iconset GraphPouch/icon.iconset
+r0
 
 CDataModelVersionCompile /Users/patrick/Documents/dev/ios/GraphPouch/build/Debug/GraphPouch.app/Contents/Resources/EDDocument.momd /Users/patrick/Documents/dev/ios/GraphPouch/GraphPouch/EDDocument.xcdatamodeld
 s379634197.216946

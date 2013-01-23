@@ -32,6 +32,7 @@
 - (void)didEndSheetGraphErrorMinX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorMaxX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorScaleX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)didEndSheetGraphErrorScaleY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (NSArray *)maxValuesWithoutZero;
 - (NSArray *)maxValuesWithMixed;
 - (NSArray *)maxValues;
@@ -389,7 +390,6 @@
     }
     else if ([obj object] == labelScaleX) {
         // verify that value does not exceed max nor lower than min
-        // both values cannot be zero
         if (([[labelScaleX stringValue] intValue] > EDGraphScaleMax) || ([[labelScaleX stringValue] intValue] < EDGraphScaleMin)){
             // if this object has already sent message then do nothing
             if (_controlTextObj == labelScaleX) {
@@ -408,7 +408,30 @@
             }
         }
         else{
-            [self changeSelectedElementsAttribute:EDGraphAttributeMinValueX newValue:[[NSNumber alloc] initWithInt:[[labelMinX stringValue] intValue]]];
+            [self changeSelectedElementsAttribute:EDGraphAttributeScaleX newValue:[[NSNumber alloc] initWithInt:[[labelScaleX stringValue] intValue]]];
+        }
+    }
+    else if ([obj object] == labelScaleY) {
+        // verify that value does not exceed max nor lower than min
+        if (([[labelScaleY stringValue] intValue] > EDGraphScaleMax) || ([[labelScaleY stringValue] intValue] < EDGraphScaleMin)){
+            // if this object has already sent message then do nothing
+            if (_controlTextObj == labelScaleY) {
+                // do nothing
+                _controlTextObj = nil;
+            }
+            else{
+                // save
+                _controlTextObj = [obj object];
+            
+                // error message
+                [graphErrorController initializeSheet:[NSString stringWithFormat:@"Scale Y value must be less than %d and greater than %d", EDGraphScaleMax, EDGraphScaleMin]];
+                
+                // launch error sheet
+                [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorScaleY:returnCode:contextInfo:) contextInfo:nil];
+            }
+        }
+        else{
+            [self changeSelectedElementsAttribute:EDGraphAttributeScaleY newValue:[[NSNumber alloc] initWithInt:[[labelScaleY stringValue] intValue]]];
         }
     }
 }
@@ -589,6 +612,14 @@
 - (void)didEndSheetGraphErrorScaleX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
     [[graphErrorController window] orderOut:self];
     [[[self view] window] makeFirstResponder:labelScaleX];
+    
+    // clear saved object
+    _controlTextObj = nil;
+}
+
+- (void)didEndSheetGraphErrorScaleY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
+    [[graphErrorController window] orderOut:self];
+    [[[self view] window] makeFirstResponder:labelScaleY];
     
     // clear saved object
     _controlTextObj = nil;

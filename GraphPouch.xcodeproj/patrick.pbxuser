@@ -45,11 +45,11 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 379634603;
-			PBXWorkspaceStateSaveDate = 379634603;
+			PBXPerProjectTemplateStateSaveDate = 380589766;
+			PBXWorkspaceStateSaveDate = 380589766;
 		};
 		perUserProjectItems = {
-			CDF4441A16A0C3C900497B8F /* PBXTextBookmark */ = CDF4441A16A0C3C900497B8F /* PBXTextBookmark */;
+			CD87DEFF16AF56CC0013B4F7 /* PBXTextBookmark */ = CD87DEFF16AF56CC0013B4F7 /* PBXTextBookmark */;
 			CDF4441B16A0C3C900497B8F /* PBXTextBookmark */ = CDF4441B16A0C3C900497B8F /* PBXTextBookmark */;
 		};
 		sourceControlManager = CD90E0F516A0C1A500FE9ED1 /* Source Control */;
@@ -61,6 +61,16 @@
 		executables = (
 			CD90E0E716A0C18100FE9ED1 /* GraphPouch */,
 		);
+	};
+	CD87DEFF16AF56CC0013B4F7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = CDE6D66C15E4413100E5695F /* EDAppController.h */;
+		name = "EDAppController.h: 9";
+		rLen = 0;
+		rLoc = 145;
+		rType = 0;
+		vrLen = 341;
+		vrLoc = 0;
 	};
 	CD90E0E716A0C18100FE9ED1 /* GraphPouch */ = {
 		isa = PBXExecutable;
@@ -105,20 +115,10 @@
 	};
 	CDE6D66C15E4413100E5695F /* EDAppController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1411, 552}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1411, 544}}";
 			sepNavSelRange = "{145, 0}";
 			sepNavVisRange = "{0, 341}";
 		};
-	};
-	CDF4441A16A0C3C900497B8F /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = CDE6D66C15E4413100E5695F /* EDAppController.h */;
-		name = "EDAppController.h: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 341;
-		vrLoc = 0;
 	};
 	CDF4441B16A0C3C900497B8F /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
