@@ -160,6 +160,8 @@ extern int const EDGraphValueMaxThresholdMin;
 extern int const EDGraphValueMaxThresholdMax;
 extern int const EDGraphScaleMax;
 extern int const EDGraphScaleMin;
+extern int const EDGraphLabelIntervalMin;
+extern int const EDGraphLabelIntervalMax;
 
 // graph points
 extern NSString *const EDGraphPointAttributeVisible;

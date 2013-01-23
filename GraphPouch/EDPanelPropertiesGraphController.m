@@ -33,6 +33,8 @@
 - (void)didEndSheetGraphErrorMaxX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorScaleX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorScaleY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)didEndSheetGraphErrorLabelIntervalX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)didEndSheetGraphErrorLabelIntervalY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (NSArray *)maxValuesWithoutZero;
 - (NSArray *)maxValuesWithMixed;
 - (NSArray *)maxValues;
@@ -75,7 +77,8 @@
     [self setElementLabel:labelMaxY attribute:EDGraphAttributeMaxValueY];
     [self setElementLabel:labelScaleX attribute:EDGraphAttributeScaleX];
     [self setElementLabel:labelScaleY attribute:EDGraphAttributeScaleY];
-    [self setElementLabel:labelScaleX attribute:EDGraphAttributeScaleX];
+    [self setElementLabel:labelIntervalX attribute:EDGraphAttributeLabelIntervalX];
+    [self setElementLabel:labelIntervalY attribute:EDGraphAttributeLabelIntervalY];
     
 #warning delete this after change
     //[self setGraphPopUpValues];
@@ -434,6 +437,52 @@
             [self changeSelectedElementsAttribute:EDGraphAttributeScaleY newValue:[[NSNumber alloc] initWithInt:[[labelScaleY stringValue] intValue]]];
         }
     }
+    else if ([obj object] == labelIntervalX) {
+        // verify that value does not exceed max nor lower than min
+        if (([[labelIntervalX stringValue] intValue] > EDGraphLabelIntervalMax) || ([[labelIntervalX stringValue] intValue] < EDGraphLabelIntervalMin)){
+            // if this object has already sent message then do nothing
+            if (_controlTextObj == labelIntervalX) {
+                // do nothing
+                _controlTextObj = nil;
+            }
+            else{
+                // save
+                _controlTextObj = [obj object];
+            
+                // error message
+                [graphErrorController initializeSheet:[NSString stringWithFormat:@"X Label Interval value must be less than %d and greater than %d", EDGraphLabelIntervalMax, EDGraphLabelIntervalMin]];
+                
+                // launch error sheet
+                [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorLabelIntervalX:returnCode:contextInfo:) contextInfo:nil];
+            }
+        }
+        else{
+            [self changeSelectedElementsAttribute:EDGraphAttributeLabelIntervalX newValue:[[NSNumber alloc] initWithInt:[[labelIntervalX stringValue] intValue]]];
+        }
+    }
+    else if ([obj object] == labelIntervalY) {
+        // verify that value does not exceed max nor lower than min
+        if (([[labelIntervalY stringValue] intValue] > EDGraphLabelIntervalMax) || ([[labelIntervalY stringValue] intValue] < EDGraphLabelIntervalMin)){
+            // if this object has already sent message then do nothing
+            if (_controlTextObj == labelIntervalY) {
+                // do nothing
+                _controlTextObj = nil;
+            }
+            else{
+                // save
+                _controlTextObj = [obj object];
+            
+                // error message
+                [graphErrorController initializeSheet:[NSString stringWithFormat:@"Y Label Interval value must be less than %d and greater than %d", EDGraphLabelIntervalMax, EDGraphLabelIntervalMin]];
+                
+                // launch error sheet
+                [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorLabelIntervalY:returnCode:contextInfo:) contextInfo:nil];
+            }
+        }
+        else{
+            [self changeSelectedElementsAttribute:EDGraphAttributeLabelIntervalY newValue:[[NSNumber alloc] initWithInt:[[labelIntervalY stringValue] intValue]]];
+        }
+    }
 }
 
 #pragma mark checkbox
@@ -620,6 +669,22 @@
 - (void)didEndSheetGraphErrorScaleY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
     [[graphErrorController window] orderOut:self];
     [[[self view] window] makeFirstResponder:labelScaleY];
+    
+    // clear saved object
+    _controlTextObj = nil;
+}
+
+- (void)didEndSheetGraphErrorLabelIntervalX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
+    [[graphErrorController window] orderOut:self];
+    [[[self view] window] makeFirstResponder:labelIntervalX];
+    
+    // clear saved object
+    _controlTextObj = nil;
+}
+
+- (void)didEndSheetGraphErrorLabelIntervalY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
+    [[graphErrorController window] orderOut:self];
+    [[[self view] window] makeFirstResponder:labelIntervalY];
     
     // clear saved object
     _controlTextObj = nil;

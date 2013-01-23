@@ -160,6 +160,8 @@ int const EDGraphValueMaxThresholdMin                           = 0;
 int const EDGraphValueMaxThresholdMax                           = 1000;
 int const EDGraphScaleMax                                       = 1000;
 int const EDGraphScaleMin                                       = 1;
+int const EDGraphLabelIntervalMax                               = 100;
+int const EDGraphLabelIntervalMin                               = 1;
 
 // graph points
 NSString * const EDGraphPointAttributeVisible                   = @"isVisible";
