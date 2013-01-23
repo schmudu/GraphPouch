@@ -27,12 +27,6 @@
     IBOutlet NSButton *buttonRemovePoints;
     IBOutlet NSButton *buttonRemoveEquation;
     
-#warning need to erase these next four
-    IBOutlet NSPopUpButton *buttonMinX;
-    IBOutlet NSPopUpButton *buttonMinY;
-    IBOutlet NSPopUpButton *buttonMaxX;
-    IBOutlet NSPopUpButton *buttonMaxY;
-    
     IBOutlet NSTextField *labelMinX;
     IBOutlet NSTextField *labelMinY;
     IBOutlet NSTextField *labelMaxX;
@@ -56,8 +50,4 @@
 - (IBAction)removeEquation:(id)sender;
 - (IBAction)addNewPoint:(id)sender;
 - (IBAction)removePoints:(id)sender;
-- (IBAction)changeValueMinX:(id)sender;
-- (IBAction)changeValueMinY:(id)sender;
-- (IBAction)changeValueMaxX:(id)sender;
-- (IBAction)changeValueMaxY:(id)sender;
 @end
