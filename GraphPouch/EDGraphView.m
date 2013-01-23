@@ -256,9 +256,7 @@
     NSBezierPath *path = [NSBezierPath bezierPath];
     NSBezierPath *outlinePath = [NSBezierPath bezierPath];
     int numGridLines = [[gridInfoVertical objectForKey:EDKeyNumberGridLinesPositive] intValue];
-    //int numGridLines = [[[self dataObj] maxValueY] intValue]/[[[self dataObj] scaleY] intValue];
     float distanceIncrement = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
-    //NSLog(@"going to draw vertical gride: label interval y:%d y scale:%d", [[[self dataObj] labelIntervalY] intValue], [[[self dataObj] scaleY] intValue]);
     float originPosVertical = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
     float originPosHorizontal = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
     
@@ -443,96 +441,12 @@
     distanceIncrement = referenceLength/(maxAxisValue/(float)scale);
     numGridLinesNegative = fabsf(minValue)/(float)scale;
     numGridLinesPositive = maxValue/(float)scale;
-    //NSLog(@"total length:%f distance increment:%f reference length:%f max Axis value:%f num grid lines pos:%f", length, distanceIncrement, referenceLength, maxAxisValue, numGridLinesPositive);
     
     [results setObject:[[NSNumber alloc] initWithFloat:distanceIncrement] forKey:EDKeyDistanceIncrement];
     [results setObject:[[NSNumber alloc] initWithInt:scale] forKey:EDKeyGridFactor];
     [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesNegative] forKey:EDKeyNumberGridLinesNegative];
     [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesPositive] forKey:EDKeyNumberGridLinesPositive];
     return results;
-    /*
-     // determine how to divide lengths based on the ratio
-    lengthPositive = ((ratio + 1)/2) * length;
-    lengthNegative = length - lengthPositive;
-    
-    // ratio defines which side is going to define the increment
-    if (ratio>0){
-        referenceLength = lengthPositive;
-        maxAxisValue = fabsf(maxValue);
-    }
-    else{
-        referenceLength = lengthNegative;
-        maxAxisValue = fabsf(minValue);
-    }
-    
-    // get factors
-    //NSArray *factors = [self getLowestFactors:maxAxisValue];
-    
-    // check if distance falls within bounds
-    //for (NSNumber *factor in factors){
-    numGridLines = maxAxisValue/scale;
-    distanceIncrement = referenceLength/numGridLines;
-        
-    // define number of grid lines
-    numGridLinesNegative = fabs(minValue)/scale;
-    numGridLinesPositive = maxValue/scale;
-            
-    
-        // if grid distance falls within the bounds of the thresholds then return that value
-        //if ((distanceIncrement < EDGridIncrementalMaximum) && (distanceIncrement > EDGridIncrementalMinimum)){
-            [results setObject:[[NSNumber alloc] initWithFloat:[factor floatValue]] forKey:EDKeyGridFactor];
-            [results setObject:[[NSNumber alloc] initWithFloat:distanceIncrement] forKey:EDKeyDistanceIncrement];
-            [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesNegative] forKey:EDKeyNumberGridLinesNegative];
-            [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesPositive] forKey:EDKeyNumberGridLinesPositive];
-            //NSLog(@"results:%@", results);
-            return results;
-        }
-    //}
-     */
-    /*
-    numGridLinesNegative = minValue;
-    numGridLinesPositive = maxValue;
-    
-    // by default return grid the size of the maximum value
-    [results setObject:[[NSNumber alloc] initWithFloat:(referenceLength/maxValue)] forKey:EDKeyDistanceIncrement];
-    [results setObject:[[NSNumber alloc] initWithInt:1] forKey:EDKeyGridFactor];
-    [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesNegative] forKey:EDKeyNumberGridLinesNegative];
-    [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesPositive] forKey:EDKeyNumberGridLinesPositive];
-    return results;
-    */
-    /*
-    NSArray *factors = [self getLowestFactors:maxAxisValue];
-    
-    // check if distance falls within bounds
-    for (NSNumber *factor in factors){
-        numGridLines = maxAxisValue/[factor floatValue];
-        distanceIncrement = referenceLength/numGridLines;
-        
-        // define number of grid lines
-        numGridLinesNegative = fabs(minValue)/[factor floatValue];
-        numGridLinesPositive = maxValue/[factor floatValue];
-            
-        
-        // if grid distance falls within the bounds of the thresholds then return that value
-        if ((distanceIncrement < EDGridIncrementalMaximum) && (distanceIncrement > EDGridIncrementalMinimum)){
-            [results setObject:[[NSNumber alloc] initWithFloat:[factor floatValue]] forKey:EDKeyGridFactor];
-            [results setObject:[[NSNumber alloc] initWithFloat:distanceIncrement] forKey:EDKeyDistanceIncrement];
-            [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesNegative] forKey:EDKeyNumberGridLinesNegative];
-            [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesPositive] forKey:EDKeyNumberGridLinesPositive];
-            //NSLog(@"results:%@", results);
-            return results;
-        }
-    }
-    numGridLinesNegative = minValue;
-    numGridLinesPositive = maxValue;
-    
-    // by default return grid the size of the maximum value
-    [results setObject:[[NSNumber alloc] initWithFloat:(referenceLength/maxValue)] forKey:EDKeyDistanceIncrement];
-    [results setObject:[[NSNumber alloc] initWithInt:1] forKey:EDKeyGridFactor];
-    [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesNegative] forKey:EDKeyNumberGridLinesNegative];
-    [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesPositive] forKey:EDKeyNumberGridLinesPositive];
-    return results;
-     */
 }
 
 - (NSMutableDictionary *)calculateGraphOrigin{
@@ -590,6 +504,10 @@
     
     // draw positive x labels
     for (int i=1; i<=numGridLinesHorizontal; i++) {
+        // only draw labels needed
+        if (i % [[[self dataObj] labelIntervalX] intValue] != 0)
+            continue;
+        
         numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 40, 20)];
         [numberField setStringValue:[[NSString alloc] initWithFormat:@"%d", i * [[gridInfoHorizontal objectForKey:EDKeyGridFactor] intValue]]];
         [numberField setBezeled:FALSE];
@@ -609,6 +527,10 @@
     // draw negative x labels
     numGridLinesHorizontal = [[gridInfoHorizontal objectForKey:EDKeyNumberGridLinesNegative] intValue];
     for (int i=1; i<=numGridLinesHorizontal; i++) {
+        // only draw labels needed
+        if (i % [[[self dataObj] labelIntervalX] intValue] != 0)
+            continue;
+        
         numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 40, 20)];
         [numberField setStringValue:[[NSString alloc] initWithFormat:@"-%d", i * [[gridInfoHorizontal objectForKey:EDKeyGridFactor] intValue]]];
         [numberField setBezeled:FALSE];
@@ -627,6 +549,10 @@
     
     // draw positive y labels
     for (int i=1; i<=numGridLinesVertical; i++) {
+        // only draw labels needed
+        if (i % [[[self dataObj] labelIntervalY] intValue] != 0)
+            continue;
+        
         numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 40, 20)];
         [numberField setStringValue:[[NSString alloc] initWithFormat:@"%d", i * [[gridInfoVertical objectForKey:EDKeyGridFactor] intValue]]];
         [numberField setBezeled:FALSE];
@@ -646,6 +572,10 @@
     // draw negative y labels
     numGridLinesVertical = [[gridInfoVertical objectForKey:EDKeyNumberGridLinesNegative] intValue];
     for (int i=1; i<=numGridLinesVertical; i++) {
+        // only draw labels needed
+        if (i % [[[self dataObj] labelIntervalY] intValue] != 0)
+            continue;
+        
         numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 40, 20)];
         [numberField setStringValue:[[NSString alloc] initWithFormat:@"-%d", i * [[gridInfoVertical objectForKey:EDKeyGridFactor] intValue]]];
         [numberField setBezeled:FALSE];
