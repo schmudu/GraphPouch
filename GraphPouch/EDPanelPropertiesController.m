@@ -110,12 +110,18 @@
         if(!graphController){
             graphController = [[EDPanelPropertiesGraphController alloc] initWithNibName:@"EDPanelPropertiesGraph" bundle:nil];
         }
+        // set window title
+        [[self window] setTitle:@"Graph Properties"];
+            
         viewController = graphController;
     }
     else {
         if(!documentController){
             documentController = [[EDPanelPropertiesDocumentController alloc] initWithNibName:@"EDPanelPropertiesDocument" bundle:nil];
         }
+        // set window title
+        [[self window] setTitle:@"Properties"];
+            
         viewController = documentController;
     }
     
