@@ -485,14 +485,14 @@
 		CD3F0AF815C4776100AB7567 /* Worksheet */ = {
 			isa = PBXGroup;
 			children = (
-				CD41B54B15BB024C00640E73 /* EDWorksheetView.h */,
-				CD41B54C15BB024C00640E73 /* EDWorksheetView.m */,
 				CDF62EA616A8F3F700DCDD2D /* EDMainContentView.h */,
 				CDF62EA716A8F3F700DCDD2D /* EDMainContentView.m */,
-				CDF62E9A16A8ACBC00DCDD2D /* EDWorksheetScrollView.h */,
-				CDF62E9B16A8ACBD00DCDD2D /* EDWorksheetScrollView.m */,
 				CDF62E9D16A8B59700DCDD2D /* EDWorksheetClipView.h */,
 				CDF62E9E16A8B59900DCDD2D /* EDWorksheetClipView.m */,
+				CDF62E9A16A8ACBC00DCDD2D /* EDWorksheetScrollView.h */,
+				CDF62E9B16A8ACBD00DCDD2D /* EDWorksheetScrollView.m */,
+				CD41B54B15BB024C00640E73 /* EDWorksheetView.h */,
+				CD41B54C15BB024C00640E73 /* EDWorksheetView.m */,
 				CD41B54E15BB046B00640E73 /* EDWorksheetViewController.h */,
 				CD41B54F15BB046B00640E73 /* EDWorksheetViewController.m */,
 				CD3F0B0115C4784A00AB7567 /* Line */,

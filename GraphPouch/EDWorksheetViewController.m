@@ -21,6 +21,7 @@
 - (void)onWindowResized:(NSNotification *)note;
 - (void)cutSelectedElements:(NSNotification *)note;
 - (void)pasteElements:(NSNotification *)note;
+- (void)copyElements:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetViewController
@@ -48,6 +49,7 @@
     [_nc addObserver:self selector:@selector(alignElementsToTop:) name:EDEventMenuAlignTop object:nil];
     [_nc addObserver:self selector:@selector(cutSelectedElements:) name:EDEventShortcutCut object:[self view]];
     [_nc addObserver:self selector:@selector(pasteElements:) name:EDEventShortcutPaste object:[self view]];
+    [_nc addObserver:self selector:@selector(copyElements:) name:EDEventShortcutCopy object:[self view]];
     
     // initialize view to display all of the worksheet elements
     [(EDWorksheetView *)[self view] drawLoadedObjects];
@@ -114,6 +116,14 @@
     [[NSPasteboard generalPasteboard] writeObjects:copiedElements];
     
     [EDCoreDataUtility deleteSelectedWorksheetElements:_context];
+}
+
+- (void)copyElements:(NSNotification *)note{
+    // copy elements to pasteboard
+    NSMutableArray *copiedElements = [EDCoreDataUtility copySelectedWorksheetElements:_context];
+    
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] writeObjects:copiedElements];
 }
 
 - (void)pasteElements:(NSNotification *)note{

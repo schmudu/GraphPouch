@@ -57,6 +57,10 @@
     [graph setLocationX:[self locationX]];
     [graph setLocationY:[self locationY]];
     [graph setSelected:[self selected]];
+    [graph setScaleX:[self scaleX]];
+    [graph setScaleY:[self scaleY]];
+    [graph setLabelIntervalX:[self labelIntervalX]];
+    [graph setLabelIntervalY:[self labelIntervalY]];
     
     // copy points
     for (EDPoint *point in [self points]){
@@ -84,6 +88,10 @@
         [self setLocationY:[aDecoder decodeFloatForKey:EDElementAttributeLocationY]];
         [self setElementWidth:[aDecoder decodeFloatForKey:EDElementAttributeWidth]];
         [self setElementHeight:[aDecoder decodeFloatForKey:EDElementAttributeHeight]];
+        [self setScaleX:[aDecoder decodeObjectForKey:EDGraphAttributeScaleX]];
+        [self setScaleY:[aDecoder decodeObjectForKey:EDGraphAttributeScaleY]];
+        [self setLabelIntervalX:[aDecoder decodeObjectForKey:EDGraphAttributeLabelIntervalX]];
+        [self setLabelIntervalY:[aDecoder decodeObjectForKey:EDGraphAttributeLabelIntervalY]];
         
         //EDPoint *newPoint;
         NSSet *points = [aDecoder decodeObjectForKey:EDGraphAttributePoints];
@@ -124,6 +132,10 @@
     [aCoder encodeFloat:[self elementHeight] forKey:EDElementAttributeHeight];
     [aCoder encodeObject:[self points] forKey:EDGraphAttributePoints];
     [aCoder encodeObject:[self equations] forKey:EDGraphAttributeEquations];
+    [aCoder encodeObject:[self scaleX] forKey:EDGraphAttributeScaleX];
+    [aCoder encodeObject:[self scaleY] forKey:EDGraphAttributeScaleY];
+    [aCoder encodeObject:[self labelIntervalX] forKey:EDGraphAttributeLabelIntervalX];
+    [aCoder encodeObject:[self labelIntervalY] forKey:EDGraphAttributeLabelIntervalY];
 }
 
 
