@@ -28,6 +28,10 @@
 @dynamic minValueY;
 @dynamic maxValueX;
 @dynamic maxValueY;
+@dynamic scaleX;
+@dynamic scaleY;
+@dynamic labelIntervalX;
+@dynamic labelIntervalY;
 
 
 - (EDGraph *)initWithContext:(NSManagedObjectContext *)context{
