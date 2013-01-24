@@ -281,6 +281,7 @@
     
     // draw positive horizontal lines starting from origin
     for (int i=0; i<=numGridLines; i++) {
+#warning all of these if statements are the same
         if ([[[self dataObj] minValueX] intValue] == 0){
             [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical - i*distanceIncrement)];
             [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + [self graphWidth], originPosVertical - i*distanceIncrement)];

@@ -15,7 +15,7 @@
 #import "EDGraph.h"
 
 @interface EDPageViewContainer()
-- (NSMutableDictionary *)calculateGraphOrigin:(EDGraph *)graph height:(float)graphHeight width:(float)graphWidth;
+- (NSMutableDictionary *)calculateGraphOrigin:(EDGraph *)graph height:(float)graphHeight width:(float)graphWidth xRatio:(float)xRatio yRatio:(float)yRatio;
 - (void)onContextChanged:(NSNotification *)note;
 - (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length scale:(int)scale;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo width:(float)graphWidth height:(float)graphHeight graph:(EDGraph *)graph;
@@ -67,9 +67,9 @@
         // draw graph in that position
         graphWidth = xRatio * ([graph elementWidth] - [EDGraphView graphMargin] * 2);
         graphHeight = yRatio * ([graph elementHeight] - [EDGraphView graphMargin] * 2);
-        originInfo = [self calculateGraphOrigin:graph height:graphHeight width:graphWidth];
+        originInfo = [self calculateGraphOrigin:graph height:graphHeight width:graphWidth xRatio:xRatio yRatio:yRatio];
         horizontalResults = [self calculateGridIncrement:[[graph maxValueX] floatValue] minValue:[[graph minValueX] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] length:graphWidth scale:[[graph scaleX] intValue]];
-        horizontalResults = [self calculateGridIncrement:[[graph maxValueY] floatValue] minValue:[[graph minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:graphHeight scale:[[graph scaleY] intValue]];
+        verticalResults = [self calculateGridIncrement:[[graph maxValueY] floatValue] minValue:[[graph minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:graphHeight scale:[[graph scaleY] intValue]];
         
         // draw border
         path = [NSBezierPath bezierPathWithRect:NSMakeRect(xRatio * ([EDGraphView graphMargin] + [graph locationX]),
@@ -80,7 +80,9 @@
         [path stroke];
         
         // draw grid
-        [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults origin:originInfo width:graphWidth height:graphHeight graph:graph];
+        if ([graph hasGridLines]) {
+            [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults origin:originInfo width:graphWidth height:graphHeight graph:graph];
+        }
     }
 }
 
@@ -102,16 +104,17 @@
 }
 
 #pragma mark draw graphs
-- (NSMutableDictionary *)calculateGraphOrigin:(EDGraph *)graph height:(float)graphHeight width:(float)graphWidth{
+- (NSMutableDictionary *)calculateGraphOrigin:(EDGraph *)graph height:(float)graphHeight width:(float)graphWidth xRatio:(float)xRatio yRatio:(float)yRatio{
     NSMutableDictionary *results = [NSMutableDictionary dictionary];
     
     int absDistanceHoriz = abs([[graph minValueX] intValue]) + abs([[graph maxValueX] intValue]);
     int absDistanceVertical = abs([[graph minValueX]intValue]) + abs([[graph maxValueY] intValue]);
     float ratioHoriz = ([[graph minValueX] floatValue] + [[graph maxValueX] floatValue])/absDistanceHoriz;
     float ratioVertical = ([[graph minValueY] floatValue]+ [[graph maxValueY] floatValue])/absDistanceVertical;
-    float originVerticalPosition = graphHeight/2 + (ratioVertical * graphHeight/2) + [EDGraphView graphMargin];
-    float originHorizontalPosition = graphWidth/2 - (ratioHoriz * graphWidth/2) + [EDGraphView graphMargin];
-    
+    //float originVerticalPosition = graphHeight/2 + (ratioVertical * graphHeight/2) + [EDGraphView graphMargin]*yRatio;
+    //float originHorizontalPosition = graphWidth/2 - (ratioHoriz * graphWidth/2) + [EDGraphView graphMargin]*xRatio;
+    float originVerticalPosition = graphHeight/2 + (ratioVertical * graphHeight/2);
+    float originHorizontalPosition = graphWidth/2 - (ratioHoriz * graphWidth/2);
     [results setValue:[NSNumber numberWithFloat:ratioHoriz] forKey:EDKeyRatioHorizontal];
     [results setValue:[NSNumber numberWithFloat:ratioVertical] forKey:EDKeyRatioVertical];
     [results setValue:[NSNumber numberWithFloat:originHorizontalPosition] forKey:EDKeyOriginPositionHorizontal];
@@ -159,65 +162,51 @@
     float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
     float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
     
-    [[NSColor redColor] setStroke];
-    
     /*
-        path = [NSBezierPath bezierPathWithRect:NSMakeRect(xRatio * ([EDGraphView graphMargin] + [graph locationX]),
+     [NSBezierPath setDefaultLineWidth:EDPageViewGraphBorderLineWidth];
+    [[NSColor redColor] setStroke];
+     path = [NSBezierPath bezierPathWithRect:NSMakeRect(xRatio * ([EDGraphView graphMargin] + [graph locationX]),
                                                            yRatio * ([graph locationY] + [EDGraphView graphMargin]),
                                                            graphWidth,
                                                            graphHeight)];
-     */
     
     // draw top/bottom of grid
-#warning the next four lines work
     [outlinePath moveToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY]) * yRatio)];
     [outlinePath lineToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]) + graphWidth, ([EDGraphView graphMargin]+[graph locationY]) * yRatio)];
     [outlinePath moveToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY]) * yRatio + graphHeight)];
     [outlinePath lineToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]) + graphWidth, ([EDGraphView graphMargin]+[graph locationY]) * yRatio + graphHeight)];
     
     // draw right/left side of grid
-    [outlinePath moveToPoint:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
-    [outlinePath lineToPoint:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin] + graphHeight)];
-    [outlinePath moveToPoint:NSMakePoint([EDGraphView graphMargin] + graphWidth, [EDGraphView graphMargin])];
-    [outlinePath lineToPoint:NSMakePoint([EDGraphView graphMargin] + graphWidth, [EDGraphView graphMargin] + graphHeight)];
+    [outlinePath moveToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY]) * yRatio)];
+    [outlinePath lineToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY]) * yRatio + graphHeight)];
+    [outlinePath moveToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]) + graphWidth, ([EDGraphView graphMargin]+[graph locationY]) * yRatio)];
+    [outlinePath lineToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]) + graphWidth, ([EDGraphView graphMargin]+[graph locationY]) * yRatio + graphHeight)];
     
     [outlinePath stroke];
+     */
     
-    /*
     // set stroke
     [[NSColor colorWithHexColorString:EDGridColor alpha:EDGridAlpha] setStroke];
-    
+    [NSBezierPath setDefaultLineWidth:0.5];
     // draw positive horizontal lines starting from origin
     for (int i=0; i<=numGridLines; i++) {
-        if ([[graph minValueX] intValue] == 0){
-            [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical - i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + graphWidth, originPosVertical - i*distanceIncrement)];
-        }
-        else if ([[graph maxValueX] intValue] == 0){
-            [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical - i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + graphWidth, originPosVertical - i*distanceIncrement)];
-        }
-        else{
-            [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical - i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + graphWidth, originPosVertical - i*distanceIncrement)];
-        }
+        // no need to draw all of the lines
+        if (i % EDPageViewGraphBorderDrawMultiplier != 0)
+            continue;
+            
+        [path moveToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY])*yRatio+originPosVertical - i*distanceIncrement)];
+        [path lineToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]) + graphWidth, ([EDGraphView graphMargin]+[graph locationY])*yRatio+originPosVertical - i*distanceIncrement)];
     }
     
      // draw negative horizontal lines starting from origin
     numGridLines = abs([[gridInfoVertical objectForKey:EDKeyNumberGridLinesNegative] intValue]);
     for (int i=0; i<=numGridLines; i++) {
-        if ([[graph minValueX] intValue] == 0){
-            [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical + i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + graphWidth, originPosVertical + i*distanceIncrement)];
-        }
-        else if ([[graph maxValueX] intValue] == 0){
-            [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical + i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + graphWidth, originPosVertical + i*distanceIncrement)];
-        }
-        else{
-            [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical + i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + graphWidth, originPosVertical + i*distanceIncrement)];
-        }
+        // no need to draw all of the lines
+        if (i % EDPageViewGraphBorderDrawMultiplier != 0)
+            continue;
+            
+        [path moveToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY])*yRatio+originPosVertical + i*distanceIncrement)];
+        [path lineToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]) + graphWidth, ([EDGraphView graphMargin]+[graph locationY])*yRatio+originPosVertical + i*distanceIncrement)];
     }
     
      // grid lines multiplied by 2 because the calculation only covers half the axis
@@ -227,38 +216,24 @@
     // draw positive vertical lines
     //NSLog(@"frame height:%f graph view height:%f graph height:%f margin:%f graphMargin:%f", [self frame].size.height, [self height], graphHeight, [EDGraphView margin], [EDGraphView graphMargin]);
     for (int i=0; i<=numGridLines; i++) {
-        if ([[graph minValueY] intValue] == 0){
-            [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [EDGraphView graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, graphHeight + [EDGraphView graphMargin])];
-        }
-        else if ([[graph maxValueY] intValue] == 0){
-            [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [EDGraphView graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, graphHeight + [EDGraphView graphMargin])];
-        }
-        else{
-            [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [EDGraphView graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, graphHeight + [EDGraphView graphMargin])];
-        }
+        // no need to draw all of the lines
+        if (i % EDPageViewGraphBorderDrawMultiplier != 0)
+            continue;
+            
+        [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement + xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY])*yRatio)];
+        [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement + xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY])*yRatio+graphHeight)];
     }
     
     numGridLines = [[gridInfoHorizontal objectForKey:EDKeyNumberGridLinesNegative] intValue];
     // draw negative vertical lines
     for (int i=0; i<=numGridLines; i++) {
-        if ([[graph minValueY] intValue] == 0){
-            [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [EDGraphView graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, graphHeight + [EDGraphView graphMargin])];
-        }
-        else if ([[graph maxValueY] intValue] == 0){
-            [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [EDGraphView graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, graphHeight + [EDGraphView graphMargin])];
-        }
-        else{
-            [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [EDGraphView graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, graphHeight + [EDGraphView graphMargin])];
-        }
+        // no need to draw all of the lines
+        if (i % EDPageViewGraphBorderDrawMultiplier != 0)
+            continue;
+            
+        [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement + xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY])*yRatio)];
+        [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement + xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY])*yRatio+graphHeight)];
     }
-    
     [path stroke];
-     */
 }
 @end

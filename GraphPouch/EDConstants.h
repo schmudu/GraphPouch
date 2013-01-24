@@ -203,6 +203,7 @@ extern float const EDPageViewDragPosX;
 extern float const EDPageViewDragOffsetY;
 extern float const EDPageViewDragWidth;
 extern float const EDPageViewDragLength;
+extern int const EDPageViewGraphBorderDrawMultiplier;
 
 // page
 extern NSString *const EDPageAttributePageNumber;

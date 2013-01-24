@@ -205,6 +205,7 @@ float const EDPageViewDragOffsetY                               = -5;
 float const EDPageViewDragWidth                                 = 80;
 float const EDPageViewDragLength                                = 10;
 float const EDPagesViewWidth                                    = 140;
+int const EDPageViewGraphBorderDrawMultiplier                   = 2;
 
 // page view
 NSString * const EDPageAttributePageNumber                      = @"pageNumber";
