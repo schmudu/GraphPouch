@@ -156,14 +156,24 @@
     float distanceIncrement = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     float originPosVertical = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
     float originPosHorizontal = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
+    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
+    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
     
     [[NSColor redColor] setStroke];
     
+    /*
+        path = [NSBezierPath bezierPathWithRect:NSMakeRect(xRatio * ([EDGraphView graphMargin] + [graph locationX]),
+                                                           yRatio * ([graph locationY] + [EDGraphView graphMargin]),
+                                                           graphWidth,
+                                                           graphHeight)];
+     */
+    
     // draw top/bottom of grid
-    [outlinePath moveToPoint:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
-    [outlinePath lineToPoint:NSMakePoint([EDGraphView graphMargin] + graphWidth, [EDGraphView graphMargin])];
-    [outlinePath moveToPoint:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin] + graphHeight)];
-    [outlinePath lineToPoint:NSMakePoint([EDGraphView graphMargin] + graphWidth, [EDGraphView graphMargin] + graphHeight)];
+#warning the next four lines work
+    [outlinePath moveToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY]) * yRatio)];
+    [outlinePath lineToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]) + graphWidth, ([EDGraphView graphMargin]+[graph locationY]) * yRatio)];
+    [outlinePath moveToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY]) * yRatio + graphHeight)];
+    [outlinePath lineToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]) + graphWidth, ([EDGraphView graphMargin]+[graph locationY]) * yRatio + graphHeight)];
     
     // draw right/left side of grid
     [outlinePath moveToPoint:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
@@ -173,6 +183,7 @@
     
     [outlinePath stroke];
     
+    /*
     // set stroke
     [[NSColor colorWithHexColorString:EDGridColor alpha:EDGridAlpha] setStroke];
     
@@ -248,5 +259,6 @@
     }
     
     [path stroke];
+     */
 }
 @end
