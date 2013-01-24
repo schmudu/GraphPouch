@@ -19,7 +19,6 @@
 @interface EDPageView()
 - (void)onContextChanged:(NSNotification *)note;
 - (void)setPageAsCurrent;
-//- (void)drawGraphs;
 @end
 
 @implementation EDPageView
@@ -316,5 +315,6 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeBool:_highlighted forKey:EDPageViewAttributeHighlighted];
     [aCoder encodeObject:_dataObj forKey:EDPageViewAttributeDataObject];
+    
 }
 @end
