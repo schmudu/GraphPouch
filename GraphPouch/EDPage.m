@@ -87,4 +87,12 @@
     }
     return result;
 }
+
+- (NSArray *)getAllWorksheetObjects{
+    NSMutableArray *elements = [NSMutableArray array];
+    
+#warning add other elements here
+    [elements addObjectsFromArray:[[self graphs] allObjects]];
+    return elements;
+}
 @end

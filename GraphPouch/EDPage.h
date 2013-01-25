@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSNumber *pageNumber;
 @property (nonatomic, retain) NSSet *graphs;
 - (BOOL)containsObject:(NSManagedObject *)object;
+- (NSArray *)getAllWorksheetObjects;
 @end
 
 @interface EDPage (CoreDataGeneratedAccessors)

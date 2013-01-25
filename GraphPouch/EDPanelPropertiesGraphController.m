@@ -206,14 +206,13 @@
 - (NSMutableDictionary *)checkForSameIntValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSMutableArray *elements = [[NSMutableArray alloc] init];
-    NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
+    elements = [EDCoreDataUtility getAllWorksheetElements:_context];
+    
     BOOL diff = FALSE;
     int i = 0;
     float value = 0;
     EDElement *currentElement;
     
-#warning add other elements here
-    [elements addObjectsFromArray:graphs];
     while ((i < [elements count]) && (!diff)) {
         currentElement = [elements objectAtIndex:i];
         // if not the first and current width is not the same as previous width
@@ -358,7 +357,12 @@
         // verify that max is not 0 and then min x is greater than -100
         if ((([[labelMinY stringValue] intValue] == 0) && ([[labelMaxY stringValue] intValue] == 0)) || ([[labelMaxY stringValue] intValue] > EDGraphValueMaxThresholdMax) || ([[labelMaxY stringValue] intValue] < EDGraphValueMaxThresholdMin)){
             // if this object has already sent message then do nothing
-            if (_controlTextObj == labelMaxY) {
+            if (_controlTextObj == labelMinY) {
+                // special: since min/max cannot both be 0
+                // do nothing
+                _controlTextObj = nil;
+            }
+            else if (_controlTextObj == labelMaxY) {
                 // do nothing
                 _controlTextObj = nil;
             }

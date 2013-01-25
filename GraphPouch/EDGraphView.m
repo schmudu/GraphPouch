@@ -281,36 +281,15 @@
     
     // draw positive horizontal lines starting from origin
     for (int i=0; i<=numGridLines; i++) {
-#warning all of these if statements are the same
-        if ([[[self dataObj] minValueX] intValue] == 0){
-            [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical - i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + [self graphWidth], originPosVertical - i*distanceIncrement)];
-        }
-        else if ([[[self dataObj] maxValueX] intValue] == 0){
-            [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical - i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + [self graphWidth], originPosVertical - i*distanceIncrement)];
-        }
-        else{
-            [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical - i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + [self graphWidth], originPosVertical - i*distanceIncrement)];
-        }
+        [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical - i*distanceIncrement)];
+        [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + [self graphWidth], originPosVertical - i*distanceIncrement)];
     }
     
      // draw negative horizontal lines starting from origin
     numGridLines = abs([[gridInfoVertical objectForKey:EDKeyNumberGridLinesNegative] intValue]);
     for (int i=0; i<=numGridLines; i++) {
-        if ([[[self dataObj] minValueX] intValue] == 0){
-            [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical + i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + [self graphWidth], originPosVertical + i*distanceIncrement)];
-        }
-        else if ([[[self dataObj] maxValueX] intValue] == 0){
-            [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical + i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + [self graphWidth], originPosVertical + i*distanceIncrement)];
-        }
-        else{
-            [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical + i*distanceIncrement)];
-            [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + [self graphWidth], originPosVertical + i*distanceIncrement)];
-        }
+        [path moveToPoint:NSMakePoint([EDGraphView graphMargin], originPosVertical + i*distanceIncrement)];
+        [path lineToPoint:NSMakePoint([EDGraphView graphMargin] + [self graphWidth], originPosVertical + i*distanceIncrement)];
     }
     
      // grid lines multiplied by 2 because the calculation only covers half the axis
@@ -318,37 +297,16 @@
     distanceIncrement = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
     
     // draw positive vertical lines
-    //NSLog(@"frame height:%f graph view height:%f graph height:%f margin:%f graphMargin:%f", [self frame].size.height, [self height], [self graphHeight], [EDGraphView margin], [EDGraphView graphMargin]);
     for (int i=0; i<=numGridLines; i++) {
-        if ([[[self dataObj] minValueY] intValue] == 0){
-            [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [EDGraphView graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphHeight] + [EDGraphView graphMargin])];
-        }
-        else if ([[[self dataObj] maxValueY] intValue] == 0){
-            [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [EDGraphView graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphHeight] + [EDGraphView graphMargin])];
-        }
-        else{
-            [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [EDGraphView graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphHeight] + [EDGraphView graphMargin])];
-        }
+        [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [EDGraphView graphMargin])];
+        [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement, [self graphHeight] + [EDGraphView graphMargin])];
     }
     
     numGridLines = [[gridInfoHorizontal objectForKey:EDKeyNumberGridLinesNegative] intValue];
     // draw negative vertical lines
     for (int i=0; i<=numGridLines; i++) {
-        if ([[[self dataObj] minValueY] intValue] == 0){
-            [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [EDGraphView graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [self graphHeight] + [EDGraphView graphMargin])];
-        }
-        else if ([[[self dataObj] maxValueY] intValue] == 0){
-            [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [EDGraphView graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [self graphHeight] + [EDGraphView graphMargin])];
-        }
-        else{
-            [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [EDGraphView graphMargin])];
-            [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [self graphHeight] + [EDGraphView graphMargin])];
-        }
+        [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [EDGraphView graphMargin])];
+        [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement, [self graphHeight] + [EDGraphView graphMargin])];
     }
     
     [path stroke];

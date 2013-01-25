@@ -218,7 +218,8 @@
     }
     
     // pass in value, other tests exist within calculate
-    float testResult = [EDParser calculate:parsedTokens error:&error context:_context varValue:5.0];
+    [EDParser calculate:parsedTokens error:&error context:_context varValue:5.0];
+    
     if (error) {
         NSLog(@"error by calculating results.");
         [self showError:error];

@@ -132,7 +132,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [[NSColor whiteColor] set];
     [NSBezierPath fillRect:bounds];
     
-#warning add other elements here
     // draw only the closest guides
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -266,7 +265,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             if (([[myElement className] isEqualToString:EDEntityNameGraph]) && (newPage == [(EDGraph *)myElement page])) {
                 [self drawGraph:(EDGraph *)myElement];
             }
-    #warning add other elements here, need drawLabel, drawLine
+#warning add other drawing elements here
         }
         
         // delete elements
@@ -554,13 +553,14 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     for (EDGraph *graph in [currentPage graphs]){
         [self drawGraph:graph];
     }
-#warning add other elements here
+#warning add other drawing elements here
 }
 
 - (void)removeAllElements:(EDPage *)page{
-    // iterate through all objects for page 
-#warning add other elements here, to worksheetElements set
-    NSSet *worksheetElements = [page graphs];
+    // iterate through all objects for page
+    
+    //NSSet *worksheetElements = [page graphs];
+    NSArray *worksheetElements = [page getAllWorksheetObjects];
     
     // remove transform rects
     for (EDElement *element in worksheetElements){
