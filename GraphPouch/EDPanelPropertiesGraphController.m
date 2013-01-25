@@ -278,7 +278,16 @@
         // verify that value does not exceed max nor lower than min
         // both values cannot be zero
         if ((([[labelMinX stringValue] intValue] == 0) && ([[labelMaxX stringValue] intValue] == 0)) || ([[labelMinX stringValue] intValue] > EDGraphValueMinThresholdMax) || ([[labelMinX stringValue] intValue] < EDGraphValueMinThresholdMin)){
-            // if this object has already sent message then do nothing
+            // if this object has already sent message then do not show sheet
+            if (_controlTextObj == labelMaxX) {
+#warning change tab order on interface then change this special condition
+                // special: since min/max cannot both be 0
+                // restore previous value
+                [self setElementLabel:labelMaxX attribute:EDGraphAttributeMaxValueX];
+                
+                // do nothing
+                _controlTextObj = [obj object];
+            }
             if (_controlTextObj == labelMinX) {
                 // do nothing
                 _controlTextObj = nil;
@@ -296,6 +305,9 @@
                 // launch error sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMinX:returnCode:contextInfo:) contextInfo:nil];
             }
+            
+            // reset value
+            [self setElementLabel:labelMinX attribute:EDGraphAttributeMinValueX];
         }
         else{
             [self changeSelectedElementsAttribute:EDGraphAttributeMinValueX newValue:[[NSNumber alloc] initWithInt:[[labelMinX stringValue] intValue]]];
@@ -306,7 +318,16 @@
         // both values cannot be zero
         if ((([[labelMinX stringValue] intValue] == 0) && ([[labelMaxX stringValue] intValue] == 0)) || ([[labelMaxX stringValue] intValue] > EDGraphValueMaxThresholdMax) || ([[labelMaxX stringValue] intValue] < EDGraphValueMaxThresholdMin)){
             // if this object has already sent message then do nothing
-            if (_controlTextObj == labelMaxX) {
+            if (_controlTextObj == labelMinX) {
+#warning change tab order on interface then change this special condition
+                // special: since min/max cannot both be 0
+                // restore previous value
+                [self setElementLabel:labelMinX attribute:EDGraphAttributeMinValueX];
+                
+                // do nothing
+                _controlTextObj = [obj object];
+            }
+            else if (_controlTextObj == labelMaxX) {
                 // do nothing
                 _controlTextObj = nil;
             }
@@ -323,6 +344,9 @@
                 // launch error sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMaxX:returnCode:contextInfo:) contextInfo:nil];
             }
+            
+            // reset value
+            [self setElementLabel:labelMaxX attribute:EDGraphAttributeMaxValueX];
         }
         else{
             [self changeSelectedElementsAttribute:EDGraphAttributeMaxValueX newValue:[[NSNumber alloc] initWithInt:[[labelMaxX stringValue] intValue]]];
@@ -331,9 +355,18 @@
     else if ([obj object] == labelMinY) {
         // verify that max is not 0 and then min x is greater than -100
         if ((([[labelMinY stringValue] intValue] == 0) && ([[labelMaxY stringValue] intValue] == 0)) || ([[labelMinY stringValue] intValue] > EDGraphValueMinThresholdMax) || ([[labelMinY stringValue] intValue] < EDGraphValueMinThresholdMin)){
-            // if this object has already sent message then do nothing
-            if (_controlTextObj == labelMinY) {
+            // if this object has already sent message then do not show sheet, otherwise infinite loop
+            if (_controlTextObj == labelMaxY) {
+#warning change tab order on interface then change this special condition
+                // special: since min/max cannot both be 0
+                // restore previous value
+                [self setElementLabel:labelMaxY attribute:EDGraphAttributeMaxValueY];
+                
                 // do nothing
+                _controlTextObj = [obj object];
+            }
+            else if (_controlTextObj == labelMinY) {
+                // do not show sheet
                 _controlTextObj = nil;
             }
             else{
@@ -348,6 +381,9 @@
                 // launch error sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMinY:returnCode:contextInfo:) contextInfo:nil];
             }
+            
+            // reset value
+            [self setElementLabel:labelMinY attribute:EDGraphAttributeMinValueY];
         }
         else{
             [self changeSelectedElementsAttribute:EDGraphAttributeMinValueY newValue:[[NSNumber alloc] initWithInt:[[labelMinY stringValue] intValue]]];
@@ -358,9 +394,13 @@
         if ((([[labelMinY stringValue] intValue] == 0) && ([[labelMaxY stringValue] intValue] == 0)) || ([[labelMaxY stringValue] intValue] > EDGraphValueMaxThresholdMax) || ([[labelMaxY stringValue] intValue] < EDGraphValueMaxThresholdMin)){
             // if this object has already sent message then do nothing
             if (_controlTextObj == labelMinY) {
+#warning change tab order on interface then change this special condition
                 // special: since min/max cannot both be 0
+                // restore previous value
+                [self setElementLabel:labelMinY attribute:EDGraphAttributeMinValueY];
+                
                 // do nothing
-                _controlTextObj = nil;
+                _controlTextObj = [obj object];
             }
             else if (_controlTextObj == labelMaxY) {
                 // do nothing
@@ -379,6 +419,9 @@
                 // launch sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMaxY:returnCode:contextInfo:) contextInfo:nil];
             }
+            
+            // reset value
+            [self setElementLabel:labelMinY attribute:EDGraphAttributeMinValueY];
         }
         else{
             [self changeSelectedElementsAttribute:EDGraphAttributeMaxValueY newValue:[[NSNumber alloc] initWithInt:[[labelMaxY stringValue] intValue]]];

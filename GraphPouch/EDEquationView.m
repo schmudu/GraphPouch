@@ -60,10 +60,9 @@
     
     int endInt = (int)[self frame].size.width * EDGraphDependentVariableIncrement;
     float i;
-    //NSLog(@"frame width int:%d frame float:%f", endInt, [self frame].size.width);
+    
     for (int j=0; j<endInt; j++){
         i = j/EDGraphDependentVariableIncrement;
-        //NSLog(@"converted j:%f", j/100.0);
         diffX = i - originHorizontalPosition;
         
         // based on position find x
@@ -83,7 +82,6 @@
         }
         valueY = [EDParser calculate:[[_equation tokens] array] error:&error context:_context varValue:valueX];
      
-        //NSLog(@"x:%f y:%f", valueX, valueY);
         // if y is greater than max or less than min than break from loop
         if ((isnan(valueY)) || (valueY > [[_graph maxValueY] floatValue]) || (valueY < [[_graph minValueY] floatValue]))
             continue;
@@ -122,65 +120,6 @@
             [path lineToPoint:NSMakePoint(i, positionVertical)];
         }
     }
-    
-    
-    // draw equation along graph
-    /*
-    for (float i=0.0; i<=[self frame].size.width; i=i+EDGraphEquationIncrement){
-        diffX = i - originHorizontalPosition;
-        
-        // based on position find x
-        if (diffX < 0){
-            // x is negative
-            ratioHorizontal = -1 * diffX/originHorizontalPosition;
-            valueX = ratioHorizontal * [[_graph minValueX] floatValue];
-        }
-        else if (diffX == 0){
-            valueX = 0;
-        }
-        else{
-            // x is positive
-            marginDiff = [self frame].size.width - originHorizontalPosition;
-            ratioHorizontal = diffX/marginDiff;
-            valueX = ratioHorizontal * [[_graph maxValueX] floatValue];
-        }
-        valueY = [EDParser calculate:[[_equation tokens] array] error:&error context:_context varValue:valueX];
-        
-        // based on value find y position
-        if (error){
-            // we received an error an cannot calculate this value
-            // do nothing
-        }
-        if (valueY < 0){
-            // y is negative
-            ratioVertical = valueY/[[_graph minValueY] floatValue];
-            positionVertical = originVerticalPosition + ratioVertical * ([self frame].size.height * ratioYNegative);
-        }
-        else if (valueY == 0){
-            positionVertical = originVerticalPosition;
-        }
-        else{
-            // y is positive
-            ratioVertical = valueY/[[_graph maxValueY] floatValue];
-            positionVertical = originVerticalPosition - ratioVertical * ([self frame].size.height * ratioYPositive);
-        }
-        
-        if (firstPointDrawnForEquation) {
-            [path moveToPoint:NSMakePoint(i, positionVertical)];
-            firstPointDrawnForEquation = false;
-        }
-        else if (error){
-            // reset
-            error = nil;
-            
-            // set variable so that equation will not draw to next point
-            firstPointDrawnForEquation = true;
-        }
-        else {
-            [path lineToPoint:NSMakePoint(i, positionVertical)];
-        }
-    }*/
-
     [path stroke];
 }
 
