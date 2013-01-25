@@ -59,6 +59,7 @@
 		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
 		CD5EE20216012A690027EFC6 /* NSObject+Document.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE20116012A690027EFC6 /* NSObject+Document.m */; };
 		CD6DF301160D181900935BF2 /* EDTransformCornerPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */; };
+		CD74501216B3342A004B813E /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = CD74501116B3342A004B813E /* icon.iconset */; };
 		CD82441516AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82441416AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m */; };
 		CD82441816AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82441716AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m */; };
 		CD82441D16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD82441C16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib */; };
@@ -90,7 +91,6 @@
 		CDF62E3416A0DAA500DCDD2D /* EDPanelProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */; };
 		CDF62E4616A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */; };
 		CDF62E4F16A2810700DCDD2D /* EDFormatterEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4E16A2810700DCDD2D /* EDFormatterEquation.m */; };
-		CDF62E5716A2FB1600DCDD2D /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = CDF62E5616A2FB1600DCDD2D /* icon.iconset */; };
 		CDF62E5D16A4779B00DCDD2D /* EDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E5C16A4779A00DCDD2D /* EDToken.m */; };
 		CDF62E6916A49D0B00DCDD2D /* EDPointView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E6816A49D0B00DCDD2D /* EDPointView.m */; };
 		CDF62E9916A762BD00DCDD2D /* EDCoreDataUtility+Graphs.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E9816A762BC00DCDD2D /* EDCoreDataUtility+Graphs.m */; };
@@ -199,6 +199,7 @@
 		CD5EE20116012A690027EFC6 /* NSObject+Document.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Document.m"; sourceTree = "<group>"; };
 		CD6DF2FF160D181900935BF2 /* EDTransformCornerPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformCornerPoint.h; sourceTree = "<group>"; };
 		CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformCornerPoint.m; sourceTree = "<group>"; };
+		CD74501116B3342A004B813E /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = icon.iconset; sourceTree = "<group>"; };
 		CD82441316AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterIntegerSignedEqualOrLessThanZero.h; sourceTree = "<group>"; };
 		CD82441416AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterIntegerSignedEqualOrLessThanZero.m; sourceTree = "<group>"; };
 		CD82441616AC482E00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterIntegerUnsignedGreaterThanZero.h; sourceTree = "<group>"; };
@@ -258,7 +259,6 @@
 		CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EDCoreDataUtility+Worksheet.m"; sourceTree = "<group>"; };
 		CDF62E4D16A2810700DCDD2D /* EDFormatterEquation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterEquation.h; sourceTree = "<group>"; };
 		CDF62E4E16A2810700DCDD2D /* EDFormatterEquation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterEquation.m; sourceTree = "<group>"; };
-		CDF62E5616A2FB1600DCDD2D /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icon.iconset; sourceTree = "<group>"; };
 		CDF62E5B16A4779800DCDD2D /* EDToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDToken.h; sourceTree = "<group>"; };
 		CDF62E5C16A4779A00DCDD2D /* EDToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDToken.m; sourceTree = "<group>"; };
 		CDF62E6716A49D0B00DCDD2D /* EDPointView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPointView.h; sourceTree = "<group>"; };
@@ -600,6 +600,7 @@
 		CD47112715BA1647008AACC3 /* GraphPouch */ = {
 			isa = PBXGroup;
 			children = (
+				CD74501116B3342A004B813E /* icon.iconset */,
 				CD47113315BA1647008AACC3 /* EDDocument.h */,
 				CD47113415BA1647008AACC3 /* EDDocument.m */,
 				CD47113615BA1647008AACC3 /* EDDocument.xib */,
@@ -630,7 +631,6 @@
 		CD9DA575169A761D0072242F /* images */ = {
 			isa = PBXGroup;
 			children = (
-				CDF62E5616A2FB1600DCDD2D /* icon.iconset */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -864,8 +864,8 @@
 				CD1EBD6A15FED65B00BEEA4D /* EDPanelPropertiesGraph.xib in Resources */,
 				CD1C57DF161E750400534D49 /* EDPageView.xib in Resources */,
 				CDAA9105166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib in Resources */,
-				CDF62E5716A2FB1600DCDD2D /* icon.iconset in Resources */,
 				CD82441D16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib in Resources */,
+				CD74501216B3342A004B813E /* icon.iconset in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
