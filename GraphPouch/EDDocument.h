@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDPanelPropertiesController.h"
-#import "EDMenuController.h"
 #import "EDWindow.h"
 #import "EDMainContentView.h"
 #import "EDPagesView.h"
@@ -26,18 +25,22 @@
     IBOutlet EDWindow *mainWindow;
     IBOutlet EDPagesView *pagesView;
     EDPanelPropertiesController *propertyController;
-    EDMenuController *menuController;
     NSManagedObjectContext *_context;
     NSManagedObjectContext *_rootContext;
+    
+    // menu
+    IBOutlet NSMenuItem *menuPageNext;
 }
 
 - (id)getInstance;
-- (void)togglePropertiesPanel:(id)sender;
 - (BOOL)propertiesPanelIsOpen;
-- (IBAction)addPage:(id)sender;
-- (IBAction)addGraph:(id)sender;
-- (IBAction)nextPage:(id)sender;
-- (IBAction)previousPage:(id)sender;
-- (void)selectAll:(id)sender;
-- (void)deselectAll:(id)sender;
+- (IBAction)togglePropertiesPanel:(id)sender;
+- (IBAction)pageAdd:(id)sender;
+- (IBAction)graphAdd:(id)sender;
+- (IBAction)pageNext:(id)sender;
+- (IBAction)pagePrevious:(id)sender;
+- (IBAction)selectAll:(id)sender;
+- (IBAction)deselectAll:(id)sender;
+- (IBAction)worksheetItemNext:(id)sender;
+- (IBAction)worksheetItemPrevious:(id)sender;
 @end

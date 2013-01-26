@@ -28,6 +28,7 @@
 - (void)onWorksheetTabKeyPressed:(NSNotification *)note;
 - (void)onContextSaved:(NSNotification *)note;
 - (void)onContextChanged:(NSNotification *)note;
+- (void)setupMenu;
 @end
 
 @implementation EDDocument
@@ -55,7 +56,6 @@
         [self setManagedObjectContext:[contexts objectForKey:EDKeyContextRoot]];
         
         propertyController = [[EDPanelPropertiesController alloc] init];
-        menuController = [[EDMenuController alloc] init];
         
         // listen
         //[EDToken printAll:_context];
@@ -146,7 +146,7 @@
     return [_context undoManager];
 }
 
-- (void)togglePropertiesPanel:(id)sender{
+- (IBAction)togglePropertiesPanel:(id)sender{
     [propertyController togglePropertiesPanel:sender];
 }
 
@@ -155,11 +155,11 @@
 }
 
 #pragma mark page
-- (IBAction)addPage:(id)sender{
+- (IBAction)pageAdd:(id)sender{
     [pagesController addNewPage];
 }
 
-- (IBAction)nextPage:(id)sender{
+- (IBAction)pageNext:(id)sender{
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
     EDPage *nextPage = [EDCoreDataUtility getPageWithNumber:([[currentPage pageNumber] intValue]+1) context:_context];
     
@@ -169,7 +169,7 @@
         [EDCoreDataUtility setPageAsCurrent:[EDCoreDataUtility getFirstPage:_context] context:_context];
 }
 
-- (IBAction)previousPage:(id)sender{
+- (IBAction)pagePrevious:(id)sender{
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
     EDPage *nextPage = [EDCoreDataUtility getPageWithNumber:([[currentPage pageNumber] intValue]-1) context:_context];
     
@@ -179,10 +179,18 @@
         [EDCoreDataUtility setPageAsCurrent:[EDCoreDataUtility getLastPage:_context] context:_context];
 }
 #pragma mark graph
-- (IBAction)addGraph:(id)sender{
+- (IBAction)graphAdd:(id)sender{
     [worksheetController addNewGraph];
 }
 
+#pragma mark worksheet
+- (IBAction)worksheetItemNext:(id)sender{
+    NSLog(@"need to select the next worksheet item");
+}
+
+- (IBAction)worksheetItemPrevious:(id)sender{
+    NSLog(@"need to select the previous worksheet item");
+}
 
 #pragma mark window
 - (void)onMainWindowClosed:(NSNotification *)note{
@@ -213,19 +221,29 @@
     
 }
 
-- (void)selectAll:(id)sender{
+- (IBAction)selectAll:(id)sender{
     [EDCoreDataUtility selectAllWorksheetElementsOnCurrentPage:_context];
 }
 
-- (void)deselectAll:(id)sender{
+- (IBAction)deselectAll:(id)sender{
     [EDCoreDataUtility clearSelectedWorksheetElements:_context];
 }
 
-#pragma mark model
-/*
-- (void)onChildContextSaved:(NSNotification *)note{
-    // merge changes to root 
-    [_rootContext mergeChangesFromContextDidSaveNotification:note];
-}*/
-
+#pragma mark menu
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
+    // pages
+    if ([[menuItem title] isEqualToString:@"Next Page"]){
+        NSArray *pages = [EDPage getAllObjects:_context];
+        if ([pages count] <= 1)
+            return FALSE;
+    }
+    
+    if ([[menuItem title] isEqualToString:@"Previous Page"]){
+        NSArray *pages = [EDPage getAllObjects:_context];
+        if ([pages count] <= 1)
+            return FALSE;
+    }
+    
+    return [super validateMenuItem:menuItem];
+}
 @end
