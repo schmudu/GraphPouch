@@ -244,6 +244,22 @@
             return FALSE;
     }
     
+    // worksheet
+    if ([[menuItem title] isEqualToString:@"Next Worksheet Item"]){
+        EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+        NSArray *items = [page getAllWorksheetObjects];
+        if ([items count] == 0)
+            return FALSE;
+    }
+    
+    if ([[menuItem title] isEqualToString:@"Previous Worksheet Item"]){
+        EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+        NSArray *items = [page getAllWorksheetObjects];
+        if ([items count] == 0)
+            return FALSE;
+    }
+    
+    
     return [super validateMenuItem:menuItem];
 }
 @end
