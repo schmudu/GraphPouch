@@ -256,6 +256,25 @@
     return TRUE;
 }
 
++ (NSMutableArray *)substituteMinusSign:(NSMutableArray *)tokens context:(NSManagedObjectContext *)context{
+    // if a minus sign is the first object then replace is with a -1 and a multiplier token
+    EDToken *firstToken = [tokens objectAtIndex:0];
+    if (([firstToken typeRaw] == EDTokenTypeOperator) && ([[firstToken tokenValue] isEqualToString:@"-"])){
+        // remove first token
+        [tokens removeObjectAtIndex:0];
+        
+        // insert number -1 token and multipler token
+        EDToken *multiplierToken = [EDToken multiplierToken:context];
+        EDToken *negativeOneToken = [[EDToken alloc] initWithContext:context];
+        [negativeOneToken setTokenValue:[NSString stringWithFormat:@"-1"]];
+        
+        [tokens insertObject:multiplierToken atIndex:0];
+        [tokens insertObject:negativeOneToken atIndex:0];
+    }
+    
+    return tokens;
+}
+
 + (NSMutableArray *)insertImpliedMultiplication:(NSMutableArray *)tokens context:(NSManagedObjectContext *)context{
     BOOL addedToken = FALSE;
     EDToken *multiplyToken, *currentToken, *previousToken;
@@ -263,6 +282,13 @@
     while (i<[tokens count]){
         currentToken = [tokens objectAtIndex:i];
         if(previousToken){
+            // insert token between number and left paren
+            if(([previousToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeParenthesis) && ([[currentToken tokenValue] isEqualToString:@"("])){
+                multiplyToken = [EDToken multiplierToken:context];
+                [tokens insertObject:multiplyToken atIndex:i];
+                addedToken = TRUE;
+            }
+            
             // insert token between identifier and identifier
             if(([previousToken typeRaw] == EDTokenTypeIdentifier) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
                 multiplyToken = [EDToken multiplierToken:context];

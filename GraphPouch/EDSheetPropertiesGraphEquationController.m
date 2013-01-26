@@ -174,6 +174,18 @@
             i++;
         }*/
         
+        // substitute minus sign for negative one and multiplier token
+        [EDTokenizer substituteMinusSign:tokens context:_context];
+        
+        // print out all tokens
+        /*
+        NSLog(@"====after substitute");
+        i =0;
+        for (EDToken *token in tokens){
+            NSLog(@"i:%d token:%@", i, token);
+            i++;
+        }*/
+        
         // insert implied multiplication
         [EDTokenizer insertImpliedMultiplication:tokens context:_context];
         
