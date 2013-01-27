@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSSet *graphs;
 - (BOOL)containsObject:(NSManagedObject *)object;
 - (NSArray *)getAllWorksheetObjects;
+- (NSArray *)getAllSelectedWorksheetObjects;
 @end
 
 @interface EDPage (CoreDataGeneratedAccessors)

@@ -2857,7 +2857,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">690</int>
+			<int key="maxID">694</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2890,6 +2890,7 @@
 						<string key="pageNext:">id</string>
 						<string key="pagePrevious:">id</string>
 						<string key="selectAll:">id</string>
+						<string key="test:">id</string>
 						<string key="togglePropertiesPanel:">id</string>
 						<string key="worksheetItemNext:">id</string>
 						<string key="worksheetItemPrevious:">id</string>
@@ -2917,6 +2918,10 @@
 						</object>
 						<object class="IBActionInfo" key="selectAll:">
 							<string key="name">selectAll:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="test:">
+							<string key="name">test:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="togglePropertiesPanel:">

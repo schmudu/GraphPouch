@@ -28,7 +28,6 @@
 - (void)onWorksheetTabKeyPressed:(NSNotification *)note;
 - (void)onContextSaved:(NSNotification *)note;
 - (void)onContextChanged:(NSNotification *)note;
-- (void)setupMenu;
 @end
 
 @implementation EDDocument
@@ -57,6 +56,8 @@
         
         propertyController = [[EDPanelPropertiesController alloc] init];
         
+        // autoenable menu bar
+        [[[[NSApp mainMenu] itemWithTitle:@"Edit"] submenu] setAutoenablesItems:TRUE];
         // listen
         //[EDToken printAll:_context];
     }
@@ -178,6 +179,7 @@
     else
         [EDCoreDataUtility setPageAsCurrent:[EDCoreDataUtility getLastPage:_context] context:_context];
 }
+
 #pragma mark graph
 - (IBAction)graphAdd:(id)sender{
     [worksheetController addNewGraph];
@@ -185,11 +187,11 @@
 
 #pragma mark worksheet
 - (IBAction)worksheetItemNext:(id)sender{
-    NSLog(@"need to select the next worksheet item");
+    [EDCoreDataUtility selectNextWorksheetElementOnCurrentPage:_context];
 }
 
 - (IBAction)worksheetItemPrevious:(id)sender{
-    NSLog(@"need to select the previous worksheet item");
+    [EDCoreDataUtility selectPreviousWorksheetElementOnCurrentPage:_context];
 }
 
 #pragma mark window
@@ -227,6 +229,10 @@
 
 - (IBAction)deselectAll:(id)sender{
     [EDCoreDataUtility clearSelectedWorksheetElements:_context];
+}
+
+- (IBAction)test:(id)sender{
+    NSLog(@"test");
 }
 
 #pragma mark menu

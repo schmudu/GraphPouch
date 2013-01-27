@@ -22,6 +22,7 @@
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     //NSArray *graphObjects = [self getAllGraphs:context];
     NSArray *graphObjects = [EDGraph getAllObjects:context];
+#warning it doesn't make sense to get all the objects.  I think we should remove this method
     
 #warning add other elements here
     [allObjects addObjectsFromArray:graphObjects];
@@ -31,19 +32,119 @@
 
 
 + (void)selectAllWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context{
-    NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
-    //NSArray *graphObjects = [EDGraph getAllObjects:context];
-    NSArray *graphObjects = [[currentPage graphs] allObjects];
+    NSArray *objects = [currentPage getAllWorksheetObjects];
     
-#warning add other elements here
-    [allObjects addObjectsFromArray:graphObjects];
-
-    for (EDElement *element in allObjects){
+    for (EDElement *element in objects){
         // set every element as selected
         [element setSelected:TRUE];
     }
 }
+
++ (void)selectNextWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context{
+    // get all selected objects on current page
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
+    NSArray *selectedObjects = [currentPage getAllSelectedWorksheetObjects];
+    NSArray *allObjects = [currentPage getAllWorksheetObjects];
+    if (([selectedObjects count] > 1) || ([selectedObjects count] == 0)){
+        // clear selection of all objects
+        [self clearSelectedWorksheetElements:context];
+        
+        // select the first object in the page
+        [(EDElement *)[allObjects objectAtIndex:0] setSelected:TRUE];
+    }
+    else{
+        //get index of currently selected object then get the next object
+        EDElement *matchingObject = (EDElement *)[selectedObjects objectAtIndex:0];
+        int i=0, j=0;
+        for (EDElement *element in allObjects){
+            if (element == matchingObject)
+                break;
+            
+            i++;
+        }
+        
+        // clear selection
+        [self clearSelectedWorksheetElements:context];
+        
+        // match the very next object
+        i++;
+        // wrap-around
+        if (i == [allObjects count]){
+            // clear selection of all objects
+            [self clearSelectedWorksheetElements:context];
+            
+            // select the first object in the page
+            [(EDElement *)[allObjects objectAtIndex:0] setSelected:TRUE];
+        }
+        else{
+            // select the very next element in the array
+            for (EDElement *element in allObjects){
+                // match the next element
+                if (j == i){
+                    [element setSelected:TRUE];
+                    break;
+                }
+                
+                j++;
+            }
+        }
+    }
+}
+
++ (void)selectPreviousWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context{
+
+    // get all selected objects on current page
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
+    NSArray *selectedObjects = [currentPage getAllSelectedWorksheetObjects];
+    NSArray *allObjects = [currentPage getAllWorksheetObjects];
+    if (([selectedObjects count] > 1) || ([selectedObjects count] == 0)){
+        // clear selection of all objects
+        [self clearSelectedWorksheetElements:context];
+        
+        // select the first object in the page
+        [(EDElement *)[allObjects objectAtIndex:0] setSelected:TRUE];
+    }
+    else{
+        //get index of currently selected object then get the next object
+        EDElement *matchingObject = (EDElement *)[selectedObjects objectAtIndex:0];
+        int i=0, j=0;
+        for (EDElement *element in allObjects){
+            if (element == matchingObject)
+                break;
+            
+            i++;
+        }
+        
+        // clear selection
+        [self clearSelectedWorksheetElements:context];
+        
+        // match the previous object
+        i--;
+        
+        // wrap-around
+        if (i == -1){
+            // clear selection of all objects
+            [self clearSelectedWorksheetElements:context];
+            
+            // select the first object in the page
+            [(EDElement *)[allObjects lastObject] setSelected:TRUE];
+        }
+        else{
+            // select the very next element in the array
+            for (EDElement *element in allObjects){
+                // match the next element
+                if (j == i){
+                    [element setSelected:TRUE];
+                    break;
+                }
+                
+                j++;
+            }
+        }
+    }
+}
+
 #pragma mark worksheet
 + (NSMutableArray *)copySelectedWorksheetElements:(NSManagedObjectContext *)context{
     // copy all selected objects

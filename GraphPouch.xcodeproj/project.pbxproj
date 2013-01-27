@@ -453,9 +453,9 @@
 		CD3F0AF715C4775900AB7567 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CDAA910E1669B0E4009B75A2 /* EDCoreData */,
 				CDAA91101669B128009B75A2 /* NSArrayController */,
 				CDC649D816979114003FADE8 /* NSCoder */,
-				CDAA910E1669B0E4009B75A2 /* NSCoreData */,
 				CDAA91111669B153009B75A2 /* NSMutableArray */,
 				CDAA91121669B15A009B75A2 /* NSMutableDictionary */,
 				CDAA91131669B186009B75A2 /* NSObject */,
@@ -635,7 +635,7 @@
 			name = images;
 			sourceTree = "<group>";
 		};
-		CDAA910E1669B0E4009B75A2 /* NSCoreData */ = {
+		CDAA910E1669B0E4009B75A2 /* EDCoreData */ = {
 			isa = PBXGroup;
 			children = (
 				CD1422C515C7590700F55819 /* EDCoreDataUtility.h */,
@@ -655,7 +655,7 @@
 				CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */,
 				CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */,
 			);
-			name = NSCoreData;
+			name = EDCoreData;
 			sourceTree = "<group>";
 		};
 		CDAA91101669B128009B75A2 /* NSArrayController */ = {

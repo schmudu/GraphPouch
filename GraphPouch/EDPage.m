@@ -95,4 +95,14 @@
     [elements addObjectsFromArray:[[self graphs] allObjects]];
     return elements;
 }
+
+- (NSArray *)getAllSelectedWorksheetObjects{
+    NSArray *allObjects = [NSMutableArray array];
+    allObjects = [self getAllWorksheetObjects];
+    
+    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"selected = %ld", TRUE];
+    NSArray *selectedObjects = [allObjects filteredArrayUsingPredicate:searchFilter];;
+    
+    return selectedObjects;
+}
 @end

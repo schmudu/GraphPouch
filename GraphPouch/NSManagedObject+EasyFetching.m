@@ -21,9 +21,17 @@
 
 + (NSArray *)getAllObjects:(NSManagedObjectContext *)context;
 {
-    NSEntityDescription *entity = [self entityDescriptionInContext:context];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    
+    // sorting by random attribute, in this case x location
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:EDElementAttributeLocationX ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sort, nil];
+    [request setSortDescriptors:sortDescriptors];
+    
+    NSEntityDescription *entity = [self entityDescriptionInContext:context];
     [request setEntity:entity];
+    
+    
     NSError *error = nil;
     NSArray *results = [context executeFetchRequest:request error:&error];
     if (error != nil)
