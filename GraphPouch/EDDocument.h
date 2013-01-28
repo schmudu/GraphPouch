@@ -43,5 +43,5 @@
 - (IBAction)deselectAll:(id)sender;
 - (IBAction)worksheetItemNext:(id)sender;
 - (IBAction)worksheetItemPrevious:(id)sender;
-- (IBAction)test:(id)sender;
+- (IBAction)copy:(id)sender;
 @end

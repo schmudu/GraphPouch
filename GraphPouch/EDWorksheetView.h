@@ -21,6 +21,11 @@
     EDPage *_currentPage;
 }
 
+- (void)copy:(id)sender;
+/*
+- (IBAction)cut:(id)sender;
+- (IBAction)paste:(id)sender;
+ */
 - (void)postInitialize:(NSManagedObjectContext *)context;
 - (void)drawLoadedObjects;
 - (NSMutableDictionary *)guides;

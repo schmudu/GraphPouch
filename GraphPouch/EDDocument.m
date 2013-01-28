@@ -128,11 +128,6 @@
 }
 
 - (void)awakeFromNib{
-    // code that happens before windowControllerDidLoadNib
-    //NSLog(@"awake from nib");
-    //[EDToken printAll:_context];
-    //NSLog(@"end: awake from nib");
-    // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextSaved:) name:NSManagedObjectContextDidSaveNotification object:_context];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
@@ -231,12 +226,28 @@
     [EDCoreDataUtility clearSelectedWorksheetElements:_context];
 }
 
-- (IBAction)test:(id)sender{
+- (IBAction)copy:(id)sender{
     NSLog(@"test");
 }
 
 #pragma mark menu
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
+    //NSLog(@"key window:%d", ([NSApp keyWindow] == mainWindow));
+    //NSLog(@"key window responder:%@ menu:%@", [mainWindow firstResponder], menuItem);
+    // CRUD
+    if ([[menuItem title] isEqualToString:@"Copy"]){
+        // only allow copy if the main window is selected
+        if ([NSApp keyWindow] == mainWindow) {
+            // worksheet view
+            if ([[mainWindow firstResponder] isKindOfClass:[EDWorksheetView class]]){
+                NSLog(@"worksheet view");
+            }
+            else if ([[mainWindow firstResponder] isKindOfClass:[EDPagesView class]]){
+                NSLog(@"pages view");
+            }
+        }
+    }
+    
     // pages
     if ([[menuItem title] isEqualToString:@"Next Page"]){
         NSArray *pages = [EDPage getAllObjects:_context];

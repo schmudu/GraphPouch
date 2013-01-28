@@ -19,6 +19,8 @@
 #import "NSManagedObject+EasyFetching.h"
 #import "NSColor+Utilities.h"
 #import "EDCoreDataUtility+Worksheet.h"
+#import "EDCoreDataUtility+Pages.h"
+#import "EDPage.h"
 
 @interface EDWorksheetView()
 - (void)drawGraph:(EDGraph *)graph;
@@ -232,24 +234,51 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     }
 }
 
-- (BOOL)performKeyEquivalent:(NSEvent *)theEvent{
-    if ((![[self window] isKeyWindow]) || ([[self window] firstResponder] != self)){
-        return [super performKeyEquivalent:theEvent];
+
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
+    // CRUD
+    if ([[menuItem title] isEqualToString:@"Copy"]){
+         EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+        NSArray *items = [page getAllSelectedWorksheetObjects];
+        if ([items count] > 0)
+            return TRUE;
+        else
+            return FALSE;
     }
     
-    if ([theEvent keyCode] == EDKeycodeCopy) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
-        return YES;
+    if ([[menuItem title] isEqualToString:@"Cut"]){
+         EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+        NSArray *items = [page getAllSelectedWorksheetObjects];
+        if ([items count] > 0)
+            return TRUE;
+        else
+            return FALSE;
     }
-    else if ([theEvent keyCode] == EDKeycodeCut) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCut object:self];
-        return YES;
+        
+     if ([[menuItem title] isEqualToString:@"Paste"]){
+#warning worksheet elements
+        NSArray *classes = [NSArray arrayWithObject:[EDGraph class]];
+        NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+         if ([objects count] > 0)
+             return TRUE;
+         else
+             return FALSE;
     }
-    else if ([theEvent keyCode] == EDKeycodePaste) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutPaste object:self];
-        return YES;
-    }
-    return [super performKeyEquivalent:theEvent];
+    
+    return [super validateMenuItem:menuItem];
+}
+
+- (IBAction)cut:(id)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCut object:self];
+}
+
+ - (IBAction)paste:(id)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutPaste object:self];
+}
+
+- (void)copy:(id)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
 }
 
 #pragma mark listeners
