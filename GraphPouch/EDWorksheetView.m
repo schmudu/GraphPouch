@@ -255,15 +255,23 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         else
             return FALSE;
     }
-        
-     if ([[menuItem title] isEqualToString:@"Paste"]){
-#warning worksheet elements
-        NSArray *classes = [NSArray arrayWithObject:[EDGraph class]];
-        NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
-         if ([objects count] > 0)
-             return TRUE;
-         else
-             return FALSE;
+    
+    if ([[menuItem title] isEqualToString:@"Select All"]){
+         EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+        NSArray *items = [page getAllWorksheetObjects];
+        if ([items count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
+    if ([[menuItem title] isEqualToString:@"Deselect All"]){
+        EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+        NSArray *items = [page getAllWorksheetObjects];
+        if ([items count] > 0)
+            return TRUE;
+        else
+            return FALSE;
     }
     
     return [super validateMenuItem:menuItem];
@@ -273,12 +281,16 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCut object:self];
 }
 
- - (IBAction)paste:(id)sender{
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutPaste object:self];
+- (IBAction)copy:(id)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
 }
 
-- (void)copy:(id)sender{
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
+- (IBAction)selectAll:(id)sender{
+    [EDCoreDataUtility selectAllWorksheetElementsOnCurrentPage:_context];
+}
+
+- (IBAction)deselectAll:(id)sender{
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context];
 }
 
 #pragma mark listeners

@@ -506,7 +506,7 @@
     [newPage setCurrentPage:TRUE];
     
     // clear any selection of worksheet elements
-    [EDCoreDataUtility clearSelectedWorksheetElements:context];
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:context];
     
     // clear any selection of pages
     [EDCoreDataUtility deselectAllPages:context];

@@ -13,7 +13,7 @@
 + (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context;
 + (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context;
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context;
-+ (void)clearSelectedWorksheetElements:(NSManagedObjectContext *)context;
++ (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context;
 + (void)selectAllWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context;
 + (void)selectNextWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context;
 + (void)selectPreviousWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context;

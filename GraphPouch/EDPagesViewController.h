@@ -19,4 +19,5 @@
 }
 - (void)postInitialize:(NSManagedObjectContext *)context;
 - (void)addNewPage;
+- (void)pastePagesFromPasteboard;
 @end

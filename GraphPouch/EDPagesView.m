@@ -35,15 +35,6 @@
     return YES;
 }
 
-/*
-- (BOOL)acceptsFirstResponder{
-    NSLog(@"pages: accept responder:%@", [[self window] firstResponder]);
-    if ([[self window] firstResponder] == self) {
-        return YES;
-    }
-    return NO;
-}*/
-
 - (void)postInitialize:(NSManagedObjectContext *)context{
     _context = context;
     _pb = [NSPasteboard generalPasteboard];
@@ -103,34 +94,32 @@
     }
 }
 #pragma mark keyboard
+/*
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent{
     // skip these shortcuts if this is not the key window and this is view is not the first responder
     if ((![[self window] isKeyWindow]) || ([[self window] firstResponder] != self)){
         return [super performKeyEquivalent:theEvent];
     }
     
-    if ([theEvent keyCode] == EDKeycodeDeselect) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutDeselectAll object:self];
-        return YES;
-    }
-    if ([theEvent keyCode] == EDKeycodeAll) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutSelectAll object:self];
-        return YES;
-    }
-    if ([theEvent keyCode] == EDKeycodeCopy) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
-        return YES;
-    }
-    else if ([theEvent keyCode] == EDKeycodeCut) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCut object:self];
-        return YES;
-    }
-    else if ([theEvent keyCode] == EDKeycodePaste) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutPaste object:self];
-        return YES;
-    }
     return NO;
+}*/
+
+- (IBAction)cut:(id)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCut object:self];
 }
+
+- (IBAction)copy:(id)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
+}
+
+- (IBAction)selectAll:(id)sender{
+    [EDCoreDataUtility selectAllPages:_context];
+}
+
+- (IBAction)deselectAll:(id)sender{
+    [EDCoreDataUtility deselectAllPages:_context];
+}
+
 - (void)keyDown:(NSEvent *)theEvent{
     NSUInteger flags = [theEvent modifierFlags];
     if(flags == EDKeyModifierNone && [theEvent keyCode] == EDKeycodeTab){
@@ -141,6 +130,35 @@
     }
 }
 
+#pragma mark menu
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
+    // CRUD
+    if ([[menuItem title] isEqualToString:@"Copy"]){
+        NSArray *items = [EDCoreDataUtility getAllSelectedPages:_context];
+        if ([items count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
+    if ([[menuItem title] isEqualToString:@"Cut"]){
+        NSArray *items = [EDCoreDataUtility getAllSelectedPages:_context];
+        if ([items count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
+    if ([[menuItem title] isEqualToString:@"Select All"]){
+        return TRUE;
+    }
+    
+    if ([[menuItem title] isEqualToString:@"Deselect All"]){
+        return TRUE;
+    }
+    
+    return [super validateMenuItem:menuItem];
+}
 #pragma mark mouse
 - (void)mouseDown:(NSEvent *)theEvent{
     [[self window] makeFirstResponder:self];

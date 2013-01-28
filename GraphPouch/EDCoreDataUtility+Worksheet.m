@@ -48,7 +48,7 @@
     NSArray *allObjects = [currentPage getAllWorksheetObjects];
     if (([selectedObjects count] > 1) || ([selectedObjects count] == 0)){
         // clear selection of all objects
-        [self clearSelectedWorksheetElements:context];
+        [self deselectAllSelectedWorksheetElementsOnCurrentPage:context];
         
         // select the first object in the page
         [(EDElement *)[allObjects objectAtIndex:0] setSelected:TRUE];
@@ -65,14 +65,14 @@
         }
         
         // clear selection
-        [self clearSelectedWorksheetElements:context];
+        [self deselectAllSelectedWorksheetElementsOnCurrentPage:context];
         
         // match the very next object
         i++;
         // wrap-around
         if (i == [allObjects count]){
             // clear selection of all objects
-            [self clearSelectedWorksheetElements:context];
+            [self deselectAllSelectedWorksheetElementsOnCurrentPage:context];
             
             // select the first object in the page
             [(EDElement *)[allObjects objectAtIndex:0] setSelected:TRUE];
@@ -100,7 +100,7 @@
     NSArray *allObjects = [currentPage getAllWorksheetObjects];
     if (([selectedObjects count] > 1) || ([selectedObjects count] == 0)){
         // clear selection of all objects
-        [self clearSelectedWorksheetElements:context];
+        [self deselectAllSelectedWorksheetElementsOnCurrentPage:context];
         
         // select the first object in the page
         [(EDElement *)[allObjects objectAtIndex:0] setSelected:TRUE];
@@ -117,7 +117,7 @@
         }
         
         // clear selection
-        [self clearSelectedWorksheetElements:context];
+        [self deselectAllSelectedWorksheetElementsOnCurrentPage:context];
         
         // match the previous object
         i--;
@@ -125,7 +125,7 @@
         // wrap-around
         if (i == -1){
             // clear selection of all objects
-            [self clearSelectedWorksheetElements:context];
+            [self deselectAllSelectedWorksheetElementsOnCurrentPage:context];
             
             // select the first object in the page
             [(EDElement *)[allObjects lastObject] setSelected:TRUE];
@@ -238,7 +238,7 @@
     return results;
 }
 
-+ (void)clearSelectedWorksheetElements:(NSManagedObjectContext *)context{
++ (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context{
     NSArray *fetchedObjects = [EDGraph getAllSelectedObjects:context];
     if (fetchedObjects == nil) {
         // Handle the error

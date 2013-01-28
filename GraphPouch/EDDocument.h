@@ -39,9 +39,7 @@
 - (IBAction)graphAdd:(id)sender;
 - (IBAction)pageNext:(id)sender;
 - (IBAction)pagePrevious:(id)sender;
-- (IBAction)selectAll:(id)sender;
-- (IBAction)deselectAll:(id)sender;
 - (IBAction)worksheetItemNext:(id)sender;
 - (IBAction)worksheetItemPrevious:(id)sender;
-- (IBAction)copy:(id)sender;
+- (IBAction)paste:(id)sender;
 @end

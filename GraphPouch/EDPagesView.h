@@ -19,4 +19,8 @@
 
 - (void)postInitialize:(NSManagedObjectContext *)context;
 - (void)setPageViewStartDragInfo:(EDPage *)pageData;
+- (IBAction)cut:(id)sender;
+- (IBAction)copy:(id)sender;
+- (IBAction)selectAll:(id)sender;
+- (IBAction)deselectAll:(id)sender;
 @end

@@ -21,7 +21,6 @@
     EDPage *_currentPage;
 }
 
-- (void)copy:(id)sender;
 /*
 - (IBAction)cut:(id)sender;
 - (IBAction)paste:(id)sender;
@@ -29,5 +28,8 @@
 - (void)postInitialize:(NSManagedObjectContext *)context;
 - (void)drawLoadedObjects;
 - (NSMutableDictionary *)guides;
-
+- (IBAction)cut:(id)sender;
+- (IBAction)copy:(id)sender;
+- (IBAction)selectAll:(id)sender;
+- (IBAction)deselectAll:(id)sender;
 @end

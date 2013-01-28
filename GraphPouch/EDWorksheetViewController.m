@@ -59,7 +59,7 @@
 
 - (void)deselectAllElements:(NSNotification *)note{
     // clear all the selected elements
-    [EDCoreDataUtility clearSelectedWorksheetElements:_context];
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context];
 }
 
 - (void)dealloc{

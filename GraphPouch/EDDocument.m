@@ -5,6 +5,7 @@
 //  Created by PATRICK LEE on 7/20/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
+#import "EDPage.h"
 #import "EDCoreDataUtility+Pages.h"
 #import "EDDocument.h"
 #import "EDWorksheetViewController.h"
@@ -218,16 +219,17 @@
     
 }
 
-- (IBAction)selectAll:(id)sender{
-    [EDCoreDataUtility selectAllWorksheetElementsOnCurrentPage:_context];
-}
-
-- (IBAction)deselectAll:(id)sender{
-    [EDCoreDataUtility clearSelectedWorksheetElements:_context];
-}
-
-- (IBAction)copy:(id)sender{
-    NSLog(@"test");
+- (IBAction)paste:(id)sender{
+#warning add other worksheet elements here add this arrayWithObject stuff to EDPage
+    NSArray *classes = [NSArray arrayWithObject:[EDGraph class]];
+    NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+    if ([objects count] > 0){
+        [EDCoreDataUtility insertWorksheetElements:objects context:_context];
+    }
+    else {
+        // paste in pages
+        [pagesController pastePagesFromPasteboard];
+    }
 }
 
 #pragma mark menu
@@ -235,17 +237,17 @@
     //NSLog(@"key window:%d", ([NSApp keyWindow] == mainWindow));
     //NSLog(@"key window responder:%@ menu:%@", [mainWindow firstResponder], menuItem);
     // CRUD
-    if ([[menuItem title] isEqualToString:@"Copy"]){
-        // only allow copy if the main window is selected
-        if ([NSApp keyWindow] == mainWindow) {
-            // worksheet view
-            if ([[mainWindow firstResponder] isKindOfClass:[EDWorksheetView class]]){
-                NSLog(@"worksheet view");
-            }
-            else if ([[mainWindow firstResponder] isKindOfClass:[EDPagesView class]]){
-                NSLog(@"pages view");
-            }
-        }
+    if ([[menuItem title] isEqualToString:@"Paste"]){
+        //NSArray *classes = [NSArray arrayWithObjects:([EDGraph class], [EDPage class], nil)];
+        NSArray *classes = [NSArray arrayWithObjects:[EDGraph class], [EDPage class], nil];
+        
+        NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+        
+        // if there are page or any types of worksheet elements then allow paste
+        if ([objects count] == 0)
+            return FALSE;
+        else
+            return TRUE;
     }
     
     // pages
