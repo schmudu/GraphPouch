@@ -39,7 +39,6 @@
 
 - (id)init
 {
-    NSLog(@"init document");
     self = [super init];
     if (self) {
         // Create a parent context
@@ -66,11 +65,11 @@
 }
 
 - (void)onContextChanged:(NSNotification *)note{
-    /*
     NSArray *updatedObjects = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
     NSArray *insertedObjects = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
-    NSLog(@"context changed:\n===updated:%@ \n===inserted:%@", updatedObjects, insertedObjects);
-     */
+    NSArray *deletedObjects = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
+    NSLog(@"context changed:\n===updated:%@ \n===inserted:%@ \n===deleted:%@", updatedObjects, insertedObjects, deletedObjects);
+    
     // push changes to parent context
     //NSLog(@"\n\n===before change:\ntokens root:%@ \nchild root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
     //NSLog(@"\n\n===before change:\ntokens root:%@ \nchild root:%@", [EDGraph getAllObjects:_rootContext], [EDGraph getAllObjects:_context]);
@@ -140,6 +139,7 @@
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window{
     // have the undo manager linked to the managed object context
+    NSLog(@"returning undo manager:%@", [_context undoManager]);
     return [_context undoManager];
 }
 
@@ -220,8 +220,7 @@
 }
 
 - (IBAction)paste:(id)sender{
-#warning add other worksheet elements here add this arrayWithObject stuff to EDPage
-    NSArray *classes = [NSArray arrayWithObject:[EDGraph class]];
+    NSArray *classes = [EDPage allWorksheetClasses];
     NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
     if ([objects count] > 0){
         [EDCoreDataUtility insertWorksheetElements:objects context:_context];
@@ -277,8 +276,6 @@
         if ([items count] == 0)
             return FALSE;
     }
-    
-    
     return [super validateMenuItem:menuItem];
 }
 @end

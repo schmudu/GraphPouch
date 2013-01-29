@@ -20,4 +20,5 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWindowWillClose object:self];
 }
+
 @end

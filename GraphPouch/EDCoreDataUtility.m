@@ -28,7 +28,7 @@
     // set undo
     [childContext setUndoManager:[startContext undoManager]];
     
-    NSLog(@"root context:%@ child context:%@", rootContext, childContext);
+    NSLog(@"root context:%@ child context:%@ start context undo mgr:%@", rootContext, childContext, [startContext undoManager]);
     
     [contexts setObject:childContext forKey:EDKeyContextChild];
     [contexts setObject:rootContext forKey:EDKeyContextRoot];

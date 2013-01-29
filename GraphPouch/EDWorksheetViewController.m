@@ -127,9 +127,7 @@
 }
 
 - (void)pasteElements:(NSNotification *)note{
-#warning add other elements here, need to add other classes
-    NSArray *classes = [NSArray arrayWithObject:[EDGraph class]];
-    
+    NSArray *classes = [EDPage allWorksheetClasses];
     NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
     [EDCoreDataUtility insertWorksheetElements:objects context:_context];
 }

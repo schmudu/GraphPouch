@@ -19,6 +19,7 @@
 - (BOOL)containsObject:(NSManagedObject *)object;
 - (NSArray *)getAllWorksheetObjects;
 - (NSArray *)getAllSelectedWorksheetObjects;
++ (NSArray *)allWorksheetClasses;
 @end
 
 @interface EDPage (CoreDataGeneratedAccessors)

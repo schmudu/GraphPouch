@@ -88,10 +88,14 @@
     return result;
 }
 
++ (NSArray *)allWorksheetClasses{
+#warning worksheet elements
+    return [NSArray arrayWithObjects:[EDGraph class], nil];
+}
 - (NSArray *)getAllWorksheetObjects{
     NSMutableArray *elements = [NSMutableArray array];
     
-#warning add other elements here
+#warning worksheet elements
     [elements addObjectsFromArray:[[self graphs] allObjects]];
     return elements;
 }
