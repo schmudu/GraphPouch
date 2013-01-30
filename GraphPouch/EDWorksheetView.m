@@ -215,12 +215,11 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 #pragma mark first responder
 - (BOOL)becomeFirstResponder{
     [_nc postNotificationName:EDEventBecomeFirstResponder object:self];
-    NSLog(@"start: becoming first responder");
     NSResponder *responder = self;
+    /*
     while ((responder = [responder nextResponder])) {
         NSLog(@"responder: %@", responder);
-    }
-    NSLog(@"end: becoming first responder");
+    }*/
     return YES;
 }
 

@@ -141,7 +141,6 @@
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window{
     // have the undo manager linked to the managed object context
-    NSLog(@"returning undo manager:%@", [_context undoManager]);
     return [_context undoManager];
 }
 
