@@ -6,24 +6,26 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDDocument.h"
-#import "EDCoreDataUtility.h"
 #import "EDConstants.h"
-#import "EDWorksheetView.h"
-#import "EDGraphView.h"
-#import "EDGraph.h"
-#import "EDWorksheetElementView.h"
-#import "EDTransformRect.h"
-#import "NSObject+Worksheet.h"
-#import "NSMutableDictionary+Utilities.h"
-#import "NSManagedObject+EasyFetching.h"
-#import "NSColor+Utilities.h"
 #import "EDCoreDataUtility+Worksheet.h"
 #import "EDCoreDataUtility+Pages.h"
+#import "EDCoreDataUtility.h"
+#import "EDDocument.h"
+#import "EDGraph.h"
+#import "EDGraphView.h"
+#import "EDLine.h"
 #import "EDPage.h"
+#import "EDTransformRect.h"
+#import "EDWorksheetView.h"
+#import "EDWorksheetElementView.h"
+#import "NSColor+Utilities.h"
+#import "NSMutableDictionary+Utilities.h"
+#import "NSManagedObject+EasyFetching.h"
+#import "NSObject+Worksheet.h"
 
 @interface EDWorksheetView()
 - (void)drawGraph:(EDGraph *)graph;
+- (void)drawLine:(EDLine *)line;
 - (void)drawGuide:(NSPoint)startPoint endPoint:(NSPoint)endPoint;
 - (void)onContextChanged:(NSNotification *)note;
 - (void)onElementMouseDown:(NSNotification *)note;
@@ -187,6 +189,10 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [aPath stroke];
 }
 
+- (void)drawLine:(EDLine *)line{
+    NSLog(@"need to add line view");
+}
+
 - (void)drawGraph:(EDGraph *)graph{
     EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph];
     
@@ -215,8 +221,8 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 #pragma mark first responder
 - (BOOL)becomeFirstResponder{
     [_nc postNotificationName:EDEventBecomeFirstResponder object:self];
-    NSResponder *responder = self;
     /*
+     NSResponder *responder = self;
     while ((responder = [responder nextResponder])) {
         NSLog(@"responder: %@", responder);
     }*/
@@ -311,7 +317,12 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             if (([[myElement className] isEqualToString:EDEntityNameGraph]) && (newPage == [(EDGraph *)myElement page])) {
                 [self drawGraph:(EDGraph *)myElement];
             }
-#warning add other drawing elements here
+            
+            // draw line if it's located on this page
+            if (([[myElement className] isEqualToString:EDEntityNameLine]) && (newPage == [(EDLine *)myElement page])) {
+                [self drawLine:(EDLine *)myElement];
+            }
+#warning worksheet elements
         }
         
         // delete elements
@@ -599,7 +610,12 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     for (EDGraph *graph in [currentPage graphs]){
         [self drawGraph:graph];
     }
-#warning add other drawing elements here
+    
+    // draw all lines
+    for (EDLine *line in [currentPage lines]){
+        [self drawLine:line];
+    }
+#warning worksheet elements
 }
 
 - (void)removeAllElements:(EDPage *)page{

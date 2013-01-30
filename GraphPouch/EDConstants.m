@@ -22,6 +22,7 @@ NSString * const EDUTIGraph                                     = @"com.edcodia.
 NSString * const EDUTIGraphView                                 = @"com.edcodia.graphpouch.graphView";
 NSString * const EDUTIToken                                     = @"com.edcodia.graphpouch.token";
 NSString * const EDUTIEquation                                  = @"com.edcodia.graphpouch.equation";
+NSString * const EDUTILine                                      = @"com.edcodia.graphpouch.line";
 
 // General
 NSString * const EDKey                                          = @"EDKey";
@@ -45,6 +46,10 @@ NSString * const EDEntityNamePage                               = @"EDPage";
 NSString * const EDEntityNamePoint                              = @"EDPoint";
 NSString * const EDEntityNameEquation                           = @"EDEquation";
 NSString * const EDEntityNameToken                              = @"EDToken";
+NSString * const EDEntityNameLine                               = @"EDLine";
+
+// line
+NSString * const EDLineAttributeThickness                       = @"thickness";
 
 // worksheet
 float const EDWorksheetViewWidth                                = 600;
@@ -212,6 +217,7 @@ NSString * const EDPageAttributePageNumber                      = @"pageNumber";
 NSString * const EDPageAttributeSelected                        = @"selected";
 NSString * const EDPageAttributeCurrent                         = @"currentPage";
 NSString * const EDPageAttributeGraphs                          = @"graphs";
+NSString * const EDPageAttributeLines                           = @"lines";
 NSString * const EDGraphAttributePage                           = @"page";
 NSString * const EDGraphAttributeScaleX                         = @"scaleX";
 NSString * const EDGraphAttributeScaleY                         = @"scaleY";

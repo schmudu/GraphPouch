@@ -37,6 +37,7 @@
 - (IBAction)togglePropertiesPanel:(id)sender;
 - (IBAction)pageAdd:(id)sender;
 - (IBAction)graphAdd:(id)sender;
+- (IBAction)lineAdd:(id)sender;
 - (IBAction)pageNext:(id)sender;
 - (IBAction)pagePrevious:(id)sender;
 - (IBAction)worksheetItemNext:(id)sender;

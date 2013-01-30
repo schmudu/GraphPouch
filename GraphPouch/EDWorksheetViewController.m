@@ -10,6 +10,7 @@
 #import "EDWorksheetView.h"
 #import "EDConstants.h"
 #import "EDGraph.h"
+#import "EDLine.h"
 #import "EDCoreDataUtility+Pages.h"
 #import "EDPoint.h"
 #import "NSManagedObject+EasyFetching.h"
@@ -74,6 +75,26 @@
 
 - (void)deleteSelectedElements:(NSNotification *)note{
     [EDCoreDataUtility deleteSelectedWorksheetElements:_context];
+}
+
+#pragma mark line
+- (void)addNewLine{
+    // create new graph
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    
+    EDLine *newLine = [[EDLine alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameLine inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+    
+    // add graph to page
+    [currentPage addLinesObject:newLine];
+    
+    // set graph attributes
+    [newLine setPage:currentPage];
+    [newLine setSelected:FALSE];
+    [newLine setLocationX:50];
+    [newLine setLocationY:150];
+    [newLine setElementWidth:300];
+    [newLine setElementHeight:300];
+    [newLine setThickness:[NSNumber numberWithInt:1]];
 }
 
 #pragma mark graphs

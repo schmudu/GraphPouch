@@ -28,6 +28,7 @@ extern NSString *const EDUTIGraph;
 extern NSString *const EDUTIGraphView;
 extern NSString *const EDUTIToken;
 extern NSString *const EDUTIEquation;
+extern NSString *const EDUTILine;
 
 // num
 extern float const EDNumberMax;
@@ -45,6 +46,10 @@ extern NSString *const EDEntityNamePage;
 extern NSString *const EDEntityNamePoint;
 extern NSString *const EDEntityNameEquation;
 extern NSString *const EDEntityNameToken;
+extern NSString *const EDEntityNameLine;
+
+// line
+extern NSString *const EDLineAttributeThickness;
 
 // worksheet
 extern float const EDWorksheetViewHeight;
@@ -210,6 +215,7 @@ extern NSString *const EDPageAttributePageNumber;
 extern NSString *const EDPageAttributeSelected;
 extern NSString *const EDPageAttributeCurrent;
 extern NSString *const EDPageAttributeGraphs;
+extern NSString *const EDPageAttributeLines;
 extern NSString *const EDGraphAttributePage;
 extern NSString *const EDGraphAttributeScaleX;
 extern NSString *const EDGraphAttributeScaleY;

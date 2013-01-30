@@ -50,7 +50,7 @@
         // set context that the rest of the application will modify
         _context = [contexts objectForKey:EDKeyContextChild];
         _rootContext = [contexts objectForKey:EDKeyContextRoot];
-        
+        NSLog(@"===root context:%@ child context:%@", _rootContext, _context);
         // set managed object context for this persistent document will write to
         [self setManagedObjectContext:[contexts objectForKey:EDKeyContextRoot]];
         
@@ -65,12 +65,10 @@
 }
 
 - (void)onContextChanged:(NSNotification *)note{
-    /*
     NSArray *updatedObjects = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
     NSArray *insertedObjects = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
     NSArray *deletedObjects = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
     NSLog(@"context changed:\n===updated:%@ \n===inserted:%@ \n===deleted:%@", updatedObjects, insertedObjects, deletedObjects);
-     */
     
     // push changes to parent context
     //NSLog(@"\n\n===before change:\ntokens root:%@ \nchild root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
@@ -175,6 +173,12 @@
         [EDCoreDataUtility setPageAsCurrent:nextPage context:_context];
     else
         [EDCoreDataUtility setPageAsCurrent:[EDCoreDataUtility getLastPage:_context] context:_context];
+}
+
+
+#pragma mark line
+- (IBAction)lineAdd:(id)sender{
+    [worksheetController addNewLine];
 }
 
 #pragma mark graph

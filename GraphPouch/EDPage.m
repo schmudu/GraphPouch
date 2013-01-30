@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
+#import "EDLine.h"
 #import "EDPage.h"
 #import "EDGraph.h"
 #import "EDPoint.h"
@@ -19,6 +20,7 @@
 @dynamic pageNumber;
 @dynamic selected;
 @dynamic graphs;
+@dynamic lines;
 
 #pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
@@ -35,6 +37,12 @@
         for (EDGraph *graph in graphs){
             // set relationship
             [self addGraphsObject:graph];
+        }
+        
+        NSSet *lines = [aDecoder decodeObjectForKey:EDPageAttributeLines];
+        for (EDLine *line in lines){
+            // set relationship
+            [self addLinesObject:line];
         }
     }
     return self;
@@ -90,13 +98,14 @@
 
 + (NSArray *)allWorksheetClasses{
 #warning worksheet elements
-    return [NSArray arrayWithObjects:[EDGraph class], nil];
+    return [NSArray arrayWithObjects:[EDGraph class], [EDLine class], nil];
 }
 - (NSArray *)getAllWorksheetObjects{
     NSMutableArray *elements = [NSMutableArray array];
     
 #warning worksheet elements
     [elements addObjectsFromArray:[[self graphs] allObjects]];
+    [elements addObjectsFromArray:[[self lines] allObjects]];
     return elements;
 }
 

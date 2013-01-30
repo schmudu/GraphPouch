@@ -8,6 +8,7 @@
 
 #import "EDCoreDataUtility+Worksheet.h"
 #import "EDGraph.h"
+#import "EDLine.h"
 #import "EDEquation.h"
 #import "EDToken.h"
 #import "NSObject+Document.h"
@@ -150,11 +151,16 @@
     // copy all selected objects
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
+    NSArray *fetchedLines = [EDLine getAllSelectedObjects:context];
     
     for (EDGraph *graph in fetchedGraphs){
         [allObjects addObject:[graph copy:context]];
     }
-#warning add other elements here
+    
+    for (EDLine *line in fetchedLines){
+        [allObjects addObject:[line copy:context]];
+    }
+#warning worksheet elements
     
     return allObjects;
 }
@@ -163,9 +169,11 @@
     // gets all selected objects
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
+    NSArray *fetchedLines = [EDLine getAllSelectedObjects:context];
     
-#warning add other elements here
+#warning worksheet elements
     [allObjects addObjectsFromArray:fetchedGraphs];
+    [allObjects addObjectsFromArray:fetchedLines];
     
     return allObjects;
 }
@@ -226,11 +234,17 @@
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
     // this method returns a dictionary of the types of selected objects
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    NSArray *fetchedObjects;
+    NSMutableArray *fetchedObjects = [NSMutableArray array];
+    NSArray *otherObjects;
     
     // get all selected graphs
-    fetchedObjects = [EDGraph getAllSelectedObjects:context];
-#warning add other elements here
+    otherObjects = [EDGraph getAllSelectedObjects:context];
+    [fetchedObjects addObjectsFromArray:otherObjects];
+    
+    otherObjects = [EDLine getAllSelectedObjects:context];
+    [fetchedObjects addObjectsFromArray:otherObjects];
+    
+#warning worksheet elements
     if ([fetchedObjects count] > 0) {
         [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDEntityNameGraph]; 
     }

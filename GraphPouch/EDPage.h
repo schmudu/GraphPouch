@@ -10,12 +10,14 @@
 #import <CoreData/CoreData.h>
 
 @class EDGraph;
+@class EDLine;
 
 @interface EDPage : NSManagedObject <NSCoding, NSPasteboardReading, NSPasteboardWriting>
 
 @property BOOL currentPage, selected;
 @property (nonatomic, retain) NSNumber *pageNumber;
 @property (nonatomic, retain) NSSet *graphs;
+@property (nonatomic, retain) NSSet *lines;
 - (BOOL)containsObject:(NSManagedObject *)object;
 - (NSArray *)getAllWorksheetObjects;
 - (NSArray *)getAllSelectedWorksheetObjects;
@@ -27,5 +29,10 @@
 - (void)removeGraphsObject:(EDGraph *)value;
 - (void)addGraphs:(NSSet *)values;
 - (void)removeGraphs:(NSSet *)values;
+
+- (void)addLinesObject:(EDLine *)value;
+- (void)removeLinesObject:(EDLine *)value;
+- (void)addLines:(NSSet *)values;
+- (void)removeLines:(NSSet *)values;
 
 @end
