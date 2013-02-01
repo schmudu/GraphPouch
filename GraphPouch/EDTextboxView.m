@@ -20,9 +20,17 @@
     self = [super initWithFrame:frame];
     if (self){
         _context = [myTextbox managedObjectContext];
+        _textView = [[NSTextView alloc] initWithFrame:[self bounds]];
         
         // set model info
         [self setDataObj:myTextbox];
+        
+        // add text field to view
+        [self addSubview:_textView];
+        //[_contentTextfield setStringValue:[NSString stringWithFormat:@"Does this work?"]];
+        //[_contentTextfield setAttributedStringValue:[NSMutableAttributedString alloc] initWithString:@"first"];
+        [_textView setEditable:TRUE];
+        [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Does this work?"]];
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];

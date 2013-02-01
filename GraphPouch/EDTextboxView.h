@@ -10,7 +10,9 @@
 #import "EDWorksheetElementView.h"
 @class EDTextbox;
 
-@interface EDTextboxView : EDWorksheetElementView
+@interface EDTextboxView : EDWorksheetElementView{
+    NSTextView *_textView;
+}
 
 - (id)initWithFrame:(NSRect)frame textboxModel:(EDTextbox *)myTextbox;
 @end
