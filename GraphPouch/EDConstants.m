@@ -37,6 +37,11 @@ float const EDNumberMax                                         = 9999999;
 NSString * const EDPreferenceSnapToGuides                       = @"EDPreferenceSnapToGuides";
 NSString * const EDPreferencePropertyPanel                      = @"EDPreferencePropertyPanel";
 
+// panels
+NSString * const EDKeyGraphLine                                 = @"EDKeyGraphLine";
+NSString * const EDKeyGraph                                     = @"EDKeyGraph";
+NSString * const EDKeyLine                                      = @"EDKeyLine";
+
 //layout
 float const EDMenuToolbarHeight                                 = 89;
 

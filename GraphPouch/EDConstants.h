@@ -37,6 +37,11 @@ extern float const EDNumberMax;
 extern NSString *const EDPreferenceSnapToGuides;
 extern NSString *const EDPreferencePropertyPanel;
 
+// panels
+extern NSString *const EDKeyGraphLine;
+extern NSString *const EDKeyGraph;
+extern NSString *const EDKeyLine;
+
 // layout
 extern float const EDMenuToolbarHeight;
 

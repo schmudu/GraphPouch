@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDPanelPropertiesController.h"
-#import "EDCoreDataUtility.h"
 #import "EDConstants.h"
+#import "EDCoreDataUtility.h"
+#import "EDCoreDataUtility+Worksheet.h"
+#import "EDPanelPropertiesController.h"
 #import "EDPanelViewController.h"
 #import "NSObject+Document.h"
-#import "EDCoreDataUtility+Worksheet.h"
 
 @interface EDPanelPropertiesController ()
 - (void)setCorrectView;
@@ -106,7 +106,7 @@
     NSMutableDictionary *selectedTypes = [EDCoreDataUtility getAllTypesOfSelectedWorksheetElements:_context];
     
 #warning add other elements here, need to check for other entities
-    if([selectedTypes valueForKey:EDEntityNameGraph]){
+    if([selectedTypes valueForKey:EDKeyGraph]){
         if(!graphController){
             graphController = [[EDPanelPropertiesGraphController alloc] initWithNibName:@"EDPanelPropertiesGraph" bundle:nil];
         }
@@ -114,6 +114,24 @@
         [[self window] setTitle:@"Graph Properties"];
             
         viewController = graphController;
+    }
+    else if([selectedTypes valueForKey:EDKeyLine]){
+        if(!lineController){
+            lineController = [[EDPanelPropertiesLineController alloc] initWithNibName:@"EDPanelPropertiesLine" bundle:nil];
+        }
+        // set window title
+        [[self window] setTitle:@"Line Properties"];
+            
+        viewController = lineController;
+    }
+    else if([selectedTypes valueForKey:EDKeyGraphLine]){
+        if(!documentController){
+            documentController = [[EDPanelPropertiesDocumentController alloc] initWithNibName:@"EDPanelPropertiesDocument" bundle:nil];
+        }
+        // set window title
+        [[self window] setTitle:@"Properties"];
+            
+        viewController = documentController;
     }
     else {
         if(!documentController){
@@ -129,6 +147,11 @@
     // check to see if view is already being shown
     // if so then do nothing except update panel
     if ((viewController == graphController) && ([[self window] contentView] == [graphController view])) {
+        // still need to update panel properties
+        [viewController initWindowAfterLoaded:_context];
+        return;
+    }
+    else if ((viewController == lineController) && ([[self window] contentView] == [lineController view])) {
         // still need to update panel properties
         [viewController initWindowAfterLoaded:_context];
         return;

@@ -222,20 +222,23 @@
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
     // this method returns a dictionary of the types of selected objects
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    NSMutableArray *fetchedObjects = [NSMutableArray array];
-    NSArray *otherObjects;
-    
-    // get all selected graphs
-    otherObjects = [EDGraph getAllSelectedObjects:context];
-    [fetchedObjects addObjectsFromArray:otherObjects];
-    
-    otherObjects = [EDLine getAllSelectedObjects:context];
-    [fetchedObjects addObjectsFromArray:otherObjects];
+    NSArray *graphObjects, *lineObjects;
     
 #warning worksheet elements
-    if ([fetchedObjects count] > 0) {
-        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDEntityNameGraph]; 
+    // get all selected graphs
+    graphObjects = [EDGraph getAllSelectedObjects:context];
+    lineObjects = [EDLine getAllSelectedObjects:context];
+    
+    if (([lineObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyGraphLine];
     }
+    else if ([graphObjects count] > 0) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyGraph];
+    }
+    else if ([lineObjects count] > 0) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyLine];
+    }
+    
     
     return results;
 }
