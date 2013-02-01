@@ -97,6 +97,8 @@
 		CDF3E17B16BC145300AB78AF /* EDPanelPropertiesLineController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E17916BC145300AB78AF /* EDPanelPropertiesLineController.m */; };
 		CDF3E17C16BC145300AB78AF /* EDPanelPropertiesLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDF3E17A16BC145300AB78AF /* EDPanelPropertiesLine.xib */; };
 		CDF3E18216BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E18116BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.m */; };
+		CDF3E18A16BC34C000AB78AF /* EDPanelPropertiesGraphLineController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E18816BC34C000AB78AF /* EDPanelPropertiesGraphLineController.m */; };
+		CDF3E18B16BC34C000AB78AF /* EDPanelPropertiesGraphLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDF3E18916BC34C000AB78AF /* EDPanelPropertiesGraphLine.xib */; };
 		CDF62E3416A0DAA500DCDD2D /* EDPanelProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */; };
 		CDF62E4616A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */; };
 		CDF62E4F16A2810700DCDD2D /* EDFormatterEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4E16A2810700DCDD2D /* EDFormatterEquation.m */; };
@@ -279,6 +281,9 @@
 		CDF3E17A16BC145300AB78AF /* EDPanelPropertiesLine.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesLine.xib; sourceTree = "<group>"; };
 		CDF3E18016BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterDecimalUnsignedOneDecimal.h; sourceTree = "<group>"; };
 		CDF3E18116BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterDecimalUnsignedOneDecimal.m; sourceTree = "<group>"; };
+		CDF3E18716BC34C000AB78AF /* EDPanelPropertiesGraphLineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesGraphLineController.h; sourceTree = "<group>"; };
+		CDF3E18816BC34C000AB78AF /* EDPanelPropertiesGraphLineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesGraphLineController.m; sourceTree = "<group>"; };
+		CDF3E18916BC34C000AB78AF /* EDPanelPropertiesGraphLine.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesGraphLine.xib; sourceTree = "<group>"; };
 		CDF62E3216A0DAA500DCDD2D /* EDPanelProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelProperties.h; sourceTree = "<group>"; };
 		CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelProperties.m; sourceTree = "<group>"; };
 		CDF62E4416A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Worksheet.h"; sourceTree = "<group>"; };
@@ -412,8 +417,9 @@
 				CD1EBD5915FED4B800BEEA4D /* EDPanelPropertiesController.h */,
 				CD1EBD5A15FED4B800BEEA4D /* EDPanelPropertiesController.m */,
 				CD2DD5D116474108006557FC /* Document */,
-				CDF3E17716BC13D400AB78AF /* Line */,
 				CD2DD5D0164740F9006557FC /* Graph */,
+				CDF3E18616BC348C00AB78AF /* GraphLine */,
+				CDF3E17716BC13D400AB78AF /* Line */,
 			);
 			name = Properties;
 			sourceTree = "<group>";
@@ -860,6 +866,16 @@
 			name = Line;
 			sourceTree = "<group>";
 		};
+		CDF3E18616BC348C00AB78AF /* GraphLine */ = {
+			isa = PBXGroup;
+			children = (
+				CDF3E18716BC34C000AB78AF /* EDPanelPropertiesGraphLineController.h */,
+				CDF3E18816BC34C000AB78AF /* EDPanelPropertiesGraphLineController.m */,
+				CDF3E18916BC34C000AB78AF /* EDPanelPropertiesGraphLine.xib */,
+			);
+			name = GraphLine;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -926,6 +942,7 @@
 				CD82441D16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib in Resources */,
 				CD74501216B3342A004B813E /* icon.iconset in Resources */,
 				CDF3E17C16BC145300AB78AF /* EDPanelPropertiesLine.xib in Resources */,
+				CDF3E18B16BC34C000AB78AF /* EDPanelPropertiesGraphLine.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,6 +1038,7 @@
 				CDF3E17216BC107300AB78AF /* EDCoreDataUtility+Lines.m in Sources */,
 				CDF3E17B16BC145300AB78AF /* EDPanelPropertiesLineController.m in Sources */,
 				CDF3E18216BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.m in Sources */,
+				CDF3E18A16BC34C000AB78AF /* EDPanelPropertiesGraphLineController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

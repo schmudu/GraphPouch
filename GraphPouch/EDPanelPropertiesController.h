@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "EDPanelPropertiesDocumentController.h"
 #import "EDPanelPropertiesGraphController.h"
+#import "EDPanelPropertiesGraphLineController.h"
 #import "EDPanelPropertiesLineController.h"
 
 
@@ -16,6 +17,7 @@
     IBOutlet NSMenuItem *menuItemProperties;
     EDPanelPropertiesDocumentController *documentController;
     EDPanelPropertiesGraphController *graphController;
+    EDPanelPropertiesGraphLineController *graphLineController;
     EDPanelPropertiesLineController *lineController;
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;

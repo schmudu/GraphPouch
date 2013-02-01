@@ -105,7 +105,7 @@
     // get all the selected objects
     NSMutableDictionary *selectedTypes = [EDCoreDataUtility getAllTypesOfSelectedWorksheetElements:_context];
     
-#warning add other elements here, need to check for other entities
+#warning worksheet elements
     if([selectedTypes valueForKey:EDKeyGraph]){
         if(!graphController){
             graphController = [[EDPanelPropertiesGraphController alloc] initWithNibName:@"EDPanelPropertiesGraph" bundle:nil];
@@ -114,6 +114,15 @@
         [[self window] setTitle:@"Graph Properties"];
             
         viewController = graphController;
+    }
+    else if([selectedTypes valueForKey:EDKeyGraphLine]){
+        if(!graphLineController){
+            graphLineController = [[EDPanelPropertiesGraphLineController alloc] initWithNibName:@"EDPanelPropertiesGraphLine" bundle:nil];
+        }
+        // set window title
+        [[self window] setTitle:@"Properties"];
+            
+        viewController = graphLineController;
     }
     else if([selectedTypes valueForKey:EDKeyLine]){
         if(!lineController){
@@ -143,10 +152,15 @@
         viewController = documentController;
     }
     
-#warning add other elements here, need to add other checks if we add other types
+#warning worksheet elements
     // check to see if view is already being shown
     // if so then do nothing except update panel
     if ((viewController == graphController) && ([[self window] contentView] == [graphController view])) {
+        // still need to update panel properties
+        [viewController initWindowAfterLoaded:_context];
+        return;
+    }
+    else if ((viewController == graphLineController) && ([[self window] contentView] == [graphLineController view])) {
         // still need to update panel properties
         [viewController initWindowAfterLoaded:_context];
         return;
