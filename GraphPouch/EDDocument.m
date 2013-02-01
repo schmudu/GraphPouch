@@ -65,10 +65,12 @@
 }
 
 - (void)onContextChanged:(NSNotification *)note{
+    /*
     NSArray *updatedObjects = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
     NSArray *insertedObjects = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
     NSArray *deletedObjects = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
     NSLog(@"context changed:\n===updated:%@ \n===inserted:%@ \n===deleted:%@", updatedObjects, insertedObjects, deletedObjects);
+     */
     
     // push changes to parent context
     //NSLog(@"\n\n===before change:\ntokens root:%@ \nchild root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);

@@ -72,13 +72,13 @@
 - (void)removeFeatures{
     // method called to remove performance-heavy elements
     // useful during mouse dragging
-    NSLog(@"remove elements.");
+    //NSLog(@"remove elements.");
 }
 
 - (void)addFeatures{
     // method called to add performance-heavy elements
     // useful after mouse dragging has completed
-    NSLog(@"add elements.");
+    //NSLog(@"add elements.");
 }
 
 #pragma mark mouse events
@@ -111,7 +111,7 @@
         }
         else {
             // post notification
-            [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:EDEventUnselectedElementClickedWithoutModifier object:self];
             
             //need to deselect all the other graphs
             [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
@@ -145,7 +145,7 @@
         }
         else {
             // post notification
-            [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:EDEventUnselectedElementClickedWithoutModifier object:self];
             
             //need to deselect all the other graphs
             [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];

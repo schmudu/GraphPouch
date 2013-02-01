@@ -45,7 +45,7 @@
     
     // listeners
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventWorksheetClicked object:[self view]];
-    [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
+    [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventUnselectedElementClickedWithoutModifier object:[self view]];
     [_nc addObserver:self selector:@selector(deleteSelectedElements:) name:EDEventDeleteKeyPressedWithoutModifiers object:[self view]];
     [_nc addObserver:self selector:@selector(alignElementsToTop:) name:EDEventMenuAlignTop object:nil];
     [_nc addObserver:self selector:@selector(cutSelectedElements:) name:EDEventShortcutCut object:[self view]];
@@ -65,7 +65,7 @@
 
 - (void)dealloc{
     [_nc removeObserver:self name:EDEventWorksheetClicked object:[self view]];
-    [_nc removeObserver:self name:EDEventUnselectedGraphClickedWithoutModifier object:[self view]];
+    [_nc removeObserver:self name:EDEventUnselectedElementClickedWithoutModifier object:[self view]];
     [_nc removeObserver:self name:EDEventDeleteKeyPressedWithoutModifiers object:[self view]];
     [_nc removeObserver:self name:EDEventMenuAlignTop object:nil];
     [_nc removeObserver:self name:EDEventWindowDidResize object:_documentController];

@@ -63,7 +63,7 @@ extern NSString *const EDEventMouseDown;
 extern NSString *const EDEventMouseDragged;
 extern NSString *const EDEventMouseUp;
 extern NSString *const EDEventTabPressedWithoutModifiers;
-extern NSString *const EDEventUnselectedGraphClickedWithoutModifier;
+extern NSString *const EDEventUnselectedElementClickedWithoutModifier;
 extern NSString *const EDEventDeleteKeyPressedWithoutModifiers;
 extern NSString *const EDEventBecomeFirstResponder;
 extern NSString *const EDEventWorksheetElementSelected;

@@ -43,6 +43,7 @@
 - (void)removeLabels;
 - (void)removeEquations;
 - (void)removePoints;
+- (void)onContextChanged:(NSNotification *)note;
 @end
 
 @implementation EDGraphView

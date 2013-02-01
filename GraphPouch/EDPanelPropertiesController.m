@@ -125,7 +125,6 @@
         viewController = documentController;
     }
     
-    //stupid comment
 #warning add other elements here, need to add other checks if we add other types
     // check to see if view is already being shown
     // if so then do nothing except update panel

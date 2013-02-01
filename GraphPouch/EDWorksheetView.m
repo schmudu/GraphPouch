@@ -14,6 +14,7 @@
 #import "EDGraph.h"
 #import "EDGraphView.h"
 #import "EDLine.h"
+#import "EDLineView.h"
 #import "EDPage.h"
 #import "EDTransformRect.h"
 #import "EDWorksheetView.h"
@@ -190,7 +191,25 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)drawLine:(EDLine *)line{
-    NSLog(@"need to add line view");
+    EDLineView *lineView = [[EDLineView alloc] initWithFrame:NSMakeRect(0, 0, [line elementWidth], [line elementHeight]) lineModel:(EDLine *)line];
+    
+    // listen to graph
+    // NOTE: any listeners you add here, remove them in method 'removeElementView'
+    [_nc addObserver:self selector:@selector(onElementSelectedDeselectOtherElements:) name:EDEventUnselectedElementClickedWithoutModifier object:lineView];
+    [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:lineView];
+    [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:lineView];
+    [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:lineView];
+    
+    // set location
+    [lineView setFrameOrigin:NSMakePoint([[line valueForKey:EDElementAttributeLocationX] floatValue], [[line valueForKey:EDElementAttributeLocationY] floatValue])];
+    
+    [self addSubview:lineView];
+    [lineView setNeedsDisplay:TRUE];
+    
+    // draw transform rect if selected
+    if ([[[lineView dataObj] valueForKey:EDElementAttributeSelected] boolValue]){
+        [self drawTransformRect:(EDElement *)[lineView dataObj]];
+    }
 }
 
 - (void)drawGraph:(EDGraph *)graph{
@@ -198,7 +217,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     
     // listen to graph
     // NOTE: any listeners you add here, remove them in method 'removeElementView'
-    [_nc addObserver:self selector:@selector(onGraphSelectedDeselectOtherGraphs:) name:EDEventUnselectedGraphClickedWithoutModifier object:graphView];
+    [_nc addObserver:self selector:@selector(onElementSelectedDeselectOtherElements:) name:EDEventUnselectedElementClickedWithoutModifier object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:graphView];
@@ -368,7 +387,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             [currentElement removeFromSuperview];
         
             // remove listener
-            [_nc removeObserver:self name:EDEventUnselectedGraphClickedWithoutModifier object:currentElement];
+            [_nc removeObserver:self name:EDEventUnselectedElementClickedWithoutModifier object:currentElement];
             [_nc removeObserver:self name:EDEventMouseDown object:currentElement];
             [_nc removeObserver:self name:EDEventMouseDragged object:currentElement];
             [_nc removeObserver:self name:EDEventMouseUp object:currentElement];
@@ -377,8 +396,8 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     }
 }
 
-- (void)onGraphSelectedDeselectOtherGraphs:(NSNotification *)note{
-    [_nc postNotificationName:EDEventUnselectedGraphClickedWithoutModifier object:self];
+- (void)onElementSelectedDeselectOtherElements:(NSNotification *)note{
+    [_nc postNotificationName:EDEventUnselectedElementClickedWithoutModifier object:self];
 }
 
 #pragma mark mouse behavior

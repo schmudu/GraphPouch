@@ -89,6 +89,7 @@
 		CDE6D67015E4429800E5695F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDE6D66F15E4429800E5695F /* Preferences.xib */; };
 		CDE6D67715E4454B00E5695F /* EDPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D67615E4454B00E5695F /* EDPreferenceController.m */; };
 		CDF3E14816B9CC2A00AB78AF /* EDLine.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E14716B9CC2A00AB78AF /* EDLine.m */; };
+		CDF3E15416BB1F3400AB78AF /* EDLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E15316BB1F3400AB78AF /* EDLineView.m */; };
 		CDF62E3416A0DAA500DCDD2D /* EDPanelProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */; };
 		CDF62E4616A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */; };
 		CDF62E4F16A2810700DCDD2D /* EDFormatterEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4E16A2810700DCDD2D /* EDFormatterEquation.m */; };
@@ -256,6 +257,8 @@
 		CDE6D67615E4454B00E5695F /* EDPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPreferenceController.m; sourceTree = "<group>"; };
 		CDF3E14616B9CC2A00AB78AF /* EDLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDLine.h; sourceTree = "<group>"; };
 		CDF3E14716B9CC2A00AB78AF /* EDLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDLine.m; sourceTree = "<group>"; };
+		CDF3E15216BB1F3400AB78AF /* EDLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDLineView.h; sourceTree = "<group>"; };
+		CDF3E15316BB1F3400AB78AF /* EDLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDLineView.m; sourceTree = "<group>"; };
 		CDF62E3216A0DAA500DCDD2D /* EDPanelProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelProperties.h; sourceTree = "<group>"; };
 		CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelProperties.m; sourceTree = "<group>"; };
 		CDF62E4416A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Worksheet.h"; sourceTree = "<group>"; };
@@ -555,6 +558,8 @@
 		CD3F0B0115C4784A00AB7567 /* Line */ = {
 			isa = PBXGroup;
 			children = (
+				CDF3E15216BB1F3400AB78AF /* EDLineView.h */,
+				CDF3E15316BB1F3400AB78AF /* EDLineView.m */,
 			);
 			name = Line;
 			sourceTree = "<group>";
@@ -959,6 +964,7 @@
 				CD82442016AC543300BAAB0B /* EDSheetPropertiesGraphErrorController.m in Sources */,
 				CD82442316AC582F00BAAB0B /* EDSheetPropertiesGraphError.m in Sources */,
 				CDF3E14816B9CC2A00AB78AF /* EDLine.m in Sources */,
+				CDF3E15416BB1F3400AB78AF /* EDLineView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

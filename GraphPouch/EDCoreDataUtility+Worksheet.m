@@ -9,6 +9,7 @@
 #import "EDCoreDataUtility+Worksheet.h"
 #import "EDGraph.h"
 #import "EDLine.h"
+#import "EDPage.h"
 #import "EDEquation.h"
 #import "EDToken.h"
 #import "NSObject+Document.h"
@@ -253,7 +254,8 @@
 }
 
 + (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context{
-    NSArray *fetchedObjects = [EDGraph getAllSelectedObjects:context];
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
+    NSArray *fetchedObjects = [currentPage getAllWorksheetObjects];
     if (fetchedObjects == nil) {
         // Handle the error
     }
