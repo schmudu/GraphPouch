@@ -13,9 +13,16 @@
 @interface EDTransformRect : NSView{
     EDElement *_element;
     NSNotificationCenter *_nc;
-    EDTransformCornerPoint *topLeftPoint, *topRightPoint, *bottomLeftPoint, *bottomRightPoint;
+    //EDTransformCornerPoint *topLeftPoint, *topRightPoint, *bottomLeftPoint, *bottomRightPoint;
+    EDTransformPoint *topLeftPoint, *topRightPoint, *bottomLeftPoint, *bottomRightPoint;
 }
 - (id)initWithFrame:(NSRect)frame element:(EDElement *)element;
 - (void)setDimensionAndPositionElementViewOrigin:(NSPoint)origin element:(EDElement *)element;
 - (void)updateDimensions:(EDElement *)element;
+
+// added to public methods because this class is subclassed
+-(void)onTransformPointDragged:(NSNotification *)note;
+-(void)onTransformPointMouseUp:(NSNotification *)note;
+-(void)onTransformPointMouseDown:(NSNotification *)note;
+- (NSMutableDictionary *)getDimensionsOfEvent:(NSNotification *)note;
 @end

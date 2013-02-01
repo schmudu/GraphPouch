@@ -18,5 +18,7 @@
     NSPoint                 _savedMouseSnapLocation;
 }
 
+- (float)findClosestPoint:(float)currentPoint guides:(NSMutableArray *)guides;
+
 @property NSString *transformCorner;
 @end

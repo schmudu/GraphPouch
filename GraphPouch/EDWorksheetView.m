@@ -17,6 +17,7 @@
 #import "EDLineView.h"
 #import "EDPage.h"
 #import "EDTransformRect.h"
+#import "EDTransformRectOnlyHorizontal.h"
 #import "EDWorksheetView.h"
 #import "EDWorksheetElementView.h"
 #import "NSColor+Utilities.h"
@@ -685,7 +686,13 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 #pragma mark transform rect
 - (void)drawTransformRect:(EDElement *)element{
     // create new transform rect
-    EDTransformRect *newTransformRect = [[EDTransformRect alloc] initWithFrame:[self bounds] element:element];
+    EDTransformRect *newTransformRect;
+    
+    // set transform rect based on type of element that we're drawing
+    if (![element isKindOfClass:[EDLine class]])
+        newTransformRect = [[EDTransformRect alloc] initWithFrame:[self bounds] element:element];
+    else
+        newTransformRect = [[EDTransformRectOnlyHorizontal alloc] initWithFrame:[self bounds] element:element];
     
     // add to dictionary
     [_transformRects setObject:newTransformRect forKey:[NSValue valueWithNonretainedObject:element]];

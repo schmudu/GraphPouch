@@ -12,10 +12,12 @@
 #import "EDElement.h"
 
 @interface EDTransformRect()
+/*
 -(void)onTransformPointDragged:(NSNotification *)note;
 -(void)onTransformPointMouseUp:(NSNotification *)note;
 -(void)onTransformPointMouseDown:(NSNotification *)note;
 - (NSMutableDictionary *)getDimensionsOfEvent:(NSNotification *)note;
+ */
 @end
 
 @implementation EDTransformRect
@@ -30,16 +32,16 @@
         bottomRightPoint = [EDTransformCornerPoint alloc];
         
         // align element with data attributes
-        topLeftPoint = [topLeftPoint initWithFrame:NSMakeRect([element locationX], [element locationY], EDTransformPointLength, EDTransformPointLength)
+        topLeftPoint = [(EDTransformCornerPoint *)topLeftPoint initWithFrame:NSMakeRect([element locationX], [element locationY], EDTransformPointLength, EDTransformPointLength)
                       verticalPoint:(EDTransformCornerPoint *)topRightPoint 
                          horizPoint:(EDTransformCornerPoint *)bottomLeftPoint];
-        topRightPoint = [topRightPoint initWithFrame:NSMakeRect([element locationX] + [element elementWidth] - EDTransformPointLength, [element locationY], EDTransformPointLength, EDTransformPointLength)
+        topRightPoint = [(EDTransformCornerPoint *)topRightPoint initWithFrame:NSMakeRect([element locationX] + [element elementWidth] - EDTransformPointLength, [element locationY], EDTransformPointLength, EDTransformPointLength)
                        verticalPoint:(EDTransformCornerPoint *)topLeftPoint 
                           horizPoint:(EDTransformCornerPoint *)bottomRightPoint];
-        bottomLeftPoint = [bottomLeftPoint initWithFrame:NSMakeRect([element locationX], [element locationY] + [element elementHeight] - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
+        bottomLeftPoint = [(EDTransformCornerPoint *)bottomLeftPoint initWithFrame:NSMakeRect([element locationX], [element locationY] + [element elementHeight] - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
                          verticalPoint:(EDTransformCornerPoint *)bottomRightPoint 
                             horizPoint:(EDTransformCornerPoint *)topLeftPoint];
-        bottomRightPoint = [bottomRightPoint initWithFrame:NSMakeRect([element locationX] + [element elementWidth] - EDTransformPointLength, [element locationY] + [element elementHeight] - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
+        bottomRightPoint = [(EDTransformCornerPoint *)bottomRightPoint initWithFrame:NSMakeRect([element locationX] + [element elementWidth] - EDTransformPointLength, [element locationY] + [element elementHeight] - EDTransformPointLength, EDTransformPointLength, EDTransformPointLength)
                           verticalPoint:(EDTransformCornerPoint *)bottomLeftPoint 
                              horizPoint:(EDTransformCornerPoint *)topRightPoint];
         // listen
@@ -182,7 +184,8 @@
 #pragma element
 - (void)setDimensionAndPositionElementViewOrigin:(NSPoint)origin element:(EDElement *)element{
     // set position and dimension based on element
-    EDTransformCornerPoint *topLeft, *topRight, *bottomLeft, *bottomRight;
+    //EDTransformCornerPoint *topLeft, *topRight, *bottomLeft, *bottomRight;
+    EDTransformPoint *topLeft, *topRight, *bottomLeft, *bottomRight;
     
     // find the positions of points
     if ([topLeftPoint frame].origin.y < [bottomLeftPoint frame].origin.y){

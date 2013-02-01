@@ -90,6 +90,9 @@
 		CDE6D67715E4454B00E5695F /* EDPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D67615E4454B00E5695F /* EDPreferenceController.m */; };
 		CDF3E14816B9CC2A00AB78AF /* EDLine.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E14716B9CC2A00AB78AF /* EDLine.m */; };
 		CDF3E15416BB1F3400AB78AF /* EDLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E15316BB1F3400AB78AF /* EDLineView.m */; };
+		CDF3E16016BBF79700AB78AF /* EDTransformRectOnlyHorizontal.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E15F16BBF79700AB78AF /* EDTransformRectOnlyHorizontal.m */; };
+		CDF3E16616BBFAC300AB78AF /* EDTransformCornerPointOnlyHorizontal.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E16516BBFAC200AB78AF /* EDTransformCornerPointOnlyHorizontal.m */; };
+		CDF3E16916BBFAF000AB78AF /* EDTransformPointOnlyHorizontal.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E16816BBFAEF00AB78AF /* EDTransformPointOnlyHorizontal.m */; };
 		CDF62E3416A0DAA500DCDD2D /* EDPanelProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */; };
 		CDF62E4616A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */; };
 		CDF62E4F16A2810700DCDD2D /* EDFormatterEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4E16A2810700DCDD2D /* EDFormatterEquation.m */; };
@@ -259,6 +262,12 @@
 		CDF3E14716B9CC2A00AB78AF /* EDLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDLine.m; sourceTree = "<group>"; };
 		CDF3E15216BB1F3400AB78AF /* EDLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDLineView.h; sourceTree = "<group>"; };
 		CDF3E15316BB1F3400AB78AF /* EDLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDLineView.m; sourceTree = "<group>"; };
+		CDF3E15E16BBF79700AB78AF /* EDTransformRectOnlyHorizontal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformRectOnlyHorizontal.h; sourceTree = "<group>"; };
+		CDF3E15F16BBF79700AB78AF /* EDTransformRectOnlyHorizontal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformRectOnlyHorizontal.m; sourceTree = "<group>"; };
+		CDF3E16416BBFAC200AB78AF /* EDTransformCornerPointOnlyHorizontal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformCornerPointOnlyHorizontal.h; sourceTree = "<group>"; };
+		CDF3E16516BBFAC200AB78AF /* EDTransformCornerPointOnlyHorizontal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformCornerPointOnlyHorizontal.m; sourceTree = "<group>"; };
+		CDF3E16716BBFAEF00AB78AF /* EDTransformPointOnlyHorizontal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformPointOnlyHorizontal.h; sourceTree = "<group>"; };
+		CDF3E16816BBFAEF00AB78AF /* EDTransformPointOnlyHorizontal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformPointOnlyHorizontal.m; sourceTree = "<group>"; };
 		CDF62E3216A0DAA500DCDD2D /* EDPanelProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelProperties.h; sourceTree = "<group>"; };
 		CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelProperties.m; sourceTree = "<group>"; };
 		CDF62E4416A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Worksheet.h"; sourceTree = "<group>"; };
@@ -781,10 +790,16 @@
 			children = (
 				CDD46E5F1607D1F200EDD75C /* EDTransformRect.h */,
 				CDD46E601607D1F200EDD75C /* EDTransformRect.m */,
+				CDF3E15E16BBF79700AB78AF /* EDTransformRectOnlyHorizontal.h */,
+				CDF3E15F16BBF79700AB78AF /* EDTransformRectOnlyHorizontal.m */,
 				CDD46E631607D22F00EDD75C /* EDTransformPoint.h */,
 				CDD46E641607D22F00EDD75C /* EDTransformPoint.m */,
+				CDF3E16716BBFAEF00AB78AF /* EDTransformPointOnlyHorizontal.h */,
+				CDF3E16816BBFAEF00AB78AF /* EDTransformPointOnlyHorizontal.m */,
 				CD6DF2FF160D181900935BF2 /* EDTransformCornerPoint.h */,
 				CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */,
+				CDF3E16416BBFAC200AB78AF /* EDTransformCornerPointOnlyHorizontal.h */,
+				CDF3E16516BBFAC200AB78AF /* EDTransformCornerPointOnlyHorizontal.m */,
 			);
 			name = Transform;
 			sourceTree = "<group>";
@@ -965,6 +980,9 @@
 				CD82442316AC582F00BAAB0B /* EDSheetPropertiesGraphError.m in Sources */,
 				CDF3E14816B9CC2A00AB78AF /* EDLine.m in Sources */,
 				CDF3E15416BB1F3400AB78AF /* EDLineView.m in Sources */,
+				CDF3E16016BBF79700AB78AF /* EDTransformRectOnlyHorizontal.m in Sources */,
+				CDF3E16616BBFAC300AB78AF /* EDTransformCornerPointOnlyHorizontal.m in Sources */,
+				CDF3E16916BBFAF000AB78AF /* EDTransformPointOnlyHorizontal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
