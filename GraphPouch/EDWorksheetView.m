@@ -136,6 +136,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)drawRect:(NSRect)dirtyRect{
+    //NSLog(@"redrawing workseet: dirty rect: x:%f y%f w:%f h:%f", dirtyRect.origin.x, dirtyRect.origin.y, dirtyRect.size.width, dirtyRect.size.height);
     NSRect bounds = [self bounds];
     [[NSColor whiteColor] set];
     [NSBezierPath fillRect:bounds];
@@ -447,6 +448,11 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
+        // remove heavy features while something is being dragged
+        if ([myElement isWorksheetElement]){
+            [(EDWorksheetElementView *)myElement removeFeatures];
+        }
+        
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse down
             [(EDWorksheetElementView *)myElement mouseDownBySelection:[[note userInfo] valueForKey:EDEventKey]];
@@ -470,7 +476,11 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
-    
+        // remove heavy features while something is being dragged
+        if ([myElement isWorksheetElement]){
+            [(EDWorksheetElementView *)myElement removeFeatures];
+        }
+        
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
             // do not notify element if it was the original element that was dragged
@@ -490,6 +500,10 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
+        // add heavy features on mouse up
+        if ([myElement isWorksheetElement]){
+            [(EDWorksheetElementView *)myElement addFeatures];
+        }
         
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
