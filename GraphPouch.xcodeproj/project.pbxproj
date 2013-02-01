@@ -93,6 +93,7 @@
 		CDF3E16016BBF79700AB78AF /* EDTransformRectOnlyHorizontal.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E15F16BBF79700AB78AF /* EDTransformRectOnlyHorizontal.m */; };
 		CDF3E16616BBFAC300AB78AF /* EDTransformCornerPointOnlyHorizontal.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E16516BBFAC200AB78AF /* EDTransformCornerPointOnlyHorizontal.m */; };
 		CDF3E16916BBFAF000AB78AF /* EDTransformPointOnlyHorizontal.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E16816BBFAEF00AB78AF /* EDTransformPointOnlyHorizontal.m */; };
+		CDF3E17216BC107300AB78AF /* EDCoreDataUtility+Lines.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E17116BC107300AB78AF /* EDCoreDataUtility+Lines.m */; };
 		CDF62E3416A0DAA500DCDD2D /* EDPanelProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */; };
 		CDF62E4616A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */; };
 		CDF62E4F16A2810700DCDD2D /* EDFormatterEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4E16A2810700DCDD2D /* EDFormatterEquation.m */; };
@@ -268,6 +269,8 @@
 		CDF3E16516BBFAC200AB78AF /* EDTransformCornerPointOnlyHorizontal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformCornerPointOnlyHorizontal.m; sourceTree = "<group>"; };
 		CDF3E16716BBFAEF00AB78AF /* EDTransformPointOnlyHorizontal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformPointOnlyHorizontal.h; sourceTree = "<group>"; };
 		CDF3E16816BBFAEF00AB78AF /* EDTransformPointOnlyHorizontal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformPointOnlyHorizontal.m; sourceTree = "<group>"; };
+		CDF3E17016BC107300AB78AF /* EDCoreDataUtility+Lines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Lines.h"; sourceTree = "<group>"; };
+		CDF3E17116BC107300AB78AF /* EDCoreDataUtility+Lines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EDCoreDataUtility+Lines.m"; sourceTree = "<group>"; };
 		CDF62E3216A0DAA500DCDD2D /* EDPanelProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelProperties.h; sourceTree = "<group>"; };
 		CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelProperties.m; sourceTree = "<group>"; };
 		CDF62E4416A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Worksheet.h"; sourceTree = "<group>"; };
@@ -472,6 +475,7 @@
 				CDAA91101669B128009B75A2 /* NSArrayController */,
 				CDC649D816979114003FADE8 /* NSCoder */,
 				CDAA91111669B153009B75A2 /* NSMutableArray */,
+				CDF3E17316BC135B00AB78AF /* NSManagedObject */,
 				CDAA91121669B15A009B75A2 /* NSMutableDictionary */,
 				CDAA91131669B186009B75A2 /* NSObject */,
 				CD3A4FE316359FC90042B6DD /* EDPage.h */,
@@ -659,6 +663,8 @@
 			children = (
 				CD1422C515C7590700F55819 /* EDCoreDataUtility.h */,
 				CD1422C615C7590700F55819 /* EDCoreDataUtility.m */,
+				CDF3E17016BC107300AB78AF /* EDCoreDataUtility+Lines.h */,
+				CDF3E17116BC107300AB78AF /* EDCoreDataUtility+Lines.m */,
 				CDF62E9716A762BC00DCDD2D /* EDCoreDataUtility+Graphs.h */,
 				CDF62E9816A762BC00DCDD2D /* EDCoreDataUtility+Graphs.m */,
 				CD26366A167EB1F500424487 /* EDCoreDataUtility+Equations.h */,
@@ -669,10 +675,6 @@
 				CD2DD5F2164C7478006557FC /* EDCoreDataUtility+Points.m */,
 				CDF62E4416A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.h */,
 				CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */,
-				CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */,
-				CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */,
-				CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */,
-				CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */,
 			);
 			name = EDCoreData;
 			sourceTree = "<group>";
@@ -824,6 +826,17 @@
 				CDE6D67615E4454B00E5695F /* EDPreferenceController.m */,
 			);
 			name = Preferences;
+			sourceTree = "<group>";
+		};
+		CDF3E17316BC135B00AB78AF /* NSManagedObject */ = {
+			isa = PBXGroup;
+			children = (
+				CDE6D61A15DC476B00E5695F /* NSManagedObject+Attributes.h */,
+				CDE6D61B15DC476B00E5695F /* NSManagedObject+Attributes.m */,
+				CDF7D84D15CEC3A00072B8BB /* NSManagedObject+EasyFetching.h */,
+				CDF7D84E15CEC3A00072B8BB /* NSManagedObject+EasyFetching.m */,
+			);
+			name = NSManagedObject;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -983,6 +996,7 @@
 				CDF3E16016BBF79700AB78AF /* EDTransformRectOnlyHorizontal.m in Sources */,
 				CDF3E16616BBFAC300AB78AF /* EDTransformCornerPointOnlyHorizontal.m in Sources */,
 				CDF3E16916BBFAF000AB78AF /* EDTransformPointOnlyHorizontal.m in Sources */,
+				CDF3E17216BC107300AB78AF /* EDCoreDataUtility+Lines.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -85,7 +85,13 @@
 
 #pragma mark data structure
 - (BOOL)containsObject:(NSManagedObject *)object{
-    BOOL result = FALSE;
+#warning worksheet elements
+    // search through graphs
+    for (EDLine *line in [self lines]){
+        if (line == object){
+            return TRUE;
+        }
+    }
     
     // search through graphs
     for (EDGraph *graph in [self graphs]){
@@ -93,7 +99,7 @@
             return TRUE;
         }
     }
-    return result;
+    return FALSE;
 }
 
 + (NSArray *)allWorksheetClasses{

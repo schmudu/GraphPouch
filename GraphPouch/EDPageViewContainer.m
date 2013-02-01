@@ -6,20 +6,24 @@
 //  Copyright (c) 2013 Patrick Lee. All rights reserved.
 //
 
-#import "EDPageViewContainer.h"
-#import "EDPage.h"
 #import "EDConstants.h"
-#import "NSColor+Utilities.h"
 #import "EDCoreDataUtility+Graphs.h"
+#import "EDCoreDataUtility+Lines.h"
+#import "EDEquation.h"
 #import "EDGraphView.h"
 #import "EDGraph.h"
+#import "EDLine.h"
+#import "EDPageViewContainer.h"
+#import "EDPage.h"
 #import "EDParser.h"
-#import "EDEquation.h"
+#import "NSColor+Utilities.h"
 
 @interface EDPageViewContainer()
 - (NSMutableDictionary *)calculateGraphOrigin:(EDGraph *)graph height:(float)graphHeight width:(float)graphWidth xRatio:(float)xRatio yRatio:(float)yRatio;
 - (void)onContextChanged:(NSNotification *)note;
 - (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length scale:(int)scale;
+- (void)drawGraphs;
+- (void)drawLines;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo width:(float)graphWidth height:(float)graphHeight graph:(EDGraph *)graph;
 - (void)drawEquation:(EDEquation *)equation verticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo width:(float)graphWidth height:(float)graphHeight graph:(EDGraph *)graph xRatio:(float)xRatio yRatio:(float)yRatio;
 @end
@@ -53,6 +57,23 @@
 {
     // Drawing code here.
     [self drawGraphs];
+    [self drawLines];
+}
+
+- (void)drawLines{
+    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
+    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
+    NSArray *lines = [EDCoreDataUtility getLinesForPage:_page context:_context];
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [[NSColor blackColor] setStroke];
+    
+    for (EDLine *line in lines){
+        [path setLineWidth:(yRatio * [[line thickness] floatValue])];
+        [path moveToPoint:NSMakePoint(xRatio * [line locationX], yRatio *([line locationY] + EDWorksheetLineSelectionHeight/2))];
+        [path lineToPoint:NSMakePoint(xRatio * ([line locationX] + [line elementWidth]), yRatio *([line locationY] + EDWorksheetLineSelectionHeight/2))];
+    }
+    
+    [path stroke];
 }
 
 - (void)drawGraphs{
