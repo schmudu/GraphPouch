@@ -13,8 +13,7 @@
 @end
 
 @implementation EDTransformCornerPoint
-
-
+#warning change here = change in EDTransformCornerPointOnlyHorizontal
 - (id)initWithFrame:(NSRect)frame verticalPoint:(EDTransformCornerPoint *)newVerticalPoint horizPoint:(EDTransformCornerPoint *)newHorizPoint
 {
     self = [super initWithFrame:frame];

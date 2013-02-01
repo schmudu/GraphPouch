@@ -92,8 +92,8 @@
     [newLine setSelected:FALSE];
     [newLine setLocationX:50];
     [newLine setLocationY:150];
-    [newLine setElementWidth:300];
-    [newLine setElementHeight:300];
+    [newLine setElementWidth:EDWorksheetLineSelectionWidth];
+    [newLine setElementHeight:EDWorksheetLineSelectionHeight];
     [newLine setThickness:[NSNumber numberWithInt:1]];
 }
 

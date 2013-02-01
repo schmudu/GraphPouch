@@ -13,13 +13,12 @@
 @implementation EDTransformPointOnlyHorizontal
 
 - (void)mouseDragged:(NSEvent *)theEvent{
-    NSLog(@"mouse dragged for horiz only");
     NSPoint newDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
     NSPoint thisOrigin = [self frame].origin;
         
     // alter origin
     thisOrigin.x += (-_lastDragLocation.x + newDragLocation.x);
-    thisOrigin.y += (-_lastDragLocation.y + newDragLocation.y);
+    //thisOrigin.y += (-_lastDragLocation.y + newDragLocation.y);
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // only do if we're snapping
@@ -54,10 +53,11 @@
                 _didSnap = TRUE;
                 
                 // check snap to vertical point
+                /*
                 if (fabsf(modifiedPosY - closestVerticalPointToOrigin) < EDGuideThreshold) {
                     // snap to new position plus the modifier
                     thisOrigin.y = closestVerticalPointToOrigin - verticalGuideModifier;
-                }
+                }*/
                 
                 // check snap to horizontal point
                 if (fabsf(modifiedPosX - closestHorizontalPointToOrigin) < EDGuideThreshold) {
@@ -72,7 +72,7 @@
                     
                     // snap back to original location
                     NSPoint currentLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
-                    thisOrigin.y += (currentLocation.y - _savedMouseSnapLocation.y);
+                    //thisOrigin.y += (currentLocation.y - _savedMouseSnapLocation.y);
                     thisOrigin.x += (currentLocation.x - _savedMouseSnapLocation.x);
                 }
             }

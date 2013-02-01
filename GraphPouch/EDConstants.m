@@ -168,6 +168,9 @@ int const EDGraphScaleMin                                       = 1;
 int const EDGraphLabelIntervalMax                               = 100;
 int const EDGraphLabelIntervalMin                               = 1;
 
+float const EDWorksheetLineSelectionHeight                      = 50;
+float const EDWorksheetLineSelectionWidth                       = 300;
+
 // graph points
 NSString * const EDGraphPointAttributeVisible                   = @"isVisible";
 NSString * const EDGraphPointAttributeShowLabel                 = @"showLabel";

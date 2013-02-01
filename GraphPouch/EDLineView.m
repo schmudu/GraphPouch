@@ -65,7 +65,7 @@
     // draw line in the middle of the bounds
     NSBezierPath *path = [NSBezierPath bezierPath];
     [path setLineWidth:[[(EDLine *)[self dataObj] thickness] floatValue]];
-    [[NSColor redColor] setStroke];
+    [[NSColor blackColor] setStroke];
                         
     [path moveToPoint:NSMakePoint(0, [self bounds].size.height/2)];
     [path lineToPoint:NSMakePoint([self bounds].size.width, [self bounds].size.height/2)];

@@ -10,7 +10,7 @@
 #import "EDTransformCornerPointOnlyHorizontal.h"
 
 @implementation EDTransformCornerPointOnlyHorizontal
-#warning pull this into a category to that this class and EDTransformCorner Point have the same functionality
+#warning change here = change in EDTransformCornerPoint
 - (id)initWithFrame:(NSRect)frame verticalPoint:(EDTransformCornerPointOnlyHorizontal *)newVerticalPoint horizPoint:(EDTransformCornerPointOnlyHorizontal *)newHorizPoint
 {
     self = [super initWithFrame:frame];

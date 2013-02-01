@@ -168,6 +168,10 @@ extern int const EDGraphScaleMin;
 extern int const EDGraphLabelIntervalMin;
 extern int const EDGraphLabelIntervalMax;
 
+// lines
+extern float const EDWorksheetLineSelectionWidth;
+extern float const EDWorksheetLineSelectionHeight;
+
 // graph points
 extern NSString *const EDGraphPointAttributeVisible;
 extern NSString *const EDGraphPointAttributeShowLabel;
