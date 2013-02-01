@@ -19,4 +19,5 @@
 - (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key;
 - (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key;
 - (NSMutableDictionary *)checkForSameIntValueInLabelsForKey:(NSString *)key;
+- (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue;
 @end

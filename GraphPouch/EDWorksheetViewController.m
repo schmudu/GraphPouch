@@ -94,7 +94,7 @@
     [newLine setLocationY:150];
     [newLine setElementWidth:EDWorksheetLineSelectionWidth];
     [newLine setElementHeight:EDWorksheetLineSelectionHeight];
-    [newLine setThickness:[NSNumber numberWithInt:1]];
+    [newLine setThickness:1.0];
 }
 
 #pragma mark graphs

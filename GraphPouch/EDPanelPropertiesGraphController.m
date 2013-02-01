@@ -21,7 +21,7 @@
 #import "NSManagedObject+EasyFetching.h"
 
 @interface EDPanelPropertiesGraphController ()
-- (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue;
+//- (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue;
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorMinX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorMaxX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
@@ -117,6 +117,7 @@
     }
 }
 
+/*
 - (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue{
     EDElement *newElement, *currentElement;
     int i = 0;
@@ -130,7 +131,7 @@
         [elements replaceObjectAtIndex:i withObject:newElement];
         i++;
     }
-}
+}*/
 
 #pragma mark text field delegation
 - (void)controlTextDidEndEditing:(NSNotification *)obj{

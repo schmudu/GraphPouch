@@ -31,6 +31,7 @@
     [line setElementHeight:[self elementHeight]];
     [line setLocationX:[self locationX]];
     [line setLocationY:[self locationY]];
+    [line setThickness:[self thickness]];
     
     return line;
 }
@@ -45,13 +46,13 @@
         [self setLocationY:[aDecoder decodeFloatForKey:EDElementAttributeLocationY]];
         [self setElementWidth:[aDecoder decodeFloatForKey:EDElementAttributeWidth]];
         [self setElementHeight:[aDecoder decodeFloatForKey:EDElementAttributeHeight]];
-        [self setThickness:[aDecoder decodeObjectForKey:EDLineAttributeThickness]];
+        [self setThickness:[aDecoder decodeFloatForKey:EDLineAttributeThickness]];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
-    [aCoder encodeInt:[[self thickness] intValue] forKey:EDLineAttributeThickness];
+    [aCoder encodeFloat:[self thickness] forKey:EDLineAttributeThickness];
     [aCoder encodeBool:[self selected] forKey:EDElementAttributeSelected];
     [aCoder encodeFloat:[self locationX] forKey:EDElementAttributeLocationX];
     [aCoder encodeFloat:[self locationY] forKey:EDElementAttributeLocationY];

@@ -14,7 +14,7 @@
 
 @interface EDLine : EDElement <NSPasteboardReading, NSPasteboardWriting, NSCoding>
 
-@property (nonatomic, retain) NSNumber * thickness;
+@property float thickness;
 @property (nonatomic, retain) EDPage *page;
 
 - (EDLine *)initWithContext:(NSManagedObjectContext *)context;

@@ -96,6 +96,7 @@
 		CDF3E17216BC107300AB78AF /* EDCoreDataUtility+Lines.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E17116BC107300AB78AF /* EDCoreDataUtility+Lines.m */; };
 		CDF3E17B16BC145300AB78AF /* EDPanelPropertiesLineController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E17916BC145300AB78AF /* EDPanelPropertiesLineController.m */; };
 		CDF3E17C16BC145300AB78AF /* EDPanelPropertiesLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDF3E17A16BC145300AB78AF /* EDPanelPropertiesLine.xib */; };
+		CDF3E18216BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E18116BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.m */; };
 		CDF62E3416A0DAA500DCDD2D /* EDPanelProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */; };
 		CDF62E4616A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */; };
 		CDF62E4F16A2810700DCDD2D /* EDFormatterEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4E16A2810700DCDD2D /* EDFormatterEquation.m */; };
@@ -276,6 +277,8 @@
 		CDF3E17816BC145300AB78AF /* EDPanelPropertiesLineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesLineController.h; sourceTree = "<group>"; };
 		CDF3E17916BC145300AB78AF /* EDPanelPropertiesLineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesLineController.m; sourceTree = "<group>"; };
 		CDF3E17A16BC145300AB78AF /* EDPanelPropertiesLine.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesLine.xib; sourceTree = "<group>"; };
+		CDF3E18016BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterDecimalUnsignedOneDecimal.h; sourceTree = "<group>"; };
+		CDF3E18116BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterDecimalUnsignedOneDecimal.m; sourceTree = "<group>"; };
 		CDF62E3216A0DAA500DCDD2D /* EDPanelProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelProperties.h; sourceTree = "<group>"; };
 		CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelProperties.m; sourceTree = "<group>"; };
 		CDF62E4416A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Worksheet.h"; sourceTree = "<group>"; };
@@ -745,6 +748,8 @@
 			children = (
 				CD1EBD87160011CC00BEEA4D /* EDFormatterDecimalUnsigned.h */,
 				CD1EBD88160011CC00BEEA4D /* EDFormatterDecimalUnsigned.m */,
+				CDF3E18016BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.h */,
+				CDF3E18116BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.m */,
 				CD1EBD8A160013D200BEEA4D /* EDFormatterDecimalSigned.h */,
 				CD1EBD8B160013D200BEEA4D /* EDFormatterDecimalSigned.m */,
 				CDD6F3A716AC44CE002D8FF0 /* EDFormatterIntegerSigned.h */,
@@ -1015,6 +1020,7 @@
 				CDF3E16916BBFAF000AB78AF /* EDTransformPointOnlyHorizontal.m in Sources */,
 				CDF3E17216BC107300AB78AF /* EDCoreDataUtility+Lines.m in Sources */,
 				CDF3E17B16BC145300AB78AF /* EDPanelPropertiesLineController.m in Sources */,
+				CDF3E18216BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

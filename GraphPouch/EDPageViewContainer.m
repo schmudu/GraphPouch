@@ -68,7 +68,7 @@
     [[NSColor blackColor] setStroke];
     
     for (EDLine *line in lines){
-        [path setLineWidth:(yRatio * [[line thickness] floatValue])];
+        [path setLineWidth:(yRatio * [line thickness])];
         [path moveToPoint:NSMakePoint(xRatio * [line locationX], yRatio *([line locationY] + EDWorksheetLineSelectionHeight/2))];
         [path lineToPoint:NSMakePoint(xRatio * ([line locationX] + [line elementWidth]), yRatio *([line locationY] + EDWorksheetLineSelectionHeight/2))];
     }

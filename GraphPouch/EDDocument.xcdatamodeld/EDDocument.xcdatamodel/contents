@@ -32,7 +32,7 @@
         <relationship name="points" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDPoint" inverseName="graph" inverseEntity="EDPoint" syncable="YES"/>
     </entity>
     <entity name="EDLine" representedClassName="EDLine" parentEntity="EDElement" syncable="YES">
-        <attribute name="thickness" optional="YES" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
+        <attribute name="thickness" optional="YES" attributeType="Float" defaultValueString="1" syncable="YES"/>
         <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="lines" inverseEntity="EDPage" syncable="YES"/>
     </entity>
     <entity name="EDPage" representedClassName="EDPage" syncable="YES">

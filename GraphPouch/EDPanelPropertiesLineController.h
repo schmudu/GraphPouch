@@ -9,6 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import "EDPanelViewController.h"
 
-@interface EDPanelPropertiesLineController : EDPanelViewController
-
+@interface EDPanelPropertiesLineController : EDPanelViewController{
+    IBOutlet NSTextField *labelX;
+    IBOutlet NSTextField *labelY;
+    IBOutlet NSTextField *labelWidth;
+}
 @end

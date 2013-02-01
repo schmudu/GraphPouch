@@ -6,11 +6,13 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDPanelViewController.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility+Pages.h"
+#import "EDCoreDataUtility+Worksheet.h"
 #import "EDElement.h"
 #import "EDGraph.h"
+#import "EDLine.h"
+#import "EDPanelViewController.h"
 #import "NSColor+Utilities.h"
 #import "NSManagedObject+EasyFetching.h"
 
@@ -72,16 +74,20 @@
         [label setTextColor:[NSColor blackColor]];
     }
 }
+
 - (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSMutableArray *elements = [[NSMutableArray alloc] init];
     NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
+    NSArray *lines = [EDLine getAllSelectedObjects:_context];
     BOOL diff = FALSE;
     int i = 0;
     float value = 0;
     EDElement *currentElement;
     
+#warning worksheet elements
     [elements addObjectsFromArray:graphs];
+    [elements addObjectsFromArray:lines];
     while ((i < [elements count]) && (!diff)) {
         currentElement = [elements objectAtIndex:i];
         // if not the first and current width is not the same as previous width
@@ -155,4 +161,18 @@
     return results;
 }
 
+- (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue{
+    EDElement *newElement, *currentElement;
+    int i = 0;
+    NSMutableArray *elements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
+    while (i < [elements count]) {
+     currentElement = [elements objectAtIndex:i];
+        
+        newElement = currentElement;
+        [newElement setValue:newValue forKey:key];
+        
+        [elements replaceObjectAtIndex:i withObject:newElement];
+        i++;
+    }
+}
 @end
