@@ -6,18 +6,19 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDSheetPropertiesGraphErrorController.h"
-#import "EDPanelPropertiesGraphController.h"
-#import "EDGraph.h"
-#import "EDPoint.h"
-#import "EDElement.h"
 #import "EDConstants.h"
-#import "NSObject+Document.h"
-#import "NSColor+Utilities.h"
-#import "NSManagedObject+EasyFetching.h"
-#import "EDCoreDataUtility+Points.h"
 #import "EDCoreDataUtility+Equations.h"
+#import "EDCoreDataUtility+Pages.h"
+#import "EDCoreDataUtility+Points.h"
 #import "EDCoreDataUtility+Worksheet.h"
+#import "EDElement.h"
+#import "EDGraph.h"
+#import "EDPanelPropertiesGraphController.h"
+#import "EDPoint.h"
+#import "EDSheetPropertiesGraphErrorController.h"
+#import "NSColor+Utilities.h"
+#import "NSObject+Document.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @interface EDPanelPropertiesGraphController ()
 - (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute;
@@ -205,9 +206,8 @@
 
 - (NSMutableDictionary *)checkForSameIntValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    NSMutableArray *elements = [[NSMutableArray alloc] init];
-    elements = [EDCoreDataUtility getAllWorksheetElements:_context];
-    
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    NSArray *elements = [currentPage getAllSelectedWorksheetObjects];
     BOOL diff = FALSE;
     int i = 0;
     float value = 0;

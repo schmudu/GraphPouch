@@ -20,19 +20,6 @@
 
 @implementation EDCoreDataUtility (Worksheet)
 
-+ (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context{
-    NSMutableArray *allObjects = [[NSMutableArray alloc] init];
-    //NSArray *graphObjects = [self getAllGraphs:context];
-    NSArray *graphObjects = [EDGraph getAllObjects:context];
-#warning it doesn't make sense to get all the objects because this gets all of the objects across all of the pages.  I think we should remove this method
-    
-#warning add other elements here
-    [allObjects addObjectsFromArray:graphObjects];
-    
-    return allObjects;
-}
-
-
 + (void)selectAllWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context{
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     NSArray *objects = [currentPage getAllWorksheetObjects];

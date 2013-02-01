@@ -88,8 +88,6 @@
      // set worksheet view as getAllSelectedWorksheetElements
     [[self window] makeFirstResponder:[self superview]];
     
-    [EDCoreDataUtility getAllWorksheetElements:_context];
-    
     NSUInteger flags = [theEvent modifierFlags];
  
     //save mouse location
@@ -128,8 +126,6 @@
 }
 
 - (void)mouseDownBySelection:(NSEvent *)theEvent{
-    [EDCoreDataUtility getAllWorksheetElements:_context];
-    
     NSUInteger flags = [theEvent modifierFlags];
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
     

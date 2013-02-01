@@ -10,7 +10,6 @@
 
 @interface EDCoreDataUtility (Worksheet)
 
-+ (NSMutableArray *)getAllWorksheetElements:(NSManagedObjectContext *)context;
 + (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context;
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context;
 + (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context;
