@@ -11,6 +11,7 @@
 
 @class EDGraph;
 @class EDLine;
+@class EDTextbox;
 
 @interface EDPage : NSManagedObject <NSCoding, NSPasteboardReading, NSPasteboardWriting>
 
@@ -18,6 +19,7 @@
 @property (nonatomic, retain) NSNumber *pageNumber;
 @property (nonatomic, retain) NSSet *graphs;
 @property (nonatomic, retain) NSSet *lines;
+@property (nonatomic, retain) NSSet *textboxes;
 - (BOOL)containsObject:(NSManagedObject *)object;
 - (NSArray *)getAllWorksheetObjects;
 - (NSArray *)getAllSelectedWorksheetObjects;
@@ -25,6 +27,7 @@
 @end
 
 @interface EDPage (CoreDataGeneratedAccessors)
+#warning worksheet elements
 - (void)addGraphsObject:(EDGraph *)value;
 - (void)removeGraphsObject:(EDGraph *)value;
 - (void)addGraphs:(NSSet *)values;
@@ -34,5 +37,10 @@
 - (void)removeLinesObject:(EDLine *)value;
 - (void)addLines:(NSSet *)values;
 - (void)removeLines:(NSSet *)values;
+
+- (void)addTextboxesObject:(EDTextbox *)value;
+- (void)removeTextboxesObject:(EDTextbox *)value;
+- (void)addTextboxes:(NSSet *)values;
+- (void)removeTextboxes:(NSSet *)values;
 
 @end

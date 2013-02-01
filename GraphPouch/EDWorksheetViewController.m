@@ -78,6 +78,10 @@
 }
 
 #pragma mark line
+- (void)addNewTextbox{
+    NSLog(@"worksheet needs to add textbox");
+}
+
 - (void)addNewLine{
     // create new graph
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];

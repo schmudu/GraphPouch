@@ -40,6 +40,7 @@
 - (IBAction)lineAdd:(id)sender;
 - (IBAction)pageNext:(id)sender;
 - (IBAction)pagePrevious:(id)sender;
+- (IBAction)textboxAdd:(id)sender;
 - (IBAction)worksheetItemNext:(id)sender;
 - (IBAction)worksheetItemPrevious:(id)sender;
 - (IBAction)paste:(id)sender;

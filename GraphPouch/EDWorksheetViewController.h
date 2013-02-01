@@ -19,5 +19,6 @@
 - (void)postInitialize:(NSManagedObjectContext *)context;
 - (void)addNewGraph;
 - (void)addNewLine;
+- (void)addNewTextbox;
 
 @end

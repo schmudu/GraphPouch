@@ -188,6 +188,11 @@
     [worksheetController addNewGraph];
 }
 
+#pragma mark textbox
+- (IBAction)textboxAdd:(id)sender{
+    [worksheetController addNewTextbox];
+}
+
 #pragma mark worksheet
 - (IBAction)worksheetItemNext:(id)sender{
     [EDCoreDataUtility selectNextWorksheetElementOnCurrentPage:_context];

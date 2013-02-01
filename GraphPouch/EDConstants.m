@@ -23,6 +23,7 @@ NSString * const EDUTIGraphView                                 = @"com.edcodia.
 NSString * const EDUTIToken                                     = @"com.edcodia.graphpouch.token";
 NSString * const EDUTIEquation                                  = @"com.edcodia.graphpouch.equation";
 NSString * const EDUTILine                                      = @"com.edcodia.graphpouch.line";
+NSString * const EDUTITextbox                                   = @"com.edcodia.graphpouch.textbox";
 
 // General
 NSString * const EDKey                                          = @"EDKey";
@@ -39,8 +40,12 @@ NSString * const EDPreferencePropertyPanel                      = @"EDPreference
 
 // panels
 NSString * const EDKeyGraphLine                                 = @"EDKeyGraphLine";
+NSString * const EDKeyGraphLineTextbox                          = @"EDKeyGraphLineTextbox";
 NSString * const EDKeyGraph                                     = @"EDKeyGraph";
+NSString * const EDKeyGraphTextbox                              = @"EDKeyGraphTextbox";
 NSString * const EDKeyLine                                      = @"EDKeyLine";
+NSString * const EDKeyLineTextbox                               = @"EDKeyLineTextbox";
+NSString * const EDKeyTextbox                                   = @"EDTextbox";
 
 // panel events
 NSString * const EDEventControlReceivedFocus                    = @"EDEventControlReceivedFocus";
@@ -55,6 +60,10 @@ NSString * const EDEntityNamePoint                              = @"EDPoint";
 NSString * const EDEntityNameEquation                           = @"EDEquation";
 NSString * const EDEntityNameToken                              = @"EDToken";
 NSString * const EDEntityNameLine                               = @"EDLine";
+NSString * const EDEntityNameTextbox                            = @"EDTextbox";
+
+// textfield
+NSString * const EDTextboxAttributeTextValue                  = @"textValue";
 
 // line
 NSString * const EDLineAttributeThickness                       = @"thickness";
@@ -229,6 +238,7 @@ NSString * const EDPageAttributeSelected                        = @"selected";
 NSString * const EDPageAttributeCurrent                         = @"currentPage";
 NSString * const EDPageAttributeGraphs                          = @"graphs";
 NSString * const EDPageAttributeLines                           = @"lines";
+NSString * const EDPageAttributeTextboxes                       = @"textboxes";
 NSString * const EDGraphAttributePage                           = @"page";
 NSString * const EDGraphAttributeScaleX                         = @"scaleX";
 NSString * const EDGraphAttributeScaleY                         = @"scaleY";

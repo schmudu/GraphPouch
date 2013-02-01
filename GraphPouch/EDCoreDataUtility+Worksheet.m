@@ -11,6 +11,7 @@
 #import "EDLine.h"
 #import "EDPage.h"
 #import "EDEquation.h"
+#import "EDTextbox.h"
 #import "EDToken.h"
 #import "NSObject+Document.h"
 #import "EDCoreDataUtility+Pages.h"
@@ -140,6 +141,7 @@
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
     NSArray *fetchedLines = [EDLine getAllSelectedObjects:context];
+    NSArray *fetchedTextboxes = [EDTextbox getAllSelectedObjects:context];
     
     for (EDGraph *graph in fetchedGraphs){
         [allObjects addObject:[graph copy:context]];
@@ -147,6 +149,10 @@
     
     for (EDLine *line in fetchedLines){
         [allObjects addObject:[line copy:context]];
+    }
+    
+    for (EDTextbox *textbox in fetchedTextboxes){
+        [allObjects addObject:[textbox copy:context]];
     }
 #warning worksheet elements
     
@@ -222,21 +228,34 @@
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
     // this method returns a dictionary of the types of selected objects
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    NSArray *graphObjects, *lineObjects;
+    NSArray *graphObjects, *lineObjects, *textboxObjects;
     
 #warning worksheet elements
     // get all selected graphs
     graphObjects = [EDGraph getAllSelectedObjects:context];
     lineObjects = [EDLine getAllSelectedObjects:context];
+    textboxObjects = [EDTextbox getAllSelectedObjects:context];
     
-    if (([lineObjects count] > 0) && ([graphObjects count] > 0)) {
+    if (([textboxObjects count] > 0) && ([lineObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyGraphLineTextbox];
+    }
+    else if (([lineObjects count] > 0) && ([graphObjects count] > 0)) {
         [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyGraphLine];
+    }
+    else if (([textboxObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyGraphTextbox];
+    }
+    else if (([textboxObjects count] > 0) && ([lineObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyLineTextbox];
     }
     else if ([graphObjects count] > 0) {
         [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyGraph];
     }
     else if ([lineObjects count] > 0) {
         [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyLine];
+    }
+    else if ([textboxObjects count] > 0) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyTextbox];
     }
     
     

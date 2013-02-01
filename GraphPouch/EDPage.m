@@ -13,14 +13,17 @@
 #import "EDEquation.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
+#import "EDTextbox.h"
 
 @implementation EDPage
 
+#warning worksheet elements
 @dynamic currentPage;
 @dynamic pageNumber;
 @dynamic selected;
 @dynamic graphs;
 @dynamic lines;
+@dynamic textboxes;
 
 #pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
@@ -32,7 +35,7 @@
         [self setSelected:[aDecoder decodeBoolForKey:EDPageAttributeSelected]];
         
         
-#warning add other elements here
+#warning worksheet elements
         NSSet *graphs = [aDecoder decodeObjectForKey:EDPageAttributeGraphs];
         for (EDGraph *graph in graphs){
             // set relationship
@@ -43,6 +46,12 @@
         for (EDLine *line in lines){
             // set relationship
             [self addLinesObject:line];
+        }
+        
+        NSSet *textboxes = [aDecoder decodeObjectForKey:EDPageAttributeTextboxes];
+        for (EDTextbox *textbox in textboxes){
+            // set relationship
+            [self addTextboxesObject:textbox];
         }
     }
     return self;
@@ -86,7 +95,7 @@
 #pragma mark data structure
 - (BOOL)containsObject:(NSManagedObject *)object{
 #warning worksheet elements
-    // search through graphs
+    // search through lines
     for (EDLine *line in [self lines]){
         if (line == object){
             return TRUE;
@@ -99,17 +108,25 @@
             return TRUE;
         }
     }
+    
+    // search through textboxes
+    for (EDTextbox *textbox in [self textboxes]){
+        if (textbox == object){
+            return TRUE;
+        }
+    }
     return FALSE;
 }
 
 + (NSArray *)allWorksheetClasses{
 #warning worksheet elements
-    return [NSArray arrayWithObjects:[EDGraph class], [EDLine class], nil];
+    return [NSArray arrayWithObjects:[EDGraph class], [EDLine class], [EDTextbox class], nil];
 }
 - (NSArray *)getAllWorksheetObjects{
     NSMutableArray *elements = [NSMutableArray array];
     
 #warning worksheet elements
+    [elements addObjectsFromArray:[[self textboxes] allObjects]];
     [elements addObjectsFromArray:[[self graphs] allObjects]];
     [elements addObjectsFromArray:[[self lines] allObjects]];
     return elements;

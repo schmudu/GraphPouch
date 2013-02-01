@@ -26,6 +26,7 @@
 #import "NSObject+Worksheet.h"
 
 @interface EDWorksheetView()
+- (void)drawTextbox:(EDTextbox *)textbox;
 - (void)drawGraph:(EDGraph *)graph;
 - (void)drawLine:(EDLine *)line;
 - (void)drawGuide:(NSPoint)startPoint endPoint:(NSPoint)endPoint;
@@ -191,6 +192,10 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [aPath stroke];
 }
 
+- (void)drawTextbox:(EDTextbox *)textbox{
+    NSLog(@"need to draw text box");
+}
+
 - (void)drawLine:(EDLine *)line{
     EDLineView *lineView = [[EDLineView alloc] initWithFrame:NSMakeRect(0, 0, [line elementWidth], [line elementHeight]) lineModel:(EDLine *)line];
     
@@ -341,6 +346,11 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             // draw line if it's located on this page
             if (([[myElement className] isEqualToString:EDEntityNameLine]) && (newPage == [(EDLine *)myElement page])) {
                 [self drawLine:(EDLine *)myElement];
+            }
+            
+            // draw textbox
+            if (([[myElement className] isEqualToString:EDEntityNameTextbox]) && (newPage == [(EDLine *)myElement page])) {
+                [self drawTextbox:(EDTextbox *)myElement];
             }
 #warning worksheet elements
         }
@@ -634,6 +644,11 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     // draw all lines
     for (EDLine *line in [currentPage lines]){
         [self drawLine:line];
+    }
+    
+    // draw textboxes
+    for (EDTextbox *textbox in [currentPage textboxes]){
+        [self drawTextbox:textbox];
     }
 #warning worksheet elements
 }

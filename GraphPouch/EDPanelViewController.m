@@ -12,6 +12,7 @@
 #import "EDElement.h"
 #import "EDGraph.h"
 #import "EDLine.h"
+#import "EDTextbox.h"
 #import "EDPanelViewController.h"
 #import "NSColor+Utilities.h"
 #import "NSManagedObject+EasyFetching.h"
@@ -81,6 +82,7 @@
     NSMutableArray *elements = [[NSMutableArray alloc] init];
     NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
     NSArray *lines = [EDLine getAllSelectedObjects:_context];
+    NSArray *textboxes = [EDTextbox getAllSelectedObjects:_context];
     BOOL diff = FALSE;
     int i = 0;
     float value = 0;
@@ -89,6 +91,7 @@
 #warning worksheet elements
     [elements addObjectsFromArray:graphs];
     [elements addObjectsFromArray:lines];
+    [elements addObjectsFromArray:textboxes];
     while ((i < [elements count]) && (!diff)) {
         currentElement = [elements objectAtIndex:i];
         // if not the first and current width is not the same as previous width

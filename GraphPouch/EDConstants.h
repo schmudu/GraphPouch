@@ -29,6 +29,7 @@ extern NSString *const EDUTIGraphView;
 extern NSString *const EDUTIToken;
 extern NSString *const EDUTIEquation;
 extern NSString *const EDUTILine;
+extern NSString *const EDUTITextbox;
 
 // num
 extern float const EDNumberMax;
@@ -39,8 +40,12 @@ extern NSString *const EDPreferencePropertyPanel;
 
 // panels
 extern NSString *const EDKeyGraphLine;
+extern NSString *const EDKeyGraphLineTextbox;
 extern NSString *const EDKeyGraph;
+extern NSString *const EDKeyGraphTextbox;
 extern NSString *const EDKeyLine;
+extern NSString *const EDKeyLineTextbox;
+extern NSString *const EDKeyTextbox;
 
 // panel events
 extern NSString *const EDEventControlReceivedFocus;
@@ -55,6 +60,10 @@ extern NSString *const EDEntityNamePoint;
 extern NSString *const EDEntityNameEquation;
 extern NSString *const EDEntityNameToken;
 extern NSString *const EDEntityNameLine;
+extern NSString *const EDEntityNameTextbox;
+
+// textfield
+extern NSString *const EDTextboxAttributeTextValue;
 
 // line
 extern NSString *const EDLineAttributeThickness;
@@ -228,6 +237,7 @@ extern NSString *const EDPageAttributeSelected;
 extern NSString *const EDPageAttributeCurrent;
 extern NSString *const EDPageAttributeGraphs;
 extern NSString *const EDPageAttributeLines;
+extern NSString *const EDPageAttributeTextboxes;
 extern NSString *const EDGraphAttributePage;
 extern NSString *const EDGraphAttributeScaleX;
 extern NSString *const EDGraphAttributeScaleY;
