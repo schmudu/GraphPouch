@@ -40,7 +40,7 @@
 }
 
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:EDEventQuitDuringEquationSheet];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventQuitDuringEquationSheet object:[self window]];
 }
 
 - (void)initializeSheet:(NSString *)equation index:(int)index{

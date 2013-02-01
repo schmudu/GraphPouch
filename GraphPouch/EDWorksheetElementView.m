@@ -18,7 +18,6 @@
 
 @interface EDWorksheetElementView()
 - (void)mouseUpBehavior:(NSEvent *)theEvent;
-//- (void)mouseDraggedBehavior:(NSEvent *)theEvent dragSource:(BOOL)isDragSource snapInfo:(NSDictionary *)snapInfo;
 - (void)notifyMouseDownListeners:(NSEvent *)theEvent;
 - (void)dispatchMouseDragNotification:(NSEvent *)theEvent snapInfo:(NSDictionary *)snapInfo;
 - (void)addFeatures;
@@ -41,7 +40,6 @@
 }
 
 - (void)dealloc{
-    //[_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:[self currentContext]];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
