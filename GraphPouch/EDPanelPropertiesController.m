@@ -35,12 +35,6 @@
     return self;
 }
 
-/*
-- (void)close{
-    NSLog(@"closing panel.");
-    [super close];
-}*/
-
 - (void)dealloc{
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     [_nc removeObserver:self name:EDEventShortcutPaste object:[self window]];
@@ -99,9 +93,6 @@
 }
 
 - (void)setCorrectView{
-    // based on what is selected, this method set the view controller
-    EDPanelViewController *viewController;
-    
     // get all the selected objects
     NSMutableDictionary *selectedTypes = [EDCoreDataUtility getAllTypesOfSelectedWorksheetElements:_context];
     
@@ -113,7 +104,7 @@
         // set window title
         [[self window] setTitle:@"Graph Properties"];
             
-        viewController = graphController;
+        _viewController = graphController;
     }
     else if([selectedTypes valueForKey:EDKeyGraphLine]){
         if(!graphLineController){
@@ -122,7 +113,7 @@
         // set window title
         [[self window] setTitle:@"Properties"];
             
-        viewController = graphLineController;
+        _viewController = graphLineController;
     }
     else if([selectedTypes valueForKey:EDKeyLine]){
         if(!lineController){
@@ -131,7 +122,7 @@
         // set window title
         [[self window] setTitle:@"Line Properties"];
             
-        viewController = lineController;
+        _viewController = lineController;
     }
     else if([selectedTypes valueForKey:EDKeyGraphLine]){
         if(!documentController){
@@ -140,7 +131,7 @@
         // set window title
         [[self window] setTitle:@"Properties"];
             
-        viewController = documentController;
+        _viewController = documentController;
     }
     else {
         if(!documentController){
@@ -149,36 +140,36 @@
         // set window title
         [[self window] setTitle:@"Properties"];
             
-        viewController = documentController;
+        _viewController = documentController;
     }
     
 #warning worksheet elements
     // check to see if view is already being shown
     // if so then do nothing except update panel
-    if ((viewController == graphController) && ([[self window] contentView] == [graphController view])) {
+    if ((_viewController == graphController) && ([[self window] contentView] == [graphController view])) {
         // still need to update panel properties
-        [viewController initWindowAfterLoaded:_context];
+        [_viewController initWindowAfterLoaded:_context];
         return;
     }
-    else if ((viewController == graphLineController) && ([[self window] contentView] == [graphLineController view])) {
+    else if ((_viewController == graphLineController) && ([[self window] contentView] == [graphLineController view])) {
         // still need to update panel properties
-        [viewController initWindowAfterLoaded:_context];
+        [_viewController initWindowAfterLoaded:_context];
         return;
     }
-    else if ((viewController == lineController) && ([[self window] contentView] == [lineController view])) {
+    else if ((_viewController == lineController) && ([[self window] contentView] == [lineController view])) {
         // still need to update panel properties
-        [viewController initWindowAfterLoaded:_context];
+        [_viewController initWindowAfterLoaded:_context];
         return;
     }
-    else if ((viewController == documentController) && ([[self window] contentView] == [documentController view])) {
+    else if ((_viewController == documentController) && ([[self window] contentView] == [documentController view])) {
         // still need to update panel properties
-        [viewController initWindowAfterLoaded:_context];
+        [_viewController initWindowAfterLoaded:_context];
         return;
     }
     
     //Compute the new window frame
     NSSize currentSize = [[[self window] contentView] frame].size;
-    NSSize newSize = [[viewController view] frame].size;
+    NSSize newSize = [[_viewController view] frame].size;
     float deltaWidth = newSize.width - currentSize.width;
     float deltaHeight = newSize.height - currentSize.height;
     NSRect windowFrame = [[self window] frame];
@@ -191,10 +182,10 @@
     [[self window] setFrame:windowFrame display:TRUE animate:TRUE];
     
     // window init after loaded
-    [viewController initWindowAfterLoaded:_context];
+    [_viewController initWindowAfterLoaded:_context];
     
     // set content of the window
-    [[self window] setContentView:[viewController view]];
+    [[self window] setContentView:[_viewController view]];
 }
 
 - (void)menuWillOpen:(NSMenu *)menu{

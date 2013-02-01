@@ -42,6 +42,9 @@ extern NSString *const EDKeyGraphLine;
 extern NSString *const EDKeyGraph;
 extern NSString *const EDKeyLine;
 
+// panel events
+extern NSString *const EDEventControlReceivedFocus;
+
 // layout
 extern float const EDMenuToolbarHeight;
 

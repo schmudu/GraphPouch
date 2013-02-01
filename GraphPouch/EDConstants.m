@@ -42,6 +42,9 @@ NSString * const EDKeyGraphLine                                 = @"EDKeyGraphLi
 NSString * const EDKeyGraph                                     = @"EDKeyGraph";
 NSString * const EDKeyLine                                      = @"EDKeyLine";
 
+// panel events
+NSString * const EDEventControlReceivedFocus                    = @"EDEventControlReceivedFocus";
+
 //layout
 float const EDMenuToolbarHeight                                 = 89;
 

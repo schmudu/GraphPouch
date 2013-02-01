@@ -25,15 +25,26 @@
     return self;
 }
 
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelX];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelY];
+}
 
 - (void)initWindowAfterLoaded:(NSManagedObjectContext *)context{
     _context = context;
     [self setElementLabel:labelX attribute:EDElementAttributeLocationX];
     [self setElementLabel:labelY attribute:EDElementAttributeLocationY];
     
+    // listen
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelX];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelY];
 }
 
 - (void)controlTextDidEndEditing:(NSNotification *)obj{
+    // if field did not change then do nothing
+    if (!_fieldChanged)
+        return;
+    
     // only change the specific attribute that was changed
     if ([obj object] == labelX) {
         [self changeSelectedElementsAttribute:EDElementAttributeLocationX newValue:[[NSNumber alloc] initWithFloat:[[labelX stringValue] floatValue]]];

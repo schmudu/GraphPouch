@@ -8,10 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface EDPanelViewController : NSViewController{
+@interface EDPanelViewController : NSViewController <NSTextFieldDelegate>{
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;
+    BOOL _fieldChanged;
 }
+
 - (void)initWindowAfterLoaded:(NSManagedObjectContext *)context;
 - (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute;
 - (void)setElementCheckbox:(NSButton *)checkbox attribute:(NSString *)attribute;
@@ -20,4 +22,5 @@
 - (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key;
 - (NSMutableDictionary *)checkForSameIntValueInLabelsForKey:(NSString *)key;
 - (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue;
+- (void)onControlReceivedFocus:(NSNotification *)note;
 @end

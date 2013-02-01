@@ -21,6 +21,7 @@
     EDPanelPropertiesLineController *lineController;
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;
+    EDPanelViewController *_viewController;
 }
 
 - (void)togglePropertiesPanel:(id)sender;

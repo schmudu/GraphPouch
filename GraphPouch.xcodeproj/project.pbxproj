@@ -99,6 +99,7 @@
 		CDF3E18216BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E18116BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.m */; };
 		CDF3E18A16BC34C000AB78AF /* EDPanelPropertiesGraphLineController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E18816BC34C000AB78AF /* EDPanelPropertiesGraphLineController.m */; };
 		CDF3E18B16BC34C000AB78AF /* EDPanelPropertiesGraphLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDF3E18916BC34C000AB78AF /* EDPanelPropertiesGraphLine.xib */; };
+		CDF3E19216BC401F00AB78AF /* EDTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E19116BC401F00AB78AF /* EDTextField.m */; };
 		CDF62E3416A0DAA500DCDD2D /* EDPanelProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */; };
 		CDF62E4616A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4516A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.m */; };
 		CDF62E4F16A2810700DCDD2D /* EDFormatterEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF62E4E16A2810700DCDD2D /* EDFormatterEquation.m */; };
@@ -284,6 +285,8 @@
 		CDF3E18716BC34C000AB78AF /* EDPanelPropertiesGraphLineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesGraphLineController.h; sourceTree = "<group>"; };
 		CDF3E18816BC34C000AB78AF /* EDPanelPropertiesGraphLineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesGraphLineController.m; sourceTree = "<group>"; };
 		CDF3E18916BC34C000AB78AF /* EDPanelPropertiesGraphLine.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesGraphLine.xib; sourceTree = "<group>"; };
+		CDF3E19016BC401F00AB78AF /* EDTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTextField.h; sourceTree = "<group>"; };
+		CDF3E19116BC401F00AB78AF /* EDTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTextField.m; sourceTree = "<group>"; };
 		CDF62E3216A0DAA500DCDD2D /* EDPanelProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelProperties.h; sourceTree = "<group>"; };
 		CDF62E3316A0DAA500DCDD2D /* EDPanelProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelProperties.m; sourceTree = "<group>"; };
 		CDF62E4416A1DAEC00DCDD2D /* EDCoreDataUtility+Worksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Worksheet.h"; sourceTree = "<group>"; };
@@ -473,11 +476,12 @@
 		CD3F0AF515C4774900AB7567 /* View+Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				CD1C57B6161BB23400534D49 /* Pages */,
 				CDD46E4E1603BE1200EDD75C /* Categories */,
 				CDC3C82415F96368009A8BFD /* Formatters */,
-				CDE6D65215E111A800E5695F /* Window */,
 				CD3F0AF915C4776900AB7567 /* Menu */,
+				CD1C57B6161BB23400534D49 /* Pages */,
+				CDF3E18F16BC3FEE00AB78AF /* Resources */,
+				CDE6D65215E111A800E5695F /* Window */,
 				CD3F0AF815C4776100AB7567 /* Worksheet */,
 			);
 			name = "View+Controllers";
@@ -876,6 +880,15 @@
 			name = GraphLine;
 			sourceTree = "<group>";
 		};
+		CDF3E18F16BC3FEE00AB78AF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CDF3E19016BC401F00AB78AF /* EDTextField.h */,
+				CDF3E19116BC401F00AB78AF /* EDTextField.m */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1039,6 +1052,7 @@
 				CDF3E17B16BC145300AB78AF /* EDPanelPropertiesLineController.m in Sources */,
 				CDF3E18216BC1FF700AB78AF /* EDFormatterDecimalUnsignedOneDecimal.m in Sources */,
 				CDF3E18A16BC34C000AB78AF /* EDPanelPropertiesGraphLineController.m in Sources */,
+				CDF3E19216BC401F00AB78AF /* EDTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

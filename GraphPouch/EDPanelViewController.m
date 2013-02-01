@@ -28,6 +28,7 @@
     if (self) {
         _context = context;
         _nc = [NSNotificationCenter defaultCenter];
+        _fieldChanged = FALSE;
     }
     
     return self;
@@ -174,5 +175,19 @@
         [elements replaceObjectAtIndex:i withObject:newElement];
         i++;
     }
+}
+
+#pragma mark control text 
+- (void)onControlReceivedFocus:(NSNotification *)note{
+    // reset variable
+    _fieldChanged = FALSE;
+}
+
+- (void)controlTextDidChange:(NSNotification *)obj{
+    // if not already set, reset color to black
+   [(NSTextField *)[obj object] setTextColor:[NSColor blackColor]];
+    
+    // text changed
+    _fieldChanged = TRUE;
 }
 @end
