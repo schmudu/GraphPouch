@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-//#import "EDLine.h"
 #import "EDWorksheetElementView.h"
 @class EDLine;
 

@@ -16,6 +16,8 @@
 #import "EDLine.h"
 #import "EDLineView.h"
 #import "EDPage.h"
+#import "EDTextbox.h"
+#import "EDTextboxView.h"
 #import "EDTransformRect.h"
 #import "EDTransformRectOnlyHorizontal.h"
 #import "EDWorksheetView.h"
@@ -133,8 +135,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [self drawAllElements];
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
+- (void)drawRect:(NSRect)dirtyRect{
     NSRect bounds = [self bounds];
     [[NSColor whiteColor] set];
     [NSBezierPath fillRect:bounds];
@@ -193,7 +194,25 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)drawTextbox:(EDTextbox *)textbox{
-    NSLog(@"need to draw text box");
+    EDTextboxView *textboxView = [[EDTextboxView alloc] initWithFrame:NSMakeRect(0, 0, [textbox elementWidth], [textbox elementHeight]) textboxModel:(EDTextbox *)textbox];
+    
+    // listen to graph
+    // NOTE: any listeners you add here, remove them in method 'removeElementView'
+    [_nc addObserver:self selector:@selector(onElementSelectedDeselectOtherElements:) name:EDEventUnselectedElementClickedWithoutModifier object:textboxView];
+    [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:textboxView];
+    [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:textboxView];
+    [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:textboxView];
+    
+    // set location
+    [textboxView setFrameOrigin:NSMakePoint([[textbox valueForKey:EDElementAttributeLocationX] floatValue], [[textbox valueForKey:EDElementAttributeLocationY] floatValue])];
+    
+    [self addSubview:textboxView];
+    [textboxView setNeedsDisplay:TRUE];
+    
+    // draw transform rect if selected
+    if ([[[textboxView dataObj] valueForKey:EDElementAttributeSelected] boolValue]){
+        [self drawTransformRect:(EDElement *)[textboxView dataObj]];
+    }
 }
 
 - (void)drawLine:(EDLine *)line{
@@ -451,6 +470,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
+    
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
             // do not notify element if it was the original element that was dragged
@@ -470,6 +490,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
+        
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged
             [(EDWorksheetElementView *)myElement mouseUpBySelection:[[note userInfo] valueForKey:EDEventKey]];

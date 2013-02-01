@@ -30,4 +30,5 @@
 - (void)updateDisplayBasedOnContext;
 - (void)drawElementAttributes;
 - (void)removeFeatures;
+- (void)addFeatures;
 @end

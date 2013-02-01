@@ -20,7 +20,6 @@
 - (void)mouseUpBehavior:(NSEvent *)theEvent;
 - (void)notifyMouseDownListeners:(NSEvent *)theEvent;
 - (void)dispatchMouseDragNotification:(NSEvent *)theEvent snapInfo:(NSDictionary *)snapInfo;
-- (void)addFeatures;
 @end
 
 @implementation EDWorksheetElementView

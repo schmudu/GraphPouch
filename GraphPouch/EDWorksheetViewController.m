@@ -6,15 +6,16 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDWorksheetViewController.h"
-#import "EDWorksheetView.h"
 #import "EDConstants.h"
+#import "EDCoreDataUtility+Pages.h"
+#import "EDCoreDataUtility+Worksheet.h"
 #import "EDGraph.h"
 #import "EDLine.h"
-#import "EDCoreDataUtility+Pages.h"
 #import "EDPoint.h"
+#import "EDTextbox.h"
+#import "EDWorksheetView.h"
+#import "EDWorksheetViewController.h"
 #import "NSManagedObject+EasyFetching.h"
-#import "EDCoreDataUtility+Worksheet.h"
 
 @interface EDWorksheetViewController ()
 - (void)deselectAllElements:(NSNotification *)note;
@@ -79,7 +80,21 @@
 
 #pragma mark line
 - (void)addNewTextbox{
-    NSLog(@"worksheet needs to add textbox");
+    // create new graph
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    
+    EDTextbox *newTextbox = [[EDTextbox alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameTextbox inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+    
+    // add graph to page
+    [currentPage addTextboxesObject:newTextbox];
+    
+    // set graph attributes
+    [newTextbox setPage:currentPage];
+    [newTextbox setSelected:FALSE];
+    [newTextbox setLocationX:50];
+    [newTextbox setLocationY:150];
+    [newTextbox setElementWidth:EDWorksheetLineSelectionWidth];
+    [newTextbox setElementHeight:EDWorksheetLineSelectionHeight];
 }
 
 - (void)addNewLine{
@@ -118,8 +133,12 @@
     [newGraph setSelected:FALSE];
     [newGraph setLocationX:50];
     [newGraph setLocationY:150];
-    [newGraph setElementWidth:300];
-    [newGraph setElementHeight:300];
+    [newGraph setElementWidth:500];
+    [newGraph setElementHeight:500];
+    [newGraph setScaleX:[NSNumber numberWithInt:2]];
+    [newGraph setScaleY:[NSNumber numberWithInt:2]];
+    [newGraph setLabelIntervalX:[NSNumber numberWithInt:1]];
+    [newGraph setLabelIntervalY:[NSNumber numberWithInt:1]];
 }
 
 #pragma mark align

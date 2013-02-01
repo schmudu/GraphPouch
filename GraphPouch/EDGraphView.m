@@ -688,6 +688,7 @@
 
 - (void)addFeatures{
     // this method isn't need because when the context changes (e.g. dragged) the model changes and the elements update automatically
+    [self drawElementAttributes];
 }
 
 @end
