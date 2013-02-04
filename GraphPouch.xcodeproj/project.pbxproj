@@ -77,6 +77,12 @@
 		CDB6829A1684D1A900702EAA /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB682991684D1A900702EAA /* EDGraph.m */; };
 		CDB682ED1694E80700702EAA /* EDEquationView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB682EC1694E80700702EAA /* EDEquationView.m */; };
 		CDD05DEA16BC716E001279FB /* EDTextboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD05DE916BC716E001279FB /* EDTextboxView.m */; };
+		CDD05DF616BD4C43001279FB /* EDTextboxViewMask.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD05DF516BD4C43001279FB /* EDTextboxViewMask.m */; };
+		CDD05DFA16BF4DBA001279FB /* icon_paper.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DF816BF4DBA001279FB /* icon_paper.png */; };
+		CDD05DFB16BF4DBA001279FB /* icon_paper_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DF916BF4DBA001279FB /* icon_paper_over.png */; };
+		CDD05DFD16C06811001279FB /* icon_graph.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DFC16C06811001279FB /* icon_graph.png */; };
+		CDD05DFF16C069AA001279FB /* icon_text.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DFE16C069AA001279FB /* icon_text.png */; };
+		CDD05E0116C06C35001279FB /* icon_line.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05E0016C06C35001279FB /* icon_line.png */; };
 		CDD46E531603BE3C00EDD75C /* NSColor+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */; };
 		CDD46E611607D1F200EDD75C /* EDTransformRect.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E601607D1F200EDD75C /* EDTransformRect.m */; };
 		CDD46E651607D22F00EDD75C /* EDTransformPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E641607D22F00EDD75C /* EDTransformPoint.m */; };
@@ -246,6 +252,13 @@
 		CDB682EC1694E80700702EAA /* EDEquationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDEquationView.m; sourceTree = "<group>"; };
 		CDD05DE816BC716E001279FB /* EDTextboxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTextboxView.h; sourceTree = "<group>"; };
 		CDD05DE916BC716E001279FB /* EDTextboxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTextboxView.m; sourceTree = "<group>"; };
+		CDD05DF416BD4C43001279FB /* EDTextboxViewMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTextboxViewMask.h; sourceTree = "<group>"; };
+		CDD05DF516BD4C43001279FB /* EDTextboxViewMask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTextboxViewMask.m; sourceTree = "<group>"; };
+		CDD05DF816BF4DBA001279FB /* icon_paper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_paper.png; sourceTree = "<group>"; };
+		CDD05DF916BF4DBA001279FB /* icon_paper_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_paper_over.png; sourceTree = "<group>"; };
+		CDD05DFC16C06811001279FB /* icon_graph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_graph.png; sourceTree = "<group>"; };
+		CDD05DFE16C069AA001279FB /* icon_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_text.png; sourceTree = "<group>"; };
+		CDD05E0016C06C35001279FB /* icon_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_line.png; sourceTree = "<group>"; };
 		CDD46E511603BE3C00EDD75C /* NSColor+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Utilities.h"; sourceTree = "<group>"; };
 		CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Utilities.m"; sourceTree = "<group>"; };
 		CDD46E5F1607D1F200EDD75C /* EDTransformRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformRect.h; sourceTree = "<group>"; };
@@ -593,6 +606,8 @@
 			children = (
 				CDD05DE816BC716E001279FB /* EDTextboxView.h */,
 				CDD05DE916BC716E001279FB /* EDTextboxView.m */,
+				CDD05DF416BD4C43001279FB /* EDTextboxViewMask.h */,
+				CDD05DF516BD4C43001279FB /* EDTextboxViewMask.m */,
 			);
 			name = Textbox;
 			sourceTree = "<group>";
@@ -683,6 +698,7 @@
 		CD9DA575169A761D0072242F /* images */ = {
 			isa = PBXGroup;
 			children = (
+				CDD05DF716BF4DBA001279FB /* icons */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -789,6 +805,18 @@
 			children = (
 			);
 			name = NSCoder;
+			sourceTree = "<group>";
+		};
+		CDD05DF716BF4DBA001279FB /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				CDD05E0016C06C35001279FB /* icon_line.png */,
+				CDD05DFE16C069AA001279FB /* icon_text.png */,
+				CDD05DFC16C06811001279FB /* icon_graph.png */,
+				CDD05DF816BF4DBA001279FB /* icon_paper.png */,
+				CDD05DF916BF4DBA001279FB /* icon_paper_over.png */,
+			);
+			path = icons;
 			sourceTree = "<group>";
 		};
 		CDD46E4E1603BE1200EDD75C /* Categories */ = {
@@ -966,6 +994,11 @@
 				CD74501216B3342A004B813E /* icon.iconset in Resources */,
 				CDF3E17C16BC145300AB78AF /* EDPanelPropertiesLine.xib in Resources */,
 				CDF3E18B16BC34C000AB78AF /* EDPanelPropertiesGraphLine.xib in Resources */,
+				CDD05DFA16BF4DBA001279FB /* icon_paper.png in Resources */,
+				CDD05DFB16BF4DBA001279FB /* icon_paper_over.png in Resources */,
+				CDD05DFD16C06811001279FB /* icon_graph.png in Resources */,
+				CDD05DFF16C069AA001279FB /* icon_text.png in Resources */,
+				CDD05E0116C06C35001279FB /* icon_line.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1065,6 +1098,7 @@
 				CDF3E19216BC401F00AB78AF /* EDTextField.m in Sources */,
 				CDF3E19B16BC491100AB78AF /* EDTextbox.m in Sources */,
 				CDD05DEA16BC716E001279FB /* EDTextboxView.m in Sources */,
+				CDD05DF616BD4C43001279FB /* EDTextboxViewMask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

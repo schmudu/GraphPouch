@@ -9,6 +9,7 @@
 #import "EDConstants.h"
 #import "NSColor+Utilities.h"
 #import "EDTextbox.h"
+#import "EDTextboxViewMask.h"
 
 @interface EDTextboxView()
 - (void)onContextChanged:(NSNotification *)note;
@@ -21,16 +22,19 @@
     if (self){
         _context = [myTextbox managedObjectContext];
         _textView = [[NSTextView alloc] initWithFrame:[self bounds]];
+        _mask = [[EDTextboxViewMask alloc] initWithFrame:[self bounds]];
         
         // set model info
         [self setDataObj:myTextbox];
         
+        [_textView setEditable:FALSE];
+        [_textView setSelectable:FALSE];
+        [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Does this work?"]];
         // add text field to view
-        [self addSubview:_textView];
+        //[self addSubview:_textView];
+        [self addSubview:_mask];
         //[_contentTextfield setStringValue:[NSString stringWithFormat:@"Does this work?"]];
         //[_contentTextfield setAttributedStringValue:[NSMutableAttributedString alloc] initWithString:@"first"];
-        [_textView setEditable:TRUE];
-        [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Does this work?"]];
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];

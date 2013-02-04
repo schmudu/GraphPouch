@@ -12,6 +12,7 @@
 
 @interface EDTextboxView : EDWorksheetElementView{
     NSTextView *_textView;
+    NSView *_mask;
 }
 
 - (id)initWithFrame:(NSRect)frame textboxModel:(EDTextbox *)myTextbox;

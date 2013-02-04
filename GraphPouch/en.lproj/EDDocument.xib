@@ -53,7 +53,7 @@
 						<object class="NSButton" id="807704737">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{140, 841}, {60, 60}}</string>
+							<string key="NSFrame">{{120, 840}, {60, 70}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="242624501"/>
@@ -70,8 +70,12 @@
 								</object>
 								<string key="NSCellIdentifier">_NS:9</string>
 								<reference key="NSControlView" ref="807704737"/>
-								<int key="NSButtonFlags">-2038153216</int>
+								<int key="NSButtonFlags">-2046017536</int>
 								<int key="NSButtonFlags2">134</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">icon_graph</string>
+								</object>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
@@ -82,7 +86,7 @@
 						<object class="NSButton" id="242624501">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{274, 841}, {60, 60}}</string>
+							<string key="NSFrame">{{200, 840}, {60, 70}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="897086742"/>
@@ -91,12 +95,16 @@
 							<object class="NSButtonCell" key="NSCell" id="22166792">
 								<int key="NSCellFlags">67108864</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Text</string>
+								<string key="NSContents">Textbox</string>
 								<reference key="NSSupport" ref="29941353"/>
 								<string key="NSCellIdentifier">_NS:9</string>
 								<reference key="NSControlView" ref="242624501"/>
-								<int key="NSButtonFlags">-2038153216</int>
+								<int key="NSButtonFlags">-2046017536</int>
 								<int key="NSButtonFlags2">134</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">icon_text</string>
+								</object>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
@@ -107,7 +115,7 @@
 						<object class="NSButton" id="897086742">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{413, 841}, {60, 60}}</string>
+							<string key="NSFrame">{{280, 840}, {60, 70}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="664958542"/>
@@ -120,8 +128,12 @@
 								<reference key="NSSupport" ref="29941353"/>
 								<string key="NSCellIdentifier">_NS:9</string>
 								<reference key="NSControlView" ref="897086742"/>
-								<int key="NSButtonFlags">-2038153216</int>
+								<int key="NSButtonFlags">-2046017536</int>
 								<int key="NSButtonFlags2">134</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">icon_line</string>
+								</object>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
@@ -132,7 +144,7 @@
 						<object class="NSButton" id="664958542">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{562, 841}, {74, 60}}</string>
+							<string key="NSFrame">{{562, 840}, {74, 70}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="694919947"/>
@@ -157,7 +169,7 @@
 						<object class="NSButton" id="694919947">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{717, 841}, {60, 60}}</string>
+							<string key="NSFrame">{{717, 840}, {60, 70}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="204223611"/>
@@ -182,7 +194,7 @@
 						<object class="NSButton" id="835139896">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{34, 841}, {60, 60}}</string>
+							<string key="NSFrame">{{40, 840}, {60, 70}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="807704737"/>
@@ -195,8 +207,16 @@
 								<reference key="NSSupport" ref="29941353"/>
 								<string key="NSCellIdentifier">_NS:9</string>
 								<reference key="NSControlView" ref="835139896"/>
-								<int key="NSButtonFlags">-2038153216</int>
-								<int key="NSButtonFlags2">134</int>
+								<int key="NSButtonFlags">-2046017536</int>
+								<int key="NSButtonFlags2">6</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">icon_paper</string>
+								</object>
+								<object class="NSCustomResource" key="NSAlternateImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">icon_paper_over</string>
+								</object>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
@@ -218,7 +238,7 @@
 											<string key="NSFrameSize">{138, 824}</string>
 											<reference key="NSSuperview" ref="302567203"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="495829339"/>
+											<reference key="NSNextKeyView" ref="263211016"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 										</object>
 									</array>
@@ -267,7 +287,7 @@
 							<string key="NSFrameSize">{140, 826}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="302567203"/>
+							<reference key="NSNextKeyView" ref="495829339"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133634</int>
 							<reference key="NSVScroller" ref="495829339"/>
@@ -288,6 +308,7 @@
 									<string key="NSFrame">{{33, 30}, {600, 766}}</string>
 									<reference key="NSSuperview" ref="263211016"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">EDWorksheetView</string>
 								</object>
@@ -569,9 +590,9 @@
 							<reference ref="835139896"/>
 							<reference ref="694919947"/>
 							<reference ref="664958542"/>
-							<reference ref="897086742"/>
-							<reference ref="807704737"/>
 							<reference ref="242624501"/>
+							<reference ref="807704737"/>
+							<reference ref="897086742"/>
 						</array>
 						<reference key="parent" ref="275939982"/>
 					</object>
@@ -747,6 +768,18 @@
 				<string key="100305.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100306.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100307.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<dictionary class="NSMutableDictionary" key="100311.IBAttributePlaceholdersKey">
+					<object class="IBAccessibilityAttribute" key="AccessibilityDescription">
+						<string key="name">AccessibilityDescription</string>
+						<reference key="object" ref="835139896"/>
+						<string key="accessibilityValue">Add New Page</string>
+					</object>
+					<object class="IBToolTipAttribute" key="ToolTip">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="835139896"/>
+						<string key="toolTip">Add Page (Alt + P)</string>
+					</object>
+				</dictionary>
 				<string key="100311.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100312.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100315.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1035,5 +1068,12 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="icon_graph">{51, 51}</string>
+			<string key="icon_line">{51, 51}</string>
+			<string key="icon_paper">{51, 51}</string>
+			<string key="icon_paper_over">{26.28131334382936, 26.28131334382936}</string>
+			<string key="icon_text">{51, 51}</string>
+		</dictionary>
 	</data>
 </archive>
