@@ -83,6 +83,7 @@
 		CDD05DFD16C06811001279FB /* icon_graph.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DFC16C06811001279FB /* icon_graph.png */; };
 		CDD05DFF16C069AA001279FB /* icon_text.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DFE16C069AA001279FB /* icon_text.png */; };
 		CDD05E0116C06C35001279FB /* icon_line.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05E0016C06C35001279FB /* icon_line.png */; };
+		CDD05E0716C0951D001279FB /* EDToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD05E0616C0951D001279FB /* EDToolbarView.m */; };
 		CDD46E531603BE3C00EDD75C /* NSColor+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */; };
 		CDD46E611607D1F200EDD75C /* EDTransformRect.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E601607D1F200EDD75C /* EDTransformRect.m */; };
 		CDD46E651607D22F00EDD75C /* EDTransformPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD46E641607D22F00EDD75C /* EDTransformPoint.m */; };
@@ -259,6 +260,8 @@
 		CDD05DFC16C06811001279FB /* icon_graph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_graph.png; sourceTree = "<group>"; };
 		CDD05DFE16C069AA001279FB /* icon_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_text.png; sourceTree = "<group>"; };
 		CDD05E0016C06C35001279FB /* icon_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_line.png; sourceTree = "<group>"; };
+		CDD05E0516C0951D001279FB /* EDToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDToolbarView.h; sourceTree = "<group>"; };
+		CDD05E0616C0951D001279FB /* EDToolbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDToolbarView.m; sourceTree = "<group>"; };
 		CDD46E511603BE3C00EDD75C /* NSColor+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Utilities.h"; sourceTree = "<group>"; };
 		CDD46E521603BE3C00EDD75C /* NSColor+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Utilities.m"; sourceTree = "<group>"; };
 		CDD46E5F1607D1F200EDD75C /* EDTransformRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformRect.h; sourceTree = "<group>"; };
@@ -873,6 +876,8 @@
 				CDA8555616236EF9006FCD62 /* EDContentView.h */,
 				CDA8555716236EF9006FCD62 /* EDContentView.m */,
 				CD1EBD4415FECF1E00BEEA4D /* Panels */,
+				CDD05E0516C0951D001279FB /* EDToolbarView.h */,
+				CDD05E0616C0951D001279FB /* EDToolbarView.m */,
 			);
 			name = Window;
 			sourceTree = "<group>";
@@ -1099,6 +1104,7 @@
 				CDF3E19B16BC491100AB78AF /* EDTextbox.m in Sources */,
 				CDD05DEA16BC716E001279FB /* EDTextboxView.m in Sources */,
 				CDD05DF616BD4C43001279FB /* EDTextboxViewMask.m in Sources */,
+				CDD05E0716C0951D001279FB /* EDToolbarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
