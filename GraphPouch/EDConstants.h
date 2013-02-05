@@ -99,6 +99,8 @@ extern NSString *const EDEventShortcutGraph;
 extern NSString *const EDEventShortcutPage;
 extern NSString *const EDEventShortcutSelectAll;
 extern NSString *const EDEventShortcutDeselectAll;
+extern float const EDMenuToolbarShadowWidth;
+
 
 // guides
 extern NSString *const EDKeyGuideVertical;

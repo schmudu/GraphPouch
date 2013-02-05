@@ -99,6 +99,7 @@ NSString * const EDEventShortcutGraph                           = @"EDEventShort
 NSString * const EDEventShortcutPage                            = @"EDEventShortcutPage";
 NSString * const EDEventShortcutSelectAll                       = @"EDEventShortcutSelectAll";
 NSString * const EDEventShortcutDeselectAll                     = @"EDEventShortcutDeselectAll";
+float const EDMenuToolbarShadowWidth                            = 4.0;
 
 // guides
 NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
