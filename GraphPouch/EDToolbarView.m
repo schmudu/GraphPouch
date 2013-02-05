@@ -27,9 +27,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
     NSGradient *fillGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithHexColorString:@"dedede"] endingColor:[NSColor colorWithHexColorString:@"bbbbbb"]];
-    // Create the path
     NSBezierPath *path = [NSBezierPath bezierPath];
     
     [path moveToPoint:NSMakePoint(0.0, 0.0)];
@@ -38,6 +36,16 @@
     [path lineToPoint:NSMakePoint(0.0, [self bounds].size.height)];
     [path lineToPoint:NSMakePoint(0.0, 0.0)];
     [fillGradient drawInBezierPath:path angle:90.0];
+    
+    NSGradient *dropShadowGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithHexColorString:@"999999"] endingColor:[NSColor colorWithHexColorString:@"aaaaaa"]];
+    NSBezierPath *shadowPath = [NSBezierPath bezierPath];
+    
+    [shadowPath moveToPoint:NSMakePoint(0.0, 96.0)];
+    [shadowPath lineToPoint:NSMakePoint([self bounds].size.width, 96.0)];
+    [shadowPath lineToPoint:NSMakePoint([self bounds].size.width, [self bounds].size.height)];
+    [shadowPath lineToPoint:NSMakePoint(0.0, [self bounds].size.height)];
+    [shadowPath lineToPoint:NSMakePoint(0.0, 96.0)];
+    [dropShadowGradient drawInBezierPath:shadowPath angle:90.0];
 }
 
 @end

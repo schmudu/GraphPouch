@@ -875,9 +875,9 @@
 				CDE6D65515E111C700E5695F /* EDWindow.m */,
 				CDA8555616236EF9006FCD62 /* EDContentView.h */,
 				CDA8555716236EF9006FCD62 /* EDContentView.m */,
-				CD1EBD4415FECF1E00BEEA4D /* Panels */,
 				CDD05E0516C0951D001279FB /* EDToolbarView.h */,
 				CDD05E0616C0951D001279FB /* EDToolbarView.m */,
+				CD1EBD4415FECF1E00BEEA4D /* Panels */,
 			);
 			name = Window;
 			sourceTree = "<group>";

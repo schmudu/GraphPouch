@@ -52,7 +52,7 @@
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSCustomView" id="24759428">
 							<reference key="NSNextResponder" ref="568628114"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">266</int>
 							<array class="NSMutableArray" key="NSSubviews">
 								<object class="NSButton" id="835139896">
 									<reference key="NSNextResponder" ref="24759428"/>
@@ -251,7 +251,7 @@
 											<string key="NSFrameSize">{138, 826}</string>
 											<reference key="NSSuperview" ref="302567203"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="263211016"/>
+											<reference key="NSNextKeyView" ref="495829339"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 										</object>
 									</array>
@@ -300,7 +300,7 @@
 							<string key="NSFrameSize">{140, 826}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="495829339"/>
+							<reference key="NSNextKeyView" ref="302567203"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133632</int>
 							<reference key="NSVScroller" ref="495829339"/>
@@ -321,7 +321,6 @@
 									<string key="NSFrame">{{33, 30}, {600, 766}}</string>
 									<reference key="NSSuperview" ref="263211016"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">EDWorksheetView</string>
 								</object>
