@@ -8,12 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDWorksheetElementView.h"
+#import "EDTextView.h"
 @class EDTextbox;
 
 @interface EDTextboxView : EDWorksheetElementView{
-    NSTextView *_textView;
+    EDTextView *_textView;
     NSView *_mask;
 }
 
 - (id)initWithFrame:(NSRect)frame textboxModel:(EDTextbox *)myTextbox;
+- (void)toggle;
 @end

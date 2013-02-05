@@ -7,6 +7,7 @@
 //
 
 #import "EDTextboxViewMask.h"
+#import "EDConstants.h"
 
 @implementation EDTextboxViewMask
 
@@ -26,4 +27,8 @@
     [NSBezierPath fillRect:[self bounds]];
 }
 
+- (void)mouseDown:(NSEvent *)theEvent{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDown object:self];
+    NSLog(@"mouse down mask.");
+}
 @end

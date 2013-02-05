@@ -81,6 +81,7 @@
 #pragma mark mouse events
 #pragma mark mouse down
 - (void)mouseDown:(NSEvent *)theEvent{
+    NSLog(@"mouse down element view.");
 #warning CAREFUL: SOME code you change here needs to change in the "mouseDownBySelection" method
      // set worksheet view as getAllSelectedWorksheetElements
     [[self window] makeFirstResponder:[self superview]];

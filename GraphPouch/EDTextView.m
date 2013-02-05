@@ -1,0 +1,47 @@
+//
+//  EDTextView.m
+//  GraphPouch
+//
+//  Created by PATRICK LEE on 2/5/13.
+//  Copyright (c) 2013 Patrick Lee. All rights reserved.
+//
+
+#import "EDTextView.h"
+
+@implementation EDTextView
+
+- (id)initWithFrame:(NSRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        _enabled = TRUE;
+    }
+    
+    return self;
+}
+
+- (void)resetCursorRects{
+    if (_enabled){
+        [super resetCursorRects];
+    }
+}
+
+- (BOOL)enabled{
+    return _enabled;
+}
+
+- (void)toggleEnabled{
+    // toggle enable
+    if (_enabled){
+        _enabled = FALSE;
+        [self setEditable:FALSE];
+        [self setSelectable:FALSE];
+    }
+    else{
+        _enabled = TRUE;
+        [self setEditable:TRUE];
+        [self setSelectable:TRUE];
+    }
+    NSLog(@"just toggle enabled to value:%d", _enabled);
+}
+@end
