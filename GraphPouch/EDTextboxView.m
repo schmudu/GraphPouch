@@ -7,9 +7,10 @@
 //
 #import "EDTextboxView.h"
 #import "EDConstants.h"
-#import "NSColor+Utilities.h"
 #import "EDTextbox.h"
 #import "EDTextboxViewMask.h"
+#import "NSColor+Utilities.h"
+#import "NSManagedObject+Attributes.h"
 
 @interface EDTextboxView()
 - (void)onContextChanged:(NSNotification *)note;
@@ -84,33 +85,12 @@
     [self addSubview:_mask];
 }
 
-- (void)onContextChanged:(NSNotification *)note{
-    // this enables undo method to work
-    NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
-    
-    BOOL hasChanged = FALSE;
-    int i = 0;
-    NSManagedObject *element;
-    
-    // search through updated array and see if this element has changed
-    while ((i<[updatedArray count]) && (!hasChanged)){
-        element = [updatedArray objectAtIndex:i];
-        // if data object changed or any of the points, update graph
-        if (element == [self dataObj]){
-            hasChanged = TRUE;
-            [self updateDisplayBasedOnContext];
-        }
-        i++;
-    }
-}
-
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // drawing code
-}
-
-- (void)mouseDown:(NSEvent *)theEvent{
-    NSLog(@"mouse down text box view.");
+    if ([[self dataObj] isSelectedElement]){
+        [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
+        [NSBezierPath fillRect:[self bounds]];
+    }
 }
 
 - (void)onMaskClicked:(NSNotification *)note{

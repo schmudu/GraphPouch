@@ -284,7 +284,6 @@
     if (snapInfo) {
         [notificationDictionary setValue:snapInfo forKey:EDKeySnapInfo];
     }
-    
     [notificationDictionary setValue:theEvent forKey:EDEventKey];
     [notificationDictionary setValue:self forKey:EDKeyWorksheetElement];
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDragged object:self userInfo:notificationDictionary];

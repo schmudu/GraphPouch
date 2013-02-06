@@ -164,10 +164,12 @@
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
     NSArray *fetchedLines = [EDLine getAllSelectedObjects:context];
+    NSArray *fetchedTextboxes = [EDTextbox getAllSelectedObjects:context];
     
 #warning worksheet elements
     [allObjects addObjectsFromArray:fetchedGraphs];
     [allObjects addObjectsFromArray:fetchedLines];
+    [allObjects addObjectsFromArray:fetchedTextboxes];
     
     return allObjects;
 }
