@@ -63,7 +63,8 @@ NSString * const EDEntityNameLine                               = @"EDLine";
 NSString * const EDEntityNameTextbox                            = @"EDTextbox";
 
 // textfield
-NSString * const EDTextboxAttributeTextValue                  = @"textValue";
+NSString * const EDTextboxAttributeTextValue                    = @"textValue";
+NSString * const EDKeyEvent                                     = @"EDKeyEvent";
 
 // line
 NSString * const EDLineAttributeThickness                       = @"thickness";

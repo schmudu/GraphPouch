@@ -14,6 +14,9 @@
 @interface EDTextboxView()
 - (void)onContextChanged:(NSNotification *)note;
 - (void)onMaskClicked:(NSNotification *)note;
+- (void)onWorksheetClicked:(NSNotification *)note;
+- (void)disable;
+- (void)enable;
 @end
 
 @implementation EDTextboxView
@@ -37,6 +40,7 @@
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMaskClicked:) name:EDEventMouseDown object:_mask];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWorksheetClicked:) name:EDEventWorksheetClicked object:[self superview]];
     }
     return self;
 }
@@ -44,35 +48,41 @@
 - (void) dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventMouseDown object:_mask];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventWorksheetClicked object:[self superview]];
 }
 
 - (BOOL)isFlipped{
     return TRUE;
 }
 
+#pragma mark disable/enable textbox
 - (void)toggle{
-    //[_textView toggleEnabled];
+    [_textView toggleEnabled];
     
     // toggle enable
-    if ([_textView enabled]){
-        // enable all tracking areas
-        [_textView addTrackingRect:[_textView frame] owner:self userData:nil assumeInside:NO];
-        [_mask removeFromSuperview];
-    }
-    else{
-        // remove all tracking areas
-        NSArray *trackingAreas = [_textView trackingAreas];
-        for (NSTrackingArea *area in trackingAreas){
-            [_textView removeTrackingArea:area];
-        }
-        [self addSubview:_mask];
-        NSLog(@"removed all tracking areas:%@", trackingAreas);
-    }
+    if ([_textView enabled])
+        [self enable];
+    else
+        [self disable];
     
     // reset cursor rects
     [[self window] invalidateCursorRectsForView:self];
 }
 
+- (void)enable{
+    // enable all tracking areas
+    [_textView addTrackingRect:[_textView frame] owner:self userData:nil assumeInside:NO];
+    [_mask removeFromSuperview];
+}
+
+- (void)disable{
+    // remove all tracking areas
+    NSArray *trackingAreas = [_textView trackingAreas];
+    for (NSTrackingArea *area in trackingAreas){
+        [_textView removeTrackingArea:area];
+    }
+    [self addSubview:_mask];
+}
 
 - (void)onContextChanged:(NSNotification *)note{
     // this enables undo method to work
@@ -105,6 +115,14 @@
 
 - (void)onMaskClicked:(NSNotification *)note{
     //NSLog(@"enabled state%d", [_textView enabled]);
-    [self toggle];
+    //[self toggle];
+    [super mouseDown:[[note userInfo] objectForKey:EDKeyEvent]];
+}
+
+- (void)onWorksheetClicked:(NSNotification *)note{
+    // worksheet was clicked
+    // disable text view
+    [_textView setEnabled:FALSE];
+    [self disable];
 }
 @end

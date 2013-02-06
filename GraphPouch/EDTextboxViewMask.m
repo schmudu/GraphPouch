@@ -23,12 +23,15 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    /*
     [[NSColor redColor] setFill];
     [NSBezierPath fillRect:[self bounds]];
+     */
 }
 
 - (void)mouseDown:(NSEvent *)theEvent{
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDown object:self];
-    NSLog(@"mouse down mask.");
+    NSMutableDictionary *eventInfo = [[NSMutableDictionary alloc] init];
+    [eventInfo setObject:theEvent forKey:EDKeyEvent];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDown object:self userInfo:eventInfo];
 }
 @end

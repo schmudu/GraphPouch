@@ -30,6 +30,19 @@
     return _enabled;
 }
 
+- (void)setEnabled:(BOOL)newState{
+    _enabled = newState;
+    
+    if (_enabled){
+        [self setEditable:TRUE];
+        [self setSelectable:TRUE];
+    }
+    else{
+        [self setEditable:FALSE];
+        [self setSelectable:FALSE];
+    }
+}
+
 - (void)toggleEnabled{
     // toggle enable
     if (_enabled){
