@@ -65,7 +65,7 @@ extern NSString *const EDEntityNameTextbox;
 // textfield
 extern NSString *const EDTextboxAttributeTextValue;
 extern NSString *const EDKeyEvent;
-
+extern float const EDTextboxBorderWidth;
 // line
 extern NSString *const EDLineAttributeThickness;
 

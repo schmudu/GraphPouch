@@ -44,6 +44,22 @@
         [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
         [NSBezierPath fillRect:[self bounds]];
     }
+    
+    // if enabled then draw dashed border
+    if ([(EDTextboxView *)[self superview] enabled]){
+        NSBezierPath *aPath;
+        aPath = [NSBezierPath bezierPath];
+        [aPath setLineWidth:EDTextboxBorderWidth];
+        CGFloat dashedLined[] = {10.0, 10.0};
+        [aPath setLineDash:dashedLined count:2 phase:0];
+        [[NSColor blueColor] setStroke];
+        [aPath moveToPoint:NSMakePoint(0, 0)];
+        [aPath lineToPoint:NSMakePoint([self frame].size.width, 0)];
+        [aPath lineToPoint:NSMakePoint([self frame].size.width, [self frame].size.height)];
+        [aPath lineToPoint:NSMakePoint(0, [self frame].size.height)];
+        [aPath lineToPoint:NSMakePoint(0, 0)];
+        [aPath stroke];
+    }
 }
 
 - (void)mouseDown:(NSEvent *)theEvent{

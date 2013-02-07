@@ -20,4 +20,5 @@
 
 - (id)initWithFrame:(NSRect)frame textboxModel:(EDTextbox *)myTextbox;
 - (BOOL)enabled;
+- (void)postInit;
 @end

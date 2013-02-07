@@ -208,6 +208,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [textboxView setFrameOrigin:NSMakePoint([[textbox valueForKey:EDElementAttributeLocationX] floatValue], [[textbox valueForKey:EDElementAttributeLocationY] floatValue])];
     
     [self addSubview:textboxView];
+    [textboxView postInit];
     [textboxView setNeedsDisplay:TRUE];
     
     // draw transform rect if selected

@@ -17,6 +17,7 @@
 - (void)onMaskDoubleClicked:(NSNotification *)note;
 - (void)onWorksheetClicked:(NSNotification *)note;
 - (void)disable;
+- (void)disableTrackingAreas;
 - (void)enable;
 @end
 
@@ -30,15 +31,17 @@
         
         // set model info
         [self setDataObj:myTextbox];
-        _enabled = TRUE;
+        _enabled = FALSE;
         
-        [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Does this work?"]];
         // add text field to view
+        [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Does this work?"]];
+        [_textView setDrawsBackground:FALSE];
         [self addSubview:_textView];
         [_textView postInit];
         
         [self addSubview:_mask];
         [_mask postInit];
+        
         //[_contentTextfield setStringValue:[NSString stringWithFormat:@"Does this work?"]];
         //[_contentTextfield setAttributedStringValue:[NSMutableAttributedString alloc] initWithString:@"first"];
         
@@ -58,6 +61,18 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventWorksheetClicked object:[self superview]];
 }
 
+- (void)postInit{
+    /*
+    // automatically disable tracking areas
+    [_textView updateTrackingAreas];
+    [self disableTrackingAreas];
+    
+    [[self window] invalidateCursorRectsForView:self];
+     */
+    [self disable];
+    NSLog(@"tracking areas:%@", [_textView trackingAreas]);
+}
+
 - (BOOL)isFlipped{
     return TRUE;
 }
@@ -72,6 +87,10 @@
 
 - (void)enable{
     _enabled = TRUE;
+ 
+    // switch order to that mask is in front of text
+    [_textView removeFromSuperview];
+    [self addSubview:_textView];
     
     // disable text box
     [_textView setEditable:TRUE];
@@ -79,10 +98,18 @@
     
     // enable all tracking areas
     [_textView addTrackingRect:[_textView frame] owner:self userData:nil assumeInside:NO];
-    [_mask removeFromSuperview];
+    //[_mask removeFromSuperview];
     
     // need to change cursor rects
     [[self window] invalidateCursorRectsForView:self];
+}
+
+- (void)disableTrackingAreas{
+    // remove all tracking areas
+    NSArray *trackingAreas = [_textView trackingAreas];
+    for (NSTrackingArea *area in trackingAreas){
+        [_textView removeTrackingArea:area];
+    }
 }
 
 - (void)disable{
@@ -92,14 +119,15 @@
     [_textView setEditable:FALSE];
     [_textView setSelectable:FALSE];
     
-    // remove all tracking areas
-    NSArray *trackingAreas = [_textView trackingAreas];
-    for (NSTrackingArea *area in trackingAreas){
-        [_textView removeTrackingArea:area];
-    }
-    
     // add the mask
+    //[self addSubview:_mask];
+ 
+    // switch order to that mask is in front of text
+    [_mask removeFromSuperview];
     [self addSubview:_mask];
+    
+    // disable tracking areas
+    [self disableTrackingAreas];
     
     // need to change cursor rects
     [[self window] invalidateCursorRectsForView:self];

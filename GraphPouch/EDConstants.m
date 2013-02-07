@@ -65,7 +65,7 @@ NSString * const EDEntityNameTextbox                            = @"EDTextbox";
 // textfield
 NSString * const EDTextboxAttributeTextValue                    = @"textValue";
 NSString * const EDKeyEvent                                     = @"EDKeyEvent";
-
+float const EDTextboxBorderWidth                                 = 1.0;
 // line
 NSString * const EDLineAttributeThickness                       = @"thickness";
 
