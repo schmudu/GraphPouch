@@ -15,10 +15,18 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        //_enabled = TRUE;
     }
     
     return self;
+}
+
+- (void)postInit{
+    // called after class has been added as a view
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onViewFrameSizeDidChange:) name:NSViewFrameDidChangeNotification object:[self superview]];
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewFrameDidChangeNotification object:[self superview]];
 }
 
 - (void)resetCursorRects{
@@ -27,37 +35,10 @@
     }
 }
 
-/*
-- (BOOL)enabled{
-    return _enabled;
-}
-
-- (void)setEnabled:(BOOL)newState{
-    _enabled = newState;
-    
-    if (_enabled){
-        [self setEditable:TRUE];
-        [self setSelectable:TRUE];
-    }
-    else{
-        [self setEditable:FALSE];
-        [self setSelectable:FALSE];
+- (void)onViewFrameSizeDidChange:(NSNotification *)note{
+    // match size of superview
+    if ([self superview] != nil){
+        [self setFrameSize:NSMakeSize([[self superview] frame].size.width, [[self superview] frame].size.height)];
     }
 }
-
-- (void)toggleEnabled{
-    // toggle enable
-    if (_enabled){
-        _enabled = FALSE;
-        [self setEditable:FALSE];
-        [self setSelectable:FALSE];
-    }
-    else{
-        _enabled = TRUE;
-        [self setEditable:TRUE];
-        [self setSelectable:TRUE];
-    }
-    NSLog(@"just toggle enabled to value:%d", _enabled);
-}
- */
 @end

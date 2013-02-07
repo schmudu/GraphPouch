@@ -10,4 +10,5 @@
 
 @interface EDTextboxViewMask : NSView
 
+- (void)postInit;
 @end

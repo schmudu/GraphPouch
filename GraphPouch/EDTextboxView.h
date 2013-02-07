@@ -9,15 +9,15 @@
 #import <Cocoa/Cocoa.h>
 #import "EDWorksheetElementView.h"
 #import "EDTextView.h"
+#import "EDTextboxViewMask.h"
 @class EDTextbox;
 
 @interface EDTextboxView : EDWorksheetElementView{
     EDTextView *_textView;
-    NSView *_mask;
+    EDTextboxViewMask *_mask;
     BOOL _enabled;
 }
 
 - (id)initWithFrame:(NSRect)frame textboxModel:(EDTextbox *)myTextbox;
 - (BOOL)enabled;
-//- (void)toggle;
 @end

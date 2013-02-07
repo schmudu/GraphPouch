@@ -14,6 +14,7 @@
 
 @interface EDTextboxView()
 - (void)onMaskClicked:(NSNotification *)note;
+- (void)onMaskDoubleClicked:(NSNotification *)note;
 - (void)onWorksheetClicked:(NSNotification *)note;
 - (void)disable;
 - (void)enable;
@@ -34,14 +35,19 @@
         [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Does this work?"]];
         // add text field to view
         [self addSubview:_textView];
-        //[self addSubview:_mask];
+        [_textView postInit];
+        
+        [self addSubview:_mask];
+        [_mask postInit];
         //[_contentTextfield setStringValue:[NSString stringWithFormat:@"Does this work?"]];
         //[_contentTextfield setAttributedStringValue:[NSMutableAttributedString alloc] initWithString:@"first"];
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMaskClicked:) name:EDEventMouseDown object:_mask];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMaskDoubleClicked:) name:EDEventMouseDoubleClick object:_mask];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWorksheetClicked:) name:EDEventWorksheetClicked object:[self superview]];
+        
     }
     return self;
 }
@@ -56,21 +62,10 @@
     return TRUE;
 }
 
+- (void)onContextChanged:(NSNotification *)note{
+    [super onContextChanged:note];
+}
 #pragma mark disable/enable textbox
-/*
-- (void)toggle{
-    [_textView toggleEnabled];
-    
-    // toggle enable
-    if ([_textView enabled])
-        [self enable];
-    else
-        [self disable];
-    
-    // reset cursor rects
-    [[self window] invalidateCursorRectsForView:self];
-}*/
-
 - (BOOL)enabled{
     return _enabled;
 }
@@ -110,16 +105,16 @@
     [[self window] invalidateCursorRectsForView:self];
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
-    if ([[self dataObj] isSelectedElement]){
-        [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
-        [NSBezierPath fillRect:[self bounds]];
-    }
-}
-
 - (void)onMaskClicked:(NSNotification *)note{
     [super mouseDown:[[note userInfo] objectForKey:EDKeyEvent]];
+}
+
+- (void)onMaskDoubleClicked:(NSNotification *)note{
+    // enable text box
+    [self enable];
+    
+    // deselect this element
+    [(EDTextbox *)[self dataObj] setSelected:FALSE];
 }
 
 - (void)onWorksheetClicked:(NSNotification *)note{

@@ -75,7 +75,9 @@ float const EDWorksheetViewHeight                               = 766;
 float const EDWorksheetShadowSize                               = 2.0;
 NSString * const EDWorksheetShadowColor                         = @"bbbbbb";
 
+
 // worksheet events
+NSString * const EDEventMouseDoubleClick                        = @"EDEventMouseDoubleClick";
 NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";
 NSString * const EDEventMouseDown                               = @"EDEventMouseDown";
 NSString * const EDEventMouseDragged                            = @"EDEventMouseDragged";

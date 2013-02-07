@@ -9,12 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface EDTextView : NSTextView{
-    //BOOL _enabled;
 }
 
-/*
-- (BOOL)enabled;
-- (void)setEnabled:(BOOL)newState;
-- (void)toggleEnabled;
-*/
+- (void)postInit;
 @end
