@@ -7,6 +7,7 @@
 //
 
 #import "EDTextView.h"
+#import "EDTextboxView.h"
 
 @implementation EDTextView
 
@@ -14,18 +15,19 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _enabled = TRUE;
+        //_enabled = TRUE;
     }
     
     return self;
 }
 
 - (void)resetCursorRects{
-    if (_enabled){
+    if ([(EDTextboxView *)[self superview] enabled]){
         [super resetCursorRects];
     }
 }
 
+/*
 - (BOOL)enabled{
     return _enabled;
 }
@@ -57,4 +59,5 @@
     }
     NSLog(@"just toggle enabled to value:%d", _enabled);
 }
+ */
 @end

@@ -8,6 +8,8 @@
 
 #import "EDTextboxViewMask.h"
 #import "EDConstants.h"
+#import "EDTextboxView.h"
+#import "NSColor+Utilities.h"
 
 @implementation EDTextboxViewMask
 
@@ -23,6 +25,12 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    // draw selection
+    // color background
+    //if ([(EDTextboxView *)[self superview] enabled]){
+        [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
+        [NSBezierPath fillRect:[self bounds]];
+    //}
     /*
     [[NSColor redColor] setFill];
     [NSBezierPath fillRect:[self bounds]];

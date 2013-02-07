@@ -13,7 +13,6 @@
 #import "NSManagedObject+Attributes.h"
 
 @interface EDTextboxView()
-- (void)onContextChanged:(NSNotification *)note;
 - (void)onMaskClicked:(NSNotification *)note;
 - (void)onWorksheetClicked:(NSNotification *)note;
 - (void)disable;
@@ -30,6 +29,7 @@
         
         // set model info
         [self setDataObj:myTextbox];
+        _enabled = TRUE;
         
         [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Does this work?"]];
         // add text field to view
@@ -57,6 +57,7 @@
 }
 
 #pragma mark disable/enable textbox
+/*
 - (void)toggle{
     [_textView toggleEnabled];
     
@@ -68,21 +69,45 @@
     
     // reset cursor rects
     [[self window] invalidateCursorRectsForView:self];
+}*/
+
+- (BOOL)enabled{
+    return _enabled;
 }
 
 - (void)enable{
+    _enabled = TRUE;
+    
+    // disable text box
+    [_textView setEditable:TRUE];
+    [_textView setSelectable:TRUE];
+    
     // enable all tracking areas
     [_textView addTrackingRect:[_textView frame] owner:self userData:nil assumeInside:NO];
     [_mask removeFromSuperview];
+    
+    // need to change cursor rects
+    [[self window] invalidateCursorRectsForView:self];
 }
 
 - (void)disable{
+    _enabled = FALSE;
+    
+    // disable text box
+    [_textView setEditable:FALSE];
+    [_textView setSelectable:FALSE];
+    
     // remove all tracking areas
     NSArray *trackingAreas = [_textView trackingAreas];
     for (NSTrackingArea *area in trackingAreas){
         [_textView removeTrackingArea:area];
     }
+    
+    // add the mask
     [self addSubview:_mask];
+    
+    // need to change cursor rects
+    [[self window] invalidateCursorRectsForView:self];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -94,15 +119,12 @@
 }
 
 - (void)onMaskClicked:(NSNotification *)note{
-    //NSLog(@"enabled state%d", [_textView enabled]);
-    //[self toggle];
     [super mouseDown:[[note userInfo] objectForKey:EDKeyEvent]];
 }
 
 - (void)onWorksheetClicked:(NSNotification *)note{
     // worksheet was clicked
     // disable text view
-    [_textView setEnabled:FALSE];
     [self disable];
 }
 @end

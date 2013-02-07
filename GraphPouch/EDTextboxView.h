@@ -14,8 +14,10 @@
 @interface EDTextboxView : EDWorksheetElementView{
     EDTextView *_textView;
     NSView *_mask;
+    BOOL _enabled;
 }
 
 - (id)initWithFrame:(NSRect)frame textboxModel:(EDTextbox *)myTextbox;
-- (void)toggle;
+- (BOOL)enabled;
+//- (void)toggle;
 @end
