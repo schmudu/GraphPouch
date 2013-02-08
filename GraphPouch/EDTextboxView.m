@@ -15,6 +15,7 @@
 @interface EDTextboxView()
 - (void)onMaskClicked:(NSNotification *)note;
 - (void)onMaskDoubleClicked:(NSNotification *)note;
+- (void)onWindowDidResignKey:(NSNotification *)note;
 - (void)onWorksheetClicked:(NSNotification *)note;
 - (void)disable;
 - (void)disableTrackingAreas;
@@ -36,6 +37,7 @@
         // add text field to view
         [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Does this work?"]];
         [_textView setDrawsBackground:FALSE];
+        [_textView setDelegate:self];
         [self addSubview:_textView];
         [_textView postInit];
         
@@ -50,6 +52,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMaskClicked:) name:EDEventMouseDown object:_mask];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMaskDoubleClicked:) name:EDEventMouseDoubleClick object:_mask];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWorksheetClicked:) name:EDEventWorksheetClicked object:[self superview]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWindowDidResignKey:) name:NSWindowDidResignKeyNotification object:[self window]];
         
     }
     return self;
@@ -58,7 +61,9 @@
 - (void) dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventMouseDown object:_mask];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventMouseDoubleClick object:_mask];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventWorksheetClicked object:[self superview]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSWindowDidResignKeyNotification object:[self window]];
 }
 
 - (void)postInit{
@@ -143,6 +148,17 @@
 - (void)onWorksheetClicked:(NSNotification *)note{
     // worksheet was clicked
     // disable text view
+    [self disable];
+}
+
+#pragma mark text field
+- (void)textDidEndEditing:(NSNotification *)notification{
+    // disable if ended editing
+    [self disable];
+}
+#pragma mark window
+- (void)onWindowDidResignKey:(NSNotification *)note{
+    // disable on resign key
     [self disable];
 }
 @end

@@ -12,7 +12,7 @@
 #import "EDTextboxViewMask.h"
 @class EDTextbox;
 
-@interface EDTextboxView : EDWorksheetElementView{
+@interface EDTextboxView : EDWorksheetElementView <NSTextViewDelegate>{
     EDTextView *_textView;
     EDTextboxViewMask *_mask;
     BOOL _enabled;
