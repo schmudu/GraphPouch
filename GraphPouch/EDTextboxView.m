@@ -35,7 +35,14 @@
         _enabled = FALSE;
         
         // add text field to view
-        [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Does this work?"]];
+        if ([myTextbox textValue]){
+            // insert saved data
+            [_textView insertText:[myTextbox textValue]];
+        }
+        else {
+            // enter default text
+            [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Enter text here..."]];
+        }
         [_textView setDrawsBackground:FALSE];
         [_textView setDelegate:self];
         [self addSubview:_textView];
@@ -153,6 +160,10 @@
 
 #pragma mark text field
 - (void)textDidEndEditing:(NSNotification *)notification{
+    // save text
+    NSAttributedString *string = [[_textView textStorage] attributedSubstringFromRange:NSMakeRange(0, [[[_textView textStorage] string] length])];
+    [[self dataObj] setTextValue:string];
+    
     // disable if ended editing
     [self disable];
 }
