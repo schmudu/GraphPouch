@@ -62,15 +62,7 @@
 }
 
 - (void)postInit{
-    /*
-    // automatically disable tracking areas
-    [_textView updateTrackingAreas];
-    [self disableTrackingAreas];
-    
-    [[self window] invalidateCursorRectsForView:self];
-     */
     [self disable];
-    NSLog(@"tracking areas:%@", [_textView trackingAreas]);
 }
 
 - (BOOL)isFlipped{
@@ -114,6 +106,9 @@
 
 - (void)disable{
     _enabled = FALSE;
+    
+    // deselect all text
+    [_textView setSelectedRange:NSMakeRange(0, 0)];
     
     // disable text box
     [_textView setEditable:FALSE];
