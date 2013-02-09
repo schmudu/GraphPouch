@@ -245,8 +245,6 @@
 
 #pragma mark menu
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
-    //NSLog(@"key window:%d", ([NSApp keyWindow] == mainWindow));
-    //NSLog(@"key window responder:%@ menu:%@", [mainWindow firstResponder], menuItem);
     // CRUD
     if ([[menuItem title] isEqualToString:@"Paste"]){
         //NSArray *classes = [NSArray arrayWithObjects:([EDGraph class], [EDPage class], nil)];
@@ -289,5 +287,14 @@
             return FALSE;
     }
     return [super validateMenuItem:menuItem];
+}
+
+#pragma mark textbox
+- (void)onTextboxDidBeginEditing{
+    [propertyController onTextboxDidBeginEditing];
+}
+
+- (void)onTextboxDidEndEditing{
+    [propertyController onTextboxDidEndEditing];
 }
 @end

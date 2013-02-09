@@ -44,4 +44,6 @@
 - (IBAction)worksheetItemNext:(id)sender;
 - (IBAction)worksheetItemPrevious:(id)sender;
 - (IBAction)paste:(id)sender;
+- (void)onTextboxDidBeginEditing;
+- (void)onTextboxDidEndEditing;
 @end

@@ -62,6 +62,10 @@
 - (void)onTransformPointMouseUp:(NSNotification *)note;
 - (void)onTransformPointMouseDown:(NSNotification *)note;
 - (void)removeTransformRect:(EDTransformRect *)transformRect element:(EDElement *)element;
+
+// textbox
+- (void)onTextboxBeginEditing:(NSNotification *)note;
+- (void)onTextboxEndEditing:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetView
@@ -203,6 +207,8 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:textboxView];
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:textboxView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:textboxView];
+    [_nc addObserver:self selector:@selector(onTextboxBeginEditing:) name:EDEventTextboxBeginEditing object:textboxView];
+    [_nc addObserver:self selector:@selector(onTextboxEndEditing:) name:EDEventTextboxEndEditing object:textboxView];
     
     // set location
     [textboxView setFrameOrigin:NSMakePoint([[textbox valueForKey:EDElementAttributeLocationX] floatValue], [[textbox valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -423,6 +429,12 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             [_nc removeObserver:self name:EDEventMouseDown object:currentElement];
             [_nc removeObserver:self name:EDEventMouseDragged object:currentElement];
             [_nc removeObserver:self name:EDEventMouseUp object:currentElement];
+            
+            // special listener for textbox
+            if ([currentElement isKindOfClass:[EDTextboxView class]]){
+                [_nc removeObserver:self name:EDEventTextboxBeginEditing object:currentElement];
+                [_nc removeObserver:self name:EDEventTextboxEndEditing object:currentElement];
+            }
         }
         i++;
     }
@@ -442,6 +454,14 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)onElementMouseDown:(NSNotification *)note{
+    // notify all textboxes to end editing
+    for (EDWorksheetElementView *elementView in [self subviews]){
+        // only find the boxes
+        if ([elementView isKindOfClass:[EDTextboxView class]]){
+            [(EDTextboxView *)elementView disable];
+        }
+    }
+    
     // order views
     [self sortSubviewsUsingFunction:&viewCompareBySelection context:nil];
     
@@ -865,5 +885,14 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             return elementView;
     }
     return nil;
+}
+
+#pragma mark textbox
+- (void)onTextboxBeginEditing:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self];
+}
+
+- (void)onTextboxEndEditing:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxEndEditing object:self];
 }
 @end

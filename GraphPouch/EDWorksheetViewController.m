@@ -24,6 +24,8 @@
 - (void)cutSelectedElements:(NSNotification *)note;
 - (void)pasteElements:(NSNotification *)note;
 - (void)copyElements:(NSNotification *)note;
+- (void)onTextboxDidBeginEditing:(NSNotification *)note;
+- (void)onTextboxDidEndEditing:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetViewController
@@ -52,6 +54,8 @@
     [_nc addObserver:self selector:@selector(cutSelectedElements:) name:EDEventShortcutCut object:[self view]];
     [_nc addObserver:self selector:@selector(pasteElements:) name:EDEventShortcutPaste object:[self view]];
     [_nc addObserver:self selector:@selector(copyElements:) name:EDEventShortcutCopy object:[self view]];
+    [_nc addObserver:self selector:@selector(onTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:[self view]];
+    [_nc addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:[self view]];
     
     // initialize view to display all of the worksheet elements
     [(EDWorksheetView *)[self view] drawLoadedObjects];
@@ -72,6 +76,8 @@
     [_nc removeObserver:self name:EDEventWindowDidResize object:_documentController];
     [_nc removeObserver:self name:EDEventShortcutCut object:[self view]];
     [_nc removeObserver:self name:EDEventShortcutPaste object:[self view]];
+    [_nc removeObserver:self name:EDEventTextboxBeginEditing object:[self view]];
+    [_nc removeObserver:self name:EDEventTextboxEndEditing object:[self view]];
 }
 
 - (void)deleteSelectedElements:(NSNotification *)note{
@@ -174,5 +180,14 @@
     NSArray *classes = [EDPage allWorksheetClasses];
     NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
     [EDCoreDataUtility insertWorksheetElements:objects context:_context];
+}
+
+#pragma textbox
+- (void)onTextboxDidBeginEditing:(NSNotification *)note{
+    [[NSApp currentDocument] onTextboxDidBeginEditing];
+}
+
+- (void)onTextboxDidEndEditing:(NSNotification *)note{
+    [[NSApp currentDocument] onTextboxDidEndEditing];
 }
 @end

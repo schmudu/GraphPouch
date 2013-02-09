@@ -17,7 +17,6 @@
 - (void)onMaskDoubleClicked:(NSNotification *)note;
 - (void)onWindowDidResignKey:(NSNotification *)note;
 - (void)onWorksheetClicked:(NSNotification *)note;
-- (void)disable;
 - (void)disableTrackingAreas;
 - (void)enable;
 @end
@@ -138,8 +137,12 @@
     
     // need to change cursor rects
     [[self window] invalidateCursorRectsForView:self];
+    
+    // notify listeners of end of editing
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxEndEditing object:self];
 }
 
+#pragma mark mouse
 - (void)onMaskClicked:(NSNotification *)note{
     [super mouseDown:[[note userInfo] objectForKey:EDKeyEvent]];
 }
@@ -150,6 +153,9 @@
     
     // deselect this element
     [(EDTextbox *)[self dataObj] setSelected:FALSE];
+    
+    // notify listeners of begin of editing
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self];
 }
 
 - (void)onWorksheetClicked:(NSNotification *)note{
@@ -158,7 +164,7 @@
     [self disable];
 }
 
-#pragma mark text field
+#pragma mark text field delegate
 - (void)textDidEndEditing:(NSNotification *)notification{
     // save text
     NSAttributedString *string = [[_textView textStorage] attributedSubstringFromRange:NSMakeRange(0, [[[_textView textStorage] string] length])];

@@ -30,6 +30,7 @@
     self = [super initWithWindow:window];
     if (self) {
         _nc = [NSNotificationCenter defaultCenter];
+        _textViewEdited = FALSE;
     }
     
     return self;
@@ -133,6 +134,16 @@
             
         _viewController = documentController;
     }
+    else if(_textViewEdited){
+        // set controller to text view
+        if(!textViewController){
+            textViewController = [[EDPanelPropertiesTextViewController alloc] initWithNibName:@"EDPanelPropertiesTextView" bundle:nil];
+        }
+        // set window title
+        [[self window] setTitle:@"Text Properties"];
+            
+        _viewController = textViewController;
+    }
     else {
         if(!documentController){
             documentController = [[EDPanelPropertiesDocumentController alloc] initWithNibName:@"EDPanelPropertiesDocument" bundle:nil];
@@ -157,6 +168,11 @@
         return;
     }
     else if ((_viewController == lineController) && ([[self window] contentView] == [lineController view])) {
+        // still need to update panel properties
+        [_viewController initWindowAfterLoaded:_context];
+        return;
+    }
+    else if ((_viewController == textViewController) && ([[self window] contentView] == [textViewController view])) {
         // still need to update panel properties
         [_viewController initWindowAfterLoaded:_context];
         return;
@@ -216,5 +232,23 @@
 #pragma mark keyboard
 - (void)onShortcutPastePressed:(NSNotification *)note{
     [_nc postNotificationName:EDEventShortcutSave object:self];
+}
+
+#pragma textbox
+- (void)onTextboxDidBeginEditing{
+    _textViewEdited = TRUE;
+    
+    if(([self isWindowLoaded]) && ([[self window] isVisible])){
+        [self setCorrectView];
+    }
+}
+
+- (void)onTextboxDidEndEditing{
+    _textViewEdited = FALSE;
+    
+    // update view
+    if(([self isWindowLoaded]) && ([[self window] isVisible])){
+        [self setCorrectView];
+    }
 }
 @end

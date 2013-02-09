@@ -60,6 +60,8 @@
 		CD5EE20216012A690027EFC6 /* NSObject+Document.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE20116012A690027EFC6 /* NSObject+Document.m */; };
 		CD6DF301160D181900935BF2 /* EDTransformCornerPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */; };
 		CD74501216B3342A004B813E /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = CD74501116B3342A004B813E /* icon.iconset */; };
+		CD80CC8F16C6B880001C3375 /* EDPanelPropertiesTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */; };
+		CD80CC9016C6B880001C3375 /* EDPanelPropertiesTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD80CC8E16C6B880001C3375 /* EDPanelPropertiesTextView.xib */; };
 		CD82441516AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82441416AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m */; };
 		CD82441816AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82441716AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m */; };
 		CD82441D16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD82441C16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib */; };
@@ -224,6 +226,9 @@
 		CD6DF2FF160D181900935BF2 /* EDTransformCornerPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformCornerPoint.h; sourceTree = "<group>"; };
 		CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformCornerPoint.m; sourceTree = "<group>"; };
 		CD74501116B3342A004B813E /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = icon.iconset; sourceTree = "<group>"; };
+		CD80CC8C16C6B880001C3375 /* EDPanelPropertiesTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesTextViewController.h; sourceTree = "<group>"; };
+		CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesTextViewController.m; sourceTree = "<group>"; };
+		CD80CC8E16C6B880001C3375 /* EDPanelPropertiesTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesTextView.xib; sourceTree = "<group>"; };
 		CD82441316AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterIntegerSignedEqualOrLessThanZero.h; sourceTree = "<group>"; };
 		CD82441416AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterIntegerSignedEqualOrLessThanZero.m; sourceTree = "<group>"; };
 		CD82441616AC482E00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterIntegerUnsignedGreaterThanZero.h; sourceTree = "<group>"; };
@@ -452,6 +457,8 @@
 				CD2DD5D0164740F9006557FC /* Graph */,
 				CDF3E18616BC348C00AB78AF /* GraphLine */,
 				CDF3E17716BC13D400AB78AF /* Line */,
+				CD80CC8B16C6B83A001C3375 /* Textbox */,
+				CD80CC8A16C6B82D001C3375 /* TextView */,
 			);
 			name = Properties;
 			sourceTree = "<group>";
@@ -705,6 +712,23 @@
 				CD47113015BA1647008AACC3 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CD80CC8A16C6B82D001C3375 /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				CD80CC8C16C6B880001C3375 /* EDPanelPropertiesTextViewController.h */,
+				CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */,
+				CD80CC8E16C6B880001C3375 /* EDPanelPropertiesTextView.xib */,
+			);
+			name = TextView;
+			sourceTree = "<group>";
+		};
+		CD80CC8B16C6B83A001C3375 /* Textbox */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Textbox;
 			sourceTree = "<group>";
 		};
 		CD9DA575169A761D0072242F /* images */ = {
@@ -1017,6 +1041,7 @@
 				CDD05E0116C06C35001279FB /* icon_line.png in Resources */,
 				CDD05E0F16C1BC86001279FB /* icon_properties.png in Resources */,
 				CDD05E1116C1C019001279FB /* icon_worksheet.png in Resources */,
+				CD80CC9016C6B880001C3375 /* EDPanelPropertiesTextView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1119,6 +1144,7 @@
 				CDD05DF616BD4C43001279FB /* EDTextboxViewMask.m in Sources */,
 				CDD05E0716C0951D001279FB /* EDToolbarView.m in Sources */,
 				CDD05E1716C1C8FB001279FB /* EDTextView.m in Sources */,
+				CD80CC8F16C6B880001C3375 /* EDPanelPropertiesTextViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

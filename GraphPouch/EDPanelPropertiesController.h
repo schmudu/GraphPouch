@@ -11,7 +11,7 @@
 #import "EDPanelPropertiesGraphController.h"
 #import "EDPanelPropertiesGraphLineController.h"
 #import "EDPanelPropertiesLineController.h"
-
+#import "EDPanelPropertiesTextViewController.h"
 
 @interface EDPanelPropertiesController : NSWindowController <NSMenuDelegate, NSWindowDelegate>{
     IBOutlet NSMenuItem *menuItemProperties;
@@ -19,9 +19,11 @@
     EDPanelPropertiesGraphController *graphController;
     EDPanelPropertiesGraphLineController *graphLineController;
     EDPanelPropertiesLineController *lineController;
+    EDPanelPropertiesTextViewController *textViewController;
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;
     EDPanelViewController *_viewController;
+    BOOL _textViewEdited;
 }
 
 - (void)togglePropertiesPanel:(id)sender;
@@ -29,5 +31,7 @@
 - (void)postInitialize:(NSManagedObjectContext *)context;
 - (BOOL)panelIsOpen;
 - (void)closePanel;
-    
+- (void)onTextboxDidBeginEditing;
+- (void)onTextboxDidEndEditing;
+
 @end
