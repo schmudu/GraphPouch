@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDPage.h"
+#import "EDTextboxView.h"
 
 @interface EDWorksheetView : NSView{
     NSNotificationCenter *_nc;
@@ -19,6 +20,7 @@
     BOOL _elementIsBeingModified;
     NSPoint _transformRectDragPoint;
     EDPage *_currentPage;
+    EDTextboxView *_currentTextView;
 }
 
 /*
@@ -32,4 +34,5 @@
 - (IBAction)copy:(id)sender;
 - (IBAction)selectAll:(id)sender;
 - (IBAction)deselectAll:(id)sender;
+- (void)selectedTextBold;
 @end

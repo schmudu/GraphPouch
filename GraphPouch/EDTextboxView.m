@@ -176,6 +176,20 @@
 #pragma mark window
 - (void)onWindowDidResignKey:(NSNotification *)note{
     // disable on resign key
-    [self disable];
+    //[self disable];
+}
+
+#pragma mark decoration
+- (void)selectedTextBold{
+    NSArray *selectedRanges = [_textView selectedRanges];
+    NSMutableAttributedString *string = [_textView textStorage];
+    NSRange range;
+    
+    [string beginEditing];
+    for (int rangeIndex=0; rangeIndex<[selectedRanges count]; rangeIndex++){
+        [[selectedRanges objectAtIndex:rangeIndex] getValue:&range];
+        [string addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica-Bold" size:14.0] range:range];
+    }
+    [string endEditing];
 }
 @end

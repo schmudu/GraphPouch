@@ -68,6 +68,7 @@ NSString * const EDKeyEvent                                     = @"EDKeyEvent";
 float const EDTextboxBorderWidth                                = 1.0;
 NSString * const EDEventTextboxBeginEditing                     = @"EDEventTextboxBeginEditing";
 NSString * const EDEventTextboxEndEditing                     = @"EDEventTextboxEndEditing";
+NSString * const EDEventButtonPressedBold                     = @"EDEventButtonPressedBold";
 
 
 // line

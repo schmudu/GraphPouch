@@ -190,4 +190,8 @@
 - (void)onTextboxDidEndEditing:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxEndEditing object:self];
 }
+
+- (void)onButtonPressedBold{
+    [(EDWorksheetView *)[self view] selectedTextBold];
+}
 @end

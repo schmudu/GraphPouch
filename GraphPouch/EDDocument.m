@@ -31,6 +31,7 @@
 - (void)onContextChanged:(NSNotification *)note;
 - (void)onTextboxDidBeginEditing:(NSNotification *)note;
 - (void)onTextboxDidEndEditing:(NSNotification *)note;
+- (void)onButtonPressedBold:(NSNotification *)note;
 @end
 
 @implementation EDDocument
@@ -101,6 +102,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTabPressedWithoutModifiers object:pagesView];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxBeginEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxEndEditing object:worksheetController];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventButtonPressedBold object:propertyController];
 }
 
 - (NSString *)windowNibName
@@ -133,6 +135,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onShortcutSavePressed:) name:EDEventShortcutSave object:propertyController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:worksheetController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onButtonPressedBold:) name:EDEventButtonPressedBold object:propertyController];
 }
 
 - (void)awakeFromNib{
@@ -302,5 +305,9 @@
 
 - (void)onTextboxDidEndEditing:(NSNotification *)note{
     [propertyController onTextboxDidEndEditing];
+}
+
+- (void)onButtonPressedBold:(NSNotification *)note{
+    [worksheetController onButtonPressedBold];
 }
 @end

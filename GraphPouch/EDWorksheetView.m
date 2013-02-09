@@ -889,10 +889,21 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 #pragma mark textbox
 - (void)onTextboxBeginEditing:(NSNotification *)note{
+    // save text view for editing
+    _currentTextView = [note object];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self];
 }
 
 - (void)onTextboxEndEditing:(NSNotification *)note{
+    // save text view for editing
+    _currentTextView = nil;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxEndEditing object:self];
+}
+
+- (void)selectedTextBold{
+    if (_currentTextView)
+        [_currentTextView selectedTextBold];
 }
 @end

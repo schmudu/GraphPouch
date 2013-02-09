@@ -13,4 +13,6 @@
     IBOutlet NSButton *buttonBold;
 }
 
+
+- (IBAction)onButtonPressedBold:(id)sender;
 @end

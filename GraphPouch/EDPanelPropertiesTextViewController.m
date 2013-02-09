@@ -7,6 +7,7 @@
 //
 
 #import "EDPanelPropertiesTextViewController.h"
+#import "EDConstants.h"
 
 @interface EDPanelPropertiesTextViewController ()
 
@@ -26,5 +27,10 @@
 
 - (void)initWindowAfterLoaded:(NSManagedObjectContext *)context{
     [super initWindowAfterLoaded:context];
+}
+
+#pragma mark buttons
+- (IBAction)onButtonPressedBold:(id)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventButtonPressedBold object:self];
 }
 @end
