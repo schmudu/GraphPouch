@@ -29,6 +29,8 @@
 - (void)onWorksheetTabKeyPressed:(NSNotification *)note;
 - (void)onContextSaved:(NSNotification *)note;
 - (void)onContextChanged:(NSNotification *)note;
+- (void)onTextboxDidBeginEditing:(NSNotification *)note;
+- (void)onTextboxDidEndEditing:(NSNotification *)note;
 @end
 
 @implementation EDDocument
@@ -97,6 +99,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextWillSaveNotification object:_rootContext];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTabPressedWithoutModifiers object:worksheetView];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTabPressedWithoutModifiers object:pagesView];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxBeginEditing object:worksheetController];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxEndEditing object:worksheetController];
 }
 
 - (NSString *)windowNibName
@@ -127,6 +131,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWorksheetTabKeyPressed:) name:EDEventTabPressedWithoutModifiers object:worksheetView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPagesViewTabKeyPressed:) name:EDEventTabPressedWithoutModifiers object:pagesView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onShortcutSavePressed:) name:EDEventShortcutSave object:propertyController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:worksheetController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:worksheetController];
 }
 
 - (void)awakeFromNib{
@@ -290,11 +296,11 @@
 }
 
 #pragma mark textbox
-- (void)onTextboxDidBeginEditing{
+- (void)onTextboxDidBeginEditing:(NSNotification *)note{
     [propertyController onTextboxDidBeginEditing];
 }
 
-- (void)onTextboxDidEndEditing{
+- (void)onTextboxDidEndEditing:(NSNotification *)note{
     [propertyController onTextboxDidEndEditing];
 }
 @end

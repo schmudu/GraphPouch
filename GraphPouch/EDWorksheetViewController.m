@@ -184,10 +184,10 @@
 
 #pragma textbox
 - (void)onTextboxDidBeginEditing:(NSNotification *)note{
-    [[NSApp currentDocument] onTextboxDidBeginEditing];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self];
 }
 
 - (void)onTextboxDidEndEditing:(NSNotification *)note{
-    [[NSApp currentDocument] onTextboxDidEndEditing];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxEndEditing object:self];
 }
 @end
