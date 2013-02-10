@@ -34,5 +34,4 @@
 - (IBAction)copy:(id)sender;
 - (IBAction)selectAll:(id)sender;
 - (IBAction)deselectAll:(id)sender;
-- (void)selectedTextBold;
 @end

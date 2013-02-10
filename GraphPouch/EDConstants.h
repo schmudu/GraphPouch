@@ -69,7 +69,6 @@ extern float const EDTextboxBorderWidth;
 extern NSString *const EDEventTextboxBeginEditing;
 extern NSString *const EDEventTextboxEndEditing;
 extern NSString *const EDEventTextboxDidChange;
-extern NSString *const EDEventButtonPressedBold;
 extern NSString *const EDKeyTextView;
 
 // line

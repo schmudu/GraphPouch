@@ -22,5 +22,4 @@
 - (BOOL)enabled;
 - (void)postInit;
 - (void)disable;
-- (void)selectedTextBold;
 @end

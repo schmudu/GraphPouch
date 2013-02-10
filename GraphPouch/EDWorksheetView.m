@@ -908,9 +908,4 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 - (void)onTextboxDidChange:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
 }
-
-- (void)selectedTextBold{
-    if (_currentTextView)
-        [_currentTextView selectedTextBold];
-}
 @end

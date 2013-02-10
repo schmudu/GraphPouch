@@ -16,7 +16,6 @@
 @interface EDPanelPropertiesController ()
 - (void)setCorrectView;
 - (void)onContextChanged:(NSNotification *)note;
-- (void)onButtonPressedBold:(NSNotification *)note;
 - (void)onShortcutPastePressed:(NSNotification *)note;
 @end
 
@@ -40,7 +39,6 @@
 - (void)dealloc{
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     [_nc removeObserver:self name:EDEventShortcutPaste object:[self window]];
-    [_nc removeObserver:self name:EDEventButtonPressedBold object:textViewController];
 }
 
 - (void)closePanel{
@@ -140,9 +138,6 @@
         // set controller to text view
         if(!textViewController){
             textViewController = [[EDPanelPropertiesTextViewController alloc] initWithNibName:@"EDPanelPropertiesTextView" bundle:nil];
-            
-            // listen
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onButtonPressedBold:) name:EDEventButtonPressedBold object:textViewController];
         }
         // set window title
         [[self window] setTitle:@"Text Properties"];
@@ -210,7 +205,7 @@
     
     // if EDTextView is the controller then call special method
     if ([_viewController isKindOfClass:[EDPanelPropertiesTextViewController class]]){
-        [(EDPanelPropertiesTextViewController *)_viewController initButtons:_currentTextView];
+        [(EDPanelPropertiesTextViewController *)_viewController initButtons:_currentTextView textbox:_currentTextbox];
     }
 }
 
@@ -245,8 +240,9 @@
 }
 
 #pragma textbox
-- (void)onTextboxDidBeginEditing:(EDTextView *)currentTextView{
+- (void)onTextboxDidBeginEditing:(EDTextView *)currentTextView currentTextbox:(EDTextbox *)currentTextbox{
     _currentTextView = currentTextView;
+    _currentTextbox = currentTextbox;
     
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         [self setCorrectView];
@@ -266,9 +262,5 @@
     if ([_viewController isKindOfClass:[EDPanelPropertiesTextViewController class]]){
         [(EDPanelPropertiesTextViewController *)_viewController updateButtonStates];
     }
-}
-
-- (void)onButtonPressedBold:(NSNotification *)note{
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventButtonPressedBold object:self];
 }
 @end

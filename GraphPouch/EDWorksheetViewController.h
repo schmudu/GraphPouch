@@ -20,5 +20,4 @@
 - (void)addNewGraph;
 - (void)addNewLine;
 - (void)addNewTextbox;
-- (void)onButtonPressedBold;
 @end

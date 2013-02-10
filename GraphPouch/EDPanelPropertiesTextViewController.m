@@ -32,26 +32,87 @@
     [self setUpFontButton];
 }
 
-- (void)initButtons:(EDTextView *)textView{
+- (void)initButtons:(EDTextView *)textView textbox:(EDTextbox *)textbox{
     _currentTextView = textView;
-    /*
+    _currentTextbox = textbox;
+}
+
+- (void)updateButtonStates{
+    //NSLog(@"need to update button state");
+    [self setUpFontButton];
+}
+
+- (NSDictionary *)getAttributeValueForSelectedRanges:(NSString *)attribute{
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    
+    // set default of FALSE for diff
+    [results setObject:[NSNumber numberWithBool:FALSE] forKey:EDKeyDiff];
+    
     NSRange effectiveRange, range;
-    id attrValue;
+    id savedAttrValue = nil, attrValue = nil;
+    // for each range get the attribute
     for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
         [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
-        attrValue = [[_currentTextView textStorage] attribute:NSSuperscriptAttributeName atIndex:range.location effectiveRange:&effectiveRange];
-        NSLog(@"attr value:%@", attrValue);
-    }*/
+        attrValue = [[_currentTextView textStorage] attribute:attribute atIndex:range.location effectiveRange:&effectiveRange];
+        
+        // if value is not the same as the last value then there's a difference
+        if ((savedAttrValue != nil) && (attrValue != nil) && (savedAttrValue != attrValue)){
+            [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
+            return results;
+        }
+        
+        [results setObject:attrValue forKey:EDKeyValue];
+        savedAttrValue = attrValue;
+    }
+    return results;
 }
 
 #pragma mark button bold
 - (IBAction)onButtonPressedBold:(id)sender{
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventButtonPressedBold object:self];
+    if (_currentTextView){
+        NSArray *selectedRanges = [_currentTextView selectedRanges];
+        NSMutableAttributedString *string = [_currentTextView textStorage];
+        NSRange range;
+        
+        [string beginEditing];
+        for (int rangeIndex=0; rangeIndex<[selectedRanges count]; rangeIndex++){
+            [[selectedRanges objectAtIndex:rangeIndex] getValue:&range];
+            //[string addAttribute:NSSuperscriptAttributeName value:[NSNumber numberWithInt:1] range:range];
+            [string addAttribute:NSSuperscriptAttributeName value:[NSNumber numberWithInt:1] range:range];
+        }
+        [string endEditing];
+        
+        // save
+        [_currentTextbox setTextValue:string];
+    }
 }
 
 #pragma mark button fonts
 - (IBAction)onButtonFontsSelected:(id)sender{
-    NSLog(@"a font was chosen");
+    NSRange effectiveRange, range;
+    NSFont *oldFont = nil, *newFont = nil;
+    
+    // start editing
+    [[_currentTextView textStorage] beginEditing];
+    
+    // for each range get the attribute and set the name
+    for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
+        [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
+        oldFont = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:range.location effectiveRange:&effectiveRange];
+        
+        // we now have the NSFont name, reset the font name
+        newFont = [NSFont fontWithName:[[buttonFonts selectedItem] title] size:[oldFont pointSize]];
+        
+        // remove old
+        [[_currentTextView textStorage] removeAttribute:NSFontAttributeName range:range];
+        
+        // add new
+        [[_currentTextView textStorage] addAttribute:NSFontAttributeName value:newFont range:range];
+    }
+    
+    // end editing
+    [[_currentTextView textStorage] endEditing];
+    
 }
 
 - (void)setUpFontButton{
@@ -74,38 +135,4 @@
 }
 
 
-- (void)updateButtonStates{
-    NSLog(@"need to update button state");
-    [self setUpFontButton];
-    /*
-    NSRange effectiveRange, range;
-    id attrValue;
-    for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
-        [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
-        attrValue = [[_currentTextView textStorage] attribute:NSSuperscriptAttributeName atIndex:range.location effectiveRange:&effectiveRange];
-        NSLog(@"attr value:%@ range loc:%ld length:%ld", attrValue, effectiveRange.location, effectiveRange.length);
-    }*/
-}
-
-- (NSDictionary *)getAttributeValueForSelectedRanges:(NSString *)attribute{
-    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    [results setObject:[NSNumber numberWithBool:FALSE] forKey:EDKeyDiff];
-    
-    NSRange effectiveRange, range;
-    id savedAttrValue = nil, attrValue = nil;
-    for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
-        [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
-        attrValue = [[_currentTextView textStorage] attribute:attribute atIndex:range.location effectiveRange:&effectiveRange];
-        
-        // if value is not the same as the last value then there's a difference
-        if ((savedAttrValue != nil) && (attrValue != nil) && (savedAttrValue != attrValue)){
-            [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
-            return results;
-        }
-        
-        [results setObject:attrValue forKey:EDKeyValue];
-        savedAttrValue = attrValue;
-    }
-    return results;
-}
 @end

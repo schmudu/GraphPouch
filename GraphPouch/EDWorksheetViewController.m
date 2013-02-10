@@ -197,8 +197,4 @@
 - (void)onTextboxDidChange:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
 }
-
-- (void)onButtonPressedBold{
-    [(EDWorksheetView *)[self view] selectedTextBold];
-}
 @end

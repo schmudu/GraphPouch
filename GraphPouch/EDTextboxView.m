@@ -157,6 +157,7 @@
     // notify listeners of begin of editing
     NSMutableDictionary *textInfo = [[NSMutableDictionary alloc] init];
     [textInfo setObject:_textView forKey:EDKeyTextView];
+    [textInfo setObject:[self dataObj] forKey:EDKeyTextbox];
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self userInfo:textInfo];
 }
 
@@ -198,6 +199,7 @@
 }
 
 #pragma mark decoration
+/*
 - (void)selectedTextBold{
     NSArray *selectedRanges = [_textView selectedRanges];
     NSMutableAttributedString *string = [_textView textStorage];
@@ -209,5 +211,5 @@
         [string addAttribute:NSSuperscriptAttributeName value:[NSNumber numberWithInt:1] range:range];
     }
     [string endEditing];
-}
+}*/
 @end
