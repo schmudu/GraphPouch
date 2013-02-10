@@ -11,12 +11,14 @@
 #import "EDTextView.h"
 
 @interface EDPanelPropertiesTextViewController : EDPanelViewController{
+    IBOutlet NSPopUpButton *buttonFonts;
     IBOutlet NSButton *buttonBold;
     EDTextView *_currentTextView;
 }
 
 
 - (IBAction)onButtonPressedBold:(id)sender;
+- (IBAction)onButtonFontsSelected:(id)sender;
 - (void)initButtons:(EDTextView *)textView;
 - (void)updateButtonStates;
 @end

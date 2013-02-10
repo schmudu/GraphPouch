@@ -177,10 +177,17 @@
 }
 
 - (void)textDidChange:(NSNotification *)notification{
+    // change notification if any editing occurs
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
 }
 
 - (void)textStorageDidProcessEditing:(NSNotification *)notification{
+    // change notification if any attributes change in the text storage
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
+}
+
+- (void)textViewDidChangeSelection:(NSNotification *)notification{
+    // change notification if selection changes
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
 }
 
