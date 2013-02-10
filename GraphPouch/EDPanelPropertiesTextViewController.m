@@ -29,8 +29,31 @@
     [super initWindowAfterLoaded:context];
 }
 
+- (void)initButtons:(EDTextView *)textView{
+    _currentTextView = textView;
+    /*
+    NSRange effectiveRange, range;
+    id attrValue;
+    for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
+        [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
+        attrValue = [[_currentTextView textStorage] attribute:NSSuperscriptAttributeName atIndex:range.location effectiveRange:&effectiveRange];
+        NSLog(@"attr value:%@", attrValue);
+    }*/
+}
+
 #pragma mark buttons
 - (IBAction)onButtonPressedBold:(id)sender{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventButtonPressedBold object:self];
+}
+
+- (void)updateButtonStates{
+    NSLog(@"need to update button state");
+    NSRange effectiveRange, range;
+    id attrValue;
+    for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
+        [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
+        attrValue = [[_currentTextView textStorage] attribute:NSSuperscriptAttributeName atIndex:range.location effectiveRange:&effectiveRange];
+        NSLog(@"attr value:%@ range loc:%ld length:%ld", attrValue, effectiveRange.location, effectiveRange.length);
+    }
 }
 @end

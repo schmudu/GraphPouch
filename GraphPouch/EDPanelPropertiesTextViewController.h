@@ -8,11 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDPanelViewController.h"
+#import "EDTextView.h"
 
 @interface EDPanelPropertiesTextViewController : EDPanelViewController{
     IBOutlet NSButton *buttonBold;
+    EDTextView *_currentTextView;
 }
 
 
 - (IBAction)onButtonPressedBold:(id)sender;
+- (void)initButtons:(EDTextView *)textView;
+- (void)updateButtonStates;
 @end

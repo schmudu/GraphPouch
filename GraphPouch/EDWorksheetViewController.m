@@ -26,6 +26,7 @@
 - (void)copyElements:(NSNotification *)note;
 - (void)onTextboxDidBeginEditing:(NSNotification *)note;
 - (void)onTextboxDidEndEditing:(NSNotification *)note;
+- (void)onTextboxDidChange:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetViewController
@@ -56,6 +57,7 @@
     [_nc addObserver:self selector:@selector(copyElements:) name:EDEventShortcutCopy object:[self view]];
     [_nc addObserver:self selector:@selector(onTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:[self view]];
     [_nc addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:[self view]];
+    [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:[self view]];
     
     // initialize view to display all of the worksheet elements
     [(EDWorksheetView *)[self view] drawLoadedObjects];
@@ -78,6 +80,7 @@
     [_nc removeObserver:self name:EDEventShortcutPaste object:[self view]];
     [_nc removeObserver:self name:EDEventTextboxBeginEditing object:[self view]];
     [_nc removeObserver:self name:EDEventTextboxEndEditing object:[self view]];
+    [_nc removeObserver:self name:EDEventTextboxDidChange object:[self view]];
 }
 
 - (void)deleteSelectedElements:(NSNotification *)note{
@@ -184,11 +187,15 @@
 
 #pragma textbox
 - (void)onTextboxDidBeginEditing:(NSNotification *)note{
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self userInfo:[note userInfo]];
 }
 
 - (void)onTextboxDidEndEditing:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxEndEditing object:self];
+}
+
+- (void)onTextboxDidChange:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
 }
 
 - (void)onButtonPressedBold{

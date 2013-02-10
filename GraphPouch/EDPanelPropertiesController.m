@@ -31,7 +31,7 @@
     self = [super initWithWindow:window];
     if (self) {
         _nc = [NSNotificationCenter defaultCenter];
-        _textViewEdited = FALSE;
+        _currentTextView = nil;
     }
     
     return self;
@@ -136,7 +136,7 @@
             
         _viewController = documentController;
     }
-    else if(_textViewEdited){
+    else if(_currentTextView){
         // set controller to text view
         if(!textViewController){
             textViewController = [[EDPanelPropertiesTextViewController alloc] initWithNibName:@"EDPanelPropertiesTextView" bundle:nil];
@@ -207,6 +207,11 @@
     
     // set content of the window
     [[self window] setContentView:[_viewController view]];
+    
+    // if EDTextView is the controller then call special method
+    if ([_viewController isKindOfClass:[EDPanelPropertiesTextViewController class]]){
+        [(EDPanelPropertiesTextViewController *)_viewController initButtons:_currentTextView];
+    }
 }
 
 - (void)menuWillOpen:(NSMenu *)menu{
@@ -240,8 +245,8 @@
 }
 
 #pragma textbox
-- (void)onTextboxDidBeginEditing{
-    _textViewEdited = TRUE;
+- (void)onTextboxDidBeginEditing:(EDTextView *)currentTextView{
+    _currentTextView = currentTextView;
     
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         [self setCorrectView];
@@ -249,11 +254,17 @@
 }
 
 - (void)onTextboxDidEndEditing{
-    _textViewEdited = FALSE;
+    _currentTextView = nil;
     
     // update view
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         [self setCorrectView];
+    }
+}
+
+- (void)onTextboxDidChange{
+    if ([_viewController isKindOfClass:[EDPanelPropertiesTextViewController class]]){
+        [(EDPanelPropertiesTextViewController *)_viewController updateButtonStates];
     }
 }
 

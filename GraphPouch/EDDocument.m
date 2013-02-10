@@ -31,6 +31,7 @@
 - (void)onContextChanged:(NSNotification *)note;
 - (void)onTextboxDidBeginEditing:(NSNotification *)note;
 - (void)onTextboxDidEndEditing:(NSNotification *)note;
+- (void)onTextboxDidChange:(NSNotification *)note;
 - (void)onButtonPressedBold:(NSNotification *)note;
 @end
 
@@ -102,6 +103,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTabPressedWithoutModifiers object:pagesView];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxBeginEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxEndEditing object:worksheetController];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxDidChange object:worksheetController];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventButtonPressedBold object:propertyController];
 }
 
@@ -135,6 +137,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onShortcutSavePressed:) name:EDEventShortcutSave object:propertyController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:worksheetController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:worksheetController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onButtonPressedBold:) name:EDEventButtonPressedBold object:propertyController];
 }
 
@@ -300,11 +303,16 @@
 
 #pragma mark textbox
 - (void)onTextboxDidBeginEditing:(NSNotification *)note{
-    [propertyController onTextboxDidBeginEditing];
+    //NSLog(@"text box beging editing:%@", [note userInfo]);
+    [propertyController onTextboxDidBeginEditing:(EDTextView *)[[note userInfo] objectForKey:EDKeyTextView]];
 }
 
 - (void)onTextboxDidEndEditing:(NSNotification *)note{
     [propertyController onTextboxDidEndEditing];
+}
+
+- (void)onTextboxDidChange:(NSNotification *)note{
+    [propertyController onTextboxDidChange];
 }
 
 - (void)onButtonPressedBold:(NSNotification *)note{

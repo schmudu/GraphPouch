@@ -43,15 +43,15 @@
             [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Enter text here..."]];
         }
         [_textView setDrawsBackground:FALSE];
+        
+        // set delegates
         [_textView setDelegate:self];
+        [[_textView textStorage] setDelegate:self];
         [self addSubview:_textView];
         [_textView postInit];
         
         [self addSubview:_mask];
         [_mask postInit];
-        
-        //[_contentTextfield setStringValue:[NSString stringWithFormat:@"Does this work?"]];
-        //[_contentTextfield setAttributedStringValue:[NSMutableAttributedString alloc] initWithString:@"first"];
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -155,7 +155,9 @@
     [(EDTextbox *)[self dataObj] setSelected:FALSE];
     
     // notify listeners of begin of editing
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self];
+    NSMutableDictionary *textInfo = [[NSMutableDictionary alloc] init];
+    [textInfo setObject:_textView forKey:EDKeyTextView];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self userInfo:textInfo];
 }
 
 - (void)onWorksheetClicked:(NSNotification *)note{
@@ -173,6 +175,15 @@
     // disable if ended editing
     [self disable];
 }
+
+- (void)textDidChange:(NSNotification *)notification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
+}
+
+- (void)textStorageDidProcessEditing:(NSNotification *)notification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
+}
+
 #pragma mark window
 - (void)onWindowDidResignKey:(NSNotification *)note{
     // disable on resign key
@@ -188,7 +199,7 @@
     [string beginEditing];
     for (int rangeIndex=0; rangeIndex<[selectedRanges count]; rangeIndex++){
         [[selectedRanges objectAtIndex:rangeIndex] getValue:&range];
-        [string addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica-Bold" size:14.0] range:range];
+        [string addAttribute:NSSuperscriptAttributeName value:[NSNumber numberWithInt:1] range:range];
     }
     [string endEditing];
 }

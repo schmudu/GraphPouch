@@ -66,6 +66,7 @@
 // textbox
 - (void)onTextboxBeginEditing:(NSNotification *)note;
 - (void)onTextboxEndEditing:(NSNotification *)note;
+- (void)onTextboxDidChange:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetView
@@ -209,6 +210,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:textboxView];
     [_nc addObserver:self selector:@selector(onTextboxBeginEditing:) name:EDEventTextboxBeginEditing object:textboxView];
     [_nc addObserver:self selector:@selector(onTextboxEndEditing:) name:EDEventTextboxEndEditing object:textboxView];
+    [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:textboxView];
     
     // set location
     [textboxView setFrameOrigin:NSMakePoint([[textbox valueForKey:EDElementAttributeLocationX] floatValue], [[textbox valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -434,6 +436,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             if ([currentElement isKindOfClass:[EDTextboxView class]]){
                 [_nc removeObserver:self name:EDEventTextboxBeginEditing object:currentElement];
                 [_nc removeObserver:self name:EDEventTextboxEndEditing object:currentElement];
+                [_nc removeObserver:self name:EDEventTextboxDidChange object:currentElement];
             }
         }
         i++;
@@ -892,7 +895,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     // save text view for editing
     _currentTextView = [note object];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self userInfo:[note userInfo]];
 }
 
 - (void)onTextboxEndEditing:(NSNotification *)note{
@@ -900,6 +903,10 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     _currentTextView = nil;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxEndEditing object:self];
+}
+
+- (void)onTextboxDidChange:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
 }
 
 - (void)selectedTextBold{
