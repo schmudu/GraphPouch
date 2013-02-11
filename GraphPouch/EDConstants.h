@@ -73,6 +73,7 @@ extern NSString *const EDKeyTextView;
 extern NSString *const EDFontAttributeName;
 extern NSString *const EDFontAttributeSize;
 extern NSString *const EDFontAttributeColor;
+extern NSString *const EDEventControlDidChange;
 
 // line
 extern NSString *const EDLineAttributeThickness;

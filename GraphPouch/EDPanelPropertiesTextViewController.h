@@ -10,10 +10,13 @@
 #import "EDPanelViewController.h"
 #import "EDTextView.h"
 #import "EDTextbox.h"
+#import "EDPanelPropertiesTextViewFontSizeText.h"
 
 @interface EDPanelPropertiesTextViewController : EDPanelViewController{
     IBOutlet NSPopUpButton *buttonFonts;
     IBOutlet NSButton *buttonBold;
+    IBOutlet NSTextField *fieldFontSize;
+    EDPanelPropertiesTextViewFontSizeText *_delegateFontSize;
     EDTextView *_currentTextView;
     EDTextbox *_currentTextbox;
 }

@@ -73,6 +73,7 @@ NSString * const EDKeyTextView                                  = @"EDKeyTextVie
 NSString * const EDFontAttributeName                            = @"EDFontAttributeName";
 NSString * const EDFontAttributeSize                            = @"EDFontAttributeSize";
 NSString * const EDFontAttributeColor                           = @"EDFontAttributeColor";
+NSString * const EDEventControlDidChange                        = @"EDEventControlDidChange";
 
 
 // line

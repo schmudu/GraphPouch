@@ -62,6 +62,7 @@
 		CD74501216B3342A004B813E /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = CD74501116B3342A004B813E /* icon.iconset */; };
 		CD80CC8F16C6B880001C3375 /* EDPanelPropertiesTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */; };
 		CD80CC9016C6B880001C3375 /* EDPanelPropertiesTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD80CC8E16C6B880001C3375 /* EDPanelPropertiesTextView.xib */; };
+		CD80CCA816C887C3001C3375 /* EDPanelPropertiesTextViewFontSizeText.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80CCA716C887C2001C3375 /* EDPanelPropertiesTextViewFontSizeText.m */; };
 		CD82441516AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82441416AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m */; };
 		CD82441816AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82441716AC482F00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.m */; };
 		CD82441D16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD82441C16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib */; };
@@ -229,6 +230,8 @@
 		CD80CC8C16C6B880001C3375 /* EDPanelPropertiesTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesTextViewController.h; sourceTree = "<group>"; };
 		CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesTextViewController.m; sourceTree = "<group>"; };
 		CD80CC8E16C6B880001C3375 /* EDPanelPropertiesTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesTextView.xib; sourceTree = "<group>"; };
+		CD80CCA616C887C1001C3375 /* EDPanelPropertiesTextViewFontSizeText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesTextViewFontSizeText.h; sourceTree = "<group>"; };
+		CD80CCA716C887C2001C3375 /* EDPanelPropertiesTextViewFontSizeText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesTextViewFontSizeText.m; sourceTree = "<group>"; };
 		CD82441316AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterIntegerSignedEqualOrLessThanZero.h; sourceTree = "<group>"; };
 		CD82441416AC470300BAAB0B /* EDFormatterIntegerSignedEqualOrLessThanZero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterIntegerSignedEqualOrLessThanZero.m; sourceTree = "<group>"; };
 		CD82441616AC482E00BAAB0B /* EDFormatterIntegerUnsignedGreaterThanZero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterIntegerUnsignedGreaterThanZero.h; sourceTree = "<group>"; };
@@ -719,6 +722,8 @@
 			children = (
 				CD80CC8C16C6B880001C3375 /* EDPanelPropertiesTextViewController.h */,
 				CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */,
+				CD80CCA616C887C1001C3375 /* EDPanelPropertiesTextViewFontSizeText.h */,
+				CD80CCA716C887C2001C3375 /* EDPanelPropertiesTextViewFontSizeText.m */,
 				CD80CC8E16C6B880001C3375 /* EDPanelPropertiesTextView.xib */,
 			);
 			name = TextView;
@@ -1145,6 +1150,7 @@
 				CDD05E0716C0951D001279FB /* EDToolbarView.m in Sources */,
 				CDD05E1716C1C8FB001279FB /* EDTextView.m in Sources */,
 				CD80CC8F16C6B880001C3375 /* EDPanelPropertiesTextViewController.m in Sources */,
+				CD80CCA816C887C3001C3375 /* EDPanelPropertiesTextViewFontSizeText.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
