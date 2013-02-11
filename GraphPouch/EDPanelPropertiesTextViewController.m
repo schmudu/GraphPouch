@@ -10,6 +10,7 @@
 #import "EDConstants.h"
 
 @interface EDPanelPropertiesTextViewController ()
+- (void)setUpFontSizeField;
 - (void)setUpFontButton;
 - (NSDictionary *)getAttributeValueForSelectedRanges:(NSString *)attribute;
 - (NSDictionary *)getFontAttributeValueForSelectedRanges:(NSString *)attribute;
@@ -41,6 +42,7 @@
     [fieldFontSize setDelegate:_delegateFontSize];
     
     [self setUpFontButton];
+    [self setUpFontSizeField];
 }
 
 - (void)initButtons:(EDTextView *)textView textbox:(EDTextbox *)textbox{
@@ -51,6 +53,7 @@
 - (void)updateButtonStates{
     //NSLog(@"need to update button state");
     [self setUpFontButton];
+    [self setUpFontSizeField];
 }
 
 - (NSDictionary *)getFontAttributeValueForSelectedRanges:(NSString *)attribute{
@@ -67,12 +70,12 @@
     NSRange range;
     NSFont *font;
     id savedAttrValue = nil, attrValue = nil;
+    float flSavedAttrValue = -1, flAttrValue = -1;
     // for each range get the attribute
     for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
         // get the range
         [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
         
-        // test
         // invalidate and ranges that are outside the bounds of the string
         if (([[[_currentTextView textStorage] string] length] == 0) || (range.location > [[[_currentTextView textStorage] string] length])){
             // in this case set the value to the default font for the text storage
@@ -99,10 +102,23 @@
                 [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
                 return results;
             }
+            
+            [results setObject:attrValue forKey:EDKeyValue];
+            savedAttrValue = attrValue;
         }
+        else if (attribute == EDFontAttributeSize){
+            flAttrValue = [font pointSize];
+            
+            // if value is not the same as the last value then there's a difference
+            if ((flSavedAttrValue != -1) && (flAttrValue != -1) && (flSavedAttrValue != flAttrValue)){
+                // there's a difference
+                [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
+                return results;
+            }
         
-        [results setObject:attrValue forKey:EDKeyValue];
-        savedAttrValue = attrValue;
+            [results setObject:[NSNumber numberWithFloat:flAttrValue] forKey:EDKeyValue];
+            flSavedAttrValue = flAttrValue;
+        }
     }
     return results;
 }
@@ -235,4 +251,21 @@
 - (void)onFontSizeDidChange:(NSNotification *)note{
     NSLog(@" controller notified that font size changed.");
 }
+
+- (void)setUpFontSizeField{
+    float fontSize;
+    NSDictionary *fontInfo = [self getFontAttributeValueForSelectedRanges:EDFontAttributeSize];
+    
+    // if there is no difference in values and the font is set then set selected item
+    if ((![[fontInfo objectForKey:EDKeyDiff] boolValue]) && ([fontInfo objectForKey:EDKeyValue] != nil)){
+        fontSize = [[fontInfo objectForKey:EDKeyValue] floatValue];
+        
+        [fieldFontSize setStringValue:[NSString stringWithFormat:@"%f", fontSize]];
+    }
+    else if (([[fontInfo objectForKey:EDKeyDiff] boolValue]) && ([fontInfo objectForKey:EDKeyValue] != nil)){
+        // insert nothing in field
+        [fieldFontSize setStringValue:[NSString stringWithFormat:@""]];
+    }
+}
+
 @end
