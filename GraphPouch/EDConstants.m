@@ -70,6 +70,9 @@ NSString * const EDEventTextboxBeginEditing                     = @"EDEventTextb
 NSString * const EDEventTextboxDidChange                        = @"EDEventTextboxDidChange";
 NSString * const EDEventTextboxEndEditing                       = @"EDEventTextboxEndEditing";
 NSString * const EDKeyTextView                                  = @"EDKeyTextView";
+NSString * const EDFontAttributeName                            = @"EDFontAttributeName";
+NSString * const EDFontAttributeSize                            = @"EDFontAttributeSize";
+NSString * const EDFontAttributeColor                           = @"EDFontAttributeColor";
 
 
 // line

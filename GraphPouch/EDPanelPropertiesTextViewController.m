@@ -12,6 +12,7 @@
 @interface EDPanelPropertiesTextViewController ()
 - (void)setUpFontButton;
 - (NSDictionary *)getAttributeValueForSelectedRanges:(NSString *)attribute;
+- (NSDictionary *)getFontAttributeValueForSelectedRanges:(NSString *)attribute;
 @end
 
 @implementation EDPanelPropertiesTextViewController
@@ -40,6 +41,41 @@
 - (void)updateButtonStates{
     //NSLog(@"need to update button state");
     [self setUpFontButton];
+}
+
+- (NSDictionary *)getFontAttributeValueForSelectedRanges:(NSString *)attribute{
+    if (_currentTextView == nil){
+        // do nothing
+        return nil;
+    }
+    
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    
+    // set default of FALSE for diff
+    [results setObject:[NSNumber numberWithBool:FALSE] forKey:EDKeyDiff];
+    
+    NSRange effectiveRange, range;
+    NSFont *font;
+    id savedAttrValue = nil, attrValue = nil;
+    // for each range get the attribute
+    for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
+        [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
+        font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:range.location effectiveRange:&effectiveRange];
+        
+        if (attribute == EDFontAttributeName){
+            attrValue = [font familyName];
+            
+            // if value is not the same as the last value then there's a difference
+            if ((savedAttrValue != nil) && (attrValue != nil) && (![savedAttrValue isEqualToString:attrValue])){
+                [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
+                return results;
+            }
+        }
+        
+        [results setObject:attrValue forKey:EDKeyValue];
+        savedAttrValue = attrValue;
+    }
+    return results;
 }
 
 - (NSDictionary *)getAttributeValueForSelectedRanges:(NSString *)attribute{
@@ -113,6 +149,8 @@
     // end editing
     [[_currentTextView textStorage] endEditing];
     
+    // save
+    [_currentTextbox setTextValue:[_currentTextView textStorage]];
 }
 
 - (void)setUpFontButton{
@@ -124,15 +162,20 @@
     [buttonFonts removeAllItems];
     [buttonFonts addItemsWithTitles:fontList];
     
-    NSDictionary *font = [self getAttributeValueForSelectedRanges:NSFontAttributeName];
+    NSDictionary *font = [self getFontAttributeValueForSelectedRanges:EDFontAttributeName];
+    
     // if there is no difference in values and the font is set then set selected item
     if ((![[font objectForKey:EDKeyDiff] boolValue]) && ([font objectForKey:EDKeyValue] != nil)){
-        fontName = [(NSFont *)[font objectForKey:EDKeyValue] fontName];
+        fontName = (NSString *)[font objectForKey:EDKeyValue];
         
         // set selection
         [buttonFonts selectItemWithTitle:fontName];
     }
+    else if (([[font objectForKey:EDKeyDiff] boolValue]) && ([font objectForKey:EDKeyValue] != nil)){
+        // insert blank name at the beginning of the font list
+        [buttonFonts insertItemWithTitle:[NSString stringWithFormat:@""] atIndex:0];
+        [buttonFonts selectItemAtIndex:0];
+    }
 }
-
 
 @end

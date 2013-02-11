@@ -70,6 +70,9 @@ extern NSString *const EDEventTextboxBeginEditing;
 extern NSString *const EDEventTextboxEndEditing;
 extern NSString *const EDEventTextboxDidChange;
 extern NSString *const EDKeyTextView;
+extern NSString *const EDFontAttributeName;
+extern NSString *const EDFontAttributeSize;
+extern NSString *const EDFontAttributeColor;
 
 // line
 extern NSString *const EDLineAttributeThickness;
