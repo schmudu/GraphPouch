@@ -72,8 +72,12 @@
         // get the range
         [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
         
+        // test
         // invalidate and ranges that are outside the bounds of the string
         if (([[[_currentTextView textStorage] string] length] == 0) || (range.location > [[[_currentTextView textStorage] string] length])){
+            // in this case set the value to the default font for the text storage
+            font = [_currentTextView font];
+            [results setObject:[font familyName] forKey:EDKeyValue];
             continue;
         }
         else if (range.location == [[[_currentTextView textStorage] string] length]){
@@ -212,7 +216,7 @@
     [buttonFonts addItemsWithTitles:fontList];
     
     NSDictionary *font = [self getFontAttributeValueForSelectedRanges:EDFontAttributeName];
-    NSLog(@"setting up font button name: got:%@", font);
+    
     // if there is no difference in values and the font is set then set selected item
     if ((![[font objectForKey:EDKeyDiff] boolValue]) && ([font objectForKey:EDKeyValue] != nil)){
         fontName = (NSString *)[font objectForKey:EDKeyValue];
