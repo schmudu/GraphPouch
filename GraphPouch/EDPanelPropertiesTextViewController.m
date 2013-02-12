@@ -269,6 +269,7 @@
         
         // we now have the NSFont name, reset the font name
         newFont = [NSFont fontWithName:[oldFont fontName] size:[[fieldFontSize stringValue] floatValue]];
+        NSLog(@"setting font size to:%f", [[fieldFontSize stringValue] floatValue]);
         
         // remove old
         [[_currentTextView textStorage] removeAttribute:NSFontAttributeName range:range];
@@ -279,6 +280,9 @@
     
     // end editing
     [[_currentTextView textStorage] endEditing];
+    [[_currentTextView textStorage] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[_currentTextView textStorage] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
+            NSLog(@"Attribute: %@, %@", value, NSStringFromRange(blockRange));
+    }];
     
     // save
     [_currentTextbox setTextValue:[_currentTextView textStorage]];
