@@ -187,8 +187,7 @@
 
 #pragma mark button fonts
 - (IBAction)onButtonFontsSelected:(id)sender{
-    NSRange effectiveRange, range;
-    NSFont *oldFont = nil, *newFont = nil;
+    NSRange range;
     
     // start editing
     [[_currentTextView textStorage] beginEditing];
@@ -203,16 +202,21 @@
             continue;
         }
         
-        oldFont = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:range.location effectiveRange:&effectiveRange];
-        
-        // we now have the NSFont name, reset the font name
-        newFont = [NSFont fontWithName:[[buttonFonts selectedItem] title] size:[oldFont pointSize]];
-        
-        // remove old
-        [[_currentTextView textStorage] removeAttribute:NSFontAttributeName range:range];
-        
-        // add new
-        [[_currentTextView textStorage] addAttribute:NSFontAttributeName value:newFont range:range];
+        // format the text accordingly
+        [[_currentTextView textStorage] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[_currentTextView textStorage] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
+            NSRange intersectionRange = NSIntersectionRange(blockRange, range);
+            NSFont *oldFont, *newFont;
+            if (intersectionRange.length > 0 ){
+                oldFont = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:intersectionRange.location effectiveRange:nil];
+                newFont = [NSFont fontWithName:[[buttonFonts selectedItem] title] size:[oldFont pointSize]];
+                // go through the sting and update the characters based on the range
+                // remove default
+                [[_currentTextView textStorage] removeAttribute:NSFontAttributeName range:intersectionRange];
+                
+                // add custom attributes
+                [[_currentTextView textStorage] addAttribute:NSFontAttributeName value:newFont range:blockRange];
+            }
+        }];
     }
     
     // end editing
