@@ -89,7 +89,12 @@
         }
         else{
             // retrieve the font
-            font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:range.location effectiveRange:nil];
+            if (range.location > 0){
+                font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:(range.location-1) effectiveRange:nil];
+            }
+            else{
+                font = [_currentTextView font];
+            }
         }
         
         // get the attribute according to the parameter passed in
@@ -204,6 +209,8 @@
         
         // format the text accordingly
         [[_currentTextView textStorage] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[_currentTextView textStorage] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
+            
+            // get the intersection between the current range and the current block range
             NSRange intersectionRange = NSIntersectionRange(blockRange, range);
             NSFont *oldFont, *newFont;
             if (intersectionRange.length > 0 ){
@@ -273,7 +280,6 @@
         
         // we now have the NSFont name, reset the font name
         newFont = [NSFont fontWithName:[oldFont fontName] size:[[fieldFontSize stringValue] floatValue]];
-        NSLog(@"setting font size to:%f", [[fieldFontSize stringValue] floatValue]);
         
         // remove old
         [[_currentTextView textStorage] removeAttribute:NSFontAttributeName range:range];
@@ -284,9 +290,6 @@
     
     // end editing
     [[_currentTextView textStorage] endEditing];
-    [[_currentTextView textStorage] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[_currentTextView textStorage] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
-            NSLog(@"Attribute: %@, %@", value, NSStringFromRange(blockRange));
-    }];
     
     // save
     [_currentTextbox setTextValue:[_currentTextView textStorage]];
@@ -295,7 +298,7 @@
 - (void)setUpFontSizeField{
     float fontSize;
     NSDictionary *fontInfo = [self getFontAttributeValueForSelectedRanges:EDFontAttributeSize];
-    
+    NSLog(@"setting up font size: info:%@", fontInfo);
     // if there is no difference in values and the font is set then set selected item
     if ((![[fontInfo objectForKey:EDKeyDiff] boolValue]) && ([fontInfo objectForKey:EDKeyValue] != nil)){
         fontSize = [[fontInfo objectForKey:EDKeyValue] floatValue];
