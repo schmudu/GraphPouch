@@ -249,7 +249,39 @@
 
 #pragma mark font size
 - (void)onFontSizeDidChange:(NSNotification *)note{
-    NSLog(@" controller notified that font size changed.");
+    NSRange effectiveRange, range;
+    NSFont *oldFont = nil, *newFont = nil;
+    
+    // start editing
+    [[_currentTextView textStorage] beginEditing];
+    
+    // for each range get the attribute and set the name
+    for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
+        // get range
+        [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
+        
+        // invalidate and ranges that are outside the bounds of the string
+        if ((range.location == [[[_currentTextView textStorage] string] length]) || (range.location > [[[_currentTextView textStorage] string] length])){
+            continue;
+        }
+        
+        oldFont = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:range.location effectiveRange:&effectiveRange];
+        
+        // we now have the NSFont name, reset the font name
+        newFont = [NSFont fontWithName:[oldFont fontName] size:[[fieldFontSize stringValue] floatValue]];
+        
+        // remove old
+        [[_currentTextView textStorage] removeAttribute:NSFontAttributeName range:range];
+        
+        // add new
+        [[_currentTextView textStorage] addAttribute:NSFontAttributeName value:newFont range:range];
+    }
+    
+    // end editing
+    [[_currentTextView textStorage] endEditing];
+    
+    // save
+    [_currentTextbox setTextValue:[_currentTextView textStorage]];
 }
 
 - (void)setUpFontSizeField{
