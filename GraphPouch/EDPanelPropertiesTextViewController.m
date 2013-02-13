@@ -51,13 +51,11 @@
 }
 
 - (void)updateButtonStates{
-    NSLog(@"need to update button state");
     [self setUpFontButton];
     [self setUpFontSizeField];
 }
 
 - (NSDictionary *)getFontAttributeValueForSelectedRanges:(NSString *)attribute{
-    /*
     if (_currentTextView == nil){
         // do nothing
         return nil;
@@ -68,83 +66,7 @@
     // set default of FALSE for diff
     [results setObject:[NSNumber numberWithBool:FALSE] forKey:EDKeyDiff];
     
-    NSRange range, effectiveRange;
-    NSFont *font;
-    id savedAttrValue = nil, attrValue = nil;
-    float flSavedAttrValue = -1, flAttrValue = -1;
-     */
-    /*
-    [[_currentTextView textStorage] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[_currentTextView textStorage] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
-        NSLog(@"font:%@ range:%@", value, NSStringFromRange(blockRange));
-    }];
-     */
-    
-    // for each range get the attribute
-    /*
-    for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
-        // get the range
-        [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
-        
-        // invalidate and ranges that are outside the bounds of the string
-        if (([[[_currentTextView textStorage] string] length] == 0) || (range.location > [[[_currentTextView textStorage] string] length])){
-            // in this case set the value to the default font for the text storage
-            font = [_currentTextView font];
-            [results setObject:[font familyName] forKey:EDKeyValue];
-            continue;
-        }
-        else if (range.location == [[[_currentTextView textStorage] string] length]){
-            // retrieve the font
-            font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:(range.location-1) effectiveRange:nil];
-        }
-        else{
-            // retrieve the font
-            if (range.location > 0){
-                font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:(range.location-1) effectiveRange:nil];
-            }
-            else{
-                font = [_currentTextView font];
-            }
-        }
-        
-        // get the attribute according to the parameter passed in
-        if (attribute == EDFontAttributeName){
-            attrValue = [font familyName];
-            
-            // if value is not the same as the last value then there's a difference
-            if ((savedAttrValue != nil) && (attrValue != nil) && (![savedAttrValue isEqualToString:attrValue])){
-                // there's a difference
-                [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
-                return results;
-            }
-            
-            [results setObject:attrValue forKey:EDKeyValue];
-            savedAttrValue = attrValue;
-        }
-        else if (attribute == EDFontAttributeSize){
-            flAttrValue = [font pointSize];
-            
-            // if value is not the same as the last value then there's a difference
-            if ((flSavedAttrValue != -1) && (flAttrValue != -1) && (flSavedAttrValue != flAttrValue)){
-                // there's a difference
-                [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
-                return results;
-            }
-        
-            [results setObject:[NSNumber numberWithFloat:flAttrValue] forKey:EDKeyValue];
-            flSavedAttrValue = flAttrValue;
-        }
-    }*/
-    if (_currentTextView == nil){
-        // do nothing
-        return nil;
-    }
-    
-    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    
-    // set default of FALSE for diff
-    [results setObject:[NSNumber numberWithBool:FALSE] forKey:EDKeyDiff];
-    
-    NSRange range, effectiveRange;
+    NSRange range;
     __block NSFont *font;
     __block id savedAttrValue = nil, attrValue = nil;
     __block float flSavedAttrValue = -1, flAttrValue = -1;
@@ -154,21 +76,18 @@
         [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
         
         // invalidate and ranges that are outside the bounds of the string
-        if (([[[_currentTextView textStorage] string] length] == 0) || (range.location > [[[_currentTextView textStorage] string] length])){
-            NSLog(@"1");
+        if (([[[_currentTextView textStorage] string] length] == 0) || (range.location > [[[_currentTextView textStorage] string] length]) || ((range.location + range.length)>[[[_currentTextView textStorage] string] length])){
             // in this case set the value to the default font for the text storage
             font = [_currentTextView font];
             [results setObject:[font familyName] forKey:EDKeyValue];
             continue;
         }
         else if (range.location == [[[_currentTextView textStorage] string] length]){
-            NSLog(@"2");
             // retrieve the font
             font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:(range.location-1) effectiveRange:nil];
             [results setObject:[font familyName] forKey:EDKeyValue];
         }
         else{
-            NSLog(@"3");
             // retrieve the font
             if (range.location > 0){
                 font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:(range.location-1) effectiveRange:nil];
@@ -179,130 +98,48 @@
             [results setObject:[font familyName] forKey:EDKeyValue];
         }
         
-        // see if there's a difference
+        // enumerate over all the different attributes that are contained in the string
         [[_currentTextView textStorage] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(range.location,range.length) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
+            
             // get the intersection between the current range and the current block range
+            // we are only interested in the intersection of what is selected and the current section of the attributed string
             NSRange intersectionRange = NSIntersectionRange(blockRange, range);
-            //NSFont *oldFont, *newFont;
+            
+            // calling font properties, need to ensure that we're not calling it for a location outside of the string
             if (intersectionRange.length > 0 ){
-                NSLog(@"block range:%@", NSStringFromRange(blockRange));
-                if (blockRange.location > 0){
-                    //attrValue = value;
+                if (attribute == EDFontAttributeName){
+                    // get font family name
+                    attrValue = [(NSFont *)value familyName];
                     
-                    if (attribute == EDFontAttributeName){
-                        attrValue = [(NSFont *)value familyName];
-                        
-                        // if value is not the same as the last value then there's a difference
-                        if ((savedAttrValue != nil) && (attrValue != nil) && (![savedAttrValue isEqualToString:attrValue])){
-                            // there's a difference
-                            [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
-                            *stop = TRUE;
-                            return;
-                        }
-                        
-                        [results setObject:attrValue forKey:EDKeyValue];
-                        savedAttrValue = attrValue;
+                    // if value is not the same as the last value then there's a difference
+                    if ((savedAttrValue != nil) && (attrValue != nil) && (![savedAttrValue isEqualToString:attrValue])){
+                        // there's a difference
+                        [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
+                        *stop = TRUE;
+                        return;
                     }
-                    else if (attribute == EDFontAttributeSize){
-                        flAttrValue = [font pointSize];
-                        
-                        // if value is not the same as the last value then there's a difference
-                        if ((flSavedAttrValue != -1) && (flAttrValue != -1) && (flSavedAttrValue != flAttrValue)){
-                            // there's a difference
-                            [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
-                            *stop = TRUE;
-                            return;
-                        }
                     
-                        [results setObject:[NSNumber numberWithFloat:flAttrValue] forKey:EDKeyValue];
-                        flSavedAttrValue = flAttrValue;
-                    }
+                    [results setObject:attrValue forKey:EDKeyValue];
+                    savedAttrValue = attrValue;
                 }
-                else{
-                    if (attribute == EDFontAttributeName){
-                        attrValue = [[_currentTextView font] familyName];
-                        
-                        // if value is not the same as the last value then there's a difference
-                        if ((savedAttrValue != nil) && (attrValue != nil) && (![savedAttrValue isEqualToString:attrValue])){
-                            // there's a difference
-                            [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
-                            *stop = TRUE;
-                            return;
-                        }
-                        
-                        [results setObject:attrValue forKey:EDKeyValue];
-                        savedAttrValue = attrValue;
-                    }
-                    else if (attribute == EDFontAttributeSize){
-                        flAttrValue = [[_currentTextView font] pointSize];
-                        
-                        // if value is not the same as the last value then there's a difference
-                        if ((flSavedAttrValue != -1) && (flAttrValue != -1) && (flSavedAttrValue != flAttrValue)){
-                            // there's a difference
-                            [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
-                            *stop = TRUE;
-                            return;
-                        }
+                else if (attribute == EDFontAttributeSize){
+                    // get font size
+                    flAttrValue = [font pointSize];
                     
-                        [results setObject:[NSNumber numberWithFloat:flAttrValue] forKey:EDKeyValue];
-                        flSavedAttrValue = flAttrValue;
+                    // if value is not the same as the last value then there's a difference
+                    if ((flSavedAttrValue != -1) && (flAttrValue != -1) && (flSavedAttrValue != flAttrValue)){
+                        // there's a difference
+                        [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
+                        *stop = TRUE;
+                        return;
                     }
+                
+                    [results setObject:[NSNumber numberWithFloat:flAttrValue] forKey:EDKeyValue];
+                    flSavedAttrValue = flAttrValue;
                 }
-                //NSLog(@"block font:%@ range:%@", value, NSStringFromRange(blockRange));
                 NSLog(@"attr:%@ savedAttr:%@", attrValue, savedAttrValue);
             }
         }];
-        
-        /*
-        // invalidate and ranges that are outside the bounds of the string
-        if (([[[_currentTextView textStorage] string] length] == 0) || (range.location > [[[_currentTextView textStorage] string] length])){
-            // in this case set the value to the default font for the text storage
-            font = [_currentTextView font];
-            [results setObject:[font familyName] forKey:EDKeyValue];
-            continue;
-        }
-        else if (range.location == [[[_currentTextView textStorage] string] length]){
-            // retrieve the font
-            font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:(range.location-1) effectiveRange:nil];
-        }
-        else{
-            // retrieve the font
-            if (range.location > 0){
-                font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:(range.location-1) effectiveRange:nil];
-            }
-            else{
-                font = [_currentTextView font];
-            }
-        }
-        
-        // get the attribute according to the parameter passed in
-        if (attribute == EDFontAttributeName){
-            attrValue = [font familyName];
-            
-            // if value is not the same as the last value then there's a difference
-            if ((savedAttrValue != nil) && (attrValue != nil) && (![savedAttrValue isEqualToString:attrValue])){
-                // there's a difference
-                [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
-                return results;
-            }
-            
-            [results setObject:attrValue forKey:EDKeyValue];
-            savedAttrValue = attrValue;
-        }
-        else if (attribute == EDFontAttributeSize){
-            flAttrValue = [font pointSize];
-            
-            // if value is not the same as the last value then there's a difference
-            if ((flSavedAttrValue != -1) && (flAttrValue != -1) && (flSavedAttrValue != flAttrValue)){
-                // there's a difference
-                [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
-                return results;
-            }
-        
-            [results setObject:[NSNumber numberWithFloat:flAttrValue] forKey:EDKeyValue];
-            flSavedAttrValue = flAttrValue;
-        }
-         */
     }
     return results;
 }
@@ -400,7 +237,7 @@
                 [[_currentTextView textStorage] removeAttribute:NSFontAttributeName range:intersectionRange];
                 
                 // add custom attributes
-                [[_currentTextView textStorage] addAttribute:NSFontAttributeName value:newFont range:blockRange];
+                [[_currentTextView textStorage] addAttribute:NSFontAttributeName value:newFont range:intersectionRange];
             }
         }];
     }
@@ -422,7 +259,7 @@
     [buttonFonts addItemsWithTitles:fontList];
     
     NSDictionary *font = [self getFontAttributeValueForSelectedRanges:EDFontAttributeName];
-    NSLog(@"font info:%@", font);
+    
     // if there is no difference in values and the font is set then set selected item
     if ((![[font objectForKey:EDKeyDiff] boolValue]) && ([font objectForKey:EDKeyValue] != nil)){
         fontName = (NSString *)[font objectForKey:EDKeyValue];
