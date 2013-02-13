@@ -174,7 +174,7 @@
     }
     else if ((_viewController == textViewController) && ([[self window] contentView] == [textViewController view])) {
         // still need to update panel properties
-        [_viewController initWindowAfterLoaded:_context];
+        //[_viewController initWindowAfterLoaded:_context];
         return;
     }
     else if ((_viewController == documentController) && ([[self window] contentView] == [documentController view])) {

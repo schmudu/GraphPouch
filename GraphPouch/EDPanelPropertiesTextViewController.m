@@ -79,23 +79,38 @@
         if (([[[_currentTextView textStorage] string] length] == 0) || (range.location > [[[_currentTextView textStorage] string] length]) || ((range.location + range.length)>[[[_currentTextView textStorage] string] length])){
             // in this case set the value to the default font for the text storage
             font = [_currentTextView font];
-            [results setObject:[font familyName] forKey:EDKeyValue];
+#warning textview font attribute
+            if (attribute == EDFontAttributeName)
+                [results setObject:[font familyName] forKey:EDKeyValue];
+            else if (attribute == EDFontAttributeSize)
+                [results setObject:[NSNumber numberWithFloat:[font pointSize]] forKey:EDKeyValue];
+            
             continue;
         }
         else if (range.location == [[[_currentTextView textStorage] string] length]){
             // retrieve the font
+#warning textview font attribute
             font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:(range.location-1) effectiveRange:nil];
-            [results setObject:[font familyName] forKey:EDKeyValue];
+            //[results setObject:[font familyName] forKey:EDKeyValue];
+            if (attribute == EDFontAttributeName)
+                [results setObject:[font familyName] forKey:EDKeyValue];
+            else if (attribute == EDFontAttributeSize)
+                [results setObject:[NSNumber numberWithFloat:[font pointSize]] forKey:EDKeyValue];
         }
         else{
             // retrieve the font
+#warning textview font attribute
             if (range.location > 0){
                 font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:(range.location-1) effectiveRange:nil];
             }
             else{
                 font = [_currentTextView font];
             }
-            [results setObject:[font familyName] forKey:EDKeyValue];
+            //[results setObject:[font familyName] forKey:EDKeyValue];
+            if (attribute == EDFontAttributeName)
+                [results setObject:[font familyName] forKey:EDKeyValue];
+            else if (attribute == EDFontAttributeSize)
+                [results setObject:[NSNumber numberWithFloat:[font pointSize]] forKey:EDKeyValue];
         }
         
         // enumerate over all the different attributes that are contained in the string
@@ -107,6 +122,7 @@
             
             // calling font properties, need to ensure that we're not calling it for a location outside of the string
             if (intersectionRange.length > 0 ){
+#warning textview font attribute
                 if (attribute == EDFontAttributeName){
                     // get font family name
                     attrValue = [(NSFont *)value familyName];
@@ -137,7 +153,6 @@
                     [results setObject:[NSNumber numberWithFloat:flAttrValue] forKey:EDKeyValue];
                     flSavedAttrValue = flAttrValue;
                 }
-                NSLog(@"attr:%@ savedAttr:%@", attrValue, savedAttrValue);
             }
         }];
     }
@@ -196,7 +211,6 @@
                 continue;
             }
         
-            //[string addAttribute:NSSuperscriptAttributeName value:[NSNumber numberWithInt:1] range:range];
             [string addAttribute:NSSuperscriptAttributeName value:[NSNumber numberWithInt:1] range:range];
         }
         [string endEditing];
@@ -283,7 +297,7 @@
 - (void)onFontSizeDidChange:(NSNotification *)note{
     NSRange effectiveRange, range;
     NSFont *oldFont = nil, *newFont = nil;
-    
+    NSLog(@"font size was changed to:%f", [[fieldFontSize stringValue] floatValue]);
     // start editing
     [[_currentTextView textStorage] beginEditing];
     
@@ -324,6 +338,7 @@
     if ((![[fontInfo objectForKey:EDKeyDiff] boolValue]) && ([fontInfo objectForKey:EDKeyValue] != nil)){
         fontSize = [[fontInfo objectForKey:EDKeyValue] floatValue];
         
+        NSLog(@"setting up font size:%f", fontSize);
         [fieldFontSize setStringValue:[NSString stringWithFormat:@"%f", fontSize]];
     }
     else if (([[fontInfo objectForKey:EDKeyDiff] boolValue]) && ([fontInfo objectForKey:EDKeyValue] != nil)){
