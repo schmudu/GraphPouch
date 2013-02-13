@@ -40,14 +40,14 @@
     [super initWindowAfterLoaded:context];
     
     [fieldFontSize setDelegate:_delegateFontSize];
-    
-    [self setUpFontButton];
-    [self setUpFontSizeField];
 }
 
 - (void)initButtons:(EDTextView *)textView textbox:(EDTextbox *)textbox{
     _currentTextView = textView;
     _currentTextbox = textbox;
+    
+    // update button states
+    [self updateButtonStates];
 }
 
 - (void)updateButtonStates{
@@ -70,7 +70,6 @@
     __block NSFont *font;
     __block id savedAttrValue = nil, attrValue = nil;
     __block float flSavedAttrValue = -1, flAttrValue = -1;
-    
     for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
         // get the range
         [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
@@ -297,7 +296,6 @@
 - (void)onFontSizeDidChange:(NSNotification *)note{
     NSRange effectiveRange, range;
     NSFont *oldFont = nil, *newFont = nil;
-    NSLog(@"font size was changed to:%f", [[fieldFontSize stringValue] floatValue]);
     // start editing
     [[_currentTextView textStorage] beginEditing];
     
@@ -338,7 +336,6 @@
     if ((![[fontInfo objectForKey:EDKeyDiff] boolValue]) && ([fontInfo objectForKey:EDKeyValue] != nil)){
         fontSize = [[fontInfo objectForKey:EDKeyValue] floatValue];
         
-        NSLog(@"setting up font size:%f", fontSize);
         [fieldFontSize setStringValue:[NSString stringWithFormat:@"%f", fontSize]];
     }
     else if (([[fontInfo objectForKey:EDKeyDiff] boolValue]) && ([fontInfo objectForKey:EDKeyValue] != nil)){
