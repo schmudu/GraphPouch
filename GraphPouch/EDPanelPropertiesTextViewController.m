@@ -210,6 +210,11 @@
 - (IBAction)onButtonFontsSelected:(id)sender{
     NSRange range;
     
+    // do not edit fonts if user selected mixed
+    if ([[[buttonFonts selectedItem] title] isEqualToString:EDFontAttributeNameMixed]){
+        return;
+    }
+    
     // start editing
     [[_currentTextView textStorage] beginEditing];
     
@@ -269,7 +274,7 @@
     }
     else if (([[font objectForKey:EDKeyDiff] boolValue]) && ([font objectForKey:EDKeyValue] != nil)){
         // insert blank name at the beginning of the font list
-        [buttonFonts insertItemWithTitle:[NSString stringWithFormat:@""] atIndex:0];
+        [buttonFonts insertItemWithTitle:[NSString stringWithFormat:@"%@",EDFontAttributeNameMixed] atIndex:0];
         [buttonFonts selectItemAtIndex:0];
     }
 }

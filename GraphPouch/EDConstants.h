@@ -74,6 +74,7 @@ extern NSString *const EDFontAttributeName;
 extern NSString *const EDFontAttributeSize;
 extern NSString *const EDFontAttributeColor;
 extern NSString *const EDEventControlDidChange;
+extern NSString *const EDFontAttributeNameMixed;
 
 // line
 extern NSString *const EDLineAttributeThickness;
