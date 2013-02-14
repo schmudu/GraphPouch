@@ -12,9 +12,10 @@
 @interface EDPanelPropertiesTextViewController ()
 - (void)setUpFontSizeField;
 - (void)setUpFontButton;
-- (NSDictionary *)getAttributeValueForSelectedRanges:(NSString *)attribute;
+- (void)setUpButtonBold;
 - (NSDictionary *)getFontAttributeValueForSelectedRanges:(NSString *)attribute;
 - (void)onFontSizeDidChange:(NSNotification *)note;
+- (void)changeFontAttribute:(NSString *)attribute addAttribute:(BOOL)addAttribute;
 @end
 
 @implementation EDPanelPropertiesTextViewController
@@ -53,6 +54,7 @@
 - (void)updateButtonStates{
     [self setUpFontButton];
     [self setUpFontSizeField];
+    [self setUpButtonBold];
 }
 
 - (NSDictionary *)getFontAttributeValueForSelectedRanges:(NSString *)attribute{
@@ -83,6 +85,8 @@
                 [results setObject:[font familyName] forKey:EDKeyValue];
             else if (attribute == EDFontAttributeSize)
                 [results setObject:[NSNumber numberWithFloat:[font pointSize]] forKey:EDKeyValue];
+            else if (attribute == EDFontAttributeBold)
+                [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSBoldFontMask]] forKey:EDKeyValue];
             
             continue;
         }
@@ -95,12 +99,18 @@
                 [results setObject:[font familyName] forKey:EDKeyValue];
             else if (attribute == EDFontAttributeSize)
                 [results setObject:[NSNumber numberWithFloat:[font pointSize]] forKey:EDKeyValue];
+            else if (attribute == EDFontAttributeBold)
+                [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSBoldFontMask]] forKey:EDKeyValue];
         }
         else{
             // retrieve the font
 #warning textview font attribute
             if (range.location > 0){
-                font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:(range.location-1) effectiveRange:nil];
+                // if length is 0 then select the character before it
+                if (range.length == 0)
+                    font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:(range.location-1) effectiveRange:nil];
+                else
+                    font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:range.location effectiveRange:nil];
             }
             else{
                 font = [_currentTextView font];
@@ -110,6 +120,8 @@
                 [results setObject:[font familyName] forKey:EDKeyValue];
             else if (attribute == EDFontAttributeSize)
                 [results setObject:[NSNumber numberWithFloat:[font pointSize]] forKey:EDKeyValue];
+            else if (attribute == EDFontAttributeBold)
+                [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSBoldFontMask]] forKey:EDKeyValue];
         }
         
         // enumerate over all the different attributes that are contained in the string
@@ -153,27 +165,37 @@
                     [results setObject:[NSNumber numberWithFloat:flAttrValue] forKey:EDKeyValue];
                     flSavedAttrValue = flAttrValue;
                 }
+                else if (attribute == EDFontAttributeBold){
+                    // get font family name
+                    //attrValue = [(NSFont *)value familyName];
+                    attrValue = [NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSBoldFontMask]];
+                    
+                    // if value is not the same as the last value then there's a difference
+                    if ((savedAttrValue != nil) && (attrValue != nil) && ([savedAttrValue boolValue] == [attrValue boolValue])){
+                        // there's a difference
+                        [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
+                        *stop = TRUE;
+                        return;
+                    }
+                    
+                    [results setObject:attrValue forKey:EDKeyValue];
+                    savedAttrValue = attrValue;
+                }
             }
         }];
     }
     return results;
 }
 
-- (NSDictionary *)getAttributeValueForSelectedRanges:(NSString *)attribute{
-    if (_currentTextView == nil){
-        // do nothing
-        return nil;
-    }
-    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+- (void)changeFontAttribute:(NSString *)attribute addAttribute:(BOOL)addAttribute{
+    NSRange range;
     
-    // set default of FALSE for diff
-    [results setObject:[NSNumber numberWithBool:FALSE] forKey:EDKeyDiff];
+    // start editing
+    [[_currentTextView textStorage] beginEditing];
     
-    NSRange effectiveRange, range;
-    id savedAttrValue = nil, attrValue = nil;
-    // for each range get the attribute
+    // for each range get the attribute and set the name
     for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
-        // get the range
+        // get range
         [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
         
         // invalidate and ranges that are outside the bounds of the string
@@ -181,22 +203,43 @@
             continue;
         }
         
-        attrValue = [[_currentTextView textStorage] attribute:attribute atIndex:range.location effectiveRange:&effectiveRange];
-        
-        // if value is not the same as the last value then there's a difference
-        if ((savedAttrValue != nil) && (attrValue != nil) && (savedAttrValue != attrValue)){
-            [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
-            return results;
-        }
-        
-        [results setObject:attrValue forKey:EDKeyValue];
-        savedAttrValue = attrValue;
+        // format the text accordingly
+        [[_currentTextView textStorage] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[_currentTextView textStorage] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
+            
+            // get the intersection between the current range and the current block range
+            NSRange intersectionRange = NSIntersectionRange(blockRange, range);
+            NSFont *oldFont, *newFont;
+            if (intersectionRange.length > 0 ){
+                oldFont = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:intersectionRange.location effectiveRange:nil];
+#warning textview font attribute
+                if (attribute == EDFontAttributeBold){
+                    if (addAttribute)
+                        newFont = [[NSFontManager sharedFontManager] convertFont:oldFont toHaveTrait:NSBoldFontMask];
+                    else
+                        newFont = [[NSFontManager sharedFontManager] convertFont:oldFont toNotHaveTrait:NSBoldFontMask];
+                }
+                else if (attribute == EDFontAttributeName){
+                    newFont = [NSFont fontWithName:[[buttonFonts selectedItem] title] size:[oldFont pointSize]];
+                }
+                
+                // go through the sting and update the characters based on the range
+                // remove default
+                [[_currentTextView textStorage] removeAttribute:NSFontAttributeName range:intersectionRange];
+                
+                // add custom attributes
+                [[_currentTextView textStorage] addAttribute:NSFontAttributeName value:newFont range:intersectionRange];
+            }
+        }];
     }
-    return results;
+    
+    // end editing
+    [[_currentTextView textStorage] endEditing];
+    
+    // save
+    [_currentTextbox setTextValue:[_currentTextView textStorage]];
 }
-
-#pragma mark button bold
-- (IBAction)onButtonPressedBold:(id)sender{
+#pragma mark button superscript
+- (IBAction)onButtonPressedSuperscript:(id)sender{
     if (_currentTextView){
         NSArray *selectedRanges = [_currentTextView selectedRanges];
         NSMutableAttributedString *string = [_currentTextView textStorage];
@@ -220,52 +263,22 @@
     }
 }
 
+#pragma mark button bold
+- (void)setUpButtonBold{
+    NSDictionary *results = [self getFontAttributeValueForSelectedRanges:EDFontAttributeBold];
+}
+
+- (IBAction)onButtonPressedBold:(id)sender{
+    [self changeFontAttribute:EDFontAttributeBold addAttribute:TRUE];
+}
+
 #pragma mark button fonts
 - (IBAction)onButtonFontsSelected:(id)sender{
-    NSRange range;
-    
     // do not edit fonts if user selected mixed
     if ([[[buttonFonts selectedItem] title] isEqualToString:EDFontAttributeNameMixed]){
         return;
     }
-    
-    // start editing
-    [[_currentTextView textStorage] beginEditing];
-    
-    // for each range get the attribute and set the name
-    for (int indexRange = 0; indexRange < [[_currentTextView selectedRanges] count]; indexRange++){
-        // get range
-        [[[_currentTextView selectedRanges] objectAtIndex:indexRange] getValue:&range];
-        
-        // invalidate and ranges that are outside the bounds of the string
-        if ((range.location == [[[_currentTextView textStorage] string] length]) || (range.location > [[[_currentTextView textStorage] string] length])){
-            continue;
-        }
-        
-        // format the text accordingly
-        [[_currentTextView textStorage] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[_currentTextView textStorage] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
-            
-            // get the intersection between the current range and the current block range
-            NSRange intersectionRange = NSIntersectionRange(blockRange, range);
-            NSFont *oldFont, *newFont;
-            if (intersectionRange.length > 0 ){
-                oldFont = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:intersectionRange.location effectiveRange:nil];
-                newFont = [NSFont fontWithName:[[buttonFonts selectedItem] title] size:[oldFont pointSize]];
-                // go through the sting and update the characters based on the range
-                // remove default
-                [[_currentTextView textStorage] removeAttribute:NSFontAttributeName range:intersectionRange];
-                
-                // add custom attributes
-                [[_currentTextView textStorage] addAttribute:NSFontAttributeName value:newFont range:intersectionRange];
-            }
-        }];
-    }
-    
-    // end editing
-    [[_currentTextView textStorage] endEditing];
-    
-    // save
-    [_currentTextbox setTextValue:[_currentTextView textStorage]];
+    [self changeFontAttribute:EDFontAttributeName addAttribute:TRUE];
 }
 
 - (void)setUpFontButton{
@@ -335,7 +348,6 @@
 - (void)setUpFontSizeField{
     float fontSize;
     NSDictionary *fontInfo = [self getFontAttributeValueForSelectedRanges:EDFontAttributeSize];
-    NSLog(@"font info for size:%@", fontInfo);
     // if there is no difference in values and the font is set then set selected item
     if ((![[fontInfo objectForKey:EDKeyDiff] boolValue]) && ([fontInfo objectForKey:EDKeyValue] != nil)){
         // set color to black
@@ -343,14 +355,8 @@
         fontSize = [[fontInfo objectForKey:EDKeyValue] floatValue];
         
         [fieldFontSize setStringValue:[NSString stringWithFormat:@"%f", fontSize]];
-        NSLog(@"setting font to :%f", fontSize);
     }
     else if (([[fontInfo objectForKey:EDKeyDiff] boolValue]) && ([fontInfo objectForKey:EDKeyValue] != nil)){
-        /*
-        // insert nothing in field
-        [fieldFontSize setStringValue:[NSString stringWithFormat:@""]];
-        NSLog(@"setting to nothing.");
-        */
         // set color to grey
         [fieldFontSize setTextColor:[NSColor grayColor]];
     }

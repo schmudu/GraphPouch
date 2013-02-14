@@ -22,6 +22,7 @@
 }
 
 
+- (IBAction)onButtonPressedSuperscript:(id)sender;
 - (IBAction)onButtonPressedBold:(id)sender;
 - (IBAction)onButtonFontsSelected:(id)sender;
 - (void)initButtons:(EDTextView *)textView textbox:(EDTextbox *)textbox;
