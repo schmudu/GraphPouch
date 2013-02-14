@@ -139,7 +139,8 @@
                 }
                 else if (attribute == EDFontAttributeSize){
                     // get font size
-                    flAttrValue = [font pointSize];
+                    flAttrValue = [(NSFont *)value pointSize];
+                    //flAttrValue = [font pointSize];
                     
                     // if value is not the same as the last value then there's a difference
                     if ((flSavedAttrValue != -1) && (flAttrValue != -1) && (flSavedAttrValue != flAttrValue)){
@@ -296,6 +297,9 @@
 - (void)onFontSizeDidChange:(NSNotification *)note{
     NSRange effectiveRange, range;
     NSFont *oldFont = nil, *newFont = nil;
+    // set color to black
+    [fieldFontSize setTextColor:[NSColor blackColor]];
+    
     // start editing
     [[_currentTextView textStorage] beginEditing];
     
@@ -331,16 +335,24 @@
 - (void)setUpFontSizeField{
     float fontSize;
     NSDictionary *fontInfo = [self getFontAttributeValueForSelectedRanges:EDFontAttributeSize];
-    
+    NSLog(@"font info for size:%@", fontInfo);
     // if there is no difference in values and the font is set then set selected item
     if ((![[fontInfo objectForKey:EDKeyDiff] boolValue]) && ([fontInfo objectForKey:EDKeyValue] != nil)){
+        // set color to black
+        [fieldFontSize setTextColor:[NSColor blackColor]];
         fontSize = [[fontInfo objectForKey:EDKeyValue] floatValue];
         
         [fieldFontSize setStringValue:[NSString stringWithFormat:@"%f", fontSize]];
+        NSLog(@"setting font to :%f", fontSize);
     }
     else if (([[fontInfo objectForKey:EDKeyDiff] boolValue]) && ([fontInfo objectForKey:EDKeyValue] != nil)){
+        /*
         // insert nothing in field
         [fieldFontSize setStringValue:[NSString stringWithFormat:@""]];
+        NSLog(@"setting to nothing.");
+        */
+        // set color to grey
+        [fieldFontSize setTextColor:[NSColor grayColor]];
     }
 }
 
