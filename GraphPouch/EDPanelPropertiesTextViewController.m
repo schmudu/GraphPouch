@@ -213,7 +213,7 @@
                 oldFont = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:intersectionRange.location effectiveRange:nil];
 #warning textview font attribute
                 if (attribute == EDFontAttributeBold){
-                    if (addAttribute)
+                    if (addAttribute == TRUE)
                         newFont = [[NSFontManager sharedFontManager] convertFont:oldFont toHaveTrait:NSBoldFontMask];
                     else
                         newFont = [[NSFontManager sharedFontManager] convertFont:oldFont toNotHaveTrait:NSBoldFontMask];
@@ -266,10 +266,28 @@
 #pragma mark button bold
 - (void)setUpButtonBold{
     NSDictionary *results = [self getFontAttributeValueForSelectedRanges:EDFontAttributeBold];
+    if ([[results objectForKey:EDKeyDiff] boolValue]) {
+        [buttonBold setState:NSMixedState];
+    }
+    else if([[results objectForKey:EDKeyValue] boolValue])
+        [buttonBold setState:NSOnState];
+    else
+        [buttonBold setState:NSOffState];
 }
 
 - (IBAction)onButtonPressedBold:(id)sender{
-    [self changeFontAttribute:EDFontAttributeBold addAttribute:TRUE];
+    //NSLog(@"state:%ld", [buttonBold state]);
+    if ([buttonBold state] == NSOnState){
+        [self changeFontAttribute:EDFontAttributeBold addAttribute:TRUE];
+    }
+    else if ([buttonBold state] == NSMixedState){
+        [buttonBold setState:NSOnState];
+        [self changeFontAttribute:EDFontAttributeBold addAttribute:TRUE];
+    }
+    else{
+        [self changeFontAttribute:EDFontAttributeBold addAttribute:FALSE];
+    }
+    //[self setUpButtonBold];
 }
 
 #pragma mark button fonts
