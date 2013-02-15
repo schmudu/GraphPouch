@@ -13,6 +13,7 @@
 - (void)setUpFontSizeField;
 - (void)setUpFontButton;
 - (void)setUpButtonBold;
+- (void)setUpButtonItalic;
 - (NSDictionary *)getFontAttributeValueForSelectedRanges:(NSString *)attribute;
 - (void)onFontSizeDidChange:(NSNotification *)note;
 - (void)changeFontAttribute:(NSString *)attribute addAttribute:(BOOL)addAttribute;
@@ -55,6 +56,7 @@
     [self setUpFontButton];
     [self setUpFontSizeField];
     [self setUpButtonBold];
+    [self setUpButtonItalic];
 }
 
 - (NSDictionary *)getFontAttributeValueForSelectedRanges:(NSString *)attribute{
@@ -80,6 +82,7 @@
         if (([[[_currentTextView textStorage] string] length] == 0) || (range.location > [[[_currentTextView textStorage] string] length]) || ((range.location + range.length)>[[[_currentTextView textStorage] string] length])){
             // in this case set the value to the default font for the text storage
             font = [_currentTextView font];
+            
 #warning textview font attribute
             if (attribute == EDFontAttributeName)
                 [results setObject:[font familyName] forKey:EDKeyValue];
@@ -87,24 +90,27 @@
                 [results setObject:[NSNumber numberWithFloat:[font pointSize]] forKey:EDKeyValue];
             else if (attribute == EDFontAttributeBold)
                 [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSBoldFontMask]] forKey:EDKeyValue];
+            else if (attribute == EDFontAttributeItalic)
+                [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSItalicFontMask]] forKey:EDKeyValue];
             
             continue;
         }
         else if (range.location == [[[_currentTextView textStorage] string] length]){
             // retrieve the font
-#warning textview font attribute
             font = [[_currentTextView textStorage] attribute:NSFontAttributeName atIndex:(range.location-1) effectiveRange:nil];
-            //[results setObject:[font familyName] forKey:EDKeyValue];
+            
+#warning textview font attribute
             if (attribute == EDFontAttributeName)
                 [results setObject:[font familyName] forKey:EDKeyValue];
             else if (attribute == EDFontAttributeSize)
                 [results setObject:[NSNumber numberWithFloat:[font pointSize]] forKey:EDKeyValue];
             else if (attribute == EDFontAttributeBold)
                 [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSBoldFontMask]] forKey:EDKeyValue];
+            else if (attribute == EDFontAttributeItalic)
+                [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSItalicFontMask]] forKey:EDKeyValue];
         }
         else{
             // retrieve the font
-#warning textview font attribute
             if (range.location > 0){
                 // if length is 0 then select the character before it
                 if (range.length == 0)
@@ -115,13 +121,15 @@
             else{
                 font = [_currentTextView font];
             }
-            //[results setObject:[font familyName] forKey:EDKeyValue];
+#warning textview font attribute
             if (attribute == EDFontAttributeName)
                 [results setObject:[font familyName] forKey:EDKeyValue];
             else if (attribute == EDFontAttributeSize)
                 [results setObject:[NSNumber numberWithFloat:[font pointSize]] forKey:EDKeyValue];
             else if (attribute == EDFontAttributeBold)
                 [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSBoldFontMask]] forKey:EDKeyValue];
+            else if (attribute == EDFontAttributeItalic)
+                [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSItalicFontMask]] forKey:EDKeyValue];
         }
         
         // enumerate over all the different attributes that are contained in the string
@@ -137,6 +145,7 @@
                 if (attribute == EDFontAttributeName){
                     // get font family name
                     attrValue = [(NSFont *)value familyName];
+                    
                     
                     // if value is not the same as the last value then there's a difference
                     if ((savedAttrValue != nil) && (attrValue != nil) && (![savedAttrValue isEqualToString:attrValue])){
@@ -167,11 +176,25 @@
                 }
                 else if (attribute == EDFontAttributeBold){
                     // get font family name
-                    //attrValue = [(NSFont *)value familyName];
-                    attrValue = [NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSBoldFontMask]];
+                    attrValue = [NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[value displayName] hasTraits:NSBoldFontMask]];
                     
                     // if value is not the same as the last value then there's a difference
-                    if ((savedAttrValue != nil) && (attrValue != nil) && ([savedAttrValue boolValue] == [attrValue boolValue])){
+                    if ((savedAttrValue != nil) && (attrValue != nil) && ([savedAttrValue boolValue] != [attrValue boolValue])){
+                        // there's a difference
+                        [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
+                        *stop = TRUE;
+                        return;
+                    }
+                    
+                    [results setObject:attrValue forKey:EDKeyValue];
+                    savedAttrValue = attrValue;
+                }
+                else if (attribute == EDFontAttributeItalic){
+                    // get font family name
+                    attrValue = [NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[value displayName] hasTraits:NSItalicFontMask]];
+                    
+                    // if value is not the same as the last value then there's a difference
+                    if ((savedAttrValue != nil) && (attrValue != nil) && ([savedAttrValue boolValue] != [attrValue boolValue])){
                         // there's a difference
                         [results setObject:[NSNumber numberWithBool:TRUE] forKey:EDKeyDiff];
                         *stop = TRUE;
@@ -217,6 +240,12 @@
                         newFont = [[NSFontManager sharedFontManager] convertFont:oldFont toHaveTrait:NSBoldFontMask];
                     else
                         newFont = [[NSFontManager sharedFontManager] convertFont:oldFont toNotHaveTrait:NSBoldFontMask];
+                }
+                else if (attribute == EDFontAttributeItalic){
+                    if (addAttribute == TRUE)
+                        newFont = [[NSFontManager sharedFontManager] convertFont:oldFont toHaveTrait:NSItalicFontMask];
+                    else
+                        newFont = [[NSFontManager sharedFontManager] convertFont:oldFont toNotHaveTrait:NSItalicFontMask];
                 }
                 else if (attribute == EDFontAttributeName){
                     newFont = [NSFont fontWithName:[[buttonFonts selectedItem] title] size:[oldFont pointSize]];
@@ -266,6 +295,7 @@
 #pragma mark button bold
 - (void)setUpButtonBold{
     NSDictionary *results = [self getFontAttributeValueForSelectedRanges:EDFontAttributeBold];
+    NSLog(@"setting up bold results:%@", results);
     if ([[results objectForKey:EDKeyDiff] boolValue]) {
         [buttonBold setState:NSMixedState];
     }
@@ -287,7 +317,31 @@
     else{
         [self changeFontAttribute:EDFontAttributeBold addAttribute:FALSE];
     }
-    //[self setUpButtonBold];
+}
+
+#pragma mark button italic
+- (void)setUpButtonItalic{
+    NSDictionary *results = [self getFontAttributeValueForSelectedRanges:EDFontAttributeItalic];
+    if ([[results objectForKey:EDKeyDiff] boolValue]) {
+        [buttonItalic setState:NSMixedState];
+    }
+    else if([[results objectForKey:EDKeyValue] boolValue])
+        [buttonItalic setState:NSOnState];
+    else
+        [buttonItalic setState:NSOffState];
+}
+
+- (IBAction)onButtonPressedItalic:(id)sender{
+    if ([buttonItalic state] == NSOnState){
+        [self changeFontAttribute:EDFontAttributeItalic addAttribute:TRUE];
+    }
+    else if ([buttonItalic state] == NSMixedState){
+        [buttonItalic setState:NSOnState];
+        [self changeFontAttribute:EDFontAttributeItalic addAttribute:TRUE];
+    }
+    else{
+        [self changeFontAttribute:EDFontAttributeItalic addAttribute:FALSE];
+    }
 }
 
 #pragma mark button fonts

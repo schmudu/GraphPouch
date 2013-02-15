@@ -76,6 +76,7 @@ NSString * const EDFontAttributeColor                           = @"EDFontAttrib
 NSString * const EDEventControlDidChange                        = @"EDEventControlDidChange";
 NSString * const EDFontAttributeNameMixed                       = @"<Mixed Fonts>";
 NSString * const EDFontAttributeBold                            = @"EDFontAttributeBold";
+NSString * const EDFontAttributeItalic                          = @"EDFontAttributeItalic";
 
 
 // line
