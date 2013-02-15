@@ -16,6 +16,7 @@
     IBOutlet NSPopUpButton *buttonFonts;
     IBOutlet NSButton *buttonBold;
     IBOutlet NSButton *buttonItalic;
+    IBOutlet NSButton *buttonSuperscript;
     IBOutlet NSTextField *fieldFontSize;
     EDPanelPropertiesTextViewFontSizeText *_delegateFontSize;
     EDTextView *_currentTextView;
