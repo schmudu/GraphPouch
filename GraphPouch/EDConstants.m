@@ -104,6 +104,7 @@ NSString * const EDEventWorksheetElementSelected                = @"EDEventWorks
 NSString * const EDEventWorksheetElementDeselected              = @"EDEventWorksheetElementDeselected";
 NSString * const EDEventWorksheetViewResignFirstResponder       = @"EDEventWorksheetViewResignFirstResponder";
 NSString * const EDEventKey                                     = @"EDEvent";
+NSString * const EDEventWorksheetElementRedrawingItself         = @"EDEventWorksheetElementRedrawingItself";
 
 // menu
 NSString * const EDEventMenuAlignTop                            = @"EDEventMenuAlignTop";

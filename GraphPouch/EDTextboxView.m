@@ -53,6 +53,7 @@
             [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Enter text here..."]];
         }
         [_textView setDrawsBackground:FALSE];
+        [_textView setAllowsUndo:TRUE];
         
         // set delegates
         [_textView setDelegate:self];
@@ -90,8 +91,15 @@
     return TRUE;
 }
 
-- (void)onContextChanged:(NSNotification *)note{
-    [super onContextChanged:note];
+- (void)updateDisplayBasedOnContext{
+    [super updateDisplayBasedOnContext];
+    
+    // by default, the textview must be disabled if textbox is selected
+    // this case arises when user selects undo command while typing and deselection of textbox is undon
+    if ([[self dataObj] selected]){
+        [self disable];
+    }
+    //NSLog(@"updating textbox: selected?:%d", [[self dataObj] selected]);
 }
 #pragma mark disable/enable textbox
 - (BOOL)enabled{
@@ -111,7 +119,6 @@
     
     // enable all tracking areas
     [_textView addTrackingRect:[_textView frame] owner:self userData:nil assumeInside:NO];
-    //[_mask removeFromSuperview];
     
     // need to change cursor rects
     [[self window] invalidateCursorRectsForView:self];
@@ -135,9 +142,6 @@
     [_textView setEditable:FALSE];
     [_textView setSelectable:FALSE];
     
-    // add the mask
-    //[self addSubview:_mask];
- 
     // switch order to that mask is in front of text
     [_mask removeFromSuperview];
     [self addSubview:_mask];

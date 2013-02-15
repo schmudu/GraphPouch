@@ -100,6 +100,7 @@ extern NSString *const EDEventDeleteKeyPressedWithoutModifiers;
 extern NSString *const EDEventBecomeFirstResponder;
 extern NSString *const EDEventWorksheetElementSelected;
 extern NSString *const EDEventWorksheetElementDeselected;
+extern NSString *const EDEventWorksheetElementRedrawingItself;
 extern NSString *const EDEventWorksheetViewResignFirstResponder;
 extern NSString *const EDEventKey;
 

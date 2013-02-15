@@ -61,7 +61,8 @@
                               [[[self dataObj] valueForKey:EDElementAttributeLocationY] floatValue],
                               [[[self dataObj] valueForKey:EDElementAttributeWidth] floatValue],
                               [[[self dataObj] valueForKey:EDElementAttributeHeight] floatValue])];
-                              
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWorksheetElementRedrawingItself object:self];
     [self setNeedsDisplay:TRUE];
 }
 

@@ -36,6 +36,7 @@
 - (void)onElementMouseDown:(NSNotification *)note;
 - (void)onElementMouseDragged:(NSNotification *)note;
 - (void)onElementMouseUp:(NSNotification *)note;
+- (void)onElementRedrawingItself:(NSNotification *)note;
 
 // guides
 - (void)saveGuides;
@@ -67,6 +68,7 @@
 - (void)onTextboxBeginEditing:(NSNotification *)note;
 - (void)onTextboxEndEditing:(NSNotification *)note;
 - (void)onTextboxDidChange:(NSNotification *)note;
+- (void)disableAllTextBoxesFromEditing;
 @end
 
 @implementation EDWorksheetView
@@ -211,6 +213,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [_nc addObserver:self selector:@selector(onTextboxBeginEditing:) name:EDEventTextboxBeginEditing object:textboxView];
     [_nc addObserver:self selector:@selector(onTextboxEndEditing:) name:EDEventTextboxEndEditing object:textboxView];
     [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:textboxView];
+    [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:textboxView];
     
     // set location
     [textboxView setFrameOrigin:NSMakePoint([[textbox valueForKey:EDElementAttributeLocationX] floatValue], [[textbox valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -234,6 +237,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:lineView];
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:lineView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:lineView];
+    [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:lineView];
     
     // set location
     [lineView setFrameOrigin:NSMakePoint([[line valueForKey:EDElementAttributeLocationX] floatValue], [[line valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -256,6 +260,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:graphView];
+    [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:graphView];
     
     // set location
     [graphView setFrameOrigin:NSMakePoint([[graph valueForKey:EDElementAttributeLocationX] floatValue], [[graph valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -369,16 +374,19 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         for (EDElement *myElement in insertedArray){
             // draw graph if it's located on this page
             if (([[myElement className] isEqualToString:EDEntityNameGraph]) && (newPage == [(EDGraph *)myElement page])) {
+                [self disableAllTextBoxesFromEditing];
                 [self drawGraph:(EDGraph *)myElement];
             }
             
             // draw line if it's located on this page
             if (([[myElement className] isEqualToString:EDEntityNameLine]) && (newPage == [(EDLine *)myElement page])) {
+                [self disableAllTextBoxesFromEditing];
                 [self drawLine:(EDLine *)myElement];
             }
             
             // draw textbox
             if (([[myElement className] isEqualToString:EDEntityNameTextbox]) && (newPage == [(EDLine *)myElement page])) {
+                [self disableAllTextBoxesFromEditing];
                 [self drawTextbox:(EDTextbox *)myElement];
             }
 #warning worksheet elements
@@ -431,6 +439,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             [_nc removeObserver:self name:EDEventMouseDown object:currentElement];
             [_nc removeObserver:self name:EDEventMouseDragged object:currentElement];
             [_nc removeObserver:self name:EDEventMouseUp object:currentElement];
+            [_nc removeObserver:self name:EDEventWorksheetElementRedrawingItself object:currentElement];
             
             // special listener for textbox
             if ([currentElement isKindOfClass:[EDTextboxView class]]){
@@ -447,6 +456,11 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [_nc postNotificationName:EDEventUnselectedElementClickedWithoutModifier object:self];
 }
 
+- (void)onElementRedrawingItself:(NSNotification *)note{
+    // whenever an element redisplays itself then disable the textviews
+    //[self disableAllTextBoxesFromEditing];
+}
+
 #pragma mark mouse behavior
 - (void)mouseDown:(NSEvent *)theEvent{
     // make this the first responder
@@ -457,13 +471,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)onElementMouseDown:(NSNotification *)note{
-    // notify all textboxes to end editing
-    for (EDWorksheetElementView *elementView in [self subviews]){
-        // only find the boxes
-        if ([elementView isKindOfClass:[EDTextboxView class]]){
-            [(EDTextboxView *)elementView disable];
-        }
-    }
+    [self disableAllTextBoxesFromEditing];
     
     // order views
     [self sortSubviewsUsingFunction:&viewCompareBySelection context:nil];
@@ -907,5 +915,15 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 - (void)onTextboxDidChange:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
+}
+
+- (void)disableAllTextBoxesFromEditing{
+    // notify all textboxes to end editing
+    for (EDWorksheetElementView *elementView in [self subviews]){
+        // only find the boxes
+        if ([elementView isKindOfClass:[EDTextboxView class]]){
+            [(EDTextboxView *)elementView disable];
+        }
+    }
 }
 @end
