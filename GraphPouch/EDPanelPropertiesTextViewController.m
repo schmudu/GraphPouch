@@ -96,7 +96,8 @@
             else if (attribute == EDFontAttributeItalic)
                 [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSItalicFontMask]] forKey:EDKeyValue];
             else if (attribute == NSSuperscriptAttributeName)
-                [results setObject:[NSNumber numberWithBool:[[_currentTextView textStorage] hasAttribute:NSSuperscriptAttributeName forIndex:0]] forKey:EDKeyValue];
+                [results setObject:[NSNumber numberWithBool:FALSE] forKey:EDKeyValue];
+                //[results setObject:[NSNumber numberWithBool:[[_currentTextView textStorage] hasAttribute:NSSuperscriptAttributeName forIndex:0]] forKey:EDKeyValue];
             
             continue;
         }
@@ -114,7 +115,7 @@
             else if (attribute == EDFontAttributeItalic)
                 [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSItalicFontMask]] forKey:EDKeyValue];
             else if (attribute == NSSuperscriptAttributeName)
-                [results setObject:[NSNumber numberWithBool:[[_currentTextView textStorage] hasAttribute:NSSuperscriptAttributeName forIndex:(range.location-1)]] forKey:EDKeyValue];
+                [results setObject:[NSNumber numberWithBool:[[_currentTextView textStorage] hasAttribute:NSSuperscriptAttributeName forRange:NSMakeRange(range.location-1,1)]] forKey:EDKeyValue];
         }
         else{
             // retrieve the font
@@ -137,8 +138,19 @@
                 [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSBoldFontMask]] forKey:EDKeyValue];
             else if (attribute == EDFontAttributeItalic)
                 [results setObject:[NSNumber numberWithBool:[[NSFontManager sharedFontManager] fontNamed:[font displayName] hasTraits:NSItalicFontMask]] forKey:EDKeyValue];
-            else if (attribute == NSSuperscriptAttributeName)
-                [results setObject:[NSNumber numberWithBool:[[_currentTextView textStorage] hasAttribute:NSSuperscriptAttributeName forIndex:0]] forKey:EDKeyValue];
+            else if (attribute == NSSuperscriptAttributeName){
+                //[results setObject:[NSNumber numberWithBool:[[_currentTextView textStorage] hasAttribute:NSSuperscriptAttributeName forIndex:0]] forKey:EDKeyValue];
+                if (range.location == 0)
+                    [results setObject:[NSNumber numberWithBool:FALSE] forKey:EDKeyValue];
+                else{
+                    if (range.length > 0)
+                        [results setObject:[NSNumber numberWithBool:[[_currentTextView textStorage] hasAttribute:NSSuperscriptAttributeName forRange:NSMakeRange(range.location,1)]] forKey:EDKeyValue];
+                    else
+                        [results setObject:[NSNumber numberWithBool:[[_currentTextView textStorage] hasAttribute:NSSuperscriptAttributeName forRange:NSMakeRange(range.location-1,1)]] forKey:EDKeyValue];
+                    
+                }
+                
+            }
         }
         
         if ((attribute == EDFontAttributeName) || (attribute == EDFontAttributeSize) || (attribute == EDFontAttributeBold) || (attribute == EDFontAttributeItalic)){
@@ -219,7 +231,7 @@
         }
         else if(attribute == NSSuperscriptAttributeName){
             // by default set the value to false, this value will be overriden if the attribute exists in the following block
-            [results setObject:[NSNumber numberWithInt:0] forKey:EDKeyValue];
+            //[results setObject:[NSNumber numberWithInt:0] forKey:EDKeyValue];
             // we need to enumerate over something different than the font name
             [[_currentTextView textStorage] enumerateAttribute:attribute inRange:NSMakeRange(range.location,range.length) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
                 
@@ -326,34 +338,8 @@
     [_currentTextbox setTextValue:[_currentTextView textStorage]];
 }
 #pragma mark button superscript
-/*
-- (IBAction)onButtonPressedSuperscript:(id)sender{
-    if (_currentTextView){
-        NSArray *selectedRanges = [_currentTextView selectedRanges];
-        NSMutableAttributedString *string = [_currentTextView textStorage];
-        NSRange range;
-        
-        [string beginEditing];
-        for (int rangeIndex=0; rangeIndex<[selectedRanges count]; rangeIndex++){
-            [[selectedRanges objectAtIndex:rangeIndex] getValue:&range];
-            
-            // invalidate and ranges that are outside the bounds of the string
-            if ((range.location == [[[_currentTextView textStorage] string] length]) || (range.location > [[[_currentTextView textStorage] string] length])){
-                continue;
-            }
-        
-            [string addAttribute:NSSuperscriptAttributeName value:[NSNumber numberWithInt:1] range:range];
-        }
-        [string endEditing];
-        
-        // save
-        [_currentTextbox setTextValue:string];
-    }
-}*/
-
 - (void)setUpButtonSuperscript{
     NSDictionary *results = [self getFontAttributeValueForSelectedRanges:NSSuperscriptAttributeName];
-    NSLog(@"super script results:%@", results);
     if ([[results objectForKey:EDKeyDiff] boolValue]) {
         [buttonSuperscript setState:NSMixedState];
     }

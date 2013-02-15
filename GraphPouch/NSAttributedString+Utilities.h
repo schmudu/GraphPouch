@@ -10,5 +10,5 @@
 
 @interface NSAttributedString (Utilities)
 
-- (BOOL)hasAttribute:(NSString *)attribute forIndex:(NSInteger)index;
+- (BOOL)hasAttribute:(NSString *)attribute forRange:(NSRange)range;
 @end

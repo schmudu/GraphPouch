@@ -10,16 +10,17 @@
 
 @implementation NSAttributedString (Utilities)
 
-- (BOOL)hasAttribute:(NSString *)attribute forIndex:(NSInteger)index{
-    NSRange range = NSMakeRange(index, 0);
+- (BOOL)hasAttribute:(NSString *)attribute forRange:(NSRange)range{
     __block BOOL result = FALSE;
     [self enumerateAttribute:attribute inRange:range options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
-        if ((int)value == 1){
-            result = TRUE;
+        if (value == nil){
+            result = FALSE;
+            *stop = TRUE;
             return;
         }
         else{
             result = TRUE;
+            *stop = TRUE;
             return;
         }
     }];
