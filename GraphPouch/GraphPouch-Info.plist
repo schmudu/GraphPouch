@@ -114,5 +114,9 @@
 			<dict/>
 		</dict>
 	</array>
+	<key>CFBundleHelpBookFolder</key>
+	<string>GraphPouch.help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>com.edcodia.graphpouch.help</string>
 </dict>
 </plist>
