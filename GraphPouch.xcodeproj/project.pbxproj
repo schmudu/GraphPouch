@@ -70,7 +70,7 @@
 		CD82442316AC582F00BAAB0B /* EDSheetPropertiesGraphError.m in Sources */ = {isa = PBXBuildFile; fileRef = CD82442216AC582E00BAAB0B /* EDSheetPropertiesGraphError.m */; };
 		CD841EE216AB451000421EB4 /* EDPageViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = CD841EE116AB451000421EB4 /* EDPageViewContainer.m */; };
 		CD90B62416CEACB6000637FF /* NSAttributedString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CD90B62316CEACB6000637FF /* NSAttributedString+Utilities.m */; };
-		CD90B62F16CEDCA1000637FF /* GraphPouch.help in Resources */ = {isa = PBXBuildFile; fileRef = CD90B62E16CEDCA1000637FF /* GraphPouch.help */; };
+		CD90B63616CFE99D000637FF /* GraphPouch.help in Resources */ = {isa = PBXBuildFile; fileRef = CD90B63516CFE99D000637FF /* GraphPouch.help */; };
 		CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */; };
 		CDA8555816236EF9006FCD62 /* EDContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA8555716236EF9006FCD62 /* EDContentView.m */; };
 		CDAA9105166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDAA9104166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib */; };
@@ -247,7 +247,7 @@
 		CD841EE116AB451000421EB4 /* EDPageViewContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainer.m; sourceTree = "<group>"; };
 		CD90B62216CEACB6000637FF /* NSAttributedString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Utilities.h"; sourceTree = "<group>"; };
 		CD90B62316CEACB6000637FF /* NSAttributedString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Utilities.m"; sourceTree = "<group>"; };
-		CD90B62E16CEDCA1000637FF /* GraphPouch.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GraphPouch.help; sourceTree = SOURCE_ROOT; };
+		CD90B63516CFE99D000637FF /* GraphPouch.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GraphPouch.help; sourceTree = SOURCE_ROOT; };
 		CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowController.h; sourceTree = "<group>"; };
 		CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowController.m; sourceTree = "<group>"; };
 		CDA8555616236EF9006FCD62 /* EDContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDContentView.h; sourceTree = "<group>"; };
@@ -713,7 +713,7 @@
 		CD47112815BA1647008AACC3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				CD90B62E16CEDCA1000637FF /* GraphPouch.help */,
+				CD90B63516CFE99D000637FF /* GraphPouch.help */,
 				CD9DA575169A761D0072242F /* images */,
 				CD47112915BA1647008AACC3 /* GraphPouch-Info.plist */,
 				CD47112A15BA1647008AACC3 /* InfoPlist.strings */,
@@ -1063,7 +1063,7 @@
 				CDD05E0F16C1BC86001279FB /* icon_properties.png in Resources */,
 				CDD05E1116C1C019001279FB /* icon_worksheet.png in Resources */,
 				CD80CC9016C6B880001C3375 /* EDPanelPropertiesTextView.xib in Resources */,
-				CD90B62F16CEDCA1000637FF /* GraphPouch.help in Resources */,
+				CD90B63616CFE99D000637FF /* GraphPouch.help in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,42 @@
+*{
+	padding:0px;
+	margin:0px;
+  font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;
+	font-size: 13px;
+}
+
+a:link{
+  text-decoration:none;
+}
+
+a:hover{
+  text-decoration:underline;
+}
+
+ul{
+	list-style-type: none;
+}
+
+#title_bar{
+  height:64px;
+  vertical-align: top;
+}
+
+#container{
+  padding-left:20px;
+  padding-top:20px;
+}
+
+#page_title{
+  font-size: 28px;
+  height:64px;
+  display:inline-block;
+}
+
+ul.table_contents li{
+  padding-bottom:20px;
+}
+
+ul.table_contents .description{
+  font-size:11px;
+}

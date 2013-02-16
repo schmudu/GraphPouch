@@ -13,11 +13,11 @@
     <key>CFBundlePackageType</key>
     <string>BNDL</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0</string>
+    <string>2</string>
     <key>CFBundleSignature</key>
     <string>hbwr</string>
     <key>CFBundleVersion</key>
-    <string>1.0</string>
+    <string>2</string>
     <key>CFBundleHelpBookName</key>
     <string>GraphPouch Help</string>
     <key>HPDBookAccessPath</key>
@@ -28,10 +28,6 @@
     <string>search.helpindex</string>
     <key>HPDBookKBProduct</key>
     <string>graphpouch1</string>
-    <key>HPDBookKBURL</key>
-    <string>http://www.edcodia.com</string>
-    <key>HPDBookRemoteURL</key>
-    <string>http://www.edcodia.com</string>
     <key>HPDBookTitle</key>
     <string>GraphPouch Help</string>
     <key>HPDBookType</key>
