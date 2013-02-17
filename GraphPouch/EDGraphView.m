@@ -260,7 +260,7 @@
     float originPosVertical = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
     float originPosHorizontal = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
     
-    [[NSColor redColor] setStroke];
+    [[NSColor blackColor] setStroke];
     
     // draw top/bottom of grid
     [outlinePath moveToPoint:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];

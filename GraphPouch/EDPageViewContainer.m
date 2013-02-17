@@ -215,7 +215,7 @@
     ratioYNegative = 1 - ratioYPositive;
     
      // set stroke
-    [[NSColor redColor] setStroke];
+    [[NSColor blackColor] setStroke];
     
     //int endInt = (int)[self frame].size.width * EDGraphDependentVariableIncrement;
     int endInt = (int)graphWidth * EDGraphDependentVariableIncrement;
