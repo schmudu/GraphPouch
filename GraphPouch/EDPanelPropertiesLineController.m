@@ -35,7 +35,7 @@
     _context = context;
     [self setElementLabel:labelX attribute:EDElementAttributeLocationX];
     [self setElementLabel:labelY attribute:EDElementAttributeLocationY];
-    [self setElementLabel:labelWidth attribute:EDLineAttributeThickness];
+    [self setElementLabel:labelWidth attribute:EDElementAttributeWidth];
     
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelX];
@@ -55,7 +55,7 @@
         [self changeSelectedElementsAttribute:EDElementAttributeLocationY newValue:[[NSNumber alloc] initWithFloat:[[labelY stringValue] floatValue]]];
     }
     else if ([obj object] == labelWidth) {
-        [self changeSelectedElementsAttribute:EDLineAttributeThickness newValue:[[NSNumber alloc] initWithFloat:[[labelWidth stringValue] floatValue]]];
+        [self changeSelectedElementsAttribute:EDElementAttributeWidth newValue:[[NSNumber alloc] initWithFloat:[[labelWidth stringValue] floatValue]]];
     }
 }
 @end
