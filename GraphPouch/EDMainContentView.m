@@ -46,12 +46,12 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    [[NSColor colorWithHexColorString:@"cccccc"] setFill];
+    [[NSColor colorWithHexColorString:@"999999"] setFill];
     [NSBezierPath fillRect:[self bounds]];
     
     // draw drop shadow of document
-    [[NSColor colorWithHexColorString:EDWorksheetShadowColor] setFill];
-    NSBezierPath *shadow = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect([_worksheetView frame].origin.x - EDWorksheetShadowSize, [_worksheetView frame].origin.y - EDWorksheetShadowSize, [_worksheetView frame].size.width + (2 * EDWorksheetShadowSize), [_worksheetView frame].size.height + 2 * EDWorksheetShadowSize) xRadius:3 yRadius:3];
+    [[NSColor colorWithHexColorString:EDWorksheetShadowColor alpha:0.4] setFill];
+    NSBezierPath *shadow = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect([_worksheetView frame].origin.x - EDWorksheetShadowSize, [_worksheetView frame].origin.y , [_worksheetView frame].size.width + (2 * EDWorksheetShadowSize), [_worksheetView frame].size.height + EDWorksheetShadowSize) xRadius:3 yRadius:3];
     [shadow fill];
     
     

@@ -18,6 +18,11 @@
 		CD1D02FF15E83F1600C88A7A /* EDMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D02FE15E83F1600C88A7A /* EDMenuViewController.m */; };
 		CD1D032815EC1BCA00C88A7A /* EDMenuWindowAlignController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */; };
 		CD1D032915EC1BCA00C88A7A /* EDMenuWindowAlign.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */; };
+		CD1DA3E716D095B300198084 /* icon_worksheet_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CD1DA3E616D095B300198084 /* icon_worksheet_over.png */; };
+		CD1DA3E916D097C900198084 /* icon_properties_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CD1DA3E816D097C900198084 /* icon_properties_over.png */; };
+		CD1DA3EB16D0992500198084 /* icon_line_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CD1DA3EA16D0992500198084 /* icon_line_over.png */; };
+		CD1DA3ED16D09AB800198084 /* icon_text_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CD1DA3EC16D09AB800198084 /* icon_text_over.png */; };
+		CD1DA3EF16D09C4B00198084 /* icon_graph_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CD1DA3EE16D09C4B00198084 /* icon_graph_over.png */; };
 		CD1EBD3315FC587B00BEEA4D /* EDMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD3215FC587B00BEEA4D /* EDMenuController.m */; };
 		CD1EBD4F15FED23F00BEEA4D /* EDPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD4E15FED23F00BEEA4D /* EDPanelViewController.m */; };
 		CD1EBD5B15FED4B800BEEA4D /* EDPanelPropertiesController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD5A15FED4B800BEEA4D /* EDPanelPropertiesController.m */; };
@@ -158,6 +163,11 @@
 		CD1D032515EC1BCA00C88A7A /* EDMenuWindowAlignController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowAlignController.h; sourceTree = "<group>"; };
 		CD1D032615EC1BCA00C88A7A /* EDMenuWindowAlignController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowAlignController.m; sourceTree = "<group>"; };
 		CD1D032715EC1BCA00C88A7A /* EDMenuWindowAlign.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDMenuWindowAlign.xib; sourceTree = "<group>"; };
+		CD1DA3E616D095B300198084 /* icon_worksheet_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_worksheet_over.png; sourceTree = "<group>"; };
+		CD1DA3E816D097C900198084 /* icon_properties_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_properties_over.png; sourceTree = "<group>"; };
+		CD1DA3EA16D0992500198084 /* icon_line_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_line_over.png; sourceTree = "<group>"; };
+		CD1DA3EC16D09AB800198084 /* icon_text_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_text_over.png; sourceTree = "<group>"; };
+		CD1DA3EE16D09C4B00198084 /* icon_graph_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_graph_over.png; sourceTree = "<group>"; };
 		CD1EBD3115FC587B00BEEA4D /* EDMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuController.h; sourceTree = "<group>"; };
 		CD1EBD3215FC587B00BEEA4D /* EDMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuController.m; sourceTree = "<group>"; };
 		CD1EBD4D15FED23F00BEEA4D /* EDPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelViewController.h; sourceTree = "<group>"; };
@@ -923,10 +933,15 @@
 		CDD05DF716BF4DBA001279FB /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				CD1DA3EE16D09C4B00198084 /* icon_graph_over.png */,
+				CD1DA3E816D097C900198084 /* icon_properties_over.png */,
 				CDD05E1016C1C019001279FB /* icon_worksheet.png */,
+				CD1DA3E616D095B300198084 /* icon_worksheet_over.png */,
 				CDD05E0E16C1BC86001279FB /* icon_properties.png */,
 				CDD05E0016C06C35001279FB /* icon_line.png */,
+				CD1DA3EA16D0992500198084 /* icon_line_over.png */,
 				CDD05DFE16C069AA001279FB /* icon_text.png */,
+				CD1DA3EC16D09AB800198084 /* icon_text_over.png */,
 				CDD05DFC16C06811001279FB /* icon_graph.png */,
 				CDD05DF816BF4DBA001279FB /* icon_paper.png */,
 				CDD05DF916BF4DBA001279FB /* icon_paper_over.png */,
@@ -1124,6 +1139,11 @@
 				CD75A43316D079F300CD775C /* EDPanelPropertiesGraphLineTextbox.xib in Resources */,
 				CD75A43916D07CA300CD775C /* EDPanelPropertiesGraphTextbox.xib in Resources */,
 				CD75A43E16D07EBD00CD775C /* EDPanelPropertiesLineTextbox.xib in Resources */,
+				CD1DA3E716D095B300198084 /* icon_worksheet_over.png in Resources */,
+				CD1DA3E916D097C900198084 /* icon_properties_over.png in Resources */,
+				CD1DA3EB16D0992500198084 /* icon_line_over.png in Resources */,
+				CD1DA3ED16D09AB800198084 /* icon_text_over.png in Resources */,
+				CD1DA3EF16D09C4B00198084 /* icon_graph_over.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

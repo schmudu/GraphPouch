@@ -87,7 +87,7 @@ NSString * const EDLineAttributeThickness                       = @"thickness";
 float const EDWorksheetViewWidth                                = 600;
 float const EDWorksheetViewHeight                               = 766;
 float const EDWorksheetShadowSize                               = 2.0;
-NSString * const EDWorksheetShadowColor                         = @"bbbbbb";
+NSString * const EDWorksheetShadowColor                         = @"333333";
 
 
 // worksheet events
@@ -117,7 +117,7 @@ NSString * const EDEventShortcutGraph                           = @"EDEventShort
 NSString * const EDEventShortcutPage                            = @"EDEventShortcutPage";
 NSString * const EDEventShortcutSelectAll                       = @"EDEventShortcutSelectAll";
 NSString * const EDEventShortcutDeselectAll                     = @"EDEventShortcutDeselectAll";
-float const EDMenuToolbarShadowWidth                            = 4.0;
+float const EDMenuToolbarShadowWidth                            = 2.0;
 
 // guides
 NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
