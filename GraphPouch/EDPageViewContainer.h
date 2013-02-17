@@ -12,6 +12,7 @@
 @interface EDPageViewContainer : NSView{
     EDPage *_page;
     NSManagedObjectContext *_context;
+    NSMutableArray *_textboxViews;
 }
 
 - (id)initWithFrame:(NSRect)frame page:(EDPage *)page;

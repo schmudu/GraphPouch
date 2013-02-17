@@ -9,6 +9,7 @@
 #import "EDConstants.h"
 #import "EDCoreDataUtility+Graphs.h"
 #import "EDCoreDataUtility+Lines.h"
+#import "EDCoreDataUtility+Pages.h"
 #import "EDEquation.h"
 #import "EDGraphView.h"
 #import "EDGraph.h"
@@ -16,6 +17,7 @@
 #import "EDPageViewContainer.h"
 #import "EDPage.h"
 #import "EDParser.h"
+#import "EDTextbox.h"
 #import "NSColor+Utilities.h"
 
 @interface EDPageViewContainer()
@@ -26,6 +28,11 @@
 - (void)drawLines;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo width:(float)graphWidth height:(float)graphHeight graph:(EDGraph *)graph;
 - (void)drawEquation:(EDEquation *)equation verticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo width:(float)graphWidth height:(float)graphHeight graph:(EDGraph *)graph xRatio:(float)xRatio yRatio:(float)yRatio;
+
+// textboxes
+- (void)drawTextboxes;
+- (void)removeTextboxes;
+- (void)updateTextboxes;
 @end
 
 @implementation EDPageViewContainer
@@ -36,6 +43,7 @@
     if (self) {
         _page = page;
         _context = [page managedObjectContext];
+        _textboxViews = [[NSMutableArray alloc] init];
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -128,6 +136,9 @@
     // if any object was updated, removed or inserted on this page then this page needs to be updated
     for (NSManagedObject *object in allObjects){
         if ((object == _page) || ([_page containsObject:object])){
+            // update textboxes
+            [self updateTextboxes];
+            
             [self setNeedsDisplay:TRUE];
         }
     }
@@ -334,4 +345,48 @@
     }
     [path stroke];
 }
+
+#pragma mark textboxes
+- (void)drawTextboxes{
+    // get all textboxes for current page
+    EDPage *currrentPage = [EDCoreDataUtility getCurrentPage:_context];
+    NSArray *textboxes = [[currrentPage textboxes] allObjects];
+    NSTextView *newTextView;
+    
+    // calculate ratio
+    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
+    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
+    
+    // for each textbox draw it on the view
+    for (EDTextbox *textbox in textboxes){
+        //newTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(xRatio * [textbox locationX], yRatio *[textbox locationY], xRatio * [textbox elementWidth], yRatio * [textbox elementHeight])];
+        newTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, xRatio * [textbox elementWidth], yRatio * [textbox elementHeight])];
+        [newTextView setDrawsBackground:FALSE];
+        
+        // add text
+        [newTextView insertText:[NSString stringWithFormat:@"Hello there"]];
+        NSLog(@"drawing textbox");
+        // add to superview
+        [self addSubview:newTextView];
+        
+        // position it
+        [newTextView setFrameOrigin:NSMakePoint(xRatio * [textbox locationX], yRatio * [textbox locationY])];
+    }
+}
+
+- (void)removeTextboxes{
+    for (NSTextView *textView in _textboxViews){
+        [textView removeFromSuperview];
+    }
+    
+}
+
+- (void)updateTextboxes{
+    // remove all textboxes
+    [self removeTextboxes];
+    
+    // draw textboxes
+    [self drawTextboxes];
+}
+
 @end
