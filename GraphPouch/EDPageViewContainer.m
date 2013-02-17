@@ -52,6 +52,11 @@
     return self;
 }
 
+- (void)postInit{
+    // update textboxes
+    [self updateTextboxes];
+}
+
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
@@ -349,28 +354,50 @@
 #pragma mark textboxes
 - (void)drawTextboxes{
     // get all textboxes for current page
-    EDPage *currrentPage = [EDCoreDataUtility getCurrentPage:_context];
-    NSArray *textboxes = [[currrentPage textboxes] allObjects];
+    //EDPage *currrentPage = [EDCoreDataUtility getCurrentPage:_context];
+    NSArray *textboxes = [[_page textboxes] allObjects];
     NSTextView *newTextView;
-    
     // calculate ratio
     float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
     float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
     
     // for each textbox draw it on the view
     for (EDTextbox *textbox in textboxes){
-        //newTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(xRatio * [textbox locationX], yRatio *[textbox locationY], xRatio * [textbox elementWidth], yRatio * [textbox elementHeight])];
         newTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, xRatio * [textbox elementWidth], yRatio * [textbox elementHeight])];
         [newTextView setDrawsBackground:FALSE];
         
+        // set container size, controls clipping
+        [[newTextView textContainer] setContainerSize:NSMakeSize(xRatio * [textbox elementWidth], yRatio * [textbox elementHeight])];
+        //NSLog(@"textbox height:%f container height:%f", yRatio * [textbox elementHeight], [newTextView textContainer] );
+        
         // add text
-        [newTextView insertText:[NSString stringWithFormat:@"Hello there"]];
-        NSLog(@"drawing textbox");
+        if ([textbox textValue]){
+            // insert saved data
+            [newTextView insertText:[textbox textValue]];
+            
+            // format the text accordingly
+            [[textbox textValue] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[textbox textValue] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
+                NSFont *modifiedFont;
+                // go through the sting and update the characters based on the range
+                // remove default
+                [[newTextView textStorage] removeAttribute:NSFontAttributeName range:blockRange];
+                
+                // need to resize the font according to ratio
+                modifiedFont = [[NSFontManager sharedFontManager] convertFont:(NSFont *)value toSize:[(NSFont *)value pointSize] * xRatio];
+                
+                // add custom attributes
+                [[newTextView textStorage] addAttribute:NSFontAttributeName value:modifiedFont range:blockRange];
+             }];
+        }
+        
         // add to superview
         [self addSubview:newTextView];
         
         // position it
         [newTextView setFrameOrigin:NSMakePoint(xRatio * [textbox locationX], yRatio * [textbox locationY])];
+        
+        // save view so it can be erased later
+        [_textboxViews addObject:newTextView];
     }
 }
 

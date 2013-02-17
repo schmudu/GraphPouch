@@ -82,6 +82,9 @@
     _container = [[EDPageViewContainer alloc] initWithFrame:NSMakeRect(EDPageImageHorizontalBuffer, (EDPageViewSelectionHeight - EDPageImageViewHeight)/2, EDPageImageViewWidth, EDPageImageViewHeight) page:pageObj];
     [self addSubview:_container];
     
+    // do any post init work
+    [_container postInit];
+    
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }

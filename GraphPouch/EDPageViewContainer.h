@@ -16,4 +16,5 @@
 }
 
 - (id)initWithFrame:(NSRect)frame page:(EDPage *)page;
+- (void)postInit;
 @end
