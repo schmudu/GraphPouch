@@ -62,6 +62,7 @@
 									<string key="NSFrame">{{645, 42}, {116, 14}}</string>
 									<reference key="NSSuperview" ref="24759428"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="246771757"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="653297726">
@@ -102,13 +103,13 @@
 									<string key="NSFrame">{{149, 42}, {102, 14}}</string>
 									<reference key="NSSuperview" ref="24759428"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="835139896"/>
+									<reference key="NSNextKeyView" ref="276099784"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="291427690">
 										<int key="NSCellFlags">68157504</int>
 										<int key="NSCellFlags2">138544128</int>
-										<string key="NSContents">New Page</string>
+										<string key="NSContents">Add Page</string>
 										<reference key="NSSupport" ref="26"/>
 										<string key="NSCellIdentifier">_NS:1535</string>
 										<reference key="NSControlView" ref="71647030"/>
@@ -123,7 +124,7 @@
 									<string key="NSFrame">{{9, 42}, {102, 14}}</string>
 									<reference key="NSSuperview" ref="24759428"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="246771757"/>
+									<reference key="NSNextKeyView" ref="71647030"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="782700918">
@@ -144,7 +145,7 @@
 									<string key="NSFrame">{{25, 6}, {70, 30}}</string>
 									<reference key="NSSuperview" ref="24759428"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="71647030"/>
+									<reference key="NSNextKeyView" ref="835139896"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="999864075">
@@ -277,7 +278,7 @@
 								<object class="NSButton" id="242624501">
 									<reference key="NSNextResponder" ref="24759428"/>
 									<int key="NSvFlags">300</int>
-									<string key="NSFrame">{{655, 6}, {60, 30}}</string>
+									<string key="NSFrame">{{655, 7}, {60, 30}}</string>
 									<reference key="NSSuperview" ref="24759428"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="897086742"/>
@@ -310,7 +311,7 @@
 								<object class="NSButton" id="664958542">
 									<reference key="NSNextResponder" ref="24759428"/>
 									<int key="NSvFlags">296</int>
-									<string key="NSFrame">{{726, 6}, {74, 30}}</string>
+									<string key="NSFrame">{{726, 7}, {74, 30}}</string>
 									<reference key="NSSuperview" ref="24759428"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="204223611"/>
@@ -1320,13 +1321,13 @@
 			<string key="icon_graph_over">{40, 25}</string>
 			<string key="icon_line">{40, 25}</string>
 			<string key="icon_line_over">{40, 25}</string>
-			<string key="icon_paper">{51, 26}</string>
+			<string key="icon_paper">{50, 25}</string>
 			<string key="icon_paper_over">{51, 26}</string>
-			<string key="icon_properties">{40, 26}</string>
+			<string key="icon_properties">{40, 25}</string>
 			<string key="icon_properties_over">{40, 26}</string>
-			<string key="icon_text">{40, 26}</string>
+			<string key="icon_text">{40, 25}</string>
 			<string key="icon_text_over">{40, 26}</string>
-			<string key="icon_worksheet">{48, 26}</string>
+			<string key="icon_worksheet">{48, 25}</string>
 			<string key="icon_worksheet_over">{48, 26}</string>
 		</dictionary>
 	</data>
