@@ -60,6 +60,12 @@
 		CD5EE20216012A690027EFC6 /* NSObject+Document.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE20116012A690027EFC6 /* NSObject+Document.m */; };
 		CD6DF301160D181900935BF2 /* EDTransformCornerPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */; };
 		CD74501216B3342A004B813E /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = CD74501116B3342A004B813E /* icon.iconset */; };
+		CD75A43216D079F300CD775C /* EDPanelPropertiesGraphLineTextboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75A43016D079F300CD775C /* EDPanelPropertiesGraphLineTextboxController.m */; };
+		CD75A43316D079F300CD775C /* EDPanelPropertiesGraphLineTextbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD75A43116D079F300CD775C /* EDPanelPropertiesGraphLineTextbox.xib */; };
+		CD75A43816D07CA300CD775C /* EDPanelPropertiesGraphTextboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75A43616D07CA300CD775C /* EDPanelPropertiesGraphTextboxController.m */; };
+		CD75A43916D07CA300CD775C /* EDPanelPropertiesGraphTextbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD75A43716D07CA300CD775C /* EDPanelPropertiesGraphTextbox.xib */; };
+		CD75A43D16D07EBD00CD775C /* EDPanelPropertiesLineTextboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD75A43B16D07EBD00CD775C /* EDPanelPropertiesLineTextboxController.m */; };
+		CD75A43E16D07EBD00CD775C /* EDPanelPropertiesLineTextbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD75A43C16D07EBD00CD775C /* EDPanelPropertiesLineTextbox.xib */; };
 		CD80CC8F16C6B880001C3375 /* EDPanelPropertiesTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */; };
 		CD80CC9016C6B880001C3375 /* EDPanelPropertiesTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD80CC8E16C6B880001C3375 /* EDPanelPropertiesTextView.xib */; };
 		CD80CCA816C887C3001C3375 /* EDPanelPropertiesTextViewFontSizeText.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80CCA716C887C2001C3375 /* EDPanelPropertiesTextViewFontSizeText.m */; };
@@ -231,6 +237,15 @@
 		CD6DF2FF160D181900935BF2 /* EDTransformCornerPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformCornerPoint.h; sourceTree = "<group>"; };
 		CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformCornerPoint.m; sourceTree = "<group>"; };
 		CD74501116B3342A004B813E /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = icon.iconset; sourceTree = "<group>"; };
+		CD75A42F16D079F300CD775C /* EDPanelPropertiesGraphLineTextboxController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesGraphLineTextboxController.h; sourceTree = "<group>"; };
+		CD75A43016D079F300CD775C /* EDPanelPropertiesGraphLineTextboxController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesGraphLineTextboxController.m; sourceTree = "<group>"; };
+		CD75A43116D079F300CD775C /* EDPanelPropertiesGraphLineTextbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesGraphLineTextbox.xib; sourceTree = "<group>"; };
+		CD75A43516D07CA300CD775C /* EDPanelPropertiesGraphTextboxController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesGraphTextboxController.h; sourceTree = "<group>"; };
+		CD75A43616D07CA300CD775C /* EDPanelPropertiesGraphTextboxController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesGraphTextboxController.m; sourceTree = "<group>"; };
+		CD75A43716D07CA300CD775C /* EDPanelPropertiesGraphTextbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesGraphTextbox.xib; sourceTree = "<group>"; };
+		CD75A43A16D07EBD00CD775C /* EDPanelPropertiesLineTextboxController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesLineTextboxController.h; sourceTree = "<group>"; };
+		CD75A43B16D07EBD00CD775C /* EDPanelPropertiesLineTextboxController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesLineTextboxController.m; sourceTree = "<group>"; };
+		CD75A43C16D07EBD00CD775C /* EDPanelPropertiesLineTextbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesLineTextbox.xib; sourceTree = "<group>"; };
 		CD80CC8C16C6B880001C3375 /* EDPanelPropertiesTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesTextViewController.h; sourceTree = "<group>"; };
 		CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesTextViewController.m; sourceTree = "<group>"; };
 		CD80CC8E16C6B880001C3375 /* EDPanelPropertiesTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesTextView.xib; sourceTree = "<group>"; };
@@ -469,7 +484,10 @@
 				CD2DD5D116474108006557FC /* Document */,
 				CD2DD5D0164740F9006557FC /* Graph */,
 				CDF3E18616BC348C00AB78AF /* GraphLine */,
+				CD75A43416D07C7200CD775C /* GraphTextbox */,
+				CD75A42D16D0799E00CD775C /* GraphLineTextbox */,
 				CDF3E17716BC13D400AB78AF /* Line */,
+				CD75A42E16D079B200CD775C /* LineTextbox */,
 				CD80CC8B16C6B83A001C3375 /* Textbox */,
 				CD80CC8A16C6B82D001C3375 /* TextView */,
 			);
@@ -727,6 +745,36 @@
 				CD47113015BA1647008AACC3 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CD75A42D16D0799E00CD775C /* GraphLineTextbox */ = {
+			isa = PBXGroup;
+			children = (
+				CD75A42F16D079F300CD775C /* EDPanelPropertiesGraphLineTextboxController.h */,
+				CD75A43016D079F300CD775C /* EDPanelPropertiesGraphLineTextboxController.m */,
+				CD75A43116D079F300CD775C /* EDPanelPropertiesGraphLineTextbox.xib */,
+			);
+			name = GraphLineTextbox;
+			sourceTree = "<group>";
+		};
+		CD75A42E16D079B200CD775C /* LineTextbox */ = {
+			isa = PBXGroup;
+			children = (
+				CD75A43A16D07EBD00CD775C /* EDPanelPropertiesLineTextboxController.h */,
+				CD75A43B16D07EBD00CD775C /* EDPanelPropertiesLineTextboxController.m */,
+				CD75A43C16D07EBD00CD775C /* EDPanelPropertiesLineTextbox.xib */,
+			);
+			name = LineTextbox;
+			sourceTree = "<group>";
+		};
+		CD75A43416D07C7200CD775C /* GraphTextbox */ = {
+			isa = PBXGroup;
+			children = (
+				CD75A43516D07CA300CD775C /* EDPanelPropertiesGraphTextboxController.h */,
+				CD75A43616D07CA300CD775C /* EDPanelPropertiesGraphTextboxController.m */,
+				CD75A43716D07CA300CD775C /* EDPanelPropertiesGraphTextbox.xib */,
+			);
+			name = GraphTextbox;
 			sourceTree = "<group>";
 		};
 		CD80CC8A16C6B82D001C3375 /* TextView */ = {
@@ -1073,6 +1121,9 @@
 				CD80CC9016C6B880001C3375 /* EDPanelPropertiesTextView.xib in Resources */,
 				CD90B63616CFE99D000637FF /* GraphPouch.help in Resources */,
 				CD90B64C16D07424000637FF /* EDPanelPropertiesTextbox.xib in Resources */,
+				CD75A43316D079F300CD775C /* EDPanelPropertiesGraphLineTextbox.xib in Resources */,
+				CD75A43916D07CA300CD775C /* EDPanelPropertiesGraphTextbox.xib in Resources */,
+				CD75A43E16D07EBD00CD775C /* EDPanelPropertiesLineTextbox.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1179,6 +1230,9 @@
 				CD80CCA816C887C3001C3375 /* EDPanelPropertiesTextViewFontSizeText.m in Sources */,
 				CD90B62416CEACB6000637FF /* NSAttributedString+Utilities.m in Sources */,
 				CD90B64B16D07424000637FF /* EDPanelPropertiesTextboxController.m in Sources */,
+				CD75A43216D079F300CD775C /* EDPanelPropertiesGraphLineTextboxController.m in Sources */,
+				CD75A43816D07CA300CD775C /* EDPanelPropertiesGraphTextboxController.m in Sources */,
+				CD75A43D16D07EBD00CD775C /* EDPanelPropertiesLineTextboxController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

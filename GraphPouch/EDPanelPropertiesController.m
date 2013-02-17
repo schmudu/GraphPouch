@@ -116,6 +116,24 @@
             
         _viewController = graphLineController;
     }
+    else if([selectedTypes valueForKey:EDKeyGraphTextbox]){
+        if(!graphTextboxController){
+            graphTextboxController = [[EDPanelPropertiesGraphTextboxController alloc] initWithNibName:@"EDPanelPropertiesGraphTextbox" bundle:nil];
+        }
+        // set window title
+        [[self window] setTitle:@"Properties"];
+            
+        _viewController = graphTextboxController;
+    }
+    else if([selectedTypes valueForKey:EDKeyGraphLineTextbox]){
+        if(!graphLineTextboxController){
+            graphLineTextboxController = [[EDPanelPropertiesGraphLineTextboxController alloc] initWithNibName:@"EDPanelPropertiesGraphLineTextbox" bundle:nil];
+        }
+        // set window title
+        [[self window] setTitle:@"Properties"];
+            
+        _viewController = graphLineTextboxController;
+    }
     else if([selectedTypes valueForKey:EDKeyLine]){
         if(!lineController){
             lineController = [[EDPanelPropertiesLineController alloc] initWithNibName:@"EDPanelPropertiesLine" bundle:nil];
@@ -125,14 +143,14 @@
             
         _viewController = lineController;
     }
-    else if([selectedTypes valueForKey:EDKeyGraphLine]){
-        if(!documentController){
-            documentController = [[EDPanelPropertiesDocumentController alloc] initWithNibName:@"EDPanelPropertiesDocument" bundle:nil];
+    else if([selectedTypes valueForKey:EDKeyLineTextbox]){
+        if(!lineTextboxController){
+            lineTextboxController = [[EDPanelPropertiesLineTextboxController alloc] initWithNibName:@"EDPanelPropertiesLineTextbox" bundle:nil];
         }
         // set window title
         [[self window] setTitle:@"Properties"];
             
-        _viewController = documentController;
+        _viewController = lineTextboxController;
     }
     else if([selectedTypes valueForKey:EDKeyTextbox]){
         if(!textboxController){
@@ -176,7 +194,22 @@
         [_viewController initWindowAfterLoaded:_context];
         return;
     }
+    else if ((_viewController == graphTextboxController) && ([[self window] contentView] == [graphTextboxController view])) {
+        // still need to update panel properties
+        [_viewController initWindowAfterLoaded:_context];
+        return;
+    }
+    else if ((_viewController == graphLineTextboxController) && ([[self window] contentView] == [graphLineTextboxController view])) {
+        // still need to update panel properties
+        [_viewController initWindowAfterLoaded:_context];
+        return;
+    }
     else if ((_viewController == lineController) && ([[self window] contentView] == [lineController view])) {
+        // still need to update panel properties
+        [_viewController initWindowAfterLoaded:_context];
+        return;
+    }
+    else if ((_viewController == lineTextboxController) && ([[self window] contentView] == [lineTextboxController view])) {
         // still need to update panel properties
         [_viewController initWindowAfterLoaded:_context];
         return;

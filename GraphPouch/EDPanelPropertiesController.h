@@ -9,8 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import "EDPanelPropertiesDocumentController.h"
 #import "EDPanelPropertiesGraphController.h"
+#import "EDPanelPropertiesGraphTextboxController.h"
 #import "EDPanelPropertiesGraphLineController.h"
+#import "EDPanelPropertiesGraphLineTextboxController.h"
 #import "EDPanelPropertiesLineController.h"
+#import "EDPanelPropertiesLineTextboxController.h"
 #import "EDPanelPropertiesTextboxController.h"
 #import "EDPanelPropertiesTextViewController.h"
 #import "EDTextView.h"
@@ -20,8 +23,11 @@
     IBOutlet NSMenuItem *menuItemProperties;
     EDPanelPropertiesDocumentController *documentController;
     EDPanelPropertiesGraphController *graphController;
+    EDPanelPropertiesGraphTextboxController *graphTextboxController;
     EDPanelPropertiesGraphLineController *graphLineController;
+    EDPanelPropertiesGraphLineTextboxController *graphLineTextboxController;
     EDPanelPropertiesLineController *lineController;
+    EDPanelPropertiesLineTextboxController *lineTextboxController;
     EDPanelPropertiesTextboxController *textboxController;
     EDPanelPropertiesTextViewController *textViewController;
     NSNotificationCenter *_nc;
