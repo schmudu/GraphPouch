@@ -11,6 +11,7 @@
 #import "EDPanelPropertiesGraphController.h"
 #import "EDPanelPropertiesGraphLineController.h"
 #import "EDPanelPropertiesLineController.h"
+#import "EDPanelPropertiesTextboxController.h"
 #import "EDPanelPropertiesTextViewController.h"
 #import "EDTextView.h"
 #import "EDTextbox.h"
@@ -21,6 +22,7 @@
     EDPanelPropertiesGraphController *graphController;
     EDPanelPropertiesGraphLineController *graphLineController;
     EDPanelPropertiesLineController *lineController;
+    EDPanelPropertiesTextboxController *textboxController;
     EDPanelPropertiesTextViewController *textViewController;
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;

@@ -71,6 +71,8 @@
 		CD841EE216AB451000421EB4 /* EDPageViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = CD841EE116AB451000421EB4 /* EDPageViewContainer.m */; };
 		CD90B62416CEACB6000637FF /* NSAttributedString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CD90B62316CEACB6000637FF /* NSAttributedString+Utilities.m */; };
 		CD90B63616CFE99D000637FF /* GraphPouch.help in Resources */ = {isa = PBXBuildFile; fileRef = CD90B63516CFE99D000637FF /* GraphPouch.help */; };
+		CD90B64B16D07424000637FF /* EDPanelPropertiesTextboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD90B64916D07424000637FF /* EDPanelPropertiesTextboxController.m */; };
+		CD90B64C16D07424000637FF /* EDPanelPropertiesTextbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD90B64A16D07424000637FF /* EDPanelPropertiesTextbox.xib */; };
 		CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */; };
 		CDA8555816236EF9006FCD62 /* EDContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA8555716236EF9006FCD62 /* EDContentView.m */; };
 		CDAA9105166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDAA9104166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib */; };
@@ -248,6 +250,9 @@
 		CD90B62216CEACB6000637FF /* NSAttributedString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Utilities.h"; sourceTree = "<group>"; };
 		CD90B62316CEACB6000637FF /* NSAttributedString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Utilities.m"; sourceTree = "<group>"; };
 		CD90B63516CFE99D000637FF /* GraphPouch.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GraphPouch.help; sourceTree = SOURCE_ROOT; };
+		CD90B64816D07424000637FF /* EDPanelPropertiesTextboxController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesTextboxController.h; sourceTree = "<group>"; };
+		CD90B64916D07424000637FF /* EDPanelPropertiesTextboxController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesTextboxController.m; sourceTree = "<group>"; };
+		CD90B64A16D07424000637FF /* EDPanelPropertiesTextbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesTextbox.xib; sourceTree = "<group>"; };
 		CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowController.h; sourceTree = "<group>"; };
 		CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowController.m; sourceTree = "<group>"; };
 		CDA8555616236EF9006FCD62 /* EDContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDContentView.h; sourceTree = "<group>"; };
@@ -739,6 +744,9 @@
 		CD80CC8B16C6B83A001C3375 /* Textbox */ = {
 			isa = PBXGroup;
 			children = (
+				CD90B64816D07424000637FF /* EDPanelPropertiesTextboxController.h */,
+				CD90B64916D07424000637FF /* EDPanelPropertiesTextboxController.m */,
+				CD90B64A16D07424000637FF /* EDPanelPropertiesTextbox.xib */,
 			);
 			name = Textbox;
 			sourceTree = "<group>";
@@ -1064,6 +1072,7 @@
 				CDD05E1116C1C019001279FB /* icon_worksheet.png in Resources */,
 				CD80CC9016C6B880001C3375 /* EDPanelPropertiesTextView.xib in Resources */,
 				CD90B63616CFE99D000637FF /* GraphPouch.help in Resources */,
+				CD90B64C16D07424000637FF /* EDPanelPropertiesTextbox.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1169,6 +1178,7 @@
 				CD80CC8F16C6B880001C3375 /* EDPanelPropertiesTextViewController.m in Sources */,
 				CD80CCA816C887C3001C3375 /* EDPanelPropertiesTextViewFontSizeText.m in Sources */,
 				CD90B62416CEACB6000637FF /* NSAttributedString+Utilities.m in Sources */,
+				CD90B64B16D07424000637FF /* EDPanelPropertiesTextboxController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

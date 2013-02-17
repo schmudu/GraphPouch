@@ -134,6 +134,15 @@
             
         _viewController = documentController;
     }
+    else if([selectedTypes valueForKey:EDKeyTextbox]){
+        if(!textboxController){
+            textboxController = [[EDPanelPropertiesTextboxController alloc] initWithNibName:@"EDPanelPropertiesTextbox" bundle:nil];
+        }
+        // set window title
+        [[self window] setTitle:@"Textbox Properties"];
+            
+        _viewController = textboxController;
+    }
     else if(_currentTextView){
         // set controller to text view
         if(!textViewController){
@@ -168,6 +177,11 @@
         return;
     }
     else if ((_viewController == lineController) && ([[self window] contentView] == [lineController view])) {
+        // still need to update panel properties
+        [_viewController initWindowAfterLoaded:_context];
+        return;
+    }
+    else if ((_viewController == textboxController) && ([[self window] contentView] == [textboxController view])) {
         // still need to update panel properties
         [_viewController initWindowAfterLoaded:_context];
         return;
