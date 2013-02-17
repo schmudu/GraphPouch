@@ -137,7 +137,7 @@ NSString * const EDKeySnapBackDistanceX                         = @"EDKeySnapBac
 NSString * const EDKeyDidSnapBack                               = @"EDKeyDidSnapBack";
 NSString * const EDKeyWorksheetElement                          = @"EDKeyWorksheetElement";
 float const EDGuideThreshold                                    = 2.0;
-float const EDGuideWidth                                        = 3.0;
+float const EDGuideWidth                                        = 2.0;
 float const EDGuideShowThreshold                                = 10.0;  // diff must be less then this to show guide
 
 // element attributes
@@ -188,7 +188,7 @@ float const EDGraphYLabelVerticalOffset                         = 2;
 float const EDGraphPointDiameter                                = 10;
 NSString * const EDKeyRatioHorizontal                           = @"EDKeyRatioHorizontal";
 NSString * const EDKeyRatioVertical                             = @"EDKeyRatioVertical";
-float const EDGraphMargin                                       = 20;
+float const EDGraphMargin                                       = 0;
 float const EDGraphInnerMargin                                  = 20;
 NSString * const EDKeyOriginPositionHorizontal                  = @"EDKeyOriginPositionHorizontal";
 NSString * const EDKeyOriginPositionVertical                    = @"EDKeyOriginPositionVertical";
