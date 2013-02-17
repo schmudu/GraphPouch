@@ -13,5 +13,6 @@
     IBOutlet NSTextField *labelX;
     IBOutlet NSTextField *labelY;
     IBOutlet NSTextField *labelWidth;
+    IBOutlet NSTextField *labelThickness;
 }
 @end

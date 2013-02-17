@@ -29,6 +29,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelX];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelY];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelWidth];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelThickness];
 }
 
 - (void)initWindowAfterLoaded:(NSManagedObjectContext *)context{
@@ -36,11 +37,13 @@
     [self setElementLabel:labelX attribute:EDElementAttributeLocationX];
     [self setElementLabel:labelY attribute:EDElementAttributeLocationY];
     [self setElementLabel:labelWidth attribute:EDElementAttributeWidth];
+    [self setElementLabel:labelThickness attribute:EDLineAttributeThickness];
     
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelX];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelY];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelWidth];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelThickness];
 }
 
 - (void)controlTextDidEndEditing:(NSNotification *)obj{
@@ -56,6 +59,9 @@
     }
     else if ([obj object] == labelWidth) {
         [self changeSelectedElementsAttribute:EDElementAttributeWidth newValue:[[NSNumber alloc] initWithFloat:[[labelWidth stringValue] floatValue]]];
+    }
+    else if ([obj object] == labelThickness) {
+        [self changeSelectedElementsAttribute:EDLineAttributeThickness newValue:[[NSNumber alloc] initWithFloat:[[labelThickness stringValue] floatValue]]];
     }
 }
 @end
