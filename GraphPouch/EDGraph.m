@@ -62,25 +62,7 @@
 - (EDGraph *)copy:(NSManagedObjectContext *)context{
     EDGraph *graph = [[EDGraph alloc] initWithContext:context];
     [graph copyAttributes:self];
-    /*
-    [graph setHasCoordinateAxes:[self hasCoordinateAxes]];
-    [graph setHasGridLines:[self hasGridLines]];
-    [graph setHasLabels:[self hasLabels]];
-    [graph setHasTickMarks:[self hasTickMarks]];
-    [graph setMinValueX:[self minValueX]];
-    [graph setMinValueY:[self minValueY]];
-    [graph setMaxValueX:[self maxValueX]];
-    [graph setMaxValueY:[self maxValueY]];
-    [graph setElementWidth:[self elementWidth]];
-    [graph setElementHeight:[self elementHeight]];
-    [graph setLocationX:[self locationX]];
-    [graph setLocationY:[self locationY]];
-    [graph setSelected:[self selected]];
-    [graph setScaleX:[self scaleX]];
-    [graph setScaleY:[self scaleY]];
-    [graph setLabelIntervalX:[self labelIntervalX]];
-    [graph setLabelIntervalY:[self labelIntervalY]];
-    */
+    
     // copy points
     for (EDPoint *point in [self points]){
         [graph addPointsObject:point];

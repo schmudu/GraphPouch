@@ -27,14 +27,6 @@
 - (EDTextbox *)copy:(NSManagedObjectContext *)context{
     EDTextbox *textbox = [[EDTextbox alloc] initWithContext:context];
     [textbox copyAttributes:self];
-    /*
-    [textbox setSelected:[self selected]];
-    [textbox setElementWidth:[self elementWidth]];
-    [textbox setElementHeight:[self elementHeight]];
-    [textbox setLocationX:[self locationX]];
-    [textbox setLocationY:[self locationY]];
-    [textbox setTextValue:[self textValue]];
-    */
     return textbox;
 }
 

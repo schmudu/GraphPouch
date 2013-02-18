@@ -34,14 +34,6 @@
     EDLine *line = [[EDLine alloc] initWithContext:context];
     [line copyAttributes:self];
     
-    /*
-    [line setSelected:[self selected]];
-    [line setElementWidth:[self elementWidth]];
-    [line setElementHeight:[self elementHeight]];
-    [line setLocationX:[self locationX]];
-    [line setLocationY:[self locationY]];
-    [line setThickness:[self thickness]];
-    */
     return line;
 }
 
