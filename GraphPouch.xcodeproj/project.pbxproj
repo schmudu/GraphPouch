@@ -23,6 +23,9 @@
 		CD1DA3EB16D0992500198084 /* icon_line_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CD1DA3EA16D0992500198084 /* icon_line_over.png */; };
 		CD1DA3ED16D09AB800198084 /* icon_text_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CD1DA3EC16D09AB800198084 /* icon_text_over.png */; };
 		CD1DA3EF16D09C4B00198084 /* icon_graph_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CD1DA3EE16D09C4B00198084 /* icon_graph_over.png */; };
+		CD1DA40216D1826A00198084 /* EDPrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1DA40116D1826A00198084 /* EDPrintView.m */; };
+		CD1DA40516D1A0A500198084 /* EDGraphViewPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1DA40416D1A0A500198084 /* EDGraphViewPrint.m */; };
+		CD1DA40816D1D1A800198084 /* EDLineViewPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1DA40716D1D1A800198084 /* EDLineViewPrint.m */; };
 		CD1EBD3315FC587B00BEEA4D /* EDMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD3215FC587B00BEEA4D /* EDMenuController.m */; };
 		CD1EBD4F15FED23F00BEEA4D /* EDPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD4E15FED23F00BEEA4D /* EDPanelViewController.m */; };
 		CD1EBD5B15FED4B800BEEA4D /* EDPanelPropertiesController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1EBD5A15FED4B800BEEA4D /* EDPanelPropertiesController.m */; };
@@ -168,6 +171,12 @@
 		CD1DA3EA16D0992500198084 /* icon_line_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_line_over.png; sourceTree = "<group>"; };
 		CD1DA3EC16D09AB800198084 /* icon_text_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_text_over.png; sourceTree = "<group>"; };
 		CD1DA3EE16D09C4B00198084 /* icon_graph_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_graph_over.png; sourceTree = "<group>"; };
+		CD1DA40016D1826A00198084 /* EDPrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPrintView.h; sourceTree = "<group>"; };
+		CD1DA40116D1826A00198084 /* EDPrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPrintView.m; sourceTree = "<group>"; };
+		CD1DA40316D1A0A500198084 /* EDGraphViewPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphViewPrint.h; sourceTree = "<group>"; };
+		CD1DA40416D1A0A500198084 /* EDGraphViewPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphViewPrint.m; sourceTree = "<group>"; };
+		CD1DA40616D1D1A800198084 /* EDLineViewPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDLineViewPrint.h; sourceTree = "<group>"; };
+		CD1DA40716D1D1A800198084 /* EDLineViewPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDLineViewPrint.m; sourceTree = "<group>"; };
 		CD1EBD3115FC587B00BEEA4D /* EDMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuController.h; sourceTree = "<group>"; };
 		CD1EBD3215FC587B00BEEA4D /* EDMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuController.m; sourceTree = "<group>"; };
 		CD1EBD4D15FED23F00BEEA4D /* EDPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelViewController.h; sourceTree = "<group>"; };
@@ -429,6 +438,15 @@
 			name = Window;
 			sourceTree = "<group>";
 		};
+		CD1DA3FF16D1825200198084 /* Print */ = {
+			isa = PBXGroup;
+			children = (
+				CD1DA40016D1826A00198084 /* EDPrintView.h */,
+				CD1DA40116D1826A00198084 /* EDPrintView.m */,
+			);
+			name = Print;
+			sourceTree = "<group>";
+		};
 		CD1EBD4415FECF1E00BEEA4D /* Panels */ = {
 			isa = PBXGroup;
 			children = (
@@ -553,6 +571,7 @@
 		CD3F0AF515C4774900AB7567 /* View+Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CD1DA3FF16D1825200198084 /* Print */,
 				CDD46E4E1603BE1200EDD75C /* Categories */,
 				CDC3C82415F96368009A8BFD /* Formatters */,
 				CD3F0AF915C4776900AB7567 /* Menu */,
@@ -652,6 +671,8 @@
 				CDB682EC1694E80700702EAA /* EDEquationView.m */,
 				CD3F0A9815BDF93400AB7567 /* EDGraphView.h */,
 				CD3F0A9915BDF93400AB7567 /* EDGraphView.m */,
+				CD1DA40316D1A0A500198084 /* EDGraphViewPrint.h */,
+				CD1DA40416D1A0A500198084 /* EDGraphViewPrint.m */,
 				CDF62E6716A49D0B00DCDD2D /* EDPointView.h */,
 				CDF62E6816A49D0B00DCDD2D /* EDPointView.m */,
 				CD3F0A9A15BDF93400AB7567 /* EDGraphViewController.h */,
@@ -678,6 +699,8 @@
 			children = (
 				CDF3E15216BB1F3400AB78AF /* EDLineView.h */,
 				CDF3E15316BB1F3400AB78AF /* EDLineView.m */,
+				CD1DA40616D1D1A800198084 /* EDLineViewPrint.h */,
+				CD1DA40716D1D1A800198084 /* EDLineViewPrint.m */,
 			);
 			name = Line;
 			sourceTree = "<group>";
@@ -1253,6 +1276,9 @@
 				CD75A43216D079F300CD775C /* EDPanelPropertiesGraphLineTextboxController.m in Sources */,
 				CD75A43816D07CA300CD775C /* EDPanelPropertiesGraphTextboxController.m in Sources */,
 				CD75A43D16D07EBD00CD775C /* EDPanelPropertiesLineTextboxController.m in Sources */,
+				CD1DA40216D1826A00198084 /* EDPrintView.m in Sources */,
+				CD1DA40516D1A0A500198084 /* EDGraphViewPrint.m in Sources */,
+				CD1DA40816D1D1A800198084 /* EDLineViewPrint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

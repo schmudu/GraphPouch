@@ -84,8 +84,8 @@ NSString * const EDFontAttributeSuperscript                     = @"EDFontAttrib
 NSString * const EDLineAttributeThickness                       = @"thickness";
 
 // worksheet
-float const EDWorksheetViewWidth                                = 600;
-float const EDWorksheetViewHeight                               = 766;
+float const EDWorksheetViewWidth                                = 612;
+float const EDWorksheetViewHeight                               = 792;
 float const EDWorksheetShadowSize                               = 2.0;
 NSString * const EDWorksheetShadowColor                         = @"333333";
 

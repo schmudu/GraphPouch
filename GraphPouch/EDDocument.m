@@ -5,21 +5,22 @@
 //  Created by PATRICK LEE on 7/20/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
-#import "EDPage.h"
-#import "EDCoreDataUtility+Pages.h"
-#import "EDDocument.h"
-#import "EDWorksheetViewController.h"
-#import "EDPagesViewController.h"
-#import "EDGraph.h"
-#import "EDToken.h"
-#import "EDCoreDataUtility.h"
-#import "EDCoreDataUtility+Worksheet.h"
-#import "EDMenuController.h"
-#import "EDPanelPropertiesController.h"
-#import "NSObject+Document.h"
 #import "EDConstants.h"
-#import "EDWorksheetView.h"
+#import "EDCoreDataUtility.h"
+#import "EDCoreDataUtility+Pages.h"
+#import "EDCoreDataUtility+Worksheet.h"
+#import "EDDocument.h"
+#import "EDGraph.h"
+#import "EDMenuController.h"
+#import "EDPage.h"
+#import "EDPagesViewController.h"
+#import "EDPanelPropertiesController.h"
+#import "EDPrintView.h"
+#import "EDToken.h"
 #import "EDWindow.h"
+#import "EDWorksheetView.h"
+#import "EDWorksheetViewController.h"
+#import "NSObject+Document.h"
 #import "NSManagedObject+EasyFetching.h"
 
 @interface EDDocument()
@@ -310,5 +311,15 @@
 
 - (void)onTextboxDidChange:(NSNotification *)note{
     [propertyController onTextboxDidChange];
+}
+
+#pragma mark printing
+- (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError *__autoreleasing *)outError{
+    NSArray *pages = [EDPage getAllObjects:_context];
+    EDPrintView *printView = [[EDPrintView alloc] initWithFrame:NSMakeRect(0, 0, EDWorksheetViewWidth, EDWorksheetViewHeight * [pages count]) context:_context];
+    //EDPrintView *printView = [[EDPrintView alloc] initWithFrame:NSMakeRect(0, 0, EDWorksheetViewWidth, EDWorksheetViewHeight) context:_context];
+    NSPrintInfo *printInfo = [self printInfo];
+    NSPrintOperation *printOp = [NSPrintOperation printOperationWithView:printView printInfo:printInfo];
+    return printOp;
 }
 @end
