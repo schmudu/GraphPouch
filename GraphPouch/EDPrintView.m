@@ -84,6 +84,19 @@
             [self addSubview:lineView];
             [_elements addObject:lineView];
         }
+        
+        // DRAW TEXTBOXES
+        textboxes = [[page textboxes] allObjects];
+        
+        for (EDTextbox *textbox in textboxes){
+            // create lineViewPrint and add it to the view
+            textboxView = [[EDTextboxView alloc] initWithFrame:NSMakeRect([textbox locationX], pageIndex * EDWorksheetViewHeight + [textbox locationY], [textbox elementWidth], [textbox elementHeight]) textboxModel:textbox];
+            
+            // add it to view
+            [self addSubview:textboxView];
+            [_elements addObject:textboxView];
+        }
+        
         pageIndex++;
     }
 }
