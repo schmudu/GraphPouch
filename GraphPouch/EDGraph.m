@@ -42,8 +42,27 @@
     return self;
 }
 
+- (void)copyAttributes:(EDElement *)source{
+    [super copyAttributes:source];
+    
+    [self setHasCoordinateAxes:[(EDGraph *)source hasCoordinateAxes]];
+    [self setHasGridLines:[(EDGraph *)source hasGridLines]];
+    [self setHasLabels:[(EDGraph *)source hasLabels]];
+    [self setHasTickMarks:[(EDGraph *)source hasTickMarks]];
+    [self setMinValueX:[(EDGraph *)source minValueX]];
+    [self setMinValueY:[(EDGraph *)source minValueY]];
+    [self setMaxValueX:[(EDGraph *)source maxValueX]];
+    [self setMaxValueY:[(EDGraph *)source maxValueY]];
+    [self setScaleX:[(EDGraph *)source scaleX]];
+    [self setScaleY:[(EDGraph *)source scaleY]];
+    [self setLabelIntervalX:[(EDGraph *)source labelIntervalX]];
+    [self setLabelIntervalY:[(EDGraph *)source labelIntervalY]];
+}
+
 - (EDGraph *)copy:(NSManagedObjectContext *)context{
     EDGraph *graph = [[EDGraph alloc] initWithContext:context];
+    [graph copyAttributes:self];
+    /*
     [graph setHasCoordinateAxes:[self hasCoordinateAxes]];
     [graph setHasGridLines:[self hasGridLines]];
     [graph setHasLabels:[self hasLabels]];
@@ -61,7 +80,7 @@
     [graph setScaleY:[self scaleY]];
     [graph setLabelIntervalX:[self labelIntervalX]];
     [graph setLabelIntervalY:[self labelIntervalY]];
-    
+    */
     // copy points
     for (EDPoint *point in [self points]){
         [graph addPointsObject:point];

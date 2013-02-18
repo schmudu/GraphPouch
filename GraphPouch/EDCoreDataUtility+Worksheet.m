@@ -175,20 +175,22 @@
 }
 
 + (void)insertWorksheetElements:(NSArray *)elements context:(NSManagedObjectContext *)context{
-    EDGraph *newGraph;
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     
     // insert objects into context
     for (EDElement *element in elements){
-        [context insertObject:element];
+        //[context insertObject:element];
         
+#warning worksheet elements
         // set element to this page
         if ([element isKindOfClass:[EDGraph class]]){
-            newGraph = (EDGraph *)element;
+            EDGraph *newGraph = [[EDGraph alloc] initWithContext:context];
+            [context insertObject:newGraph];
+            [newGraph copyAttributes:element];
             [newGraph setPage:currentPage];
             
             // get all points that need to be modified
-            NSArray *points = [[NSArray alloc] initWithArray:[[newGraph points] allObjects]];
+            NSArray *points = [[NSArray alloc] initWithArray:[[(EDGraph *)element points] allObjects]];
             for (EDPoint *point in points){
                 // insert into context
                 [context insertObject:point];
@@ -199,7 +201,7 @@
             
             // get all points that need to be modified
             NSArray *tokens;
-            NSArray *equations = [[NSArray alloc] initWithArray:[[newGraph equations] allObjects]];
+            NSArray *equations = [[NSArray alloc] initWithArray:[[(EDGraph *)element equations] allObjects]];
             
             for (EDEquation *equation in equations){
                 // insert into context
@@ -214,7 +216,6 @@
                 // clear any previous tokens
                 [equation removeTokens:[equation tokens]];
                 
-                //for (EDToken *token in tokens){
                 for (EDToken *token in tokens){
                     // insert token
                     [context insertObject:token];
@@ -223,6 +224,18 @@
                     [equation addTokensObject:token];
                 }
             }
+        }
+        else if ([element isKindOfClass:[EDLine class]]){
+            EDLine *newLine = [[EDLine alloc] initWithContext:context];
+            [context insertObject:newLine];
+            [newLine copyAttributes:element];
+            [newLine setPage:currentPage];
+        }
+        else if ([element isKindOfClass:[EDTextbox class]]){
+            EDTextbox *newTextbox = [[EDTextbox alloc] initWithContext:context];
+            [context insertObject:newTextbox];
+            [newTextbox copyAttributes:element];
+            [newTextbox setPage:currentPage];
         }
     }
 }

@@ -16,4 +16,12 @@
 @dynamic locationY;
 @dynamic elementWidth;
 @dynamic elementHeight;
+
+- (void)copyAttributes:(EDElement *)source{
+    [self setSelected:[source selected]];
+    [self setLocationX:[source locationX]];
+    [self setLocationY:[source locationY]];
+    [self setElementWidth:[source elementWidth]];
+    [self setElementHeight:[source elementHeight]];
+}
 @end

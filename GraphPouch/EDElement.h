@@ -15,4 +15,6 @@
 
 @property float locationX, locationY, elementWidth, elementHeight;
 @property BOOL selected;
+
+- (void)copyAttributes:(EDElement *)source;
 @end

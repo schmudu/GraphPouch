@@ -26,14 +26,22 @@
 
 - (EDTextbox *)copy:(NSManagedObjectContext *)context{
     EDTextbox *textbox = [[EDTextbox alloc] initWithContext:context];
+    [textbox copyAttributes:self];
+    /*
     [textbox setSelected:[self selected]];
     [textbox setElementWidth:[self elementWidth]];
     [textbox setElementHeight:[self elementHeight]];
     [textbox setLocationX:[self locationX]];
     [textbox setLocationY:[self locationY]];
     [textbox setTextValue:[self textValue]];
-    
+    */
     return textbox;
+}
+
+- (void)copyAttributes:(EDElement *)source{
+    [super copyAttributes:source];
+    
+    [self setTextValue:[(EDTextbox *)source textValue]];
 }
 
 #pragma mark encoding, decoding this object

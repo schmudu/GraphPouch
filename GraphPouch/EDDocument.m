@@ -263,8 +263,12 @@
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
     // CRUD
     if ([[menuItem title] isEqualToString:@"Paste"]){
+        
+        NSArray *pageClasses = [EDPage allWorksheetClasses];
         //NSArray *classes = [NSArray arrayWithObjects:([EDGraph class], [EDPage class], nil)];
-        NSArray *classes = [NSArray arrayWithObjects:[EDGraph class], [EDPage class], nil];
+        //NSMutableArray *classes = [NSArray arrayWithObjects:[EDPage class], [pageClasses get], nil];
+        NSMutableArray *classes = [NSMutableArray arrayWithArray:pageClasses];
+        [classes addObject:[EDPage class]];
         
         NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
         
