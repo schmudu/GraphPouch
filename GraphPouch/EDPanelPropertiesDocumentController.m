@@ -7,6 +7,7 @@
 //
 
 #import "EDPanelPropertiesDocumentController.h"
+#import "EDConstants.h"
 
 @interface EDPanelPropertiesDocumentController ()
 
@@ -22,6 +23,14 @@
     }
     
     return self;
+}
+
+- (IBAction)onButtonNamePressed:(id)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPanelDocumentPressedName object:self];
+}
+
+- (IBAction)onButtonDatePressed:(id)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPanelDocumentPressedDate object:self];
 }
 
 - (void)initWindowAfterLoaded{

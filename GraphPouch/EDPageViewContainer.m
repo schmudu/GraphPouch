@@ -378,16 +378,18 @@
             // format the text accordingly
             [[textbox textValue] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[textbox textValue] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
                 NSFont *modifiedFont;
-                // go through the sting and update the characters based on the range
-                // remove default
-                [[newTextView textStorage] removeAttribute:NSFontAttributeName range:blockRange];
+                if (value != nil){
+                    // go through the sting and update the characters based on the range
+                    // remove default
+                    [[newTextView textStorage] removeAttribute:NSFontAttributeName range:blockRange];
+                    
+                    // need to resize the font according to ratio
+                    modifiedFont = [[NSFontManager sharedFontManager] convertFont:(NSFont *)value toSize:[(NSFont *)value pointSize] * xRatio];
                 
-                // need to resize the font according to ratio
-                modifiedFont = [[NSFontManager sharedFontManager] convertFont:(NSFont *)value toSize:[(NSFont *)value pointSize] * xRatio];
-                
-                // add custom attributes
-                [[newTextView textStorage] addAttribute:NSFontAttributeName value:modifiedFont range:blockRange];
-             }];
+                    // add custom attributes
+                    [[newTextView textStorage] addAttribute:NSFontAttributeName value:modifiedFont range:blockRange];
+                }
+            }];
         }
         
         // add to superview

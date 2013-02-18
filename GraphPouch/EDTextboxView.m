@@ -40,12 +40,14 @@
             
             // format the text accordingly
             [[myTextbox textValue] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[myTextbox textValue] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
-                // go through the sting and update the characters based on the range
-                // remove default
-                [[_textView textStorage] removeAttribute:NSFontAttributeName range:blockRange];
-                
                 // add custom attributes
-                [[_textView textStorage] addAttribute:NSFontAttributeName value:value range:blockRange];
+                if (value != nil){
+                    // go through the sting and update the characters based on the range
+                    // remove default
+                    [[_textView textStorage] removeAttribute:NSFontAttributeName range:blockRange];
+                
+                    [[_textView textStorage] addAttribute:NSFontAttributeName value:value range:blockRange];
+                }
              }];
         }
         else {

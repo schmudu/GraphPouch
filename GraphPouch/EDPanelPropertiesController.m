@@ -16,6 +16,8 @@
 @interface EDPanelPropertiesController ()
 - (void)setCorrectView;
 - (void)onContextChanged:(NSNotification *)note;
+- (void)onPanelDocumentPressedDate:(NSNotification *)note;
+- (void)onPanelDocumentPressedName:(NSNotification *)note;
 - (void)onShortcutPastePressed:(NSNotification *)note;
 @end
 
@@ -39,6 +41,10 @@
 - (void)dealloc{
     [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     [_nc removeObserver:self name:EDEventShortcutPaste object:[self window]];
+    if (documentController){
+        [_nc removeObserver:self name:EDEventPanelDocumentPressedName object:documentController];
+        [_nc removeObserver:self name:EDEventPanelDocumentPressedDate object:documentController];
+    }
 }
 
 - (void)closePanel{
@@ -174,6 +180,10 @@
     else {
         if(!documentController){
             documentController = [[EDPanelPropertiesDocumentController alloc] initWithNibName:@"EDPanelPropertiesDocument" bundle:nil];
+            
+            // add listeners
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPanelDocumentPressedName:) name:EDEventPanelDocumentPressedName object:documentController];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPanelDocumentPressedDate:) name:EDEventPanelDocumentPressedDate object:documentController];
         }
         // set window title
         [[self window] setTitle:@"Properties"];
@@ -310,4 +320,15 @@
         [(EDPanelPropertiesTextViewController *)_viewController updateButtonStates];
     }
 }
+
+#pragma document panel
+- (void)onPanelDocumentPressedDate:(NSNotification *)note{
+    [_nc postNotificationName:EDEventPanelDocumentPressedDate object:self];
+}
+
+- (void)onPanelDocumentPressedName:(NSNotification *)note{
+    [_nc postNotificationName:EDEventPanelDocumentPressedName object:self];
+}
+
+
 @end

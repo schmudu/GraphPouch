@@ -46,6 +46,8 @@ extern NSString *const EDKeyGraphTextbox;
 extern NSString *const EDKeyLine;
 extern NSString *const EDKeyLineTextbox;
 extern NSString *const EDKeyTextbox;
+extern NSString *const EDEventPanelDocumentPressedDate;
+extern NSString *const EDEventPanelDocumentPressedName;
 
 // panel events
 extern NSString *const EDEventControlReceivedFocus;

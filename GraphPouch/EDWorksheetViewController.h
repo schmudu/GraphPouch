@@ -20,4 +20,6 @@
 - (void)addNewGraph;
 - (void)addNewLine;
 - (void)addNewTextbox;
+- (void)addLabelName;
+- (void)addLabelDate;
 @end

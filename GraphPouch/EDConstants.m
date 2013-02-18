@@ -46,6 +46,8 @@ NSString * const EDKeyGraphTextbox                              = @"EDKeyGraphTe
 NSString * const EDKeyLine                                      = @"EDKeyLine";
 NSString * const EDKeyLineTextbox                               = @"EDKeyLineTextbox";
 NSString * const EDKeyTextbox                                   = @"EDTextbox";
+NSString * const EDEventPanelDocumentPressedDate                = @"EDEventPanelDocumentPressedDate";
+NSString * const EDEventPanelDocumentPressedName                = @"EDEventPanelDocumentPressedName";
 
 // panel events
 NSString * const EDEventControlReceivedFocus                    = @"EDEventControlReceivedFocus";

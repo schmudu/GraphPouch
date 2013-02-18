@@ -10,4 +10,6 @@
 #import "EDPanelViewController.h"
 
 @interface EDPanelPropertiesDocumentController : EDPanelViewController
+- (IBAction)onButtonNamePressed:(id)sender;
+- (IBAction)onButtonDatePressed:(id)sender;
 @end

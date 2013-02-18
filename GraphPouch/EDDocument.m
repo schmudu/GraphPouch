@@ -27,6 +27,8 @@
 - (void)onMainWindowClosed:(NSNotification *)note;
 - (void)onShortcutSavePressed:(NSNotification *)note;
 - (void)onPagesViewTabKeyPressed:(NSNotification *)note;
+- (void)onPanelDocumentPressedDate:(NSNotification *)note;
+- (void)onPanelDocumentPressedName:(NSNotification *)note;
 - (void)onWorksheetTabKeyPressed:(NSNotification *)note;
 - (void)onContextSaved:(NSNotification *)note;
 - (void)onContextChanged:(NSNotification *)note;
@@ -96,6 +98,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventWindowWillClose object:[self windowForSheet]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutSave object:mainWindow];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutSave object:propertyController];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPanelDocumentPressedName object:propertyController];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPanelDocumentPressedDate object:propertyController];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:_context];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextWillSaveNotification object:_rootContext];
@@ -134,6 +138,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWorksheetTabKeyPressed:) name:EDEventTabPressedWithoutModifiers object:worksheetView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPagesViewTabKeyPressed:) name:EDEventTabPressedWithoutModifiers object:pagesView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onShortcutSavePressed:) name:EDEventShortcutSave object:propertyController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPanelDocumentPressedName:) name:EDEventPanelDocumentPressedName object:propertyController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPanelDocumentPressedDate:) name:EDEventPanelDocumentPressedDate object:propertyController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:worksheetController];
@@ -321,5 +327,14 @@
     NSPrintInfo *printInfo = [self printInfo];
     NSPrintOperation *printOp = [NSPrintOperation printOperationWithView:printView printInfo:printInfo];
     return printOp;
+}
+
+#pragma mark worksheet
+- (void)onPanelDocumentPressedDate:(NSNotification *)note{
+    [worksheetController addLabelDate];
+}
+
+- (void)onPanelDocumentPressedName:(NSNotification *)note{
+    [worksheetController addLabelName];
 }
 @end

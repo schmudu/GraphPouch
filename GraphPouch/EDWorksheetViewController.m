@@ -89,7 +89,7 @@
 
 #pragma mark line
 - (void)addNewTextbox{
-    // create new graph
+    // create new textbox
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
     
     EDTextbox *newTextbox = [[EDTextbox alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameTextbox inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
@@ -148,6 +148,74 @@
     [newGraph setScaleY:[NSNumber numberWithInt:2]];
     [newGraph setLabelIntervalX:[NSNumber numberWithInt:1]];
     [newGraph setLabelIntervalY:[NSNumber numberWithInt:1]];
+}
+
+- (void)addLabelName{
+    // create new textbox
+    EDPage *currentPage = [EDCoreDataUtility getPageWithNumber:1 context:_context];
+    
+    EDTextbox *newTextbox = [[EDTextbox alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameTextbox inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+    
+    // add name textbox
+    [currentPage addTextboxesObject:newTextbox];
+    
+    // set graph attributes
+    [newTextbox setPage:currentPage];
+    [newTextbox setSelected:FALSE];
+    [newTextbox setLocationX:350];
+    [newTextbox setLocationY:23];
+    [newTextbox setElementWidth:100];
+    [newTextbox setElementHeight:30];
+    [newTextbox setTextValue:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Name"]]];
+    
+    // add line
+    EDLine *newLine = [[EDLine alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameLine inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+    
+    // add graph to page
+    [currentPage addLinesObject:newLine];
+    
+    // set graph attributes
+    [newLine setPage:currentPage];
+    [newLine setSelected:FALSE];
+    [newLine setLocationX:400];
+    [newLine setLocationY:15];
+    [newLine setElementWidth:200];
+    [newLine setElementHeight:EDWorksheetLineSelectionHeight];
+    [newLine setThickness:1.0];
+}
+
+- (void)addLabelDate{
+    // create new textbox
+    EDPage *currentPage = [EDCoreDataUtility getPageWithNumber:1 context:_context];
+    
+    EDTextbox *newTextbox = [[EDTextbox alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameTextbox inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+    
+    // add name textbox
+    [currentPage addTextboxesObject:newTextbox];
+    
+    // set graph attributes
+    [newTextbox setPage:currentPage];
+    [newTextbox setSelected:FALSE];
+    [newTextbox setLocationX:355];
+    [newTextbox setLocationY:58];
+    [newTextbox setElementWidth:100];
+    [newTextbox setElementHeight:30];
+    [newTextbox setTextValue:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Date"]]];
+    
+    // add line
+    EDLine *newLine = [[EDLine alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameLine inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+    
+    // add graph to page
+    [currentPage addLinesObject:newLine];
+    
+    // set graph attributes
+    [newLine setPage:currentPage];
+    [newLine setSelected:FALSE];
+    [newLine setLocationX:400];
+    [newLine setLocationY:50];
+    [newLine setElementWidth:200];
+    [newLine setElementHeight:EDWorksheetLineSelectionHeight];
+    [newLine setThickness:1.0];
 }
 
 #pragma mark align
