@@ -57,6 +57,12 @@
     return self;
 }
 
+- (void)copyAttributes:(EDPage *)source{
+    [self setSelected:[source selected]];
+    [self setCurrentPage:[source currentPage]];
+    [self setPageNumber:[source pageNumber]];
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeBool:[self currentPage] forKey:EDPageAttributeCurrent];
     [aCoder encodeInt:[[self pageNumber] intValue] forKey:EDPageAttributePageNumber];

@@ -406,6 +406,7 @@
 - (void)onShortcutCut:(NSNotification *)note{
     [self removeSelectedPages:TRUE];
 }
+
 - (void)removeSelectedPages:(BOOL)copyToPasteboard{
     // copyToPasteboard designates whether pages should be copied to pasteboard
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];

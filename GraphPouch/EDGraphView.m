@@ -617,9 +617,6 @@
     float originY = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
     float originX = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
     
-    // set point color
-    [[NSColor blackColor] setFill];
-    
     // set label constants
     [labelFormatter setMaximumFractionDigits:2];
     [labelFormatter setMinimumFractionDigits:0];

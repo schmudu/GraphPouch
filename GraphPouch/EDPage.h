@@ -24,6 +24,7 @@
 - (NSArray *)getAllWorksheetObjects;
 - (NSArray *)getAllSelectedWorksheetObjects;
 + (NSArray *)allWorksheetClasses;
+- (void)copyAttributes:(EDPage *)source;
 @end
 
 @interface EDPage (CoreDataGeneratedAccessors)

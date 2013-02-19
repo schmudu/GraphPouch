@@ -7,13 +7,15 @@
 //
 
 #import "EDCoreDataUtility+Pages.h"
-#import "EDConstants.h"
-#import "NSManagedObject+EasyFetching.h"
-#import "EDCoreDataUtility.h"
-#import "EDGraph.h"
-#import "EDEquation.h"
-#import "EDToken.h"
 #import "EDCoreDataUtility+Worksheet.h"
+#import "EDConstants.h"
+#import "EDCoreDataUtility.h"
+#import "EDEquation.h"
+#import "EDGraph.h"
+#import "EDLine.h"
+#import "EDTextbox.h"
+#import "EDToken.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @implementation EDCoreDataUtility (Pages)
 
@@ -520,29 +522,48 @@
     if ([pages count] > 0) {
         // cycle through objects and insert after last selected page
         for (EDPage *page in pages){
-            [context insertObject:page];
+            EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context] insertIntoManagedObjectContext:context];
+            //[context insertObject:page];
+            [newPage copyAttributes:page];
             
             // update each page view with it's new position
-            [page setPageNumber:[[NSNumber alloc] initWithInt:startInsertPosition]];
+            [newPage setPageNumber:[[NSNumber alloc] initWithInt:startInsertPosition]];
             
             // get all graphs that need to be modified
             NSArray *graphs = [[NSArray alloc] initWithArray:[[page graphs] allObjects]];
+            NSArray *lines = [[NSArray alloc] initWithArray:[[page lines] allObjects]];
+            NSArray *textboxes = [[NSArray alloc] initWithArray:[[page textboxes] allObjects]];
             
+#warning worksheet elements
             for (EDGraph *graph in graphs){
-                // insert into context
-                [context insertObject:graph];
+                EDGraph *newGraph = [[EDGraph alloc] initWithContext:context];
+                [context insertObject:newGraph];
+                [newGraph copyAttributes:graph];
+                [newGraph setPage:newPage];
                 
-                // set relationship
-                [graph setPage:page];
+                // get all points that need to be modified
+                NSArray *points = [[NSArray alloc] initWithArray:[[graph points] allObjects]];
+                for (EDPoint *point in points){
+                    // insert into context
+                    [context insertObject:point];
+                    
+                    // set relationship
+                    [point setGraph:newGraph];
+                }
                 
+                // get all points that need to be modified
+                NSArray *tokens;
                 NSArray *equations = [[NSArray alloc] initWithArray:[[graph equations] allObjects]];
+                
                 for (EDEquation *equation in equations){
+                    // insert into context
                     [context insertObject:equation];
                     
-                    [equation setGraph:graph];
+                    // set relationship
+                    [equation setGraph:newGraph];
                     
                     // insert tokens as well
-                    NSArray *tokens = [[NSArray alloc] initWithArray:[[equation tokens] array]];
+                    tokens = [[NSArray alloc] initWithArray:[[equation tokens] array]];
                     
                     // clear any previous tokens
                     [equation removeTokens:[equation tokens]];
@@ -554,10 +575,31 @@
                         // set relationship
                         [equation addTokensObject:token];
                     }
-                    
                 }
             }
+            
+            // lines
+            for (EDLine *line in lines){
+                // insert into context
+                [context insertObject:line];
+            
+                // set relationship
+                [line setPage:newPage];
+            }
+            
+            // textboxes
+            for (EDTextbox *textbox in textboxes){
+                // insert into context
+                [context insertObject:textbox];
+            
+                // set relationship
+                [textbox setPage:newPage];
+            }
             startInsertPosition++;
+            
+            
+            // done with source page, now we can delete it
+            [context deleteObject:page];
         }
         
         // update each page view with it's new position
