@@ -18,6 +18,7 @@
     BOOL                    _didSnap;
     BOOL                    _didSnapToSourceX;
     BOOL                    _didSnapToSourceY;
+    BOOL                    _mouseUpEventSource;
     NSManagedObjectContext *_context;
 }
 

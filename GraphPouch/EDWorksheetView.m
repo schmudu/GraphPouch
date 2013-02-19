@@ -532,10 +532,11 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
     for (NSObject *myElement in [self subviews]){
+        /*
         // add heavy features on mouse up
         if ([myElement isWorksheetElement]){
             [(EDWorksheetElementView *)myElement addFeatures];
-        }
+        }*/
         
         if(([myElement isWorksheetElement]) && ([selectedElements containsObject:[(EDWorksheetElementView *)myElement dataObj]])){
             // notify element that of mouse dragged

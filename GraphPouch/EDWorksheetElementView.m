@@ -32,7 +32,7 @@
         // Initialization code here.
         _didSnapToSourceX = FALSE;
         _didSnapToSourceY = FALSE;
-        
+        _mouseUpEventSource = FALSE;
     }
     
     return self;
@@ -334,6 +334,9 @@
     // add performance heavy elements that were removed during dragging
     [self addFeatures];
     
+    // this was the event origin
+    _mouseUpEventSource = TRUE;
+    
     // notify listeners
     NSMutableDictionary *notificationDictionary = [[NSMutableDictionary alloc] init];
     [notificationDictionary setValue:theEvent forKey:EDEventKey];
@@ -341,8 +344,14 @@
 }
 
 - (void)mouseUpBySelection:(NSEvent *)theEvent{
-    // add performance heavy elements that were removed during dragging
-    [self addFeatures];
+    // if this was the source then do not add the features again
+    if(!_mouseUpEventSource){
+        // add performance heavy elements that were removed during dragging
+        [self addFeatures];
+    }
+    else{
+        _mouseUpEventSource = FALSE;
+    }
     
     [self mouseUpBehavior:theEvent];
 }
