@@ -99,12 +99,12 @@
 }
 
 - (void)postInitialize:(NSManagedObjectContext *)context{
-    //NSLog(@"worksheet frame: x:%f y:%f width:%f height:%f superview:%@", [self frame].origin.x, [self frame].origin.y, [self frame].size.width, [self frame].size.height, [(NSClipView *)[self superview] documentView]);
     _context = context;
     
     // find current page
     EDPage *newPage = (EDPage *)[EDPage getCurrentPage:context];
     _currentPage = newPage;
+    _currentDraggedView = nil;
     
     // listen
     _nc = [NSNotificationCenter defaultCenter];
@@ -143,7 +143,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)drawRect:(NSRect)dirtyRect{
-    //NSLog(@"redrawing workseet: dirty rect: x:%f y%f w:%f h:%f", dirtyRect.origin.x, dirtyRect.origin.y, dirtyRect.size.width, dirtyRect.size.height);
     NSRect bounds = [self bounds];
     [[NSColor whiteColor] set];
     [NSBezierPath fillRect:bounds];
@@ -280,11 +279,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 #pragma mark first responder
 - (BOOL)becomeFirstResponder{
     [_nc postNotificationName:EDEventBecomeFirstResponder object:self];
-    /*
-     NSResponder *responder = self;
-    while ((responder = [responder nextResponder])) {
-        NSLog(@"responder: %@", responder);
-    }*/
     return YES;
 }
 
@@ -463,6 +457,9 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 #pragma mark mouse behavior
 - (void)mouseDown:(NSEvent *)theEvent{
+    // clear which element is being dragged
+    _currentDraggedView = nil;
+    
     // make this the first responder
     [[self window] makeFirstResponder:self];
     
@@ -470,7 +467,22 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [_nc postNotificationName:EDEventWorksheetClicked object:self];
 }
 
+- (void)mouseUp:(NSEvent *)theEvent{
+    // clear which element is being dragged
+    _currentDraggedView = nil;
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent{
+    // if an element is currently being dragged then send this event to it
+    [_currentDraggedView mouseDragged:theEvent];
+}
+
+#pragma mark mouse down
+
 - (void)onElementMouseDown:(NSNotification *)note{
+    // save which element is being dragged
+    _currentDraggedView = (EDWorksheetElementView *)[note object];
+    
     [self disableAllTextBoxesFromEditing];
     
     // order views
@@ -528,6 +540,9 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)onElementMouseUp:(NSNotification *)note{
+    // clear which element is being dragged
+    _currentDraggedView = nil;
+    
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed
     NSArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];

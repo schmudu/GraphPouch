@@ -21,6 +21,7 @@
     NSPoint _transformRectDragPoint;
     EDPage *_currentPage;
     EDTextboxView *_currentTextView;
+    EDWorksheetElementView *_currentDraggedView;
 }
 
 /*
