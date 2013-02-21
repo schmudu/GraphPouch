@@ -1,7 +1,6 @@
 * {
   padding: 0px;
   margin: 0px;
-  /*font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;*/
   font-family: Helvetica, Arial, Verdana, sans-serif;
   font-size: 16px;
   font-style: normal;
@@ -45,6 +44,7 @@ ul{
 
 .topic_description{
   padding-bottom: 30px;
+  line-height: 140%;
 }
 
 .topic_title{
@@ -57,6 +57,7 @@ ul{
   padding-top: 10px;
   padding-bottom: 30px;
   padding-left: 10px;
+  line-height: 120%;
 }
 
 ul.table_contents li{
@@ -78,6 +79,10 @@ ul.instructions li{
   padding-bottom: 8px;
 }
 
+.menu_command{
+  font-size: 14px;
+}
+
 .relevant_title{
   color: #444444;
   font-weight: bold;
@@ -91,12 +96,16 @@ ul.instructions li{
   left:30px;
 }
 
-#relevance_list{
-
-}
 #relevance_list li{
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 10px;
 }
 
+.relevance_link>a{
+  font-size: 14px;
+}
+
+.technical_term{
+  font-style:italic;
+}
