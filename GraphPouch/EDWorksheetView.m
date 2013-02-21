@@ -156,7 +156,8 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         // either element is being modified or transform rect is
         if (_elementIsBeingModified) {
             // get all elements
-            NSMutableArray *elements = [self getAllSelectedWorksheetElementsViews];
+            //NSMutableArray *elements = [self getAllSelectedWorksheetElementsViews];
+            NSMutableArray *elements = [[NSMutableArray alloc] initWithObjects:_currentDraggedView, nil];
             NSMutableDictionary *closestVerticalGuide = [self getClosestVerticalGuide:[_guides objectForKey:EDKeyGuideVertical] elements:elements];
             NSMutableDictionary *closestHorizontalGuide = [self getClosestHorizontalGuide:[_guides objectForKey:EDKeyGuideHorizontal] elements:elements];
             
