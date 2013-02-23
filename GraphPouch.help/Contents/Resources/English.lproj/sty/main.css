@@ -74,6 +74,16 @@ ul.instructions{
   list-style-type: square;
 }
 
+ol.instructions{
+  padding-top:10px;
+  padding-left: 30px;
+}
+
+ol.instructions li{
+  font-size: 12px;
+  padding-bottom: 8px;
+}
+
 ul.instructions li{
   font-size: 12px;
   padding-bottom: 8px;
