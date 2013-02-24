@@ -89,6 +89,10 @@ ul.instructions li{
   padding-bottom: 8px;
 }
 
+.instructions .technical_term{
+  font-size: 12px;
+}
+
 .menu_command{
   font-size: 12px;
 }
