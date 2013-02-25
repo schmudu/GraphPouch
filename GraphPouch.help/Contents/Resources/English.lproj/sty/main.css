@@ -89,6 +89,10 @@ ul.instructions li{
   padding-bottom: 8px;
 }
 
+.instructions li a{
+  font-size: 12px;
+}
+
 .instructions .technical_term{
   font-size: 12px;
 }
