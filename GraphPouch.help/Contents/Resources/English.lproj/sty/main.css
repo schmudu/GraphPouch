@@ -43,7 +43,7 @@ ul{
 }
 
 .topic_description{
-  padding-bottom: 30px;
+  padding-bottom: 15px;
   line-height: 140%;
 }
 
@@ -166,4 +166,14 @@ ul.instructions li{
   background-color: #eeeeee;
   padding: 10px;
   border: 1px solid #ccccc nc;
+}
+
+ul.page_contents {
+  padding-left: 30px;
+  padding-bottom: 30px;
+  font-size:12px;
+}
+
+ul.page_contents li{
+  padding-bottom: 5px;
 }
