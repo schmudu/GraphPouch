@@ -75,6 +75,10 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>GraphPouch.help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>com.edcodia.graphpouch.help</string>
 	<key>CFBundleIconFile</key>
 	<string>icon</string>
 	<key>CFBundleIdentifier</key>
@@ -86,7 +90,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -114,9 +118,5 @@
 			<dict/>
 		</dict>
 	</array>
-	<key>CFBundleHelpBookFolder</key>
-	<string>GraphPouch.help</string>
-	<key>CFBundleHelpBookName</key>
-	<string>com.edcodia.graphpouch.help</string>
 </dict>
 </plist>

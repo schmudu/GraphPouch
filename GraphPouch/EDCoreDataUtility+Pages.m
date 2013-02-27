@@ -500,15 +500,15 @@
     if (previousPage == page){
         return;
     }
+    // clear any selection of worksheet elements
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:context];
+    
     // unset previous page as current
     [previousPage setCurrentPage:FALSE];
     
     // set parameter as current page
     EDPage *newPage = [self getPage:page context:context];
     [newPage setCurrentPage:TRUE];
-    
-    // clear any selection of worksheet elements
-    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:context];
     
     // clear any selection of pages
     [EDCoreDataUtility deselectAllPages:context];

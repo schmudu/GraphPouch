@@ -402,6 +402,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CD0CA8AD16DEC42D0039C933 /* validate */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = validate;
+			sourceTree = "<group>";
+		};
 		CD1C57B6161BB23400534D49 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
@@ -769,6 +776,7 @@
 		CD47112815BA1647008AACC3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CD0CA8AD16DEC42D0039C933 /* validate */,
 				CD90B63516CFE99D000637FF /* GraphPouch.help */,
 				CD9DA575169A761D0072242F /* images */,
 				CD47112915BA1647008AACC3 /* GraphPouch-Info.plist */,
