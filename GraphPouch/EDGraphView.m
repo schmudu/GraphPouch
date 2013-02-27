@@ -78,14 +78,12 @@
 
 - (float)graphHeight{
     // defines height of graph that doesn't touch the arrows
-    return [self height] - 2 * EDCoordinateArrowLength - 2 * EDGraphInnerMargin - 2 * EDCoordinateArrowWidth; 
-    //return [self height] - 2 * EDCoordinateArrowLength - 2 * EDGraphInnerMargin;
+    return [self height] - EDCoordinateArrowLength - 2 * EDGraphInnerMargin - 2 * EDCoordinateArrowWidth;
 }
 
 - (float)graphWidth{
     // defines width of graph that doesn't touch the arrows
-    return [self width] - 2 * EDCoordinateArrowLength - 2 * EDGraphInnerMargin - 2 * EDCoordinateArrowWidth; 
-    //return [self width] - 2 * EDCoordinateArrowLength - 2 * EDGraphInnerMargin;
+    return [self width] - EDCoordinateArrowLength - 2 * EDGraphInnerMargin - 2 * EDCoordinateArrowWidth;
 }
 
 - (float)height{
@@ -581,29 +579,6 @@
         }
     }
 }
-
-/*
-- (void)drawPoints:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
-    float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
-    float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
-    //float originX, originY;
-    
-    // set origin points
-    float originVerticalPosition = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
-    float originHorizontalPosition = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
-    
-    // set point color
-    [[NSColor blackColor] setFill];
-    
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    for (EDPoint *point in [(EDGraph *)[self dataObj] points]) {
-        if ([point isVisible]) {
-            // draw point
-            path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(originHorizontalPosition + ([point locationX]/[[gridInfoHorizontal objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementHorizontal - EDGraphPointDiameter/2,originVerticalPosition - ([point locationY]/[[gridInfoVertical objectForKey:EDKeyGridFactor] floatValue]) * distanceIncrementVertical - EDGraphPointDiameter/2, EDGraphPointDiameter, EDGraphPointDiameter)];
-            [path fill];
-        }
-    }
-}*/
 
 - (void)drawPointsWithLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     NSTextField *pointLabel;
