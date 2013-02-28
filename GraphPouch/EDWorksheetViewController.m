@@ -24,6 +24,7 @@
 - (void)cutSelectedElements:(NSNotification *)note;
 - (void)pasteElements:(NSNotification *)note;
 - (void)copyElements:(NSNotification *)note;
+- (void)onKeyPressedArrow:(NSNotification *)note;
 - (void)onTextboxDidBeginEditing:(NSNotification *)note;
 - (void)onTextboxDidEndEditing:(NSNotification *)note;
 - (void)onTextboxDidChange:(NSNotification *)note;
@@ -58,6 +59,7 @@
     [_nc addObserver:self selector:@selector(onTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:[self view]];
     [_nc addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:[self view]];
     [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:[self view]];
+    [_nc addObserver:self selector:@selector(onKeyPressedArrow:) name:EDEventArrowKeyPressed object:[self view]];
     
     // initialize view to display all of the worksheet elements
     [(EDWorksheetView *)[self view] drawLoadedObjects];
@@ -81,6 +83,7 @@
     [_nc removeObserver:self name:EDEventTextboxBeginEditing object:[self view]];
     [_nc removeObserver:self name:EDEventTextboxEndEditing object:[self view]];
     [_nc removeObserver:self name:EDEventTextboxDidChange object:[self view]];
+    [_nc removeObserver:self name:EDEventArrowKeyPressed object:[self view]];
 }
 
 - (void)deleteSelectedElements:(NSNotification *)note{
@@ -264,5 +267,29 @@
 
 - (void)onTextboxDidChange:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
+}
+
+- (void)onKeyPressedArrow:(NSNotification *)note{
+    // move elements around the worksheet
+    NSEvent *userEvent = [(NSDictionary *)[note userInfo] objectForKey:EDKeyEvent];
+    BOOL multipyModifier = FALSE;
+    NSUInteger flags = [userEvent modifierFlags];
+    EDDirection direction;
+    
+    if(flags & NSShiftKeyMask){
+        multipyModifier = TRUE;
+    }
+    
+    if ([userEvent keyCode] == EDKeycodeArrowDown)
+        direction = EDDirectionDown;
+    else if ([userEvent keyCode] == EDKeycodeArrowLeft)
+        direction = EDDirectionLeft;
+    else if ([userEvent keyCode] == EDKeycodeArrowRight)
+        direction = EDDirectionRight;
+    else if ([userEvent keyCode] == EDKeycodeArrowUp)
+        direction = EDDirectionUp;
+    
+    // move all selected elements
+    [EDCoreDataUtility moveSelectedWorksheetElements:direction multiplyModifier:multipyModifier context:_context];
 }
 @end

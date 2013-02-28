@@ -23,5 +23,6 @@
 - (IBAction)onButtonPressedSubmit:(id)sender;
 - (id)initWithContext:(NSManagedObjectContext *)context;
 - (void)initializeSheet:(NSString *)equation index:(int)index;
+- (IBAction)onButtonPressedHelp:(id)sender;
     
 @end

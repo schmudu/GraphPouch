@@ -90,6 +90,8 @@ float const EDWorksheetViewWidth                                = 612;
 float const EDWorksheetViewHeight                               = 792;
 float const EDWorksheetShadowSize                               = 2.0;
 NSString * const EDWorksheetShadowColor                         = @"333333";
+float const EDIncrementPressedArrowModifier                     = 10.0;
+float const EDIncrementPressedArrow                             = 2.0;
 
 
 // worksheet events
@@ -107,6 +109,7 @@ NSString * const EDEventWorksheetElementDeselected              = @"EDEventWorks
 NSString * const EDEventWorksheetViewResignFirstResponder       = @"EDEventWorksheetViewResignFirstResponder";
 NSString * const EDEventKey                                     = @"EDEvent";
 NSString * const EDEventWorksheetElementRedrawingItself         = @"EDEventWorksheetElementRedrawingItself";
+NSString * const EDEventArrowKeyPressed                         = @"EDEventArrowKeyPressed";
 
 // menu
 NSString * const EDEventMenuAlignTop                            = @"EDEventMenuAlignTop";
@@ -282,6 +285,10 @@ int const EDKeycodePage                                         = 9;
 int const EDKeycodeAll                                          = 0;
 int const EDKeycodeDeselect                                     = 2;
 int const EDKeyModifierNone                                     = 256;
+int const EDKeycodeArrowLeft                                    = 123;
+int const EDKeycodeArrowUp                                      = 126;
+int const EDKeycodeArrowRight                                   = 124;
+int const EDKeycodeArrowDown                                    = 125;
 
 // transform
 float const EDTransformPointLength                              = 10;

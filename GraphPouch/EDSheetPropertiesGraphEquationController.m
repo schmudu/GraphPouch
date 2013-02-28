@@ -332,4 +332,9 @@
         //[equation printAllTokens];
     }
 }
+
+- (IBAction)onButtonPressedHelp:(id)sender{
+    NSString *locBookName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleHelpBookName"];
+    [[NSHelpManager sharedHelpManager] openHelpAnchor:@"equation_types"  inBook:locBookName];
+}
 @end

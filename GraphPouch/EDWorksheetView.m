@@ -297,6 +297,14 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     else if(flags == EDKeyModifierNone && [theEvent keyCode] == EDKeycodeDelete){
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventDeleteKeyPressedWithoutModifiers object:self];
     }
+    else if(([theEvent keyCode] == EDKeycodeArrowLeft) ||
+            ([theEvent keyCode] == EDKeycodeArrowUp) ||
+            ([theEvent keyCode] == EDKeycodeArrowRight) ||
+            ([theEvent keyCode] == EDKeycodeArrowDown)){
+        NSMutableDictionary *pressedInfo = [[NSMutableDictionary alloc] init];
+        [pressedInfo setObject:theEvent forKey:EDKeyEvent];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventArrowKeyPressed object:self userInfo:pressedInfo];
+    }
 }
 
 

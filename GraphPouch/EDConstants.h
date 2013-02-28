@@ -89,6 +89,8 @@ extern float const EDWorksheetViewHeight;
 extern float const EDWorksheetViewWidth;
 extern float const EDWorksheetShadowSize;
 extern NSString *const EDWorksheetShadowColor;
+extern float const EDIncrementPressedArrowModifier;
+extern float const EDIncrementPressedArrow;
 
 // worksheet events
 extern NSString *const EDEventWorksheetClicked;
@@ -105,6 +107,7 @@ extern NSString *const EDEventWorksheetElementDeselected;
 extern NSString *const EDEventWorksheetElementRedrawingItself;
 extern NSString *const EDEventWorksheetViewResignFirstResponder;
 extern NSString *const EDEventKey;
+extern NSString *const EDEventArrowKeyPressed;
 
 // menu
 extern NSString *const EDEventMenuAlignTop;
@@ -280,6 +283,10 @@ extern int const        EDKeycodePage;
 extern int const        EDKeycodeAll;
 extern int const        EDKeycodeDeselect;
 extern int const        EDKeyModifierNone;
+extern int const        EDKeycodeArrowLeft;
+extern int const        EDKeycodeArrowUp;
+extern int const        EDKeycodeArrowRight;
+extern int const        EDKeycodeArrowDown;
 
 // transform
 extern float const EDTransformPointLength;
@@ -320,6 +327,14 @@ typedef enum{
     EDAssociationRight,
     EDAssociationLeft
 } EDAssociation;
+
+// direction
+typedef enum{
+    EDDirectionLeft,
+    EDDirectionUp,
+    EDDirectionRight,
+    EDDirectionDown
+} EDDirection;
 
 extern NSString *const EDKeyValidEquation;
 extern NSString *const EDKeyParsedTokens;

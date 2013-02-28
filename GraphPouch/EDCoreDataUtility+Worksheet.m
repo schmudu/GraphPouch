@@ -294,19 +294,41 @@
     NSMutableArray *selectedElements = [self getAllSelectedWorksheetElements:context];
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     
-    /*
-    NSArray *equations = [EDEquation getAllObjects:context];
-    NSLog(@"before delete equations:%@", equations);
-     */
     for (EDElement *element in selectedElements){
         if ([element isKindOfClass:[EDGraph class]]) {
             [currentPage removeGraphsObject:(EDGraph *)element];
         }
         [context deleteObject:element];
     }
-    /*
-    equations = [EDEquation getAllObjects:context];
-    NSLog(@"after delete equations:%@", equations);
-     */
+}
+
++ (void)moveSelectedWorksheetElements:(EDDirection)direction multiplyModifier:(BOOL)modifier context:(NSManagedObjectContext *)context{
+    float increment;
+    if (modifier){
+        if ((direction == EDDirectionDown) || (direction == EDDirectionRight)){
+            increment = EDIncrementPressedArrowModifier;
+        }
+        else{
+            increment = -1 * EDIncrementPressedArrowModifier;
+        }
+    }
+    else{
+        if ((direction == EDDirectionDown) || (direction == EDDirectionRight)){
+            increment = EDIncrementPressedArrow;
+        }
+        else{
+            increment = -1 * EDIncrementPressedArrow;
+        }
+    }
+    
+    NSMutableArray *selectedElements = [self getAllSelectedWorksheetElements:context];
+    for (EDElement *element in selectedElements){
+        if ((direction == EDDirectionRight) || (direction == EDDirectionLeft)){
+            [element setLocationX:([element locationX] + increment)];
+        }
+        else{
+            [element setLocationY:([element locationY] + increment)];
+        }
+    }
 }
 @end

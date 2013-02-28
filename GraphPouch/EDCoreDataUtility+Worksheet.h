@@ -7,17 +7,19 @@
 //
 
 #import "EDCoreDataUtility.h"
+#import "EDConstants.h"
 
 @interface EDCoreDataUtility (Worksheet)
 
++ (NSMutableArray *)copySelectedWorksheetElements:(NSManagedObjectContext *)context;
++ (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context;
++ (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context;
 + (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context;
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context;
-+ (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context;
++ (void)insertWorksheetElements:(NSArray *)elements context:(NSManagedObjectContext *)context;
++ (void)moveSelectedWorksheetElements:(EDDirection)direction multiplyModifier:(BOOL)modifier context:(NSManagedObjectContext *)context;
 + (void)selectAllWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context;
 + (void)selectNextWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context;
 + (void)selectPreviousWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context;
-+ (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context;
-+ (void)insertWorksheetElements:(NSArray *)elements context:(NSManagedObjectContext *)context;
-+ (NSMutableArray *)copySelectedWorksheetElements:(NSManagedObjectContext *)context;
-    
+
 @end

@@ -7,8 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDValidation.h"
 
 int main(int argc, char *argv[])
 {
     return NSApplicationMain(argc, (const char **)argv);
+    //return EDCheckReceiptAndRun(argc, (const char **)argv);
 }
