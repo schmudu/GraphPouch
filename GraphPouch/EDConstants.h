@@ -73,6 +73,8 @@ extern NSString *const EDEventTextboxEndEditing;
 extern NSString *const EDEventTextboxDidChange;
 extern NSString *const EDKeyTextView;
 extern NSString *const EDFontAttributeName;
+extern float const EDFontDefaultSize;
+extern float const EDFontDefaultSizeTextbox;
 extern NSString *const EDFontAttributeSize;
 extern NSString *const EDFontAttributeColor;
 extern NSString *const EDEventControlDidChange;

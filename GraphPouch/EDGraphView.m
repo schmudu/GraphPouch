@@ -267,6 +267,7 @@
     
     // set stroke
     [[NSColor colorWithHexColorString:EDGridColor alpha:EDGridAlpha] setStroke];
+    //[[NSColor colorWithHexColorString:EDGridColor] setStroke];
     
     // draw positive horizontal lines starting from origin
     for (int i=0; i<=numGridLines; i++) {
@@ -417,6 +418,7 @@
 #pragma mark labels
 - (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     NSTextField *numberField, *labelField;
+    NSFont *defaultFont;
     
     // grid lines multiplied by 2 because the calculation only covers half the axis
     int numGridLinesVertical = [[gridInfoVertical objectForKey:EDKeyNumberGridLinesPositive] intValue];
@@ -435,6 +437,11 @@
     [labelField setDrawsBackground:FALSE];
     [labelField setEditable:FALSE];
     [labelField setSelectable:FALSE];
+    
+    // resize font
+    defaultFont = [NSFont fontWithName:[[labelField font] fontName] size:EDFontDefaultSize];
+    [labelField setFont:defaultFont];
+    
     [labelField setFrameOrigin:NSMakePoint(originHorizontalPosition + EDGraphVerticalLabelHorizontalOffset + EDCoordinateArrowWidth, EDGraphMargin + EDGraphYLabelVerticalOffset)];
     [self addSubview:labelField];
     [_labels addObject:labelField];
@@ -446,6 +453,7 @@
     [labelField setDrawsBackground:FALSE];
     [labelField setEditable:FALSE];
     [labelField setSelectable:FALSE];
+    [labelField setFont:defaultFont];
     [labelField setFrameOrigin:NSMakePoint([self frame].size.width + EDGraphHorizontalLabelHorizontalOffset + EDGraphXLabelHorizontalOffset - EDGraphMargin, originVerticalPosition + EDGraphHorizontalLabelVerticalOffset)];
     [self addSubview:labelField];
     [_labels addObject:labelField];
@@ -462,7 +470,8 @@
         [numberField setDrawsBackground:FALSE];
         [numberField setEditable:FALSE];
         [numberField setSelectable:FALSE];
-    
+        [numberField setFont:defaultFont];
+        
         [self addSubview:numberField];
         
         // position it
@@ -485,7 +494,8 @@
         [numberField setDrawsBackground:FALSE];
         [numberField setEditable:FALSE];
         [numberField setSelectable:FALSE];
-    
+        [numberField setFont:defaultFont];
+        
         [self addSubview:numberField];
         
         // position it
@@ -507,7 +517,8 @@
         [numberField setDrawsBackground:FALSE];
         [numberField setEditable:FALSE];
         [numberField setSelectable:FALSE];
-    
+        [numberField setFont:defaultFont];
+        
         [self addSubview:numberField];
         
         // position it
@@ -530,7 +541,8 @@
         [numberField setDrawsBackground:FALSE];
         [numberField setEditable:FALSE];
         [numberField setSelectable:FALSE];
-    
+        [numberField setFont:defaultFont];
+        
         [self addSubview:numberField];
         
         // position it
@@ -617,6 +629,11 @@
                 [pointLabel setEditable:FALSE];
                 [pointLabel setSelectable:FALSE];
                 [pointLabel setFrameSize:NSMakeSize([pointLabel intrinsicContentSize].width + EDGraphPointLabelHorizontalOffset, [pointLabel frame].size.height)];
+                
+                // resize
+                NSFont *defaultFont = [NSFont fontWithName:[[pointLabel font] fontName] size:EDFontDefaultSize];
+                [pointLabel setFont:defaultFont];
+    
                 [self addSubview:pointLabel];
                 
                 labelWidth = [pointLabel intrinsicContentSize].width + EDGraphPointLabelHorizontalOffset;
