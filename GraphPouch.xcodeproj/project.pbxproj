@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CD015FCE15BA66CA0096CDF9 /* EDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CD015FCD15BA66CA0096CDF9 /* EDConstants.m */; };
+		CD0CA8BC16DEFB6D0039C933 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD0CA8BB16DEFB6D0039C933 /* IOKit.framework */; };
+		CD0CA8BE16DEFBB70039C933 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD0CA8BD16DEFBB70039C933 /* Security.framework */; };
 		CD1422C715C7590700F55819 /* EDCoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1422C615C7590700F55819 /* EDCoreDataUtility.m */; };
 		CD1C57AD161B9AB200534D49 /* EDPageArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57AC161B9AB200534D49 /* EDPageArrayController.m */; };
 		CD1C57BA161BB26A00534D49 /* EDPagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1C57B9161BB26A00534D49 /* EDPagesViewController.m */; };
@@ -148,6 +150,10 @@
 /* Begin PBXFileReference section */
 		CD015FCC15BA66CA0096CDF9 /* EDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDConstants.h; sourceTree = "<group>"; };
 		CD015FCD15BA66CA0096CDF9 /* EDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDConstants.m; sourceTree = "<group>"; };
+		CD0CA8BA16DEF9670039C933 /* GraphPouch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GraphPouch.entitlements; sourceTree = "<group>"; };
+		CD0CA8BB16DEFB6D0039C933 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = ../../../../../../System/Library/Frameworks/IOKit.framework; sourceTree = "<group>"; };
+		CD0CA8BD16DEFBB70039C933 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = ../../../../../../System/Library/Frameworks/Security.framework; sourceTree = "<group>"; };
+		CD0CA8BF16DEFC540039C933 /* EDValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDValidation.h; sourceTree = "<group>"; };
 		CD1422C515C7590700F55819 /* EDCoreDataUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDCoreDataUtility.h; sourceTree = "<group>"; };
 		CD1422C615C7590700F55819 /* EDCoreDataUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDCoreDataUtility.m; sourceTree = "<group>"; };
 		CD1C57AB161B9AB200534D49 /* EDPageArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageArrayController.h; sourceTree = "<group>"; };
@@ -396,6 +402,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD47112215BA1647008AACC3 /* Cocoa.framework in Frameworks */,
+				CD0CA8BC16DEFB6D0039C933 /* IOKit.framework in Frameworks */,
+				CD0CA8BE16DEFBB70039C933 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +413,7 @@
 		CD0CA8AD16DEC42D0039C933 /* validate */ = {
 			isa = PBXGroup;
 			children = (
+				CD0CA8BF16DEFC540039C933 /* EDValidation.h */,
 			);
 			name = validate;
 			sourceTree = "<group>";
@@ -739,6 +748,8 @@
 		CD47112015BA1647008AACC3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CD0CA8BD16DEFBB70039C933 /* Security.framework */,
+				CD0CA8BB16DEFB6D0039C933 /* IOKit.framework */,
 				CD47112115BA1647008AACC3 /* Cocoa.framework */,
 				CD47112315BA1647008AACC3 /* Other Frameworks */,
 			);
@@ -758,6 +769,7 @@
 		CD47112715BA1647008AACC3 /* GraphPouch */ = {
 			isa = PBXGroup;
 			children = (
+				CD0CA8BA16DEF9670039C933 /* GraphPouch.entitlements */,
 				CD74501116B3342A004B813E /* icon.iconset */,
 				CD47113315BA1647008AACC3 /* EDDocument.h */,
 				CD47113415BA1647008AACC3 /* EDDocument.m */,
@@ -1334,7 +1346,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -1351,7 +1365,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -1361,6 +1375,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1371,19 +1386,22 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};
 		CD47114215BA1647008AACC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = GraphPouch/GraphPouch.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GraphPouch/GraphPouch-Prefix.pch";
 				INFOPLIST_FILE = "GraphPouch/GraphPouch-Info.plist";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1392,12 +1410,14 @@
 		CD47114315BA1647008AACC3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = GraphPouch/GraphPouch.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GraphPouch/GraphPouch-Prefix.pch";
 				INFOPLIST_FILE = "GraphPouch/GraphPouch-Info.plist";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
