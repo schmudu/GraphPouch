@@ -56,7 +56,11 @@
         // set context that the rest of the application will modify
         _context = [contexts objectForKey:EDKeyContextChild];
         _rootContext = [contexts objectForKey:EDKeyContextRoot];
-        NSLog(@"===root context:%@ child context:%@", _rootContext, _context);
+        
+        // create copy context
+        //_copyContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
+        
+        //NSLog(@"===root context:%@ child context:%@ copy:%@", _rootContext, _context, _copyContext);
         // set managed object context for this persistent document will write to
         [self setManagedObjectContext:[contexts objectForKey:EDKeyContextRoot]];
         

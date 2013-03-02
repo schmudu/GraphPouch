@@ -27,6 +27,7 @@
     EDPanelPropertiesController *propertyController;
     NSManagedObjectContext *_context;
     NSManagedObjectContext *_rootContext;
+    NSManagedObjectContext *_copyContext;
     
     // menu
     IBOutlet NSMenuItem *menuPageNext;
