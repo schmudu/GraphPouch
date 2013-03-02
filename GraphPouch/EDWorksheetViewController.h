@@ -15,8 +15,9 @@
     NSNotificationCenter *_nc;
     IBOutlet EDDocument *_documentController;
     NSManagedObjectContext *_context;
+    NSManagedObjectContext *_copyContext;
 }
-- (void)postInitialize:(NSManagedObjectContext *)context;
+- (void)postInitialize:(NSManagedObjectContext *)context copyContext:(NSManagedObjectContext *)copyContext;
 - (void)addNewGraph;
 - (void)addNewLine;
 - (void)addNewTextbox;

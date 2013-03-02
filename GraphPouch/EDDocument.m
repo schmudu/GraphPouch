@@ -57,12 +57,22 @@
         _context = [contexts objectForKey:EDKeyContextChild];
         _rootContext = [contexts objectForKey:EDKeyContextRoot];
         
-        // create copy context
-        //_copyContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
-        
-        //NSLog(@"===root context:%@ child context:%@ copy:%@", _rootContext, _context, _copyContext);
         // set managed object context for this persistent document will write to
         [self setManagedObjectContext:[contexts objectForKey:EDKeyContextRoot]];
+        
+        // create copy context
+        NSError *error;
+        _copyContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
+        //[_copyContext setPersistentStoreCoordinator:[[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]]];
+        
+        NSPersistentStoreCoordinator *copyCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+        //[copyCoordinator addPersistentStoreWithType:NSInMemoryStoreType configuration:[self managedObjectModel] URL:nil options:nil error:&error];
+        [copyCoordinator addPersistentStoreWithType:NSInMemoryStoreType configuration:nil URL:nil options:nil error:nil];
+        [_copyContext setPersistentStoreCoordinator:copyCoordinator];
+        
+        //NSLog(@"managed object model:%@", [self managedObjectModel]);
+        
+        NSLog(@"===root context:%@ child context:%@ copy:%@", _rootContext, _context, _copyContext);
         
         propertyController = [[EDPanelPropertiesController alloc] init];
         
@@ -126,7 +136,7 @@
     [super windowControllerDidLoadNib:aController];
     [(EDWorksheetView *)worksheetView postInitialize:_context];
     [worksheetController setView:worksheetView];
-    [worksheetController postInitialize:_context];
+    [worksheetController postInitialize:_context copyContext:_copyContext];
     [pagesController postInitialize:_context];
     [mainWindow postInitialize:_context];
     // post init property panel
@@ -255,7 +265,7 @@
     NSArray *classes = [EDPage allWorksheetClasses];
     NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
     if ([objects count] > 0){
-        [EDCoreDataUtility insertWorksheetElements:objects context:_context];
+        [EDCoreDataUtility insertWorksheetElements:objects intoContext:_context];
     }
     else {
         // paste in pages

@@ -34,20 +34,36 @@
         if ([destEntityName isEqualToString:parentEntity]) continue;
         
         if ([desc isToMany]) {
-            
-            NSMutableSet *newDestSet = [NSMutableSet set];
-            
-            for (oldDestObject in [object valueForKey:key]) {
-                temp = [lookup objectForKey:[oldDestObject objectID]];
-                if (!temp) {
-                    temp = [self copyObject:oldDestObject
-                                  toContext:moc
-                                     parent:entityName];
+            if ([desc isOrdered]) {
+                NSRelationshipDescription *rel = [relationships objectForKey:key];
+                NSString *keyName = [rel name];
+                // Get a set of all objects in the relationship
+                NSMutableOrderedSet *sourceSet = [object mutableOrderedSetValueForKey:keyName];
+                NSMutableOrderedSet *clonedSet = [[NSMutableOrderedSet alloc] init];
+                for (id relatedObject in sourceSet) {
+                    //Clone it, and add clone to set
+                    temp = [self copyObject:relatedObject toContext:moc parent:entityName];
+                    if (temp) {
+                        [clonedSet addObject:temp];
+                    }
                 }
-                [newDestSet addObject:temp];
+                [newObject setValue:clonedSet forKey:key];
             }
-            
-            [newObject setValue:newDestSet forKey:key];
+            else{
+                NSMutableSet *newDestSet = [NSMutableSet set];
+                
+                for (oldDestObject in [object valueForKey:key]) {
+                    temp = [lookup objectForKey:[oldDestObject objectID]];
+                    if (!temp) {
+                        temp = [self copyObject:oldDestObject
+                                      toContext:moc
+                                         parent:entityName];
+                    }
+                    [newDestSet addObject:temp];
+                }
+                
+                [newObject setValue:newDestSet forKey:key];
+            }
             
         } else {
             oldDestObject = [object valueForKey:key];

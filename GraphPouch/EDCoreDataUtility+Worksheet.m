@@ -6,18 +6,19 @@
 //  Copyright (c) 2013 Patrick Lee. All rights reserved.
 //
 
+#import "EDCoreDataUtility+Pages.h"
 #import "EDCoreDataUtility+Worksheet.h"
+#import "EDElement.h"
+#import "EDEquation.h"
 #import "EDGraph.h"
 #import "EDLine.h"
 #import "EDPage.h"
-#import "EDEquation.h"
 #import "EDTextbox.h"
 #import "EDToken.h"
-#import "NSObject+Document.h"
-#import "EDCoreDataUtility+Pages.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "NSManagedObjectContext+Objects.h"
 #import "NSMutableArray+EDPoint.h"
-#import "EDElement.h"
+#import "NSObject+Document.h"
 
 @implementation EDCoreDataUtility (Worksheet)
 
@@ -136,19 +137,32 @@
 }
 
 #pragma mark worksheet
-+ (NSMutableArray *)copySelectedWorksheetElements:(NSManagedObjectContext *)context{
+//+ (NSMutableArray *)copySelectedWorksheetElements:(NSManagedObjectContext *)context{
++ (NSMutableArray *)copySelectedWorksheetElementsFromContext:(NSManagedObjectContext *)context toContext:(NSManagedObjectContext *)copyContext{
     // copy all selected objects
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
     NSArray *fetchedLines = [EDLine getAllSelectedObjects:context];
     NSArray *fetchedTextboxes = [EDTextbox getAllSelectedObjects:context];
+    id copiedObject = nil;
     
     for (EDGraph *graph in fetchedGraphs){
-        [allObjects addObject:[graph copy:context]];
+        // prototype
+        copiedObject = [context copyObject:graph toContext:copyContext parent:EDEntityNamePage];
+        
+        //[allObjects addObject:[graph copy:context]];
+        [allObjects addObject:copiedObject];
+        
+        NSLog(@"finished copying graph.");
     }
     
     for (EDLine *line in fetchedLines){
-        [allObjects addObject:[line copy:context]];
+        // prototype
+        copiedObject = [context copyObject:line toContext:copyContext parent:EDEntityNamePage];
+        
+        //[allObjects addObject:[line copy:context]];
+        [allObjects addObject:copiedObject];
+        NSLog(@"finished copying line.");
     }
     
     for (EDTextbox *textbox in fetchedTextboxes){
@@ -174,7 +188,7 @@
     return allObjects;
 }
 
-+ (void)insertWorksheetElements:(NSArray *)elements context:(NSManagedObjectContext *)context{
++ (void)insertWorksheetElements:(NSArray *)elements intoContext:(NSManagedObjectContext *)context{
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     
     // insert objects into context
@@ -184,6 +198,7 @@
 #warning worksheet elements
         // set element to this page
         if ([element isKindOfClass:[EDGraph class]]){
+            /*
             EDGraph *newGraph = [[EDGraph alloc] initWithContext:context];
             [context insertObject:newGraph];
             [newGraph copyAttributes:element];
@@ -224,11 +239,19 @@
                     [equation addTokensObject:token];
                 }
             }
+            */
+            EDGraph *newGraph = (EDGraph *)[context copyObject:element toContext:context parent:EDEntityNamePage];
+            [newGraph setPage:currentPage];
         }
         else if ([element isKindOfClass:[EDLine class]]){
+            /*
             EDLine *newLine = [[EDLine alloc] initWithContext:context];
             [context insertObject:newLine];
             [newLine copyAttributes:element];
+            [newLine setPage:currentPage];
+             */
+            // copying from copy context to document child context
+            EDLine *newLine = (EDLine *)[context copyObject:element toContext:context parent:EDEntityNamePage];
             [newLine setPage:currentPage];
         }
         else if ([element isKindOfClass:[EDTextbox class]]){

@@ -44,9 +44,9 @@
     return self;
 }
 
-- (void)postInitialize:(NSManagedObjectContext *)context{
-    
+- (void)postInitialize:(NSManagedObjectContext *)context copyContext:(NSManagedObjectContext *)copyContext{
     _context = context;
+    _copyContext = copyContext;
     
     // listeners
     [_nc addObserver:self selector:@selector(deselectAllElements:) name:EDEventWorksheetClicked object:[self view]];
@@ -234,7 +234,7 @@
 #pragma mark keyboard shortcuts
 - (void)cutSelectedElements:(NSNotification *)note{
     // copy elements to pasteboard
-    NSMutableArray *copiedElements = [EDCoreDataUtility copySelectedWorksheetElements:_context];
+    NSMutableArray *copiedElements = [EDCoreDataUtility copySelectedWorksheetElementsFromContext:_context toContext:_copyContext];
     
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] writeObjects:copiedElements];
@@ -244,7 +244,12 @@
 
 - (void)copyElements:(NSNotification *)note{
     // copy elements to pasteboard
-    NSMutableArray *copiedElements = [EDCoreDataUtility copySelectedWorksheetElements:_context];
+    NSMutableArray *copiedElements = [EDCoreDataUtility copySelectedWorksheetElementsFromContext:_context toContext:_copyContext];
+    
+    // save after copy
+    NSError *error;
+    [_copyContext save:&error];
+    NSLog(@"error:%@", error);
     
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] writeObjects:copiedElements];
@@ -253,7 +258,7 @@
 - (void)pasteElements:(NSNotification *)note{
     NSArray *classes = [EDPage allWorksheetClasses];
     NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
-    [EDCoreDataUtility insertWorksheetElements:objects context:_context];
+    [EDCoreDataUtility insertWorksheetElements:objects intoContext:_context];
 }
 
 #pragma textbox
