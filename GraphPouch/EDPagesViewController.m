@@ -47,6 +47,7 @@
 - (void)onShortcutDeselectAll:(NSNotification *)note;
 - (void)updateViewFrameSize;
 - (NSMutableArray *)getSelectedPages;
+- (NSMutableArray *)getSelectedPagesAndCopyToCopyContext;
 - (void)removeSelectedPages:(BOOL)copyToPasteboard;
 @end
 
@@ -251,7 +252,7 @@
 #pragma mark page events
 - (void)onPageViewStartDrag:(NSNotification *)note{
     [(EDPagesView *)[self view] setPageViewStartDragInfo:[[note userInfo] objectForKey:EDKeyPageViewData]];
-    NSMutableArray *selectedPageViews = [self getSelectedPages];
+    NSMutableArray *selectedPageViews = [self getSelectedPagesAndCopyToCopyContext];
     
     // copy all page views that are selected to the pasteboard
     [[NSPasteboard generalPasteboard] clearContents];
@@ -375,6 +376,19 @@
      // iterate through page controllers and add to array if it's selected
     for (EDPageViewController *pageController in _pageControllers){
         if ([[(EDPageView *)[pageController view] dataObj] selected] == TRUE) {
+            [selectedPages addObject:newPage];
+        }
+    }
+    
+    return selectedPages;
+}
+
+- (NSMutableArray *)getSelectedPagesAndCopyToCopyContext{
+    NSMutableArray *selectedPages = [[NSMutableArray alloc] init];
+    EDPage *newPage;
+     // iterate through page controllers and add to array if it's selected
+    for (EDPageViewController *pageController in _pageControllers){
+        if ([[(EDPageView *)[pageController view] dataObj] selected] == TRUE) {
             newPage = (EDPage *)[_context copyObject:[(EDPageView *)[pageController view] dataObj] toContext:_copyContext parent:nil];
             [selectedPages addObject:newPage];
         }
@@ -460,26 +474,12 @@
 }
 
 - (void)onShortcutCopy:(NSNotification *)note{
-    NSMutableArray *selectedPages = [self getSelectedPages];
+    NSMutableArray *selectedPages = [self getSelectedPagesAndCopyToCopyContext];
     
-    // copy all page views that are selected to the pasteboard
-    //NSLog(@"going to copy:%@ context:%@", selectedPages, [[selectedPages objectAtIndex:0] managedObjectContext]);
     [[NSPasteboard generalPasteboard] clearContents];
-    //[[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPages]];
     [[NSPasteboard generalPasteboard] writeObjects:selectedPages];
-    // test
-    NSArray *classes = [NSArray arrayWithObjects:[EDPage class], [EDLine class], nil];
-    NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
-    //NSLog(@"copied objects:%@ selected pages:%@", objects, selectedPages);
-    [[(EDPage *)[selectedPages objectAtIndex:0] lines] enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-        NSLog(@"===selected: line: moc:%@ page:%@", [(EDLine *)obj managedObjectContext], [[(EDLine *)obj page] managedObjectContext]);
-    }];
-    [[(EDPage *)[objects objectAtIndex:0] lines] enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-        NSLog(@"===copied: line: moc:%@", [(EDLine *)obj managedObjectContext]);
-    }];
 }
 
-//- (void)onShortcutPaste:(NSNotification *)note{
 - (void)pastePagesFromPasteboard{
     // get last selected object
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
@@ -493,21 +493,13 @@
         insertPosition = (int)[[EDPage getAllObjects:_context] count] + 1;
     }
     
-    /*
-    NSArray *objects = [EDGraph getAllObjects:_context];
-    NSLog(@"graphs before insert:%ld", [objects count]);
-     */
     NSArray *classes = [NSArray arrayWithObject:[EDPage class]];
     NSArray *pages = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
-    NSLog(@"objects in pasteboard:%@", pages);
+    
     // retrieve pages that we will need to update after inserting the pasted pages
     NSArray *pagesToUpdate = [EDCoreDataUtility getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:insertPosition context:_context];
     
     [EDCoreDataUtility insertPages:pages atPosition:insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:_context];
-    /*
-    objects = [EDGraph getAllObjects:_context];
-    NSLog(@"graphs after insert:%ld", [objects count]);
-     */
 }
 
 - (void)onShortcutSelectAll:(NSNotification *)note{
