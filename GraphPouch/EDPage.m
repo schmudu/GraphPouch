@@ -67,7 +67,10 @@
     [aCoder encodeBool:[self currentPage] forKey:EDPageAttributeCurrent];
     [aCoder encodeInt:[[self pageNumber] intValue] forKey:EDPageAttributePageNumber];
     [aCoder encodeBool:[self selected] forKey:EDPageAttributeSelected];
+#warning worksheet elements
     [aCoder encodeObject:[self graphs] forKey:EDPageAttributeGraphs];
+    [aCoder encodeObject:[self lines] forKey:EDPageAttributeLines];
+    [aCoder encodeObject:[self textboxes] forKey:EDPageAttributeTextboxes];
 }
 
 #pragma mark pasteboard writing protocol

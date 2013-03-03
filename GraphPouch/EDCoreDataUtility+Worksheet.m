@@ -141,34 +141,24 @@
 + (NSMutableArray *)copySelectedWorksheetElementsFromContext:(NSManagedObjectContext *)context toContext:(NSManagedObjectContext *)copyContext{
     // copy all selected objects
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
+    
+#warning worksheet elements
     NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
     NSArray *fetchedLines = [EDLine getAllSelectedObjects:context];
     NSArray *fetchedTextboxes = [EDTextbox getAllSelectedObjects:context];
+    NSMutableArray *fetchedObjects = [[NSMutableArray alloc] init];
+    [fetchedObjects addObjectsFromArray:fetchedGraphs];
+    [fetchedObjects addObjectsFromArray:fetchedLines];
+    [fetchedObjects addObjectsFromArray:fetchedTextboxes];
+    
     id copiedObject = nil;
     
-    for (EDGraph *graph in fetchedGraphs){
+    for (EDElement *element in fetchedObjects){
         // prototype
-        copiedObject = [context copyObject:graph toContext:copyContext parent:EDEntityNamePage];
+        copiedObject = [context copyObject:element toContext:copyContext parent:EDEntityNamePage];
         
-        //[allObjects addObject:[graph copy:context]];
         [allObjects addObject:copiedObject];
-        
-        NSLog(@"finished copying graph.");
     }
-    
-    for (EDLine *line in fetchedLines){
-        // prototype
-        copiedObject = [context copyObject:line toContext:copyContext parent:EDEntityNamePage];
-        
-        //[allObjects addObject:[line copy:context]];
-        [allObjects addObject:copiedObject];
-        NSLog(@"finished copying line.");
-    }
-    
-    for (EDTextbox *textbox in fetchedTextboxes){
-        [allObjects addObject:[textbox copy:context]];
-    }
-#warning worksheet elements
     
     return allObjects;
 }

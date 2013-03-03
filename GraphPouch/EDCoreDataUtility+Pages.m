@@ -16,6 +16,7 @@
 #import "EDTextbox.h"
 #import "EDToken.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "NSManagedObjectContext+Objects.h"
 
 @implementation EDCoreDataUtility (Pages)
 
@@ -521,6 +522,7 @@
     int startInsertPosition = insertPosition;
     if ([pages count] > 0) {
         // cycle through objects and insert after last selected page
+        /*
         for (EDPage *page in pages){
             EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:context] insertIntoManagedObjectContext:context];
             //[context insertObject:page];
@@ -600,6 +602,89 @@
             
             // done with source page, now we can delete it
             [context deleteObject:page];
+        }*/
+        
+        for (EDPage *page in pages){
+            //EDGraph *newGraph = (EDGraph *)[context copyObject:element toContext:context parent:EDEntityNamePage];
+            //[newGraph setPage:currentPage];
+            EDPage *newPage = (EDPage *)[context copyObject:page toContext:context parent:nil];
+            
+            // update each page view with it's new position
+            [newPage setPageNumber:[[NSNumber alloc] initWithInt:startInsertPosition]];
+            
+            /*
+            // get all graphs that need to be modified
+            NSArray *graphs = [[NSArray alloc] initWithArray:[[page graphs] allObjects]];
+            NSArray *lines = [[NSArray alloc] initWithArray:[[page lines] allObjects]];
+            NSArray *textboxes = [[NSArray alloc] initWithArray:[[page textboxes] allObjects]];
+            
+#warning worksheet elements
+            for (EDGraph *graph in graphs){
+                EDGraph *newGraph = [[EDGraph alloc] initWithContext:context];
+                [context insertObject:newGraph];
+                [newGraph copyAttributes:graph];
+                [newGraph setPage:newPage];
+                
+                // get all points that need to be modified
+                NSArray *points = [[NSArray alloc] initWithArray:[[graph points] allObjects]];
+                for (EDPoint *point in points){
+                    // insert into context
+                    [context insertObject:point];
+                    
+                    // set relationship
+                    [point setGraph:newGraph];
+                }
+                
+                // get all points that need to be modified
+                NSArray *tokens;
+                NSArray *equations = [[NSArray alloc] initWithArray:[[graph equations] allObjects]];
+                
+                for (EDEquation *equation in equations){
+                    // insert into context
+                    [context insertObject:equation];
+                    
+                    // set relationship
+                    [equation setGraph:newGraph];
+                    
+                    // insert tokens as well
+                    tokens = [[NSArray alloc] initWithArray:[[equation tokens] array]];
+                    
+                    // clear any previous tokens
+                    [equation removeTokens:[equation tokens]];
+                    
+                    for (EDToken *token in tokens){
+                        // insert token
+                        [context insertObject:token];
+                        
+                        // set relationship
+                        [equation addTokensObject:token];
+                    }
+                }
+            }
+            
+            // lines
+            for (EDLine *line in lines){
+                // insert into context
+                [context insertObject:line];
+            
+                // set relationship
+                [line setPage:newPage];
+            }
+            
+            // textboxes
+            for (EDTextbox *textbox in textboxes){
+                // insert into context
+                [context insertObject:textbox];
+            
+                // set relationship
+                [textbox setPage:newPage];
+            }
+             */
+            startInsertPosition++;
+            
+            
+            // done with source page, now we can delete it
+            //[context deleteObject:page];
         }
         
         // update each page view with it's new position

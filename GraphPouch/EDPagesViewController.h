@@ -16,8 +16,9 @@
     IBOutlet EDDocument *_documentController;
     int _startDragSection;
     NSManagedObjectContext *_context;
+    NSManagedObjectContext *_copyContext;
 }
-- (void)postInitialize:(NSManagedObjectContext *)context;
+- (void)postInitialize:(NSManagedObjectContext *)context copyContext:(NSManagedObjectContext *)copyContext;
 - (void)addNewPage;
 - (void)pastePagesFromPasteboard;
 @end

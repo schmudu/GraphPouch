@@ -245,14 +245,14 @@
 - (void)copyElements:(NSNotification *)note{
     // copy elements to pasteboard
     NSMutableArray *copiedElements = [EDCoreDataUtility copySelectedWorksheetElementsFromContext:_context toContext:_copyContext];
-    
-    // save after copy
-    NSError *error;
-    [_copyContext save:&error];
-    NSLog(@"error:%@", error);
-    
+    NSLog(@"copied elements:%@", copiedElements);
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] writeObjects:copiedElements];
+    
+    // test
+    NSArray *classes = [EDPage allWorksheetClasses];
+    NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+    NSLog(@"copied objects:%@", objects);
 }
 
 - (void)pasteElements:(NSNotification *)note{

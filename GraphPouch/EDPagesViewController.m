@@ -8,6 +8,7 @@
 //testing
 #import "EDToken.h"
 #import "EDGraph.h"
+#import "EDLine.h"
 
 #import "EDGraph.h"
 #import "EDPagesViewController.h"
@@ -17,6 +18,7 @@
 #import "EDConstants.h"
 #import "EDPageViewController.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "NSManagedObjectContext+Objects.h"
 #import "EDCoreDataUtility+Pages.h"
 
 @interface EDPagesViewController ()
@@ -44,7 +46,7 @@
 - (void)onShortcutSelectAll:(NSNotification *)note;
 - (void)onShortcutDeselectAll:(NSNotification *)note;
 - (void)updateViewFrameSize;
-- (NSArray *)getSelectedPages;
+- (NSMutableArray *)getSelectedPages;
 - (void)removeSelectedPages:(BOOL)copyToPasteboard;
 @end
 
@@ -77,9 +79,11 @@
     [_nc removeObserver:self name:EDEventWindowDidResize object:_documentController];
 }
 
-- (void)postInitialize:(NSManagedObjectContext *)context{
+//- (void)postInitialize:(NSManagedObjectContext *)context{
+- (void)postInitialize:(NSManagedObjectContext *)context copyContext:(NSManagedObjectContext *)copyContext{
     // init context
     _context = context;
+    _copyContext = copyContext;
     
     // disable autoresize
     [[self view] setAutoresizesSubviews:FALSE];
@@ -247,7 +251,7 @@
 #pragma mark page events
 - (void)onPageViewStartDrag:(NSNotification *)note{
     [(EDPagesView *)[self view] setPageViewStartDragInfo:[[note userInfo] objectForKey:EDKeyPageViewData]];
-    NSArray *selectedPageViews = [self getSelectedPages];
+    NSMutableArray *selectedPageViews = [self getSelectedPages];
     
     // copy all page views that are selected to the pasteboard
     [[NSPasteboard generalPasteboard] clearContents];
@@ -365,13 +369,14 @@
     }
 }
 
-- (NSArray *)getSelectedPages{
+- (NSMutableArray *)getSelectedPages{
     NSMutableArray *selectedPages = [[NSMutableArray alloc] init];
-    
+    EDPage *newPage;
      // iterate through page controllers and add to array if it's selected
     for (EDPageViewController *pageController in _pageControllers){
         if ([[(EDPageView *)[pageController view] dataObj] selected] == TRUE) {
-            [selectedPages addObject:[(EDPageView *)[pageController view] dataObj]];
+            newPage = (EDPage *)[_context copyObject:[(EDPageView *)[pageController view] dataObj] toContext:_copyContext parent:nil];
+            [selectedPages addObject:newPage];
         }
     }
     
@@ -455,11 +460,23 @@
 }
 
 - (void)onShortcutCopy:(NSNotification *)note{
-    NSArray *selectedPageViews = [self getSelectedPages];
+    NSMutableArray *selectedPages = [self getSelectedPages];
     
     // copy all page views that are selected to the pasteboard
+    //NSLog(@"going to copy:%@ context:%@", selectedPages, [[selectedPages objectAtIndex:0] managedObjectContext]);
     [[NSPasteboard generalPasteboard] clearContents];
-    [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPageViews]];
+    //[[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPages]];
+    [[NSPasteboard generalPasteboard] writeObjects:selectedPages];
+    // test
+    NSArray *classes = [NSArray arrayWithObjects:[EDPage class], [EDLine class], nil];
+    NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+    //NSLog(@"copied objects:%@ selected pages:%@", objects, selectedPages);
+    [[(EDPage *)[selectedPages objectAtIndex:0] lines] enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        NSLog(@"===selected: line: moc:%@ page:%@", [(EDLine *)obj managedObjectContext], [[(EDLine *)obj page] managedObjectContext]);
+    }];
+    [[(EDPage *)[objects objectAtIndex:0] lines] enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        NSLog(@"===copied: line: moc:%@", [(EDLine *)obj managedObjectContext]);
+    }];
 }
 
 //- (void)onShortcutPaste:(NSNotification *)note{
@@ -482,7 +499,7 @@
      */
     NSArray *classes = [NSArray arrayWithObject:[EDPage class]];
     NSArray *pages = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
-    
+    NSLog(@"objects in pasteboard:%@", pages);
     // retrieve pages that we will need to update after inserting the pasted pages
     NSArray *pagesToUpdate = [EDCoreDataUtility getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:insertPosition context:_context];
     

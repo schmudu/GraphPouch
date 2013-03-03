@@ -137,7 +137,7 @@
     [(EDWorksheetView *)worksheetView postInitialize:_context];
     [worksheetController setView:worksheetView];
     [worksheetController postInitialize:_context copyContext:_copyContext];
-    [pagesController postInitialize:_context];
+    [pagesController postInitialize:_context copyContext:_copyContext];
     [mainWindow postInitialize:_context];
     // post init property panel
     [propertyController postInitialize:_context];
