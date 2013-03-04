@@ -168,6 +168,9 @@
             // nothing is selected so add page to the end of the list
             [newPage setPageNumber:[[NSNumber alloc] initWithInt:((int)[pages count] + 1)]];
         }
+        
+        // set this page as the current one
+        [EDCoreDataUtility setPageAsCurrent:newPage context:_context];
     }
 }
 
