@@ -11,14 +11,13 @@
 
 @interface EDCoreDataUtility (Worksheet)
 
-//+ (NSMutableArray *)copySelectedWorksheetElements:(NSManagedObjectContext *)context;
 + (NSMutableArray *)copySelectedWorksheetElementsFromContext:(NSManagedObjectContext *)context toContext:(NSManagedObjectContext *)copyContext;
 + (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context;
 + (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context;
 + (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context;
++ (NSMutableArray *)getAllWorksheetElementsOnPage:(EDPage *)currentPage context:(NSManagedObjectContext *)context;
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context;
-//+ (void)insertWorksheetElements:(NSArray *)elements context:(NSManagedObjectContext *)context;
-+ (void)insertWorksheetElements:(NSArray *)elements intoContext:(NSManagedObjectContext *)context;
++ (NSArray *)insertWorksheetElements:(NSArray *)elements intoContext:(NSManagedObjectContext *)context;
 + (void)moveSelectedWorksheetElements:(EDDirection)direction multiplyModifier:(BOOL)modifier context:(NSManagedObjectContext *)context;
 + (void)selectAllWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context;
 + (void)selectNextWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context;

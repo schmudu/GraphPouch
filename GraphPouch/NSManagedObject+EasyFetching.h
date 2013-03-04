@@ -7,11 +7,13 @@
 //
 
 #import <CoreData/CoreData.h>
+#import "EDPage.h"
 
 @interface NSManagedObject (EasyFetching)
 
 + (NSEntityDescription *)entityDescriptionInContext:(NSManagedObjectContext *)context;
 + (NSArray *)getAllObjects:(NSManagedObjectContext *)context;
++ (NSArray *)getAllObjectsOnPage:(EDPage *)page context:(NSManagedObjectContext *)context;
 + (NSArray *)getAllObjectsOrderedByPageNumber:(NSManagedObjectContext *)context;
 + (NSArray *)getAllSelectedObjects:(NSManagedObjectContext *)context;
 + (NSArray *)getAllUnselectedObjects:(NSManagedObjectContext *)context;

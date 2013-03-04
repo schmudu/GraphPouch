@@ -5,6 +5,9 @@
 //  Created by PATRICK LEE on 7/20/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
+// testing
+#import "EDLine.h"
+
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
 #import "EDCoreDataUtility+Pages.h"
@@ -263,9 +266,38 @@
 
 - (IBAction)paste:(id)sender{
     NSArray *classes = [EDPage allWorksheetClasses];
-    NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
-    if ([objects count] > 0){
-        [EDCoreDataUtility insertWorksheetElements:objects intoContext:_context];
+    NSArray *newObjects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+    if ([newObjects count] > 0){
+        EDPage *currentPage = (EDPage *)[EDPage getCurrentPage:_context];
+        NSArray *oldObjects = [EDCoreDataUtility getAllWorksheetElementsOnPage:currentPage context:_context];
+        
+        // retrieve new objects
+        NSArray *newElements = [EDCoreDataUtility insertWorksheetElements:newObjects intoContext:_context];
+        
+        // if there are elements at the exact the same position then offset these elements so the user can see them
+        // try matching just one object
+        EDElement *newObject = (EDElement *)[newObjects objectAtIndex:0];
+        EDElement *testObject;
+        int counter = 0;
+        BOOL samePositionMatch = FALSE;
+        while ((!samePositionMatch) && (counter < [oldObjects count])){
+            testObject = [oldObjects objectAtIndex:counter];
+            
+            // if object has same position then we have a match
+            if (([testObject locationX] == [newObject locationX]) && ([testObject locationY] == [newObject locationY])){
+                samePositionMatch = TRUE;
+            }
+            counter++;
+        }
+        
+        // if match then offset the new objects, so it doesn't cover the old ones
+        if (samePositionMatch){
+            for (EDElement *element in newElements){
+                // update to new position
+                [element setValue:[NSNumber numberWithFloat:([element locationX] + EDCopyLocationOffset)] forKey:EDElementAttributeLocationX];
+                [element setValue:[NSNumber numberWithFloat:([element locationY] + EDCopyLocationOffset)] forKey:EDElementAttributeLocationY];
+            }
+        }
     }
     else {
         // paste in pages

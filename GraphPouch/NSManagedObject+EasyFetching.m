@@ -74,6 +74,37 @@
     return [filteredResults lastObject];
 }
 
++ (NSArray *)getAllObjectsOnPage:(EDPage *)page context:(NSManagedObjectContext *)context{
+    NSEntityDescription *entity;
+    
+    entity = [self entityDescriptionInContext:context];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
+    
+    // grab relationships
+    [request setRelationshipKeyPathsForPrefetching:[NSArray arrayWithObject:@"graphs"]];
+    
+    NSError *error = nil;
+    NSArray *objects = [context executeFetchRequest:request error:&error];
+    
+    // verify that objects actually exist
+    if ([objects count] == 0) {
+        // if no objects then return empty
+        return nil;
+    }
+    
+    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"page = %@", page];
+    NSArray *filteredResults = [objects filteredArrayUsingPredicate:searchFilter];;
+    
+    //NSArray *results = [[context executeFetchRequest:request error:&error] filteredArrayUsingPredicate:searchFilter];
+    if (error != nil)
+    {
+        //handle errors
+    }
+    return filteredResults;
+}
+
 + (NSArray *)getAllSelectedObjects:(NSManagedObjectContext *)context{
     NSEntityDescription *entity;
     

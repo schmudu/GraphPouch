@@ -93,6 +93,7 @@ extern float const EDWorksheetShadowSize;
 extern NSString *const EDWorksheetShadowColor;
 extern float const EDIncrementPressedArrowModifier;
 extern float const EDIncrementPressedArrow;
+extern float const EDCopyLocationOffset;
 
 // worksheet events
 extern NSString *const EDEventWorksheetClicked;

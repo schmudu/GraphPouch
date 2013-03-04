@@ -94,6 +94,7 @@ float const EDWorksheetShadowSize                               = 2.0;
 NSString * const EDWorksheetShadowColor                         = @"333333";
 float const EDIncrementPressedArrowModifier                     = 10.0;
 float const EDIncrementPressedArrow                             = 2.0;
+float const EDCopyLocationOffset                                = 50.0;
 
 
 // worksheet events

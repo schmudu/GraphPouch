@@ -178,79 +178,62 @@
     return allObjects;
 }
 
-+ (void)insertWorksheetElements:(NSArray *)elements intoContext:(NSManagedObjectContext *)context{
++ (NSArray *)insertWorksheetElements:(NSArray *)elements intoContext:(NSManagedObjectContext *)context{
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
-    
+    NSMutableArray *insertedObjects = [[NSMutableArray alloc] init];
+    //EDElement *newElement;
     // insert objects into context
     for (EDElement *element in elements){
-        //[context insertObject:element];
-        
 #warning worksheet elements
+        /*
+        newElement = [context copyObject:element toContext:context parent:EDEntityNamePage];
+        [newElement setPage:currentPage];
+        [insertedObjects addObject:newElement];
+         */
         // set element to this page
         if ([element isKindOfClass:[EDGraph class]]){
-            /*
-            EDGraph *newGraph = [[EDGraph alloc] initWithContext:context];
-            [context insertObject:newGraph];
-            [newGraph copyAttributes:element];
-            [newGraph setPage:currentPage];
-            
-            // get all points that need to be modified
-            NSArray *points = [[NSArray alloc] initWithArray:[[(EDGraph *)element points] allObjects]];
-            for (EDPoint *point in points){
-                // insert into context
-                [context insertObject:point];
-                
-                // set relationship
-                [point setGraph:newGraph];
-            }
-            
-            // get all points that need to be modified
-            NSArray *tokens;
-            NSArray *equations = [[NSArray alloc] initWithArray:[[(EDGraph *)element equations] allObjects]];
-            
-            for (EDEquation *equation in equations){
-                // insert into context
-                [context insertObject:equation];
-                
-                // set relationship
-                [equation setGraph:newGraph];
-                
-                // insert tokens as well
-                tokens = [[NSArray alloc] initWithArray:[[equation tokens] array]];
-                
-                // clear any previous tokens
-                [equation removeTokens:[equation tokens]];
-                
-                for (EDToken *token in tokens){
-                    // insert token
-                    [context insertObject:token];
-                    
-                    // set relationship
-                    [equation addTokensObject:token];
-                }
-            }
-            */
             EDGraph *newGraph = (EDGraph *)[context copyObject:element toContext:context parent:EDEntityNamePage];
             [newGraph setPage:currentPage];
+            [insertedObjects addObject:newGraph];
         }
         else if ([element isKindOfClass:[EDLine class]]){
-            /*
-            EDLine *newLine = [[EDLine alloc] initWithContext:context];
-            [context insertObject:newLine];
-            [newLine copyAttributes:element];
-            [newLine setPage:currentPage];
-             */
             // copying from copy context to document child context
             EDLine *newLine = (EDLine *)[context copyObject:element toContext:context parent:EDEntityNamePage];
             [newLine setPage:currentPage];
+            [insertedObjects addObject:newLine];
         }
         else if ([element isKindOfClass:[EDTextbox class]]){
-            EDTextbox *newTextbox = [[EDTextbox alloc] initWithContext:context];
-            [context insertObject:newTextbox];
-            [newTextbox copyAttributes:element];
+            //EDTextbox *newTextbox = [[EDTextbox alloc] initWithContext:context];
+            //[context insertObject:newTextbox];
+            //[newTextbox copyAttributes:element];
+            //[newTextbox setPage:currentPage];
+            // copying from copy context to document child context
+            EDTextbox *newTextbox = (EDTextbox *)[context copyObject:element toContext:context parent:EDEntityNamePage];
             [newTextbox setPage:currentPage];
+            [insertedObjects addObject:newTextbox];
         }
     }
+    
+    return insertedObjects;
+}
+
++ (NSMutableArray *)getAllWorksheetElementsOnPage:(EDPage *)currentPage context:(NSManagedObjectContext *)context{
+    // gets all selected objects
+    NSMutableArray *allObjects = [[NSMutableArray alloc] init];
+    NSArray *fetchedGraphs = [EDGraph getAllObjectsOnPage:currentPage context:context];
+    NSArray *fetchedLines = [EDLine getAllObjectsOnPage:currentPage context:context];
+    NSArray *fetchedTextboxes = [EDTextbox getAllObjectsOnPage:currentPage context:context];
+    
+    if (fetchedGraphs)
+        [allObjects addObjectsFromArray:fetchedGraphs];
+    
+    if (fetchedLines)
+        [allObjects addObjectsFromArray:fetchedLines];
+    
+    if (fetchedTextboxes)
+        [allObjects addObjectsFromArray:fetchedTextboxes];
+    
+    return allObjects;
 }
 
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{

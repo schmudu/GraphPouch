@@ -22,7 +22,7 @@
 - (void)deleteSelectedElements:(NSNotification *)note;
 - (void)onWindowResized:(NSNotification *)note;
 - (void)cutSelectedElements:(NSNotification *)note;
-- (void)pasteElements:(NSNotification *)note;
+//- (void)pasteElements:(NSNotification *)note;
 - (void)copyElements:(NSNotification *)note;
 - (void)onKeyPressedArrow:(NSNotification *)note;
 - (void)onTextboxDidBeginEditing:(NSNotification *)note;
@@ -54,7 +54,7 @@
     [_nc addObserver:self selector:@selector(deleteSelectedElements:) name:EDEventDeleteKeyPressedWithoutModifiers object:[self view]];
     [_nc addObserver:self selector:@selector(alignElementsToTop:) name:EDEventMenuAlignTop object:nil];
     [_nc addObserver:self selector:@selector(cutSelectedElements:) name:EDEventShortcutCut object:[self view]];
-    [_nc addObserver:self selector:@selector(pasteElements:) name:EDEventShortcutPaste object:[self view]];
+    //[_nc addObserver:self selector:@selector(pasteElements:) name:EDEventShortcutPaste object:[self view]];
     [_nc addObserver:self selector:@selector(copyElements:) name:EDEventShortcutCopy object:[self view]];
     [_nc addObserver:self selector:@selector(onTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:[self view]];
     [_nc addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:[self view]];
@@ -79,7 +79,7 @@
     [_nc removeObserver:self name:EDEventMenuAlignTop object:nil];
     [_nc removeObserver:self name:EDEventWindowDidResize object:_documentController];
     [_nc removeObserver:self name:EDEventShortcutCut object:[self view]];
-    [_nc removeObserver:self name:EDEventShortcutPaste object:[self view]];
+    //[_nc removeObserver:self name:EDEventShortcutPaste object:[self view]];
     [_nc removeObserver:self name:EDEventTextboxBeginEditing object:[self view]];
     [_nc removeObserver:self name:EDEventTextboxEndEditing object:[self view]];
     [_nc removeObserver:self name:EDEventTextboxDidChange object:[self view]];
@@ -249,11 +249,40 @@
     [[NSPasteboard generalPasteboard] writeObjects:copiedElements];
 }
 
+/*
 - (void)pasteElements:(NSNotification *)note{
+    EDPage *currentPage = [[(EDPage *)[EDPage getCurrentPage:_context] pageNumber] intValue];
+    NSArray *oldObjects = [EDCoreDataUtility getAllWorksheetElementsOnPage:currentPageNumber context:_context];
+    
+    // retrieve new objects
     NSArray *classes = [EDPage allWorksheetClasses];
-    NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
-    [EDCoreDataUtility insertWorksheetElements:objects intoContext:_context];
-}
+    NSArray *newObjects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+    [EDCoreDataUtility insertWorksheetElements:newObjects intoContext:_context];
+    
+    // if there are elements at the exact the same position then offset these elements so the user can see them
+    // try matching just one object
+    EDElement *newObject = (EDElement *)[newObjects objectAtIndex:0];
+    EDElement *testObject;
+    int counter = 0;
+    BOOL samePositionMatch = FALSE;
+    while ((!samePositionMatch) && (counter < [oldObjects count])){
+        testObject = [oldObjects objectAtIndex:counter];
+        
+        // if object has same position then we have a match
+        if (([testObject locationX] == [newObject locationX]) && ([testObject locationY] == [newObject locationY])){
+            samePositionMatch = TRUE;
+        }
+        counter++;
+    }
+    
+    // if match then offset the new objects, so it doesn't cover the old ones
+    if (samePositionMatch){
+        for (EDElement *element in newObjects){
+            [element setLocationX:([element locationX] + EDCopyLocationOffset)];
+            [element setLocationY:([element locationY] + EDCopyLocationOffset)];
+        }
+    }
+}*/
 
 #pragma textbox
 - (void)onTextboxDidBeginEditing:(NSNotification *)note{
