@@ -502,6 +502,9 @@
     // retrieve pages that we will need to update after inserting the pasted pages
     NSArray *pagesToUpdate = [EDCoreDataUtility getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:insertPosition context:_context];
     
+    // deselect all previous pages
+    [EDCoreDataUtility deselectAllPages:_context];
+    
     [EDCoreDataUtility insertPages:pages atPosition:insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:_context];
 }
 

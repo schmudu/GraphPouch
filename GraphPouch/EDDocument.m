@@ -273,6 +273,9 @@
         EDPage *currentPage = (EDPage *)[EDPage getCurrentPage:_context];
         NSArray *oldObjects = [EDCoreDataUtility getAllWorksheetElementsOnPage:currentPage context:_context];
         
+        // deselect all previously selected elements
+        [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context];
+        
         // retrieve new objects
         NSArray *newElements = [EDCoreDataUtility insertWorksheetElements:newObjects intoContext:_context];
         
