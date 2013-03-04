@@ -284,6 +284,10 @@
             [elem setSelected:FALSE];
         }
     }
+    
+    // save
+    NSError *error;
+    [context save:&error];
 }
 
 + (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context{
