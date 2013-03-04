@@ -11,6 +11,7 @@
 #import "EDWindow.h"
 #import "EDMainContentView.h"
 #import "EDPagesView.h"
+#import "EDWindowControllerAbout.h"
 
 @class EDWorksheetView;
 @class EDWorksheetViewController;
@@ -25,6 +26,7 @@
     IBOutlet EDWindow *mainWindow;
     IBOutlet EDPagesView *pagesView;
     EDPanelPropertiesController *propertyController;
+    EDWindowControllerAbout *aboutController;
     NSManagedObjectContext *_context;
     NSManagedObjectContext *_rootContext;
     NSManagedObjectContext *_copyContext;
@@ -45,4 +47,5 @@
 - (IBAction)worksheetItemNext:(id)sender;
 - (IBAction)worksheetItemPrevious:(id)sender;
 - (IBAction)paste:(id)sender;
+- (IBAction)toggleAboutWindow:(id)sender;
 @end

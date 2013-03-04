@@ -21,6 +21,7 @@
 #import "EDPrintView.h"
 #import "EDToken.h"
 #import "EDWindow.h"
+#import "EDWindowControllerAbout.h"
 #import "EDWorksheetView.h"
 #import "EDWorksheetViewController.h"
 #import "NSObject+Document.h"
@@ -78,6 +79,7 @@
         NSLog(@"===root context:%@ child context:%@ copy:%@", _rootContext, _context, _copyContext);
         
         propertyController = [[EDPanelPropertiesController alloc] init];
+        aboutController = [[EDWindowControllerAbout alloc] initWithWindowNibName:@"EDWindowAbout"];
         
         // autoenable menu bar
         [[[[NSApp mainMenu] itemWithTitle:@"Edit"] submenu] setAutoenablesItems:TRUE];
@@ -386,5 +388,10 @@
 
 - (void)onPanelDocumentPressedName:(NSNotification *)note{
     [worksheetController addLabelName];
+}
+
+#pragma mark about
+- (IBAction)toggleAboutWindow:(id)sender{
+    [aboutController toggleAboutWindow:sender];
 }
 @end

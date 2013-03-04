@@ -1699,6 +1699,14 @@
 					<int key="connectionID">697</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleAboutWindow:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="238522557"/>
+					</object>
+					<int key="connectionID">702</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="835318025"/>
@@ -2840,7 +2848,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">700</int>
+			<int key="maxID">702</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2874,6 +2882,7 @@
 						<string key="pagePrevious:">id</string>
 						<string key="paste:">id</string>
 						<string key="textboxAdd:">id</string>
+						<string key="toggleAboutWindow:">id</string>
 						<string key="togglePropertiesPanel:">id</string>
 						<string key="worksheetItemNext:">id</string>
 						<string key="worksheetItemPrevious:">id</string>
@@ -2905,6 +2914,10 @@
 						</object>
 						<object class="IBActionInfo" key="textboxAdd:">
 							<string key="name">textboxAdd:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleAboutWindow:">
+							<string key="name">toggleAboutWindow:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="togglePropertiesPanel:">
