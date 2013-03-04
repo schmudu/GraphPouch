@@ -30,7 +30,7 @@
 + (EDPage *)getPageWithNumber:(int)pageNumber context:(NSManagedObjectContext *)context;
 + (void)setPageAsCurrent:(EDPage *)page context:(NSManagedObjectContext *)context;
 + (EDPage *)getLastSelectedPage:(NSManagedObjectContext *)context;
-+ (void)insertPages:(NSArray *)pages atPosition:(int)insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:(NSManagedObjectContext *)context;
++ (EDPage *)insertPages:(NSArray *)pages atPosition:(int)insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:(NSManagedObjectContext *)context;
 + (void)selectAllPages:(NSManagedObjectContext *)context;
 + (void)deselectAllPages:(NSManagedObjectContext *)context;
 + (EDPage *)getLastPage:(NSManagedObjectContext *)context;

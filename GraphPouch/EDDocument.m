@@ -260,10 +260,7 @@
 }
 
 - (void)onShortcutSavePressed:(NSNotification *)note{
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onChildContextSaved:) name:NSManagedObjectContextWillSaveNotification object:_rootContext];
     [EDCoreDataUtility save:_context];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextWillSaveNotification object:_rootContext];
-    
 }
 
 - (IBAction)paste:(id)sender{
@@ -316,8 +313,6 @@
     if ([[menuItem title] isEqualToString:@"Paste"]){
         
         NSArray *pageClasses = [EDPage allWorksheetClasses];
-        //NSArray *classes = [NSArray arrayWithObjects:([EDGraph class], [EDPage class], nil)];
-        //NSMutableArray *classes = [NSArray arrayWithObjects:[EDPage class], [pageClasses get], nil];
         NSMutableArray *classes = [NSMutableArray arrayWithArray:pageClasses];
         [classes addObject:[EDPage class]];
         

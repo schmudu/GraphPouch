@@ -518,7 +518,8 @@
     [newPage setSelected:TRUE];
 }
 
-+ (void)insertPages:(NSArray *)pages atPosition:(int)insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:(NSManagedObjectContext *) context{
++ (EDPage *)insertPages:(NSArray *)pages atPosition:(int)insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:(NSManagedObjectContext *) context{
+    EDPage *returnPage;
     int startInsertPosition = insertPosition;
     if ([pages count] > 0) {
         // cycle through objects and insert after last selected page
@@ -529,6 +530,10 @@
             // update each page view with it's new position
             [newPage setPageNumber:[[NSNumber alloc] initWithInt:startInsertPosition]];
             
+            // save the first page
+            if (startInsertPosition == insertPosition)
+                returnPage = newPage;
+            
             startInsertPosition++;
         }
         
@@ -537,6 +542,11 @@
             [page setPageNumber:[[NSNumber alloc] initWithInt:(insertPosition + (int)[pages count])]];
             insertPosition++;
         }
+        
+        // automatically return the first page that is inserted
+        return returnPage;
     }
+    
+    return nil;
 }
 @end

@@ -505,7 +505,11 @@
     // deselect all previous pages
     [EDCoreDataUtility deselectAllPages:_context];
     
-    [EDCoreDataUtility insertPages:pages atPosition:insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:_context];
+    EDPage *firstPagePasted = [EDCoreDataUtility insertPages:pages atPosition:insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:_context];
+    
+    // make the first page that was pasted as the current page
+    if (firstPagePasted)
+        [EDCoreDataUtility setPageAsCurrent:firstPagePasted context:_context];
 }
 
 - (void)onShortcutSelectAll:(NSNotification *)note{

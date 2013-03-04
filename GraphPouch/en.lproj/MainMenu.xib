@@ -994,7 +994,7 @@
 									<reference key="NSMenu" ref="862844726"/>
 									<string key="NSTitle">Next Worksheet Item</string>
 									<string key="NSKeyEquiv">]</string>
-									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
@@ -1003,7 +1003,7 @@
 									<reference key="NSMenu" ref="862844726"/>
 									<string key="NSTitle">Previous Worksheet Item</string>
 									<string key="NSKeyEquiv">[</string>
-									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
