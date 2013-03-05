@@ -46,6 +46,7 @@
 
 - (void)initWindowAfterLoaded:(NSManagedObjectContext *)context{
     _context = context;
+    
     if (!equationController) {
         equationController = [[EDSheetPropertiesGraphEquationController alloc] initWithContext:_context];
     }
@@ -71,26 +72,32 @@
     [self setElementCheckbox:checkboxGrid attribute:EDGraphAttributeGridLines];
     [self setElementCheckbox:checkboxHasTickMarks attribute:EDGraphAttributeTickMarks];
     
+    
     // initialize table points datasource and delegate
-    tablePointsController = [[EDPanelPropertiesGraphTablePoints alloc] initWithContext:_context table:tablePoints removeButton:buttonRemovePoints];
-    [tablePoints setDelegate:tablePointsController];
-    [tablePoints setDataSource:tablePointsController];
+    if (!tablePointsController){
+        tablePointsController = [[EDPanelPropertiesGraphTablePoints alloc] initWithContext:_context table:tablePoints removeButton:buttonRemovePoints];
+        [tablePoints setDelegate:tablePointsController];
+        [tablePoints setDataSource:tablePointsController];
+    }
+    
+    // initialize table equation datasource and delegate
+    if (!tableEquationController){
+        tableEquationController = [[EDPanelPropertiesGraphTableEquation alloc] initWithContext:_context table:tableEquation removeButton:buttonRemoveEquation];
+        [tableEquation setDelegate:tableEquationController];
+        [tableEquation setDataSource:tableEquationController];
+    }
     
     // set button state
     if ([tablePoints numberOfSelectedRows] == 0) {
         [buttonRemovePoints setEnabled:FALSE];
     }
     
-    // initialize table equation datasource and delegate
-    tableEquationController = [[EDPanelPropertiesGraphTableEquation alloc] initWithContext:_context table:tableEquation removeButton:buttonRemoveEquation];
-    [tableEquation setDelegate:tableEquationController];
-    [tableEquation setDataSource:tableEquationController];
-    
     // set button state
     if ([tableEquation numberOfSelectedRows] == 0) {
         [buttonRemoveEquation setEnabled:FALSE];
     }
     
+    /*
     //listen
     [tableEquation setTarget:self];
     [tableEquation setDoubleAction:@selector(onDoubleClickEquation:)];
@@ -106,8 +113,27 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelScaleY];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelIntervalX];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelIntervalY];
+     */
 }
 
+- (void)viewDidLoad{
+    //listen
+    [tableEquation setTarget:self];
+    [tableEquation setDoubleAction:@selector(onDoubleClickEquation:)];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelHeight];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelWidth];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelX];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelY];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelMinX];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelMaxX];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelMinY];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelMaxY];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelScaleX];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelScaleY];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelIntervalX];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelIntervalY];
+     
+}
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelHeight];

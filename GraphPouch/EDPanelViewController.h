@@ -18,6 +18,8 @@
 - (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute;
 - (void)setElementCheckbox:(NSButton *)checkbox attribute:(NSString *)attribute;
 - (void)setLabelState:(NSTextField *)label hasChange:(BOOL)diff value:(float)labelValue;
+- (void)viewDidLoad;
+- (void)viewWillLoad;
 - (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key;
 - (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key;
 - (NSMutableDictionary *)checkForSameIntValueInLabelsForKey:(NSString *)key;

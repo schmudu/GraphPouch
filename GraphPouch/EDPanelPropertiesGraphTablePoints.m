@@ -120,6 +120,7 @@
     // set the attribute for the graph that holds this point
     // set the common points
     [EDCoreDataUtility setAllCommonPointsforSelectedGraphs:newPoint attribute:newAttribute context:_context];
+    [EDCoreDataUtility save:_context];
 }
 
 #pragma mark table delegate
@@ -135,6 +136,25 @@
 
 - (void)onContextChanged:(NSNotification *)note{
     [pointsTable reloadData];
-    //NSLog(@"context changed.");
 }
+
+#pragma mark text
+/*
+- (void)textDidEndEditing:(NSNotification *)notification{
+    NSLog(@"text did end editing: first responder:%@ key window:%d", [[self window] firstResponder], [[self window] isKeyWindow]);
+    NSDictionary *userInfo = [notification userInfo];
+
+    int textMovement = [[userInfo valueForKey:@"NSTextMovement"] intValue];
+    //NSLog(@"text move:%d tab:%d", textMovement, NSTabTextMovement);
+    if (([pointsTable selectedColumn] == ([[pointsTable tableColumns] count] - 1)) && (textMovement == NSTabTextMovement))
+    {
+        // the tab key was hit while in the last column, 
+        // so go to the left most cell in the next row
+        [pointsTable editColumn:0 row:([pointsTable editedRow] + 1) withEvent:nil select:YES];
+    }
+    else{
+        [super textDidEndEditing:notification];
+    }
+    //[[self window] makeFirstResponder:self];
+}*/
 @end

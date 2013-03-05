@@ -38,14 +38,15 @@
     [self setElementLabel:labelY attribute:EDElementAttributeLocationY];
     [self setElementLabel:labelWidth attribute:EDElementAttributeWidth];
     [self setElementLabel:labelHeight attribute:EDElementAttributeHeight];
-    
+}
+
+- (void)viewDidLoad{
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelX];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelY];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelWidth];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelHeight];
 }
-
 - (void)controlTextDidEndEditing:(NSNotification *)obj{
     // if field did not change then do nothing
     if (!_fieldChanged)

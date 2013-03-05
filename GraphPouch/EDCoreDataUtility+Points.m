@@ -78,11 +78,13 @@
     }
     
     // sort common points by x
+    /*
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDElementAttributeLocationX ascending:TRUE];
     NSArray *descriptorArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     NSArray *sortedArray = [commonPoints sortedArrayUsingDescriptors:descriptorArray];
-    
     return sortedArray;
+     */
+    return commonPoints;
 }
 
 + (NSArray *)getOneCommonPointFromSelectedGraphsMatchingPoint:(EDPoint *)matchPoint context:(NSManagedObjectContext *)context{

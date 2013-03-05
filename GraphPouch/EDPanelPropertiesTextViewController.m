@@ -43,6 +43,10 @@
 - (void)initWindowAfterLoaded:(NSManagedObjectContext *)context{
     [super initWindowAfterLoaded:context];
     
+    //[fieldFontSize setDelegate:_delegateFontSize];
+}
+
+- (void)viewDidLoad{
     [fieldFontSize setDelegate:_delegateFontSize];
 }
 

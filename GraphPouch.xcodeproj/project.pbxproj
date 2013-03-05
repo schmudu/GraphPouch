@@ -577,6 +577,10 @@
 				CD1EBD6715FED65A00BEEA4D /* EDPanelPropertiesGraph.xib */,
 				CD1EBD7215FED75900BEEA4D /* EDPanelPropertiesGraphController.h */,
 				CD1EBD7315FED75900BEEA4D /* EDPanelPropertiesGraphController.m */,
+				CD263666167E9B4B00424487 /* EDPanelPropertiesGraphTableEquation.h */,
+				CD263667167E9B4B00424487 /* EDPanelPropertiesGraphTableEquation.m */,
+				CD2DD5D216474144006557FC /* EDPanelPropertiesGraphTablePoints.h */,
+				CD2DD5D316474144006557FC /* EDPanelPropertiesGraphTablePoints.m */,
 				CDAA9104166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib */,
 				CD252E95166CFB9700163420 /* EDSheetPropertiesGraphEquation.h */,
 				CD252E96166CFB9700163420 /* EDSheetPropertiesGraphEquation.m */,
@@ -587,10 +591,6 @@
 				CD82442216AC582E00BAAB0B /* EDSheetPropertiesGraphError.m */,
 				CD82441E16AC543300BAAB0B /* EDSheetPropertiesGraphErrorController.h */,
 				CD82441F16AC543300BAAB0B /* EDSheetPropertiesGraphErrorController.m */,
-				CD263666167E9B4B00424487 /* EDPanelPropertiesGraphTableEquation.h */,
-				CD263667167E9B4B00424487 /* EDPanelPropertiesGraphTableEquation.m */,
-				CD2DD5D216474144006557FC /* EDPanelPropertiesGraphTablePoints.h */,
-				CD2DD5D316474144006557FC /* EDPanelPropertiesGraphTablePoints.m */,
 			);
 			name = Graph;
 			sourceTree = "<group>";

@@ -37,7 +37,9 @@
     [self setElementLabel:labelX attribute:EDElementAttributeLocationX];
     [self setElementLabel:labelY attribute:EDElementAttributeLocationY];
     [self setElementLabel:labelWidth attribute:EDElementAttributeWidth];
-    
+}
+
+- (void)viewDidLoad{
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelX];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelY];

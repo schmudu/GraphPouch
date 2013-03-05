@@ -36,7 +36,21 @@
 }
 
 - (void)initWindowAfterLoaded:(NSManagedObjectContext *)context{
-    // init code
+    // init code, every time items change
+}
+
+- (void)loadView{
+    [self viewWillLoad];
+    [super loadView];
+    [self viewDidLoad];
+}
+
+- (void)viewDidLoad{
+    // code after view loaded
+}
+
+- (void)viewWillLoad{
+    // code before view loaded
 }
 
 #pragma mark labels
