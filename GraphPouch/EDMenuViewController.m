@@ -15,7 +15,7 @@
     self = [super init];
     if (self){
         //NSLog(@"setting state to:%@", [defaults boolForKey:EDPreferenceSnapToGuides]);
-        //[snapToGrid setState:[defaults boolForKey:EDPreferenceSnapToGuides]];
+        [snapToGrid setState:[[NSUserDefaults standardUserDefaults] boolForKey:EDPreferenceSnapToGuides]];
     }
     return self;
 }

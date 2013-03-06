@@ -120,6 +120,12 @@
     
     // set variable for draggin
     lastDragLocation = [[[self window] contentView]convertPoint:[theEvent locationInWindow] toView:[self superview]];
+    
+    // if mosue up already then we need to catch it and call it's behavior
+    NSEvent *nextEvent = [[self window] nextEventMatchingMask:NSLeftMouseUpMask untilDate:[[NSDate date] dateByAddingTimeInterval:0.1] inMode:NSDefaultRunLoopMode dequeue:NO];
+    if ([nextEvent type] == NSLeftMouseUp){
+        [self mouseUp:theEvent];
+    }
 }
 
 - (void)mouseDownBySelection:(NSEvent *)theEvent{
@@ -209,7 +215,6 @@
                     didSnapY = TRUE;
                 }
                 else if (fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold) {
-                    //NSLog(@"case 2");
                     thisOrigin.y = closestVerticalPointToEdge - [[self dataObj] elementHeight];
                     snapDistanceY = savedOrigin.y + [[self dataObj] elementHeight] - closestVerticalPointToEdge;
                     didSnapY = TRUE;
