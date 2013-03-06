@@ -29,6 +29,7 @@ NSString * const EDUTITextbox                                   = @"com.edcodia.
 NSString * const EDKey                                          = @"EDKey";
 NSString * const EDValue                                        = @"EDValue";
 NSString * const EDSelectedViewColor                            = @"3E8DD3";
+//NSString * const EDSelectedViewColor                            = @"ffffff";
 float const EDSelectedViewStrokeWidth                            = 2.0;
 
 // numbers

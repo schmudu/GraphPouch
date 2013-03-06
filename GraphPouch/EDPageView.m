@@ -109,6 +109,8 @@
     
     // create the image
     NSImage *anImage = [[NSImage alloc] initWithSize:s];
+    //NSString *thePath = [[NSBundle mainBundle] pathForResource:@"about_logo" ofType:@"png"];
+    //NSImage *anImage = [[NSImage alloc] initWithContentsOfFile:thePath];
     
     // create a rect in which you will draw the letter in the image
     NSRect imageBounds;

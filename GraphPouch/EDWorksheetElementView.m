@@ -105,11 +105,14 @@
             [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
         }
         else {
+            NSMutableDictionary *clickInfo = [[NSMutableDictionary alloc] init];
+            [clickInfo setObject:[self dataObj] forKey:EDKeyWorksheetElement];
+            
             // post notification
-            [[NSNotificationCenter defaultCenter] postNotificationName:EDEventUnselectedElementClickedWithoutModifier object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:EDEventUnselectedElementClickedWithoutModifier object:self userInfo:clickInfo];
             
             //need to deselect all the other graphs
-            [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
+            //[[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
             
             [self notifyMouseDownListeners:theEvent];
         }

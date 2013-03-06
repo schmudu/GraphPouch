@@ -273,6 +273,26 @@
     return results;
 }
 
++ (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context selectElement:(EDElement *)element{
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
+    NSArray *fetchedObjects = [currentPage getAllWorksheetObjects];
+    if (fetchedObjects == nil) {
+        // Handle the error
+    }
+    else{
+        for (EDGraph *elem in fetchedObjects){
+            [elem setSelected:FALSE];
+        }
+    }
+    
+    // select current element
+    [element setSelected:TRUE];
+    
+    // save
+    NSError *error;
+    [context save:&error];
+}
+
 + (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context{
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     NSArray *fetchedObjects = [currentPage getAllWorksheetObjects];

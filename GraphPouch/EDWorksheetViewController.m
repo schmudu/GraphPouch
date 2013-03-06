@@ -66,8 +66,14 @@
 }
 
 - (void)deselectAllElements:(NSNotification *)note{
-    // clear all the selected elements
-    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context];
+    if ([note userInfo]){
+        // clear all the selected elements and select worksheet element
+        [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:(EDElement *)[[note userInfo] objectForKey:EDKeyWorksheetElement]];
+    }
+    else {
+        // clear all the selected elements
+        [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context];
+    }
 }
 
 - (void)dealloc{

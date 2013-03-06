@@ -456,7 +456,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)onElementSelectedDeselectOtherElements:(NSNotification *)note{
-    [_nc postNotificationName:EDEventUnselectedElementClickedWithoutModifier object:self];
+    [_nc postNotificationName:EDEventUnselectedElementClickedWithoutModifier object:self userInfo:[note userInfo]];
 }
 
 - (void)onElementRedrawingItself:(NSNotification *)note{
