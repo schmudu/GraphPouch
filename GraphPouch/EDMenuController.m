@@ -7,7 +7,6 @@
 //
 
 #import "EDMenuController.h"
-#import "EDPanelPropertiesController.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility+Pages.h"
 #import "EDPage.h"
@@ -23,7 +22,6 @@
     self = [super init];
     if(self){
         _context = context;
-        NSLog(@"init menu controller: context:%@", _context);
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];

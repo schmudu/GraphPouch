@@ -14,7 +14,6 @@
 #import "EDCoreDataUtility+Worksheet.h"
 #import "EDDocument.h"
 #import "EDGraph.h"
-#import "EDMenuController.h"
 #import "EDPage.h"
 #import "EDPagesViewController.h"
 #import "EDPanelPropertiesController.h"
@@ -65,7 +64,6 @@
         [self setManagedObjectContext:[contexts objectForKey:EDKeyContextRoot]];
         
         // create copy context
-        NSError *error;
         _copyContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
         //[_copyContext setPersistentStoreCoordinator:[[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]]];
         
@@ -78,7 +76,7 @@
         
         NSLog(@"===root context:%@ child context:%@ copy:%@", _rootContext, _context, _copyContext);
         
-        propertyController = [[EDPanelPropertiesController alloc] init];
+        propertyController = [[EDPanelPropertiesController alloc] initWithWindowNibName:@"EDPanelProperties"];
         aboutController = [[EDWindowControllerAbout alloc] initWithWindowNibName:@"EDWindowAbout"];
         
         // autoenable menu bar

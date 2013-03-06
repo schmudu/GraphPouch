@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EDPanelPropertiesController.h"
 
 @interface EDMenuController : NSObject{
     NSManagedObjectContext *_context;

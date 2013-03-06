@@ -22,14 +22,15 @@
 @end
 
 @implementation EDPanelPropertiesController
+/*
 - (id)init{
     self = [super initWithWindowNibName:@"EDPanelProperties"];
     return self;
-}
+}*/
 
 - (id)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
+    //self = [super initWithWindow:window];
     if (self) {
         _nc = [NSNotificationCenter defaultCenter];
         _currentTextView = nil;

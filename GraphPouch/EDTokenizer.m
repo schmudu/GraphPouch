@@ -92,63 +92,93 @@
     
     // numbers
     reti = regcomp(&regex, "^([0-9]+|\\.|\\.[0-9]+|[0-9]+\\.|[0-9]+\\.[0-9]+)$", REG_EXTENDED);
-    if (reti) 
+    if (reti) {
+        regfree(&regex);
         return FALSE;
+    }
     reti = regexec(&regex, cStr, 0, NULL, 0);
     if (!reti) {
         // set type to number
         [token setTypeRaw:EDTokenTypeNumber];
+        regfree(&regex);
         return TRUE;
     }
     
     // constants
+    // free memory for next comparison
+    regfree(&regex);
     reti = regcomp(&regex, "^(p|pi)$", REG_EXTENDED);
-    if (reti) 
+    if (reti) {
+        regfree(&regex);
         return FALSE;
+    }
     reti = regexec(&regex, cStr, 0, NULL, 0);
     if (!reti) {
         // set type to number
         [token setTypeRaw:EDTokenTypeConstant];
+        regfree(&regex);
         return TRUE;
     }
     
     // identifiers
+    // free memory for next comparison
+    regfree(&regex);
     reti = regcomp(&regex, "^(x)$", REG_EXTENDED);
-    if (reti) 
+    if (reti) {
+        regfree(&regex);
         return FALSE;
+    }
     reti = regexec(&regex, cStr, 0, NULL, 0);
     if (!reti) {
         // set type to number
         [token setTypeRaw:EDTokenTypeIdentifier];
+        regfree(&regex);
         return TRUE;
     }
     
     // parenthesis
+    // free memory for next comparison
+    regfree(&regex);
     reti = regcomp(&regex, "^(\\(|\\))$", REG_EXTENDED);
-    if (reti) 
+    if (reti) {
+        regfree(&regex);
         return FALSE;
+    }
     reti = regexec(&regex, cStr, 0, NULL, 0);
     if (!reti) {
         // set type to number
         [token setTypeRaw:EDTokenTypeParenthesis];
+        regfree(&regex);
         return TRUE;
     }
     
     // functions
+    // free memory for next comparison
+    regfree(&regex);
     reti = regcomp(&regex, "^(s|si|sin|c|co|cos)$", REG_EXTENDED);
-    if (reti) 
+    if (reti) {
+        regfree(&regex);
         return FALSE;
+    }
+    
     reti = regexec(&regex, cStr, 0, NULL, 0);
     if (!reti) {
         // set type to number
         [token setTypeRaw:EDTokenTypeFunction];
+        regfree(&regex);
         return TRUE;
     }
     
     // operators
+    // free memory for next comparison
+    regfree(&regex);
     reti = regcomp(&regex, "^(\\+|\\-|\\*|\\/|\\^)$", REG_EXTENDED);
-    if (reti) 
+    if (reti) {
+        regfree(&regex);
         return FALSE;
+    }
+    
+    // free memory for next comparison
     reti = regexec(&regex, cStr, 0, NULL, 0);
     if (!reti) {
         // set type to number
@@ -174,8 +204,13 @@
             [token setAssociationRaw:EDAssociationRight];
             [token setPrecedence:[NSNumber numberWithInt:4]];
         }
+        regfree(&regex);
         return TRUE;
     }
+    
+    // free memory
+    regfree(&regex);
+    //free((char *)cStr);
     
     [token setIsValid:FALSE];
     return FALSE;
@@ -231,7 +266,8 @@
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate term '%@'.",[currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
                 *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
-                    return FALSE;        
+                regfree(&regex);
+                return FALSE;
             }
         }
         
@@ -240,19 +276,26 @@
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate two consecutive function terms: '%@' and '%@'", [previousToken tokenValue], [currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
                 *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
-                return FALSE;                 
+                regfree(&regex);
+                return FALSE;
             }
             
             if(([previousToken typeRaw] == EDTokenTypeOperator) && ([currentToken typeRaw] == EDTokenTypeOperator)){
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate two consecutive operators: '%@' and '%@'", [previousToken tokenValue], [currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
                 *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
-                return FALSE;                 
+                regfree(&regex);
+                return FALSE;
             }
         }
         previousToken = currentToken;
         i++;
     }
+    
+    // free memory
+    regfree(&regex);
+    //free((char *)cStr);
+
     return TRUE;
 }
 

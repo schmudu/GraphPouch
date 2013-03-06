@@ -7,7 +7,6 @@
 //
 
 #import "EDMenuWindowController.h"
-#import "EDPanelPropertiesController.h"
 #import "EDConstants.h"
 #import "NSObject+Document.h"
 #import "EDDocument.h"
