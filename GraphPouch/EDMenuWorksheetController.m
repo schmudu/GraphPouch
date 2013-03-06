@@ -6,15 +6,14 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDMenuViewController.h"
+#import "EDMenuWorksheetController.h"
 #import "EDConstants.h"
 
-@implementation EDMenuViewController
+@implementation EDMenuWorksheetController
 
 - (id)init{
     self = [super init];
     if (self){
-        //NSLog(@"setting state to:%@", [defaults boolForKey:EDPreferenceSnapToGuides]);
         [snapToGrid setState:[[NSUserDefaults standardUserDefaults] boolForKey:EDPreferenceSnapToGuides]];
     }
     return self;

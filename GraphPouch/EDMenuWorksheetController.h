@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "EDWorksheetViewController.h"
 
-@interface EDMenuViewController : NSObject <NSMenuDelegate>{
+@interface EDMenuWorksheetController : NSObject <NSMenuDelegate>{
     IBOutlet NSMenuItem *snapToGrid;
     IBOutlet EDWorksheetViewController *worksheetViewController;
 }
