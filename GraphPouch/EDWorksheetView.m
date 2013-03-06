@@ -814,6 +814,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)updateTransformRects:(NSArray *)updatedElements{
+    // select this graph and deselect everything else
     // need to update transform rects
     EDTransformRect *transformRect;
     BOOL isSelected;
@@ -821,7 +822,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     for (NSObject *myObject in updatedElements){
         // check - only update if objects are displayed on worksheet
         if (![myObject isKindOfClass:[EDElement class]])
-            break;
+            continue;
     
         // cast
         EDElement *myElement = (EDElement *)myObject;

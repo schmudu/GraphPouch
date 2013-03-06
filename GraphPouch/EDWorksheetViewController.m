@@ -110,6 +110,9 @@
     [newTextbox setLocationY:150];
     [newTextbox setElementWidth:EDWorksheetLineSelectionWidth];
     [newTextbox setElementHeight:EDWorksheetLineSelectionHeight];
+    
+    // select this graph and deselect everything else
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newTextbox];
 }
 
 - (void)addNewLine{
@@ -129,6 +132,9 @@
     [newLine setElementWidth:EDWorksheetLineSelectionWidth];
     [newLine setElementHeight:EDWorksheetLineSelectionHeight];
     [newLine setThickness:1.0];
+    
+    // select this graph and deselect everything else
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newLine];
 }
 
 #pragma mark graphs
@@ -154,6 +160,9 @@
     [newGraph setScaleY:[NSNumber numberWithInt:2]];
     [newGraph setLabelIntervalX:[NSNumber numberWithInt:1]];
     [newGraph setLabelIntervalY:[NSNumber numberWithInt:1]];
+    
+    // select this graph and deselect everything else
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newGraph];
 }
 
 - (void)addLabelName{
