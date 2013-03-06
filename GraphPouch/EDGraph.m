@@ -93,6 +93,10 @@
         [self setScaleY:[aDecoder decodeObjectForKey:EDGraphAttributeScaleY]];
         [self setLabelIntervalX:[aDecoder decodeObjectForKey:EDGraphAttributeLabelIntervalX]];
         [self setLabelIntervalY:[aDecoder decodeObjectForKey:EDGraphAttributeLabelIntervalY]];
+        [self setMaxValueX:[aDecoder decodeObjectForKey:EDGraphAttributeMaxValueX]];
+        [self setMinValueX:[aDecoder decodeObjectForKey:EDGraphAttributeMinValueX]];
+        [self setMaxValueY:[aDecoder decodeObjectForKey:EDGraphAttributeMaxValueY]];
+        [self setMinValueY:[aDecoder decodeObjectForKey:EDGraphAttributeMinValueY]];
         
         //EDPoint *newPoint;
         NSSet *points = [aDecoder decodeObjectForKey:EDGraphAttributePoints];
@@ -137,6 +141,10 @@
     [aCoder encodeObject:[self scaleY] forKey:EDGraphAttributeScaleY];
     [aCoder encodeObject:[self labelIntervalX] forKey:EDGraphAttributeLabelIntervalX];
     [aCoder encodeObject:[self labelIntervalY] forKey:EDGraphAttributeLabelIntervalY];
+    [aCoder encodeObject:[self maxValueX] forKey:EDGraphAttributeMaxValueX];
+    [aCoder encodeObject:[self minValueX] forKey:EDGraphAttributeMinValueX];
+    [aCoder encodeObject:[self maxValueY] forKey:EDGraphAttributeMaxValueY];
+    [aCoder encodeObject:[self minValueY] forKey:EDGraphAttributeMinValueY];
 }
 
 
