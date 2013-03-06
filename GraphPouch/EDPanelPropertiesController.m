@@ -53,9 +53,10 @@
 
 - (void)windowDidLoad{
     // set menu state if opened
+    /*
     if([[NSUserDefaults standardUserDefaults] boolForKey:EDPreferencePropertyPanel]){
         [menuItemProperties setState:NSOnState];
-    }
+    }*/
     [super windowDidLoad];
 }
 
@@ -81,17 +82,18 @@
 
 - (void)togglePropertiesPanel:(id)sender{
     NSMenuItem *menuItem = (NSMenuItem *)sender;
-    if(([self isWindowLoaded]) && ([[self window] isVisible])){
+    //if(([self isWindowLoaded]) && ([[self window] isVisible])){
+    if([[NSUserDefaults standardUserDefaults] boolForKey:EDPreferencePropertyPanel]){
         // close window
         [[self window] close];
-        [menuItem setState:NSOffState];
+        //[menuItem setState:NSOffState];
         
         // set preferences
         [[NSUserDefaults standardUserDefaults] setBool:FALSE forKey:EDPreferencePropertyPanel];
     }
     else {
         [self showWindow:self];
-        [menuItem setState:NSOnState];
+        //[menuItem setState:NSOnState];
         [self setCorrectView];
         
         // set preferences
@@ -268,12 +270,13 @@
 
 - (void)menuWillOpen:(NSMenu *)menu{
     // set state based on state of window
+    /*
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         [menuItemProperties setState:NSOnState];
     }
     else {
         [menuItemProperties setState:NSOffState];
-    }
+    }*/
 }
 
 - (BOOL)panelIsOpen{

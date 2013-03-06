@@ -1065,6 +1065,7 @@
 						<string key="pagePrevious:">id</string>
 						<string key="paste:">id</string>
 						<string key="textboxAdd:">id</string>
+						<string key="toggleAboutWindow:">id</string>
 						<string key="togglePropertiesPanel:">id</string>
 						<string key="worksheetItemNext:">id</string>
 						<string key="worksheetItemPrevious:">id</string>
@@ -1096,6 +1097,10 @@
 						</object>
 						<object class="IBActionInfo" key="textboxAdd:">
 							<string key="name">textboxAdd:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleAboutWindow:">
+							<string key="name">toggleAboutWindow:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="togglePropertiesPanel:">

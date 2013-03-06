@@ -20,12 +20,14 @@
 
 
 - (void)menuWillOpen:(NSMenu *)menu{
-    if ([(EDDocument *)[self currentDocument] propertiesPanelIsOpen]){
+    //if ([(EDDocument *)[self currentDocument] propertiesPanelIsOpen]){
+    /*
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:EDPreferencePropertyPanel]){
         [properties setState:NSOnState];
     }
     else {
         [properties setState:NSOffState];
-    }
+    }*/
 }
 
 @end
