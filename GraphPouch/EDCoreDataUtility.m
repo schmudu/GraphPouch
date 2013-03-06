@@ -17,7 +17,8 @@
     NSMutableDictionary *contexts = [[NSMutableDictionary alloc] init];
     // this method will create a child context that will be used throught the program
     // this is so the nspersistentdocumentcontroller won't complain when we save
-    NSManagedObjectContext *rootContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    //NSManagedObjectContext *rootContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    NSManagedObjectContext *rootContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     
     [rootContext setPersistentStoreCoordinator:[startContext persistentStoreCoordinator]];
     NSManagedObjectContext *childContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];

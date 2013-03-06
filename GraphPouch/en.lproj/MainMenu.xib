@@ -1020,7 +1020,7 @@
 								</object>
 								<object class="NSMenuItem" id="939328116">
 									<reference key="NSMenu" ref="862844726"/>
-									<string key="NSTitle">Snap to Grid</string>
+									<string key="NSTitle">Snap to Objects</string>
 									<string key="NSKeyEquiv">g</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -3050,6 +3050,39 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/EDMenuWindowController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">EDMenuWorksheetController</string>
+					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">toggleSnapToGrid:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">toggleSnapToGrid:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">toggleSnapToGrid:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="snapToGrid">NSMenuItem</string>
+						<string key="worksheetViewController">EDWorksheetViewController</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="snapToGrid">
+							<string key="name">snapToGrid</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="worksheetViewController">
+							<string key="name">worksheetViewController</string>
+							<string key="candidateClassName">EDWorksheetViewController</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/EDMenuWorksheetController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
