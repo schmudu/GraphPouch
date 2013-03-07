@@ -127,6 +127,8 @@
     // if mosue up already then we need to catch it and call it's behavior
     NSEvent *nextEvent = [[self window] nextEventMatchingMask:NSLeftMouseUpMask untilDate:[[NSDate date] dateByAddingTimeInterval:0.1] inMode:NSDefaultRunLoopMode dequeue:NO];
     if ([nextEvent type] == NSLeftMouseUp){
+        // special case because mouseUp is not called
+        [self removeFeatures];
         [self mouseUp:theEvent];
     }
 }
