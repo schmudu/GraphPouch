@@ -598,7 +598,7 @@
     NSNumberFormatter *labelFormatter = [[NSNumberFormatter alloc] init];
     float distanceIncrementVertical = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     float distanceIncrementHorizontal = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
-    float horizontalOffset, labelHeight, labelWidth, pointLocX, pointLocY;
+    float horizontalOffset, labelWidth, pointLocX, pointLocY;
     
     // set origin points
     float originY = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
@@ -637,7 +637,6 @@
                 [self addSubview:pointLabel];
                 
                 labelWidth = [pointLabel intrinsicContentSize].width + EDGraphPointLabelHorizontalOffset;
-                labelHeight = [labelString heightForWidth:labelWidth attributes:nil];
                 
                 // configure horizontal offset, based off dynamic text width
                 if ([point locationX] > 0) 

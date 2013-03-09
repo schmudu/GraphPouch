@@ -183,40 +183,6 @@
 
 #pragma element
 - (void)setDimensionAndPositionElementViewOrigin:(NSPoint)origin element:(EDElement *)element{
-    // set position and dimension based on element
-    //EDTransformCornerPoint *topLeft, *topRight, *bottomLeft, *bottomRight;
-    EDTransformPoint *topLeft, *topRight, *bottomLeft, *bottomRight;
-    
-    // find the positions of points
-    if ([topLeftPoint frame].origin.y < [bottomLeftPoint frame].origin.y){
-        if([topLeftPoint frame].origin.x < [topRightPoint frame].origin.x){
-            topLeft = topLeftPoint;
-            topRight = topRightPoint;
-            bottomLeft = bottomLeftPoint;
-            bottomRight = bottomRightPoint;
-        }
-        else {
-            topLeft = topRightPoint;
-            topRight = topLeftPoint;
-            bottomLeft = bottomRightPoint;
-            bottomRight = bottomLeftPoint;
-        }
-    }
-    else{
-        if([topLeftPoint frame].origin.x < [topRightPoint frame].origin.x){
-            topLeft = bottomLeftPoint;
-            topRight = bottomRightPoint;
-            bottomLeft = topLeftPoint;
-            bottomRight = topRightPoint;
-        }
-        else {
-            topLeft = bottomRightPoint;
-            topRight = bottomLeftPoint;
-            bottomLeft = topRightPoint;
-            bottomRight = topLeftPoint;
-        }
-    }
-    
     // set positions
     [topLeftPoint setFrameOrigin:NSMakePoint(origin.x, origin.y)];
     [topRightPoint setFrameOrigin:NSMakePoint(origin.x + [element elementWidth] - EDTransformPointLength, origin.y)];

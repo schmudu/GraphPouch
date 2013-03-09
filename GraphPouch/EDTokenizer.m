@@ -61,7 +61,10 @@
             else{
                 NSMutableDictionary *errorDictionary = [[NSMutableDictionary alloc] init];
                 [errorDictionary setValue:[[NSString alloc] initWithFormat:@"Could not recognize character at position:%d",i+1] forKey:NSLocalizedDescriptionKey];
-                *error = [[NSError alloc] initWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDictionary];
+                
+                if(error != NULL)
+                    *error = [[NSError alloc] initWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDictionary];
+                
                 return nil;
             }
         }
@@ -80,7 +83,10 @@
         
     NSMutableDictionary *errorDictionary = [[NSMutableDictionary alloc] init];
     [errorDictionary setValue:@"some error" forKey:NSLocalizedDescriptionKey];
-    *error = [[NSError alloc] initWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDictionary];
+    
+    if(error != NULL)
+        *error = [[NSError alloc] initWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDictionary];
+    
     return nil;
 }
 
@@ -231,28 +237,32 @@
         if (([currentToken typeRaw] == EDTokenTypeFunction) && (([[currentToken tokenValue] isEqualToString:@"c"]) || ([[currentToken tokenValue] isEqualToString:@"co"]))){
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
             [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate expression '%@'. Did you mean 'cos'?",[currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
-            *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+            if(error != NULL)
+                *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
             return FALSE;
         }
         
         if (([currentToken typeRaw] == EDTokenTypeFunction) && (([[currentToken tokenValue] isEqualToString:@"s"]) || ([[currentToken tokenValue] isEqualToString:@"si"]))){
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
             [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate expression '%@'. Did you mean 'sin'?",[currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
-            *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+            if(error != NULL)
+                *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
             return FALSE;
         }
         
         if (([currentToken typeRaw] == EDTokenTypeFunction) && (([[currentToken tokenValue] isEqualToString:@"t"]) || ([[currentToken tokenValue] isEqualToString:@"ta"]))){
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
             [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate expression '%@'. Did you mean 'tan'?",[currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
-            *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+            if(error != NULL)
+                *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
             return FALSE;
         }
         
         if (([currentToken typeRaw] == EDTokenTypeFunction) && ([[currentToken tokenValue] isEqualToString:@"p"])){
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
             [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate expression '%@'. Did you mean 'pi'?",[currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
-            *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+            if(error != NULL)
+                *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
             return FALSE;
         }
         
@@ -265,7 +275,8 @@
             if (!reti){
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate term '%@'.",[currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
-                *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                if(error != NULL)
+                    *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                 regfree(&regex);
                 return FALSE;
             }
@@ -275,7 +286,8 @@
             if(([previousToken typeRaw] == EDTokenTypeFunction) && ([currentToken typeRaw] == EDTokenTypeFunction)){
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate two consecutive function terms: '%@' and '%@'", [previousToken tokenValue], [currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
-                *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                if(error != NULL)
+                    *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                 regfree(&regex);
                 return FALSE;
             }
@@ -283,7 +295,8 @@
             if(([previousToken typeRaw] == EDTokenTypeOperator) && ([currentToken typeRaw] == EDTokenTypeOperator)){
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate two consecutive operators: '%@' and '%@'", [previousToken tokenValue], [currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
-                *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                if(error != NULL)
+                    *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                 regfree(&regex);
                 return FALSE;
             }

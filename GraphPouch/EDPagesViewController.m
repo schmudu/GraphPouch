@@ -176,7 +176,6 @@
 
 - (void)onContextChanged:(NSNotification *)note{
     NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
-    int entityDeleted = FALSE;
     
     for (NSManagedObject *addedObject in insertedArray){
         if ([[addedObject className] isEqualToString:EDEntityNamePage]) {
@@ -188,7 +187,6 @@
     for (NSObject *removedObject in deletedArray){
         // only remove page objects
         if ([[removedObject className] isEqualToString:EDEntityNamePage]) {
-            entityDeleted = TRUE;
             [self removePage:(EDPage *)removedObject];
         }
     }

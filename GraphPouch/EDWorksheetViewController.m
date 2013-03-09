@@ -291,7 +291,7 @@
         direction = EDDirectionLeft;
     else if ([userEvent keyCode] == EDKeycodeArrowRight)
         direction = EDDirectionRight;
-    else if ([userEvent keyCode] == EDKeycodeArrowUp)
+    else
         direction = EDDirectionUp;
     
     // move all selected elements

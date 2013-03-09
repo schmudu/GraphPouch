@@ -16,7 +16,7 @@
     NSMutableArray *output;
     EDStack *operator;
     int i=0;
-    EDToken *currentToken, *operatorToken, *previousToken;
+    EDToken *currentToken, *operatorToken;
     output = [NSMutableArray array];
     operator = [[EDStack alloc] init];
     
@@ -75,7 +75,10 @@
                     NSLog(@"no matching paren found.");
                     NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                     [errorDetail setValue:[NSString stringWithFormat:@"No matching parenthesis found"] forKey:NSLocalizedDescriptionKey];
-                    *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                    
+                    if(error != NULL)
+                        *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                    
                     return nil;
                 }
                 
@@ -95,7 +98,6 @@
         }
         
         // save
-        previousToken = currentToken;
         i++;
     }
  
@@ -147,7 +149,8 @@
             if([result count] < 2){
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:[NSString stringWithFormat:@"Missing terms to properly evaluate equation"] forKey:NSLocalizedDescriptionKey];
-                *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                if(error != NULL)
+                    *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                 return 0;
             }
             else {
@@ -157,7 +160,8 @@
                 if(([firstNumToken typeRaw] != EDTokenTypeNumber) || ([secondNumToken typeRaw] != EDTokenTypeNumber)){
                     NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                     [errorDetail setValue:[NSString stringWithFormat:@"Missing terms to properly evaluate equation"] forKey:NSLocalizedDescriptionKey];
-                    *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                    if(error != NULL)
+                        *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                     return 0;
                 }
                 else {
@@ -184,7 +188,8 @@
                     if (isnan(answer) || isinf(answer)){
                         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                         [errorDetail setValue:[NSString stringWithFormat:@"Got infinity/divide_by_zero answer"] forKey:NSLocalizedDescriptionKey];
-                        *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                        if(error != NULL)
+                            *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                         return 0;
                     }
                     [resultToken setTokenValue:[NSString stringWithFormat:@"%f", answer]];

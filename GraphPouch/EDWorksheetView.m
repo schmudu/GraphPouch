@@ -622,7 +622,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
                                              
 - (NSMutableDictionary *)getClosestHorizontalGuide:(NSMutableArray *)guides elements:(NSArray *)elements{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    float originDiff, edgeDiff, originClosestGuide, edgeClosestGuide, absoluteClosestGuide;
+    float originDiff, edgeDiff, originClosestGuide, edgeClosestGuide, absoluteClosestGuide=0;
     float absoluteSmallestDiff = EDNumberMax;
     
     // for each point find the closest point
@@ -650,7 +650,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 - (NSMutableDictionary *)getClosestVerticalGuide:(NSMutableArray *)guides elements:(NSArray *)elements{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    float originDiff, edgeDiff, originClosestGuide, edgeClosestGuide, absoluteClosestGuide;
+    float originDiff, edgeDiff, originClosestGuide, edgeClosestGuide, absoluteClosestGuide=0;
     float absoluteSmallestDiff = 999999;
     
     // for each point find the closest point
