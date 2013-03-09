@@ -374,6 +374,9 @@
         if ([textbox textValue]){
             // insert saved data
             [newTextView insertText:[textbox textValue]];
+        
+            [newTextView setEditable:FALSE];
+            [newTextView setSelectable:FALSE];
             
             // format the text accordingly
             [[textbox textValue] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[textbox textValue] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
