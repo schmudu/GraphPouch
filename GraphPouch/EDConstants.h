@@ -315,6 +315,7 @@ extern NSString *const EDEquationAttributeEquation;
 extern NSString *const EDEquationAttributeTokens;
 extern NSString *const EDEventQuitDuringEquationSheet;
 extern int const EDEquationSheetIndexInvalid;
+extern float const EDEquationMaxThresholdDrawingValue;
 
 // tokens
 typedef enum{

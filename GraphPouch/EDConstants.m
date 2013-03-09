@@ -318,6 +318,7 @@ NSString * const EDEquationAttributeIsVisible                   = @"isVisible";
 NSString * const EDEquationAttributeTokens                      = @"tokens";
 NSString * const EDEventQuitDuringEquationSheet                 = @"EDEventQuitDuringEquationSheet";
 int const EDEquationSheetIndexInvalid                           = -1;
+float const EDEquationMaxThresholdDrawingValue                  = 1.5;
 
 // errors
 NSString * const EDErrorDomain                                  = @"com.edcodia.graphpouch";

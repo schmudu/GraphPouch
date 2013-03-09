@@ -82,9 +82,13 @@
         }
         valueY = [EDParser calculate:[[_equation tokens] array] error:&error context:_context varValue:valueX];
      
-        // if y is greater than max or less than min than break from loop
-        if ((isnan(valueY)) || (valueY > [[_graph maxValueY] floatValue]) || (valueY < [[_graph minValueY] floatValue]))
+        // if y is greater than max or less than min * threshold modifier than break from loop
+        // e.g. if max is 10 and modifier is 1.5, then points greater than 15 will not be drawn
+        //if ((isnan(valueY)) || (valueY > [[_graph maxValueY] floatValue]) || (valueY < [[_graph minValueY] floatValue])){
+        if ((isnan(valueY)) || (valueY > [[_graph maxValueY] floatValue] * EDEquationMaxThresholdDrawingValue) || (valueY < [[_graph minValueY] floatValue]*EDEquationMaxThresholdDrawingValue)){
+            firstPointDrawnForEquation = true;
             continue;
+        }
      
         // based on value find y position
         if (error){
