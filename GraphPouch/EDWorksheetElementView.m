@@ -129,8 +129,13 @@
     if ([nextEvent type] == NSLeftMouseUp){
         // special case because mouseUp is not called
         [self removeFeatures];
-        [self mouseUp:theEvent];
-    }
+        //[self mouseUp:theEvent];
+        // special case
+        // notify listeners of mouse up that wouldn't be registered by normal mouse up
+        NSMutableDictionary *notificationDictionary = [[NSMutableDictionary alloc] init];
+        [notificationDictionary setValue:theEvent forKey:EDEventKey];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseUp object:self userInfo:notificationDictionary];
+     }
 }
 
 - (void)mouseDownBySelection:(NSEvent *)theEvent{
