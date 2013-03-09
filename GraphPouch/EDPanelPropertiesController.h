@@ -19,7 +19,7 @@
 #import "EDTextView.h"
 #import "EDTextbox.h"
 
-@interface EDPanelPropertiesController : NSWindowController <NSMenuDelegate, NSWindowDelegate>{
+@interface EDPanelPropertiesController : NSWindowController <NSWindowDelegate>{
     IBOutlet NSMenuItem *menuItemProperties;
     EDPanelPropertiesDocumentController *documentController;
     EDPanelPropertiesGraphController *graphController;

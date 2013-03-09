@@ -82,9 +82,9 @@
 }
 
 - (void)togglePropertiesPanel:(id)sender{
-    NSMenuItem *menuItem = (NSMenuItem *)sender;
-    //if(([self isWindowLoaded]) && ([[self window] isVisible])){
-    if([[NSUserDefaults standardUserDefaults] boolForKey:EDPreferencePropertyPanel]){
+    //NSMenuItem *menuItem = (NSMenuItem *)sender;
+    if(([self isWindowLoaded]) && ([[self window] isVisible])){
+    //if([[NSUserDefaults standardUserDefaults] boolForKey:EDPreferencePropertyPanel]){
         // close window
         [[self window] close];
         //[menuItem setState:NSOffState];
@@ -267,17 +267,6 @@
     if ([_viewController isKindOfClass:[EDPanelPropertiesTextViewController class]]){
         [(EDPanelPropertiesTextViewController *)_viewController initButtons:_currentTextView textbox:_currentTextbox];
     }
-}
-
-- (void)menuWillOpen:(NSMenu *)menu{
-    // set state based on state of window
-    /*
-    if(([self isWindowLoaded]) && ([[self window] isVisible])){
-        [menuItemProperties setState:NSOnState];
-    }
-    else {
-        [menuItemProperties setState:NSOffState];
-    }*/
 }
 
 - (BOOL)panelIsOpen{
