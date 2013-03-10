@@ -19,7 +19,7 @@
 #import "EDPanelPropertiesController.h"
 #import "EDPrintView.h"
 #import "EDToken.h"
-#import "EDWindow.h"
+//#import "EDWindow.h"
 #import "EDWindowControllerAbout.h"
 #import "EDWorksheetView.h"
 #import "EDWorksheetViewController.h"

@@ -29,7 +29,8 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSGradient *fillGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithHexColorString:@"dedede"] endingColor:[NSColor colorWithHexColorString:@"bbbbbb"]];
+    //NSGradient *fillGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithHexColorString:@"dedede"] endingColor:[NSColor colorWithHexColorString:@"bbbbbb"]];
+    NSGradient *fillGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithHexColorString:@"ff0000"] endingColor:[NSColor colorWithHexColorString:@"bbbbbb"]];
     NSBezierPath *path = [NSBezierPath bezierPath];
     
     [path moveToPoint:NSMakePoint(0.0, 0.0)];

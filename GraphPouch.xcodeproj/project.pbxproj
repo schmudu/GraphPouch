@@ -70,6 +70,11 @@
 		CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */; };
 		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
 		CD4E680D16E78E78002397C0 /* EDMenuWorksheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4E680C16E78E78002397C0 /* EDMenuWorksheetController.m */; };
+		CD5312AA16ECEC0F00F670FD /* INAppStoreWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312A516ECE94100F670FD /* INAppStoreWindow.m */; };
+		CD5312AB16ECEC3D00F670FD /* INWindowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312A716ECE94100F670FD /* INWindowButton.m */; };
+		CD5312AC16ECEC4100F670FD /* NSColor+INAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312A916ECE94100F670FD /* NSColor+INAdditions.m */; };
+		CD5312B016ECEF7400F670FD /* EDToolbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312AE16ECEF7400F670FD /* EDToolbarViewController.m */; };
+		CD5312B116ECEF7400F670FD /* EDToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD5312AF16ECEF7400F670FD /* EDToolbarView.xib */; };
 		CD5EE20216012A690027EFC6 /* NSObject+Document.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE20116012A690027EFC6 /* NSObject+Document.m */; };
 		CD6DF301160D181900935BF2 /* EDTransformCornerPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */; };
 		CD74501216B3342A004B813E /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = CD74501116B3342A004B813E /* icon.iconset */; };
@@ -265,6 +270,15 @@
 		CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphArrayController.m; sourceTree = "<group>"; };
 		CD4E680B16E78E78002397C0 /* EDMenuWorksheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWorksheetController.h; sourceTree = "<group>"; };
 		CD4E680C16E78E78002397C0 /* EDMenuWorksheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWorksheetController.m; sourceTree = "<group>"; };
+		CD5312A416ECE94100F670FD /* INAppStoreWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INAppStoreWindow.h; sourceTree = "<group>"; };
+		CD5312A516ECE94100F670FD /* INAppStoreWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = INAppStoreWindow.m; sourceTree = "<group>"; };
+		CD5312A616ECE94100F670FD /* INWindowButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INWindowButton.h; sourceTree = "<group>"; };
+		CD5312A716ECE94100F670FD /* INWindowButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = INWindowButton.m; sourceTree = "<group>"; };
+		CD5312A816ECE94100F670FD /* NSColor+INAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSColor+INAdditions.h"; sourceTree = "<group>"; };
+		CD5312A916ECE94100F670FD /* NSColor+INAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSColor+INAdditions.m"; sourceTree = "<group>"; };
+		CD5312AD16ECEF7400F670FD /* EDToolbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDToolbarViewController.h; sourceTree = "<group>"; };
+		CD5312AE16ECEF7400F670FD /* EDToolbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDToolbarViewController.m; sourceTree = "<group>"; };
+		CD5312AF16ECEF7400F670FD /* EDToolbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDToolbarView.xib; sourceTree = "<group>"; };
 		CD5EE20016012A690027EFC6 /* NSObject+Document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Document.h"; sourceTree = "<group>"; };
 		CD5EE20116012A690027EFC6 /* NSObject+Document.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Document.m"; sourceTree = "<group>"; };
 		CD6DF2FF160D181900935BF2 /* EDTransformCornerPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformCornerPoint.h; sourceTree = "<group>"; };
@@ -608,6 +622,7 @@
 		CD3F0AF515C4774900AB7567 /* View+Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CD5312A316ECE92E00F670FD /* Toolbar */,
 				CD1DA3FF16D1825200198084 /* Print */,
 				CDD46E4E1603BE1200EDD75C /* Categories */,
 				CDC3C82415F96368009A8BFD /* Formatters */,
@@ -820,6 +835,22 @@
 				CD47113015BA1647008AACC3 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CD5312A316ECE92E00F670FD /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				CD5312A416ECE94100F670FD /* INAppStoreWindow.h */,
+				CD5312A516ECE94100F670FD /* INAppStoreWindow.m */,
+				CD5312A616ECE94100F670FD /* INWindowButton.h */,
+				CD5312A716ECE94100F670FD /* INWindowButton.m */,
+				CD5312A816ECE94100F670FD /* NSColor+INAdditions.h */,
+				CD5312A916ECE94100F670FD /* NSColor+INAdditions.m */,
+				CD5312AD16ECEF7400F670FD /* EDToolbarViewController.h */,
+				CD5312AE16ECEF7400F670FD /* EDToolbarViewController.m */,
+				CD5312AF16ECEF7400F670FD /* EDToolbarView.xib */,
+			);
+			name = Toolbar;
 			sourceTree = "<group>";
 		};
 		CD75A42D16D0799E00CD775C /* GraphLineTextbox */ = {
@@ -1221,6 +1252,7 @@
 				CD1DA3EF16D09C4B00198084 /* icon_graph_over.png in Resources */,
 				CD20AA7416E43FE50027F985 /* EDWindowAbout.xib in Resources */,
 				CD20AA7616E447B30027F985 /* about_logo.png in Resources */,
+				CD5312B116ECEF7400F670FD /* EDToolbarView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1335,6 +1367,10 @@
 				CD881D4016E249B600DB0E94 /* NSManagedObjectContext+Objects.m in Sources */,
 				CD20AA7316E43FE50027F985 /* EDWindowControllerAbout.m in Sources */,
 				CD4E680D16E78E78002397C0 /* EDMenuWorksheetController.m in Sources */,
+				CD5312AA16ECEC0F00F670FD /* INAppStoreWindow.m in Sources */,
+				CD5312AB16ECEC3D00F670FD /* INWindowButton.m in Sources */,
+				CD5312AC16ECEC4100F670FD /* NSColor+INAdditions.m in Sources */,
+				CD5312B016ECEF7400F670FD /* EDToolbarViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

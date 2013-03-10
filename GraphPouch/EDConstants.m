@@ -228,6 +228,7 @@ float const EDGraphDependentVariableIncrement                   = 5.0;        //
 // window
 NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";
 NSString * const EDEventWindowWillClose                         = @"EDEventWindowWillClose";
+float const EDMainWindowTitleBarHeight                          = 60.0;
 
 // pages view
 NSString * const EDEventPagesViewClicked                        = @"EDEventPagesViewClicked";

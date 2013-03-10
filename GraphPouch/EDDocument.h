@@ -8,7 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDPanelPropertiesController.h"
-#import "EDWindow.h"
+//#import "EDWindow.h"
+#import "INAppStoreWindow.h"
 #import "EDMainContentView.h"
 #import "EDPagesView.h"
 #import "EDWindowControllerAbout.h"
@@ -23,7 +24,8 @@
     IBOutlet EDPagesViewController *pagesController;
     IBOutlet EDWorksheetView *worksheetView;
     IBOutlet EDMainContentView *mainWorksheetView;
-    IBOutlet EDWindow *mainWindow;
+    //IBOutlet EDWindow *mainWindow;
+    IBOutlet INAppStoreWindow *mainWindow;
     IBOutlet EDPagesView *pagesView;
     EDPanelPropertiesController *propertyController;
     EDWindowControllerAbout *aboutController;

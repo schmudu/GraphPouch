@@ -226,6 +226,7 @@ extern float const EDGraphPointLabelHorizontalOffset;
 // window
 extern NSString *const EDEventWindowDidResize;
 extern NSString *const EDEventWindowWillClose;
+extern float const EDMainWindowTitleBarHeight;
 
 // pages
 extern NSString *const EDEventPagesViewClicked;
