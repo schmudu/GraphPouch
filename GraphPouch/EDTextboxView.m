@@ -118,12 +118,15 @@
     [_textView removeFromSuperview];
     [self addSubview:_textView];
     
-    // disable text box
+    // enable text box
     [_textView setEditable:TRUE];
     [_textView setSelectable:TRUE];
     
     // enable all tracking areas
     [_textView addTrackingRect:[_textView frame] owner:self userData:nil assumeInside:NO];
+    
+    // set cursor position to end of text view
+    //[_textView moveToEndOfLine:nil];
     
     // need to change cursor rects
     [[self window] invalidateCursorRectsForView:self];

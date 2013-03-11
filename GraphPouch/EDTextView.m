@@ -32,6 +32,12 @@
 - (void)resetCursorRects{
     if ([(EDTextboxView *)[self superview] enabled]){
         [super resetCursorRects];
+        
+        // enabled, by default set cursor at end of textbox
+        [self setSelectedRange:NSMakeRange(0, [[self string] length])];
+        
+        // make this the first responder
+        [[self window] makeFirstResponder:self];
     }
 }
 
