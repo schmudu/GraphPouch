@@ -272,6 +272,7 @@
             reti = regcomp(&regex, "^[0-9]+\\.$", REG_EXTENDED);
             if (reti) return FALSE;
             reti = regexec(&regex, cStr, 0, NULL, 0);
+            regfree(&regex);
             if (!reti){
                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                 [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate term '%@'.",[currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
@@ -288,7 +289,6 @@
                 [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate two consecutive function terms: '%@' and '%@'", [previousToken tokenValue], [currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
                 if(error != NULL)
                     *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
-                regfree(&regex);
                 return FALSE;
             }
             
@@ -297,7 +297,7 @@
                 [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate two consecutive operators: '%@' and '%@'", [previousToken tokenValue], [currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
                 if(error != NULL)
                     *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
-                regfree(&regex);
+                //regfree(&regex);
                 return FALSE;
             }
         }
