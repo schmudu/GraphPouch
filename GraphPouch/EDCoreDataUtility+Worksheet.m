@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Patrick Lee. All rights reserved.
 //
 
+#import "EDCoreDataUtility.h"
 #import "EDCoreDataUtility+Pages.h"
 #import "EDCoreDataUtility+Worksheet.h"
 #import "EDElement.h"
@@ -30,6 +31,9 @@
         // set every element as selected
         [element setSelected:TRUE];
     }
+    
+    // save
+    [EDCoreDataUtility save:context];
 }
 
 + (void)selectNextWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context{
@@ -81,10 +85,12 @@
             }
         }
     }
+    
+    // save
+    [EDCoreDataUtility save:context];
 }
 
 + (void)selectPreviousWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context{
-
     // get all selected objects on current page
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     NSArray *selectedObjects = [currentPage getAllSelectedWorksheetObjects];
@@ -134,10 +140,12 @@
             }
         }
     }
+    
+    // save
+    [EDCoreDataUtility save:context];
 }
 
 #pragma mark worksheet
-//+ (NSMutableArray *)copySelectedWorksheetElements:(NSManagedObjectContext *)context{
 + (NSMutableArray *)copySelectedWorksheetElementsFromContext:(NSManagedObjectContext *)context toContext:(NSManagedObjectContext *)copyContext{
     // copy all selected objects
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
@@ -289,8 +297,9 @@
     [element setSelected:TRUE];
     
     // save
-    NSError *error;
-    [context save:&error];
+    //NSError *error;
+    //[context save:&error];
+    [EDCoreDataUtility save:context];
 }
 
 + (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context{
@@ -306,8 +315,9 @@
     }
     
     // save
-    NSError *error;
-    [context save:&error];
+    //NSError *error;
+    //[context save:&error];
+    [EDCoreDataUtility save:context];
 }
 
 + (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context{
@@ -315,11 +325,21 @@
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     
     for (EDElement *element in selectedElements){
+#warning worksheet elements
         if ([element isKindOfClass:[EDGraph class]]) {
             [currentPage removeGraphsObject:(EDGraph *)element];
         }
+        else if ([element isKindOfClass:[EDLine class]]) {
+            [currentPage removeLinesObject:(EDLine *)element];
+        }
+        else if ([element isKindOfClass:[EDTextbox class]]) {
+            [currentPage removeTextboxesObject:(EDTextbox *)element];
+        }
         [context deleteObject:element];
     }
+    
+    // save
+    [EDCoreDataUtility save:context];
 }
 
 + (void)moveSelectedWorksheetElements:(EDDirection)direction multiplyModifier:(BOOL)modifier context:(NSManagedObjectContext *)context{
@@ -350,5 +370,8 @@
             [element setLocationY:([element locationY] + increment)];
         }
     }
+    
+    // save
+    [EDCoreDataUtility save:context];
 }
 @end

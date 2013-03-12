@@ -12,11 +12,4 @@
 
 @implementation EDCoreDataUtility (Graphs)
 
-+ (NSArray *)getGraphsForPage:(EDPage *)page context:(NSManagedObjectContext *)context{
-    NSArray *graphs = [EDGraph getAllObjects:context];
-    
-    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(page == %@)", page];
-    NSArray *matchingGraphs = [graphs filteredArrayUsingPredicate:searchFilter];
-    return matchingGraphs;
-}
 @end

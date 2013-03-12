@@ -12,8 +12,6 @@
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSArrayController</string>
-			<string>NSButton</string>
-			<string>NSButtonCell</string>
 			<string>NSCustomObject</string>
 			<string>NSCustomView</string>
 			<string>NSScrollView</string>
@@ -65,7 +63,7 @@
 											<string key="NSFrameSize">{138, 843}</string>
 											<reference key="NSSuperview" ref="302567203"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="263211016"/>
+											<reference key="NSNextKeyView" ref="495829339"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 										</object>
 									</array>
@@ -114,7 +112,7 @@
 							<string key="NSFrameSize">{140, 843}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="495829339"/>
+							<reference key="NSNextKeyView" ref="302567203"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133632</int>
 							<reference key="NSVScroller" ref="495829339"/>
@@ -135,7 +133,6 @@
 									<string key="NSFrame">{{27, 6}, {612, 792}}</string>
 									<reference key="NSSuperview" ref="263211016"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">EDWorksheetView</string>
 								</object>
@@ -199,211 +196,6 @@
 			<object class="NSCustomObject" id="254499860">
 				<string key="NSClassName">INAppStoreWindow</string>
 			</object>
-			<object class="NSCustomView" id="24759428">
-				<nil key="NSNextResponder"/>
-				<int key="NSvFlags">266</int>
-				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSButton" id="246771757">
-						<reference key="NSNextResponder" ref="24759428"/>
-						<int key="NSvFlags">300</int>
-						<string key="NSFrame">{{40, 5}, {70, 30}}</string>
-						<reference key="NSSuperview" ref="24759428"/>
-						<reference key="NSNextKeyView" ref="835139896"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="999864075">
-							<int key="NSCellFlags">-2080374784</int>
-							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents"/>
-							<object class="NSFont" key="NSSupport" id="29941353">
-								<string key="NSName">LucidaGrande</string>
-								<double key="NSSize">13</double>
-								<int key="NSfFlags">1044</int>
-							</object>
-							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="246771757"/>
-							<int key="NSButtonFlags">135020544</int>
-							<int key="NSButtonFlags2">6</int>
-							<object class="NSCustomResource" key="NSNormalImage">
-								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">icon_worksheet</string>
-							</object>
-							<object class="NSCustomResource" key="NSAlternateImage">
-								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">icon_worksheet_over</string>
-							</object>
-							<string key="NSAlternateContents"/>
-							<string key="NSKeyEquivalent"/>
-							<int key="NSPeriodicDelay">400</int>
-							<int key="NSPeriodicInterval">75</int>
-						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-					</object>
-					<object class="NSButton" id="835139896">
-						<reference key="NSNextResponder" ref="24759428"/>
-						<int key="NSvFlags">300</int>
-						<string key="NSFrame">{{145, 5}, {60, 30}}</string>
-						<reference key="NSSuperview" ref="24759428"/>
-						<reference key="NSNextKeyView" ref="807704737"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="957299534">
-							<int key="NSCellFlags">67108864</int>
-							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents"/>
-							<reference key="NSSupport" ref="29941353"/>
-							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="835139896"/>
-							<int key="NSButtonFlags">135020544</int>
-							<int key="NSButtonFlags2">6</int>
-							<object class="NSCustomResource" key="NSNormalImage">
-								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">icon_paper</string>
-							</object>
-							<object class="NSCustomResource" key="NSAlternateImage">
-								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">icon_paper_over</string>
-							</object>
-							<string key="NSAlternateContents"/>
-							<string key="NSKeyEquivalent"/>
-							<int key="NSPeriodicDelay">400</int>
-							<int key="NSPeriodicInterval">75</int>
-						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-					</object>
-					<object class="NSButton" id="807704737">
-						<reference key="NSNextResponder" ref="24759428"/>
-						<int key="NSvFlags">296</int>
-						<string key="NSFrame">{{546, 5}, {60, 30}}</string>
-						<reference key="NSSuperview" ref="24759428"/>
-						<reference key="NSNextKeyView" ref="242624501"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="978794777">
-							<int key="NSCellFlags">67108864</int>
-							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents"/>
-							<reference key="NSSupport" ref="29941353"/>
-							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="807704737"/>
-							<int key="NSButtonFlags">135020544</int>
-							<int key="NSButtonFlags2">134</int>
-							<object class="NSCustomResource" key="NSNormalImage">
-								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">icon_graph</string>
-							</object>
-							<object class="NSCustomResource" key="NSAlternateImage">
-								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">icon_graph_over</string>
-							</object>
-							<string key="NSAlternateContents"/>
-							<string key="NSKeyEquivalent"/>
-							<int key="NSPeriodicDelay">400</int>
-							<int key="NSPeriodicInterval">75</int>
-						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-					</object>
-					<object class="NSButton" id="897086742">
-						<reference key="NSNextResponder" ref="24759428"/>
-						<int key="NSvFlags">296</int>
-						<string key="NSFrame">{{624, 5}, {60, 30}}</string>
-						<reference key="NSSuperview" ref="24759428"/>
-						<reference key="NSNextKeyView" ref="664958542"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="189526198">
-							<int key="NSCellFlags">-2080374784</int>
-							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents"/>
-							<reference key="NSSupport" ref="29941353"/>
-							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="897086742"/>
-							<int key="NSButtonFlags">135020544</int>
-							<int key="NSButtonFlags2">134</int>
-							<object class="NSCustomResource" key="NSNormalImage">
-								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">icon_line</string>
-							</object>
-							<object class="NSCustomResource" key="NSAlternateImage">
-								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">icon_line_over</string>
-							</object>
-							<string key="NSAlternateContents"/>
-							<string key="NSKeyEquivalent"/>
-							<int key="NSPeriodicDelay">400</int>
-							<int key="NSPeriodicInterval">75</int>
-						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-					</object>
-					<object class="NSButton" id="242624501">
-						<reference key="NSNextResponder" ref="24759428"/>
-						<int key="NSvFlags">296</int>
-						<string key="NSFrame">{{585, 7}, {60, 30}}</string>
-						<reference key="NSSuperview" ref="24759428"/>
-						<reference key="NSNextKeyView" ref="897086742"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="22166792">
-							<int key="NSCellFlags">67108864</int>
-							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents"/>
-							<reference key="NSSupport" ref="29941353"/>
-							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="242624501"/>
-							<int key="NSButtonFlags">135020544</int>
-							<int key="NSButtonFlags2">134</int>
-							<object class="NSCustomResource" key="NSNormalImage">
-								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">icon_text</string>
-							</object>
-							<object class="NSCustomResource" key="NSAlternateImage">
-								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">icon_text_over</string>
-							</object>
-							<string key="NSAlternateContents"/>
-							<string key="NSKeyEquivalent"/>
-							<int key="NSPeriodicDelay">400</int>
-							<int key="NSPeriodicInterval">75</int>
-						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-					</object>
-					<object class="NSButton" id="664958542">
-						<reference key="NSNextResponder" ref="24759428"/>
-						<int key="NSvFlags">296</int>
-						<string key="NSFrame">{{656, 7}, {74, 30}}</string>
-						<reference key="NSSuperview" ref="24759428"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="919302313">
-							<int key="NSCellFlags">-2080374784</int>
-							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents"/>
-							<reference key="NSSupport" ref="29941353"/>
-							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="664958542"/>
-							<int key="NSButtonFlags">135020544</int>
-							<int key="NSButtonFlags2">134</int>
-							<object class="NSCustomResource" key="NSNormalImage">
-								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">icon_properties</string>
-							</object>
-							<object class="NSCustomResource" key="NSAlternateImage">
-								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">icon_properties_over</string>
-							</object>
-							<string key="NSAlternateContents"/>
-							<string key="NSKeyEquivalent"/>
-							<int key="NSPeriodicDelay">400</int>
-							<int key="NSPeriodicInterval">75</int>
-						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-					</object>
-				</array>
-				<string key="NSFrameSize">{806, 50}</string>
-				<reference key="NSNextKeyView" ref="246771757"/>
-				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<string key="NSClassName">EDToolbarView</string>
-			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
@@ -462,54 +254,6 @@
 						<reference key="destination" ref="275939982"/>
 					</object>
 					<int key="connectionID">100405</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">graphAdd:</string>
-						<reference key="source" ref="512844837"/>
-						<reference key="destination" ref="807704737"/>
-					</object>
-					<int key="connectionID">100380</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">togglePropertiesPanel:</string>
-						<reference key="source" ref="512844837"/>
-						<reference key="destination" ref="664958542"/>
-					</object>
-					<int key="connectionID">100386</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">pageAdd:</string>
-						<reference key="source" ref="512844837"/>
-						<reference key="destination" ref="835139896"/>
-					</object>
-					<int key="connectionID">100379</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">lineAdd:</string>
-						<reference key="source" ref="613418571"/>
-						<reference key="destination" ref="897086742"/>
-					</object>
-					<int key="connectionID">100381</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">textboxAdd:</string>
-						<reference key="source" ref="613418571"/>
-						<reference key="destination" ref="242624501"/>
-					</object>
-					<int key="connectionID">100382</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">newDocument:</string>
-						<reference key="source" ref="613418571"/>
-						<reference key="destination" ref="246771757"/>
-					</object>
-					<int key="connectionID">100390</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -715,113 +459,12 @@
 						<reference key="object" ref="562031203"/>
 						<reference key="parent" ref="263211016"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100385</int>
-						<reference key="object" ref="24759428"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="246771757"/>
-							<reference ref="835139896"/>
-							<reference ref="807704737"/>
-							<reference ref="897086742"/>
-							<reference ref="242624501"/>
-							<reference ref="664958542"/>
-						</array>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100387</int>
-						<reference key="object" ref="246771757"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="999864075"/>
-						</array>
-						<reference key="parent" ref="24759428"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100311</int>
-						<reference key="object" ref="835139896"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="957299534"/>
-						</array>
-						<reference key="parent" ref="24759428"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100029</int>
-						<reference key="object" ref="807704737"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="978794777"/>
-						</array>
-						<reference key="parent" ref="24759428"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100368</int>
-						<reference key="object" ref="897086742"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="189526198"/>
-						</array>
-						<reference key="parent" ref="24759428"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100365</int>
-						<reference key="object" ref="242624501"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="22166792"/>
-						</array>
-						<reference key="parent" ref="24759428"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100371</int>
-						<reference key="object" ref="664958542"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="919302313"/>
-						</array>
-						<reference key="parent" ref="24759428"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100372</int>
-						<reference key="object" ref="919302313"/>
-						<reference key="parent" ref="664958542"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100366</int>
-						<reference key="object" ref="22166792"/>
-						<reference key="parent" ref="242624501"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100369</int>
-						<reference key="object" ref="189526198"/>
-						<reference key="parent" ref="897086742"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100030</int>
-						<reference key="object" ref="978794777"/>
-						<reference key="parent" ref="807704737"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100312</int>
-						<reference key="object" ref="957299534"/>
-						<reference key="parent" ref="835139896"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100388</int>
-						<reference key="object" ref="999864075"/>
-						<reference key="parent" ref="246771757"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<object class="NSMutableDictionary" key="100029.IBAttributePlaceholdersKey">
-					<string key="NS.key.0">ToolTip</string>
-					<object class="IBToolTipAttribute" key="NS.object.0">
-						<string key="name">ToolTip</string>
-						<reference key="object" ref="807704737"/>
-						<string key="toolTip">Add Graph to current page</string>
-					</object>
-				</object>
-				<string key="100029.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100030.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100069.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100288.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100293.CustomClassName">EDGraphArrayController</string>
@@ -832,65 +475,10 @@
 				<string key="100305.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100306.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100307.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<dictionary class="NSMutableDictionary" key="100311.IBAttributePlaceholdersKey">
-					<object class="IBAccessibilityAttribute" key="AccessibilityDescription">
-						<string key="name">AccessibilityDescription</string>
-						<reference key="object" ref="835139896"/>
-						<string key="accessibilityValue">Add New Page</string>
-					</object>
-					<object class="IBToolTipAttribute" key="ToolTip">
-						<string key="name">ToolTip</string>
-						<reference key="object" ref="835139896"/>
-						<string key="toolTip">Add Page to Worksheet</string>
-					</object>
-				</dictionary>
-				<string key="100311.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100312.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100315.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100319.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100348.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100361.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<object class="NSMutableDictionary" key="100365.IBAttributePlaceholdersKey">
-					<string key="NS.key.0">ToolTip</string>
-					<object class="IBToolTipAttribute" key="NS.object.0">
-						<string key="name">ToolTip</string>
-						<reference key="object" ref="242624501"/>
-						<string key="toolTip">Add Textfield to current page</string>
-					</object>
-				</object>
-				<string key="100365.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100366.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<object class="NSMutableDictionary" key="100368.IBAttributePlaceholdersKey">
-					<string key="NS.key.0">ToolTip</string>
-					<object class="IBToolTipAttribute" key="NS.object.0">
-						<string key="name">ToolTip</string>
-						<reference key="object" ref="897086742"/>
-						<string key="toolTip">Add Line to current page</string>
-					</object>
-				</object>
-				<string key="100368.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100369.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<object class="NSMutableDictionary" key="100371.IBAttributePlaceholdersKey">
-					<string key="NS.key.0">AccessibilityDescription</string>
-					<object class="IBAccessibilityAttribute" key="NS.object.0">
-						<string key="name">AccessibilityDescription</string>
-						<reference key="object" ref="664958542"/>
-						<string key="accessibilityValue">Toggle Properties Panel</string>
-					</object>
-				</object>
-				<string key="100371.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100372.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100385.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<object class="NSMutableDictionary" key="100387.IBAttributePlaceholdersKey">
-					<string key="NS.key.0">ToolTip</string>
-					<object class="IBToolTipAttribute" key="NS.object.0">
-						<string key="name">ToolTip</string>
-						<reference key="object" ref="246771757"/>
-						<string key="toolTip">New Worksheet</string>
-					</object>
-				</object>
-				<string key="100387.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100388.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBWindowTemplateEditedContentRect">{{133, 170}, {507, 413}}</string>
 				<string key="6.CustomClassName">EDContentView</string>
@@ -1102,14 +690,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">EDToolbarView</string>
-					<string key="superclassName">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/EDToolbarView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">EDWorksheetView</string>
 					<string key="superclassName">NSView</string>
 					<dictionary class="NSMutableDictionary" key="actions">
@@ -1178,19 +758,5 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="icon_graph">{40, 25}</string>
-			<string key="icon_graph_over">{40, 25}</string>
-			<string key="icon_line">{40, 25}</string>
-			<string key="icon_line_over">{40, 25}</string>
-			<string key="icon_paper">{50, 25}</string>
-			<string key="icon_paper_over">{51, 26}</string>
-			<string key="icon_properties">{40, 25}</string>
-			<string key="icon_properties_over">{40, 26}</string>
-			<string key="icon_text">{40, 25}</string>
-			<string key="icon_text_over">{40, 26}</string>
-			<string key="icon_worksheet">{48, 25}</string>
-			<string key="icon_worksheet_over">{48, 26}</string>
-		</dictionary>
 	</data>
 </archive>

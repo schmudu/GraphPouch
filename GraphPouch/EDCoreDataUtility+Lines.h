@@ -10,5 +10,4 @@
 
 @interface EDCoreDataUtility (Lines)
 
-+ (NSArray *)getLinesForPage:(EDPage *)page context:(NSManagedObjectContext *)context;
 @end

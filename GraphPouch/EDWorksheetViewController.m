@@ -113,6 +113,9 @@
     
     // select this graph and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newTextbox];
+    
+    // save
+    [EDCoreDataUtility save:_context];
 }
 
 - (void)addNewLine{
@@ -135,6 +138,9 @@
     
     // select this graph and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newLine];
+    
+    // save
+    [EDCoreDataUtility save:_context];
 }
 
 #pragma mark graphs
@@ -163,6 +169,9 @@
     
     // select this graph and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newGraph];
+    
+    // save
+    [EDCoreDataUtility save:_context];
 }
 
 - (void)addLabelName{
@@ -197,6 +206,9 @@
     [newLine setElementWidth:200];
     [newLine setElementHeight:EDWorksheetLineSelectionHeight];
     [newLine setThickness:1.0];
+    
+    // save
+    [EDCoreDataUtility save:_context];
 }
 
 - (void)addLabelDate{
@@ -231,6 +243,9 @@
     [newLine setElementWidth:200];
     [newLine setElementHeight:EDWorksheetLineSelectionHeight];
     [newLine setThickness:1.0];
+    
+    // save
+    [EDCoreDataUtility save:_context];
 }
 
 #pragma mark align

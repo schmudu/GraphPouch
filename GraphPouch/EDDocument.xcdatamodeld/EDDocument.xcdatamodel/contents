@@ -41,7 +41,7 @@
         <attribute name="selected" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <relationship name="graphs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDGraph" inverseName="page" inverseEntity="EDGraph" syncable="YES"/>
         <relationship name="lines" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDLine" inverseName="page" inverseEntity="EDLine" syncable="YES"/>
-        <relationship name="textboxes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EDTextbox" inverseName="page" inverseEntity="EDTextbox" syncable="YES"/>
+        <relationship name="textboxes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDTextbox" inverseName="page" inverseEntity="EDTextbox" syncable="YES"/>
     </entity>
     <entity name="EDPoint" representedClassName="EDPoint" syncable="YES">
         <attribute name="isVisible" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>

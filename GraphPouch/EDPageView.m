@@ -69,6 +69,12 @@
     [NSBezierPath strokeRect:bounds];
 }
 
+/*
+- (void)didAddSubview:(NSView *)subview{
+    [super didAddSubview:subview];
+    NSLog(@"did add subview.");
+}*/
+
 #pragma mark data
 - (EDPage *)dataObj{
     return _dataObj;

@@ -48,6 +48,13 @@
     return _pageData;
 }
 
+/*
+- (void)loadView{
+    [super loadView];
+    //[self postInit];
+    NSLog(@"later?");
+}*/
+
 - (void)postInit{
     // set data obj
     [(EDPageView *)[self view] setDataObj:_pageData];

@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
+#import "EDConstants.h"
 #import "EDCoreDataUtility+Pages.h"
 #import "EDCoreDataUtility+Worksheet.h"
-#import "EDConstants.h"
 #import "EDCoreDataUtility.h"
 #import "EDEquation.h"
 #import "EDGraph.h"
@@ -37,6 +37,8 @@
     for (EDPage *page in pages){
         [page setSelected:TRUE];
     }
+    
+    [EDCoreDataUtility save:context];
 }
 
 + (void)deselectAllPages:(NSManagedObjectContext *)context{
@@ -55,6 +57,7 @@
     for (EDPage *page in pages){
         [page setSelected:FALSE];
     }
+    [EDCoreDataUtility save:context];
 }
 
 + (NSArray *)getAllPages:(NSManagedObjectContext *)context{
@@ -202,6 +205,8 @@
     
     // fetch object
     [context deleteObject:managedObj];
+    
+    [EDCoreDataUtility save:context];
 }
 
 + (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber context:(NSManagedObjectContext *)context{
@@ -508,7 +513,9 @@
     [previousPage setCurrentPage:FALSE];
     
     // set parameter as current page
+//#error something about this throws up
     EDPage *newPage = [self getPage:page context:context];
+    //EDPage *newPage = [self getPageWithNumber:[[page pageNumber] intValue] context:context];
     [newPage setCurrentPage:TRUE];
     
     // clear any selection of pages
@@ -516,6 +523,9 @@
     
     // set this page as selected
     [newPage setSelected:TRUE];
+    
+    // save
+    [EDCoreDataUtility save:context];
 }
 
 + (EDPage *)insertPages:(NSArray *)pages atPosition:(int)insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:(NSManagedObjectContext *) context{
@@ -542,6 +552,9 @@
             [page setPageNumber:[[NSNumber alloc] initWithInt:(insertPosition + (int)[pages count])]];
             insertPosition++;
         }
+    
+        // save
+        [EDCoreDataUtility save:context];
         
         // automatically return the first page that is inserted
         return returnPage;

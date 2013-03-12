@@ -94,11 +94,14 @@
     NSArray *deletedObjects = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
     NSLog(@"context changed:\n===updated:%@ \n===inserted:%@ \n===deleted:%@", updatedObjects, insertedObjects, deletedObjects);
      */
+    NSArray *invalidatedObjects = [[[note userInfo] objectForKey:NSInvalidatedObjectsKey] allObjects];
+    NSArray *invalidatedAllObjects = [[[note userInfo] objectForKey:NSInvalidatedAllObjectsKey] allObjects];
+    NSLog(@"context changed:\n===invalidated:%@ \n===all invalidated:%@", invalidatedObjects, invalidatedAllObjects);
     
     // push changes to parent context
     //NSLog(@"\n\n===before change:\ntokens root:%@ \nchild root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
     //NSLog(@"\n\n===before change:\ntokens root:%@ \nchild root:%@", [EDGraph getAllObjects:_rootContext], [EDGraph getAllObjects:_context]);
-    [EDCoreDataUtility save:_context];
+    //[EDCoreDataUtility save:_context];
     //NSLog(@"\n\n===after change: \ntokens root:%@ \nchild root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
     //NSLog(@"\n\n===after change: \ntokens root:%@ \nchild root:%@", [EDGraph getAllObjects:_rootContext], [EDGraph getAllObjects:_context]);
 }

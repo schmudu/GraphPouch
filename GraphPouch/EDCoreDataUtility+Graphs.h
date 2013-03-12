@@ -11,5 +11,4 @@
 
 @interface EDCoreDataUtility (Graphs)
 
-+ (NSArray *)getGraphsForPage:(EDPage *)page context:(NSManagedObjectContext *)context;
 @end

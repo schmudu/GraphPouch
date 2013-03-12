@@ -12,11 +12,4 @@
 
 @implementation EDCoreDataUtility (Lines)
 
-+ (NSArray *)getLinesForPage:(EDPage *)page context:(NSManagedObjectContext *)context{
-    NSArray *lines = [EDLine getAllObjects:context];
-    
-    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(page == %@)", page];
-    NSArray *matchingLines = [lines filteredArrayUsingPredicate:searchFilter];
-    return matchingLines;
-}
 @end

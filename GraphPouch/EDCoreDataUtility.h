@@ -21,5 +21,6 @@
 // selection
 //+ (NSArray *)getAllGraphs:(NSManagedObjectContext *)context;
 // save
-+ (void)save:(NSManagedObjectContext *)context;
+//+ (void)save:(NSManagedObjectContext *)context;
++ (BOOL)save:(NSManagedObjectContext *)context;
 @end

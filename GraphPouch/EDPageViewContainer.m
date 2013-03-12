@@ -55,7 +55,17 @@
 - (void)postInit{
     // update textboxes
     [self updateTextboxes];
+    
+    // draw any elements if necessary
+    [self displayRect:[self bounds]];
+    [self setNeedsDisplay:TRUE];
 }
+
+/*
+- (void)viewWillMoveToSuperview:(NSView *)newSuperview{
+    [super viewWillMoveToSuperview:newSuperview];
+    NSLog(@"container will move to superview.");
+}*/
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -76,7 +86,8 @@
 - (void)drawLines{
     float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
     float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
-    NSArray *lines = [EDCoreDataUtility getLinesForPage:_page context:_context];
+    //NSArray *lines = [EDCoreDataUtility getLinesForPage:_page context:_context];
+    NSArray *lines = [[_page lines] allObjects];
     NSBezierPath *path = [NSBezierPath bezierPath];
     [[NSColor blackColor] setStroke];
     
@@ -90,7 +101,8 @@
 }
 
 - (void)drawGraphs{
-    NSArray *graphs = [EDCoreDataUtility getGraphsForPage:_page context:_context];
+    //NSArray *graphs = [EDCoreDataUtility getGraphsForPage:_page context:_context];
+    NSArray *graphs = [[_page graphs] allObjects];
     float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
     float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
     float graphWidth, graphHeight;
