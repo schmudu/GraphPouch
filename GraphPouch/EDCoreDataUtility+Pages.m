@@ -513,7 +513,6 @@
     [previousPage setCurrentPage:FALSE];
     
     // set parameter as current page
-//#error something about this throws up
     EDPage *newPage = [self getPage:page context:context];
     //EDPage *newPage = [self getPageWithNumber:[[page pageNumber] intValue] context:context];
     [newPage setCurrentPage:TRUE];

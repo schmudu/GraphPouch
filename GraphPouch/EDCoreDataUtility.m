@@ -37,7 +37,7 @@
 
 
 + (BOOL)save:(NSManagedObjectContext *)context{
-    NSLog(@"===saving context:%@", context);
+    //NSLog(@"===saving context:%@", context);
     NSError *error;
     if (![context save:&error]) {
         // If Cocoa generated the error...
