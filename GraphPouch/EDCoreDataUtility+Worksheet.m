@@ -33,7 +33,7 @@
     }
     
     // save
-    [EDCoreDataUtility save:context];
+    //[EDCoreDataUtility save:context];
 }
 
 + (void)selectNextWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context{
@@ -87,7 +87,7 @@
     }
     
     // save
-    [EDCoreDataUtility save:context];
+    //[EDCoreDataUtility save:context];
 }
 
 + (void)selectPreviousWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context{
@@ -142,7 +142,7 @@
     }
     
     // save
-    [EDCoreDataUtility save:context];
+    //[EDCoreDataUtility save:context];
 }
 
 #pragma mark worksheet
@@ -299,7 +299,7 @@
     // save
     //NSError *error;
     //[context save:&error];
-    [EDCoreDataUtility save:context];
+    //[EDCoreDataUtility save:context];
 }
 
 + (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context{
@@ -317,7 +317,7 @@
     // save
     //NSError *error;
     //[context save:&error];
-    [EDCoreDataUtility save:context];
+    //[EDCoreDataUtility save:context];
 }
 
 + (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context{
@@ -339,7 +339,7 @@
     }
     
     // save
-    [EDCoreDataUtility save:context];
+    //[EDCoreDataUtility save:context];
 }
 
 + (void)moveSelectedWorksheetElements:(EDDirection)direction multiplyModifier:(BOOL)modifier context:(NSManagedObjectContext *)context{
@@ -372,6 +372,6 @@
     }
     
     // save
-    [EDCoreDataUtility save:context];
+    //[EDCoreDataUtility save:context];
 }
 @end

@@ -197,7 +197,6 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
     entity = [self entityDescriptionInContext:context];
-    
     // order by page number
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:EDPageAttributePageNumber ascending:TRUE];
     NSArray *sortArray = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
@@ -206,10 +205,11 @@
     [request setEntity:entity];
     NSError *error = nil;
     NSArray *results = [context executeFetchRequest:request error:&error];
+    /*
     if (error != nil)
     {
         //handle errors
-    }
+    }*/
     return results;
 }
 

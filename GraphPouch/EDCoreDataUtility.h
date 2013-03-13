@@ -18,9 +18,7 @@
 // objects
 + (NSManagedObject *)getObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context;
     
-// selection
-//+ (NSArray *)getAllGraphs:(NSManagedObjectContext *)context;
 // save
-//+ (void)save:(NSManagedObjectContext *)context;
-+ (BOOL)save:(NSManagedObjectContext *)context;
++ (BOOL)saveRootContext:(NSManagedObjectContext *)rootContext childContext:(NSManagedObjectContext *)childContext;
++ (BOOL)validateElements:(NSManagedObjectContext *)context;
 @end

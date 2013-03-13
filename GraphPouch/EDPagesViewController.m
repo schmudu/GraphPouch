@@ -431,6 +431,9 @@
     // copyToPasteboard designates whether pages should be copied to pasteboard
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
     NSArray *allPages = [EDPage getAllObjects:_context];
+    /*
+     NSLog(@"===\tselected pages ordered by page number:%@ \n\t===all pages:%@", selectedPages, allPages);
+     */
     
     // if there will no pages left if all pages are cut, then do not allow this operation
     if ([allPages count] - [selectedPages count] < 1) 
@@ -447,7 +450,7 @@
         [EDCoreDataUtility setPageAsCurrent:(EDPage *)[pagesAfterLastSelectedPage objectAtIndex:0] context:_context];
         
         // save so that context changes and worksheet view updates
-        [EDCoreDataUtility save:_context];
+        //[EDCoreDataUtility save:_context];
     }
     else {
         // set the previous unselected page as current
@@ -455,7 +458,7 @@
         [EDCoreDataUtility setPageAsCurrent:(EDPage *)[pagesBeforeLastSelectedPage lastObject] context:_context];
         
         // save so that context changes and worksheet view updates
-        [EDCoreDataUtility save:_context];
+        //[EDCoreDataUtility save:_context];
     }
     
     // copy all page views that are selected to the pasteboard
@@ -469,6 +472,10 @@
     
      // update page numbers
     [EDCoreDataUtility correctPageNumbersAfterDelete:_context];
+    
+    // save
+#warning need to correct this, this is why panels open and close so quickly
+    //[EDCoreDataUtility save:_context];
     
     // update location
     [self correctPagePositionsAfterUpdate];

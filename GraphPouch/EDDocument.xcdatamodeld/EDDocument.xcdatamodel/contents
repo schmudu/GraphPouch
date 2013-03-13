@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="EDElement" representedClassName="EDElement" syncable="YES">
-        <attribute name="elementHeight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="elementWidth" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="locationX" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="locationY" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="selected" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="elementHeight" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="elementWidth" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="locationX" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="locationY" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="selected" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
     </entity>
     <entity name="EDEquation" representedClassName="EDEquation" syncable="YES">
-        <attribute name="equation" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isVisible" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="showLabel" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="equation" attributeType="String" syncable="YES"/>
+        <attribute name="isVisible" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="showLabel" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <relationship name="graph" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDGraph" inverseName="equations" inverseEntity="EDGraph" syncable="YES"/>
         <relationship name="tokens" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="EDToken" inverseName="equation" inverseEntity="EDToken" syncable="YES"/>
     </entity>
     <entity name="EDGraph" representedClassName="EDGraph" parentEntity="EDElement" syncable="YES">
-        <attribute name="hasCoordinateAxes" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="hasGridLines" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="hasLabels" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="hasTickMarks" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="labelIntervalX" optional="YES" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
-        <attribute name="labelIntervalY" optional="YES" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
-        <attribute name="maxValueX" optional="YES" attributeType="Integer 16" defaultValueString="10" syncable="YES"/>
-        <attribute name="maxValueY" optional="YES" attributeType="Integer 16" defaultValueString="10" syncable="YES"/>
-        <attribute name="minValueX" optional="YES" attributeType="Integer 16" defaultValueString="-10" syncable="YES"/>
-        <attribute name="minValueY" optional="YES" attributeType="Integer 16" defaultValueString="-10" syncable="YES"/>
-        <attribute name="scaleX" optional="YES" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
-        <attribute name="scaleY" optional="YES" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
+        <attribute name="hasCoordinateAxes" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="hasGridLines" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="hasLabels" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="hasTickMarks" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="labelIntervalX" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
+        <attribute name="labelIntervalY" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
+        <attribute name="maxValueX" attributeType="Integer 16" defaultValueString="10" syncable="YES"/>
+        <attribute name="maxValueY" attributeType="Integer 16" defaultValueString="10" syncable="YES"/>
+        <attribute name="minValueX" attributeType="Integer 16" defaultValueString="-10" syncable="YES"/>
+        <attribute name="minValueY" attributeType="Integer 16" defaultValueString="-10" syncable="YES"/>
+        <attribute name="scaleX" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
+        <attribute name="scaleY" attributeType="Integer 16" defaultValueString="1" syncable="YES"/>
         <relationship name="equations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDEquation" inverseName="graph" inverseEntity="EDEquation" syncable="YES"/>
         <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="graphs" inverseEntity="EDPage" syncable="YES"/>
         <relationship name="points" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDPoint" inverseName="graph" inverseEntity="EDPoint" syncable="YES"/>
     </entity>
     <entity name="EDLine" representedClassName="EDLine" parentEntity="EDElement" syncable="YES">
-        <attribute name="thickness" optional="YES" attributeType="Float" defaultValueString="1" syncable="YES"/>
+        <attribute name="thickness" attributeType="Float" defaultValueString="1" syncable="YES"/>
         <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="lines" inverseEntity="EDPage" syncable="YES"/>
     </entity>
     <entity name="EDPage" representedClassName="EDPage" syncable="YES">
-        <attribute name="currentPage" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="pageNumber" optional="YES" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
-        <attribute name="selected" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="currentPage" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="pageNumber" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="selected" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <relationship name="graphs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDGraph" inverseName="page" inverseEntity="EDGraph" syncable="YES"/>
         <relationship name="lines" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDLine" inverseName="page" inverseEntity="EDLine" syncable="YES"/>
         <relationship name="textboxes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDTextbox" inverseName="page" inverseEntity="EDTextbox" syncable="YES"/>
     </entity>
     <entity name="EDPoint" representedClassName="EDPoint" syncable="YES">
-        <attribute name="isVisible" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="locationX" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="locationY" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="showLabel" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="isVisible" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="locationX" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="locationY" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="showLabel" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <relationship name="graph" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDGraph" inverseName="points" inverseEntity="EDGraph" syncable="YES"/>
     </entity>
     <entity name="EDTextbox" representedClassName="EDTextbox" parentEntity="EDElement" syncable="YES">
-        <attribute name="textValue" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="textValue" attributeType="Transformable" syncable="YES"/>
         <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="textboxes" inverseEntity="EDPage" syncable="YES"/>
     </entity>
     <entity name="EDToken" representedClassName="EDToken" syncable="YES">
-        <attribute name="association" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="isValid" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="precedence" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="tokenValue" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="association" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="isValid" attributeType="Boolean" syncable="YES"/>
+        <attribute name="precedence" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="tokenValue" attributeType="String" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="equation" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDEquation" inverseName="tokens" inverseEntity="EDEquation" syncable="YES"/>
     </entity>
     <elements>

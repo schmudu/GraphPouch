@@ -115,7 +115,6 @@
 		CDD05DFD16C06811001279FB /* icon_graph.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DFC16C06811001279FB /* icon_graph.png */; };
 		CDD05DFF16C069AA001279FB /* icon_text.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DFE16C069AA001279FB /* icon_text.png */; };
 		CDD05E0116C06C35001279FB /* icon_line.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05E0016C06C35001279FB /* icon_line.png */; };
-		CDD05E0716C0951D001279FB /* EDToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD05E0616C0951D001279FB /* EDToolbarView.m */; };
 		CDD05E0F16C1BC86001279FB /* icon_properties.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05E0E16C1BC86001279FB /* icon_properties.png */; };
 		CDD05E1116C1C019001279FB /* icon_worksheet.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05E1016C1C019001279FB /* icon_worksheet.png */; };
 		CDD05E1716C1C8FB001279FB /* EDTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD05E1616C1C8FA001279FB /* EDTextView.m */; };
@@ -345,8 +344,6 @@
 		CDD05DFC16C06811001279FB /* icon_graph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_graph.png; sourceTree = "<group>"; };
 		CDD05DFE16C069AA001279FB /* icon_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_text.png; sourceTree = "<group>"; };
 		CDD05E0016C06C35001279FB /* icon_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_line.png; sourceTree = "<group>"; };
-		CDD05E0516C0951D001279FB /* EDToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDToolbarView.h; sourceTree = "<group>"; };
-		CDD05E0616C0951D001279FB /* EDToolbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDToolbarView.m; sourceTree = "<group>"; };
 		CDD05E0E16C1BC86001279FB /* icon_properties.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_properties.png; sourceTree = "<group>"; };
 		CDD05E1016C1C019001279FB /* icon_worksheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_worksheet.png; sourceTree = "<group>"; };
 		CDD05E1516C1C8FA001279FB /* EDTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTextView.h; sourceTree = "<group>"; };
@@ -446,8 +443,6 @@
 			isa = PBXGroup;
 			children = (
 				CD1C57DE161E750400534D49 /* EDPageView.xib */,
-				CD1C57B8161BB26A00534D49 /* EDPagesViewController.h */,
-				CD1C57B9161BB26A00534D49 /* EDPagesViewController.m */,
 				CD1C57BB161BCAA100534D49 /* EDPageViewController.h */,
 				CD1C57BC161BCAA100534D49 /* EDPageViewController.m */,
 				CD1C57C4161D13B900534D49 /* EDPageView.h */,
@@ -456,6 +451,8 @@
 				CD841EE116AB451000421EB4 /* EDPageViewContainer.m */,
 				CD1C57C8161D153200534D49 /* EDPagesView.h */,
 				CD1C57C9161D153200534D49 /* EDPagesView.m */,
+				CD1C57B8161BB26A00534D49 /* EDPagesViewController.h */,
+				CD1C57B9161BB26A00534D49 /* EDPagesViewController.m */,
 			);
 			name = Pages;
 			sourceTree = "<group>";
@@ -1108,8 +1105,6 @@
 				CDE6D65515E111C700E5695F /* EDWindow.m */,
 				CDA8555616236EF9006FCD62 /* EDContentView.h */,
 				CDA8555716236EF9006FCD62 /* EDContentView.m */,
-				CDD05E0516C0951D001279FB /* EDToolbarView.h */,
-				CDD05E0616C0951D001279FB /* EDToolbarView.m */,
 				CD1EBD4415FECF1E00BEEA4D /* Panels */,
 			);
 			name = Window;
@@ -1352,7 +1347,6 @@
 				CDF3E19B16BC491100AB78AF /* EDTextbox.m in Sources */,
 				CDD05DEA16BC716E001279FB /* EDTextboxView.m in Sources */,
 				CDD05DF616BD4C43001279FB /* EDTextboxViewMask.m in Sources */,
-				CDD05E0716C0951D001279FB /* EDToolbarView.m in Sources */,
 				CDD05E1716C1C8FB001279FB /* EDTextView.m in Sources */,
 				CD80CC8F16C6B880001C3375 /* EDPanelPropertiesTextViewController.m in Sources */,
 				CD80CCA816C887C3001C3375 /* EDPanelPropertiesTextViewFontSizeText.m in Sources */,

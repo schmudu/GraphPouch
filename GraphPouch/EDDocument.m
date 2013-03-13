@@ -50,7 +50,8 @@
 {
     self = [super init];
     if (self) {
-        // Create a parent context
+        // Autosave
+        [[NSDocumentController sharedDocumentController] setAutosavingDelay:2.0];
         
         //Init code
         NSDictionary *contexts;
@@ -99,17 +100,20 @@
     NSArray *invalidatedAllObjects = [[[note userInfo] objectForKey:NSInvalidatedAllObjectsKey] allObjects];
     NSLog(@"context changed:\n===invalidated:%@ \n===all invalidated:%@", invalidatedObjects, invalidatedAllObjects);
      */
-    
+    //[EDCoreDataUtility validateElements:_context];
+    //[EDCoreDataUtility validateElements:_rootContext];
+    [self updateChangeCount:NSChangeUndone];
     // push changes to parent context
     //NSLog(@"\n\n===before change:\ntokens root:%@ \nchild root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
     //NSLog(@"\n\n===before change:\ntokens root:%@ \nchild root:%@", [EDGraph getAllObjects:_rootContext], [EDGraph getAllObjects:_context]);
-    [EDCoreDataUtility save:_context];
+    //[EDCoreDataUtility save:_context];
     //NSLog(@"\n\n===after change: \ntokens root:%@ \nchild root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
     //NSLog(@"\n\n===after change: \ntokens root:%@ \nchild root:%@", [EDGraph getAllObjects:_rootContext], [EDGraph getAllObjects:_context]);
 }
 
 - (void)onContextSaved:(NSNotification *)note{
     //NSLog(@"===before save: tokens root:%@ child root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
+    NSLog(@"context saved.");
     [_rootContext mergeChangesFromContextDidSaveNotification:note];
     //NSLog(@"===after save: tokens root:%@ child root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
 }
@@ -180,6 +184,22 @@
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window{
     // have the undo manager linked to the managed object context
     return [_context undoManager];
+}
+
+#pragma mark document
+- (void)autosaveDocumentWithDelegate:(id)delegate didAutosaveSelector:(SEL)didAutosaveSelector contextInfo:(void *)contextInfo{
+    [self updateChangeCount:NSChangeDone];
+    NSLog(@"===autosaving. location:%@", [[[NSDocumentController sharedDocumentController] currentDocument] autosavedContentsFileURL]);
+    [EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
+    [EDCoreDataUtility validateElements:_context];
+    [super autosaveDocumentWithDelegate:delegate didAutosaveSelector:didAutosaveSelector contextInfo:contextInfo];
+}
+
+- (void)saveDocument:(id)sender{
+    [self updateChangeCount:NSChangeDone];
+    [EDCoreDataUtility validateElements:_context];
+    [EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
+    [super saveDocument:sender];
 }
 
 - (IBAction)togglePropertiesPanel:(id)sender{
@@ -263,7 +283,7 @@
 }
 
 - (void)onShortcutSavePressed:(NSNotification *)note{
-    [EDCoreDataUtility save:_context];
+    [EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
 }
 
 - (IBAction)paste:(id)sender{

@@ -38,7 +38,7 @@
         [page setSelected:TRUE];
     }
     
-    [EDCoreDataUtility save:context];
+    //[EDCoreDataUtility save:context];
 }
 
 + (void)deselectAllPages:(NSManagedObjectContext *)context{
@@ -57,7 +57,7 @@
     for (EDPage *page in pages){
         [page setSelected:FALSE];
     }
-    [EDCoreDataUtility save:context];
+    //[EDCoreDataUtility save:context];
 }
 
 + (NSArray *)getAllPages:(NSManagedObjectContext *)context{
@@ -206,7 +206,7 @@
     // fetch object
     [context deleteObject:managedObj];
     
-    [EDCoreDataUtility save:context];
+    //[EDCoreDataUtility save:context];
 }
 
 + (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber context:(NSManagedObjectContext *)context{
@@ -524,7 +524,7 @@
     [newPage setSelected:TRUE];
     
     // save
-    [EDCoreDataUtility save:context];
+    //[EDCoreDataUtility save:context];
 }
 
 + (EDPage *)insertPages:(NSArray *)pages atPosition:(int)insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:(NSManagedObjectContext *) context{
@@ -553,7 +553,7 @@
         }
     
         // save
-        [EDCoreDataUtility save:context];
+        //[EDCoreDataUtility save:context];
         
         // automatically return the first page that is inserted
         return returnPage;

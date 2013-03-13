@@ -110,12 +110,21 @@
     [newTextbox setLocationY:150];
     [newTextbox setElementWidth:EDWorksheetLineSelectionWidth];
     [newTextbox setElementHeight:EDWorksheetLineSelectionHeight];
+    // enter default text
+    //NSAttributedString *defaultString = [[_textView textStorage] attributedSubstringFromRange:NSMakeRange(0, [[[_textView textStorage] string] length])];
+    [newTextbox setTextValue:[[NSMutableAttributedString alloc] initWithString:@"Enter text here..."]];
+    /*
+    NSFont *defaultFont;
+    defaultFont = [NSFont fontWithName:[[_textView font] fontName] size:EDFontDefaultSizeTextbox];
+    [_textView setFont:defaultFont];
+    [_textView insertText:];
+     */
     
     // select this graph and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newTextbox];
     
     // save
-    [EDCoreDataUtility save:_context];
+    //[EDCoreDataUtility save:_context];
 }
 
 - (void)addNewLine{
@@ -140,7 +149,7 @@
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newLine];
     
     // save
-    [EDCoreDataUtility save:_context];
+    //[EDCoreDataUtility save:_context];
 }
 
 #pragma mark graphs
@@ -171,7 +180,7 @@
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newGraph];
     
     // save
-    [EDCoreDataUtility save:_context];
+    //[EDCoreDataUtility save:_context];
 }
 
 - (void)addLabelName{
@@ -208,7 +217,7 @@
     [newLine setThickness:1.0];
     
     // save
-    [EDCoreDataUtility save:_context];
+    //[EDCoreDataUtility save:_context];
 }
 
 - (void)addLabelDate{
@@ -245,7 +254,7 @@
     [newLine setThickness:1.0];
     
     // save
-    [EDCoreDataUtility save:_context];
+    //[EDCoreDataUtility save:_context];
 }
 
 #pragma mark align

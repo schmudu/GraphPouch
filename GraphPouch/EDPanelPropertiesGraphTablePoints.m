@@ -120,7 +120,7 @@
     // set the attribute for the graph that holds this point
     // set the common points
     [EDCoreDataUtility setAllCommonPointsforSelectedGraphs:newPoint attribute:newAttribute context:_context];
-    [EDCoreDataUtility save:_context];
+    //[EDCoreDataUtility save:_context];
 }
 
 #pragma mark table delegate

@@ -8,6 +8,14 @@
 
 #import "EDCoreDataUtility.h"
 #import "EDConstants.h"
+#import "EDEquation.h"
+#import "EDGraph.h"
+#import "EDLine.h"
+#import "EDPage.h"
+#import "EDPoint.h"
+#import "EDTextbox.h"
+#import "EDToken.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @interface EDCoreDataUtility()
 @end
@@ -36,59 +44,65 @@
 }
 
 
-+ (BOOL)save:(NSManagedObjectContext *)context{
-    //NSLog(@"===saving context:%@", context);
++ (BOOL)saveRootContext:(NSManagedObjectContext *)rootContext childContext:(NSManagedObjectContext *)childContext{
+    [childContext performBlock:^{
+        // do something that takes some time asynchronously using the temp context
+        
+        // push to parent
+        NSError *error;
+        if (![childContext save:&error])
+        {
+            // handle error
+            [EDCoreDataUtility validateElements:childContext];
+        }
+        
+        // save parent to disk asynchronously
+        /*
+        [rootContext performBlock:^{
+            NSError *error;
+            if (![rootContext save:&error])
+            {
+                // handle error
+                [EDCoreDataUtility validateElements:rootContext];
+            }
+        }];*/
+    }];
+    return TRUE;
+}
+
++ (BOOL)validateElements:(NSManagedObjectContext *)context{
+#warning worksheet elements
+    NSArray *equations = [EDEquation getAllObjects:context];
+    NSArray *graphs = [EDGraph getAllObjects:context];
+    NSArray *lines = [EDLine getAllObjects:context];
+    NSArray *pages = [EDPage getAllObjects:context];
+    NSArray *points = [EDPoint getAllObjects:context];
+    NSArray *textboxes = [EDTextbox getAllObjects:context];
+    NSArray *tokens = [EDToken getAllObjects:context];
+    NSMutableArray *allObjects = [NSMutableArray array];
+    
+    [allObjects addObjectsFromArray:equations];
+    [allObjects addObjectsFromArray:graphs];
+    [allObjects addObjectsFromArray:lines];
+    [allObjects addObjectsFromArray:pages];
+    [allObjects addObjectsFromArray:points];
+    [allObjects addObjectsFromArray:textboxes];
+    [allObjects addObjectsFromArray:tokens];
+    
+    BOOL result, returnResult = TRUE;
     NSError *error;
-    if (![context save:&error]) {
-        // If Cocoa generated the error...
-        //NSString *message = nil;
-        if ([[error domain] isEqualToString:@"NSCocoaErrorDomain"]) {
-            // ...check whether there's an NSDetailedErrors array
-            NSDictionary *userInfo = [error userInfo];
-            if ([userInfo valueForKey:@"NSDetailedErrors"] != nil) {
-                // ...and loop through the array, if so.
-                NSArray *errors = [userInfo valueForKey:@"NSDetailedErrors"];
-                for (NSError *anError in errors) {
-                    
-                    NSDictionary *subUserInfo = [anError userInfo];
-                    subUserInfo = [anError userInfo];
-                    // Granted, this indents the NSValidation keys rather a lot
-                    // ...but it's a small loss to keep the code more readable.
-                    NSLog(@"Core Data Save Error\n\n \
-                          NSValidationErrorKey\n%@\n\n \
-                          NSValidationErrorPredicate\n%@\n\n \
-                          NSValidationErrorObject\n%@\n\n \
-                          NSLocalizedDescription\n%@",
-                          [subUserInfo valueForKey:@"NSValidationErrorKey"],
-                          [subUserInfo valueForKey:@"NSValidationErrorPredicate"],
-                          [subUserInfo valueForKey:@"NSValidationErrorObject"],
-                          [subUserInfo valueForKey:@"NSLocalizedDescription"]);
-                }
-            }
-            // If there was no NSDetailedErrors array, print values directly
-            // from the top-level userInfo object. (Hint: all of these keys
-            // will have null values when you've got multiple errors sitting
-            // behind the NSDetailedErrors key.
-            else {
-                NSLog(@"Core Data Save Error\n\n \
-                      NSValidationErrorKey\n%@\n\n \
-                      NSValidationErrorPredicate\n%@\n\n \
-                      NSValidationErrorObject\n%@\n\n \
-                      NSLocalizedDescription\n%@",
-                      [userInfo valueForKey:@"NSValidationErrorKey"],
-                      [userInfo valueForKey:@"NSValidationErrorPredicate"],
-                      [userInfo valueForKey:@"NSValidationErrorObject"],
-                      [userInfo valueForKey:@"NSLocalizedDescription"]);
-                
-            }
+    // validate all objects
+    for (NSManagedObject *object in allObjects){
+        result = [object validateForUpdate:&error];
+        
+        if (!result) {
+            NSLog(@"====error with object:%@\nerror info:%@", error, [error userInfo]);
+            
+            // set return value
+            returnResult = FALSE;
         }
-        // Handle mine--or 3rd party-generated--errors
-        else {
-            NSLog(@"Custom Error: %@", [error localizedDescription]);
-        }
-        return NO;
     }
-    return YES;
+    return returnResult;
 }
 /*
 + (void)save:(NSManagedObjectContext *)context{
