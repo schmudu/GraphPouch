@@ -111,11 +111,14 @@
     [newTextbox setElementWidth:EDWorksheetLineSelectionWidth];
     [newTextbox setElementHeight:EDWorksheetLineSelectionHeight];
     // enter default text
-    //NSAttributedString *defaultString = [[_textView textStorage] attributedSubstringFromRange:NSMakeRange(0, [[[_textView textStorage] string] length])];
-    [newTextbox setTextValue:[[NSMutableAttributedString alloc] initWithString:@"Enter text here..."]];
-    /*
+    //NSMutableAttributedString *defaultString = [[_textView textStorage] attributedSubstringFromRange:NSMakeRange(0, [[[_textView textStorage] string] length])];
     NSFont *defaultFont;
-    defaultFont = [NSFont fontWithName:[[_textView font] fontName] size:EDFontDefaultSizeTextbox];
+    defaultFont = [NSFont fontWithName:@"Helvetica" size:EDFontDefaultSizeTextbox];
+    NSMutableAttributedString *defaultString = [[NSMutableAttributedString alloc] initWithString:@"Enter text here"];
+    [defaultString addAttribute:NSFontAttributeName value:defaultFont range:NSMakeRange(0, [defaultString length])];
+    //[newTextbox setTextValue:[[NSMutableAttributedString alloc] initWithString:@"Enter text here..."]];
+    [newTextbox setTextValue:defaultString];
+    /*
     [_textView setFont:defaultFont];
     [_textView insertText:];
      */

@@ -380,13 +380,13 @@
         
         // set container size, controls clipping
         [[newTextView textContainer] setContainerSize:NSMakeSize(xRatio * [textbox elementWidth], yRatio * [textbox elementHeight])];
-        //NSLog(@"textbox height:%f container height:%f", yRatio * [textbox elementHeight], [newTextView textContainer] );
         
         // add text
         if ([textbox textValue]){
             // insert saved data
+            //[newTextView insertText:[textbox textValue]];
             [newTextView insertText:[textbox textValue]];
-        
+            
             [newTextView setEditable:FALSE];
             [newTextView setSelectable:FALSE];
             
@@ -394,7 +394,7 @@
             [[textbox textValue] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[textbox textValue] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
                 NSFont *modifiedFont;
                 if (value != nil){
-                    // go through the sting and update the characters based on the range
+                    // go through the string and update the characters based on the range
                     // remove default
                     [[newTextView textStorage] removeAttribute:NSFontAttributeName range:blockRange];
                     
