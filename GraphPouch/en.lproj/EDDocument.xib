@@ -11,7 +11,6 @@
 			<string key="NS.object.0">2844</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
-			<string>NSArrayController</string>
 			<string>NSCustomObject</string>
 			<string>NSCustomView</string>
 			<string>NSScrollView</string>
@@ -63,7 +62,7 @@
 											<string key="NSFrameSize">{138, 843}</string>
 											<reference key="NSSuperview" ref="302567203"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="495829339"/>
+											<reference key="NSNextKeyView" ref="263211016"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 										</object>
 									</array>
@@ -112,7 +111,7 @@
 							<string key="NSFrameSize">{140, 843}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="302567203"/>
+							<reference key="NSNextKeyView" ref="495829339"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133632</int>
 							<reference key="NSVScroller" ref="495829339"/>
@@ -133,6 +132,7 @@
 									<string key="NSFrame">{{27, 6}, {612, 792}}</string>
 									<reference key="NSSuperview" ref="263211016"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">EDWorksheetView</string>
 								</object>
@@ -166,32 +166,6 @@
 			</object>
 			<object class="NSCustomObject" id="1011574510">
 				<string key="NSClassName">EDPagesViewController</string>
-			</object>
-			<object class="NSArrayController" id="439036319">
-				<bool key="NSEditable">YES</bool>
-				<bool key="NSAutomaticallyPreparesContent">YES</bool>
-				<object class="_NSManagedProxy" key="_NSManagedProxy">
-					<string key="NSEntityName">EDGraph</string>
-				</object>
-				<bool key="_NSIsUsingManagedProxy">YES</bool>
-				<bool key="NSAvoidsEmptySelection">YES</bool>
-				<bool key="NSPreservesSelection">YES</bool>
-				<bool key="NSSelectsInsertedObjects">YES</bool>
-				<bool key="NSFilterRestrictsInsertion">YES</bool>
-				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
-			</object>
-			<object class="NSArrayController" id="831842768">
-				<bool key="NSEditable">YES</bool>
-				<bool key="NSAutomaticallyPreparesContent">YES</bool>
-				<object class="_NSManagedProxy" key="_NSManagedProxy">
-					<string key="NSEntityName">EDPage</string>
-				</object>
-				<bool key="_NSIsUsingManagedProxy">YES</bool>
-				<bool key="NSAvoidsEmptySelection">YES</bool>
-				<bool key="NSPreservesSelection">YES</bool>
-				<bool key="NSSelectsInsertedObjects">YES</bool>
-				<bool key="NSFilterRestrictsInsertion">YES</bool>
-				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 			</object>
 			<object class="NSCustomObject" id="254499860">
 				<string key="NSClassName">INAppStoreWindow</string>
@@ -278,38 +252,6 @@
 						<reference key="destination" ref="512844837"/>
 					</object>
 					<int key="connectionID">100340</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">managedObjectContext: managedObjectContext</string>
-						<reference key="source" ref="439036319"/>
-						<reference key="destination" ref="512844837"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="439036319"/>
-							<reference key="NSDestination" ref="512844837"/>
-							<string key="NSLabel">managedObjectContext: managedObjectContext</string>
-							<string key="NSBinding">managedObjectContext</string>
-							<string key="NSKeyPath">managedObjectContext</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">100296</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">managedObjectContext: managedObjectContext</string>
-						<reference key="source" ref="831842768"/>
-						<reference key="destination" ref="512844837"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="831842768"/>
-							<reference key="NSDestination" ref="512844837"/>
-							<string key="NSLabel">managedObjectContext: managedObjectContext</string>
-							<string key="NSBinding">managedObjectContext</string>
-							<string key="NSKeyPath">managedObjectContext</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">100310</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -399,18 +341,6 @@
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">100293</int>
-						<reference key="object" ref="439036319"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Graphs</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100307</int>
-						<reference key="object" ref="831842768"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Pages</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">100315</int>
 						<reference key="object" ref="1011574510"/>
 						<reference key="parent" ref="0"/>
@@ -467,14 +397,11 @@
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100069.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100288.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100293.CustomClassName">EDGraphArrayController</string>
-				<string key="100293.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100303.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100304.CustomClassName">EDPagesView</string>
 				<string key="100304.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100305.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100306.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="100307.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100315.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100319.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="100348.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -510,6 +437,7 @@
 						<string key="pageNext:">id</string>
 						<string key="pagePrevious:">id</string>
 						<string key="paste:">id</string>
+						<string key="saveDocument:">id</string>
 						<string key="textboxAdd:">id</string>
 						<string key="toggleAboutWindow:">id</string>
 						<string key="togglePropertiesPanel:">id</string>
@@ -539,6 +467,10 @@
 						</object>
 						<object class="IBActionInfo" key="paste:">
 							<string key="name">paste:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveDocument:">
+							<string key="name">saveDocument:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="textboxAdd:">
@@ -609,14 +541,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/EDDocument.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">EDGraphArrayController</string>
-					<string key="superclassName">NSArrayController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/EDGraphArrayController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
