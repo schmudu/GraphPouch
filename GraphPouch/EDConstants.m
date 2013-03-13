@@ -25,6 +25,9 @@ NSString * const EDUTIEquation                                  = @"com.edcodia.
 NSString * const EDUTILine                                      = @"com.edcodia.graphpouch.line";
 NSString * const EDUTITextbox                                   = @"com.edcodia.graphpouch.textbox";
 
+// Saving
+float const EDAutosaveTimeIncrement                             = 10.0;
+
 // General
 NSString * const EDKey                                          = @"EDKey";
 NSString * const EDValue                                        = @"EDValue";

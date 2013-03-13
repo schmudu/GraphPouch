@@ -33,7 +33,6 @@
 - (void)onPanelDocumentPressedDate:(NSNotification *)note;
 - (void)onPanelDocumentPressedName:(NSNotification *)note;
 - (void)onWorksheetTabKeyPressed:(NSNotification *)note;
-- (void)onContextSaved:(NSNotification *)note;
 - (void)onContextChanged:(NSNotification *)note;
 - (void)onTextboxDidBeginEditing:(NSNotification *)note;
 - (void)onTextboxDidEndEditing:(NSNotification *)note;
@@ -51,7 +50,7 @@
     self = [super init];
     if (self) {
         // Autosave
-        [[NSDocumentController sharedDocumentController] setAutosavingDelay:2.0];
+        [[NSDocumentController sharedDocumentController] setAutosavingDelay:EDAutosaveTimeIncrement];
         
         //Init code
         NSDictionary *contexts;
@@ -89,33 +88,8 @@
 }
 
 - (void)onContextChanged:(NSNotification *)note{
-    /*
-    NSArray *updatedObjects = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
-    NSArray *insertedObjects = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
-    NSArray *deletedObjects = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
-    NSLog(@"context changed:\n===updated:%@ \n===inserted:%@ \n===deleted:%@", updatedObjects, insertedObjects, deletedObjects);
-     */
-    /*
-    NSArray *invalidatedObjects = [[[note userInfo] objectForKey:NSInvalidatedObjectsKey] allObjects];
-    NSArray *invalidatedAllObjects = [[[note userInfo] objectForKey:NSInvalidatedAllObjectsKey] allObjects];
-    NSLog(@"context changed:\n===invalidated:%@ \n===all invalidated:%@", invalidatedObjects, invalidatedAllObjects);
-     */
-    //[EDCoreDataUtility validateElements:_context];
-    //[EDCoreDataUtility validateElements:_rootContext];
+    // update counter that we have changes to be saved
     [self updateChangeCount:NSChangeUndone];
-    // push changes to parent context
-    //NSLog(@"\n\n===before change:\ntokens root:%@ \nchild root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
-    //NSLog(@"\n\n===before change:\ntokens root:%@ \nchild root:%@", [EDGraph getAllObjects:_rootContext], [EDGraph getAllObjects:_context]);
-    //[EDCoreDataUtility save:_context];
-    //NSLog(@"\n\n===after change: \ntokens root:%@ \nchild root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
-    //NSLog(@"\n\n===after change: \ntokens root:%@ \nchild root:%@", [EDGraph getAllObjects:_rootContext], [EDGraph getAllObjects:_context]);
-}
-
-- (void)onContextSaved:(NSNotification *)note{
-    //NSLog(@"===before save: tokens root:%@ child root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
-    NSLog(@"context saved.");
-    [_rootContext mergeChangesFromContextDidSaveNotification:note];
-    //NSLog(@"===after save: tokens root:%@ child root:%@", [EDToken getAllObjects:_rootContext], [EDToken getAllObjects:_context]);
 }
 
 - (void)dealloc{
@@ -126,7 +100,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutSave object:propertyController];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPanelDocumentPressedName object:propertyController];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPanelDocumentPressedDate object:propertyController];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:_context];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextWillSaveNotification object:_rootContext];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTabPressedWithoutModifiers object:worksheetView];
@@ -172,7 +145,6 @@
 }
 
 - (void)awakeFromNib{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextSaved:) name:NSManagedObjectContextDidSaveNotification object:_context];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 
@@ -189,9 +161,9 @@
 #pragma mark document
 - (void)autosaveDocumentWithDelegate:(id)delegate didAutosaveSelector:(SEL)didAutosaveSelector contextInfo:(void *)contextInfo{
     [self updateChangeCount:NSChangeDone];
-    NSLog(@"===autosaving. location:%@", [[[NSDocumentController sharedDocumentController] currentDocument] autosavedContentsFileURL]);
-    [EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
+    //NSLog(@"===autosaving. location:%@", [[[NSDocumentController sharedDocumentController] currentDocument] autosavedContentsFileURL]);
     [EDCoreDataUtility validateElements:_context];
+    [EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
     [super autosaveDocumentWithDelegate:delegate didAutosaveSelector:didAutosaveSelector contextInfo:contextInfo];
 }
 
