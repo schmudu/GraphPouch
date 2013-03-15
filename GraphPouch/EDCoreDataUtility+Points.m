@@ -136,6 +136,8 @@
             }
         }
     }
+    
+    [EDCoreDataUtility saveContext:context];
 }
 
 + (void)removeCommonPointsforSelectedGraphsMatchingPoints:(NSArray *)pointsToRemove context:(NSManagedObjectContext *)context{
@@ -154,5 +156,7 @@
             [context deleteObject:matchingPoint];
         }
     }
+    
+    [EDCoreDataUtility saveContext:context];
 }
 @end

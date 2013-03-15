@@ -26,6 +26,7 @@
         _context = context;
         pointsTable = table;
         buttonPointRemove = button;
+        _changedPointAttribute = FALSE;
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -119,8 +120,8 @@
     
     // set the attribute for the graph that holds this point
     // set the common points
+    _changedPointAttribute = TRUE;
     [EDCoreDataUtility setAllCommonPointsforSelectedGraphs:newPoint attribute:newAttribute context:_context];
-    //[EDCoreDataUtility save:_context];
 }
 
 #pragma mark table delegate
@@ -135,11 +136,19 @@
 }
 
 - (void)onContextChanged:(NSNotification *)note{
-    [pointsTable reloadData];
+    if (!_changedPointAttribute)
+    {
+        // do not reload table data if the points table is the one that changed the data
+        [pointsTable reloadData];
+    }
+    else{
+        // reset change attribute
+        _changedPointAttribute = FALSE;
+    }
 }
 
 #pragma mark text
-/*
+    /*
 - (void)textDidEndEditing:(NSNotification *)notification{
     NSLog(@"text did end editing: first responder:%@ key window:%d", [[self window] firstResponder], [[self window] isKeyWindow]);
     NSDictionary *userInfo = [notification userInfo];

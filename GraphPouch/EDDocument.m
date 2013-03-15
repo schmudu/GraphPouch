@@ -163,14 +163,16 @@
     [self updateChangeCount:NSChangeDone];
     //NSLog(@"===autosaving. location:%@", [[[NSDocumentController sharedDocumentController] currentDocument] autosavedContentsFileURL]);
     [EDCoreDataUtility validateElements:_context];
-    [EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
+    //[EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
+    [EDCoreDataUtility saveContext:_context];
     [super autosaveDocumentWithDelegate:delegate didAutosaveSelector:didAutosaveSelector contextInfo:contextInfo];
 }
 
 - (void)saveDocument:(id)sender{
     [self updateChangeCount:NSChangeDone];
     [EDCoreDataUtility validateElements:_context];
-    [EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
+    [EDCoreDataUtility saveContext:_context];
+    //[EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
     [super saveDocument:sender];
 }
 
@@ -255,7 +257,8 @@
 }
 
 - (void)onShortcutSavePressed:(NSNotification *)note{
-    [EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
+    //[EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
+    [EDCoreDataUtility saveContext:_context];
 }
 
 - (IBAction)paste:(id)sender{

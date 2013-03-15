@@ -19,6 +19,7 @@
 + (NSManagedObject *)getObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context;
     
 // save
-+ (BOOL)saveRootContext:(NSManagedObjectContext *)rootContext childContext:(NSManagedObjectContext *)childContext;
+//+ (BOOL)saveRootContext:(NSManagedObjectContext *)rootContext childContext:(NSManagedObjectContext *)childContext;
++ (BOOL)saveContext:(NSManagedObjectContext *)context;
 + (BOOL)validateElements:(NSManagedObjectContext *)context;
 @end

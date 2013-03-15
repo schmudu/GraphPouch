@@ -475,7 +475,7 @@
     
     // save
 #warning need to correct this, this is why panels open and close so quickly
-    //[EDCoreDataUtility save:_context];
+    [EDCoreDataUtility saveContext:_context];
     
     // update location
     [self correctPagePositionsAfterUpdate];

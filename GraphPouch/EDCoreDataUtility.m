@@ -44,16 +44,16 @@
 }
 
 
-+ (BOOL)saveRootContext:(NSManagedObjectContext *)rootContext childContext:(NSManagedObjectContext *)childContext{
-    [childContext performBlock:^{
++ (BOOL)saveContext:(NSManagedObjectContext *)context{
+    [context performBlock:^{
         // do something that takes some time asynchronously using the temp context
         
         // push to parent
         NSError *error;
-        if (![childContext save:&error])
+        if (![context save:&error])
         {
             // handle error
-            [EDCoreDataUtility validateElements:childContext];
+            [EDCoreDataUtility validateElements:context];
         }
         
         // save parent to disk asynchronously
