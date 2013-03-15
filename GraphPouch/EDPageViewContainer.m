@@ -15,6 +15,7 @@
 #import "EDGraph.h"
 #import "EDLine.h"
 #import "EDPageViewContainer.h"
+#import "EDPageViewContainerTextView.h"
 #import "EDPage.h"
 #import "EDParser.h"
 #import "EDTextbox.h"
@@ -375,11 +376,13 @@
     
     // for each textbox draw it on the view
     for (EDTextbox *textbox in textboxes){
-        newTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, xRatio * [textbox elementWidth], yRatio * [textbox elementHeight])];
+        //newTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, xRatio * [textbox elementWidth], yRatio * [textbox elementHeight])];
+        newTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, [textbox elementWidth], [textbox elementHeight])];
         [newTextView setDrawsBackground:FALSE];
         
         // set container size, controls clipping
-        [[newTextView textContainer] setContainerSize:NSMakeSize(xRatio * [textbox elementWidth], yRatio * [textbox elementHeight])];
+        //[[newTextView textContainer] setContainerSize:NSMakeSize(xRatio * [textbox elementWidth], yRatio * [textbox elementHeight])];
+        [[newTextView textContainer] setContainerSize:NSMakeSize([textbox elementWidth], [textbox elementHeight])];
         
         // add text
         if ([textbox textValue]){
@@ -389,6 +392,7 @@
             
             [newTextView setEditable:FALSE];
             [newTextView setSelectable:FALSE];
+            [newTextView setDrawsBackground:FALSE];
             
             // format the text accordingly
             [[textbox textValue] enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0,[[textbox textValue] length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id value, NSRange blockRange, BOOL *stop) {
@@ -399,27 +403,40 @@
                     [[newTextView textStorage] removeAttribute:NSFontAttributeName range:blockRange];
                     
                     // need to resize the font according to ratio
-                    modifiedFont = [[NSFontManager sharedFontManager] convertFont:(NSFont *)value toSize:[(NSFont *)value pointSize] * xRatio];
-                
+                    //modifiedFont = [[NSFontManager sharedFontManager] convertFont:(NSFont *)value toSize:[(NSFont *)value pointSize] * xRatio + 1];
+                    modifiedFont = [[NSFontManager sharedFontManager] convertFont:(NSFont *)value toSize:[(NSFont *)value pointSize]];
+                    
                     // add custom attributes
                     [[newTextView textStorage] addAttribute:NSFontAttributeName value:modifiedFont range:blockRange];
                 }
             }];
         }
         
+        
         // add to superview
-        [self addSubview:newTextView];
+        //[self addSubview:newTextView];
+        
+        // create image
+        //NSImage *textImage = [[NSImage alloc] initWithData:[newTextView dataWithPDFInsideRect:[newTextView bounds]]];
+        NSImage *textImage = [[NSImage alloc] initWithData:[newTextView dataWithPDFInsideRect:[newTextView bounds]]];
+        //EDPageViewContainerTextView *textView = [[EDPageViewContainerTextView alloc] initWithFrame:[newTextView bounds] textImage:textImage];
+        EDPageViewContainerTextView *textView = [[EDPageViewContainerTextView alloc] initWithFrame:[self bounds] textImage:textImage xRatio:xRatio yRatio:yRatio];
+        
+        [self addSubview:textView];
         
         // position it
-        [newTextView setFrameOrigin:NSMakePoint(xRatio * [textbox locationX], yRatio * [textbox locationY])];
+        //[newTextView setFrameOrigin:NSMakePoint(xRatio * [textbox locationX], yRatio * [textbox locationY])];
+        [textView setFrameOrigin:NSMakePoint(xRatio * [textbox locationX], yRatio * [textbox locationY])];
         
         // save view so it can be erased later
-        [_textboxViews addObject:newTextView];
+        //[_textboxViews addObject:newTextView];
+        [_textboxViews addObject:textView];
     }
 }
 
 - (void)removeTextboxes{
-    for (NSTextView *textView in _textboxViews){
+    //for (NSTextView *textView in _textboxViews){
+    for (NSView *textView in _textboxViews){
         [textView removeFromSuperview];
     }
     

@@ -98,6 +98,7 @@
 		CD90B63616CFE99D000637FF /* GraphPouch.help in Resources */ = {isa = PBXBuildFile; fileRef = CD90B63516CFE99D000637FF /* GraphPouch.help */; };
 		CD90B64B16D07424000637FF /* EDPanelPropertiesTextboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD90B64916D07424000637FF /* EDPanelPropertiesTextboxController.m */; };
 		CD90B64C16D07424000637FF /* EDPanelPropertiesTextbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD90B64A16D07424000637FF /* EDPanelPropertiesTextbox.xib */; };
+		CD97257816F2721600A39E2D /* EDPageViewContainerTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD97257716F2721600A39E2D /* EDPageViewContainerTextView.m */; };
 		CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */; };
 		CDA8555816236EF9006FCD62 /* EDContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA8555716236EF9006FCD62 /* EDContentView.m */; };
 		CDAA9105166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDAA9104166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib */; };
@@ -316,6 +317,8 @@
 		CD90B64816D07424000637FF /* EDPanelPropertiesTextboxController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesTextboxController.h; sourceTree = "<group>"; };
 		CD90B64916D07424000637FF /* EDPanelPropertiesTextboxController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesTextboxController.m; sourceTree = "<group>"; };
 		CD90B64A16D07424000637FF /* EDPanelPropertiesTextbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesTextbox.xib; sourceTree = "<group>"; };
+		CD97257616F2721600A39E2D /* EDPageViewContainerTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewContainerTextView.h; sourceTree = "<group>"; };
+		CD97257716F2721600A39E2D /* EDPageViewContainerTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainerTextView.m; sourceTree = "<group>"; };
 		CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowController.h; sourceTree = "<group>"; };
 		CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowController.m; sourceTree = "<group>"; };
 		CDA8555616236EF9006FCD62 /* EDContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDContentView.h; sourceTree = "<group>"; };
@@ -449,6 +452,8 @@
 				CD1C57C5161D13B900534D49 /* EDPageView.m */,
 				CD841EE016AB451000421EB4 /* EDPageViewContainer.h */,
 				CD841EE116AB451000421EB4 /* EDPageViewContainer.m */,
+				CD97257616F2721600A39E2D /* EDPageViewContainerTextView.h */,
+				CD97257716F2721600A39E2D /* EDPageViewContainerTextView.m */,
 				CD1C57C8161D153200534D49 /* EDPagesView.h */,
 				CD1C57C9161D153200534D49 /* EDPagesView.m */,
 				CD1C57B8161BB26A00534D49 /* EDPagesViewController.h */,
@@ -1365,6 +1370,7 @@
 				CD5312AB16ECEC3D00F670FD /* INWindowButton.m in Sources */,
 				CD5312AC16ECEC4100F670FD /* NSColor+INAdditions.m in Sources */,
 				CD5312B016ECEF7400F670FD /* EDToolbarViewController.m in Sources */,
+				CD97257816F2721600A39E2D /* EDPageViewContainerTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
