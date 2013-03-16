@@ -114,7 +114,7 @@
     //NSMutableAttributedString *defaultString = [[_textView textStorage] attributedSubstringFromRange:NSMakeRange(0, [[[_textView textStorage] string] length])];
     NSFont *defaultFont;
     defaultFont = [NSFont fontWithName:@"Helvetica" size:EDFontDefaultSizeTextbox];
-    NSMutableAttributedString *defaultString = [[NSMutableAttributedString alloc] initWithString:@"Enter text here"];
+    NSMutableAttributedString *defaultString = [[NSMutableAttributedString alloc] initWithString:EDTextViewDefaultString];
     [defaultString addAttribute:NSFontAttributeName value:defaultFont range:NSMakeRange(0, [defaultString length])];
     [newTextbox setTextValue:defaultString];
     

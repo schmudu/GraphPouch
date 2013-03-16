@@ -85,6 +85,7 @@ extern NSString *const EDFontAttributeNameMixed;
 extern NSString *const EDFontAttributeBold;
 extern NSString *const EDFontAttributeItalic;
 extern NSString *const EDFontAttributeSuperscript;
+extern NSString *const EDTextViewDefaultString;
 
 // line
 extern NSString *const EDLineAttributeThickness;

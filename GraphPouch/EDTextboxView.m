@@ -55,7 +55,7 @@
             NSFont *defaultFont;
             defaultFont = [NSFont fontWithName:[[_textView font] fontName] size:EDFontDefaultSizeTextbox];
             [_textView setFont:defaultFont];
-            [_textView insertText:[[NSMutableAttributedString alloc] initWithString:@"Enter text here..."]];
+            [_textView insertText:[[NSMutableAttributedString alloc] initWithString:EDTextViewDefaultString]];
         }
         [_textView setDrawsBackground:FALSE];
         [_textView setAllowsUndo:TRUE];
