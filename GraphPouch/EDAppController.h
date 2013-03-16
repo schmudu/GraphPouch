@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 @class EDPreferenceController;
 
-@interface EDAppController : NSObject{
+@interface EDAppController : NSObject <NSApplicationDelegate>{
     EDPreferenceController *preferencesController;
 }
 - (IBAction)showPreferencePanel:(id)sender;

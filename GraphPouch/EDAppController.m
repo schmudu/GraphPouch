@@ -24,4 +24,8 @@
     
     [preferencesController showWindow:self];
 }
+
+- (void)applicationDidFinishLaunching:(NSNotification *)notification{
+    NSLog(@"app finished launching.");
+}
 @end
