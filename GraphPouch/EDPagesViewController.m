@@ -117,6 +117,9 @@
             [self drawPage:page];
         }
     }
+    
+    // update frame size
+    [self updateViewFrameSize];
 }
 
 #pragma mark page CRUD
