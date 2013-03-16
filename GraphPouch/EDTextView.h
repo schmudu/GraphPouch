@@ -12,4 +12,5 @@
 }
 
 - (void)postInit;
+- (void)selectAllText;
 @end

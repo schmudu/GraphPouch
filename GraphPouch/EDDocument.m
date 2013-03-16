@@ -38,6 +38,7 @@
 - (void)onTextboxDidBeginEditing:(NSNotification *)note;
 - (void)onTextboxDidEndEditing:(NSNotification *)note;
 - (void)onTextboxDidChange:(NSNotification *)note;
+- (void)modifyPersistentStores;
 @end
 
 @implementation EDDocument
@@ -66,24 +67,18 @@
         
         // create copy context
         _copyContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
-        //[_copyContext setPersistentStoreCoordinator:[[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]]];
         
         NSPersistentStoreCoordinator *copyCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-        //[copyCoordinator addPersistentStoreWithType:NSInMemoryStoreType configuration:[self managedObjectModel] URL:nil options:nil error:&error];
         [copyCoordinator addPersistentStoreWithType:NSInMemoryStoreType configuration:nil URL:nil options:nil error:nil];
         [_copyContext setPersistentStoreCoordinator:copyCoordinator];
         
-        //NSLog(@"managed object model:%@", [self managedObjectModel]);
-        
-        NSLog(@"===root context:%@ child context:%@ copy:%@", _rootContext, _context, _copyContext);
+        NSLog(@"===root context:%@ child context:%@ copy:%@ persistent stores:%@", _rootContext, _context, _copyContext, [[_rootContext persistentStoreCoordinator] persistentStores]);
         
         propertyController = [[EDPanelPropertiesController alloc] initWithWindowNibName:@"EDPanelProperties"];
         aboutController = [[EDWindowControllerAbout alloc] initWithWindowNibName:@"EDWindowAbout"];
         
         // autoenable menu bar
         [[[[NSApp mainMenu] itemWithTitle:@"Edit"] submenu] setAutoenablesItems:TRUE];
-        // listen
-        //[EDToken printAll:_context];
     }
     return self;
 }
@@ -147,6 +142,7 @@
 }
 
 - (void)awakeFromNib{
+    [self modifyPersistentStores];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 
@@ -160,7 +156,29 @@
     return [_context undoManager];
 }
 
+#pragma mark application delegate
+- (void)applicationWillFinishLaunching:(NSNotification *)notification{
+    NSLog(@"app finished launching.");
+}
+
+- (BOOL)applicationOpenUntitledFile:(NSApplication *)sender{
+    NSLog(@"application will open file.");
+    return TRUE;
+}
+
 #pragma mark document
+- (void)modifyPersistentStores{
+    /*
+    // going to migrate persistent stores to open temp file in reachable place
+    NSPersistentStoreCoordinator *psc = [_rootContext persistentStoreCoordinator];
+    NSString *tempFileTemplate = [NSTemporaryDirectory() stringByAppendingPathComponent:@"graphpouch_temp.gp"];
+    
+    // migrate persistent store to use template
+    
+    NSLog(@"stores:%@ create folder temp file:%@", [psc persistentStores], tempFileTemplate);
+    */
+}
+
 - (void)autosaveDocumentWithDelegate:(id)delegate didAutosaveSelector:(SEL)didAutosaveSelector contextInfo:(void *)contextInfo{
     [self updateChangeCount:NSChangeDone];
     //NSLog(@"===autosaving. location:%@", [[[NSDocumentController sharedDocumentController] currentDocument] autosavedContentsFileURL]);

@@ -293,6 +293,7 @@
 		CD75A43A16D07EBD00CD775C /* EDPanelPropertiesLineTextboxController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesLineTextboxController.h; sourceTree = "<group>"; };
 		CD75A43B16D07EBD00CD775C /* EDPanelPropertiesLineTextboxController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesLineTextboxController.m; sourceTree = "<group>"; };
 		CD75A43C16D07EBD00CD775C /* EDPanelPropertiesLineTextbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesLineTextbox.xib; sourceTree = "<group>"; };
+		CD7EAA5716F49A5800EBE2B1 /* v1.xcdatamodeld.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = v1.xcdatamodeld.xcdatamodel; sourceTree = "<group>"; };
 		CD80CC8C16C6B880001C3375 /* EDPanelPropertiesTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesTextViewController.h; sourceTree = "<group>"; };
 		CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesTextViewController.m; sourceTree = "<group>"; };
 		CD80CC8E16C6B880001C3375 /* EDPanelPropertiesTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesTextView.xib; sourceTree = "<group>"; };
@@ -1523,9 +1524,10 @@
 		CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CD7EAA5716F49A5800EBE2B1 /* v1.xcdatamodeld.xcdatamodel */,
 				CD47113D15BA1647008AACC3 /* EDDocument.xcdatamodel */,
 			);
-			currentVersion = CD47113D15BA1647008AACC3 /* EDDocument.xcdatamodel */;
+			currentVersion = CD7EAA5716F49A5800EBE2B1 /* v1.xcdatamodeld.xcdatamodel */;
 			path = EDDocument.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -181,6 +181,9 @@
     [textInfo setObject:_textView forKey:EDKeyTextView];
     [textInfo setObject:[self dataObj] forKey:EDKeyTextbox];
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self userInfo:textInfo];
+    
+    // auto select the context of the text box
+    [_textView selectAllText];
 }
 
 - (void)onWorksheetClicked:(NSNotification *)note{

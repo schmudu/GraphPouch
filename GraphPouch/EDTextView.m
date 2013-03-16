@@ -29,16 +29,25 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewFrameDidChangeNotification object:[self superview]];
 }
 
+/*
 - (void)resetCursorRects{
     if ([(EDTextboxView *)[self superview] enabled]){
         [super resetCursorRects];
-        
+     
         // enabled, by default set cursor at end of textbox
         [self setSelectedRange:NSMakeRange(0, [[self string] length])];
         
         // make this the first responder
         [[self window] makeFirstResponder:self];
     }
+}*/
+
+- (void)selectAllText{
+    // enabled, by default set cursor at end of textbox
+    [self setSelectedRange:NSMakeRange(0, [[self string] length])];
+    
+    // make this the first responder
+    [[self window] makeFirstResponder:self];
 }
 
 - (void)onViewFrameSizeDidChange:(NSNotification *)note{
