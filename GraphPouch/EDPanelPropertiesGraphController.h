@@ -40,6 +40,7 @@
     EDSheetPropertiesGraphErrorController *graphErrorController;
     EDPanelPropertiesGraphTablePoints *tablePointsController;
     EDPanelPropertiesGraphTableEquation *tableEquationController;
+    id _currentSheet;
 }
 
 - (IBAction)toggleHasCoordinateAxes:(id)sender;

@@ -29,6 +29,7 @@
 - (void)didEndSheetGraphErrorScaleY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorLabelIntervalX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorLabelIntervalY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)onContextChanged:(NSNotification *)note;
 - (void)onDoubleClickEquation:(id)sender;
 @end
 
@@ -38,7 +39,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // init
+        _currentSheet = nil;
     }
     
     return self;
@@ -97,9 +98,10 @@
         [buttonRemoveEquation setEnabled:FALSE];
     }
     
-    /*
     //listen
-    [tableEquation setTarget:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+    /*
+     [tableEquation setTarget:self];
     [tableEquation setDoubleAction:@selector(onDoubleClickEquation:)];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelHeight];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelWidth];
@@ -136,6 +138,7 @@
 }
 
 - (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelHeight];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelWidth];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelX];
@@ -148,6 +151,15 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelScaleY];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelIntervalX];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelIntervalY];
+}
+
+#pragma mark context
+- (void)onContextChanged:(NSNotification *)note{
+    // must end sheet if it's up
+    if (_currentSheet){
+        //end sheet if it's showing
+        [NSApp endSheet:_currentSheet];
+    }
 }
 
 #pragma mark keyboard
@@ -220,6 +232,7 @@
                 
                 // launch error sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMinX:returnCode:contextInfo:) contextInfo:nil];
+                _currentSheet = [graphErrorController window];
             }
             
             // reset value
@@ -259,6 +272,7 @@
                 
                 // launch error sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMaxX:returnCode:contextInfo:) contextInfo:nil];
+                _currentSheet = [graphErrorController window];
             }
             
             // reset value
@@ -296,6 +310,7 @@
                 
                 // launch error sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMinY:returnCode:contextInfo:) contextInfo:nil];
+                _currentSheet = [graphErrorController window];
             }
             
             // reset value
@@ -334,6 +349,7 @@
                 
                 // launch sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorMaxY:returnCode:contextInfo:) contextInfo:nil];
+                _currentSheet = [graphErrorController window];
             }
             
             // reset value
@@ -360,6 +376,7 @@
                 
                 // launch error sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorScaleX:returnCode:contextInfo:) contextInfo:nil];
+                _currentSheet = [graphErrorController window];
             }
         }
         else{
@@ -383,6 +400,7 @@
                 
                 // launch error sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorScaleY:returnCode:contextInfo:) contextInfo:nil];
+                _currentSheet = [graphErrorController window];
             }
         }
         else{
@@ -406,6 +424,7 @@
                 
                 // launch error sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorLabelIntervalX:returnCode:contextInfo:) contextInfo:nil];
+                _currentSheet = [graphErrorController window];
             }
         }
         else{
@@ -429,6 +448,7 @@
                 
                 // launch error sheet
                 [NSApp beginSheet:[graphErrorController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheetGraphErrorLabelIntervalY:returnCode:contextInfo:) contextInfo:nil];
+                _currentSheet = [graphErrorController window];
             }
         }
         else{
@@ -534,6 +554,7 @@
 #pragma mark equation sheet
 - (IBAction)addNewEquation:(id)sender{
     [NSApp beginSheet:[equationController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+    _currentSheet = [equationController window];
     [equationController initializeSheet:nil index:EDEquationSheetIndexInvalid];
 }
 
@@ -571,6 +592,7 @@
     
     // return value based on column identifier
     [NSApp beginSheet:[equationController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+    _currentSheet = [equationController window];
     NSString *equation = [[commonEquations objectAtIndex:[(NSTableView *)sender clickedRow]] equation];
     [equationController initializeSheet:equation index:(int)[(NSTableView *)sender clickedRow]];
 }
@@ -581,6 +603,7 @@
 - (void)didEndSheetGraphErrorMinX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
     [[graphErrorController window] orderOut:self];
     [[[self view] window] makeFirstResponder:labelMinX];
+    _currentSheet = nil;
     
     // clear saved object
     _controlTextObj = nil;
@@ -589,6 +612,7 @@
 - (void)didEndSheetGraphErrorMaxX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
     [[graphErrorController window] orderOut:self];
     [[[self view] window] makeFirstResponder:labelMaxX];
+    _currentSheet = nil;
     
     // clear saved object
     _controlTextObj = nil;
@@ -597,6 +621,7 @@
 - (void)didEndSheetGraphErrorMinY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
     [[graphErrorController window] orderOut:self];
     [[[self view] window] makeFirstResponder:labelMinY];
+    _currentSheet = nil;
     
     // clear saved object
     _controlTextObj = nil;
@@ -605,6 +630,7 @@
 - (void)didEndSheetGraphErrorMaxY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
     [[graphErrorController window] orderOut:self];
     [[[self view] window] makeFirstResponder:labelMaxY];
+    _currentSheet = nil;
     
     // clear saved object
     _controlTextObj = nil;
@@ -613,6 +639,7 @@
 - (void)didEndSheetGraphErrorScaleX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
     [[graphErrorController window] orderOut:self];
     [[[self view] window] makeFirstResponder:labelScaleX];
+    _currentSheet = nil;
     
     // clear saved object
     _controlTextObj = nil;
@@ -621,6 +648,7 @@
 - (void)didEndSheetGraphErrorScaleY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
     [[graphErrorController window] orderOut:self];
     [[[self view] window] makeFirstResponder:labelScaleY];
+    _currentSheet = nil;
     
     // clear saved object
     _controlTextObj = nil;
@@ -629,6 +657,7 @@
 - (void)didEndSheetGraphErrorLabelIntervalX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
     [[graphErrorController window] orderOut:self];
     [[[self view] window] makeFirstResponder:labelIntervalX];
+    _currentSheet = nil;
     
     // clear saved object
     _controlTextObj = nil;
@@ -637,6 +666,7 @@
 - (void)didEndSheetGraphErrorLabelIntervalY:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo{
     [[graphErrorController window] orderOut:self];
     [[[self view] window] makeFirstResponder:labelIntervalY];
+    _currentSheet = nil;
     
     // clear saved object
     _controlTextObj = nil;

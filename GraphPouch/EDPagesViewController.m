@@ -42,7 +42,6 @@
 - (void)onPageViewMouseDown:(NSNotification *)note;
 - (void)onShortcutCopy:(NSNotification *)note;
 - (void)onShortcutCut:(NSNotification *)note;
-//- (void)onShortcutPaste:(NSNotification *)note;
 - (void)onShortcutSelectAll:(NSNotification *)note;
 - (void)onShortcutDeselectAll:(NSNotification *)note;
 - (void)updateViewFrameSize;
@@ -74,7 +73,6 @@
     [_nc removeObserver:self name:EDEventPageViewsFinishedDrag object:[self view]];
     [_nc removeObserver:self name:EDEventShortcutCopy object:[self view]];
     [_nc removeObserver:self name:EDEventShortcutCut object:[self view]];
-    //[_nc removeObserver:self name:EDEventShortcutPaste object:[self view]];
     [_nc removeObserver:self name:EDEventShortcutSelectAll object:[self view]];
     [_nc removeObserver:self name:EDEventShortcutDeselectAll object:[self view]];
     [_nc removeObserver:self name:EDEventWindowDidResize object:_documentController];
@@ -98,7 +96,6 @@
     // listen
     [_nc addObserver:self selector:@selector(onShortcutCopy:) name:EDEventShortcutCopy object:[self view]];
     [_nc addObserver:self selector:@selector(onShortcutCut:) name:EDEventShortcutCut object:[self view]];
-    //[_nc addObserver:self selector:@selector(onShortcutPaste:) name:EDEventShortcutPaste object:[self view]];
     [_nc addObserver:self selector:@selector(onShortcutSelectAll:) name:EDEventShortcutSelectAll object:[self view]];
     [_nc addObserver:self selector:@selector(onShortcutDeselectAll:) name:EDEventShortcutDeselectAll object:[self view]];
     [_nc addObserver:self selector:@selector(onPagesViewClicked:) name:EDEventPagesViewClicked object:[self view]];
