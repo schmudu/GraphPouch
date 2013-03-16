@@ -233,6 +233,8 @@ extern float const EDMainWindowTitleBarHeight;
 
 // pages
 extern NSString *const EDEventPagesViewClicked;
+extern NSString *const EDEventPagesWillBeRemoved;
+extern NSString *const EDKeyPagesToRemove;
 //extern NSString *const EDEventPageViewDragged;
 extern NSString *const EDEventPagesDeletePressed;
 extern NSString *const EDEventPageViewStartDrag;

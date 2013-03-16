@@ -380,6 +380,11 @@
         NSNumber *valueY = [[NSNumber alloc] initWithFloat:[self frame].origin.y];
         [[self dataObj] setValue:valueX forKey:EDElementAttributeLocationX];
         [[self dataObj] setValue:valueY forKey:EDElementAttributeLocationY];
+        
+        // this fixes bug of dragging an element and deselecting the element
+        // and it dragging to its origin position
+        // save
+        [EDCoreDataUtility saveContext:_context];
     }
 }
 

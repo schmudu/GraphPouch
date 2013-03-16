@@ -234,6 +234,8 @@ NSString * const EDEventWindowWillClose                         = @"EDEventWindo
 float const EDMainWindowTitleBarHeight                          = 60.0;
 
 // pages view
+NSString * const EDEventPagesWillBeRemoved                      = @"EDEventPagesWillBeRemoved";
+NSString * const EDKeyPagesToRemove                             = @"EDKeyPageToRemove";
 NSString * const EDEventPagesViewClicked                        = @"EDEventPagesViewClicked";
 NSString * const EDEventPagesDeletePressed                      = @"EDEventPagesDeletePressed";
 //NSString * const EDEventPageViewDragged                         = @"EDEventPageViewDragged";

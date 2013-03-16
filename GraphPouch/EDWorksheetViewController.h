@@ -18,6 +18,7 @@
     NSManagedObjectContext *_copyContext;
 }
 - (void)postInitialize:(NSManagedObjectContext *)context copyContext:(NSManagedObjectContext *)copyContext;
+- (void)onPagesWillBeRemoved:(NSArray *)pagesToDelete;
 - (void)addNewGraph;
 - (void)addNewLine;
 - (void)addNewTextbox;

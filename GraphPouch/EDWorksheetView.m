@@ -83,16 +83,6 @@
         // these dictionaries are the reverse of each other
         _transformRects = [[NSMutableDictionary alloc] init];
         _elementsWithTransformRects = [[NSMutableDictionary alloc] init];
-        
-        /*
-        // find current page
-        EDPage *newPage = (EDPage *)[EDPage getCurrentPage];
-        _currentPage = newPage;
-        
-        // listen
-        _nc = [NSNotificationCenter defaultCenter];
-        [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
-         */
     }
     
     return self;
@@ -108,7 +98,7 @@
     
     // listen
     _nc = [NSNotificationCenter defaultCenter];
-    [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:context];
+    [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 
 - (void)dealloc{
@@ -418,7 +408,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         // need to erase everything and redraw
         [self removeAllElements:_currentPage];
         
-        // redraw
+        // redraw everything on this page
         [self drawAllElements];
         
         // set this page as the new current
@@ -950,5 +940,20 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             [(EDTextboxView *)elementView disable];
         }
     }
+}
+
+#pragma mark pages
+- (void)onPagesWillBeDeleted:(NSArray *)pages{
+    // cycle through pages, if current page is one of the pages to be deleted
+    // remove all worksheet elements
+    if (_currentPage){
+        for (EDPage *page in pages){
+            if (page == _currentPage){
+                // match, this page is going to be deleted so remove all worksheet elements
+                [self removeAllElements:page];
+            }
+        }
+    }
+    
 }
 @end

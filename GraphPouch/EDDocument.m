@@ -30,6 +30,7 @@
 - (void)onMainWindowClosed:(NSNotification *)note;
 - (void)onShortcutSavePressed:(NSNotification *)note;
 - (void)onPagesViewTabKeyPressed:(NSNotification *)note;
+- (void)onPagesWillBeRemoved:(NSNotification *)note;
 - (void)onPanelDocumentPressedDate:(NSNotification *)note;
 - (void)onPanelDocumentPressedName:(NSNotification *)note;
 - (void)onWorksheetTabKeyPressed:(NSNotification *)note;
@@ -142,6 +143,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:worksheetController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPagesWillBeRemoved:) name:EDEventPagesWillBeRemoved object:pagesController];
 }
 
 - (void)awakeFromNib{
@@ -185,6 +187,10 @@
 }
 
 #pragma mark page
+- (void)onPagesWillBeRemoved:(NSNotification *)note{
+    [worksheetController onPagesWillBeRemoved:[[note userInfo] objectForKey:EDKeyPagesToRemove]];
+}
+
 - (IBAction)pageAdd:(id)sender{
     [pagesController addNewPage];
 }
@@ -257,7 +263,6 @@
 }
 
 - (void)onShortcutSavePressed:(NSNotification *)note{
-    //[EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
     [EDCoreDataUtility saveContext:_context];
 }
 

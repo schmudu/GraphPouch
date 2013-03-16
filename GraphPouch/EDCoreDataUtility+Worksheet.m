@@ -295,11 +295,6 @@
     
     // select current element
     [element setSelected:TRUE];
-    
-    // save
-    //NSError *error;
-    //[context save:&error];
-    //[EDCoreDataUtility save:context];
 }
 
 + (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context{
@@ -313,11 +308,6 @@
             [elem setSelected:FALSE];
         }
     }
-    
-    // save
-    //NSError *error;
-    //[context save:&error];
-    //[EDCoreDataUtility save:context];
 }
 
 + (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context{
@@ -337,9 +327,6 @@
         }
         [context deleteObject:element];
     }
-    
-    // save
-    //[EDCoreDataUtility save:context];
 }
 
 + (void)moveSelectedWorksheetElements:(EDDirection)direction multiplyModifier:(BOOL)modifier context:(NSManagedObjectContext *)context{

@@ -205,8 +205,6 @@
     
     // fetch object
     [context deleteObject:managedObj];
-    
-    //[EDCoreDataUtility save:context];
 }
 
 + (NSArray *)getPagesWithPageNumberGreaterThanOrEqualTo:(int)beginPageNumber context:(NSManagedObjectContext *)context{

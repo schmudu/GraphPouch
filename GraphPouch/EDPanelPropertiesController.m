@@ -278,12 +278,16 @@
 
 #pragma mark context changed
 - (void)onContextChanged:(NSNotification *)note{
-    /*
-    NSArray *updatedObjects = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
+    // special case
     NSArray *insertedObjects = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
-    NSArray *deletedObjects = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
-    NSLog(@"context changed:\n===updated:%@ \n===inserted:%@ \n===deleted:%@", updatedObjects, insertedObjects, deletedObjects);
-     */
+    // if a page was inserted then text views cannot be edited
+    for (id object in insertedObjects){
+        if ([object isKindOfClass:[EDPage class]]){
+            _currentTextView = nil;
+            break;
+        }
+    }
+    
     // set the correct view if window is showing
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         [self setCorrectView];

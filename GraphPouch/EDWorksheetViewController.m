@@ -116,18 +116,10 @@
     defaultFont = [NSFont fontWithName:@"Helvetica" size:EDFontDefaultSizeTextbox];
     NSMutableAttributedString *defaultString = [[NSMutableAttributedString alloc] initWithString:@"Enter text here"];
     [defaultString addAttribute:NSFontAttributeName value:defaultFont range:NSMakeRange(0, [defaultString length])];
-    //[newTextbox setTextValue:[[NSMutableAttributedString alloc] initWithString:@"Enter text here..."]];
     [newTextbox setTextValue:defaultString];
-    /*
-    [_textView setFont:defaultFont];
-    [_textView insertText:];
-     */
     
     // select this graph and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newTextbox];
-    
-    // save
-    //[EDCoreDataUtility save:_context];
 }
 
 - (void)addNewLine{
@@ -181,9 +173,6 @@
     
     // select this graph and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newGraph];
-    
-    // save
-    //[EDCoreDataUtility save:_context];
 }
 
 - (void)addLabelName{
@@ -323,5 +312,10 @@
     
     // move all selected elements
     [EDCoreDataUtility moveSelectedWorksheetElements:direction multiplyModifier:multipyModifier context:_context];
+}
+
+#pragma mark pages 
+- (void)onPagesWillBeRemoved:(NSArray *)pagesToDelete{
+    [(EDWorksheetView *)[self view] onPagesWillBeDeleted:pagesToDelete];
 }
 @end

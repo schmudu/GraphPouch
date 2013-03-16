@@ -144,7 +144,6 @@
 - (void)addNewPage{
     // create new page
     NSArray *pages = [EDCoreDataUtility getAllPages:_context];
-    //EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:[EDCoreDataUtility context]] insertIntoManagedObjectContext:[EDCoreDataUtility context]];
     EDPage *newPage = [[EDPage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNamePage inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
     
     // if no other pages then set this page to be the first one
@@ -431,9 +430,13 @@
     // copyToPasteboard designates whether pages should be copied to pasteboard
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
     NSArray *allPages = [EDPage getAllObjects:_context];
-    /*
-     NSLog(@"===\tselected pages ordered by page number:%@ \n\t===all pages:%@", selectedPages, allPages);
-     */
+    
+    // must dispatch event to notify that the worksheet view to remove all of its elements
+    // if we wait until context notifies the worksheet view, all of the elements will be
+    // deleted due to cascade delete rule
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    [userInfo setObject:selectedPages forKey:EDKeyPagesToRemove];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesWillBeRemoved object:self userInfo:userInfo];
     
     // if there will no pages left if all pages are cut, then do not allow this operation
     if ([allPages count] - [selectedPages count] < 1) 
@@ -448,17 +451,11 @@
     if ([pagesAfterLastSelectedPage count] > 0){
         // set the next unselected page as current
         [EDCoreDataUtility setPageAsCurrent:(EDPage *)[pagesAfterLastSelectedPage objectAtIndex:0] context:_context];
-        
-        // save so that context changes and worksheet view updates
-        //[EDCoreDataUtility save:_context];
     }
     else {
         // set the previous unselected page as current
         NSArray *pagesBeforeLastSelectedPage = [EDCoreDataUtility getUnselectedPagesWithPageNumberLessThan:lastSelectedPageNumber greaterThanOrEqualTo:0 context:_context];
         [EDCoreDataUtility setPageAsCurrent:(EDPage *)[pagesBeforeLastSelectedPage lastObject] context:_context];
-        
-        // save so that context changes and worksheet view updates
-        //[EDCoreDataUtility save:_context];
     }
     
     // copy all page views that are selected to the pasteboard
@@ -472,10 +469,6 @@
     
      // update page numbers
     [EDCoreDataUtility correctPageNumbersAfterDelete:_context];
-    
-    // save
-#warning need to correct this, this is why panels open and close so quickly
-    [EDCoreDataUtility saveContext:_context];
     
     // update location
     [self correctPagePositionsAfterUpdate];
