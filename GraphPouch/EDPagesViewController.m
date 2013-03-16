@@ -497,13 +497,22 @@
     NSArray *classes = [NSArray arrayWithObject:[EDPage class]];
     NSArray *pages = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
     
+    // order copied pages by their page numbers
+    NSArray *sortedPages;
+    sortedPages = [pages sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSNumber *first = [(EDPage *)a pageNumber];
+        NSNumber *second = [(EDPage *)b pageNumber];
+        return [first compare:second];
+    }];
+    
     // retrieve pages that we will need to update after inserting the pasted pages
     NSArray *pagesToUpdate = [EDCoreDataUtility getUnselectedPagesWithPageNumberGreaterThanOrEqualTo:insertPosition context:_context];
     
     // deselect all previous pages
     [EDCoreDataUtility deselectAllPages:_context];
     
-    EDPage *firstPagePasted = [EDCoreDataUtility insertPages:pages atPosition:insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:_context];
+    //EDPage *firstPagePasted = [EDCoreDataUtility insertPages:pages atPosition:insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:_context];
+    EDPage *firstPagePasted = [EDCoreDataUtility insertPages:sortedPages atPosition:insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:_context];
     
     // make the first page that was pasted as the current page
     if (firstPagePasted)
