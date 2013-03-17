@@ -293,7 +293,7 @@
 		CD75A43A16D07EBD00CD775C /* EDPanelPropertiesLineTextboxController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesLineTextboxController.h; sourceTree = "<group>"; };
 		CD75A43B16D07EBD00CD775C /* EDPanelPropertiesLineTextboxController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesLineTextboxController.m; sourceTree = "<group>"; };
 		CD75A43C16D07EBD00CD775C /* EDPanelPropertiesLineTextbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesLineTextbox.xib; sourceTree = "<group>"; };
-		CD7EAA5716F49A5800EBE2B1 /* v1.xcdatamodeld.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = v1.xcdatamodeld.xcdatamodel; sourceTree = "<group>"; };
+		CD7EAA5716F49A5800EBE2B1 /* v1.xcdatamodeld.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v1.xcdatamodeld.xcdatamodel; sourceTree = "<group>"; };
 		CD80CC8C16C6B880001C3375 /* EDPanelPropertiesTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesTextViewController.h; sourceTree = "<group>"; };
 		CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesTextViewController.m; sourceTree = "<group>"; };
 		CD80CC8E16C6B880001C3375 /* EDPanelPropertiesTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesTextView.xib; sourceTree = "<group>"; };
@@ -1193,7 +1193,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = ED;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Patrick Lee";
 			};
 			buildConfigurationList = CD47111715BA1646008AACC3 /* Build configuration list for PBXProject "GraphPouch" */;
@@ -1419,6 +1419,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1448,6 +1452,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
