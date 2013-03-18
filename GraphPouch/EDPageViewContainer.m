@@ -10,30 +10,41 @@
 #import "EDCoreDataUtility+Graphs.h"
 #import "EDCoreDataUtility+Lines.h"
 #import "EDCoreDataUtility+Pages.h"
-#import "EDEquation.h"
+//#import "EDEquation.h"
 #import "EDGraphView.h"
 #import "EDGraph.h"
 #import "EDLine.h"
 #import "EDPageViewContainer.h"
+#import "EDPageViewContainerGraphView.h"
+#import "EDPageViewContainerGraphCacheView.h"
 #import "EDPageViewContainerTextView.h"
 #import "EDPage.h"
-#import "EDParser.h"
+//#import "EDParser.h"
 #import "EDTextbox.h"
 #import "NSColor+Utilities.h"
 
 @interface EDPageViewContainer()
 - (NSMutableDictionary *)calculateGraphOrigin:(EDGraph *)graph height:(float)graphHeight width:(float)graphWidth xRatio:(float)xRatio yRatio:(float)yRatio;
 - (void)onContextChanged:(NSNotification *)note;
-- (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length scale:(int)scale;
-- (void)drawGraphs;
-- (void)drawLines;
-- (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo width:(float)graphWidth height:(float)graphHeight graph:(EDGraph *)graph;
+//- (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length scale:(int)scale;
+//- (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo width:(float)graphWidth height:(float)graphHeight graph:(EDGraph *)graph;
 - (void)drawEquation:(EDEquation *)equation verticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo width:(float)graphWidth height:(float)graphHeight graph:(EDGraph *)graph xRatio:(float)xRatio yRatio:(float)yRatio;
+
+// elements
+- (void)updateElements;
+
+// graphs
+- (void)drawGraphs;
+- (void)removeGraphs;
+
+// lines
+- (void)drawLines;
+- (void)removeLines;
 
 // textboxes
 - (void)drawTextboxes;
 - (void)removeTextboxes;
-- (void)updateTextboxes;
+//- (void)updateTextboxes;
 @end
 
 @implementation EDPageViewContainer
@@ -45,6 +56,9 @@
         _page = page;
         _context = [page managedObjectContext];
         _textboxViews = [[NSMutableArray alloc] init];
+        //_graphViews = [[NSMutableArray alloc] init];
+        _graphCacheViews = [[NSMutableArray alloc] init];
+        _lineViews = [[NSMutableArray alloc] init];
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -55,18 +69,12 @@
 
 - (void)postInit{
     // update textboxes
-    [self updateTextboxes];
+    [self updateElements];
     
     // draw any elements if necessary
     [self displayRect:[self bounds]];
     [self setNeedsDisplay:TRUE];
 }
-
-/*
-- (void)viewWillMoveToSuperview:(NSView *)newSuperview{
-    [super viewWillMoveToSuperview:newSuperview];
-    NSLog(@"container will move to superview.");
-}*/
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -80,14 +88,13 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
-    [self drawGraphs];
     [self drawLines];
 }
 
+#pragma mark lines
 - (void)drawLines{
     float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
     float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
-    //NSArray *lines = [EDCoreDataUtility getLinesForPage:_page context:_context];
     NSArray *lines = [[_page lines] allObjects];
     NSBezierPath *path = [NSBezierPath bezierPath];
     [[NSColor blackColor] setStroke];
@@ -101,47 +108,35 @@
     [path stroke];
 }
 
+#pragma mark graphs
 - (void)drawGraphs{
-    //NSArray *graphs = [EDCoreDataUtility getGraphsForPage:_page context:_context];
     NSArray *graphs = [[_page graphs] allObjects];
-    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
-    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
-    float graphWidth, graphHeight;
-    NSBezierPath *path;
-    NSDictionary *horizontalResults, *verticalResults;
-    NSDictionary *originInfo;
-    [[NSColor colorWithHexColorString:EDGraphBorderColor] setStroke];
+    EDPageViewContainerGraphView *graphView;
+    EDPageViewContainerGraphCacheView *graphCacheView;
+    NSImage *graphImage;
     
-    // for each of the graphs draw them
+    // for each graph create a graph view
     for (EDGraph *graph in graphs){
-        // draw graph in that position
-        graphWidth = xRatio * ([graph elementWidth] - [EDGraphView graphMargin] * 2);
-        graphHeight = yRatio * ([graph elementHeight] - [EDGraphView graphMargin] * 2);
-        originInfo = [self calculateGraphOrigin:graph height:graphHeight width:graphWidth xRatio:xRatio yRatio:yRatio];
-        horizontalResults = [self calculateGridIncrement:[[graph maxValueX] floatValue] minValue:[[graph minValueX] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] length:graphWidth scale:[[graph scaleX] intValue]];
-        verticalResults = [self calculateGridIncrement:[[graph maxValueY] floatValue] minValue:[[graph minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:graphHeight scale:[[graph scaleY] intValue]];
+        graphView = [[EDPageViewContainerGraphView alloc] initWithFrame:[self bounds] graph:graph context:_context];
         
-        // draw border
-        path = [NSBezierPath bezierPathWithRect:NSMakeRect(xRatio * ([EDGraphView graphMargin] + [graph locationX]),
-                                                           yRatio * ([graph locationY] + [EDGraphView graphMargin]),
-                                                           graphWidth,
-                                                           graphHeight)];
-        [path setLineWidth:EDPageViewGraphBorderLineWidth];
-        [path stroke];
+        // create image
+        graphImage = [[NSImage alloc] initWithData:[graphView dataWithPDFInsideRect:[graphView bounds]]];
         
-        // page view is abstract so we only draw grid and equation
-        // draw grid
-        if ([graph hasGridLines]) {
-            [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults origin:originInfo width:graphWidth height:graphHeight graph:graph];
-        }
+        // create cache image that only needs to draw on update
+        graphCacheView = [[EDPageViewContainerGraphCacheView alloc] initWithFrame:[self bounds] graphImage:graphImage];
+        [self addSubview:graphCacheView];
         
-        // draw equations
-        for (EDEquation *equation in [graph equations]){
-            [self drawEquation:equation verticalGrid:verticalResults horizontalGrid:horizontalResults origin:originInfo width:graphWidth height:graphHeight graph:graph xRatio:xRatio yRatio:yRatio];
-        }
+        // save view so it can be erased later
+        [_graphCacheViews addObject:graphCacheView];
     }
 }
 
+- (void)removeGraphs{
+    for (NSView *graphCacheView in _graphCacheViews){
+        [graphCacheView removeFromSuperview];
+    }
+    
+}
 - (void)onContextChanged:(NSNotification *)note{
     // update if needed
     NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
@@ -155,239 +150,46 @@
     for (NSManagedObject *object in allObjects){
         if ((object == _page) || ([_page containsObject:object])){
             // update textboxes
-            [self updateTextboxes];
+            [self updateElements];
             
             [self setNeedsDisplay:TRUE];
         }
     }
 }
 
-#pragma mark draw graphs
-- (NSMutableDictionary *)calculateGraphOrigin:(EDGraph *)graph height:(float)graphHeight width:(float)graphWidth xRatio:(float)xRatio yRatio:(float)yRatio{
-    NSMutableDictionary *results = [NSMutableDictionary dictionary];
+#pragma mark elements
+- (void)updateElements{
+#warning worksheet elements
+    // remove all textboxes
+    [self removeTextboxes];
+    [self removeGraphs];
     
-    int absDistanceHoriz = abs([[graph minValueX] intValue]) + abs([[graph maxValueX] intValue]);
-    int absDistanceVertical = abs([[graph minValueX]intValue]) + abs([[graph maxValueY] intValue]);
-    float ratioHoriz = ([[graph minValueX] floatValue] + [[graph maxValueX] floatValue])/absDistanceHoriz;
-    float ratioVertical = ([[graph minValueY] floatValue]+ [[graph maxValueY] floatValue])/absDistanceVertical;
-    float originVerticalPosition = graphHeight/2 + (ratioVertical * graphHeight/2);
-    float originHorizontalPosition = graphWidth/2 - (ratioHoriz * graphWidth/2);
-    [results setValue:[NSNumber numberWithFloat:ratioHoriz] forKey:EDKeyRatioHorizontal];
-    [results setValue:[NSNumber numberWithFloat:ratioVertical] forKey:EDKeyRatioVertical];
-    [results setValue:[NSNumber numberWithFloat:originHorizontalPosition] forKey:EDKeyOriginPositionHorizontal];
-    [results setValue:[NSNumber numberWithFloat:originVerticalPosition] forKey:EDKeyOriginPositionVertical];
-    return results;
-}
-
-- (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length scale:(int)scale{
-    // start by default with one grid line per unit
-    float distanceIncrement, maxAxisValue, lengthPositive, lengthNegative, referenceLength, numGridLinesPositive, numGridLinesNegative;
-    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    
-     // determine how to divide lengths based on the ratio
-    lengthPositive = ((ratio + 1)/2) * length;
-    lengthNegative = length - lengthPositive;
-    
-    // ratio defines which side is going to define the increment
-    if (ratio>0){
-        referenceLength = lengthPositive;
-        maxAxisValue = fabsf(maxValue);
-    }
-    else{
-        referenceLength = lengthNegative;
-        maxAxisValue = fabsf(minValue);
-    }
-    
-    distanceIncrement = referenceLength/(maxAxisValue/(float)scale);
-    numGridLinesNegative = fabsf(minValue)/(float)scale;
-    numGridLinesPositive = maxValue/(float)scale;
-    
-    [results setObject:[[NSNumber alloc] initWithFloat:distanceIncrement] forKey:EDKeyDistanceIncrement];
-    [results setObject:[[NSNumber alloc] initWithInt:scale] forKey:EDKeyGridFactor];
-    [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesNegative] forKey:EDKeyNumberGridLinesNegative];
-    [results setObject:[[NSNumber alloc] initWithFloat:numGridLinesPositive] forKey:EDKeyNumberGridLinesPositive];
-    return results;
-}
-
-- (void)drawEquation:(EDEquation *)equation verticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo width:(float)graphWidth height:(float)graphHeight graph:(EDGraph *)graph xRatio:(float)xRatio yRatio:(float)yRatio{
-    // draw equation
-    BOOL firstPointDrawnForEquation = true;
-    NSError *error;
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    float diffX, marginDiff, ratioHorizontal, ratioVertical, valueX, valueY, positionVertical;
-    
-    // set origin points
-    //float originVerticalPosition = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue] - [EDGraphView graphMargin];
-    //float originHorizontalPosition = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue] - [EDGraphView graphMargin];
-    float originVerticalPosition = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
-    float originHorizontalPosition = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
-    
-     // ratio positive/negative vertical
-    float ratioYPositive, ratioYNegative;
-    ratioYPositive = [[graph maxValueY] floatValue]/([[graph maxValueY] floatValue] + fabsf([[graph minValueY] floatValue]));
-    ratioYNegative = 1 - ratioYPositive;
-    
-     // set stroke
-    [[NSColor blackColor] setStroke];
-    
-    //int endInt = (int)[self frame].size.width * EDGraphDependentVariableIncrement;
-    int endInt = (int)graphWidth * EDGraphDependentVariableIncrement;
-    float i;
-    for (int j=0; j<endInt; j++){
-        i = j/EDGraphDependentVariableIncrement;
-        //NSLog(@"converted j:%f", j/100.0);
-        diffX = i - originHorizontalPosition;
-        
-        // based on position find x
-        if (diffX < 0){
-            // x is negative
-            ratioHorizontal = -1 * diffX/originHorizontalPosition;
-            valueX = ratioHorizontal * [[graph minValueX] floatValue];
-        }
-        else if (diffX == 0){
-            valueX = 0;
-        }
-        else{
-            // x is positive
-            marginDiff = graphWidth - originHorizontalPosition;
-            ratioHorizontal = diffX/marginDiff;
-            valueX = ratioHorizontal * [[graph maxValueX] floatValue];
-        }
-        valueY = [EDParser calculate:[[equation tokens] array] error:&error context:_context varValue:valueX];
-        
-        // if y is greater than max or less than min than break from loop
-        if ((valueY > [[graph maxValueY] floatValue]) || (valueY < [[graph minValueY] floatValue])){
-            firstPointDrawnForEquation = true;
-            continue;
-        }
-     
-        // based on value find y position
-        if (error){
-            // we received an error an cannot calculate this value
-            // do nothing
-        }
-        
-        if (valueY < 0){
-            // y is negative
-            ratioVertical = valueY/[[graph minValueY] floatValue];
-            positionVertical = originVerticalPosition + ratioVertical * (graphHeight * ratioYNegative);
-        }
-        else if (valueY == 0){
-            positionVertical = originVerticalPosition;
-        }
-        else{
-            // y is positive
-            ratioVertical = valueY/[[graph maxValueY] floatValue];
-            //positionVertical = originVerticalPosition - ratioVertical * ([self frame].size.height * ratioYPositive);
-            positionVertical = originVerticalPosition - ratioVertical * (graphHeight * ratioYPositive);
-        }
-        
-        // must add margin
-        positionVertical = ([graph locationY] + [EDGraphView graphMargin]) * yRatio + positionVertical;
-        
-        if (firstPointDrawnForEquation) {
-            [path moveToPoint:NSMakePoint(i + xRatio * ([EDGraphView graphMargin] + [graph locationX]), positionVertical)];
-            firstPointDrawnForEquation = false;
-        }
-        else if (error){
-            // reset
-            error = nil;
-            
-            // set variable so that equation will not draw to next point
-            firstPointDrawnForEquation = true;
-        }
-        else {
-            [path lineToPoint:NSMakePoint(i + xRatio * ([EDGraphView graphMargin] + [graph locationX]), positionVertical)];
-        }
-    }
-
-    [path stroke];
-}
-
-- (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo width:(float)graphWidth height:(float)graphHeight graph:(EDGraph *)graph{
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    int numGridLines = [[gridInfoVertical objectForKey:EDKeyNumberGridLinesPositive] intValue];
-    float distanceIncrement = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
-    float originPosVertical = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
-    float originPosHorizontal = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
-    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
-    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
-    
-    // set stroke
-    [[NSColor colorWithHexColorString:EDGridColor alpha:EDGridAlpha] setStroke];
-    [NSBezierPath setDefaultLineWidth:0.3];
-    // draw positive horizontal lines starting from origin
-    for (int i=0; i<=numGridLines; i++) {
-        // no need to draw all of the lines
-        if (i % EDPageViewGraphBorderDrawMultiplier != 0)
-            continue;
-            
-        [path moveToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY])*yRatio+originPosVertical - i*distanceIncrement)];
-        [path lineToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]) + graphWidth, ([EDGraphView graphMargin]+[graph locationY])*yRatio+originPosVertical - i*distanceIncrement)];
-    }
-    
-     // draw negative horizontal lines starting from origin
-    numGridLines = abs([[gridInfoVertical objectForKey:EDKeyNumberGridLinesNegative] intValue]);
-    for (int i=0; i<=numGridLines; i++) {
-        // no need to draw all of the lines
-        if (i % EDPageViewGraphBorderDrawMultiplier != 0)
-            continue;
-            
-        [path moveToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY])*yRatio+originPosVertical + i*distanceIncrement)];
-        [path lineToPoint:NSMakePoint(xRatio * ([EDGraphView graphMargin]+[graph locationX]) + graphWidth, ([EDGraphView graphMargin]+[graph locationY])*yRatio+originPosVertical + i*distanceIncrement)];
-    }
-    
-     // grid lines multiplied by 2 because the calculation only covers half the axis
-    numGridLines = [[gridInfoHorizontal objectForKey:EDKeyNumberGridLinesPositive] intValue];
-    distanceIncrement = [[gridInfoHorizontal objectForKey:EDKeyDistanceIncrement] floatValue];
-    
-    // draw positive vertical lines
-    for (int i=0; i<=numGridLines; i++) {
-        // no need to draw all of the lines
-        if (i % EDPageViewGraphBorderDrawMultiplier != 0)
-            continue;
-            
-        [path moveToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement + xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY])*yRatio)];
-        [path lineToPoint:NSMakePoint(originPosHorizontal + i*distanceIncrement + xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY])*yRatio+graphHeight)];
-    }
-    
-    numGridLines = [[gridInfoHorizontal objectForKey:EDKeyNumberGridLinesNegative] intValue];
-    // draw negative vertical lines
-    for (int i=0; i<=numGridLines; i++) {
-        // no need to draw all of the lines
-        if (i % EDPageViewGraphBorderDrawMultiplier != 0)
-            continue;
-            
-        [path moveToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement + xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY])*yRatio)];
-        [path lineToPoint:NSMakePoint(originPosHorizontal - i*distanceIncrement + xRatio * ([EDGraphView graphMargin]+[graph locationX]), ([EDGraphView graphMargin]+[graph locationY])*yRatio+graphHeight)];
-    }
-    [path stroke];
+    // draw textboxes
+    [self drawTextboxes];
+    [self drawGraphs];
 }
 
 #pragma mark textboxes
 - (void)drawTextboxes{
     // get all textboxes for current page
-    //EDPage *currrentPage = [EDCoreDataUtility getCurrentPage:_context];
     NSArray *textboxes = [[_page textboxes] allObjects];
     NSTextView *newTextView;
+    
     // calculate ratio
     float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
     float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
     
     // for each textbox draw it on the view
     for (EDTextbox *textbox in textboxes){
-        //newTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, xRatio * [textbox elementWidth], yRatio * [textbox elementHeight])];
         newTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, [textbox elementWidth], [textbox elementHeight])];
         [newTextView setDrawsBackground:FALSE];
         
         // set container size, controls clipping
-        //[[newTextView textContainer] setContainerSize:NSMakeSize(xRatio * [textbox elementWidth], yRatio * [textbox elementHeight])];
         [[newTextView textContainer] setContainerSize:NSMakeSize([textbox elementWidth], [textbox elementHeight])];
         
         // add text
         if ([textbox textValue]){
             // insert saved data
-            //[newTextView insertText:[textbox textValue]];
             [newTextView insertText:[textbox textValue]];
             
             [newTextView setEditable:FALSE];
@@ -413,23 +215,16 @@
         }
         
         
-        // add to superview
-        //[self addSubview:newTextView];
-        
         // create image
-        //NSImage *textImage = [[NSImage alloc] initWithData:[newTextView dataWithPDFInsideRect:[newTextView bounds]]];
         NSImage *textImage = [[NSImage alloc] initWithData:[newTextView dataWithPDFInsideRect:[newTextView bounds]]];
-        //EDPageViewContainerTextView *textView = [[EDPageViewContainerTextView alloc] initWithFrame:[newTextView bounds] textImage:textImage];
         EDPageViewContainerTextView *textView = [[EDPageViewContainerTextView alloc] initWithFrame:[self bounds] textImage:textImage xRatio:xRatio yRatio:yRatio];
         
         [self addSubview:textView];
         
         // position it
-        //[newTextView setFrameOrigin:NSMakePoint(xRatio * [textbox locationX], yRatio * [textbox locationY])];
         [textView setFrameOrigin:NSMakePoint(xRatio * [textbox locationX], yRatio * [textbox locationY])];
         
         // save view so it can be erased later
-        //[_textboxViews addObject:newTextView];
         [_textboxViews addObject:textView];
     }
 }
@@ -439,15 +234,6 @@
     for (NSView *textView in _textboxViews){
         [textView removeFromSuperview];
     }
-    
-}
-
-- (void)updateTextboxes{
-    // remove all textboxes
-    [self removeTextboxes];
-    
-    // draw textboxes
-    [self drawTextboxes];
 }
 
 @end

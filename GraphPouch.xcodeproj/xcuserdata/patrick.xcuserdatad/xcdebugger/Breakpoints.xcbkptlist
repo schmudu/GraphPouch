@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDPageViewContainer.m"
-         timestampString = "384987936.177732"
+         timestampString = "385249599.604149"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "58"
-         endingLineNumber = "58"
+         startingLineNumber = "72"
+         endingLineNumber = "72"
          landmarkName = "-postInit"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDPageViewContainer.m"
-         timestampString = "384987936.177732"
+         timestampString = "385249599.604149"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "62"
-         endingLineNumber = "62"
+         startingLineNumber = "76"
+         endingLineNumber = "76"
          landmarkName = "-postInit"
          landmarkType = "5">
       </FileBreakpoint>
@@ -202,32 +202,6 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "GraphPouch/EDPageViewContainer.m"
-         timestampString = "384987936.177732"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "83"
-         endingLineNumber = "83"
-         landmarkName = "-drawRect:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "GraphPouch/EDPageViewContainer.m"
-         timestampString = "384987936.177732"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
-         landmarkName = "-drawGraphs"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDCoreDataUtility+Worksheet.m"
          timestampString = "385091374.210114"
          startingColumnNumber = "9223372036854775807"
@@ -287,19 +261,6 @@
          startingLineNumber = "220"
          endingLineNumber = "220"
          landmarkName = "-setPageAsCurrent"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "GraphPouch/EDPageViewContainer.m"
-         timestampString = "384987936.177732"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "104"
-         endingLineNumber = "104"
-         landmarkName = "-drawGraphs"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
