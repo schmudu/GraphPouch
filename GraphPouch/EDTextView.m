@@ -29,6 +29,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewFrameDidChangeNotification object:[self superview]];
 }
 
+
+/*
+- (void)cancelOperation:(id)sender{
+    NSLog(@"cancel.");
+}
+ */
 /*
 - (void)resetCursorRects{
     if ([(EDTextboxView *)[self superview] enabled]){

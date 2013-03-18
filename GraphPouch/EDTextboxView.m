@@ -106,6 +106,13 @@
     }
     //NSLog(@"updating textbox: selected?:%d", [[self dataObj] selected]);
 }
+
+#pragma mark keyboard
+- (void)cancelOperation:(id)sender{
+    // disable text box if user presses escape
+    [self disable];
+}
+
 #pragma mark disable/enable textbox
 - (BOOL)enabled{
     return _enabled;
