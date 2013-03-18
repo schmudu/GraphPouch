@@ -26,11 +26,7 @@
 #import "NSColor+Utilities.h"
 
 @interface EDPageViewContainer()
-- (NSMutableDictionary *)calculateGraphOrigin:(EDGraph *)graph height:(float)graphHeight width:(float)graphWidth xRatio:(float)xRatio yRatio:(float)yRatio;
 - (void)onContextChanged:(NSNotification *)note;
-//- (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length scale:(int)scale;
-//- (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo width:(float)graphWidth height:(float)graphHeight graph:(EDGraph *)graph;
-- (void)drawEquation:(EDEquation *)equation verticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo width:(float)graphWidth height:(float)graphHeight graph:(EDGraph *)graph xRatio:(float)xRatio yRatio:(float)yRatio;
 
 // elements
 - (void)updateElements;
@@ -46,7 +42,6 @@
 // textboxes
 - (void)drawTextboxes;
 - (void)removeTextboxes;
-//- (void)updateTextboxes;
 @end
 
 @implementation EDPageViewContainer

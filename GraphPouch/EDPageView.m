@@ -114,6 +114,7 @@
     NSSize s = NSMakeSize(200, 100);
     
     // create the image
+#warning fix image here
     NSImage *anImage = [[NSImage alloc] initWithSize:s];
     //NSString *thePath = [[NSBundle mainBundle] pathForResource:@"about_logo" ofType:@"png"];
     //NSImage *anImage = [[NSImage alloc] initWithContentsOfFile:thePath];
@@ -140,6 +141,7 @@
 }
 
 - (void)mouseDown:(NSEvent *)theEvent{
+    NSLog(@"mouse down. page:%@", _dataObj);
     // make pages getAllSelectedWorksheetElements
     [[self window] makeFirstResponder:[self superview]];
     
