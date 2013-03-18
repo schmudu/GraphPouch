@@ -514,15 +514,6 @@
     EDPage *newPage = [self getPage:page context:context];
     //EDPage *newPage = [self getPageWithNumber:[[page pageNumber] intValue] context:context];
     [newPage setCurrentPage:TRUE];
-    
-    // clear any selection of pages
-    [EDCoreDataUtility deselectAllPages:context];
-    
-    // set this page as selected
-    [newPage setSelected:TRUE];
-    
-    // save
-    //[EDCoreDataUtility save:context];
 }
 
 + (EDPage *)insertPages:(NSArray *)pages atPosition:(int)insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:(NSManagedObjectContext *) context{
