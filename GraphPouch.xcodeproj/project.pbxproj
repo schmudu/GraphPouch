@@ -101,6 +101,8 @@
 		CD97257816F2721600A39E2D /* EDPageViewContainerTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD97257716F2721600A39E2D /* EDPageViewContainerTextView.m */; };
 		CDA299BE16F667D80021729F /* EDPageViewContainerGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA299BD16F667D80021729F /* EDPageViewContainerGraphView.m */; };
 		CDA299C116F66F490021729F /* EDPageViewContainerGraphCacheView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA299C016F66F490021729F /* EDPageViewContainerGraphCacheView.m */; };
+		CDA299C416F7A9890021729F /* EDPageViewContainerLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA299C316F7A9890021729F /* EDPageViewContainerLineView.m */; };
+		CDA299C716F7A99B0021729F /* EDPageViewContainerLineCacheView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA299C616F7A99B0021729F /* EDPageViewContainerLineCacheView.m */; };
 		CDA6644A15F026DC002FBE2F /* EDMenuWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */; };
 		CDA8555816236EF9006FCD62 /* EDContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA8555716236EF9006FCD62 /* EDContentView.m */; };
 		CDAA9105166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDAA9104166965D5009B75A2 /* EDSheetPropertiesGraphEquation.xib */; };
@@ -326,6 +328,10 @@
 		CDA299BD16F667D80021729F /* EDPageViewContainerGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainerGraphView.m; sourceTree = "<group>"; };
 		CDA299BF16F66F490021729F /* EDPageViewContainerGraphCacheView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewContainerGraphCacheView.h; sourceTree = "<group>"; };
 		CDA299C016F66F490021729F /* EDPageViewContainerGraphCacheView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainerGraphCacheView.m; sourceTree = "<group>"; };
+		CDA299C216F7A9890021729F /* EDPageViewContainerLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewContainerLineView.h; sourceTree = "<group>"; };
+		CDA299C316F7A9890021729F /* EDPageViewContainerLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainerLineView.m; sourceTree = "<group>"; };
+		CDA299C516F7A99B0021729F /* EDPageViewContainerLineCacheView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewContainerLineCacheView.h; sourceTree = "<group>"; };
+		CDA299C616F7A99B0021729F /* EDPageViewContainerLineCacheView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainerLineCacheView.m; sourceTree = "<group>"; };
 		CDA6644815F026DB002FBE2F /* EDMenuWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWindowController.h; sourceTree = "<group>"; };
 		CDA6644915F026DC002FBE2F /* EDMenuWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWindowController.m; sourceTree = "<group>"; };
 		CDA8555616236EF9006FCD62 /* EDContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDContentView.h; sourceTree = "<group>"; };
@@ -463,6 +469,10 @@
 				CDA299BD16F667D80021729F /* EDPageViewContainerGraphView.m */,
 				CDA299BF16F66F490021729F /* EDPageViewContainerGraphCacheView.h */,
 				CDA299C016F66F490021729F /* EDPageViewContainerGraphCacheView.m */,
+				CDA299C216F7A9890021729F /* EDPageViewContainerLineView.h */,
+				CDA299C316F7A9890021729F /* EDPageViewContainerLineView.m */,
+				CDA299C516F7A99B0021729F /* EDPageViewContainerLineCacheView.h */,
+				CDA299C616F7A99B0021729F /* EDPageViewContainerLineCacheView.m */,
 				CD97257616F2721600A39E2D /* EDPageViewContainerTextView.h */,
 				CD97257716F2721600A39E2D /* EDPageViewContainerTextView.m */,
 				CD1C57C8161D153200534D49 /* EDPagesView.h */,
@@ -1384,6 +1394,8 @@
 				CD97257816F2721600A39E2D /* EDPageViewContainerTextView.m in Sources */,
 				CDA299BE16F667D80021729F /* EDPageViewContainerGraphView.m in Sources */,
 				CDA299C116F66F490021729F /* EDPageViewContainerGraphCacheView.m in Sources */,
+				CDA299C416F7A9890021729F /* EDPageViewContainerLineView.m in Sources */,
+				CDA299C716F7A99B0021729F /* EDPageViewContainerLineCacheView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,7 +15,7 @@
     NSMutableArray *_textboxViews;
     //NSMutableArray *_graphViews;
     NSMutableArray *_graphCacheViews;
-    NSMutableArray *_lineViews;
+    NSMutableArray *_lineCacheViews;
 }
 
 - (id)initWithFrame:(NSRect)frame page:(EDPage *)page;

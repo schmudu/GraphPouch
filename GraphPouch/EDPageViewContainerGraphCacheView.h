@@ -10,8 +10,6 @@
 
 @interface EDPageViewContainerGraphCacheView : NSView{
     NSImage *_graphImage;
-    float _xRatio;
-    float _yRatio;
 }
 
 - (id)initWithFrame:(NSRect)frame graphImage:(NSImage *)graphImage;

@@ -17,6 +17,8 @@
 #import "EDPageViewContainer.h"
 #import "EDPageViewContainerGraphView.h"
 #import "EDPageViewContainerGraphCacheView.h"
+#import "EDPageViewContainerLineView.h"
+#import "EDPageViewContainerLineCacheView.h"
 #import "EDPageViewContainerTextView.h"
 #import "EDPage.h"
 //#import "EDParser.h"
@@ -58,7 +60,7 @@
         _textboxViews = [[NSMutableArray alloc] init];
         //_graphViews = [[NSMutableArray alloc] init];
         _graphCacheViews = [[NSMutableArray alloc] init];
-        _lineViews = [[NSMutableArray alloc] init];
+        _lineCacheViews = [[NSMutableArray alloc] init];
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -88,24 +90,38 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
-    [self drawLines];
 }
 
 #pragma mark lines
 - (void)drawLines{
-    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
-    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
     NSArray *lines = [[_page lines] allObjects];
-    NSBezierPath *path = [NSBezierPath bezierPath];
-    [[NSColor blackColor] setStroke];
+    EDPageViewContainerLineView *lineView;
+    EDPageViewContainerLineCacheView *lineCacheView;
+    NSImage *lineImage;
     
+    // for each graph create a graph view
     for (EDLine *line in lines){
-        [path setLineWidth:(yRatio * [line thickness])];
-        [path moveToPoint:NSMakePoint(xRatio * [line locationX], yRatio *([line locationY] + EDWorksheetLineSelectionHeight/2))];
-        [path lineToPoint:NSMakePoint(xRatio * ([line locationX] + [line elementWidth]), yRatio *([line locationY] + EDWorksheetLineSelectionHeight/2))];
+        lineView = [[EDPageViewContainerLineView alloc] initWithFrame:[self bounds] line:line];
+        
+        // create image
+        lineImage = [[NSImage alloc] initWithData:[lineView dataWithPDFInsideRect:[lineView bounds]]];
+        
+        // create cache image that only needs to draw on update
+        lineCacheView = [[EDPageViewContainerLineCacheView alloc] initWithFrame:[self bounds] lineImage:lineImage];
+        
+        //[lineCacheView setFrameOrigin:NSMakePoint(xRatio * [line locationX], yRatio * [line locationY])];
+        [self addSubview:lineCacheView];
+        
+        // save view so it can be erased later
+        [_lineCacheViews addObject:lineCacheView];
+    }
+}
+
+- (void)removeLines{
+    for (NSView *lineCacheView in _lineCacheViews){
+        [lineCacheView removeFromSuperview];
     }
     
-    [path stroke];
 }
 
 #pragma mark graphs
@@ -160,13 +176,15 @@
 #pragma mark elements
 - (void)updateElements{
 #warning worksheet elements
-    // remove all textboxes
+    // remove
     [self removeTextboxes];
     [self removeGraphs];
+    [self removeLines];
     
-    // draw textboxes
+    // draw
     [self drawTextboxes];
     [self drawGraphs];
+    [self drawLines];
 }
 
 #pragma mark textboxes
