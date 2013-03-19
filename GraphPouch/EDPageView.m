@@ -102,11 +102,13 @@
     
     NSPoint down = [_mouseDownEvent locationInWindow];
     NSPoint drag = [theEvent locationInWindow];
-    float distance = hypotf(down.x - drag.x, down.y - drag.y);
+    /*
+     float distance = hypotf(down.x - drag.x, down.y - drag.y);
     
     if (distance < 3){
+        NSLog(@"returning: distance:%f", distance);
         return;
-    }
+    }*/
     
     // validation
     
@@ -141,7 +143,6 @@
 }
 
 - (void)mouseDown:(NSEvent *)theEvent{
-    NSLog(@"mouse down. page:%@", _dataObj);
     // make pages getAllSelectedWorksheetElements
     [[self window] makeFirstResponder:[self superview]];
     
@@ -178,6 +179,13 @@
     
     //redraw page
     [self setNeedsDisplay:TRUE];
+    
+    // if mouse dragged already then we need to catch it and call it's behavior
+    // play around with the TimeInterval, more means that it can catch dragging, less means it's less responsive
+    NSEvent *nextEvent = [[self window] nextEventMatchingMask:NSLeftMouseDraggedMask untilDate:[[NSDate date] dateByAddingTimeInterval:0.35] inMode:NSDefaultRunLoopMode dequeue:NO];
+    if ([nextEvent type] == NSLeftMouseDragged){
+        [self mouseDragged:nextEvent];
+     }
 }
 
 - (void)drawStringCenteredIn:(NSRect)rect{

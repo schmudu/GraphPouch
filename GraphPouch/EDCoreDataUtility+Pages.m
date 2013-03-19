@@ -512,8 +512,9 @@
     
     // set parameter as current page
     EDPage *newPage = [self getPage:page context:context];
-    //EDPage *newPage = [self getPageWithNumber:[[page pageNumber] intValue] context:context];
     [newPage setCurrentPage:TRUE];
+    
+    [EDCoreDataUtility saveContext:context];
 }
 
 + (EDPage *)insertPages:(NSArray *)pages atPosition:(int)insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:(NSManagedObjectContext *) context{
