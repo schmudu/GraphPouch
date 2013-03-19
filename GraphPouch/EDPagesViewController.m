@@ -431,16 +431,16 @@
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
     NSArray *allPages = [EDPage getAllObjects:_context];
     
+    // if there will no pages left if all pages are cut, then do not allow this operation
+    if ([allPages count] - [selectedPages count] < 1) 
+        return;
+    
     // must dispatch event to notify that the worksheet view to remove all of its elements
     // if we wait until context notifies the worksheet view, all of the elements will be
     // deleted due to cascade delete rule
     NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
     [userInfo setObject:selectedPages forKey:EDKeyPagesToRemove];
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesWillBeRemoved object:self userInfo:userInfo];
-    
-    // if there will no pages left if all pages are cut, then do not allow this operation
-    if ([allPages count] - [selectedPages count] < 1) 
-        return;
     
     // get last selected page which we will use to designate which page should be used
     int lastSelectedPageNumber = [[(EDPage *)[selectedPages lastObject] pageNumber] intValue]; 

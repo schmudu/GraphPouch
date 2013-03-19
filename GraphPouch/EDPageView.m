@@ -189,7 +189,7 @@
 }
 
 - (void)drawStringCenteredIn:(NSRect)rect{
-    [[NSColor purpleColor] setFill];
+    [[NSColor whiteColor] setFill];
     [NSBezierPath fillRect:NSMakeRect(0, 0, EDPageImageViewWidth, EDPageImageViewHeight)];
 }
 
