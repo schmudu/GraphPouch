@@ -83,6 +83,10 @@
         // these dictionaries are the reverse of each other
         _transformRects = [[NSMutableDictionary alloc] init];
         _elementsWithTransformRects = [[NSMutableDictionary alloc] init];
+    
+        // set mouse points
+        _mousePointDown = NSMakePoint(-1, -1);
+        _mousePointDrag = NSMakePoint(-1, -1);
     }
     
     return self;
@@ -176,6 +180,27 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
                 [self drawGuide:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], 0) endPoint:NSMakePoint([[closestHorizontalGuide valueForKey:EDKeyClosestGuide] floatValue], [self frame].size.height)];
             }
         }
+    }
+    
+    // draw selection rectangle if points are set
+    if ((_mousePointDown.x != -1) && (_mousePointDrag.x != -1)){
+        [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] setFill];
+        [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:1.0] setStroke];
+        
+        float xStart, yStart;
+        if (_mousePointDown.x < _mousePointDrag.x)
+            xStart = _mousePointDown.x;
+        else
+            xStart = _mousePointDrag.x;
+        
+        if (_mousePointDown.y < _mousePointDrag.y)
+            yStart = _mousePointDown.y;
+        else
+            yStart = _mousePointDrag.y;
+        
+        // draw rectangle
+        [NSBezierPath fillRect:NSMakeRect(xStart, yStart, fabsf(_mousePointDown.x - _mousePointDrag.x),fabsf(_mousePointDown.y - _mousePointDrag.y))];
+        [NSBezierPath strokeRect:NSMakeRect(xStart, yStart, fabsf(_mousePointDown.x - _mousePointDrag.x),fabsf(_mousePointDown.y - _mousePointDrag.y))];
     }
 }
 
@@ -456,6 +481,9 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 #pragma mark mouse behavior
 - (void)mouseDown:(NSEvent *)theEvent{
+    // save mouse down point
+    _mousePointDown = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
+    
     // clear which element is being dragged
     _currentDraggedView = nil;
     
@@ -469,11 +497,31 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 - (void)mouseUp:(NSEvent *)theEvent{
     // clear which element is being dragged
     _currentDraggedView = nil;
+    
+    // reset mouse points
+    _mousePointDown = NSMakePoint(-1, -1);
+    _mousePointDrag = NSMakePoint(-1, -1);
+    [self setNeedsDisplay:TRUE];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent{
     // if an element is currently being dragged then send this event to it
-    [_currentDraggedView mouseDragged:theEvent];
+    if(_currentDraggedView){
+        [_currentDraggedView mouseDragged:theEvent];
+    }
+    else if ((_mousePointDown.x != -1) && (_mousePointDown.y != -1)){
+        // save mouse drag point
+        _mousePointDrag = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
+        
+        // notify listeners of drag
+        NSMutableDictionary *dragDict = [NSMutableDictionary dictionary];
+        //[dragDict setObject:_mousePointDown forKey:EDKeyPointDown];
+        //[dragDict setObject:_mousePointDrag forKey:EDKeyPointDrag];
+        [dragDict setValue:[NSValue valueWithPoint:_mousePointDown] forKey:EDKeyPointDown];
+        [dragDict setValue:[NSValue valueWithPoint:_mousePointDrag] forKey:EDKeyPointDrag];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDragged object:self userInfo:dragDict];
+        [self setNeedsDisplay:TRUE];
+    }
 }
 
 #pragma mark mouse down

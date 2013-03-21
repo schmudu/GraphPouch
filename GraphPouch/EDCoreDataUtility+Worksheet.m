@@ -31,9 +31,6 @@
         // set every element as selected
         [element setSelected:TRUE];
     }
-    
-    // save
-    //[EDCoreDataUtility save:context];
 }
 
 + (void)selectNextWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context{
@@ -140,9 +137,6 @@
             }
         }
     }
-    
-    // save
-    //[EDCoreDataUtility save:context];
 }
 
 #pragma mark worksheet
@@ -193,11 +187,6 @@
     // insert objects into context
     for (EDElement *element in elements){
 #warning worksheet elements
-        /*
-        newElement = [context copyObject:element toContext:context parent:EDEntityNamePage];
-        [newElement setPage:currentPage];
-        [insertedObjects addObject:newElement];
-         */
         // set element to this page
         if ([element isKindOfClass:[EDGraph class]]){
             EDGraph *newGraph = (EDGraph *)[context copyObject:element toContext:context parent:EDEntityNamePage];
@@ -211,10 +200,6 @@
             [insertedObjects addObject:newLine];
         }
         else if ([element isKindOfClass:[EDTextbox class]]){
-            //EDTextbox *newTextbox = [[EDTextbox alloc] initWithContext:context];
-            //[context insertObject:newTextbox];
-            //[newTextbox copyAttributes:element];
-            //[newTextbox setPage:currentPage];
             // copying from copy context to document child context
             EDTextbox *newTextbox = (EDTextbox *)[context copyObject:element toContext:context parent:EDEntityNamePage];
             [newTextbox setPage:currentPage];
@@ -357,8 +342,27 @@
             [element setLocationY:([element locationY] + increment)];
         }
     }
+}
+
++ (void)selectElementsInRect:(NSRect)rect context:(NSManagedObjectContext *)context{
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
+    NSArray *objects = [currentPage getAllWorksheetObjects];
+    NSRect elementRect;
+    BOOL intersectionRect;
+    // iterate through all objects
+    for (EDElement *element in objects){
+        // create rect for element
+        elementRect = NSMakeRect([element locationX], [element locationY], [element elementWidth], [element elementHeight]);
+        
+        intersectionRect = NSIntersectsRect(rect, elementRect);
+        if(intersectionRect){
+            // set element as selected
+            [element setSelected:TRUE];
+        }
+        else{
+            [element setSelected:FALSE];
+        }
+    }
     
-    // save
-    //[EDCoreDataUtility save:context];
 }
 @end

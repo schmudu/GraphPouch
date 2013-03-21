@@ -98,6 +98,8 @@ extern NSString *const EDWorksheetShadowColor;
 extern float const EDIncrementPressedArrowModifier;
 extern float const EDIncrementPressedArrow;
 extern float const EDCopyLocationOffset;
+extern NSString *const EDKeyPointDrag;
+extern NSString *const EDKeyPointDown;
 
 // worksheet events
 extern NSString *const EDEventWorksheetClicked;

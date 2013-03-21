@@ -24,6 +24,7 @@
 - (void)cutSelectedElements:(NSNotification *)note;
 - (void)copyElements:(NSNotification *)note;
 - (void)onKeyPressedArrow:(NSNotification *)note;
+- (void)onSelectedRectangleDragged:(NSNotification *)note;
 - (void)onTextboxDidBeginEditing:(NSNotification *)note;
 - (void)onTextboxDidEndEditing:(NSNotification *)note;
 - (void)onTextboxDidChange:(NSNotification *)note;
@@ -58,6 +59,7 @@
     [_nc addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:[self view]];
     [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:[self view]];
     [_nc addObserver:self selector:@selector(onKeyPressedArrow:) name:EDEventArrowKeyPressed object:[self view]];
+    [_nc addObserver:self selector:@selector(onSelectedRectangleDragged:) name:EDEventMouseDragged object:[self view]];
     
     // initialize view to display all of the worksheet elements
     [(EDWorksheetView *)[self view] drawLoadedObjects];
@@ -87,6 +89,7 @@
     [_nc removeObserver:self name:EDEventTextboxEndEditing object:[self view]];
     [_nc removeObserver:self name:EDEventTextboxDidChange object:[self view]];
     [_nc removeObserver:self name:EDEventArrowKeyPressed object:[self view]];
+    [_nc removeObserver:self name:EDEventMouseDragged object:[self view]];
 }
 
 - (void)deleteSelectedElements:(NSNotification *)note{
@@ -317,5 +320,25 @@
 #pragma mark pages 
 - (void)onPagesWillBeRemoved:(NSArray *)pagesToDelete{
     [(EDWorksheetView *)[self view] onPagesWillBeDeleted:pagesToDelete];
+}
+#pragma mark selection rectangle
+- (void)onSelectedRectangleDragged:(NSNotification *)note{
+    // select worksheet elements that intersect with two points
+    NSPoint downPoint = [[[note userInfo] valueForKey:EDKeyPointDown] pointValue];
+    NSPoint dragPoint = [[[note userInfo] valueForKey:EDKeyPointDrag] pointValue];
+    float xStart, yStart;
+    
+    if (downPoint.x < dragPoint.x)
+        xStart = downPoint.x;
+    else
+        xStart = dragPoint.x;
+    
+    if (downPoint.y < dragPoint.y)
+        yStart = downPoint.y;
+    else
+        yStart = dragPoint.y;
+    
+    NSRect selectionRect = NSMakeRect(xStart, yStart, fabsf(downPoint.x - dragPoint.x), fabsf(downPoint.y - dragPoint.y));
+    [EDCoreDataUtility selectElementsInRect:selectionRect context:_context];
 }
 @end

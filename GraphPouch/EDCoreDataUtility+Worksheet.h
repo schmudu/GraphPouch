@@ -24,5 +24,6 @@
 + (void)selectAllWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context;
 + (void)selectNextWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context;
 + (void)selectPreviousWorksheetElementOnCurrentPage:(NSManagedObjectContext *)context;
++ (void)selectElementsInRect:(NSRect)rect context:(NSManagedObjectContext *)context;
 
 @end

@@ -22,6 +22,8 @@
     EDPage *_currentPage;
     EDTextboxView *_currentTextView;
     EDWorksheetElementView *_currentDraggedView;
+    NSPoint _mousePointDown;
+    NSPoint _mousePointDrag;
 }
 
 /*
