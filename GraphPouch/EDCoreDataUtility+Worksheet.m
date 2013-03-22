@@ -348,7 +348,7 @@
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     NSArray *objects = [currentPage getAllWorksheetObjects];
     NSRect elementRect;
-    BOOL intersectionRect;
+    BOOL intersectionRect, changed = FALSE;
     // iterate through all objects
     for (EDElement *element in objects){
         // create rect for element
@@ -357,12 +357,21 @@
         intersectionRect = NSIntersectsRect(rect, elementRect);
         if(intersectionRect){
             // set element as selected
-            [element setSelected:TRUE];
+            if (![element selected]){
+                changed = TRUE;
+                [element setSelected:TRUE];
+            }
         }
         else{
-            [element setSelected:FALSE];
+            if ([element selected]){
+                changed = TRUE;
+                [element setSelected:FALSE];
+            }
         }
     }
     
+    //if there was a change then save
+    if (changed)
+        [EDCoreDataUtility saveContext:context];
 }
 @end

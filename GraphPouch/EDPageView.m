@@ -181,7 +181,7 @@
     [self setNeedsDisplay:TRUE];
     
     // if mouse dragged already then we need to catch it and call it's behavior
-    // play around with the TimeInterval, more means that it can catch dragging, less means it's less responsive
+    // play around with the TimeInterval, more means that it can catch dragging, but less responsive
     NSEvent *nextEvent = [[self window] nextEventMatchingMask:NSLeftMouseDraggedMask untilDate:[[NSDate date] dateByAddingTimeInterval:0.35] inMode:NSDefaultRunLoopMode dequeue:NO];
     if ([nextEvent type] == NSLeftMouseDragged){
         [self mouseDragged:nextEvent];

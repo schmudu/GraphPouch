@@ -150,7 +150,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         // either element is being modified or transform rect is
         if (_elementIsBeingModified) {
             // get all elements
-            //NSMutableArray *elements = [self getAllSelectedWorksheetElementsViews];
             NSMutableArray *elements = [[NSMutableArray alloc] initWithObjects:_currentDraggedView, nil];
             NSMutableDictionary *closestVerticalGuide = [self getClosestVerticalGuide:[_guides objectForKey:EDKeyGuideVertical] elements:elements];
             NSMutableDictionary *closestHorizontalGuide = [self getClosestHorizontalGuide:[_guides objectForKey:EDKeyGuideHorizontal] elements:elements];
@@ -481,6 +480,9 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 #pragma mark mouse behavior
 - (void)mouseDown:(NSEvent *)theEvent{
+    NSLog(@"mouse down.");
+    BOOL mouseDragged = FALSE;
+    
     // save mouse down point
     _mousePointDown = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
     
@@ -490,8 +492,25 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     // make this the first responder
     [[self window] makeFirstResponder:self];
     
-    //post notification
-    [_nc postNotificationName:EDEventWorksheetClicked object:self];
+    // catch mouse drags here
+    // for some reason the mouseDown method eats up the mouseDragged events as well
+    while (1) {
+        NSEvent *nextEvent = [[self window] nextEventMatchingMask: (NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+        
+        if ([nextEvent type] == NSLeftMouseUp){
+            [self mouseUp:nextEvent];
+            break;
+        }
+        else{
+            mouseDragged = TRUE;
+            [self mouseDragged:nextEvent];
+        }
+    }
+    
+    // if mouse was not dragged then continue with normal order to notifying listeners of mouse down
+    // otherwise the mouse dragging would take care of the selection/deselection of elements
+    if (!mouseDragged)
+        [_nc postNotificationName:EDEventWorksheetClicked object:self];
 }
 
 - (void)mouseUp:(NSEvent *)theEvent{
@@ -515,8 +534,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         
         // notify listeners of drag
         NSMutableDictionary *dragDict = [NSMutableDictionary dictionary];
-        //[dragDict setObject:_mousePointDown forKey:EDKeyPointDown];
-        //[dragDict setObject:_mousePointDrag forKey:EDKeyPointDrag];
         [dragDict setValue:[NSValue valueWithPoint:_mousePointDown] forKey:EDKeyPointDown];
         [dragDict setValue:[NSValue valueWithPoint:_mousePointDrag] forKey:EDKeyPointDrag];
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDragged object:self userInfo:dragDict];
@@ -525,7 +542,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 #pragma mark mouse down
-
 - (void)onElementMouseDown:(NSNotification *)note{
     // save which element is being dragged
     _currentDraggedView = (EDWorksheetElementView *)[note object];
