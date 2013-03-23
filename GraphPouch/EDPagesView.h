@@ -10,7 +10,7 @@
 #import "EDPage.h"
 #import "EDPagesViewSelectionView.h"
 
-@interface EDPagesView : NSView {
+@interface EDPagesView : NSView{
     BOOL _highlighted;
     NSPasteboard *_pb;
     EDPage *_startDragPageData;

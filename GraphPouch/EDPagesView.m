@@ -18,6 +18,7 @@
 
 @interface EDPagesView()
 - (int)getHighlightedDragSection:(int)totalPages pageDragged:(int)pageDragged mousePosition:(float)yPos;
+- (void)onMenuPageAdd:(id)sender;
 @end
 
 @implementation EDPagesView
@@ -160,6 +161,10 @@
     }
     
     if ([[menuItem title] isEqualToString:@"Deselect All"]){
+        return TRUE;
+    }
+    
+    if ([[menuItem title] isEqualToString:@"Add Page"]){
         return TRUE;
     }
     
@@ -345,4 +350,16 @@
     return NO;
 }
 
+#pragma mark menus
+- (NSMenu *)menuForEvent:(NSEvent *)event{
+    NSMenu *returnMenu = [[NSMenu alloc] init];
+    //NSMenuItem *itemPageAdd = [[NSMenuItem alloc] initWithTitle:@"Add Page" action:@selector(onMenuPageAdd:) keyEquivalent:nil];
+    [returnMenu addItemWithTitle:@"Add Page" action:@selector(onMenuPageAdd:) keyEquivalent:@""];
+    return returnMenu;
+}
+
+- (void)onMenuPageAdd:(id)sender{
+    NSLog(@"add page:%@", sender);
+    [[[self window] firstResponder] doCommandBySelector:@selector(pageAdd:)];
+}
 @end
