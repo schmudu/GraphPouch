@@ -18,6 +18,7 @@
     NSMutableArray *_lineCacheViews;
 }
 
++ (NSRect)containerFrame;
 - (id)initWithFrame:(NSRect)frame page:(EDPage *)page;
 - (void)postInit;
 @end

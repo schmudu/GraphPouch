@@ -480,7 +480,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 #pragma mark mouse behavior
 - (void)mouseDown:(NSEvent *)theEvent{
-    NSLog(@"mouse down.");
     BOOL mouseDragged = FALSE;
     
     // save mouse down point

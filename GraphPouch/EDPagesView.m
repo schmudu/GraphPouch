@@ -6,11 +6,13 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDPagesView.h"
-#import "EDPageView.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
 #import "EDCoreDataUtility+Pages.h"
+#import "EDPagesView.h"
+#import "EDPageView.h"
+#import "EDPageViewContainer.h"
+#import "EDPagesViewSelectionView.h"
 #import "NSManagedObject+EasyFetching.h"
 #import "NSColor+Utilities.h"
 
@@ -38,16 +40,19 @@
 - (void)postInitialize:(NSManagedObjectContext *)context{
     _context = context;
     _pb = [NSPasteboard generalPasteboard];
+    
+    // what types of dragging elements we receive
     [self registerForDraggedTypes:[NSArray arrayWithObjects:EDUTIPage,nil]];
+    
+    // view that handles dragging selection
+    _selectionView = [[EDPagesViewSelectionView alloc] initWithFrame:[self bounds]];
 }
 
 - (void)dealloc{
     [self unregisterDraggedTypes];
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
-    
+- (void)drawRect:(NSRect)dirtyRect{
     if ((_highlighted) && (_highlightedDragSection > 0)) {
         NSRect highlightRect = NSMakeRect(EDPageViewDragPosX, (_highlightedDragSection - 1) * EDPageViewIncrementPosY - EDPageViewDragOffsetY, EDPageViewDragWidth, EDPageViewDragLength);
         [NSBezierPath fillRect:highlightRect];
@@ -160,10 +165,79 @@
     
     return [super validateMenuItem:menuItem];
 }
+
 #pragma mark mouse
 - (void)mouseDown:(NSEvent *)theEvent{
+    // store mouse down point
+    _mousePointDown = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
+    
     [[self window] makeFirstResponder:self];
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesViewClicked object:self];
+    
+    // add selection view
+    //_selectionView = [[EDPagesViewSelectionView alloc] initWithFrame:[self bounds]];
+    [_selectionView setFrame:[self bounds]];
+    [self addSubview:_selectionView];
+}
+
+- (void)mouseUp:(NSEvent *)theEvent{
+    // remove view
+    [_selectionView removeFromSuperview];
+    
+    // reset mouse points
+    //[self setNeedsDisplay:TRUE];
+    [_selectionView resetPoints];
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent{
+    // get mouse point drag
+    _mousePointDrag = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
+    
+    // set the selection view and it will draw
+    [_selectionView setMouseDragPoint:_mousePointDrag mouseDownPoint:_mousePointDown];
+    
+    // if mouse points are set then notify listeners who will actually select the page
+    if ((_mousePointDown.x != -1) && (_mousePointDown.y != -1)){
+        // notify listeners of drag
+        NSMutableDictionary *dragDict = [NSMutableDictionary dictionary];
+        [dragDict setValue:[NSValue valueWithPoint:_mousePointDown] forKey:EDKeyPointDown];
+        [dragDict setValue:[NSValue valueWithPoint:_mousePointDrag] forKey:EDKeyPointDrag];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDragged object:self userInfo:dragDict];
+        
+        // create selection rectangle
+        float xStart, yStart;
+        if (_mousePointDown.x < _mousePointDrag.x)
+            xStart = _mousePointDown.x;
+        else
+            xStart = _mousePointDrag.x;
+        
+        if (_mousePointDown.y < _mousePointDrag.y)
+            yStart = _mousePointDown.y;
+        else
+            yStart = _mousePointDrag.y;
+        
+        NSRect selectionRect = NSMakeRect(xStart, yStart, fabsf(_mousePointDown.x - _mousePointDrag.x), fabsf(_mousePointDown.y - _mousePointDrag.y));
+        
+        // select pages that are in the rect
+        NSRect pageContainerRect;
+        BOOL doesIntersect;
+        NSMutableArray *selectedPages = [NSMutableArray array];
+        for (id view in [self subviews]){
+            if (![view isKindOfClass:[EDPageView class]])
+                continue;
+            
+            // if view is within the selection rectangle then have it selected
+            pageContainerRect = NSMakeRect([(EDPageView *)view frame].origin.x + [EDPageViewContainer containerFrame].origin.x, [(EDPageView *)view frame].origin.y + [EDPageViewContainer containerFrame].origin.y, [EDPageViewContainer containerFrame].size.width, [EDPageViewContainer containerFrame].size.height);
+            doesIntersect = NSIntersectsRect(selectionRect, pageContainerRect);
+            
+            // if intersects then add to the array
+            if (doesIntersect)
+                [selectedPages addObject:[(EDPageView *)view dataObj]];
+        }
+        
+        // tell model to select the pages and deselect the rest
+        [EDCoreDataUtility selectOnlyPages:selectedPages context:_context];
+    }
 }
 
 #pragma mark events

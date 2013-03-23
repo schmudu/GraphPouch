@@ -46,6 +46,10 @@
 
 @implementation EDPageViewContainer
 
++ (NSRect)containerFrame{
+    return NSMakeRect(EDPageImageHorizontalBuffer, (EDPageViewSelectionHeight - EDPageImageViewHeight)/2, EDPageImageViewWidth, EDPageImageViewHeight);
+}
+
 - (id)initWithFrame:(NSRect)frame page:(EDPage *)page
 {
     self = [super initWithFrame:frame];

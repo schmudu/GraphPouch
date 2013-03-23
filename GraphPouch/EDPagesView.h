@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDPage.h"
+#import "EDPagesViewSelectionView.h"
 
 @interface EDPagesView : NSView {
     BOOL _highlighted;
@@ -15,6 +16,9 @@
     EDPage *_startDragPageData;
     int _highlightedDragSection;
     NSManagedObjectContext *_context;
+    NSPoint _mousePointDown;
+    NSPoint _mousePointDrag;
+    EDPagesViewSelectionView *_selectionView;
 }
 
 - (void)postInitialize:(NSManagedObjectContext *)context;

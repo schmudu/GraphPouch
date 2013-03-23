@@ -99,6 +99,7 @@
 		CD90B64B16D07424000637FF /* EDPanelPropertiesTextboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD90B64916D07424000637FF /* EDPanelPropertiesTextboxController.m */; };
 		CD90B64C16D07424000637FF /* EDPanelPropertiesTextbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD90B64A16D07424000637FF /* EDPanelPropertiesTextbox.xib */; };
 		CD97257816F2721600A39E2D /* EDPageViewContainerTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD97257716F2721600A39E2D /* EDPageViewContainerTextView.m */; };
+		CD980DDF16FD0FC700209E02 /* EDPagesViewSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD980DDE16FD0FC700209E02 /* EDPagesViewSelectionView.m */; };
 		CDA299BE16F667D80021729F /* EDPageViewContainerGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA299BD16F667D80021729F /* EDPageViewContainerGraphView.m */; };
 		CDA299C116F66F490021729F /* EDPageViewContainerGraphCacheView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA299C016F66F490021729F /* EDPageViewContainerGraphCacheView.m */; };
 		CDA299C416F7A9890021729F /* EDPageViewContainerLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA299C316F7A9890021729F /* EDPageViewContainerLineView.m */; };
@@ -324,6 +325,8 @@
 		CD90B64A16D07424000637FF /* EDPanelPropertiesTextbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesTextbox.xib; sourceTree = "<group>"; };
 		CD97257616F2721600A39E2D /* EDPageViewContainerTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewContainerTextView.h; sourceTree = "<group>"; };
 		CD97257716F2721600A39E2D /* EDPageViewContainerTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainerTextView.m; sourceTree = "<group>"; };
+		CD980DDD16FD0FC700209E02 /* EDPagesViewSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPagesViewSelectionView.h; sourceTree = "<group>"; };
+		CD980DDE16FD0FC700209E02 /* EDPagesViewSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPagesViewSelectionView.m; sourceTree = "<group>"; };
 		CDA299BC16F667D80021729F /* EDPageViewContainerGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewContainerGraphView.h; sourceTree = "<group>"; };
 		CDA299BD16F667D80021729F /* EDPageViewContainerGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainerGraphView.m; sourceTree = "<group>"; };
 		CDA299BF16F66F490021729F /* EDPageViewContainerGraphCacheView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewContainerGraphCacheView.h; sourceTree = "<group>"; };
@@ -479,6 +482,8 @@
 				CD1C57C9161D153200534D49 /* EDPagesView.m */,
 				CD1C57B8161BB26A00534D49 /* EDPagesViewController.h */,
 				CD1C57B9161BB26A00534D49 /* EDPagesViewController.m */,
+				CD980DDD16FD0FC700209E02 /* EDPagesViewSelectionView.h */,
+				CD980DDE16FD0FC700209E02 /* EDPagesViewSelectionView.m */,
 			);
 			name = Pages;
 			sourceTree = "<group>";
@@ -1396,6 +1401,7 @@
 				CDA299C116F66F490021729F /* EDPageViewContainerGraphCacheView.m in Sources */,
 				CDA299C416F7A9890021729F /* EDPageViewContainerLineView.m in Sources */,
 				CDA299C716F7A99B0021729F /* EDPageViewContainerLineCacheView.m in Sources */,
+				CD980DDF16FD0FC700209E02 /* EDPagesViewSelectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

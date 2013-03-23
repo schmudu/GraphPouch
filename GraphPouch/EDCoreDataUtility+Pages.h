@@ -35,4 +35,5 @@
 + (void)deselectAllPages:(NSManagedObjectContext *)context;
 + (EDPage *)getLastPage:(NSManagedObjectContext *)context;
 + (EDPage *)getFirstPage:(NSManagedObjectContext *)context;
++ (void)selectOnlyPages:(NSArray *)pages context:(NSManagedObjectContext *)context;
 @end

@@ -69,12 +69,6 @@
     [NSBezierPath strokeRect:bounds];
 }
 
-/*
-- (void)didAddSubview:(NSView *)subview{
-    [super didAddSubview:subview];
-    NSLog(@"did add subview.");
-}*/
-
 #pragma mark data
 - (EDPage *)dataObj{
     return _dataObj;
@@ -85,7 +79,7 @@
     _dataObj = pageObj;
     
     // draw container subview
-    _container = [[EDPageViewContainer alloc] initWithFrame:NSMakeRect(EDPageImageHorizontalBuffer, (EDPageViewSelectionHeight - EDPageImageViewHeight)/2, EDPageImageViewWidth, EDPageImageViewHeight) page:pageObj];
+    _container = [[EDPageViewContainer alloc] initWithFrame:[EDPageViewContainer containerFrame] page:pageObj];
     [self addSubview:_container];
     
     // do any post init work
@@ -216,7 +210,6 @@
     NSMutableArray *allObjects = [NSMutableArray arrayWithArray:updatedArray];
     [allObjects addObjectsFromArray:insertedArray];
     [allObjects addObjectsFromArray:removedArray];
-    
     // if any object was updated, removed or inserted on this page then this page needs to be updated
     for (NSManagedObject *object in allObjects){
         if ((object == [self dataObj]) || ([(EDPage *)[self dataObj] containsObject:object])){

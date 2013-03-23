@@ -551,4 +551,30 @@
     
     return nil;
 }
+
++ (void)selectOnlyPages:(NSArray *)pages context:(NSManagedObjectContext *)context{
+    NSArray *allPages = [EDPage getAllObjects:context];
+    
+    BOOL changed = FALSE;
+    for (EDPage *page in allPages){
+        if ([pages containsObject:page]){
+            // this page needs to be selected
+            if (![page selected]){
+                changed = TRUE;
+                [page setSelected:TRUE];
+            }
+        }
+        else{
+            // this page needs to be deselected
+            if ([page selected]){
+                changed = TRUE;
+                [page setSelected:FALSE];
+            }
+        }
+    }
+    
+    // if there is a change then save it
+    if (changed)
+        [EDCoreDataUtility saveContext:context];
+}
 @end
