@@ -359,8 +359,12 @@ extern NSString *const EDTokenAttributeType;
 extern NSString *const EDTokenAttributeAssociation;
 extern NSString *const EDTokenAttributeEquation;
 
-// errors
+#pragma mark errors
 extern NSString *const EDErrorDomain;
 extern int const EDErrorTokenizer;
 
+#pragma mark context menu
+extern NSString *const EDContextMenuPageAdd;
+extern NSString *const EDContextMenuPagesSelectAll;
+extern NSString *const EDContextMenuPagesDeselectAll;
 @end

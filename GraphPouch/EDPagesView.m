@@ -19,6 +19,8 @@
 @interface EDPagesView()
 - (int)getHighlightedDragSection:(int)totalPages pageDragged:(int)pageDragged mousePosition:(float)yPos;
 - (void)onMenuPageAdd:(id)sender;
+- (void)onMenuPagesSelectAll:(id)sender;
+- (void)onMenuPagesDeselectAll:(id)sender;
 @end
 
 @implementation EDPagesView
@@ -164,7 +166,15 @@
         return TRUE;
     }
     
-    if ([[menuItem title] isEqualToString:@"Add Page"]){
+    if ([[menuItem title] isEqualToString:EDContextMenuPageAdd]){
+        return TRUE;
+    }
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuPagesSelectAll]){
+        return TRUE;
+    }
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuPagesDeselectAll]){
         return TRUE;
     }
     
@@ -353,13 +363,29 @@
 #pragma mark menus
 - (NSMenu *)menuForEvent:(NSEvent *)event{
     NSMenu *returnMenu = [[NSMenu alloc] init];
-    //NSMenuItem *itemPageAdd = [[NSMenuItem alloc] initWithTitle:@"Add Page" action:@selector(onMenuPageAdd:) keyEquivalent:nil];
-    [returnMenu addItemWithTitle:@"Add Page" action:@selector(onMenuPageAdd:) keyEquivalent:@""];
+    
+    // add/remove page
+    NSMenuItem *menuPageAdd = [[NSMenuItem alloc] initWithTitle:EDContextMenuPageAdd action:@selector(onMenuPageAdd:) keyEquivalent:@"p"];
+    [menuPageAdd setKeyEquivalentModifierMask:NSControlKeyMask];
+    [returnMenu addItem:menuPageAdd];
+    [returnMenu addItem:[NSMenuItem separatorItem]];
+    
+    // selection
+    [returnMenu addItemWithTitle:EDContextMenuPagesSelectAll action:@selector(onMenuPagesSelectAll:) keyEquivalent:@"a"];
+    [returnMenu addItemWithTitle:EDContextMenuPagesDeselectAll action:@selector(onMenuPagesDeselectAll:) keyEquivalent:@"d"];
+    
     return returnMenu;
 }
 
 - (void)onMenuPageAdd:(id)sender{
-    NSLog(@"add page:%@", sender);
     [[[self window] firstResponder] doCommandBySelector:@selector(pageAdd:)];
+}
+
+- (void)onMenuPagesSelectAll:(id)sender{
+    [EDCoreDataUtility selectAllPages:_context];
+}
+
+- (void)onMenuPagesDeselectAll:(id)sender{
+    [EDCoreDataUtility deselectAllPages:_context];
 }
 @end

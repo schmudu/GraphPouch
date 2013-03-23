@@ -89,10 +89,10 @@ NSString * const EDFontAttributeSuperscript                     = @"EDFontAttrib
 NSString * const EDTextViewDefaultString                        = @"Double click here to add your text";
 
 
-// line
+#pragma mark line
 NSString * const EDLineAttributeThickness                       = @"thickness";
 
-// worksheet
+#pragma mark worksheet
 float const EDWorksheetViewWidth                                = 612;
 float const EDWorksheetViewHeight                               = 792;
 float const EDWorksheetShadowSize                               = 2.0;
@@ -103,7 +103,7 @@ float const EDCopyLocationOffset                                = 50.0;
 NSString * const EDKeyPointDown                                 = @"EDKeyPointDown";
 NSString * const EDKeyPointDrag                                 = @"EDKeyPointDrag";
 
-// worksheet events
+#pragma mark worksheet elements
 NSString * const EDEventMouseDoubleClick                        = @"EDEventMouseDoubleClick";
 NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";
 NSString * const EDEventMouseDown                               = @"EDEventMouseDown";
@@ -344,6 +344,9 @@ NSString *const EDTokenAttributeType                            = @"type";
 NSString *const EDTokenAttributeAssociation                     = @"association";
 NSString *const EDTokenAttributeEquation                        = @"equation";
 
-
+#pragma mark context menu
+NSString *const EDContextMenuPageAdd                            = @"Add page";
+NSString *const EDContextMenuPagesSelectAll                     = @"Select all pages";
+NSString *const EDContextMenuPagesDeselectAll                   = @"Deselect all pages";
 
 @end

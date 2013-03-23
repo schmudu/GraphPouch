@@ -57,7 +57,8 @@
     for (EDPage *page in pages){
         [page setSelected:FALSE];
     }
-    //[EDCoreDataUtility save:context];
+    
+    //[EDCoreDataUtility saveContext:context];
 }
 
 + (NSArray *)getAllPages:(NSManagedObjectContext *)context{
