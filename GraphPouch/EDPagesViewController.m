@@ -282,7 +282,6 @@
 }
 
 - (void)onShortcutPaste:(NSNotification *)note{
-    NSLog(@"pasting.");
     [self pastePagesFromPasteboard];
 }
 

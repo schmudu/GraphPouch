@@ -39,6 +39,7 @@
 - (void)onTextboxDidEndEditing:(NSNotification *)note;
 - (void)onTextboxDidChange:(NSNotification *)note;
 - (void)modifyPersistentStores;
+- (void)updatePageNumberInWindowTitle;
 @end
 
 @implementation EDDocument
@@ -84,6 +85,9 @@
 }
 
 - (void)onContextChanged:(NSNotification *)note{
+    // update title page number
+    [self updatePageNumberInWindowTitle];
+    
     // update counter that we have changes to be saved
     [self updateChangeCount:NSChangeUndone];
 }
@@ -143,6 +147,7 @@
 
 - (void)awakeFromNib{
     [self modifyPersistentStores];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 
@@ -154,16 +159,6 @@
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window{
     // have the undo manager linked to the managed object context
     return [_context undoManager];
-}
-
-#pragma mark application delegate
-- (void)applicationWillFinishLaunching:(NSNotification *)notification{
-    NSLog(@"app finished launching.");
-}
-
-- (BOOL)applicationOpenUntitledFile:(NSApplication *)sender{
-    NSLog(@"application will open file.");
-    return TRUE;
 }
 
 #pragma mark document
@@ -269,6 +264,19 @@
     
     // notify scroll view that window resized
     [mainWorksheetView windowDidResize];
+}
+
+- (void)updatePageNumberInWindowTitle{
+    // set title
+    NSArray *pages = [EDPage getAllObjects:_context];
+    EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+    NSString *fileName = [mainWindow representedFilename];
+    
+    // set to untitled if no name
+    if ([fileName isEqualToString:@""])
+        fileName = @"Untitled";
+    
+    [mainWindow setTitle:[NSString stringWithFormat:@"%@ (page %d of %ld)", fileName, [[page pageNumber] intValue], [pages count]]];
 }
 
 #pragma mark keyboard

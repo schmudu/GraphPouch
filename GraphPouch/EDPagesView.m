@@ -194,8 +194,9 @@
     
     if ([[menuItem title] isEqualToString:EDContextMenuPagesDelete]){
         NSArray *selectedPages = [EDPage getAllSelectedObjects:_context];
+        NSArray *allPages = [EDPage getAllObjects:_context];
         
-        if ([selectedPages count] > 0)
+        if (([selectedPages count] > 0) && (([allPages count] - [selectedPages count]) > 0))
             return TRUE;
         else
             return FALSE;

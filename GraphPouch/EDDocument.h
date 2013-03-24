@@ -18,7 +18,7 @@
 @class EDWorksheetViewController;
 @class EDPagesViewController;
 
-@interface EDDocument : NSPersistentDocument <NSApplicationDelegate, NSWindowDelegate>{
+@interface EDDocument : NSPersistentDocument <NSWindowDelegate>{
     IBOutlet NSArrayController *elementsController;
     IBOutlet EDWorksheetViewController *worksheetController;
     IBOutlet EDPagesViewController *pagesController;

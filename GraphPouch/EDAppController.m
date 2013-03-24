@@ -30,6 +30,11 @@
     NSLog(@"app will finished launching: current document:%@", [[NSDocumentController sharedDocumentController] currentDocument]);
 }
 
+- (void)applicationDidFinishLaunching:(NSNotification *)notification{
+    //NSApplication *mainApp = (NSApplication *)[notification object];
+    //NSLog(@"app did finished launching: current document:%@ notification:%@", [[NSDocumentController sharedDocumentController] currentDocument], [[NSApplication sharedApplication] mainWindow]);
+}
+
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)sender{
     NSLog(@"application will open file.");
     return TRUE;
