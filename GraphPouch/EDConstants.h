@@ -39,6 +39,9 @@ extern NSString *const EDKeyContextRoot;
 extern NSString *const EDContextMenuPageAdd;
 extern NSString *const EDContextMenuPagesSelectAll;
 extern NSString *const EDContextMenuPagesDeselectAll;
+extern NSString *const EDContextMenuPagesCopy;
+extern NSString *const EDContextMenuPagesPaste;
+extern NSString *const EDContextMenuPagesDelete;
 
 #pragma mark directions
 typedef enum{
@@ -198,6 +201,7 @@ extern NSString *const EDEventPagesWillBeRemoved;
 extern NSString *const EDKeyPagesToRemove;
 //extern NSString *const EDEventPageViewDragged;
 extern NSString *const EDEventPagesDeletePressed;
+extern NSString *const EDEventPagesPastePressed;
 extern NSString *const EDEventPageViewStartDrag;
 extern NSString *const EDEventPageViewsFinishedDrag;
 extern NSString *const EDKeySelectedPageFirst;

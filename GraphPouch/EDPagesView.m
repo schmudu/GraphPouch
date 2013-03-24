@@ -19,8 +19,11 @@
 @interface EDPagesView()
 - (int)getHighlightedDragSection:(int)totalPages pageDragged:(int)pageDragged mousePosition:(float)yPos;
 - (void)onMenuPageAdd:(id)sender;
-- (void)onMenuPagesSelectAll:(id)sender;
+- (void)onMenuPagesCopy:(id)sender;
 - (void)onMenuPagesDeselectAll:(id)sender;
+- (void)onMenuPagesDelete:(id)sender;
+- (void)onMenuPagesPaste:(id)sender;
+- (void)onMenuPagesSelectAll:(id)sender;
 @end
 
 @implementation EDPagesView
@@ -171,13 +174,52 @@
     }
     
     if ([[menuItem title] isEqualToString:EDContextMenuPagesSelectAll]){
-        return TRUE;
+        NSArray *selectedPages = [EDPage getAllSelectedObjects:_context];
+        NSArray *allPages = [EDPage getAllObjects:_context];
+        
+        if ([selectedPages count] == [allPages count])
+            return FALSE;
+        else
+            return TRUE;
     }
     
     if ([[menuItem title] isEqualToString:EDContextMenuPagesDeselectAll]){
-        return TRUE;
+        NSArray *selectedPages = [EDPage getAllSelectedObjects:_context];
+        
+        if ([selectedPages count] > 0)
+            return TRUE;
+        else
+            return FALSE;
     }
     
+    if ([[menuItem title] isEqualToString:EDContextMenuPagesDelete]){
+        NSArray *selectedPages = [EDPage getAllSelectedObjects:_context];
+        
+        if ([selectedPages count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuPagesCopy]){
+        NSArray *selectedPages = [EDPage getAllSelectedObjects:_context];
+        
+        if ([selectedPages count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuPagesPaste]){
+        NSArray *classes = [NSArray arrayWithObject:[EDPage class]];
+        NSArray *pages = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+        
+        if ([pages count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
     return [super validateMenuItem:menuItem];
 }
 
@@ -368,12 +410,14 @@
     NSMenuItem *menuPageAdd = [[NSMenuItem alloc] initWithTitle:EDContextMenuPageAdd action:@selector(onMenuPageAdd:) keyEquivalent:@"p"];
     [menuPageAdd setKeyEquivalentModifierMask:NSControlKeyMask];
     [returnMenu addItem:menuPageAdd];
+    [returnMenu addItemWithTitle:EDContextMenuPagesCopy action:@selector(onMenuPagesCopy:) keyEquivalent:@"c"];
+    [returnMenu addItemWithTitle:EDContextMenuPagesPaste action:@selector(onMenuPagesPaste:) keyEquivalent:@"v"];
+    [returnMenu addItemWithTitle:EDContextMenuPagesDelete action:@selector(onMenuPagesDelete:) keyEquivalent:@""];
     [returnMenu addItem:[NSMenuItem separatorItem]];
     
     // selection
     [returnMenu addItemWithTitle:EDContextMenuPagesSelectAll action:@selector(onMenuPagesSelectAll:) keyEquivalent:@"a"];
     [returnMenu addItemWithTitle:EDContextMenuPagesDeselectAll action:@selector(onMenuPagesDeselectAll:) keyEquivalent:@"d"];
-    
     return returnMenu;
 }
 
@@ -387,5 +431,17 @@
 
 - (void)onMenuPagesDeselectAll:(id)sender{
     [EDCoreDataUtility deselectAllPages:_context];
+}
+
+- (void)onMenuPagesCopy:(id)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
+}
+
+- (void)onMenuPagesDelete:(id)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
+}
+
+- (void)onMenuPagesPaste:(id)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesPastePressed object:self];
 }
 @end
