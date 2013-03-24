@@ -11,149 +11,8 @@ FOUNDATION_EXPORT int const GRAPH_INIT_HAS_GRID_LINES;
 #import <Foundation/Foundation.h>
 
 @interface EDConstants : NSObject
-// Context
-extern NSString *const EDKeyContextChild;
-extern NSString *const EDKeyContextRoot;
 
-// Saving
-extern float const EDAutosaveTimeIncrement;
-
-// General
-extern NSString *const EDKey;
-extern NSString *const EDValue;
-extern NSString *const EDSelectedViewColor;
-extern float const EDSelectedViewStrokeWidth;
-
-// UTI
-extern NSString *const EDUTIPage;
-extern NSString *const EDUTIPageView;
-extern NSString *const EDUTIGraph;
-extern NSString *const EDUTIGraphView;
-extern NSString *const EDUTIToken;
-extern NSString *const EDUTIEquation;
-extern NSString *const EDUTILine;
-extern NSString *const EDUTITextbox;
-
-// num
-extern float const EDNumberMax;
-
-// preferences
-extern NSString *const EDPreferenceSnapToGuides;
-extern NSString *const EDPreferencePropertyPanel;
-
-// panels
-extern NSString *const EDKeyGraphLine;
-extern NSString *const EDKeyGraphLineTextbox;
-extern NSString *const EDKeyGraph;
-extern NSString *const EDKeyGraphTextbox;
-extern NSString *const EDKeyLine;
-extern NSString *const EDKeyLineTextbox;
-extern NSString *const EDKeyTextbox;
-extern NSString *const EDEventPanelDocumentPressedDate;
-extern NSString *const EDEventPanelDocumentPressedName;
-
-// panel events
-extern NSString *const EDEventControlReceivedFocus;
-
-// layout
-extern float const EDMenuToolbarHeight;
-
-// entity name
-extern NSString *const EDEntityNameGraph;
-extern NSString *const EDEntityNamePage;
-extern NSString *const EDEntityNamePoint;
-extern NSString *const EDEntityNameEquation;
-extern NSString *const EDEntityNameToken;
-extern NSString *const EDEntityNameLine;
-extern NSString *const EDEntityNameTextbox;
-
-// textfield
-extern NSString *const EDTextboxAttributeTextValue;
-extern NSString *const EDKeyEvent;
-extern float const EDTextboxBorderWidth;
-extern NSString *const EDEventTextboxBeginEditing;
-extern NSString *const EDEventTextboxEndEditing;
-extern NSString *const EDEventTextboxDidChange;
-extern NSString *const EDKeyTextView;
-extern NSString *const EDFontAttributeName;
-extern float const EDFontDefaultSize;
-extern float const EDFontDefaultSizeTextbox;
-extern NSString *const EDFontAttributeSize;
-extern NSString *const EDFontAttributeColor;
-extern NSString *const EDEventControlDidChange;
-extern NSString *const EDFontAttributeNameMixed;
-extern NSString *const EDFontAttributeBold;
-extern NSString *const EDFontAttributeItalic;
-extern NSString *const EDFontAttributeSuperscript;
-extern NSString *const EDTextViewDefaultString;
-
-// line
-extern NSString *const EDLineAttributeThickness;
-
-// worksheet
-extern float const EDWorksheetViewHeight;
-extern float const EDWorksheetViewWidth;
-extern float const EDWorksheetShadowSize;
-extern NSString *const EDWorksheetShadowColor;
-extern float const EDIncrementPressedArrowModifier;
-extern float const EDIncrementPressedArrow;
-extern float const EDCopyLocationOffset;
-extern NSString *const EDKeyPointDrag;
-extern NSString *const EDKeyPointDown;
-
-// worksheet events
-extern NSString *const EDEventWorksheetClicked;
-extern NSString *const EDEventMouseDoubleClick;
-extern NSString *const EDEventMouseDown;
-extern NSString *const EDEventMouseDragged;
-extern NSString *const EDEventMouseUp;
-extern NSString *const EDEventTabPressedWithoutModifiers;
-extern NSString *const EDEventUnselectedElementClickedWithoutModifier;
-extern NSString *const EDEventDeleteKeyPressedWithoutModifiers;
-extern NSString *const EDEventBecomeFirstResponder;
-extern NSString *const EDEventWorksheetElementSelected;
-extern NSString *const EDEventWorksheetElementDeselected;
-extern NSString *const EDEventWorksheetElementRedrawingItself;
-extern NSString *const EDEventWorksheetViewResignFirstResponder;
-extern NSString *const EDEventKey;
-extern NSString *const EDEventArrowKeyPressed;
-
-// menu
-extern NSString *const EDEventMenuAlignTop;
-extern NSString *const EDEventShortcutNewPage;
-extern NSString *const EDEventShortcutCopy;
-extern NSString *const EDEventShortcutCut;
-extern NSString *const EDEventShortcutPaste;
-extern NSString *const EDEventShortcutSave;
-extern NSString *const EDEventShortcutGraph;
-extern NSString *const EDEventShortcutPage;
-extern NSString *const EDEventShortcutSelectAll;
-extern NSString *const EDEventShortcutDeselectAll;
-extern float const EDMenuToolbarShadowWidth;
-
-
-// guides
-extern NSString *const EDKeyGuideVertical;
-extern NSString *const EDKeyGuideHorizontal;
-extern NSString *const EDKeySnapOffset;
-extern NSString *const EDKeyClosestGuide;
-extern NSString *const EDKeyGuideDiff;
-extern NSString *const EDKeyDiff;
-extern NSString *const EDKeyValue;
-extern NSString *const EDKeyDidSnapX;
-extern NSString *const EDKeyDidSnapY;
-extern NSString *const EDKeySnapInfo;
-extern NSString *const EDKeySnapDistanceX;
-extern NSString *const EDKeySnapDistanceY;
-extern NSString *const EDKeySnapBackDistanceY;
-extern NSString *const EDKeySnapBackDistanceX;
-extern NSString *const EDKeyDidSnapBack;
-extern NSString *const EDKeyWorksheetElement;
-extern float const EDGuideThreshold;
-extern float const EDGuideWidth;
-extern float const EDGuideShowThreshold;
-
-// attributes
+#pragma mark attributes
 extern NSString *const EDGraphAttributeLabels;
 extern NSString *const EDGraphBorderColor;
 extern float const EDPageViewGraphBorderLineWidth;
@@ -172,7 +31,52 @@ extern NSString *const EDElementAttributeLocationY;
 extern NSString *const EDElementAttributeWidth;
 extern NSString *const EDElementAttributeHeight;
 
-// graphs
+#pragma mark context
+extern NSString *const EDKeyContextChild;
+extern NSString *const EDKeyContextRoot;
+
+#pragma mark context menu
+extern NSString *const EDContextMenuPageAdd;
+extern NSString *const EDContextMenuPagesSelectAll;
+extern NSString *const EDContextMenuPagesDeselectAll;
+
+#pragma mark directions
+typedef enum{
+    EDDirectionLeft,
+    EDDirectionUp,
+    EDDirectionRight,
+    EDDirectionDown
+} EDDirection;
+
+#pragma mark entity name
+extern NSString *const EDEntityNameGraph;
+extern NSString *const EDEntityNamePage;
+extern NSString *const EDEntityNamePoint;
+extern NSString *const EDEntityNameEquation;
+extern NSString *const EDEntityNameToken;
+extern NSString *const EDEntityNameLine;
+extern NSString *const EDEntityNameTextbox;
+
+#pragma mark equations
+extern NSString *const EDEquationAttributeIsVisible;
+extern NSString *const EDEquationAttributeShowLabel;
+extern NSString *const EDEquationAttributeEquation;
+extern NSString *const EDEquationAttributeTokens;
+extern NSString *const EDEventQuitDuringEquationSheet;
+extern int const EDEquationSheetIndexInvalid;
+extern float const EDEquationMaxThresholdDrawingValue;
+
+#pragma mark errors
+extern NSString *const EDErrorDomain;
+extern int const EDErrorTokenizer;
+
+#pragma mark general
+extern NSString *const EDKey;
+extern NSString *const EDValue;
+extern NSString *const EDSelectedViewColor;
+extern float const EDSelectedViewStrokeWidth;
+
+#pragma mark graphs
 extern float const EDGraphDefaultHeight;
 extern float const EDGraphDefaultWidth;
 extern float const EDGraphDefaultCoordinateLineWidth;
@@ -217,11 +121,7 @@ extern int const EDGraphScaleMin;
 extern int const EDGraphLabelIntervalMin;
 extern int const EDGraphLabelIntervalMax;
 
-// lines
-extern float const EDWorksheetLineSelectionWidth;
-extern float const EDWorksheetLineSelectionHeight;
-
-// graph points
+#pragma mark graph points
 extern NSString *const EDGraphPointAttributeVisible;
 extern NSString *const EDGraphPointAttributeShowLabel;
 extern float const EDGraphPointLabelWidth;
@@ -229,12 +129,70 @@ extern float const EDGraphPointLabelHeight;
 extern float const EDGraphPointLabelVerticalOffset;
 extern float const EDGraphPointLabelHorizontalOffset;
 
-// window
-extern NSString *const EDEventWindowDidResize;
-extern NSString *const EDEventWindowWillClose;
-extern float const EDMainWindowTitleBarHeight;
+#pragma mark keyboard mapping
+extern int const        EDKeycodeQuit;
+extern int const        EDKeycodeTab;
+extern int const        EDKeycodeDelete;
+extern int const        EDKeycodeCopy;
+extern int const        EDKeycodeCut;
+extern int const        EDKeycodePaste;
+extern int const        EDKeycodeSave;
+extern int const        EDKeycodeGraph;
+extern int const        EDKeycodePage;
+extern int const        EDKeycodeAll;
+extern int const        EDKeycodeDeselect;
+extern int const        EDKeyModifierNone;
+extern int const        EDKeycodeArrowLeft;
+extern int const        EDKeycodeArrowUp;
+extern int const        EDKeycodeArrowRight;
+extern int const        EDKeycodeArrowDown;
 
-// pages
+#pragma mark guides
+extern NSString *const EDKeyGuideVertical;
+extern NSString *const EDKeyGuideHorizontal;
+extern NSString *const EDKeySnapOffset;
+extern NSString *const EDKeyClosestGuide;
+extern NSString *const EDKeyGuideDiff;
+extern NSString *const EDKeyDiff;
+extern NSString *const EDKeyValue;
+extern NSString *const EDKeyDidSnapX;
+extern NSString *const EDKeyDidSnapY;
+extern NSString *const EDKeySnapInfo;
+extern NSString *const EDKeySnapDistanceX;
+extern NSString *const EDKeySnapDistanceY;
+extern NSString *const EDKeySnapBackDistanceY;
+extern NSString *const EDKeySnapBackDistanceX;
+extern NSString *const EDKeyDidSnapBack;
+extern NSString *const EDKeyWorksheetElement;
+extern float const EDGuideThreshold;
+extern float const EDGuideWidth;
+extern float const EDGuideShowThreshold;
+
+#pragma mark layout
+extern float const EDMenuToolbarHeight;
+
+#pragma mark line
+extern NSString *const EDLineAttributeThickness;
+extern float const EDWorksheetLineSelectionWidth;
+extern float const EDWorksheetLineSelectionHeight;
+
+#pragma mark menu
+extern NSString *const EDEventMenuAlignTop;
+extern NSString *const EDEventShortcutNewPage;
+extern NSString *const EDEventShortcutCopy;
+extern NSString *const EDEventShortcutCut;
+extern NSString *const EDEventShortcutPaste;
+extern NSString *const EDEventShortcutSave;
+extern NSString *const EDEventShortcutGraph;
+extern NSString *const EDEventShortcutPage;
+extern NSString *const EDEventShortcutSelectAll;
+extern NSString *const EDEventShortcutDeselectAll;
+extern float const EDMenuToolbarShadowWidth;
+
+#pragma mark num
+extern float const EDNumberMax;
+
+#pragma mark pages
 extern NSString *const EDEventPagesViewClicked;
 extern NSString *const EDEventPagesWillBeRemoved;
 extern NSString *const EDKeyPagesToRemove;
@@ -266,7 +224,7 @@ extern float const EDPageViewDragWidth;
 extern float const EDPageViewDragLength;
 extern int const EDPageViewGraphBorderDrawMultiplier;
 
-// page
+#pragma mark page
 extern NSString *const EDPageAttributePageNumber;
 extern NSString *const EDPageAttributeSelected;
 extern NSString *const EDPageAttributeCurrent;
@@ -282,25 +240,75 @@ extern NSString *const EDEventPageClickedWithoutModifier;
 extern NSString *const EDEventPageViewMouseDown;
 extern float const EDPagesViewWidth;
 
-// keyboard mapping
-extern int const        EDKeycodeQuit;
-extern int const        EDKeycodeTab;
-extern int const        EDKeycodeDelete;
-extern int const        EDKeycodeCopy;
-extern int const        EDKeycodeCut;
-extern int const        EDKeycodePaste;
-extern int const        EDKeycodeSave;
-extern int const        EDKeycodeGraph;
-extern int const        EDKeycodePage;
-extern int const        EDKeycodeAll;
-extern int const        EDKeycodeDeselect;
-extern int const        EDKeyModifierNone;
-extern int const        EDKeycodeArrowLeft;
-extern int const        EDKeycodeArrowUp;
-extern int const        EDKeycodeArrowRight;
-extern int const        EDKeycodeArrowDown;
 
-// transform
+#pragma mark panels
+extern NSString *const EDKeyGraphLine;
+extern NSString *const EDKeyGraphLineTextbox;
+extern NSString *const EDKeyGraph;
+extern NSString *const EDKeyGraphTextbox;
+extern NSString *const EDKeyLine;
+extern NSString *const EDKeyLineTextbox;
+extern NSString *const EDKeyTextbox;
+extern NSString *const EDEventPanelDocumentPressedDate;
+extern NSString *const EDEventPanelDocumentPressedName;
+
+#pragma mark panel events
+extern NSString *const EDEventControlReceivedFocus;
+
+#pragma mark preferences
+extern NSString *const EDPreferenceSnapToGuides;
+extern NSString *const EDPreferencePropertyPanel;
+
+#pragma mark saving
+extern float const EDAutosaveTimeIncrement;
+
+#pragma mark textfield
+extern NSString *const EDTextboxAttributeTextValue;
+extern NSString *const EDKeyEvent;
+extern float const EDTextboxBorderWidth;
+extern NSString *const EDEventTextboxBeginEditing;
+extern NSString *const EDEventTextboxEndEditing;
+extern NSString *const EDEventTextboxDidChange;
+extern NSString *const EDKeyTextView;
+extern NSString *const EDFontAttributeName;
+extern float const EDFontDefaultSize;
+extern float const EDFontDefaultSizeTextbox;
+extern NSString *const EDFontAttributeSize;
+extern NSString *const EDFontAttributeColor;
+extern NSString *const EDEventControlDidChange;
+extern NSString *const EDFontAttributeNameMixed;
+extern NSString *const EDFontAttributeBold;
+extern NSString *const EDFontAttributeItalic;
+extern NSString *const EDFontAttributeSuperscript;
+extern NSString *const EDTextViewDefaultString;
+
+#pragma mark tokens
+typedef enum{
+    EDTokenTypeNumber,
+    EDTokenTypeOperator,
+    EDTokenTypeIdentifier,
+    EDTokenTypeParenthesis,
+    EDTokenTypeFunction,
+    EDTokenTypeConstant
+} EDTokenType;
+
+typedef enum{
+    EDAssociationRight,
+    EDAssociationLeft
+} EDAssociation;
+
+extern NSString *const EDKeyValidEquation;
+extern NSString *const EDKeyParsedTokens;
+extern NSString *const EDKeyEquation;
+extern NSString *const EDTokenAttributeIsValid;
+extern NSString *const EDTokenAttributePrecedence;
+extern NSString *const EDTokenAttributeValue;
+extern NSString *const EDTokenAttributeType;
+extern NSString *const EDTokenAttributeAssociation;
+extern NSString *const EDTokenAttributeEquation;
+
+
+#pragma mark transform
 extern float const EDTransformPointLength;
 extern NSString *const EDEventTransformPointDragged;
 extern NSString *const EDEventTransformRectChanged;
@@ -317,54 +325,46 @@ extern NSString *const EDTransformCornerUpperRight;
 extern NSString *const EDTransformCornerBottomLeft;
 extern NSString *const EDTransformCornerBottomRight;
 
-// equations
-extern NSString *const EDEquationAttributeIsVisible;
-extern NSString *const EDEquationAttributeShowLabel;
-extern NSString *const EDEquationAttributeEquation;
-extern NSString *const EDEquationAttributeTokens;
-extern NSString *const EDEventQuitDuringEquationSheet;
-extern int const EDEquationSheetIndexInvalid;
-extern float const EDEquationMaxThresholdDrawingValue;
+#pragma mark UTI
+extern NSString *const EDUTIPage;
+extern NSString *const EDUTIPageView;
+extern NSString *const EDUTIGraph;
+extern NSString *const EDUTIGraphView;
+extern NSString *const EDUTIToken;
+extern NSString *const EDUTIEquation;
+extern NSString *const EDUTILine;
+extern NSString *const EDUTITextbox;
 
-// tokens
-typedef enum{
-    EDTokenTypeNumber,
-    EDTokenTypeOperator,
-    EDTokenTypeIdentifier,
-    EDTokenTypeParenthesis,
-    EDTokenTypeFunction,
-    EDTokenTypeConstant
-} EDTokenType;
+#pragma mark worksheet
+extern float const EDWorksheetViewHeight;
+extern float const EDWorksheetViewWidth;
+extern float const EDWorksheetShadowSize;
+extern NSString *const EDWorksheetShadowColor;
+extern float const EDIncrementPressedArrowModifier;
+extern float const EDIncrementPressedArrow;
+extern float const EDCopyLocationOffset;
+extern NSString *const EDKeyPointDrag;
+extern NSString *const EDKeyPointDown;
 
-typedef enum{
-    EDAssociationRight,
-    EDAssociationLeft
-} EDAssociation;
+#pragma mark worksheet events
+extern NSString *const EDEventWorksheetClicked;
+extern NSString *const EDEventMouseDoubleClick;
+extern NSString *const EDEventMouseDown;
+extern NSString *const EDEventMouseDragged;
+extern NSString *const EDEventMouseUp;
+extern NSString *const EDEventTabPressedWithoutModifiers;
+extern NSString *const EDEventUnselectedElementClickedWithoutModifier;
+extern NSString *const EDEventDeleteKeyPressedWithoutModifiers;
+extern NSString *const EDEventBecomeFirstResponder;
+extern NSString *const EDEventWorksheetElementSelected;
+extern NSString *const EDEventWorksheetElementDeselected;
+extern NSString *const EDEventWorksheetElementRedrawingItself;
+extern NSString *const EDEventWorksheetViewResignFirstResponder;
+extern NSString *const EDEventKey;
+extern NSString *const EDEventArrowKeyPressed;
 
-// direction
-typedef enum{
-    EDDirectionLeft,
-    EDDirectionUp,
-    EDDirectionRight,
-    EDDirectionDown
-} EDDirection;
-
-extern NSString *const EDKeyValidEquation;
-extern NSString *const EDKeyParsedTokens;
-extern NSString *const EDKeyEquation;
-extern NSString *const EDTokenAttributeIsValid;
-extern NSString *const EDTokenAttributePrecedence;
-extern NSString *const EDTokenAttributeValue;
-extern NSString *const EDTokenAttributeType;
-extern NSString *const EDTokenAttributeAssociation;
-extern NSString *const EDTokenAttributeEquation;
-
-#pragma mark errors
-extern NSString *const EDErrorDomain;
-extern int const EDErrorTokenizer;
-
-#pragma mark context menu
-extern NSString *const EDContextMenuPageAdd;
-extern NSString *const EDContextMenuPagesSelectAll;
-extern NSString *const EDContextMenuPagesDeselectAll;
+#pragma mark window
+extern NSString *const EDEventWindowDidResize;
+extern NSString *const EDEventWindowWillClose;
+extern float const EDMainWindowTitleBarHeight;
 @end

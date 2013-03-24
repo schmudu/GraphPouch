@@ -11,55 +11,23 @@ int const GRAPH_INIT_TICK_MARKS         = FALSE;
 int const GRAPH_INIT_HAS_GRID_LINES     = FALSE; 
 
 @implementation EDConstants
-// Context
+#pragma mark context
 NSString * const EDKeyContextChild                              = @"EDKeyContextChild";
 NSString * const EDKeyContextRoot                               = @"EDKeyContextRoot";
 
-// UTI
-NSString * const EDUTIPage                                      = @"com.edcodia.graphpouch.page";
-NSString * const EDUTIPageView                                  = @"com.edcodia.graphpouch.pageview";
-NSString * const EDUTIGraph                                     = @"com.edcodia.graphpouch.graph";
-NSString * const EDUTIGraphView                                 = @"com.edcodia.graphpouch.graphView";
-NSString * const EDUTIToken                                     = @"com.edcodia.graphpouch.token";
-NSString * const EDUTIEquation                                  = @"com.edcodia.graphpouch.equation";
-NSString * const EDUTILine                                      = @"com.edcodia.graphpouch.line";
-NSString * const EDUTITextbox                                   = @"com.edcodia.graphpouch.textbox";
+#pragma mark context menu
+NSString *const EDContextMenuPageAdd                            = @"Add page";
+NSString *const EDContextMenuPagesSelectAll                     = @"Select all pages";
+NSString *const EDContextMenuPagesDeselectAll                   = @"Deselect all pages";
 
-// Saving
-float const EDAutosaveTimeIncrement                             = 10.0;
+#pragma mark element attributes
+NSString * const EDElementAttributeSelected                     = @"selected";
+NSString * const EDElementAttributeLocationX                    = @"locationX";
+NSString * const EDElementAttributeLocationY                    = @"locationY";
+NSString * const EDElementAttributeWidth                        = @"elementWidth";
+NSString * const EDElementAttributeHeight                       = @"elementHeight";
 
-// General
-NSString * const EDKey                                          = @"EDKey";
-NSString * const EDValue                                        = @"EDValue";
-NSString * const EDSelectedViewColor                            = @"3E8DD3";
-//NSString * const EDSelectedViewColor                            = @"ffffff";
-float const EDSelectedViewStrokeWidth                            = 2.0;
-
-// numbers
-float const EDNumberMax                                         = 9999999;
-
-// preferences
-NSString * const EDPreferenceSnapToGuides                       = @"EDPreferenceSnapToGuides";
-NSString * const EDPreferencePropertyPanel                      = @"EDPreferencePropertyPanel";
-
-// panels
-NSString * const EDKeyGraphLine                                 = @"EDKeyGraphLine";
-NSString * const EDKeyGraphLineTextbox                          = @"EDKeyGraphLineTextbox";
-NSString * const EDKeyGraph                                     = @"EDKeyGraph";
-NSString * const EDKeyGraphTextbox                              = @"EDKeyGraphTextbox";
-NSString * const EDKeyLine                                      = @"EDKeyLine";
-NSString * const EDKeyLineTextbox                               = @"EDKeyLineTextbox";
-NSString * const EDKeyTextbox                                   = @"EDTextbox";
-NSString * const EDEventPanelDocumentPressedDate                = @"EDEventPanelDocumentPressedDate";
-NSString * const EDEventPanelDocumentPressedName                = @"EDEventPanelDocumentPressedName";
-
-// panel events
-NSString * const EDEventControlReceivedFocus                    = @"EDEventControlReceivedFocus";
-
-//layout
-float const EDMenuToolbarHeight                                 = 89;
-
-// entity names
+#pragma mark entity names
 NSString * const EDEntityNameGraph                              = @"EDGraph";
 NSString * const EDEntityNamePage                               = @"EDPage";
 NSString * const EDEntityNamePoint                              = @"EDPoint";
@@ -68,100 +36,26 @@ NSString * const EDEntityNameToken                              = @"EDToken";
 NSString * const EDEntityNameLine                               = @"EDLine";
 NSString * const EDEntityNameTextbox                            = @"EDTextbox";
 
-// textfield
-NSString * const EDTextboxAttributeTextValue                    = @"textValue";
-NSString * const EDKeyEvent                                     = @"EDKeyEvent";
-float const EDTextboxBorderWidth                                = 1.0;
-float const EDFontDefaultSize                                   = 10.0;
-float const EDFontDefaultSizeTextbox                            = 10.0;
-NSString * const EDEventTextboxBeginEditing                     = @"EDEventTextboxBeginEditing";
-NSString * const EDEventTextboxDidChange                        = @"EDEventTextboxDidChange";
-NSString * const EDEventTextboxEndEditing                       = @"EDEventTextboxEndEditing";
-NSString * const EDKeyTextView                                  = @"EDKeyTextView";
-NSString * const EDFontAttributeName                            = @"EDFontAttributeName";
-NSString * const EDFontAttributeSize                            = @"EDFontAttributeSize";
-NSString * const EDFontAttributeColor                           = @"EDFontAttributeColor";
-NSString * const EDEventControlDidChange                        = @"EDEventControlDidChange";
-NSString * const EDFontAttributeNameMixed                       = @"<Mixed Fonts>";
-NSString * const EDFontAttributeBold                            = @"EDFontAttributeBold";
-NSString * const EDFontAttributeItalic                          = @"EDFontAttributeItalic";
-NSString * const EDFontAttributeSuperscript                     = @"EDFontAttributeSuperscript";
-NSString * const EDTextViewDefaultString                        = @"Double click here to add your text";
+#pragma mark equations
+NSString * const EDEquationAttributeEquation                    = @"equation";
+NSString * const EDEquationAttributeShowLabel                   = @"showLabel";
+NSString * const EDEquationAttributeIsVisible                   = @"isVisible";
+NSString * const EDEquationAttributeTokens                      = @"tokens";
+NSString * const EDEventQuitDuringEquationSheet                 = @"EDEventQuitDuringEquationSheet";
+int const EDEquationSheetIndexInvalid                           = -1;
+float const EDEquationMaxThresholdDrawingValue                  = 1.5;
 
+#pragma mark errors
+NSString * const EDErrorDomain                                  = @"com.edcodia.graphpouch";
+int const EDErrorTokenizer                                      = 1;
 
-#pragma mark line
-NSString * const EDLineAttributeThickness                       = @"thickness";
+#pragma mark general
+NSString * const EDKey                                          = @"EDKey";
+NSString * const EDValue                                        = @"EDValue";
+NSString * const EDSelectedViewColor                            = @"3E8DD3";
+float const EDSelectedViewStrokeWidth                            = 2.0;
 
-#pragma mark worksheet
-float const EDWorksheetViewWidth                                = 612;
-float const EDWorksheetViewHeight                               = 792;
-float const EDWorksheetShadowSize                               = 2.0;
-NSString * const EDWorksheetShadowColor                         = @"333333";
-float const EDIncrementPressedArrowModifier                     = 10.0;
-float const EDIncrementPressedArrow                             = 2.0;
-float const EDCopyLocationOffset                                = 50.0;
-NSString * const EDKeyPointDown                                 = @"EDKeyPointDown";
-NSString * const EDKeyPointDrag                                 = @"EDKeyPointDrag";
-
-#pragma mark worksheet elements
-NSString * const EDEventMouseDoubleClick                        = @"EDEventMouseDoubleClick";
-NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";
-NSString * const EDEventMouseDown                               = @"EDEventMouseDown";
-NSString * const EDEventMouseDragged                            = @"EDEventMouseDragged";
-NSString * const EDEventMouseUp                                 = @"EDEventMouseUp";
-NSString * const EDEventUnselectedElementClickedWithoutModifier   = @"EDEventUnselectedElementClickedWithoutModifier";
-NSString * const EDEventDeleteKeyPressedWithoutModifiers        = @"EDEventDeleteKeyPressedWithoutModifiers";
-NSString * const EDEventTabPressedWithoutModifiers              = @"EDEventTabPressedWithoutModifiers";
-NSString * const EDEventBecomeFirstResponder                    = @"EDEventBecomeFirstResponder";
-NSString * const EDEventWorksheetElementSelected                = @"EDEventWorksheetElementSelected";
-NSString * const EDEventWorksheetElementDeselected              = @"EDEventWorksheetElementDeselected";
-NSString * const EDEventWorksheetViewResignFirstResponder       = @"EDEventWorksheetViewResignFirstResponder";
-NSString * const EDEventKey                                     = @"EDEvent";
-NSString * const EDEventWorksheetElementRedrawingItself         = @"EDEventWorksheetElementRedrawingItself";
-NSString * const EDEventArrowKeyPressed                         = @"EDEventArrowKeyPressed";
-
-// menu
-NSString * const EDEventMenuAlignTop                            = @"EDEventMenuAlignTop";
-NSString * const EDEventShortcutNewPage                         = @"EDEventShortcutNewPage";
-NSString * const EDEventShortcutCopy                            = @"EDEventShortcutCopy";
-NSString * const EDEventShortcutCut                             = @"EDEventShortcutCut";
-NSString * const EDEventShortcutPaste                           = @"EDEventShortcutPaste";
-NSString * const EDEventShortcutSave                            = @"EDEventShortcutSave";
-NSString * const EDEventShortcutGraph                           = @"EDEventShortcutGraph";
-NSString * const EDEventShortcutPage                            = @"EDEventShortcutPage";
-NSString * const EDEventShortcutSelectAll                       = @"EDEventShortcutSelectAll";
-NSString * const EDEventShortcutDeselectAll                     = @"EDEventShortcutDeselectAll";
-float const EDMenuToolbarShadowWidth                            = 2.0;
-
-// guides
-NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
-NSString * const EDKeyGuideHorizontal                           = @"EDKeyGuideHorizontal";
-NSString * const EDKeySnapOffset                                = @"EDKeySnapOffset";
-NSString * const EDKeyClosestGuide                              = @"EDKeyClosestGuide";
-NSString * const EDKeyGuideDiff                                 = @"EDKeyGuideDiff";
-NSString * const EDKeyDiff                                      = @"EDKeyDiff";
-NSString * const EDKeyValue                                     = @"EDKeyValue";
-NSString * const EDKeyDidSnapX                                  = @"EDKeyDidSnapX";
-NSString * const EDKeyDidSnapY                                  = @"EDKeyDidSnapY";
-NSString * const EDKeySnapInfo                                  = @"EDKeySnapInfo";
-NSString * const EDKeySnapDistanceX                             = @"EDKeySnapDistanceX";
-NSString * const EDKeySnapDistanceY                             = @"EDKeySnapDistanceY";
-NSString * const EDKeySnapBackDistanceY                         = @"EDKeySnapBackDistanceY";
-NSString * const EDKeySnapBackDistanceX                         = @"EDKeySnapBackDistanceX";
-NSString * const EDKeyDidSnapBack                               = @"EDKeyDidSnapBack";
-NSString * const EDKeyWorksheetElement                          = @"EDKeyWorksheetElement";
-float const EDGuideThreshold                                    = 2.0;
-float const EDGuideWidth                                        = 2.0;
-float const EDGuideShowThreshold                                = 10.0;  // diff must be less then this to show guide
-
-// element attributes
-NSString * const EDElementAttributeSelected                     = @"selected";
-NSString * const EDElementAttributeLocationX                    = @"locationX";
-NSString * const EDElementAttributeLocationY                    = @"locationY";
-NSString * const EDElementAttributeWidth                        = @"elementWidth";
-NSString * const EDElementAttributeHeight                       = @"elementHeight";
-
-// graph attributes
+#pragma mark graph attributes
 NSString * const EDGraphAttributeLabels                         = @"hasLabels";
 NSString * const EDGraphAttributeTickMarks                      = @"hasTickMarks";
 NSString * const EDGraphAttributeCoordinateAxes                 = @"hasCoordinateAxes";
@@ -221,7 +115,7 @@ int const EDGraphLabelIntervalMin                               = 1;
 float const EDWorksheetLineSelectionHeight                      = 50;
 float const EDWorksheetLineSelectionWidth                       = 300;
 
-// graph points
+#pragma mark graph points
 NSString * const EDGraphPointAttributeVisible                   = @"isVisible";
 NSString * const EDGraphPointAttributeShowLabel                 = @"showLabel";
 float const EDGraphPointLabelHeight                             = 20;
@@ -230,12 +124,87 @@ float const EDGraphPointLabelVerticalOffset                     = 1;
 float const EDGraphPointLabelHorizontalOffset                   = 8;
 float const EDGraphDependentVariableIncrement                   = 5.0;        // the higher the number the more accurate the graphs, but worse performance
 
-// window
-NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";
-NSString * const EDEventWindowWillClose                         = @"EDEventWindowWillClose";
-float const EDMainWindowTitleBarHeight                          = 60.0;
+#pragma mark guides
+NSString * const EDKeyGuideVertical                             = @"EDKeyGuideVertical";
+NSString * const EDKeyGuideHorizontal                           = @"EDKeyGuideHorizontal";
+NSString * const EDKeySnapOffset                                = @"EDKeySnapOffset";
+NSString * const EDKeyClosestGuide                              = @"EDKeyClosestGuide";
+NSString * const EDKeyGuideDiff                                 = @"EDKeyGuideDiff";
+NSString * const EDKeyDiff                                      = @"EDKeyDiff";
+NSString * const EDKeyValue                                     = @"EDKeyValue";
+NSString * const EDKeyDidSnapX                                  = @"EDKeyDidSnapX";
+NSString * const EDKeyDidSnapY                                  = @"EDKeyDidSnapY";
+NSString * const EDKeySnapInfo                                  = @"EDKeySnapInfo";
+NSString * const EDKeySnapDistanceX                             = @"EDKeySnapDistanceX";
+NSString * const EDKeySnapDistanceY                             = @"EDKeySnapDistanceY";
+NSString * const EDKeySnapBackDistanceY                         = @"EDKeySnapBackDistanceY";
+NSString * const EDKeySnapBackDistanceX                         = @"EDKeySnapBackDistanceX";
+NSString * const EDKeyDidSnapBack                               = @"EDKeyDidSnapBack";
+NSString * const EDKeyWorksheetElement                          = @"EDKeyWorksheetElement";
+float const EDGuideThreshold                                    = 2.0;
+float const EDGuideWidth                                        = 2.0;
+float const EDGuideShowThreshold                                = 10.0;  // diff must be less then this to show guide
 
-// pages view
+#pragma mark keyboard
+int const EDKeycodeSave                                         = 1;
+int const EDKeycodeTab                                          = 48;
+int const EDKeycodeQuit                                         = 12;
+int const EDKeycodeDelete                                       = 51;
+int const EDKeycodeCopy                                         = 8;
+int const EDKeycodeCut                                          = 7;
+int const EDKeycodePaste                                        = 9;
+int const EDKeycodeGraph                                        = 9;
+int const EDKeycodePage                                         = 9;
+int const EDKeycodeAll                                          = 0;
+int const EDKeycodeDeselect                                     = 2;
+int const EDKeyModifierNone                                     = 256;
+int const EDKeycodeArrowLeft                                    = 123;
+int const EDKeycodeArrowUp                                      = 126;
+int const EDKeycodeArrowRight                                   = 124;
+int const EDKeycodeArrowDown                                    = 125;
+
+#pragma mark layout
+float const EDMenuToolbarHeight                                 = 89;
+
+#pragma mark line
+NSString * const EDLineAttributeThickness                       = @"thickness";
+
+#pragma mark menu
+NSString * const EDEventMenuAlignTop                            = @"EDEventMenuAlignTop";
+NSString * const EDEventShortcutNewPage                         = @"EDEventShortcutNewPage";
+NSString * const EDEventShortcutCopy                            = @"EDEventShortcutCopy";
+NSString * const EDEventShortcutCut                             = @"EDEventShortcutCut";
+NSString * const EDEventShortcutPaste                           = @"EDEventShortcutPaste";
+NSString * const EDEventShortcutSave                            = @"EDEventShortcutSave";
+NSString * const EDEventShortcutGraph                           = @"EDEventShortcutGraph";
+NSString * const EDEventShortcutPage                            = @"EDEventShortcutPage";
+NSString * const EDEventShortcutSelectAll                       = @"EDEventShortcutSelectAll";
+NSString * const EDEventShortcutDeselectAll                     = @"EDEventShortcutDeselectAll";
+float const EDMenuToolbarShadowWidth                            = 2.0;
+
+#pragma mark numbers
+float const EDNumberMax                                         = 9999999;
+
+#pragma mark preferences
+NSString * const EDPreferenceSnapToGuides                       = @"EDPreferenceSnapToGuides";
+NSString * const EDPreferencePropertyPanel                      = @"EDPreferencePropertyPanel";
+
+#pragma mark page view
+NSString * const EDPageAttributePageNumber                      = @"pageNumber";
+NSString * const EDPageAttributeSelected                        = @"selected";
+NSString * const EDPageAttributeCurrent                         = @"currentPage";
+NSString * const EDPageAttributeGraphs                          = @"graphs";
+NSString * const EDPageAttributeLines                           = @"lines";
+NSString * const EDPageAttributeTextboxes                       = @"textboxes";
+NSString * const EDGraphAttributePage                           = @"page";
+NSString * const EDGraphAttributeScaleX                         = @"scaleX";
+NSString * const EDGraphAttributeScaleY                         = @"scaleY";
+NSString * const EDGraphAttributeLabelIntervalX                 = @"labelIntervalX";
+NSString * const EDGraphAttributeLabelIntervalY                 = @"labelIntervalY";
+NSString * const EDEventPageClickedWithoutModifier              = @"EDEventPageClickedWithoutModifier";
+NSString * const EDEventPageViewMouseDown                       = @"EDEventPageViewMouseDown";
+
+#pragma mark pages view
 NSString * const EDEventPagesWillBeRemoved                      = @"EDEventPagesWillBeRemoved";
 NSString * const EDKeyPagesToRemove                             = @"EDKeyPageToRemove";
 NSString * const EDEventPagesViewClicked                        = @"EDEventPagesViewClicked";
@@ -268,41 +237,55 @@ float const EDPageViewDragLength                                = 10;
 float const EDPagesViewWidth                                    = 140;
 int const EDPageViewGraphBorderDrawMultiplier                   = 2;
 
-// page view
-NSString * const EDPageAttributePageNumber                      = @"pageNumber";
-NSString * const EDPageAttributeSelected                        = @"selected";
-NSString * const EDPageAttributeCurrent                         = @"currentPage";
-NSString * const EDPageAttributeGraphs                          = @"graphs";
-NSString * const EDPageAttributeLines                           = @"lines";
-NSString * const EDPageAttributeTextboxes                       = @"textboxes";
-NSString * const EDGraphAttributePage                           = @"page";
-NSString * const EDGraphAttributeScaleX                         = @"scaleX";
-NSString * const EDGraphAttributeScaleY                         = @"scaleY";
-NSString * const EDGraphAttributeLabelIntervalX                 = @"labelIntervalX";
-NSString * const EDGraphAttributeLabelIntervalY                 = @"labelIntervalY";
-NSString * const EDEventPageClickedWithoutModifier              = @"EDEventPageClickedWithoutModifier";
-NSString * const EDEventPageViewMouseDown                       = @"EDEventPageViewMouseDown";
+#pragma mark panels
+NSString * const EDKeyGraphLine                                 = @"EDKeyGraphLine";
+NSString * const EDKeyGraphLineTextbox                          = @"EDKeyGraphLineTextbox";
+NSString * const EDKeyGraph                                     = @"EDKeyGraph";
+NSString * const EDKeyGraphTextbox                              = @"EDKeyGraphTextbox";
+NSString * const EDKeyLine                                      = @"EDKeyLine";
+NSString * const EDKeyLineTextbox                               = @"EDKeyLineTextbox";
+NSString * const EDKeyTextbox                                   = @"EDTextbox";
+NSString * const EDEventPanelDocumentPressedDate                = @"EDEventPanelDocumentPressedDate";
+NSString * const EDEventPanelDocumentPressedName                = @"EDEventPanelDocumentPressedName";
 
-// keyboard
+#pragma mark panel events
+NSString * const EDEventControlReceivedFocus                    = @"EDEventControlReceivedFocus";
 
-int const EDKeycodeSave                                         = 1;
-int const EDKeycodeTab                                          = 48;
-int const EDKeycodeQuit                                         = 12;
-int const EDKeycodeDelete                                       = 51;
-int const EDKeycodeCopy                                         = 8;
-int const EDKeycodeCut                                          = 7;
-int const EDKeycodePaste                                        = 9;
-int const EDKeycodeGraph                                        = 9;
-int const EDKeycodePage                                         = 9;
-int const EDKeycodeAll                                          = 0;
-int const EDKeycodeDeselect                                     = 2;
-int const EDKeyModifierNone                                     = 256;
-int const EDKeycodeArrowLeft                                    = 123;
-int const EDKeycodeArrowUp                                      = 126;
-int const EDKeycodeArrowRight                                   = 124;
-int const EDKeycodeArrowDown                                    = 125;
+#pragma mark saving
+float const EDAutosaveTimeIncrement                             = 10.0;
 
-// transform
+#pragma mark textfield
+NSString * const EDTextboxAttributeTextValue                    = @"textValue";
+NSString * const EDKeyEvent                                     = @"EDKeyEvent";
+float const EDTextboxBorderWidth                                = 1.0;
+float const EDFontDefaultSize                                   = 10.0;
+float const EDFontDefaultSizeTextbox                            = 10.0;
+NSString * const EDEventTextboxBeginEditing                     = @"EDEventTextboxBeginEditing";
+NSString * const EDEventTextboxDidChange                        = @"EDEventTextboxDidChange";
+NSString * const EDEventTextboxEndEditing                       = @"EDEventTextboxEndEditing";
+NSString * const EDKeyTextView                                  = @"EDKeyTextView";
+NSString * const EDFontAttributeName                            = @"EDFontAttributeName";
+NSString * const EDFontAttributeSize                            = @"EDFontAttributeSize";
+NSString * const EDFontAttributeColor                           = @"EDFontAttributeColor";
+NSString * const EDEventControlDidChange                        = @"EDEventControlDidChange";
+NSString * const EDFontAttributeNameMixed                       = @"<Mixed Fonts>";
+NSString * const EDFontAttributeBold                            = @"EDFontAttributeBold";
+NSString * const EDFontAttributeItalic                          = @"EDFontAttributeItalic";
+NSString * const EDFontAttributeSuperscript                     = @"EDFontAttributeSuperscript";
+NSString * const EDTextViewDefaultString                        = @"Double click here to add your text";
+
+#pragma mark tokenize
+NSString * const EDKeyValidEquation                             = @"EDKeyValidEquation";
+NSString * const EDKeyParsedTokens                              = @"EDKeyParsedTokens";
+NSString * const EDKeyEquation                                  = @"EDKeyEquation";
+NSString *const EDTokenAttributeIsValid                         = @"isValid";
+NSString *const EDTokenAttributePrecedence                      = @"precedence";
+NSString *const EDTokenAttributeValue                           = @"tokenValue";
+NSString *const EDTokenAttributeType                            = @"type";
+NSString *const EDTokenAttributeAssociation                     = @"association";
+NSString *const EDTokenAttributeEquation                        = @"equation";
+
+#pragma mark transform
 float const EDTransformPointLength                              = 10;
 NSString * const EDEventTransformPointDragged                   = @"EDEventTransformPointDragged";
 NSString * const EDEventTransformRectChanged                    = @"EDEventTransformRectChanged";
@@ -319,34 +302,47 @@ NSString * const EDTransformCornerUpperRight                    = @"EDTransformC
 NSString * const EDTransformCornerBottomLeft                    = @"EDTransformCornerBottomLeft";
 NSString * const EDTransformCornerBottomRight                   = @"EDTransformCornerBottomRight";
 
-// equations
-NSString * const EDEquationAttributeEquation                    = @"equation";
-NSString * const EDEquationAttributeShowLabel                   = @"showLabel";
-NSString * const EDEquationAttributeIsVisible                   = @"isVisible";
-NSString * const EDEquationAttributeTokens                      = @"tokens";
-NSString * const EDEventQuitDuringEquationSheet                 = @"EDEventQuitDuringEquationSheet";
-int const EDEquationSheetIndexInvalid                           = -1;
-float const EDEquationMaxThresholdDrawingValue                  = 1.5;
+#pragma mark UTI
+NSString * const EDUTIPage                                      = @"com.edcodia.graphpouch.page";
+NSString * const EDUTIPageView                                  = @"com.edcodia.graphpouch.pageview";
+NSString * const EDUTIGraph                                     = @"com.edcodia.graphpouch.graph";
+NSString * const EDUTIGraphView                                 = @"com.edcodia.graphpouch.graphView";
+NSString * const EDUTIToken                                     = @"com.edcodia.graphpouch.token";
+NSString * const EDUTIEquation                                  = @"com.edcodia.graphpouch.equation";
+NSString * const EDUTILine                                      = @"com.edcodia.graphpouch.line";
+NSString * const EDUTITextbox                                   = @"com.edcodia.graphpouch.textbox";
 
-// errors
-NSString * const EDErrorDomain                                  = @"com.edcodia.graphpouch";
-int const EDErrorTokenizer                                      = 1;
+#pragma mark worksheet
+float const EDWorksheetViewWidth                                = 612;
+float const EDWorksheetViewHeight                               = 792;
+float const EDWorksheetShadowSize                               = 2.0;
+NSString * const EDWorksheetShadowColor                         = @"333333";
+float const EDIncrementPressedArrowModifier                     = 10.0;
+float const EDIncrementPressedArrow                             = 2.0;
+float const EDCopyLocationOffset                                = 50.0;
+NSString * const EDKeyPointDown                                 = @"EDKeyPointDown";
+NSString * const EDKeyPointDrag                                 = @"EDKeyPointDrag";
 
-// tokenize
-NSString * const EDKeyValidEquation                             = @"EDKeyValidEquation";
-NSString * const EDKeyParsedTokens                              = @"EDKeyParsedTokens";
-NSString * const EDKeyEquation                                  = @"EDKeyEquation";
+#pragma mark worksheet elements
+NSString * const EDEventMouseDoubleClick                        = @"EDEventMouseDoubleClick";
+NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";
+NSString * const EDEventMouseDown                               = @"EDEventMouseDown";
+NSString * const EDEventMouseDragged                            = @"EDEventMouseDragged";
+NSString * const EDEventMouseUp                                 = @"EDEventMouseUp";
+NSString * const EDEventUnselectedElementClickedWithoutModifier   = @"EDEventUnselectedElementClickedWithoutModifier";
+NSString * const EDEventDeleteKeyPressedWithoutModifiers        = @"EDEventDeleteKeyPressedWithoutModifiers";
+NSString * const EDEventTabPressedWithoutModifiers              = @"EDEventTabPressedWithoutModifiers";
+NSString * const EDEventBecomeFirstResponder                    = @"EDEventBecomeFirstResponder";
+NSString * const EDEventWorksheetElementSelected                = @"EDEventWorksheetElementSelected";
+NSString * const EDEventWorksheetElementDeselected              = @"EDEventWorksheetElementDeselected";
+NSString * const EDEventWorksheetViewResignFirstResponder       = @"EDEventWorksheetViewResignFirstResponder";
+NSString * const EDEventKey                                     = @"EDEvent";
+NSString * const EDEventWorksheetElementRedrawingItself         = @"EDEventWorksheetElementRedrawingItself";
+NSString * const EDEventArrowKeyPressed                         = @"EDEventArrowKeyPressed";
 
-NSString *const EDTokenAttributeIsValid                         = @"isValid";
-NSString *const EDTokenAttributePrecedence                      = @"precedence";
-NSString *const EDTokenAttributeValue                           = @"tokenValue";
-NSString *const EDTokenAttributeType                            = @"type";
-NSString *const EDTokenAttributeAssociation                     = @"association";
-NSString *const EDTokenAttributeEquation                        = @"equation";
-
-#pragma mark context menu
-NSString *const EDContextMenuPageAdd                            = @"Add page";
-NSString *const EDContextMenuPagesSelectAll                     = @"Select all pages";
-NSString *const EDContextMenuPagesDeselectAll                   = @"Deselect all pages";
+#pragma mark window
+NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";
+NSString * const EDEventWindowWillClose                         = @"EDEventWindowWillClose";
+float const EDMainWindowTitleBarHeight                          = 60.0;
 
 @end
