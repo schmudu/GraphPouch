@@ -348,5 +348,5 @@ NSString * const EDEventArrowKeyPressed                         = @"EDEventArrow
 NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";
 NSString * const EDEventWindowWillClose                         = @"EDEventWindowWillClose";
 float const EDMainWindowTitleBarHeight                          = 60.0;
-
+NSString * const EDEventWindowSettingTitle                      = @"EDEventWindowSettingTitle";
 @end

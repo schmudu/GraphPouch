@@ -14,6 +14,7 @@
 
 + (void)initialize{
     // init app code
+    NSLog(@"initialize.");
 }
 
 - (IBAction)showPreferencePanel:(id)sender{
@@ -31,8 +32,8 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification{
-    //NSApplication *mainApp = (NSApplication *)[notification object];
-    //NSLog(@"app did finished launching: current document:%@ notification:%@", [[NSDocumentController sharedDocumentController] currentDocument], [[NSApplication sharedApplication] mainWindow]);
+    NSApplication *mainApp = (NSApplication *)[notification object];
+    NSLog(@"app did finished launching: current document:%@ notification:%@", [[NSDocumentController sharedDocumentController] currentDocument], [[NSApplication sharedApplication] mainWindow]);
 }
 
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)sender{

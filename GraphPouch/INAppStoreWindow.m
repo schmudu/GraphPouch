@@ -495,6 +495,12 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
     [super setTitle:aString];
     [self _layoutTrafficLightsAndContent];
     [self _displayWindowAndTitlebar];
+    
+    // only dispatch this once, upon loading of file
+    if ((!_hasLoadedInitialTitle) && (![aString isEqualToString:@"Window"])){
+        _hasLoadedInitialTitle = TRUE;
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWindowSettingTitle object:self];
+    }
 }
 
 #pragma mark -
@@ -715,6 +721,7 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
 
 - (void)_doInitialWindowSetup
 {
+    _hasLoadedInitialTitle = FALSE;
     _showsBaselineSeparator = YES;
     _centerTrafficLightButtons = YES;
     _titleBarHeight = [self _minimumTitlebarHeight];

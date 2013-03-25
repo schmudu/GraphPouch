@@ -371,4 +371,5 @@ extern NSString *const EDEventArrowKeyPressed;
 extern NSString *const EDEventWindowDidResize;
 extern NSString *const EDEventWindowWillClose;
 extern float const EDMainWindowTitleBarHeight;
+extern NSString *const EDEventWindowSettingTitle;
 @end

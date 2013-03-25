@@ -27,18 +27,19 @@
 #import "NSManagedObject+EasyFetching.h"
 
 @interface EDDocument()
+- (void)modifyPersistentStores;
+- (void)onContextChanged:(NSNotification *)note;
 - (void)onMainWindowClosed:(NSNotification *)note;
-- (void)onShortcutSavePressed:(NSNotification *)note;
 - (void)onPagesViewTabKeyPressed:(NSNotification *)note;
 - (void)onPagesWillBeRemoved:(NSNotification *)note;
 - (void)onPanelDocumentPressedDate:(NSNotification *)note;
 - (void)onPanelDocumentPressedName:(NSNotification *)note;
-- (void)onWorksheetTabKeyPressed:(NSNotification *)note;
-- (void)onContextChanged:(NSNotification *)note;
+- (void)onShortcutSavePressed:(NSNotification *)note;
 - (void)onTextboxDidBeginEditing:(NSNotification *)note;
 - (void)onTextboxDidEndEditing:(NSNotification *)note;
 - (void)onTextboxDidChange:(NSNotification *)note;
-- (void)modifyPersistentStores;
+- (void)onWindowSettingTitle:(NSNotification *)note;
+- (void)onWorksheetTabKeyPressed:(NSNotification *)note;
 - (void)updatePageNumberInWindowTitle;
 @end
 
@@ -107,6 +108,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxBeginEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxEndEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxDidChange object:worksheetController];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventWindowSettingTitle object:mainWindow];
 }
 
 - (NSString *)windowNibName
@@ -143,6 +145,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:worksheetController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPagesWillBeRemoved:) name:EDEventPagesWillBeRemoved object:pagesController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWindowSettingTitle:) name:EDEventWindowSettingTitle object:mainWindow];
 }
 
 - (void)awakeFromNib{
@@ -254,6 +257,11 @@
 }
 
 #pragma mark window
+- (void)onWindowSettingTitle:(NSNotification *)note{
+    // this only called upon initial loading of file
+    [self updatePageNumberInWindowTitle];
+}
+
 - (void)onMainWindowClosed:(NSNotification *)note{
     // close auxilary panels
     [propertyController closePanel];
@@ -386,7 +394,6 @@
 
 #pragma mark textbox
 - (void)onTextboxDidBeginEditing:(NSNotification *)note{
-    //NSLog(@"text box beging editing:%@", [note userInfo]);
     [propertyController onTextboxDidBeginEditing:(EDTextView *)[[note userInfo] objectForKey:EDKeyTextView] currentTextbox:(EDTextbox *)[[note userInfo] objectForKey:EDKeyTextbox]];
 }
 
