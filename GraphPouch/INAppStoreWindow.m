@@ -496,11 +496,21 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
     [self _layoutTrafficLightsAndContent];
     [self _displayWindowAndTitlebar];
     
-    // only dispatch this once, upon loading of file
-    if ((!_hasLoadedInitialTitle) && (![aString isEqualToString:@"Window"])){
-        _hasLoadedInitialTitle = TRUE;
+    NSString *pattern = @".*\(.*)*(\\(.*\\))";
+    
+    NSRegularExpression *regex = [NSRegularExpression
+                                  regularExpressionWithPattern:pattern
+                                  options:NSRegularExpressionCaseInsensitive
+                                  error:nil];
+    NSTextCheckingResult *textCheckingResult = [regex firstMatchInString:aString options:0 range:NSMakeRange(0, aString.length)];
+    
+    //NSRange matchRangeFirst = [textCheckingResult rangeAtIndex:1];
+    NSRange matchRangeSecond = [textCheckingResult rangeAtIndex:2];
+    //NSString *matchFirst = [aString substringWithRange:matchRangeFirst];
+    NSString *matchSecond = [aString substringWithRange:matchRangeSecond];
+    //NSLog(@"aString:%@ Found string '%@' second:'%@'", aString, matchFirst, matchSecond);
+    if ([matchSecond isEqualToString:@""])
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWindowSettingTitle object:self];
-    }
 }
 
 #pragma mark -
@@ -721,7 +731,7 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
 
 - (void)_doInitialWindowSetup
 {
-    _hasLoadedInitialTitle = FALSE;
+    //_hasLoadedInitialTitle = FALSE;
     _showsBaselineSeparator = YES;
     _centerTrafficLightButtons = YES;
     _titleBarHeight = [self _minimumTitlebarHeight];

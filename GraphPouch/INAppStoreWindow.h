@@ -42,7 +42,7 @@
 @interface INAppStoreWindow : NSWindow{
     NSManagedObjectContext *_context;
     EDToolbarViewController *toolbarController;
-    BOOL _hasLoadedInitialTitle;
+    //BOOL _hasLoadedInitialTitle;
 }
 
 - (void)postInitialize:(NSManagedObjectContext *)context;

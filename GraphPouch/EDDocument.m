@@ -192,6 +192,9 @@
     [EDCoreDataUtility saveContext:_context];
     //[EDCoreDataUtility saveRootContext:_rootContext childContext:_context];
     [super saveDocument:sender];
+    
+    // maintain page number
+    [self updatePageNumberInWindowTitle];
 }
 
 - (IBAction)togglePropertiesPanel:(id)sender{
@@ -278,13 +281,20 @@
     // set title
     NSArray *pages = [EDPage getAllObjects:_context];
     EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
-    NSString *fileName = [mainWindow representedFilename];
+    NSString *filename, *fileNameAndPath = [mainWindow representedFilename];
+    
+    // break into components
+    NSArray *stringComponents = [fileNameAndPath componentsSeparatedByString:@"/"];
     
     // set to untitled if no name
-    if ([fileName isEqualToString:@""])
-        fileName = @"Untitled";
+    if ([fileNameAndPath isEqualToString:@""])
+        filename = @"Untitled";
+    else if ([stringComponents count] > 0){
+        // get last component and set filename
+        filename = (NSString *)[stringComponents lastObject];
+    }
     
-    [mainWindow setTitle:[NSString stringWithFormat:@"%@ (page %d of %ld)", fileName, [[page pageNumber] intValue], [pages count]]];
+    [mainWindow setTitle:[NSString stringWithFormat:@"%@ (page %d of %ld)", filename, [[page pageNumber] intValue], [pages count]]];
 }
 
 #pragma mark keyboard
