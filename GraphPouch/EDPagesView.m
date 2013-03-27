@@ -404,6 +404,7 @@
 }
 
 #pragma mark menus
+/*
 - (NSMenu *)menuForEvent:(NSEvent *)event{
     NSMenu *returnMenu = [[NSMenu alloc] init];
     
@@ -420,7 +421,7 @@
     [returnMenu addItemWithTitle:EDContextMenuPagesSelectAll action:@selector(onMenuPagesSelectAll:) keyEquivalent:@"a"];
     [returnMenu addItemWithTitle:EDContextMenuPagesDeselectAll action:@selector(onMenuPagesDeselectAll:) keyEquivalent:@"d"];
     return returnMenu;
-}
+}*/
 
 - (void)onMenuPageAdd:(id)sender{
     [[[self window] firstResponder] doCommandBySelector:@selector(pageAdd:)];
