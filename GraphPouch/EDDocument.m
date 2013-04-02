@@ -215,6 +215,7 @@
 }
 
 - (IBAction)pageNext:(id)sender{
+    /*
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
     EDPage *nextPage = [EDCoreDataUtility getPageWithNumber:([[currentPage pageNumber] intValue]+1) context:_context];
     
@@ -222,9 +223,12 @@
         [EDCoreDataUtility setPageAsCurrent:nextPage context:_context];
     else
         [EDCoreDataUtility setPageAsCurrent:[EDCoreDataUtility getFirstPage:_context] context:_context];
+     */
+    [EDCoreDataUtility gotoPageNext:_context];
 }
 
 - (IBAction)pagePrevious:(id)sender{
+    /*
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
     EDPage *nextPage = [EDCoreDataUtility getPageWithNumber:([[currentPage pageNumber] intValue]-1) context:_context];
     
@@ -232,6 +236,8 @@
         [EDCoreDataUtility setPageAsCurrent:nextPage context:_context];
     else
         [EDCoreDataUtility setPageAsCurrent:[EDCoreDataUtility getLastPage:_context] context:_context];
+     */
+    [EDCoreDataUtility gotoPagePrevious:_context];
 }
 
 

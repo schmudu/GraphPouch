@@ -19,9 +19,14 @@ NSString * const EDKeyContextRoot                               = @"EDKeyContext
 NSString *const EDContextMenuPageAdd                            = @"Add page";
 NSString *const EDContextMenuPagesSelectAll                     = @"Select all pages";
 NSString *const EDContextMenuPagesDeselectAll                   = @"Deselect all pages";
-NSString *const EDContextMenuPagesCopy                          = @"Copy pages";
-NSString *const EDContextMenuPagesPaste                         = @"Paste pages";
-NSString *const EDContextMenuPagesDelete                        = @"Delete pages";
+NSString *const EDContextMenuPagesCopy                          = @"Copy page";
+NSString *const EDContextMenuPagesCopyPlural                    = @"Copy pages";
+NSString *const EDContextMenuPagesPaste                         = @"Paste page";
+NSString *const EDContextMenuPagesPastePlural                   = @"Paste pages";
+NSString *const EDContextMenuPagesDelete                        = @"Delete page";
+NSString *const EDContextMenuPagesDeletePlural                  = @"Delete pages";
+NSString *const EDContextMenuPagesPageNext                      = @"Go to next page";
+NSString *const EDContextMenuPagesPagePrevious                  = @"Go to previous page";
 
 #pragma mark element attributes
 NSString * const EDElementAttributeSelected                     = @"selected";

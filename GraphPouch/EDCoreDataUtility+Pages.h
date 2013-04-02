@@ -36,4 +36,6 @@
 + (EDPage *)getLastPage:(NSManagedObjectContext *)context;
 + (EDPage *)getFirstPage:(NSManagedObjectContext *)context;
 + (void)selectOnlyPages:(NSArray *)pages context:(NSManagedObjectContext *)context;
++ (void)gotoPageNext:(NSManagedObjectContext *)context;
++ (void)gotoPagePrevious:(NSManagedObjectContext *)context;
 @end

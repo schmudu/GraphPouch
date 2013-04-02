@@ -22,6 +22,8 @@
 - (void)onMenuPagesCopy:(id)sender;
 - (void)onMenuPagesDeselectAll:(id)sender;
 - (void)onMenuPagesDelete:(id)sender;
+- (void)onMenuPagesGoToPageNext:(id)sender;
+- (void)onMenuPagesGoToPagePrevious:(id)sender;
 - (void)onMenuPagesPaste:(id)sender;
 - (void)onMenuPagesSelectAll:(id)sender;
 @end
@@ -192,7 +194,7 @@
             return FALSE;
     }
     
-    if ([[menuItem title] isEqualToString:EDContextMenuPagesDelete]){
+    if (([[menuItem title] isEqualToString:EDContextMenuPagesDelete]) || ([[menuItem title] isEqualToString:EDContextMenuPagesDeletePlural])){
         NSArray *selectedPages = [EDPage getAllSelectedObjects:_context];
         NSArray *allPages = [EDPage getAllObjects:_context];
         
@@ -202,7 +204,7 @@
             return FALSE;
     }
     
-    if ([[menuItem title] isEqualToString:EDContextMenuPagesCopy]){
+    if (([[menuItem title] isEqualToString:EDContextMenuPagesCopy]) || ([[menuItem title] isEqualToString:EDContextMenuPagesCopyPlural])){
         NSArray *selectedPages = [EDPage getAllSelectedObjects:_context];
         
         if ([selectedPages count] > 0)
@@ -212,7 +214,7 @@
     }
     
     
-    if ([[menuItem title] isEqualToString:EDContextMenuPagesPaste]){
+    if (([[menuItem title] isEqualToString:EDContextMenuPagesPaste]) || ([[menuItem title] isEqualToString:EDContextMenuPagesPastePlural])){
         NSArray *classes = [NSArray arrayWithObject:[EDPage class]];
         NSArray *pages = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
         
@@ -221,6 +223,16 @@
         else
             return FALSE;
     }
+    
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuPagesPageNext]){
+        return TRUE;
+    }
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuPagesPagePrevious]){
+        return TRUE;
+    }
+    
     return [super validateMenuItem:menuItem];
 }
 
@@ -404,7 +416,6 @@
 }
 
 #pragma mark menus
-/*
 - (NSMenu *)menuForEvent:(NSEvent *)event{
     NSMenu *returnMenu = [[NSMenu alloc] init];
     
@@ -412,16 +423,54 @@
     NSMenuItem *menuPageAdd = [[NSMenuItem alloc] initWithTitle:EDContextMenuPageAdd action:@selector(onMenuPageAdd:) keyEquivalent:@"p"];
     [menuPageAdd setKeyEquivalentModifierMask:NSControlKeyMask];
     [returnMenu addItem:menuPageAdd];
-    [returnMenu addItemWithTitle:EDContextMenuPagesCopy action:@selector(onMenuPagesCopy:) keyEquivalent:@"c"];
-    [returnMenu addItemWithTitle:EDContextMenuPagesPaste action:@selector(onMenuPagesPaste:) keyEquivalent:@"v"];
-    [returnMenu addItemWithTitle:EDContextMenuPagesDelete action:@selector(onMenuPagesDelete:) keyEquivalent:@""];
-    [returnMenu addItem:[NSMenuItem separatorItem]];
+    
+    // menu depends on how many pages are selected and in the pasteboard
+    NSArray *pagesSelected = [EDCoreDataUtility getAllSelectedPages:_context];
+    
+    NSArray *classes = [NSArray arrayWithObject:[EDPage class]];
+    NSArray *pagesBuffered = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+    BOOL multiplePagesBuffered = FALSE;
+    
+    if ([pagesBuffered count] > 1)
+        multiplePagesBuffered = TRUE;
+    
+    // based on the number of pages selected and what's buffered set the menu
+    if ([pagesSelected count] > 1){
+        [returnMenu addItemWithTitle:EDContextMenuPagesCopyPlural action:@selector(onMenuPagesCopy:) keyEquivalent:@"c"];
+        if (multiplePagesBuffered)
+            [returnMenu addItemWithTitle:EDContextMenuPagesPastePlural action:@selector(onMenuPagesPaste:) keyEquivalent:@"v"];
+        else
+            [returnMenu addItemWithTitle:EDContextMenuPagesPaste action:@selector(onMenuPagesPaste:) keyEquivalent:@"v"];
+        
+        [returnMenu addItemWithTitle:EDContextMenuPagesDeletePlural action:@selector(onMenuPagesDelete:) keyEquivalent:@""];
+    }
+    else{
+        [returnMenu addItemWithTitle:EDContextMenuPagesCopy action:@selector(onMenuPagesCopy:) keyEquivalent:@"c"];
+        if (multiplePagesBuffered)
+            [returnMenu addItemWithTitle:EDContextMenuPagesPastePlural action:@selector(onMenuPagesPaste:) keyEquivalent:@"v"];
+        else
+            [returnMenu addItemWithTitle:EDContextMenuPagesPaste action:@selector(onMenuPagesPaste:) keyEquivalent:@"v"];
+        
+        [returnMenu addItemWithTitle:EDContextMenuPagesDelete action:@selector(onMenuPagesDelete:) keyEquivalent:@""];
+    }
     
     // selection
+    [returnMenu addItem:[NSMenuItem separatorItem]];
     [returnMenu addItemWithTitle:EDContextMenuPagesSelectAll action:@selector(onMenuPagesSelectAll:) keyEquivalent:@"a"];
     [returnMenu addItemWithTitle:EDContextMenuPagesDeselectAll action:@selector(onMenuPagesDeselectAll:) keyEquivalent:@"d"];
+    
+    // navigation
+    [returnMenu addItem:[NSMenuItem separatorItem]];
+    NSMenuItem *menuPagePreviousNext = [[NSMenuItem alloc] initWithTitle:EDContextMenuPagesPageNext action:@selector(onMenuPagesGoToPageNext:) keyEquivalent:@"]"];
+    [menuPagePreviousNext setKeyEquivalentModifierMask:NSShiftKeyMask|NSCommandKeyMask];
+    [returnMenu addItem:menuPagePreviousNext];
+    
+    NSMenuItem *menuPagePreviousPage = [[NSMenuItem alloc] initWithTitle:EDContextMenuPagesPagePrevious action:@selector(onMenuPagesGoToPagePrevious:) keyEquivalent:@"["];
+    [menuPagePreviousPage setKeyEquivalentModifierMask:NSShiftKeyMask|NSCommandKeyMask];
+    [returnMenu addItem:menuPagePreviousPage];
+    
     return returnMenu;
-}*/
+}
 
 - (void)onMenuPageAdd:(id)sender{
     [[[self window] firstResponder] doCommandBySelector:@selector(pageAdd:)];
@@ -441,6 +490,16 @@
 
 - (void)onMenuPagesDelete:(id)sender{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
+}
+
+- (void)onMenuPagesGoToPageNext:(id)sender{
+    [EDCoreDataUtility gotoPageNext:_context];
+}
+
+
+- (void)onMenuPagesGoToPagePrevious:(id)sender{
+    [EDCoreDataUtility gotoPagePrevious:_context];
+    
 }
 
 - (void)onMenuPagesPaste:(id)sender{

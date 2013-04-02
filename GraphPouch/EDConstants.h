@@ -40,8 +40,13 @@ extern NSString *const EDContextMenuPageAdd;
 extern NSString *const EDContextMenuPagesSelectAll;
 extern NSString *const EDContextMenuPagesDeselectAll;
 extern NSString *const EDContextMenuPagesCopy;
+extern NSString *const EDContextMenuPagesCopyPlural;
 extern NSString *const EDContextMenuPagesPaste;
+extern NSString *const EDContextMenuPagesPastePlural;
 extern NSString *const EDContextMenuPagesDelete;
+extern NSString *const EDContextMenuPagesDeletePlural;
+extern NSString *const EDContextMenuPagesPageNext;
+extern NSString *const EDContextMenuPagesPagePrevious;
 
 #pragma mark directions
 typedef enum{

@@ -497,6 +497,26 @@
     return (EDPage *)[EDPage getCurrentPage:context];
 }
 
++ (void)gotoPageNext:(NSManagedObjectContext *)context{
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
+    EDPage *nextPage = [EDCoreDataUtility getPageWithNumber:([[currentPage pageNumber] intValue]+1) context:context];
+    
+    if (nextPage)
+        [EDCoreDataUtility setPageAsCurrent:nextPage context:context];
+    else
+        [EDCoreDataUtility setPageAsCurrent:[EDCoreDataUtility getFirstPage:context] context:context];
+}
+
++ (void)gotoPagePrevious:(NSManagedObjectContext *)context{
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
+    EDPage *nextPage = [EDCoreDataUtility getPageWithNumber:([[currentPage pageNumber] intValue]-1) context:context];
+    
+    if (nextPage)
+        [EDCoreDataUtility setPageAsCurrent:nextPage context:context];
+    else
+        [EDCoreDataUtility setPageAsCurrent:[EDCoreDataUtility getLastPage:context] context:context];
+}
+
 + (void)setPageAsCurrent:(EDPage *)page context:(NSManagedObjectContext *)context{
     // unset previous current page
     EDPage *previousPage = (EDPage *)[EDPage getCurrentPage:context];
