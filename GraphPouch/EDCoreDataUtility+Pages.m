@@ -538,6 +538,16 @@
     [EDCoreDataUtility saveContext:context];
 }
 
++ (void)setPageAsDeselected:(EDPage *)page context:(NSManagedObjectContext *)context{
+    // set selected
+    [page setSelected:FALSE];
+}
+
++ (void)setPageAsSelected:(EDPage *)page context:(NSManagedObjectContext *)context{
+    // set selected
+    [page setSelected:TRUE];
+}
+
 + (EDPage *)insertPages:(NSArray *)pages atPosition:(int)insertPosition pagesToUpdate:(NSArray *)pagesToUpdate context:(NSManagedObjectContext *) context{
     EDPage *returnPage;
     int startInsertPosition = insertPosition;

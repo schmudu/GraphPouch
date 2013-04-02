@@ -268,6 +268,7 @@
     [self setNeedsDisplay:TRUE];
 }
 
+
 #pragma mark pastboard
 - (BOOL)readFromPasteboard:(NSPasteboard *)pb{
     NSArray *classes = [NSArray arrayWithObject:[EDPageView class]];

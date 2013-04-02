@@ -15,7 +15,11 @@ int const GRAPH_INIT_HAS_GRID_LINES     = FALSE;
 NSString * const EDKeyContextChild                              = @"EDKeyContextChild";
 NSString * const EDKeyContextRoot                               = @"EDKeyContextRoot";
 
-#pragma mark context menu
+#pragma mark context menu page
+NSString *const EDContextMenuPageSelect                         = @"Select page";
+NSString *const EDContextMenuPageDeselect                       = @"Deselect page";
+
+#pragma mark context menu pages
 NSString *const EDContextMenuPageAdd                            = @"Add page";
 NSString *const EDContextMenuPagesSelectAll                     = @"Select all pages";
 NSString *const EDContextMenuPagesDeselectAll                   = @"Deselect all pages";

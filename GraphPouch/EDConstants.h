@@ -35,7 +35,11 @@ extern NSString *const EDElementAttributeHeight;
 extern NSString *const EDKeyContextChild;
 extern NSString *const EDKeyContextRoot;
 
-#pragma mark context menu
+#pragma mark context menu pages
+extern NSString *const EDContextMenuPageSelect;
+extern NSString *const EDContextMenuPageDeselect;
+
+#pragma mark context menu pages
 extern NSString *const EDContextMenuPageAdd;
 extern NSString *const EDContextMenuPagesSelectAll;
 extern NSString *const EDContextMenuPagesDeselectAll;
