@@ -31,8 +31,9 @@
 - (void)onMenuPageCopy:(id)sender;
 - (void)onMenuPageCut:(id)sender;
 - (void)onMenuPageDelete:(id)sender;
-- (void)onMenuPageSelect:(id)sender;
 - (void)onMenuPageDeselect:(id)sender;
+- (void)onMenuPageSelect:(id)sender;
+- (void)onMenuPageSetCurrent:(id)sender;
 
 // elements
 - (void)updateElements;
@@ -88,6 +89,15 @@
 
 #pragma mark context menu
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuPageMakeCurrent]){
+        // do not allow if this page is already current
+        if ([_page currentPage])
+            return FALSE;
+        else
+            return TRUE;
+    }
+    
     if ([[menuItem title] isEqualToString:EDContextMenuPageSelect]){
         if ([_page selected])
             return FALSE;
@@ -126,6 +136,8 @@
     [returnMenu addItemWithTitle:EDContextMenuPagesCut action:@selector(onMenuPageCut:) keyEquivalent:@"x"];
     [returnMenu addItemWithTitle:EDContextMenuPagesDelete action:@selector(onMenuPageDelete:) keyEquivalent:@""];
     [returnMenu addItem:[NSMenuItem separatorItem]];
+    [returnMenu addItemWithTitle:EDContextMenuPageMakeCurrent action:@selector(onMenuPageSetCurrent:) keyEquivalent:@""];
+    [returnMenu addItem:[NSMenuItem separatorItem]];
     [returnMenu addItemWithTitle:EDContextMenuPageDeselect action:@selector(onMenuPageDeselect:) keyEquivalent:@""];
     [returnMenu addItemWithTitle:EDContextMenuPageSelect action:@selector(onMenuPageSelect:) keyEquivalent:@""];
     return returnMenu;
@@ -154,6 +166,9 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutDelete object:self userInfo:dict];
 }
 
+- (void)onMenuPageSetCurrent:(id)sender{
+    [EDCoreDataUtility setPageAsCurrent:_page context:_context];
+}
 #pragma mark drawing
 - (BOOL)isFlipped{
     return TRUE;

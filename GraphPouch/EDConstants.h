@@ -53,6 +53,7 @@ extern NSString *const EDContextMenuPagesDelete;
 extern NSString *const EDContextMenuPagesDeletePlural;
 extern NSString *const EDContextMenuPagesPageNext;
 extern NSString *const EDContextMenuPagesPagePrevious;
+extern NSString *const EDContextMenuPageMakeCurrent;
 
 #pragma mark directions
 typedef enum{

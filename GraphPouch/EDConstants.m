@@ -27,6 +27,7 @@ NSString *const EDContextMenuPagesCopy                          = @"Copy page";
 NSString *const EDContextMenuPagesCopyPlural                    = @"Copy pages";
 NSString *const EDContextMenuPagesCut                           = @"Cut page";
 NSString *const EDContextMenuPagesCutPlural                     = @"Cut pages";
+NSString *const EDContextMenuPageMakeCurrent                    = @"View page";
 
 NSString *const EDContextMenuPagesPaste                         = @"Paste page";
 NSString *const EDContextMenuPagesPastePlural                   = @"Paste pages";
