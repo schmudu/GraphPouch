@@ -8,16 +8,20 @@
 
 #import "EDGraph.h"
 #import "EDGraphView.h"
-#import "EDPageView.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
 #import "EDCoreDataUtility+Pages.h"
-#import "NSColor+Utilities.h"
 #import "EDCoreDataUtility+Graphs.h"
+#import "EDPage.h"
+#import "EDPageView.h"
 #import "EDPageViewContainer.h"
+#import "NSColor+Utilities.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @interface EDPageView()
 - (void)onContextChanged:(NSNotification *)note;
+- (void)onPageCommandCut:(NSNotification *)note;
+- (void)onPageCommandDelete:(NSNotification *)note;
 - (void)setPageAsCurrent;
 @end
 
@@ -44,6 +48,9 @@
 - (void)dealloc{
     [self unregisterDraggedTypes];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutCut object:_container];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutDelete object:_container];
+    
 }
 
 #pragma mark drawing
@@ -87,6 +94,8 @@
     
     // listen
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageCommandCut:) name:EDEventShortcutCut object:_container];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageCommandDelete:) name:EDEventShortcutDelete object:_container];
 }
 
 #pragma mark mouse
@@ -198,7 +207,13 @@
 #pragma mark keyboard
 - (void)keyDown:(NSEvent *)theEvent{
     if ([theEvent keyCode] == EDKeycodeDelete) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
+        // only allow this if there are pages selected
+        NSArray *selectedPages = [EDCoreDataUtility getAllSelectedPages:_context];
+        NSArray *allPages = [EDPage getAllObjects:_context];
+        
+        // if there are selected pages and it won't wipe out all pages then allow delete to happen
+        if (([selectedPages count] > 0) && ([allPages count] - [selectedPages count] > 1))
+            [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
     }
 }
 
@@ -268,6 +283,14 @@
     [self setNeedsDisplay:TRUE];
 }
 
+#pragma mark commands
+- (void)onPageCommandCut:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCut object:self userInfo:[note userInfo]];
+}
+
+- (void)onPageCommandDelete:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutDelete object:self userInfo:[note userInfo]];
+}
 
 #pragma mark pastboard
 - (BOOL)readFromPasteboard:(NSPasteboard *)pb{

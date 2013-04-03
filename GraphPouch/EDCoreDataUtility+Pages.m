@@ -104,6 +104,21 @@
     return [filteredResults objectAtIndex:0];
 }
 
++ (NSArray *)getPagesWithoutNumber:(int)pageNumber context:(NSManagedObjectContext *)context{
+    // this method returns page objects that does not match the page number
+    NSArray *fetchedObjects;
+    
+    // get all selected pages ordered by page number
+    fetchedObjects = [EDPage getAllObjectsOrderedByPageNumber:context];
+    
+    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"(pageNumber != %d)", pageNumber];
+    NSArray *filteredResults = [fetchedObjects filteredArrayUsingPredicate:searchFilter];
+    if ([filteredResults count] == 0) {
+        return nil;
+    }
+    return filteredResults;
+}
+
 + (EDPage *)getPage:(EDPage *)page context:(NSManagedObjectContext *)context{
     // this method returns the page object that matches the page number
     NSArray *fetchedObjects;

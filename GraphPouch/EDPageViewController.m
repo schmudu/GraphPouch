@@ -17,6 +17,8 @@
 - (void)onPageViewStartDrag:(NSNotification *)note;
 - (void)onContextChanged:(NSNotification *)note;
 - (void)onDeleteKeyPressed:(NSNotification *)note;
+- (void)onCommandPageCut:(NSNotification *)note;
+- (void)onCommandPageDelete:(NSNotification *)note;
 - (void)onPageViewMouseDown:(NSNotification *)note;
 @end
 
@@ -31,6 +33,8 @@
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDeleteKeyPressed:) name:EDEventPagesDeletePressed object:[self view]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onCommandPageCut:) name:EDEventShortcutCut object:[self view]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onCommandPageDelete:) name:EDEventShortcutDelete object:[self view]];
     }
     
     return self;
@@ -42,18 +46,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageViewStartDrag object:[self view]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPagesDeletePressed object:[self view]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageViewMouseDown object:[self view]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutCut object:[self view]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutDelete object:[self view]];
 }
 
 - (EDPage *)dataObj{
     return _pageData;
 }
-
-/*
-- (void)loadView{
-    [super loadView];
-    //[self postInit];
-    NSLog(@"later?");
-}*/
 
 - (void)postInit{
     // set data obj
@@ -69,22 +68,20 @@
 }
 
 #pragma mark events
+- (void)onCommandPageCut:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCut object:self userInfo:[note userInfo]];
+}
+
+- (void)onCommandPageDelete:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutDelete object:self userInfo:[note userInfo]];
+}
+
 - (void)onPageViewMouseDown:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewMouseDown object:self userInfo:[note userInfo]];
 }
 
 - (void)onDeleteKeyPressed:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesDeletePressed object:self];
-    /*
-    NSArray *pages = [EDCoreDataUtility getAllPages];
-    NSArray *selectedPages = [EDPage getAllSelectedObjects];
-    
-    // do not delete if there will be no pages left
-    if (([pages count] - [selectedPages count]) < 1) 
-        return;
-    
-    [EDCoreDataUtility deleteSelectedPages];
-     */
 }
 
 - (void)onPageViewStartDrag:(NSNotification *)note{

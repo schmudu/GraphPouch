@@ -462,10 +462,10 @@
 			isa = PBXGroup;
 			children = (
 				CD1C57DE161E750400534D49 /* EDPageView.xib */,
-				CD1C57BB161BCAA100534D49 /* EDPageViewController.h */,
-				CD1C57BC161BCAA100534D49 /* EDPageViewController.m */,
 				CD1C57C4161D13B900534D49 /* EDPageView.h */,
 				CD1C57C5161D13B900534D49 /* EDPageView.m */,
+				CD1C57BB161BCAA100534D49 /* EDPageViewController.h */,
+				CD1C57BC161BCAA100534D49 /* EDPageViewController.m */,
 				CD841EE016AB451000421EB4 /* EDPageViewContainer.h */,
 				CD841EE116AB451000421EB4 /* EDPageViewContainer.m */,
 				CDA299BC16F667D80021729F /* EDPageViewContainerGraphView.h */,

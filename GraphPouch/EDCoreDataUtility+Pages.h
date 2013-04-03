@@ -27,6 +27,7 @@
 + (EDPage *)getLastSelectedPage:(NSManagedObjectContext *)context;
 + (EDPage *)getPage:(EDPage *)page context:(NSManagedObjectContext *)context;
 + (EDPage *)getPageWithNumber:(int)pageNumber context:(NSManagedObjectContext *)context;
++ (NSArray *)getPagesWithoutNumber:(int)pageNumber context:(NSManagedObjectContext *)context;
 
 #pragma mark CRUD
 + (void)correctPageNumbersAfterDelete:(NSManagedObjectContext *)context;

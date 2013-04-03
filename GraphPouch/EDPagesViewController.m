@@ -33,6 +33,8 @@
 - (void)updatePageNumbersOfUndraggedPagesLessThan:(int)upperNumber greaterThanOrEqualTo:(int)lowerNumber;
 - (void)updatePageNumbersOfUndraggedPagesGreaterThanOrEqualTo:(int)lowerNumber lessThan:(int)upperNumber;
 - (void)deselectAllPages;
+- (void)onCommandPageCut:(NSNotification *)note;
+- (void)onCommandPageDelete:(NSNotification *)note;
 - (void)onPageViewClickedWithoutModifier:(NSNotification *)note;
 - (void)onPageViewStartDrag:(NSNotification *)note;
 - (void)onPagesViewClicked:(NSNotification *)note;
@@ -48,7 +50,8 @@
 - (void)updateViewFrameSize;
 - (NSMutableArray *)getSelectedPages;
 - (NSMutableArray *)getSelectedPagesAndCopyToCopyContext;
-- (void)removeSelectedPages:(BOOL)copyToPasteboard;
+//- (void)removeSelectedPages:(BOOL)copyToPasteboard;
+- (void)removePages:(NSArray *)pages copyToPasteboard:(BOOL)copyToPasteboard;
 @end
 
 @implementation EDPagesViewController
@@ -223,6 +226,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewStartDrag:) name:EDEventPageViewStartDrag object:pageController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDeleteKeyPressed:) name:EDEventPagesDeletePressed object:pageController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPageViewMouseDown:) name:EDEventPageViewMouseDown object:pageController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onCommandPageCut:) name:EDEventShortcutCut object:pageController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onCommandPageDelete:) name:EDEventShortcutDelete object:pageController];
 }
 
 - (void)removePage:(EDPage *)page{
@@ -239,6 +244,8 @@
             [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageViewStartDrag object:currentPageController];
             [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPagesDeletePressed object:currentPageController];
             [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPageViewMouseDown object:currentPageController];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutCut object:currentPageController];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutDelete object:currentPageController];
             
             // remove page view
             [[currentPageController view] removeFromSuperview];
@@ -253,6 +260,16 @@
 }
 
 #pragma mark page events
+- (void)onCommandPageCut:(NSNotification *)note{
+    EDPage *pageToCut = (EDPage *)[[note userInfo] objectForKey:EDKeyPagesToRemove];
+    [self removePages:[NSArray arrayWithObject:pageToCut] copyToPasteboard:TRUE];
+}
+
+- (void)onCommandPageDelete:(NSNotification *)note{
+    EDPage *pageToCut = (EDPage *)[[note userInfo] objectForKey:EDKeyPagesToRemove];
+    [self removePages:[NSArray arrayWithObject:pageToCut] copyToPasteboard:FALSE];
+}
+
 - (void)onPageViewStartDrag:(NSNotification *)note{
     [(EDPagesView *)[self view] setPageViewStartDragInfo:[[note userInfo] objectForKey:EDKeyPageViewData]];
     NSMutableArray *selectedPageViews = [self getSelectedPagesAndCopyToCopyContext];
@@ -426,31 +443,36 @@
 
 #pragma mark keyboard
 - (void)onDeleteKeyPressed:(NSNotification *)note{
-    [self removeSelectedPages:FALSE];
+    //[self removeSelectedPages:FALSE];
+    NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
+    [self removePages:selectedPages copyToPasteboard:FALSE];
 }
 
 - (void)onShortcutCut:(NSNotification *)note{
-    [self removeSelectedPages:TRUE];
+    //[self removeSelectedPages:TRUE];
+    NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
+    [self removePages:selectedPages copyToPasteboard:TRUE];
 }
 
-- (void)removeSelectedPages:(BOOL)copyToPasteboard{
+//- (void)removeSelectedPages:(BOOL)copyToPasteboard{
+- (void)removePages:(NSArray *)pages copyToPasteboard:(BOOL)copyToPasteboard{
     // copyToPasteboard designates whether pages should be copied to pasteboard
-    NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
+    //NSArray * = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
     NSArray *allPages = [EDPage getAllObjects:_context];
     
     // if there will no pages left if all pages are cut, then do not allow this operation
-    if ([allPages count] - [selectedPages count] < 1) 
+    if ([allPages count] - [pages count] < 1)
         return;
     
     // must dispatch event to notify that the worksheet view to remove all of its elements
     // if we wait until context notifies the worksheet view, all of the elements will be
     // deleted due to cascade delete rule
     NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-    [userInfo setObject:selectedPages forKey:EDKeyPagesToRemove];
+    [userInfo setObject:pages forKey:EDKeyPagesToRemove];
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPagesWillBeRemoved object:self userInfo:userInfo];
     
     // get last selected page which we will use to designate which page should be used
-    int lastSelectedPageNumber = [[(EDPage *)[selectedPages lastObject] pageNumber] intValue]; 
+    int lastSelectedPageNumber = [[(EDPage *)[pages lastObject] pageNumber] intValue];
     
     // set page after selected pages as the currently viewed page
     NSArray *pagesAfterLastSelectedPage = [EDCoreDataUtility getPagesWithPageNumberGreaterThan:lastSelectedPageNumber context:_context];
@@ -462,23 +484,38 @@
     else {
         // set the previous unselected page as current
         NSArray *pagesBeforeLastSelectedPage = [EDCoreDataUtility getUnselectedPagesWithPageNumberLessThan:lastSelectedPageNumber greaterThanOrEqualTo:0 context:_context];
-        [EDCoreDataUtility setPageAsCurrent:(EDPage *)[pagesBeforeLastSelectedPage lastObject] context:_context];
+        
+        // if no unselected page we must be deleting a single page
+        if ([pagesBeforeLastSelectedPage count] != 0){
+            [EDCoreDataUtility setPageAsCurrent:(EDPage *)[pagesBeforeLastSelectedPage lastObject] context:_context];
+        }
+        else{
+            // select page before the page that is supposed to be deleted
+            //EDPage *lastPage = [EDCoreDataUtility getLastPage:_context];
+            NSArray *pagesNotToBeDeleted = [EDCoreDataUtility getPagesWithoutNumber:[[(EDPage *)[pages lastObject] pageNumber] intValue] context:_context];
+            
+            // be default set the current page to be the first page
+            [EDCoreDataUtility setPageAsCurrent:[pagesNotToBeDeleted objectAtIndex:0] context:_context];
+        }
     }
     
     // copy all page views that are selected to the pasteboard
     if (copyToPasteboard) {
         [[NSPasteboard generalPasteboard] clearContents];
-        [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:selectedPages]];
+        [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithArray:pages]];
     }
     
     // now cut all selected views
-    [self removePages:selectedPages];
+    [self removePages:pages];
     
      // update page numbers
     [EDCoreDataUtility correctPageNumbersAfterDelete:_context];
     
     // update location
     [self correctPagePositionsAfterUpdate];
+    
+    // save
+    [EDCoreDataUtility saveContext:_context];
 }
 
 - (void)onShortcutCopy:(NSNotification *)note{

@@ -25,6 +25,9 @@ NSString *const EDContextMenuPagesSelectAll                     = @"Select all p
 NSString *const EDContextMenuPagesDeselectAll                   = @"Deselect all pages";
 NSString *const EDContextMenuPagesCopy                          = @"Copy page";
 NSString *const EDContextMenuPagesCopyPlural                    = @"Copy pages";
+NSString *const EDContextMenuPagesCut                           = @"Cut page";
+NSString *const EDContextMenuPagesCutPlural                     = @"Cut pages";
+
 NSString *const EDContextMenuPagesPaste                         = @"Paste page";
 NSString *const EDContextMenuPagesPastePlural                   = @"Paste pages";
 NSString *const EDContextMenuPagesDelete                        = @"Delete page";
@@ -186,12 +189,14 @@ NSString * const EDEventMenuAlignTop                            = @"EDEventMenuA
 NSString * const EDEventShortcutNewPage                         = @"EDEventShortcutNewPage";
 NSString * const EDEventShortcutCopy                            = @"EDEventShortcutCopy";
 NSString * const EDEventShortcutCut                             = @"EDEventShortcutCut";
+NSString * const EDEventShortcutDelete                          = @"EDEventShortcutDelete";
 NSString * const EDEventShortcutPaste                           = @"EDEventShortcutPaste";
 NSString * const EDEventShortcutSave                            = @"EDEventShortcutSave";
 NSString * const EDEventShortcutGraph                           = @"EDEventShortcutGraph";
 NSString * const EDEventShortcutPage                            = @"EDEventShortcutPage";
 NSString * const EDEventShortcutSelectAll                       = @"EDEventShortcutSelectAll";
 NSString * const EDEventShortcutDeselectAll                     = @"EDEventShortcutDeselectAll";
+
 float const EDMenuToolbarShadowWidth                            = 2.0;
 
 #pragma mark numbers
