@@ -583,7 +583,8 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     NSUInteger flags = [theEvent modifierFlags];
     if(flags & NSControlKeyMask){
         // do nothing
-#error menu not showing up for control click
+//#error menu not showing up for control click
+        [self rightMouseDown:theEvent];
     }
     else{
         BOOL mouseDragged = FALSE;
