@@ -23,6 +23,7 @@
 - (void)onWindowResized:(NSNotification *)note;
 - (void)cutSelectedElements:(NSNotification *)note;
 - (void)copyElements:(NSNotification *)note;
+- (void)pasteElements:(NSNotification *)note;
 - (void)onCommandGraph:(NSNotification *)note;
 - (void)onCommandLine:(NSNotification *)note;
 - (void)onCommandTextbox:(NSNotification *)note;
@@ -58,6 +59,7 @@
     [_nc addObserver:self selector:@selector(alignElementsToTop:) name:EDEventMenuAlignTop object:nil];
     [_nc addObserver:self selector:@selector(cutSelectedElements:) name:EDEventShortcutCut object:[self view]];
     [_nc addObserver:self selector:@selector(copyElements:) name:EDEventShortcutCopy object:[self view]];
+    [_nc addObserver:self selector:@selector(pasteElements:) name:EDEventShortcutPaste object:[self view]];
     [_nc addObserver:self selector:@selector(onTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:[self view]];
     [_nc addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:[self view]];
     [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:[self view]];
@@ -91,6 +93,7 @@
     [_nc removeObserver:self name:EDEventMenuAlignTop object:nil];
     [_nc removeObserver:self name:EDEventWindowDidResize object:_documentController];
     [_nc removeObserver:self name:EDEventShortcutCut object:[self view]];
+    [_nc removeObserver:self name:EDEventShortcutPaste object:[self view]];
     [_nc removeObserver:self name:EDEventTextboxBeginEditing object:[self view]];
     [_nc removeObserver:self name:EDEventTextboxEndEditing object:[self view]];
     [_nc removeObserver:self name:EDEventTextboxDidChange object:[self view]];
@@ -293,6 +296,12 @@
     [[NSPasteboard generalPasteboard] writeObjects:copiedElements];
     
     [EDCoreDataUtility deleteSelectedWorksheetElements:_context];
+}
+
+- (void)pasteElements:(NSNotification *)note{
+    NSLog(@"controller paste.");
+    // send to first responder
+    [[[[self view] window] firstResponder] doCommandBySelector:@selector(paste:)];
 }
 
 - (void)copyElements:(NSNotification *)note{

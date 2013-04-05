@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDWorksheetElementView.h"
 #import "EDWorksheetView.h"
+#import "EDElement.h"
 #import "EDWorksheetElementView.h"
 #import "EDConstants.h"
 #import "EDGraph.h"
@@ -20,6 +20,13 @@
 - (void)mouseUpBehavior:(NSEvent *)theEvent;
 - (void)notifyMouseDownListeners:(NSEvent *)theEvent;
 - (void)dispatchMouseDragNotification:(NSEvent *)theEvent snapInfo:(NSDictionary *)snapInfo;
+
+// context menu
+- (void)onMenuCommandCut:(NSNotification *)note;
+- (void)onMenuCommandCopy:(NSNotification *)note;
+- (void)onMenuCommandDelete:(NSNotification *)note;
+- (void)onMenuCommandDeselect:(NSNotification *)note;
+- (void)onMenuCommandSelect:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetElementView
@@ -77,6 +84,70 @@
     // method called to add performance-heavy elements
     // useful after mouse dragging has completed
     //NSLog(@"add elements.");
+}
+
+#pragma mark context menu
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
+    if ([[menuItem title] isEqualToString:EDContextMenuElementSelect]){
+        if ([(EDElement *)[self dataObj] selected])
+            return FALSE;
+        else
+            return TRUE;
+    }
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuElementDeselect]){
+        if ([(EDElement *)[self dataObj] selected])
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
+    if (([[menuItem title] isEqualToString:EDContextMenuElementCopy]) ||
+        ([[menuItem title] isEqualToString:EDContextMenuElementCut]) ||
+        ([[menuItem title] isEqualToString:EDContextMenuElementDelete])){
+        return TRUE;
+    }
+    
+    return [super validateMenuItem:menuItem];
+}
+
+- (NSMenu *)menuForEvent:(NSEvent *)event{
+    NSMenu *returnMenu = [[NSMenu alloc] init];
+    [returnMenu addItemWithTitle:EDContextMenuElementSelect action:@selector(onMenuCommandSelect:) keyEquivalent:@""];
+    [returnMenu addItemWithTitle:EDContextMenuElementDeselect action:@selector(onMenuCommandDeselect:) keyEquivalent:@""];
+    [returnMenu addItem:[NSMenuItem separatorItem]];
+    [returnMenu addItemWithTitle:EDContextMenuElementCopy action:@selector(onMenuCommandCopy:) keyEquivalent:@""];
+    [returnMenu addItemWithTitle:EDContextMenuElementCut action:@selector(onMenuCommandCut:) keyEquivalent:@""];
+    [returnMenu addItemWithTitle:EDContextMenuElementDelete action:@selector(onMenuCommandDelete:) keyEquivalent:@""];
+    return returnMenu;
+}
+
+- (void)onMenuCommandCut:(NSNotification *)note{
+    NSArray *object = [NSArray arrayWithObject:[self dataObj]];
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] writeObjects:object];
+    
+    [EDCoreDataUtility deleteWorksheetElement:[self dataObj] context:_context];
+}
+
+- (void)onMenuCommandCopy:(NSNotification *)note{
+    NSArray *object = [NSArray arrayWithObject:[self dataObj]];
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] writeObjects:object];
+}
+
+- (void)onMenuCommandDelete:(NSNotification *)note{
+    [EDCoreDataUtility deleteWorksheetElement:[self dataObj] context:_context];
+}
+
+- (void)onMenuCommandDeselect:(NSNotification *)note{
+   // deselect element
+    [(EDElement *)[self dataObj] setSelected:FALSE];
+}
+
+- (void)onMenuCommandSelect:(NSNotification *)note{
+   // select element
+    [(EDElement *)[self dataObj] setSelected:TRUE];
 }
 
 #pragma mark mouse events

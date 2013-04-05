@@ -37,12 +37,12 @@ NSString *const EDContextMenuPagesPageNext                      = @"Go to next p
 NSString *const EDContextMenuPagesPagePrevious                  = @"Go to previous page";
 
 #pragma mark context menu worksheet
-NSString *const EDContextMenuWorksheetSelect                    = @"Select all elements";
-NSString *const EDContextMenuWorksheetDeselect                  = @"Deselect all elements";
-NSString *const EDContextMenuWorksheetCopy                      = @"Copy selected elements";
-NSString *const EDContextMenuWorksheetCut                       = @"Cut selected elements";
-NSString *const EDContextMenuWorksheetDelete                    = @"Delete selected elements";
-NSString *const EDContextMenuWorksheetPaste                     = @"Paste elements";
+NSString *const EDContextMenuWorksheetSelect                    = @"Select all";
+NSString *const EDContextMenuWorksheetDeselect                  = @"Deselect all";
+NSString *const EDContextMenuWorksheetCopy                      = @"Copy";
+NSString *const EDContextMenuWorksheetCut                       = @"Cut";
+NSString *const EDContextMenuWorksheetDelete                    = @"Delete";
+NSString *const EDContextMenuWorksheetPaste                     = @"Paste";
 NSString *const EDContextMenuWorksheetGraph                     = @"Insert Graph";
 NSString *const EDContextMenuWorksheetTextbox                   = @"Insert Textbox";
 NSString *const EDContextMenuWorksheetLine                      = @"Insert Line";
@@ -51,8 +51,8 @@ NSString *const EDEventCommandLine                              = @"EDEventComma
 NSString *const EDEventCommandTextbox                           = @"EDEventCommandTextbox";
 
 #pragma mark context menu element
-NSString *const EDContextMenuElementSelect                      = @"Select element";
-NSString *const EDContextMenuElementDeselect                    = @"Deselect element";
+NSString *const EDContextMenuElementSelect                      = @"Select";
+NSString *const EDContextMenuElementDeselect                    = @"Deselect";
 NSString *const EDContextMenuElementDelete                      = @"Delete";
 NSString *const EDContextMenuElementCopy                        = @"Copy";
 NSString *const EDContextMenuElementCut                         = @"Cut";

@@ -14,6 +14,7 @@
 
 + (NSMutableArray *)copySelectedWorksheetElementsFromContext:(NSManagedObjectContext *)context toContext:(NSManagedObjectContext *)copyContext;
 + (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context;
++ (void)deleteWorksheetElement:(EDElement *)element context:(NSManagedObjectContext *)context;
 + (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context;
 + (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context selectElement:(EDElement *)element;
 + (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context;

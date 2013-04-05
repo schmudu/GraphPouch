@@ -495,6 +495,15 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         return TRUE;
     }
     
+    if ([[menuItem title] isEqualToString:EDContextMenuWorksheetPaste]){
+        NSArray *classes = [EDPage allWorksheetClasses];
+        NSArray *newObjects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
+        if ([newObjects count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
     if ([[menuItem title] isEqualToString:EDContextMenuWorksheetCopy]){
         NSArray *selectedItems = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
         if ([selectedItems count] > 0)
@@ -537,11 +546,22 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [returnMenu addItem:[NSMenuItem separatorItem]];
     [returnMenu addItemWithTitle:EDContextMenuWorksheetCopy action:@selector(onMenuCommandCopy:) keyEquivalent:@"x"];
     [returnMenu addItemWithTitle:EDContextMenuWorksheetCut action:@selector(onMenuCommandCut:) keyEquivalent:@"c"];
+    [returnMenu addItemWithTitle:EDContextMenuWorksheetPaste action:@selector(onMenuCommandPaste:) keyEquivalent:@"v"];
     [returnMenu addItemWithTitle:EDContextMenuWorksheetDelete action:@selector(onMenuCommandDelete:) keyEquivalent:@""];
     [returnMenu addItem:[NSMenuItem separatorItem]];
-    [returnMenu addItemWithTitle:EDContextMenuWorksheetGraph action:@selector(onMenuCommandGraph:) keyEquivalent:@""];
-    [returnMenu addItemWithTitle:EDContextMenuWorksheetLine action:@selector(onMenuCommandLine:) keyEquivalent:@""];
-    [returnMenu addItemWithTitle:EDContextMenuWorksheetTextbox action:@selector(onMenuCommandTextbox:) keyEquivalent:@""];
+    
+    NSMenuItem *menuAddGraph = [[NSMenuItem alloc] initWithTitle:EDContextMenuWorksheetGraph action:@selector(onMenuCommandGraph:) keyEquivalent:@"g"];
+    [menuAddGraph setKeyEquivalentModifierMask:NSControlKeyMask];
+    [returnMenu addItem:menuAddGraph];
+    
+    NSMenuItem *menuAddLine = [[NSMenuItem alloc] initWithTitle:EDContextMenuWorksheetLine action:@selector(onMenuCommandLine:) keyEquivalent:@"l"];
+    [menuAddLine setKeyEquivalentModifierMask:NSControlKeyMask];
+    [returnMenu addItem:menuAddLine];
+    
+    NSMenuItem *menuAddTextbox = [[NSMenuItem alloc] initWithTitle:EDContextMenuWorksheetTextbox action:@selector(onMenuCommandTextbox:) keyEquivalent:@"t"];
+    [menuAddTextbox setKeyEquivalentModifierMask:NSControlKeyMask];
+    [returnMenu addItem:menuAddTextbox];
+    
     return returnMenu;
 }
 
@@ -559,6 +579,10 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 - (void)onMenuCommandCopy:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
+}
+
+- (void)onMenuCommandPaste:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutPaste object:self];
 }
 
 - (void)onMenuCommandDelete:(NSNotification *)note{

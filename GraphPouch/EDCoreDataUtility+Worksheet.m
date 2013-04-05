@@ -295,6 +295,21 @@
     }
 }
 
++ (void)deleteWorksheetElement:(EDElement *)element context:(NSManagedObjectContext *)context{
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
+#warning worksheet elements
+    if ([element isKindOfClass:[EDGraph class]]) {
+        [currentPage removeGraphsObject:(EDGraph *)element];
+    }
+    else if ([element isKindOfClass:[EDLine class]]) {
+        [currentPage removeLinesObject:(EDLine *)element];
+    }
+    else if ([element isKindOfClass:[EDTextbox class]]) {
+        [currentPage removeTextboxesObject:(EDTextbox *)element];
+    }
+    [context deleteObject:element];
+}
+
 + (void)deleteSelectedWorksheetElements:(NSManagedObjectContext *)context{
     NSMutableArray *selectedElements = [self getAllSelectedWorksheetElements:context];
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
