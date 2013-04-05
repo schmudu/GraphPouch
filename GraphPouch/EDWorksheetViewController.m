@@ -23,6 +23,9 @@
 - (void)onWindowResized:(NSNotification *)note;
 - (void)cutSelectedElements:(NSNotification *)note;
 - (void)copyElements:(NSNotification *)note;
+- (void)onCommandGraph:(NSNotification *)note;
+- (void)onCommandLine:(NSNotification *)note;
+- (void)onCommandTextbox:(NSNotification *)note;
 - (void)onKeyPressedArrow:(NSNotification *)note;
 - (void)onSelectedRectangleDragged:(NSNotification *)note;
 - (void)onTextboxDidBeginEditing:(NSNotification *)note;
@@ -60,6 +63,9 @@
     [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:[self view]];
     [_nc addObserver:self selector:@selector(onKeyPressedArrow:) name:EDEventArrowKeyPressed object:[self view]];
     [_nc addObserver:self selector:@selector(onSelectedRectangleDragged:) name:EDEventMouseDragged object:[self view]];
+    [_nc addObserver:self selector:@selector(onCommandGraph:) name:EDEventCommandGraph object:[self view]];
+    [_nc addObserver:self selector:@selector(onCommandLine:) name:EDEventCommandLine object:[self view]];
+    [_nc addObserver:self selector:@selector(onCommandTextbox:) name:EDEventCommandTextbox object:[self view]];
     
     // initialize view to display all of the worksheet elements
     [(EDWorksheetView *)[self view] drawLoadedObjects];
@@ -90,6 +96,9 @@
     [_nc removeObserver:self name:EDEventTextboxDidChange object:[self view]];
     [_nc removeObserver:self name:EDEventArrowKeyPressed object:[self view]];
     [_nc removeObserver:self name:EDEventMouseDragged object:[self view]];
+    [_nc removeObserver:self name:EDEventCommandGraph object:[self view]];
+    [_nc removeObserver:self name:EDEventCommandLine object:[self view]];
+    [_nc removeObserver:self name:EDEventCommandTextbox object:[self view]];
 }
 
 - (void)deleteSelectedElements:(NSNotification *)note{
@@ -250,6 +259,19 @@
     
     // save
     //[EDCoreDataUtility save:_context];
+}
+
+#pragma mark menu
+- (void)onCommandGraph:(NSNotification *)note{
+    [self addNewGraph];
+}
+
+- (void)onCommandLine:(NSNotification *)note{
+    [self addNewLine];
+}
+
+- (void)onCommandTextbox:(NSNotification *)note{
+    [self addNewTextbox];
 }
 
 #pragma mark align

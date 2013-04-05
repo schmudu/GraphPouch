@@ -55,6 +55,27 @@ extern NSString *const EDContextMenuPagesPageNext;
 extern NSString *const EDContextMenuPagesPagePrevious;
 extern NSString *const EDContextMenuPageMakeCurrent;
 
+#pragma mark context menu element
+extern NSString *const EDContextMenuElementSelect;
+extern NSString *const EDContextMenuElementDeselect;
+extern NSString *const EDContextMenuElementDelete;
+extern NSString *const EDContextMenuElementCopy;
+extern NSString *const EDContextMenuElementCut;
+
+#pragma mark context menu worksheet
+extern NSString *const EDContextMenuWorksheetDeselect;
+extern NSString *const EDContextMenuWorksheetSelect;
+extern NSString *const EDContextMenuWorksheetGraph;
+extern NSString *const EDContextMenuWorksheetTextbox;
+extern NSString *const EDContextMenuWorksheetLine;
+extern NSString *const EDContextMenuWorksheetCopy;
+extern NSString *const EDContextMenuWorksheetCut;
+extern NSString *const EDContextMenuWorksheetPaste;
+extern NSString *const EDContextMenuWorksheetDelete;
+extern NSString *const EDEventCommandGraph;
+extern NSString *const EDEventCommandLine;
+extern NSString *const EDEventCommandTextbox;
+
 #pragma mark directions
 typedef enum{
     EDDirectionLeft,

@@ -36,6 +36,27 @@ NSString *const EDContextMenuPagesDeletePlural                  = @"Delete pages
 NSString *const EDContextMenuPagesPageNext                      = @"Go to next page";
 NSString *const EDContextMenuPagesPagePrevious                  = @"Go to previous page";
 
+#pragma mark context menu worksheet
+NSString *const EDContextMenuWorksheetSelect                    = @"Select all elements";
+NSString *const EDContextMenuWorksheetDeselect                  = @"Deselect all elements";
+NSString *const EDContextMenuWorksheetCopy                      = @"Copy selected elements";
+NSString *const EDContextMenuWorksheetCut                       = @"Cut selected elements";
+NSString *const EDContextMenuWorksheetDelete                    = @"Delete selected elements";
+NSString *const EDContextMenuWorksheetPaste                     = @"Paste elements";
+NSString *const EDContextMenuWorksheetGraph                     = @"Insert Graph";
+NSString *const EDContextMenuWorksheetTextbox                   = @"Insert Textbox";
+NSString *const EDContextMenuWorksheetLine                      = @"Insert Line";
+NSString *const EDEventCommandGraph                             = @"EDEventCommandGraph";
+NSString *const EDEventCommandLine                              = @"EDEventCommandLine";
+NSString *const EDEventCommandTextbox                           = @"EDEventCommandTextbox";
+
+#pragma mark context menu element
+NSString *const EDContextMenuElementSelect                      = @"Select element";
+NSString *const EDContextMenuElementDeselect                    = @"Deselect element";
+NSString *const EDContextMenuElementDelete                      = @"Delete";
+NSString *const EDContextMenuElementCopy                        = @"Copy";
+NSString *const EDContextMenuElementCut                         = @"Cut";
+
 #pragma mark element attributes
 NSString * const EDElementAttributeSelected                     = @"selected";
 NSString * const EDElementAttributeLocationX                    = @"locationX";

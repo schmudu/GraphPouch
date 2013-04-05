@@ -69,6 +69,17 @@
 - (void)onTextboxEndEditing:(NSNotification *)note;
 - (void)onTextboxDidChange:(NSNotification *)note;
 - (void)disableAllTextBoxesFromEditing;
+
+// context menu
+- (void)onMenuCommandCut:(NSNotification *)note;
+- (void)onMenuCommandCopy:(NSNotification *)note;
+- (void)onMenuCommandDelete:(NSNotification *)note;
+- (void)onMenuCommandDeselect:(NSNotification *)note;
+- (void)onMenuCommandGraph:(NSNotification *)note;
+- (void)onMenuCommandLine:(NSNotification *)note;
+- (void)onMenuCommandPaste:(NSNotification *)note;
+- (void)onMenuCommandSelect:(NSNotification *)note;
+- (void)onMenuCommandTextbox:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetView
@@ -323,47 +334,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 
 
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
-    // CRUD
-    if ([[menuItem title] isEqualToString:@"Copy"]){
-         EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
-        NSArray *items = [page getAllSelectedWorksheetObjects];
-        if ([items count] > 0)
-            return TRUE;
-        else
-            return FALSE;
-    }
-    
-    if ([[menuItem title] isEqualToString:@"Cut"]){
-         EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
-        NSArray *items = [page getAllSelectedWorksheetObjects];
-        if ([items count] > 0)
-            return TRUE;
-        else
-            return FALSE;
-    }
-    
-    if ([[menuItem title] isEqualToString:@"Select All"]){
-         EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
-        NSArray *items = [page getAllWorksheetObjects];
-        if ([items count] > 0)
-            return TRUE;
-        else
-            return FALSE;
-    }
-    
-    if ([[menuItem title] isEqualToString:@"Deselect All"]){
-        EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
-        NSArray *items = [page getAllWorksheetObjects];
-        if ([items count] > 0)
-            return TRUE;
-        else
-            return FALSE;
-    }
-    
-    return [super validateMenuItem:menuItem];
-}
-
 - (IBAction)cut:(id)sender{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCut object:self];
 }
@@ -478,38 +448,175 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     //[self disableAllTextBoxesFromEditing];
 }
 
-#pragma mark mouse behavior
-- (void)mouseDown:(NSEvent *)theEvent{
-    BOOL mouseDragged = FALSE;
-    
-    // save mouse down point
-    _mousePointDown = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
-    
-    // clear which element is being dragged
-    _currentDraggedView = nil;
-    
-    // make this the first responder
-    [[self window] makeFirstResponder:self];
-    
-    // catch mouse drags here
-    // for some reason the mouseDown method eats up the mouseDragged events as well
-    while (1) {
-        NSEvent *nextEvent = [[self window] nextEventMatchingMask: (NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-        
-        if ([nextEvent type] == NSLeftMouseUp){
-            [self mouseUp:nextEvent];
-            break;
-        }
-        else{
-            mouseDragged = TRUE;
-            [self mouseDragged:nextEvent];
-        }
+#pragma mark menu
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
+    // CRUD
+    if ([[menuItem title] isEqualToString:@"Copy"]){
+         EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+        NSArray *items = [page getAllSelectedWorksheetObjects];
+        if ([items count] > 0)
+            return TRUE;
+        else
+            return FALSE;
     }
     
-    // if mouse was not dragged then continue with normal order to notifying listeners of mouse down
-    // otherwise the mouse dragging would take care of the selection/deselection of elements
-    if (!mouseDragged)
-        [_nc postNotificationName:EDEventWorksheetClicked object:self];
+    if ([[menuItem title] isEqualToString:@"Cut"]){
+         EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+        NSArray *items = [page getAllSelectedWorksheetObjects];
+        if ([items count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
+    if ([[menuItem title] isEqualToString:@"Select All"]){
+         EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+        NSArray *items = [page getAllWorksheetObjects];
+        if ([items count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
+    if ([[menuItem title] isEqualToString:@"Deselect All"]){
+        EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+        NSArray *items = [page getAllWorksheetObjects];
+        if ([items count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuWorksheetSelect]){
+        return TRUE;
+    }
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuWorksheetDeselect]){
+        return TRUE;
+    }
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuWorksheetCopy]){
+        NSArray *selectedItems = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
+        if ([selectedItems count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuWorksheetCut]){
+        NSArray *selectedItems = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
+        if ([selectedItems count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
+    if ([[menuItem title] isEqualToString:EDContextMenuWorksheetDelete]){
+        NSArray *selectedItems = [EDCoreDataUtility getAllSelectedWorksheetElements:_context];
+        if ([selectedItems count] > 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    
+#warning worksheet elements
+    if (([[menuItem title] isEqualToString:EDContextMenuWorksheetGraph]) ||
+        ([[menuItem title] isEqualToString:EDContextMenuWorksheetLine]) ||
+        ([[menuItem title] isEqualToString:EDContextMenuWorksheetTextbox])){
+        return TRUE;
+    }
+    return [super validateMenuItem:menuItem];
+}
+
+
+- (NSMenu *)menuForEvent:(NSEvent *)event{
+    NSMenu *returnMenu = [[NSMenu alloc] init];
+#warning worksheet elements
+    [returnMenu addItemWithTitle:EDContextMenuWorksheetSelect action:@selector(onMenuCommandSelect:) keyEquivalent:@"a"];
+    [returnMenu addItemWithTitle:EDContextMenuWorksheetDeselect action:@selector(onMenuCommandDeselect:) keyEquivalent:@"d"];
+    [returnMenu addItem:[NSMenuItem separatorItem]];
+    [returnMenu addItemWithTitle:EDContextMenuWorksheetCopy action:@selector(onMenuCommandCopy:) keyEquivalent:@"x"];
+    [returnMenu addItemWithTitle:EDContextMenuWorksheetCut action:@selector(onMenuCommandCut:) keyEquivalent:@"c"];
+    [returnMenu addItemWithTitle:EDContextMenuWorksheetDelete action:@selector(onMenuCommandDelete:) keyEquivalent:@""];
+    [returnMenu addItem:[NSMenuItem separatorItem]];
+    [returnMenu addItemWithTitle:EDContextMenuWorksheetGraph action:@selector(onMenuCommandGraph:) keyEquivalent:@""];
+    [returnMenu addItemWithTitle:EDContextMenuWorksheetLine action:@selector(onMenuCommandLine:) keyEquivalent:@""];
+    [returnMenu addItemWithTitle:EDContextMenuWorksheetTextbox action:@selector(onMenuCommandTextbox:) keyEquivalent:@""];
+    return returnMenu;
+}
+
+- (void)onMenuCommandSelect:(NSNotification *)note{
+    [EDCoreDataUtility selectAllWorksheetElementsOnCurrentPage:_context];
+}
+
+- (void)onMenuCommandDeselect:(NSNotification *)note{
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context];
+}
+
+- (void)onMenuCommandCut:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCut object:self];
+}
+
+- (void)onMenuCommandCopy:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventShortcutCopy object:self];
+}
+
+- (void)onMenuCommandDelete:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventDeleteKeyPressedWithoutModifiers object:self];
+}
+
+- (void)onMenuCommandGraph:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCommandGraph object:self];
+}
+
+- (void)onMenuCommandLine:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCommandLine object:self];
+}
+
+- (void)onMenuCommandTextbox:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCommandTextbox object:self];
+}
+
+#pragma mark mouse behavior
+- (void)mouseDown:(NSEvent *)theEvent{
+    // if mouse down with control key, then do not execute this method
+    NSUInteger flags = [theEvent modifierFlags];
+    if(flags & NSControlKeyMask){
+        // do nothing
+#error menu not showing up for control click
+    }
+    else{
+        BOOL mouseDragged = FALSE;
+        
+        // save mouse down point
+        _mousePointDown = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
+        
+        // clear which element is being dragged
+        _currentDraggedView = nil;
+        
+        // make this the first responder
+        [[self window] makeFirstResponder:self];
+        
+        // catch mouse drags here
+        // for some reason the mouseDown method eats up the mouseDragged events as well
+        while (1) {
+            NSEvent *nextEvent = [[self window] nextEventMatchingMask: (NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+            
+            if ([nextEvent type] == NSLeftMouseUp){
+                [self mouseUp:nextEvent];
+                break;
+            }
+            else{
+                mouseDragged = TRUE;
+                [self mouseDragged:nextEvent];
+            }
+        }
+        
+        // if mouse was not dragged then continue with normal order to notifying listeners of mouse down
+        // otherwise the mouse dragging would take care of the selection/deselection of elements
+        if (!mouseDragged)
+            [_nc postNotificationName:EDEventWorksheetClicked object:self];
+    }
 }
 
 - (void)mouseUp:(NSEvent *)theEvent{
