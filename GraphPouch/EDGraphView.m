@@ -48,6 +48,7 @@
 - (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph{
     self = [super initWithFrame:frame];
     if (self){
+        _equationsAlreadyDrawn = FALSE;
         _context = [myGraph managedObjectContext];
         _labels = [[NSMutableArray alloc] init];
         _equations = [[NSMutableArray alloc] init];
@@ -562,6 +563,9 @@
     for (NSTextField *numberField in _labels){
         [numberField removeFromSuperview];
     }
+    
+    // remove all objects
+    [_labels removeAllObjects];
 }
 
 - (void)removeEquations{
@@ -569,6 +573,11 @@
     for (NSView *equationView in _equations){
         [equationView removeFromSuperview];
     }
+    
+    // remove all objects
+    [_equations removeAllObjects];
+    
+    _equationsAlreadyDrawn = FALSE;
 }
 
 - (void)removePoints{
@@ -576,15 +585,26 @@
     for (NSView *pointView in _points){
         [pointView removeFromSuperview];
     }
+    
+    // remove all objects
+    [_points removeAllObjects];
 }
 
 - (void)drawEquations:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
+    // if equations already drawn then do nothing
+    if (_equationsAlreadyDrawn)
+        return;
+    
     EDEquationView *equationView;
     EDEquationCacheView *equationCacheView;
     NSImage *equationImage;
     
     // for each graph create a graph view
     for (EDEquation *equation in [[self dataObj] equations]){
+        // if not visible then do not draw this equation
+        if (![equation isVisible])
+            continue;
+        
         // create origin equation view
         equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight]) equation:equation];
         [equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
@@ -604,6 +624,8 @@
         // save view so it can be erased later
         [_equations addObject:equationCacheView];
     }
+    
+    _equationsAlreadyDrawn = TRUE;
 }
 
 - (void)drawPointsWithLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{

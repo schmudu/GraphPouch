@@ -11,6 +11,7 @@
 @class EDGraph;
 
 @interface EDGraphView : EDWorksheetElementView {
+    BOOL _equationsAlreadyDrawn;  // because mouseUp events are not always fired (mouseDown gobbles them up) we need to keep track of whether or not we've drawn the equations
     NSMutableArray *_labels;
     NSMutableArray *_equations;
     NSMutableArray *_points;
