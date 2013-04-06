@@ -104,8 +104,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewStartDrag object:self];
     
     NSPoint down = [_mouseDownEvent locationInWindow];
-    NSPoint drag = [theEvent locationInWindow];
     /*
+     NSPoint drag = [theEvent locationInWindow];
      float distance = hypotf(down.x - drag.x, down.y - drag.y);
     
     if (distance < 3){

@@ -10,20 +10,21 @@
 //  EDGraphMargin defines the space in which labels can be drawn next to the coordinate axes
 //  EDCoordinateArrowWidth defines the width of the arrow that could potentially be drawn on the very edge of the graph
 
-#import "NS(Attributed)String+Geometrics.h"
+#import "EDConstants.h"
 #import "EDCoreDataUtility.h"
-#import "EDGraphView.h"
 #import "EDElement.h"
+#import "EDGraphView.h"
+#import "EDGraph.h"
+#import "EDEquation.h"
+#import "EDEquationView.h"
+#import "EDParser.h"
+#import "EDPoint.h"
+#import "EDPointView.h"
+#import "EDWorksheetView.h"
+#import "NS(Attributed)String+Geometrics.h"
+#import "NSColor+Utilities.h"
 #import "NSManagedObject+Attributes.h"
 #import "NSObject+Document.h"
-#import "EDGraph.h"
-#import "EDConstants.h"
-#import "NSColor+Utilities.h"
-#import "EDPoint.h"
-#import "EDEquation.h"
-#import "EDParser.h"
-#import "EDEquationView.h"
-#import "EDPointView.h"
 
 @interface EDGraphView()
 - (float)height;
@@ -122,7 +123,11 @@
     [self removeEquations];
     [self removePoints];
     
-    [self drawElementAttributes];
+    // do not allow element to be drawn if mouse is being dragged
+#warning need to get rid of mouseIsDragging and draw EDEquationView as a cache rather than redraw it every time something changes
+#warning this also violates loosely coupling
+    if (![(EDWorksheetView *)[self superview] mouseIsDragging])
+        [self drawElementAttributes];
 }
     
 - (void)drawRect:(NSRect)dirtyRect{

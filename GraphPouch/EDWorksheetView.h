@@ -18,6 +18,7 @@
     NSMutableDictionary *_elementsWithTransformRects;
     BOOL _mouseIsDown;
     BOOL _elementIsBeingModified;
+    BOOL _mouseIsDragging;
     NSPoint _transformRectDragPoint;
     EDPage *_currentPage;
     EDTextboxView *_currentTextView;
@@ -38,4 +39,5 @@
 - (IBAction)selectAll:(id)sender;
 - (IBAction)deselectAll:(id)sender;
 - (void)onPagesWillBeDeleted:(NSArray *)pages;
+- (BOOL)mouseIsDragging;
 @end
