@@ -81,6 +81,7 @@ NSString * const EDEquationAttributeTokens                      = @"tokens";
 NSString * const EDEventQuitDuringEquationSheet                 = @"EDEventQuitDuringEquationSheet";
 int const EDEquationSheetIndexInvalid                           = -1;
 float const EDEquationMaxThresholdDrawingValue                  = 1.5;
+float const EDEquationLineWidth                                 = 1.0;
 
 #pragma mark errors
 NSString * const EDErrorDomain                                  = @"com.edcodia.graphpouch";

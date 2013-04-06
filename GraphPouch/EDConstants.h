@@ -102,6 +102,7 @@ extern NSString *const EDEquationAttributeTokens;
 extern NSString *const EDEventQuitDuringEquationSheet;
 extern int const EDEquationSheetIndexInvalid;
 extern float const EDEquationMaxThresholdDrawingValue;
+extern float const EDEquationLineWidth;
 
 #pragma mark errors
 extern NSString *const EDErrorDomain;

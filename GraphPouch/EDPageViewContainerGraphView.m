@@ -92,7 +92,7 @@
     
     // set stroke
     [[NSColor colorWithHexColorString:EDGridColor alpha:EDGridAlpha] setStroke];
-    [NSBezierPath setDefaultLineWidth:0.3];
+    [NSBezierPath setDefaultLineWidth:0.15];
     // draw positive horizontal lines starting from origin
     for (int i=0; i<=numGridLines; i++) {
         // no need to draw all of the lines

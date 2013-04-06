@@ -57,6 +57,7 @@
     
     // set stroke
     [[NSColor blackColor] setStroke];
+    [path setLineWidth:EDEquationLineWidth];
     
     int endInt = (int)[self frame].size.width * EDGraphDependentVariableIncrement;
     float i;
