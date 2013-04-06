@@ -13,10 +13,11 @@
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
 #import "EDElement.h"
+#import "EDEquation.h"
+#import "EDEquationCacheView.h"
+#import "EDEquationView.h"
 #import "EDGraphView.h"
 #import "EDGraph.h"
-#import "EDEquation.h"
-#import "EDEquationView.h"
 #import "EDParser.h"
 #import "EDPoint.h"
 #import "EDPointView.h"
@@ -119,6 +120,7 @@
     // this is called whenever the context for this object changes
     [super updateDisplayBasedOnContext];
  
+#warning worksheet elements
     [self removeLabels];
     [self removeEquations];
     [self removePoints];
@@ -578,18 +580,29 @@
 
 - (void)drawEquations:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     EDEquationView *equationView;
+    EDEquationCacheView *equationCacheView;
+    NSImage *equationImage;
     
-    
+    // for each graph create a graph view
     for (EDEquation *equation in [[self dataObj] equations]){
-        if ([equation isVisible]){
-            // add equation view
-            equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight]) equation:equation];
-            [equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
-            [self addSubview:equationView];
-            
-            // add to list that will remove them all later
-            [_equations addObject:equationView];
-        }
+        // create origin equation view
+        equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight]) equation:equation];
+        [equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
+        
+        // create image
+        equationImage = [[NSImage alloc] initWithData:[equationView dataWithPDFInsideRect:[equationView bounds]]];
+        
+        // create cache image that only needs to draw on update
+        equationCacheView = [[EDEquationCacheView alloc] initWithFrame:[self bounds] equationImage:equationImage];
+        
+        // add to subview
+        [self addSubview:equationCacheView];
+        
+        // set origin
+        [equationCacheView setFrameOrigin:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
+        
+        // save view so it can be erased later
+        [_equations addObject:equationCacheView];
     }
 }
 

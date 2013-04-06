@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CD015FCE15BA66CA0096CDF9 /* EDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CD015FCD15BA66CA0096CDF9 /* EDConstants.m */; };
+		CD0AC3241710539A0006B9B2 /* EDEquationCacheView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0AC323171053990006B9B2 /* EDEquationCacheView.m */; };
 		CD0CA8BC16DEFB6D0039C933 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD0CA8BB16DEFB6D0039C933 /* IOKit.framework */; };
 		CD0CA8BE16DEFBB70039C933 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD0CA8BD16DEFBB70039C933 /* Security.framework */; };
 		CD1422C715C7590700F55819 /* EDCoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1422C615C7590700F55819 /* EDCoreDataUtility.m */; };
@@ -164,6 +165,8 @@
 /* Begin PBXFileReference section */
 		CD015FCC15BA66CA0096CDF9 /* EDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDConstants.h; sourceTree = "<group>"; };
 		CD015FCD15BA66CA0096CDF9 /* EDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDConstants.m; sourceTree = "<group>"; };
+		CD0AC322171053990006B9B2 /* EDEquationCacheView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDEquationCacheView.h; sourceTree = "<group>"; };
+		CD0AC323171053990006B9B2 /* EDEquationCacheView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDEquationCacheView.m; sourceTree = "<group>"; };
 		CD0CA8BA16DEF9670039C933 /* GraphPouch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GraphPouch.entitlements; sourceTree = "<group>"; };
 		CD0CA8BB16DEFB6D0039C933 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = ../../../../../../System/Library/Frameworks/IOKit.framework; sourceTree = "<group>"; };
 		CD0CA8BD16DEFBB70039C933 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = ../../../../../../System/Library/Frameworks/Security.framework; sourceTree = "<group>"; };
@@ -748,6 +751,8 @@
 		CD3F0AFF15C4784000AB7567 /* Graph */ = {
 			isa = PBXGroup;
 			children = (
+				CD0AC322171053990006B9B2 /* EDEquationCacheView.h */,
+				CD0AC323171053990006B9B2 /* EDEquationCacheView.m */,
 				CDB682EB1694E80700702EAA /* EDEquationView.h */,
 				CDB682EC1694E80700702EAA /* EDEquationView.m */,
 				CD3F0A9815BDF93400AB7567 /* EDGraphView.h */,
@@ -1402,6 +1407,7 @@
 				CDA299C416F7A9890021729F /* EDPageViewContainerLineView.m in Sources */,
 				CDA299C716F7A99B0021729F /* EDPageViewContainerLineCacheView.m in Sources */,
 				CD980DDF16FD0FC700209E02 /* EDPagesViewSelectionView.m in Sources */,
+				CD0AC3241710539A0006B9B2 /* EDEquationCacheView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
