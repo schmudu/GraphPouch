@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDPanelPropertiesController.h"
-//#import "EDWindow.h"
 #import "INAppStoreWindow.h"
 #import "EDMainContentView.h"
 #import "EDPagesView.h"
@@ -50,4 +49,6 @@
 - (IBAction)worksheetItemPrevious:(id)sender;
 - (IBAction)paste:(id)sender;
 - (IBAction)toggleAboutWindow:(id)sender;
+- (void)propertiesPanelDisable:(id)sender;
+- (void)propertiesPanelEnable:(id)sender;
 @end

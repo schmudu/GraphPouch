@@ -20,6 +20,7 @@
 #import "EDTextbox.h"
 
 @interface EDPanelPropertiesController : NSWindowController <NSWindowDelegate>{
+    BOOL _panelEnabled;
     IBOutlet NSMenuItem *menuItemProperties;
     EDPanelPropertiesDocumentController *documentController;
     EDPanelPropertiesGraphController *graphController;
@@ -45,4 +46,6 @@
 - (void)onTextboxDidBeginEditing:(EDTextView *)currentTextView currentTextbox:(EDTextbox *)currentTextbox;
 - (void)onTextboxDidEndEditing;
 - (void)onTextboxDidChange;
+- (void)panelObservingContextDisable;
+- (void)panelObservingContextEnable;
 @end

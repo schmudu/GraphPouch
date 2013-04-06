@@ -18,12 +18,10 @@
 #import "NSManagedObject+EasyFetching.h"
 
 @interface EDWorksheetViewController ()
+- (void)copyElements:(NSNotification *)note;
+- (void)cutSelectedElements:(NSNotification *)note;
 - (void)deselectAllElements:(NSNotification *)note;
 - (void)deleteSelectedElements:(NSNotification *)note;
-- (void)onWindowResized:(NSNotification *)note;
-- (void)cutSelectedElements:(NSNotification *)note;
-- (void)copyElements:(NSNotification *)note;
-- (void)pasteElements:(NSNotification *)note;
 - (void)onCommandGraph:(NSNotification *)note;
 - (void)onCommandLine:(NSNotification *)note;
 - (void)onCommandTextbox:(NSNotification *)note;
@@ -32,6 +30,8 @@
 - (void)onTextboxDidBeginEditing:(NSNotification *)note;
 - (void)onTextboxDidEndEditing:(NSNotification *)note;
 - (void)onTextboxDidChange:(NSNotification *)note;
+- (void)onWindowResized:(NSNotification *)note;
+- (void)pasteElements:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetViewController
@@ -299,7 +299,6 @@
 }
 
 - (void)pasteElements:(NSNotification *)note{
-    NSLog(@"controller paste.");
     // send to first responder
     [[[[self view] window] firstResponder] doCommandBySelector:@selector(paste:)];
 }
@@ -348,7 +347,7 @@
     [EDCoreDataUtility moveSelectedWorksheetElements:direction multiplyModifier:multipyModifier context:_context];
 }
 
-#pragma mark pages 
+#pragma mark pages
 - (void)onPagesWillBeRemoved:(NSArray *)pagesToDelete{
     [(EDWorksheetView *)[self view] onPagesWillBeDeleted:pagesToDelete];
 }

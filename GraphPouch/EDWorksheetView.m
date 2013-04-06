@@ -48,10 +48,8 @@
 - (float)findClosestPoint:(float)currentPoint guides:(NSMutableArray *)guides;
 
 // elements
-- (void)addElementFeatures;
 - (void)drawAllElements;
 - (void)removeAllElements:(EDPage *)page;
-- (void)removeElementFeatures;
 - (void)removeElementView:(EDElement *)element;
 - (NSMutableArray *)getAllSelectedWorksheetElementsViews;
 - (NSMutableArray *)getAllUnselectedWorksheetElementsViews;
@@ -61,7 +59,6 @@
 - (void)updateTransformRects:(NSArray *)updatedElements;
 - (void)mouseDragTransformRect:(NSEvent *)event element:(EDWorksheetElementView *)element;
 - (void)onTransformRectChanged:(NSNotification *)note;
-//- (EDWorksheetElementView *)findElementViewViaTransformRect:(EDTransformRect *)rect element:(EDElement *)element;
 - (void)onTransformPointMouseUp:(NSNotification *)note;
 - (void)onTransformPointMouseDown:(NSNotification *)note;
 - (void)removeTransformRect:(EDTransformRect *)transformRect element:(EDElement *)element;
@@ -91,7 +88,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         _mouseIsDown = FALSE;
-        _mouseIsDragging = FALSE;
         _elementIsBeingModified = FALSE;
         
         // these dictionaries are the reverse of each other
@@ -605,10 +601,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 #pragma mark mouse behavior
-- (BOOL)mouseIsDragging{
-    return _mouseIsDragging;
-}
-
 - (void)mouseDown:(NSEvent *)theEvent{
     // if mouse down with control key, then do not execute this method
     NSUInteger flags = [theEvent modifierFlags];
@@ -629,9 +621,8 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         // make this the first responder
         [[self window] makeFirstResponder:self];
         
-        // remove features while dragging so it doesn't slow down
-        [self removeElementFeatures];
-        _mouseIsDragging = TRUE;
+        // disable property panel
+        [[[self window] firstResponder] doCommandBySelector:@selector(propertiesPanelDisable:)];
         
         // catch mouse drags here
         // for some reason the mouseDown method eats up the mouseDragged events as well
@@ -648,9 +639,8 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             }
         }
         
-        // add the element features back
-        _mouseIsDragging = FALSE;
-        [self addElementFeatures];
+        // disable property panel
+        [[[self window] firstResponder] doCommandBySelector:@selector(propertiesPanelEnable:)];
         
         // if mouse was not dragged then continue with normal order to notifying listeners of mouse down
         // otherwise the mouse dragging would take care of the selection/deselection of elements
@@ -923,24 +913,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 #pragma mark elements
-- (void)addElementFeatures{
-    // remove features
-    for (NSView *view in [self subviews]){
-        if ([view isKindOfClass:[EDWorksheetElementView class]]){
-            [(EDWorksheetElementView *)view addFeatures];
-        }
-    }
-}
-
-- (void)removeElementFeatures{
-    // remove features
-    for (NSView *view in [self subviews]){
-        if ([view isKindOfClass:[EDWorksheetElementView class]]){
-            [(EDWorksheetElementView *)view removeFeatures];
-        }
-    }
-}
-
 - (void)drawAllElements{
     // draw all elements for the current page
     EDPage *currentPage = (EDPage *)[EDPage getCurrentPage:_context];

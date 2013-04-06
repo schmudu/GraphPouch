@@ -76,6 +76,7 @@ extern NSString *const EDEventCommandGraph;
 extern NSString *const EDEventCommandLine;
 extern NSString *const EDEventCommandTextbox;
 
+
 #pragma mark directions
 typedef enum{
     EDDirectionLeft,
@@ -383,6 +384,8 @@ extern float const EDIncrementPressedArrow;
 extern float const EDCopyLocationOffset;
 extern NSString *const EDKeyPointDrag;
 extern NSString *const EDKeyPointDown;
+extern NSString *const EDEventDraggingMouseStart;
+extern NSString *const EDEventDraggingMouseFinish;
 
 #pragma mark worksheet events
 extern NSString *const EDEventWorksheetClicked;

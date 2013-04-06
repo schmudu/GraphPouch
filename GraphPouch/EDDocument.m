@@ -360,6 +360,15 @@
     }
 }
 
+#pragma mark properties panel
+- (void)propertiesPanelDisable:(id)sender{
+    [propertyController panelObservingContextDisable];
+}
+
+- (void)propertiesPanelEnable:(id)sender{
+    [propertyController panelObservingContextEnable];
+}
+
 #pragma mark menu
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
     // CRUD

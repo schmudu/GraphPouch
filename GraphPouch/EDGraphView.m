@@ -123,11 +123,7 @@
     [self removeEquations];
     [self removePoints];
     
-    // do not allow element to be drawn if mouse is being dragged
-#warning need to get rid of mouseIsDragging and draw EDEquationView as a cache rather than redraw it every time something changes
-#warning this also violates loosely coupling
-    if (![(EDWorksheetView *)[self superview] mouseIsDragging])
-        [self drawElementAttributes];
+    [self drawElementAttributes];
 }
     
 - (void)drawRect:(NSRect)dirtyRect{

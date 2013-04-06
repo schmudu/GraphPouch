@@ -34,6 +34,7 @@
     if (self) {
         _nc = [NSNotificationCenter defaultCenter];
         _currentTextView = nil;
+        _panelEnabled = TRUE;
     }
     
     return self;
@@ -103,6 +104,10 @@
 }
 
 - (void)setCorrectView{
+    // don't do anything if not enabled
+    if (!_panelEnabled)
+        return;
+    
     // get all the selected objects
     NSMutableDictionary *selectedTypes = [EDCoreDataUtility getAllTypesOfSelectedWorksheetElements:_context];
     
@@ -292,6 +297,19 @@
     if(([self isWindowLoaded]) && ([[self window] isVisible])){
         [self setCorrectView];
     }
+}
+
+- (void)panelObservingContextDisable{
+    [_nc removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+    _panelEnabled = FALSE;
+}
+
+- (void)panelObservingContextEnable{
+    [_nc addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+    _panelEnabled = TRUE;
+    
+    // set correct view
+    [self setCorrectView];
 }
 
 #pragma mark keyboard

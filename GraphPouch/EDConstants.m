@@ -362,6 +362,8 @@ float const EDIncrementPressedArrow                             = 2.0;
 float const EDCopyLocationOffset                                = 50.0;
 NSString * const EDKeyPointDown                                 = @"EDKeyPointDown";
 NSString * const EDKeyPointDrag                                 = @"EDKeyPointDrag";
+NSString * const EDEventDraggingMouseStart                      = @"EDEventDraggingMouseStart";
+NSString * const EDEventDraggingMouseFinish                     = @"EDEventDraggingMouseFinish";
 
 #pragma mark worksheet elements
 NSString * const EDEventMouseDoubleClick                        = @"EDEventMouseDoubleClick";
