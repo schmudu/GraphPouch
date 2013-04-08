@@ -27,7 +27,6 @@
 #import "NSManagedObject+EasyFetching.h"
 
 @interface EDDocument()
-- (void)modifyPersistentStores;
 - (void)onContextChanged:(NSNotification *)note;
 - (void)onMainWindowClosed:(NSNotification *)note;
 - (void)onPagesViewTabKeyPressed:(NSNotification *)note;
@@ -149,8 +148,6 @@
 }
 
 - (void)awakeFromNib{
-    [self modifyPersistentStores];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
 
@@ -165,17 +162,22 @@
 }
 
 #pragma mark document
-- (void)modifyPersistentStores{
-    /*
-    // going to migrate persistent stores to open temp file in reachable place
-    NSPersistentStoreCoordinator *psc = [_rootContext persistentStoreCoordinator];
-    NSString *tempFileTemplate = [NSTemporaryDirectory() stringByAppendingPathComponent:@"graphpouch_temp.gp"];
+/*
+- (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url ofType:(NSString *)fileType modelConfiguration:(NSString *)configuration storeOptions:(NSDictionary *)storeOptions error:(NSError **)error
+{
+    NSMutableDictionary *newStoreOptions;
+    if (storeOptions == nil) {
+        newStoreOptions = [NSMutableDictionary dictionary];
+    }
+    else {
+        newStoreOptions = [storeOptions mutableCopy];
+    }
+    [newStoreOptions setObject:[NSNumber numberWithBool:YES] forKey:NSMigratePersistentStoresAutomaticallyOption];
+    [newStoreOptions setObject:[NSNumber numberWithBool:YES] forKey:NSInferMappingModelAutomaticallyOption];
     
-    // migrate persistent store to use template
-    
-    NSLog(@"stores:%@ create folder temp file:%@", [psc persistentStores], tempFileTemplate);
-    */
-}
+    BOOL result = [super configurePersistentStoreCoordinatorForURL:url ofType:fileType modelConfiguration:configuration storeOptions:newStoreOptions error:error];
+    return result;
+}*/
 
 - (void)autosaveDocumentWithDelegate:(id)delegate didAutosaveSelector:(SEL)didAutosaveSelector contextInfo:(void *)contextInfo{
     [self updateChangeCount:NSChangeDone];
