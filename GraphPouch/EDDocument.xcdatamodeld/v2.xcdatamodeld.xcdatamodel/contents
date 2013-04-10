@@ -32,7 +32,6 @@
         <relationship name="points" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDPoint" inverseName="graph" inverseEntity="EDPoint" syncable="YES"/>
     </entity>
     <entity name="EDLine" representedClassName="EDLine" parentEntity="EDElement" syncable="YES">
-        <attribute name="dummy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thickness" attributeType="Float" defaultValueString="1" syncable="YES"/>
         <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="lines" inverseEntity="EDPage" syncable="YES"/>
     </entity>
@@ -67,7 +66,7 @@
         <element name="EDElement" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDEquation" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDGraph" positionX="160" positionY="192" width="128" height="270"/>
-        <element name="EDLine" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="EDLine" positionX="160" positionY="192" width="128" height="75"/>
         <element name="EDPage" positionX="160" positionY="192" width="128" height="135"/>
         <element name="EDPoint" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDTextbox" positionX="160" positionY="192" width="128" height="75"/>

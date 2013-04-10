@@ -278,6 +278,7 @@
 		CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphArrayController.m; sourceTree = "<group>"; };
 		CD4E680B16E78E78002397C0 /* EDMenuWorksheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWorksheetController.h; sourceTree = "<group>"; };
 		CD4E680C16E78E78002397C0 /* EDMenuWorksheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWorksheetController.m; sourceTree = "<group>"; };
+		CD4FF07B1714C21800DEBF29 /* v2.xcdatamodeld.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = v2.xcdatamodeld.xcdatamodel; sourceTree = "<group>"; };
 		CD5312A416ECE94100F670FD /* INAppStoreWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INAppStoreWindow.h; sourceTree = "<group>"; };
 		CD5312A516ECE94100F670FD /* INAppStoreWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = INAppStoreWindow.m; sourceTree = "<group>"; };
 		CD5312A616ECE94100F670FD /* INWindowButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INWindowButton.h; sourceTree = "<group>"; };
@@ -1568,10 +1569,11 @@
 		CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CD4FF07B1714C21800DEBF29 /* v2.xcdatamodeld.xcdatamodel */,
 				CD7EAA5716F49A5800EBE2B1 /* v1.xcdatamodeld.xcdatamodel */,
 				CD47113D15BA1647008AACC3 /* EDDocument.xcdatamodel */,
 			);
-			currentVersion = CD7EAA5716F49A5800EBE2B1 /* v1.xcdatamodeld.xcdatamodel */;
+			currentVersion = CD4FF07B1714C21800DEBF29 /* v2.xcdatamodeld.xcdatamodel */;
 			path = EDDocument.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
