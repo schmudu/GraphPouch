@@ -10,6 +10,7 @@
 #import "EDCoreDataUtility+Pages.h"
 #import "EDCoreDataUtility+Worksheet.h"
 #import "EDElement.h"
+#import "EDExpression.h"
 #import "EDGraph.h"
 #import "EDLine.h"
 #import "EDTextbox.h"
@@ -94,6 +95,7 @@
 - (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
     NSMutableArray *elements = [[NSMutableArray alloc] init];
+    NSArray *expressions = [EDExpression getAllSelectedObjects:_context];
     NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
     NSArray *lines = [EDLine getAllSelectedObjects:_context];
     NSArray *textboxes = [EDTextbox getAllSelectedObjects:_context];
@@ -103,6 +105,7 @@
     EDElement *currentElement;
     
 #warning worksheet elements
+    [elements addObjectsFromArray:expressions];
     [elements addObjectsFromArray:graphs];
     [elements addObjectsFromArray:lines];
     [elements addObjectsFromArray:textboxes];

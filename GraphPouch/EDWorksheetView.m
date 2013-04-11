@@ -11,6 +11,7 @@
 #import "EDCoreDataUtility+Pages.h"
 #import "EDCoreDataUtility.h"
 #import "EDDocument.h"
+#import "EDExpression.h"
 #import "EDGraph.h"
 #import "EDGraphView.h"
 #import "EDLine.h"
@@ -28,10 +29,11 @@
 #import "NSObject+Worksheet.h"
 
 @interface EDWorksheetView()
-- (void)drawTextbox:(EDTextbox *)textbox;
+- (void)drawExpression:(EDExpression *)expression;
 - (void)drawGraph:(EDGraph *)graph;
 - (void)drawLine:(EDLine *)line;
 - (void)drawGuide:(NSPoint)startPoint endPoint:(NSPoint)endPoint;
+- (void)drawTextbox:(EDTextbox *)textbox;
 - (void)onContextChanged:(NSNotification *)note;
 - (void)onElementMouseDown:(NSNotification *)note;
 - (void)onElementMouseDragged:(NSNotification *)note;
@@ -74,6 +76,7 @@
 - (void)onMenuCommandCopy:(NSNotification *)note;
 - (void)onMenuCommandDelete:(NSNotification *)note;
 - (void)onMenuCommandDeselect:(NSNotification *)note;
+- (void)onMenuCommandExpression:(NSNotification *)note;
 - (void)onMenuCommandGraph:(NSNotification *)note;
 - (void)onMenuCommandLine:(NSNotification *)note;
 - (void)onMenuCommandPaste:(NSNotification *)note;
@@ -275,6 +278,11 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     }
 }
 
+- (void)drawExpression:(EDExpression *)expression{
+    NSLog(@"need to draw an expression.");
+}
+
+
 - (void)drawGraph:(EDGraph *)graph{
     EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph];
     
@@ -374,6 +382,13 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             if (([[myElement className] isEqualToString:EDEntityNameTextbox]) && (newPage == [(EDLine *)myElement page])) {
                 [self disableAllTextBoxesFromEditing];
                 [self drawTextbox:(EDTextbox *)myElement];
+            }
+            
+            // draw expression
+            if (([[myElement className] isEqualToString:EDEntityNameExpression]) && (newPage == [(EDExpression *)myElement page])) {
+                [self disableAllTextBoxesFromEditing];
+                //[self drawTextbox:(EDTextbox *)myElement];
+                NSLog(@"need to draw expression.");
             }
 #warning worksheet elements
         }
@@ -528,7 +543,8 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     }
     
 #warning worksheet elements
-    if (([[menuItem title] isEqualToString:EDContextMenuWorksheetGraph]) ||
+    if (([[menuItem title] isEqualToString:EDContextMenuWorksheetExpression]) ||
+        ([[menuItem title] isEqualToString:EDContextMenuWorksheetGraph]) ||
         ([[menuItem title] isEqualToString:EDContextMenuWorksheetLine]) ||
         ([[menuItem title] isEqualToString:EDContextMenuWorksheetTextbox])){
         return TRUE;
@@ -548,6 +564,10 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [returnMenu addItemWithTitle:EDContextMenuWorksheetPaste action:@selector(onMenuCommandPaste:) keyEquivalent:@"v"];
     [returnMenu addItemWithTitle:EDContextMenuWorksheetDelete action:@selector(onMenuCommandDelete:) keyEquivalent:@""];
     [returnMenu addItem:[NSMenuItem separatorItem]];
+    
+    NSMenuItem *menuAddExpression = [[NSMenuItem alloc] initWithTitle:EDContextMenuWorksheetExpression action:@selector(onMenuCommandExpression:) keyEquivalent:@"e"];
+    [menuAddExpression setKeyEquivalentModifierMask:NSControlKeyMask];
+    [returnMenu addItem:menuAddExpression];
     
     NSMenuItem *menuAddGraph = [[NSMenuItem alloc] initWithTitle:EDContextMenuWorksheetGraph action:@selector(onMenuCommandGraph:) keyEquivalent:@"g"];
     [menuAddGraph setKeyEquivalentModifierMask:NSControlKeyMask];
@@ -586,6 +606,10 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 - (void)onMenuCommandDelete:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventDeleteKeyPressedWithoutModifiers object:self];
+}
+
+- (void)onMenuCommandExpression:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCommandExpression object:self];
 }
 
 - (void)onMenuCommandGraph:(NSNotification *)note{
@@ -916,6 +940,11 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 - (void)drawAllElements{
     // draw all elements for the current page
     EDPage *currentPage = (EDPage *)[EDPage getCurrentPage:_context];
+    
+    // draw all expresssions
+    for (EDExpression *expression in [currentPage expressions]){
+        [self drawExpression:expression];
+    }
     
     // draw all graphs
     for (EDGraph *graph in [currentPage graphs]){

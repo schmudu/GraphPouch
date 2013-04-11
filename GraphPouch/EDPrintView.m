@@ -53,7 +53,7 @@
     
     // get all pages
     NSArray *pages = [EDPage getAllObjectsOrderedByPageNumber:_context];
-    NSArray *graphs, *textboxes, *lines;
+    NSArray *expressions, *graphs, *textboxes, *lines;
     EDGraphViewPrint *graphView;
     EDLineView *lineView;
     EDTextboxView *textboxView;
@@ -61,6 +61,21 @@
     // for each page draw worksheet elements
     for (EDPage *page in pages){
 #warning worksheet elements
+        // DRAW EXPRESSION
+        expressions = [[page expressions] allObjects];
+        
+        for (EDExpression *expression in expressions){
+            NSLog(@"need to draw expression in print view.");
+            /*
+            // create graphViewPrint and add it to the view
+            graphView = [[EDGraphViewPrint alloc] initWithFrame:NSMakeRect([graph locationX], pageIndex * EDWorksheetViewHeight + [graph locationY], [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph];
+            
+            // add it to view
+            [self addSubview:graphView];
+            [_elements addObject:graphView];
+             */
+        }
+        
         // DRAW GRAPHS
         graphs = [[page graphs] allObjects];
         

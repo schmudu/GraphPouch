@@ -9,6 +9,7 @@
 #import "EDCoreDataUtility.h"
 #import "EDConstants.h"
 #import "EDEquation.h"
+#import "EDExpression.h"
 #import "EDGraph.h"
 #import "EDLine.h"
 #import "EDPage.h"
@@ -73,6 +74,7 @@
 + (BOOL)validateElements:(NSManagedObjectContext *)context{
 #warning worksheet elements
     NSArray *equations = [EDEquation getAllObjects:context];
+    NSArray *expressions = [EDExpression getAllObjects:context];
     NSArray *graphs = [EDGraph getAllObjects:context];
     NSArray *lines = [EDLine getAllObjects:context];
     NSArray *pages = [EDPage getAllObjects:context];
@@ -82,6 +84,7 @@
     NSMutableArray *allObjects = [NSMutableArray array];
     
     [allObjects addObjectsFromArray:equations];
+    [allObjects addObjectsFromArray:expressions];
     [allObjects addObjectsFromArray:graphs];
     [allObjects addObjectsFromArray:lines];
     [allObjects addObjectsFromArray:pages];
@@ -104,14 +107,6 @@
     }
     return returnResult;
 }
-/*
-+ (void)save:(NSManagedObjectContext *)context{
-    NSError *error;
-    BOOL successfulSave = [context save:&error];
-    if (!successfulSave) {
-        NSLog(@"error:%@, %@", error, [error userInfo]);
-    }
-}*/
 
 + (NSManagedObject *)getObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context{
     // this method returns the page object that matches the page number

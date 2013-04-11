@@ -11,6 +11,7 @@
 #import "EDCoreDataUtility+Worksheet.h"
 #import "EDElement.h"
 #import "EDEquation.h"
+#import "EDExpression.h"
 #import "EDGraph.h"
 #import "EDLine.h"
 #import "EDPage.h"
@@ -145,10 +146,12 @@
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     
 #warning worksheet elements
+    NSArray *fetcheExpressions = [EDExpression getAllSelectedObjects:context];
     NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
     NSArray *fetchedLines = [EDLine getAllSelectedObjects:context];
     NSArray *fetchedTextboxes = [EDTextbox getAllSelectedObjects:context];
     NSMutableArray *fetchedObjects = [[NSMutableArray alloc] init];
+    [fetchedObjects addObjectsFromArray:fetcheExpressions];
     [fetchedObjects addObjectsFromArray:fetchedGraphs];
     [fetchedObjects addObjectsFromArray:fetchedLines];
     [fetchedObjects addObjectsFromArray:fetchedTextboxes];
@@ -168,11 +171,13 @@
 + (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context{
     // gets all selected objects
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
+    NSArray *fetchedExpressions = [EDExpression getAllSelectedObjects:context];
     NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
     NSArray *fetchedLines = [EDLine getAllSelectedObjects:context];
     NSArray *fetchedTextboxes = [EDTextbox getAllSelectedObjects:context];
     
 #warning worksheet elements
+    [allObjects addObjectsFromArray:fetchedExpressions];
     [allObjects addObjectsFromArray:fetchedGraphs];
     [allObjects addObjectsFromArray:fetchedLines];
     [allObjects addObjectsFromArray:fetchedTextboxes];
@@ -183,12 +188,17 @@
 + (NSArray *)insertWorksheetElements:(NSArray *)elements intoContext:(NSManagedObjectContext *)context{
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
     NSMutableArray *insertedObjects = [[NSMutableArray alloc] init];
-    //EDElement *newElement;
+    
     // insert objects into context
     for (EDElement *element in elements){
 #warning worksheet elements
         // set element to this page
-        if ([element isKindOfClass:[EDGraph class]]){
+        if ([element isKindOfClass:[EDExpression class]]){
+            EDExpression *newExpression = (EDExpression *)[context copyObject:element toContext:context parent:EDEntityNameExpression];
+            [newExpression setPage:currentPage];
+            [insertedObjects addObject:newExpression];
+        }
+        else if ([element isKindOfClass:[EDGraph class]]){
             EDGraph *newGraph = (EDGraph *)[context copyObject:element toContext:context parent:EDEntityNamePage];
             [newGraph setPage:currentPage];
             [insertedObjects addObject:newGraph];
@@ -212,10 +222,15 @@
 
 + (NSMutableArray *)getAllWorksheetElementsOnPage:(EDPage *)currentPage context:(NSManagedObjectContext *)context{
     // gets all selected objects
+#warning worksheet elements
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
+    NSArray *fetchedExpressions = [EDExpression getAllObjectsOnPage:currentPage context:context];
     NSArray *fetchedGraphs = [EDGraph getAllObjectsOnPage:currentPage context:context];
     NSArray *fetchedLines = [EDLine getAllObjectsOnPage:currentPage context:context];
     NSArray *fetchedTextboxes = [EDTextbox getAllObjectsOnPage:currentPage context:context];
+    
+    if (fetchedExpressions)
+        [allObjects addObjectsFromArray:fetchedExpressions];
     
     if (fetchedGraphs)
         [allObjects addObjectsFromArray:fetchedGraphs];
@@ -232,15 +247,40 @@
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
     // this method returns a dictionary of the types of selected objects
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    NSArray *graphObjects, *lineObjects, *textboxObjects;
+    NSArray *expressionObjects, *graphObjects, *lineObjects, *textboxObjects;
     
 #warning worksheet elements
     // get all selected graphs
+    expressionObjects = [EDExpression getAllSelectedObjects:context];
     graphObjects = [EDGraph getAllSelectedObjects:context];
     lineObjects = [EDLine getAllSelectedObjects:context];
     textboxObjects = [EDTextbox getAllSelectedObjects:context];
     
-    if (([textboxObjects count] > 0) && ([lineObjects count] > 0) && ([graphObjects count] > 0)) {
+    if (([expressionObjects count] > 0) && ([textboxObjects count] > 0) && ([lineObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionGraphLineTextbox];
+    }
+    else if (([expressionObjects count] > 0) && ([textboxObjects count] > 0) && ([lineObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionLineTextbox];
+    }
+    else if (([expressionObjects count] > 0) && ([textboxObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionGraphTextbox];
+    }
+    else if (([expressionObjects count] > 0) && ([lineObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionGraphLine];
+    }
+    else if (([expressionObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionGraph];
+    }
+    else if (([expressionObjects count] > 0) && ([lineObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionLine];
+    }
+    else if (([expressionObjects count] > 0) && ([textboxObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionTextbox];
+    }
+    else if ([expressionObjects count] > 0) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpression];
+    }
+    else if (([textboxObjects count] > 0) && ([lineObjects count] > 0) && ([graphObjects count] > 0)) {
         [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyGraphLineTextbox];
     }
     else if (([lineObjects count] > 0) && ([graphObjects count] > 0)) {
@@ -298,7 +338,10 @@
 + (void)deleteWorksheetElement:(EDElement *)element context:(NSManagedObjectContext *)context{
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];
 #warning worksheet elements
-    if ([element isKindOfClass:[EDGraph class]]) {
+    if ([element isKindOfClass:[EDExpression class]]) {
+        [currentPage removeExpressionsObject:(EDExpression *)element];
+    }
+    else if ([element isKindOfClass:[EDGraph class]]) {
         [currentPage removeGraphsObject:(EDGraph *)element];
     }
     else if ([element isKindOfClass:[EDLine class]]) {
@@ -316,7 +359,10 @@
     
     for (EDElement *element in selectedElements){
 #warning worksheet elements
-        if ([element isKindOfClass:[EDGraph class]]) {
+        if ([element isKindOfClass:[EDExpression class]]) {
+            [currentPage removeExpressionsObject:(EDExpression *)element];
+        }
+        else if ([element isKindOfClass:[EDGraph class]]) {
             [currentPage removeGraphsObject:(EDGraph *)element];
         }
         else if ([element isKindOfClass:[EDLine class]]) {

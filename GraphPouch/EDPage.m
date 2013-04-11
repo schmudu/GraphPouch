@@ -8,6 +8,7 @@
 
 #import "EDLine.h"
 #import "EDPage.h"
+#import "EDExpression.h"
 #import "EDGraph.h"
 #import "EDPoint.h"
 #import "EDEquation.h"
@@ -19,11 +20,12 @@
 
 #warning worksheet elements
 @dynamic currentPage;
-@dynamic pageNumber;
-@dynamic selected;
+@dynamic expressions;
 @dynamic graphs;
 @dynamic lines;
+@dynamic pageNumber;
 @dynamic textboxes;
+@dynamic selected;
 
 #pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
@@ -36,6 +38,12 @@
         
         
 #warning worksheet elements
+        NSSet *expressions = [aDecoder decodeObjectForKey:EDPageAttributeExpressions];
+        for (EDExpression *expression in expressions){
+            // set relationship
+            [self addExpressionsObject:expression];
+        }
+        
         NSSet *graphs = [aDecoder decodeObjectForKey:EDPageAttributeGraphs];
         for (EDGraph *graph in graphs){
             // set relationship
@@ -68,6 +76,7 @@
     [aCoder encodeInt:[[self pageNumber] intValue] forKey:EDPageAttributePageNumber];
     [aCoder encodeBool:[self selected] forKey:EDPageAttributeSelected];
 #warning worksheet elements
+    [aCoder encodeObject:[self expressions] forKey:EDPageAttributeExpressions];
     [aCoder encodeObject:[self graphs] forKey:EDPageAttributeGraphs];
     [aCoder encodeObject:[self lines] forKey:EDPageAttributeLines];
     [aCoder encodeObject:[self textboxes] forKey:EDPageAttributeTextboxes];
@@ -104,6 +113,13 @@
 #pragma mark data structure
 - (BOOL)containsObject:(NSManagedObject *)object{
 #warning worksheet elements
+    // search through expressions
+    for (EDExpression *expression in [self expressions]){
+        if (expression == object){
+            return TRUE;
+        }
+    }
+    
     // search through lines
     for (EDLine *line in [self lines]){
         if (line == object){
@@ -129,15 +145,16 @@
 
 + (NSArray *)allWorksheetClasses{
 #warning worksheet elements
-    return [NSArray arrayWithObjects:[EDGraph class], [EDLine class], [EDTextbox class], nil];
+    return [NSArray arrayWithObjects:[EDExpression class], [EDGraph class], [EDLine class], [EDTextbox class], nil];
 }
 - (NSArray *)getAllWorksheetObjects{
     NSMutableArray *elements = [NSMutableArray array];
     
 #warning worksheet elements
-    [elements addObjectsFromArray:[[self textboxes] allObjects]];
+    [elements addObjectsFromArray:[[self expressions] allObjects]];
     [elements addObjectsFromArray:[[self graphs] allObjects]];
     [elements addObjectsFromArray:[[self lines] allObjects]];
+    [elements addObjectsFromArray:[[self textboxes] allObjects]];
     return elements;
 }
 

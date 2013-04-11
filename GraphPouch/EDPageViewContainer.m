@@ -38,6 +38,10 @@
 // elements
 - (void)updateElements;
 
+// expressions
+- (void)drawExpressions;
+- (void)removeExpressions;
+
 // graphs
 - (void)drawGraphs;
 - (void)removeGraphs;
@@ -177,6 +181,15 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+}
+
+#pragma mark expressions
+- (void)drawExpressions{
+    
+}
+
+- (void)removeExpressions{
+    
 }
 
 #pragma mark lines

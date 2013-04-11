@@ -112,6 +112,7 @@
     NSMutableDictionary *selectedTypes = [EDCoreDataUtility getAllTypesOfSelectedWorksheetElements:_context];
     
 #warning worksheet elements
+#warning need to create panel for EDExpression
     if([selectedTypes valueForKey:EDKeyGraph]){
         if(!graphController){
             graphController = [[EDPanelPropertiesGraphController alloc] initWithNibName:@"EDPanelPropertiesGraph" bundle:nil];

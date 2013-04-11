@@ -65,6 +65,7 @@ extern NSString *const EDContextMenuElementCut;
 #pragma mark context menu worksheet
 extern NSString *const EDContextMenuWorksheetDeselect;
 extern NSString *const EDContextMenuWorksheetSelect;
+extern NSString *const EDContextMenuWorksheetExpression;
 extern NSString *const EDContextMenuWorksheetGraph;
 extern NSString *const EDContextMenuWorksheetTextbox;
 extern NSString *const EDContextMenuWorksheetLine;
@@ -72,6 +73,7 @@ extern NSString *const EDContextMenuWorksheetCopy;
 extern NSString *const EDContextMenuWorksheetCut;
 extern NSString *const EDContextMenuWorksheetPaste;
 extern NSString *const EDContextMenuWorksheetDelete;
+extern NSString *const EDEventCommandExpression;
 extern NSString *const EDEventCommandGraph;
 extern NSString *const EDEventCommandLine;
 extern NSString *const EDEventCommandTextbox;
@@ -93,6 +95,7 @@ extern NSString *const EDEntityNameEquation;
 extern NSString *const EDEntityNameToken;
 extern NSString *const EDEntityNameLine;
 extern NSString *const EDEntityNameTextbox;
+extern NSString *const EDEntityNameExpression;
 
 #pragma mark equations
 extern NSString *const EDEquationAttributeIsVisible;
@@ -107,6 +110,9 @@ extern float const EDEquationLineWidth;
 #pragma mark errors
 extern NSString *const EDErrorDomain;
 extern int const EDErrorTokenizer;
+
+#pragma mark expression
+extern NSString *const EDExpressionAttributeExpression;
 
 #pragma mark general
 extern NSString *const EDKey;
@@ -268,6 +274,7 @@ extern int const EDPageViewGraphBorderDrawMultiplier;
 extern NSString *const EDPageAttributePageNumber;
 extern NSString *const EDPageAttributeSelected;
 extern NSString *const EDPageAttributeCurrent;
+extern NSString *const EDPageAttributeExpressions;
 extern NSString *const EDPageAttributeGraphs;
 extern NSString *const EDPageAttributeLines;
 extern NSString *const EDPageAttributeTextboxes;
@@ -282,6 +289,14 @@ extern float const EDPagesViewWidth;
 
 
 #pragma mark panels
+extern NSString *const EDKeyExpression;
+extern NSString *const EDKeyExpressionGraph;
+extern NSString *const EDKeyExpressionGraphLine;
+extern NSString *const EDKeyExpressionGraphLineTextbox;
+extern NSString *const EDKeyExpressionGraphTextbox;
+extern NSString *const EDKeyExpressionLine;
+extern NSString *const EDKeyExpressionLineTextbox;
+extern NSString *const EDKeyExpressionTextbox;
 extern NSString *const EDKeyGraphLine;
 extern NSString *const EDKeyGraphLineTextbox;
 extern NSString *const EDKeyGraph;
@@ -374,6 +389,7 @@ extern NSString *const EDUTIToken;
 extern NSString *const EDUTIEquation;
 extern NSString *const EDUTILine;
 extern NSString *const EDUTITextbox;
+extern NSString *const EDUTIExpression;
 
 #pragma mark worksheet
 extern float const EDWorksheetViewHeight;

@@ -14,6 +14,10 @@
         <relationship name="graph" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDGraph" inverseName="equations" inverseEntity="EDGraph" syncable="YES"/>
         <relationship name="tokens" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="EDToken" inverseName="equation" inverseEntity="EDToken" syncable="YES"/>
     </entity>
+    <entity name="EDExpression" representedClassName="EDExpression" parentEntity="EDElement" syncable="YES">
+        <attribute name="expression" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="expressions" inverseEntity="EDPage" syncable="YES"/>
+    </entity>
     <entity name="EDGraph" representedClassName="EDGraph" parentEntity="EDElement" syncable="YES">
         <attribute name="hasCoordinateAxes" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="hasGridLines" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
@@ -39,6 +43,7 @@
         <attribute name="currentPage" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="pageNumber" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="selected" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <relationship name="expressions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDExpression" inverseName="page" inverseEntity="EDExpression" syncable="YES"/>
         <relationship name="graphs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDGraph" inverseName="page" inverseEntity="EDGraph" syncable="YES"/>
         <relationship name="lines" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDLine" inverseName="page" inverseEntity="EDLine" syncable="YES"/>
         <relationship name="textboxes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EDTextbox" inverseName="page" inverseEntity="EDTextbox" syncable="YES"/>
@@ -67,9 +72,10 @@
         <element name="EDEquation" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDGraph" positionX="160" positionY="192" width="128" height="270"/>
         <element name="EDLine" positionX="160" positionY="192" width="128" height="75"/>
-        <element name="EDPage" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="EDPage" positionX="160" positionY="192" width="128" height="150"/>
         <element name="EDPoint" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDTextbox" positionX="160" positionY="192" width="128" height="75"/>
         <element name="EDToken" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="EDExpression" positionX="160" positionY="192" width="128" height="75"/>
     </elements>
 </model>

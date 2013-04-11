@@ -16,6 +16,7 @@
 #import "EDEquation.h"
 #import "EDEquationCacheView.h"
 #import "EDEquationView.h"
+#import "EDExpression.h"
 #import "EDGraphView.h"
 #import "EDGraph.h"
 #import "EDParser.h"
@@ -121,7 +122,6 @@
     // this is called whenever the context for this object changes
     [super updateDisplayBasedOnContext];
  
-#warning worksheet elements
     [self removeLabels];
     [self removeEquations];
     [self removePoints];

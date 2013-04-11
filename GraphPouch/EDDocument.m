@@ -175,7 +175,6 @@
     [newStoreOptions setObject:[NSNumber numberWithBool:YES] forKey:NSInferMappingModelAutomaticallyOption];
     
     BOOL result = [super configurePersistentStoreCoordinatorForURL:url ofType:fileType modelConfiguration:configuration storeOptions:newStoreOptions error:error];
-    NSLog(@"base url:%@ model:%@", [url baseURL], [self managedObjectModel]);
     return result;
 }
 

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class EDExpression;
 @class EDGraph;
 @class EDLine;
 @class EDTextbox;
@@ -17,6 +18,7 @@
 
 @property BOOL currentPage, selected;
 @property (nonatomic, retain) NSNumber *pageNumber;
+@property (nonatomic, retain) NSSet *expressions;
 @property (nonatomic, retain) NSSet *graphs;
 @property (nonatomic, retain) NSSet *lines;
 @property (nonatomic, retain) NSSet *textboxes;
@@ -43,5 +45,10 @@
 - (void)removeTextboxesObject:(EDTextbox *)value;
 - (void)addTextboxes:(NSSet *)values;
 - (void)removeTextboxes:(NSSet *)values;
+
+- (void)addExpressionsObject:(EDExpression *)value;
+- (void)removeExpressionsObject:(EDExpression *)value;
+- (void)addExpressions:(NSSet *)values;
+- (void)removeExpressions:(NSSet *)values;
 
 @end

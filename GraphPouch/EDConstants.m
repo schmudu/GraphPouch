@@ -43,9 +43,11 @@ NSString *const EDContextMenuWorksheetCopy                      = @"Copy";
 NSString *const EDContextMenuWorksheetCut                       = @"Cut";
 NSString *const EDContextMenuWorksheetDelete                    = @"Delete";
 NSString *const EDContextMenuWorksheetPaste                     = @"Paste";
+NSString *const EDContextMenuWorksheetExpression                = @"Insert Expression";
 NSString *const EDContextMenuWorksheetGraph                     = @"Insert Graph";
 NSString *const EDContextMenuWorksheetTextbox                   = @"Insert Textbox";
 NSString *const EDContextMenuWorksheetLine                      = @"Insert Line";
+NSString *const EDEventCommandExpression                        = @"EDEventCommandExpression";
 NSString *const EDEventCommandGraph                             = @"EDEventCommandGraph";
 NSString *const EDEventCommandLine                              = @"EDEventCommandLine";
 NSString *const EDEventCommandTextbox                           = @"EDEventCommandTextbox";
@@ -65,6 +67,7 @@ NSString * const EDElementAttributeWidth                        = @"elementWidth
 NSString * const EDElementAttributeHeight                       = @"elementHeight";
 
 #pragma mark entity names
+NSString * const EDEntityNameExpression                         = @"EDExpression";
 NSString * const EDEntityNameGraph                              = @"EDGraph";
 NSString * const EDEntityNamePage                               = @"EDPage";
 NSString * const EDEntityNamePoint                              = @"EDPoint";
@@ -86,6 +89,9 @@ float const EDEquationLineWidth                                 = 1.0;
 #pragma mark errors
 NSString * const EDErrorDomain                                  = @"com.edcodia.graphpouch";
 int const EDErrorTokenizer                                      = 1;
+
+#pragma mark expression
+NSString * const EDExpressionAttributeExpression                = @"expression";
 
 #pragma mark general
 NSString * const EDKey                                          = @"EDKey";
@@ -233,6 +239,7 @@ NSString * const EDPreferencePropertyPanel                      = @"EDPreference
 NSString * const EDPageAttributePageNumber                      = @"pageNumber";
 NSString * const EDPageAttributeSelected                        = @"selected";
 NSString * const EDPageAttributeCurrent                         = @"currentPage";
+NSString * const EDPageAttributeExpressions                     = @"expressions";
 NSString * const EDPageAttributeGraphs                          = @"graphs";
 NSString * const EDPageAttributeLines                           = @"lines";
 NSString * const EDPageAttributeTextboxes                       = @"textboxes";
@@ -279,9 +286,17 @@ float const EDPagesViewWidth                                    = 140;
 int const EDPageViewGraphBorderDrawMultiplier                   = 2;
 
 #pragma mark panels
+NSString * const EDKeyExpression                                = @"EDKeyExpression";
+NSString * const EDKeyExpressionGraph                           = @"EDKeyExpressionGraph";
+NSString * const EDKeyExpressionGraphLine                       = @"EDKeyExpressionGraphLine";
+NSString * const EDKeyExpressionGraphLineTextbox                = @"EDKeyExpressionGraphLineTextbox";
+NSString * const EDKeyExpressionGraphTextbox                    = @"EDKeyExpressionGraphTextbox";
+NSString * const EDKeyExpressionLine                            = @"EDKeyExpressionLine";
+NSString * const EDKeyExpressionLineTextbox                     = @"EDKeyExpressionLineTextbox";
+NSString * const EDKeyExpressionTextbox                         = @"EDKeyExpressionTextbox";
+NSString * const EDKeyGraph                                     = @"EDKeyGraph";
 NSString * const EDKeyGraphLine                                 = @"EDKeyGraphLine";
 NSString * const EDKeyGraphLineTextbox                          = @"EDKeyGraphLineTextbox";
-NSString * const EDKeyGraph                                     = @"EDKeyGraph";
 NSString * const EDKeyGraphTextbox                              = @"EDKeyGraphTextbox";
 NSString * const EDKeyLine                                      = @"EDKeyLine";
 NSString * const EDKeyLineTextbox                               = @"EDKeyLineTextbox";
@@ -352,6 +367,7 @@ NSString * const EDUTIToken                                     = @"com.edcodia.
 NSString * const EDUTIEquation                                  = @"com.edcodia.graphpouch.equation";
 NSString * const EDUTILine                                      = @"com.edcodia.graphpouch.line";
 NSString * const EDUTITextbox                                   = @"com.edcodia.graphpouch.textbox";
+NSString * const EDUTIExpression                                = @"com.edcodia.graphpouch.expression";
 
 #pragma mark worksheet
 float const EDWorksheetViewWidth                                = 612;
