@@ -953,6 +953,15 @@
 						<object class="NSMenu" key="NSSubmenu" id="862844726">
 							<string key="NSTitle">Worksheet</string>
 							<array class="NSMutableArray" key="NSMenuItems">
+								<object class="NSMenuItem" id="498538158">
+									<reference key="NSMenu" ref="862844726"/>
+									<string key="NSTitle">New Expression</string>
+									<string key="NSKeyEquiv">e</string>
+									<int key="NSKeyEquivModMask">262144</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1033313550"/>
+									<reference key="NSMixedImage" ref="310636482"/>
+								</object>
 								<object class="NSMenuItem" id="974002066">
 									<reference key="NSMenu" ref="862844726"/>
 									<string key="NSTitle">New Graph</string>
@@ -1713,6 +1722,14 @@
 						<reference key="destination" ref="238522557"/>
 					</object>
 					<int key="connectionID">702</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">expressionAdd:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="498538158"/>
+					</object>
+					<int key="connectionID">713</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2633,6 +2650,7 @@
 							<reference ref="961701776"/>
 							<reference ref="939328116"/>
 							<reference ref="419132393"/>
+							<reference ref="498538158"/>
 						</array>
 						<reference key="parent" ref="169439842"/>
 					</object>
@@ -2723,6 +2741,11 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">699</int>
 						<reference key="object" ref="419132393"/>
+						<reference key="parent" ref="862844726"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">712</int>
+						<reference key="object" ref="498538158"/>
 						<reference key="parent" ref="862844726"/>
 					</object>
 				</array>
@@ -2856,6 +2879,7 @@
 				<string key="695.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="698.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="699.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="712.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="74.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2872,7 +2896,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">711</int>
+			<int key="maxID">713</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2899,6 +2923,7 @@
 					<string key="className">EDDocument</string>
 					<string key="superclassName">NSPersistentDocument</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="expressionAdd:">id</string>
 						<string key="graphAdd:">id</string>
 						<string key="lineAdd:">id</string>
 						<string key="pageAdd:">id</string>
@@ -2913,6 +2938,10 @@
 						<string key="worksheetItemPrevious:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="expressionAdd:">
+							<string key="name">expressionAdd:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="graphAdd:">
 							<string key="name">graphAdd:</string>
 							<string key="candidateClassName">id</string>

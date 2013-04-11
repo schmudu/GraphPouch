@@ -19,6 +19,7 @@
 }
 - (void)postInitialize:(NSManagedObjectContext *)context copyContext:(NSManagedObjectContext *)copyContext;
 - (void)onPagesWillBeRemoved:(NSArray *)pagesToDelete;
+- (void)addNewExpression;
 - (void)addNewGraph;
 - (void)addNewLine;
 - (void)addNewTextbox;

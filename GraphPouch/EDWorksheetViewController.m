@@ -9,6 +9,7 @@
 #import "EDConstants.h"
 #import "EDCoreDataUtility+Pages.h"
 #import "EDCoreDataUtility+Worksheet.h"
+#import "EDExpression.h"
 #import "EDGraph.h"
 #import "EDLine.h"
 #import "EDPoint.h"
@@ -108,7 +109,33 @@
     [EDCoreDataUtility deleteSelectedWorksheetElements:_context];
 }
 
-#pragma mark line
+#pragma mark expression
+- (void)addNewExpression{
+    // create new expression
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    
+    EDExpression *newExpression = [[EDExpression alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameExpression inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+    
+    // add expression to page
+    [currentPage addExpressionsObject:newExpression];
+    
+    // set expression attributes
+    [newExpression setPage:currentPage];
+    [newExpression setSelected:FALSE];
+    [newExpression setLocationX:50];
+    [newExpression setLocationY:150];
+    [newExpression setElementWidth:EDWorksheetLineSelectionWidth];
+    [newExpression setElementHeight:EDWorksheetLineSelectionHeight];
+    
+    // enter default text
+    [newExpression setExpression:@"y=mx+b"];
+    
+    // select this graph and deselect everything else
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newExpression];
+    
+}
+
+#pragma mark textbox
 - (void)addNewTextbox{
     // create new textbox
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
@@ -125,8 +152,8 @@
     [newTextbox setLocationY:150];
     [newTextbox setElementWidth:EDWorksheetLineSelectionWidth];
     [newTextbox setElementHeight:EDWorksheetLineSelectionHeight];
+    
     // enter default text
-    //NSMutableAttributedString *defaultString = [[_textView textStorage] attributedSubstringFromRange:NSMakeRange(0, [[[_textView textStorage] string] length])];
     NSFont *defaultFont;
     defaultFont = [NSFont fontWithName:@"Helvetica" size:EDFontDefaultSizeTextbox];
     NSMutableAttributedString *defaultString = [[NSMutableAttributedString alloc] initWithString:EDTextViewDefaultString];
@@ -137,6 +164,7 @@
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newTextbox];
 }
 
+#pragma mark line
 - (void)addNewLine{
     // create new graph
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
