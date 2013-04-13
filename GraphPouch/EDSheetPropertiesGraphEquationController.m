@@ -134,6 +134,7 @@
 
 #pragma mark validate
 - (NSMutableDictionary *)validEquation:(NSString *)potentialEquation{
+#warning same code EDExpression
     NSMutableDictionary *results = [NSMutableDictionary dictionary];
     NSError *error;
     NSMutableArray *parsedTokens;

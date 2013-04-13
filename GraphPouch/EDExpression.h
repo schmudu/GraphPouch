@@ -19,4 +19,6 @@
 
 - (EDExpression *)initWithContext:(NSManagedObjectContext *)context;
 - (EDExpression *)copy:(NSManagedObjectContext *)context;
++ (NSMutableDictionary *)isValidEquationOrExpression:(NSString *)potentialEquation context:(NSManagedObjectContext *)context error:(NSError *)error;
++ (NSMutableDictionary *)validEquation:(NSString *)potentialEquation;
 @end

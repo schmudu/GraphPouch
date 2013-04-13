@@ -279,7 +279,22 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)drawExpression:(EDExpression *)expression{
-    NSLog(@"need to draw an expression.");
+    //NSLog(@"need to draw an expression:%@", [expression expression]);
+    // need to validate if this is an expression or equations
+    NSError *error;
+    //BOOL validEquation = [EDExpression isValidEquation:[expression expression] context:_context error:&error];
+    NSDictionary *expressionDict = [EDExpression isValidEquationOrExpression:[expression expression] context:_context error:error];
+    if (error){
+        NSLog(@"error:%@", [[error userInfo] objectForKey:NSLocalizedDescriptionKey]);
+    }
+    else{
+        if (validEquation) {
+            NSLog(@"this is a valid equation.");
+        }
+        else {
+            NSLog(@"this is a valid expression.");
+        }
+    }
 }
 
 
@@ -387,8 +402,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
             // draw expression
             if (([[myElement className] isEqualToString:EDEntityNameExpression]) && (newPage == [(EDExpression *)myElement page])) {
                 [self disableAllTextBoxesFromEditing];
-                //[self drawTextbox:(EDTextbox *)myElement];
-                NSLog(@"need to draw expression.");
+                [self drawExpression:(EDExpression *)myElement];
             }
 #warning worksheet elements
         }
