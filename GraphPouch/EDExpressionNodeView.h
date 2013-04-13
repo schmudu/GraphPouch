@@ -16,6 +16,7 @@
 }
 @property int treeHeight;
 @property float fontModifier, fontSize;
+@property (nonatomic, retain) NSImage *image;
 @property (nonatomic, retain) EDToken *token;
 @property (nonatomic, retain) EDExpressionNodeView *childLeft, *childRight;
 @property (nonatomic, weak) EDExpressionNodeView *parent;
@@ -25,6 +26,7 @@
 + (NSTextField *)generateTextField:(NSRect)rect;
 - (id)initWithFrame:(NSRect)frameRect token:(EDToken *)token;
 - (EDToken *)token;
+- (void)traverseTreeAndCreateImage;
 - (BOOL)insertNodeIntoRightMostChild:(EDExpressionNodeView *)node;
 - (BOOL)isLeafNode;
 
