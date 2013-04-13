@@ -283,17 +283,20 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     // need to validate if this is an expression or equations
     NSError *error;
     //BOOL validEquation = [EDExpression isValidEquation:[expression expression] context:_context error:&error];
-    NSDictionary *expressionDict = [EDExpression isValidEquationOrExpression:[expression expression] context:_context error:error];
+    NSDictionary *expressionDict = [EDExpression isValidEquationOrExpression:[expression expression] context:_context error:&error];
     if (error){
         NSLog(@"error:%@", [[error userInfo] objectForKey:NSLocalizedDescriptionKey]);
     }
     else{
+        NSLog(@"this is a valid equation/expression.");
+        /*
         if (validEquation) {
             NSLog(@"this is a valid equation.");
         }
         else {
             NSLog(@"this is a valid expression.");
         }
+         */
     }
 }
 

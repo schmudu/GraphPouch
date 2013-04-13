@@ -91,40 +91,34 @@
 }
 
 #pragma mark equation/expression
-+ (BOOL)isValidEquation:(NSString *)potentialEquation context:(NSManagedObjectContext *)context error:(NSError **)error{
++ (NSMutableDictionary *)isValidEquationOrExpression:(NSString *)potentialEquation context:(NSManagedObjectContext *)context error:(NSError **)error{
+    NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
     NSArray *expressions = [potentialEquation componentsSeparatedByString:@"="];
     
     NSLog(@"expressions:%@", expressions);
     
-    if ([expressions count] != 2){
-        if ([expressions count] != 1){
-            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:[NSString stringWithFormat:@"Too many '=' symbols"] forKey:NSLocalizedDescriptionKey];
-            
-            if(error != NULL)
-                *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
-            
-            return FALSE;
-        }
-        return FALSE;
+    if (([expressions count] == 2) || ([expressions count] == 1)){
+        NSLog(@"valid expression or equation.");
     }
     else{
-        // there was only one '=' token
-        // now validate each expression
-        //NSDictionary *firstExpression = [EDExpression validExpression:[expressions objectAtIndex:0] context:context error:*error];
-        //NSDictionary *secondExpression = [EDExpression validExpression:[expressions objectAtIndex:0] context:context error:*error];
+        // too many equal signs
+        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+        [errorDetail setValue:[NSString stringWithFormat:@"Too many '=' symbols"] forKey:NSLocalizedDescriptionKey];
+        
+        if(*error == nil)
+            *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
     }
-    return TRUE;
+    return resultDict;
 }
 
 
-+ (NSMutableDictionary *)validEquation:(NSString *)potentialEquation{
++ (NSMutableDictionary *)validExpression:(NSString *)potentialExpression context:(NSManagedObjectContext *)context error:(NSError **)error{
 #warning same code EDSheetPropertiesGraphEquationController
     // this method will accept expressions or equations and return the type
     NSMutableDictionary *results = [NSMutableDictionary dictionary];
-    NSError *error;
+    //NSError *error;
     NSMutableArray *parsedTokens;
-    NSMutableArray *tokens = [EDTokenizer tokenize:potentialEquation error:&error context:context];
+    NSMutableArray *tokens = [EDTokenizer tokenize:potentialExpression error:error context:context];
     
     if (error) {
         [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
@@ -141,7 +135,7 @@
         }*/
         
         // validate expression
-        [EDTokenizer isValidExpression:tokens withError:&error context:context];
+        [EDTokenizer isValidExpression:tokens withError:error context:context];
         if (error) {
             [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
             return results;
@@ -185,7 +179,7 @@
          */
         
         // parse expression
-        parsedTokens = [EDParser parse:tokens error:&error];
+        parsedTokens = [EDParser parse:tokens error:error];
         if (error) {
             [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
             return results;
@@ -213,7 +207,7 @@
     }
     
     // pass in value, other tests exist within calculate
-    [EDParser calculate:parsedTokens error:&error context:context varValue:5.0];
+    [EDParser calculate:parsedTokens error:error context:context varValue:5.0];
     
     if (error) {
         NSLog(@"error by calculating results.");
