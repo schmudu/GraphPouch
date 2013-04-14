@@ -293,7 +293,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     }
     else{
         // valid equation/expression
-        NSLog(@"this is a valid equation/expression: first expression stack:%@ second stack:%@ type:%d", [expressionDict objectForKey:EDKeyExpressionFirst], [expressionDict objectForKey:EDKeyExpressionSecond], [[expressionDict objectForKey:EDKeyExpressionType] intValue]);
         // create tree
         EDExpressionNodeView *rootNode = [EDExpression createExpressionNodeTree:[expressionDict objectForKey:EDKeyExpressionFirst] frame:[self bounds]];
         
@@ -302,6 +301,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         
         // add image to worksheet
         [self addSubview:rootNode];
+        [rootNode setFrameOrigin:NSMakePoint(100, 100)];
     }
 }
 

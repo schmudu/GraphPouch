@@ -13,6 +13,10 @@
 
 @synthesize treeHeight,fontModifier, fontSize, token, childLeft, childRight, parent;
 
+- (BOOL)isFlipped{
+    return TRUE;
+}
+
 - (id)initWithFrame:(NSRect)frame token:(EDToken *)newToken
 {
     self = [super initWithFrame:frame];
@@ -22,6 +26,7 @@
         [self setChildRight:nil];
         [self setFontModifier:1.0];
         [self setTreeHeight:0];
+        [self setFontSize:12.0];
         
         // set default text size
         [self setFrameSize:[EDExpressionNodeView getTokenSize:[self token] fontSize:12]];
@@ -53,8 +58,8 @@
             // draw division line
             NSBezierPath *path = [NSBezierPath bezierPath];
             [[NSColor blackColor] setStroke];
-            [path moveToPoint:NSMakePoint(0, 0)];
-            [path lineToPoint:NSMakePoint(largerWidth, 0)];
+            [path moveToPoint:NSMakePoint(0, [[self childLeft] frame].size.height + 1)];
+            [path lineToPoint:NSMakePoint(largerWidth, [[self childLeft] frame].size.height + 1)];
             [path stroke];
         }
     }
@@ -82,6 +87,7 @@
     [field setAttributedStringValue:string];
     imageData = [field dataWithPDFInsideRect:NSMakeRect(0, 0, size.width, size.height)];
     image = [[NSImage alloc] initWithData:imageData];
+    NSLog(@"token image:%@ size:%f", [token tokenValue], fontSize);
     return image;
 }
 
@@ -182,9 +188,9 @@
             [self addSubview:[self childRight]];
             [[self childRight] setFrameOrigin:NSMakePoint([[self childLeft] frame].size.width + [[self image] size].width, 0)];
             
-            NSLog(@"token:%@ width left:%f self:%f right:%f", [[self token] tokenValue], [[self childLeft] frame].size.width, [self frame].size.width, [[self childRight] frame].size.width);
+            //NSLog(@"token:%@ width left:%f self:%f right:%f", [[self token] tokenValue], [[self childLeft] frame].size.width, [self frame].size.width, [[self childRight] frame].size.width);
             [self setFrameSize:NSMakeSize([[self childLeft] frame].size.width + [[self image] size].width + [[self childRight] frame].size.width, largerHeight)];
-            NSLog(@"new frame size:%f", [self frame].size.width);
+            //NSLog(@"new frame size:%f", [self frame].size.width);
         }
         else if([[[self token] tokenValue] isEqualToString:@"/"]){
             float height = heightLeft + 1 + 2 + 1 + heightRight;
@@ -192,21 +198,26 @@
             
             // center left child
             if (widthLeft > widthRight)
-                [[self childLeft] setFrameOrigin:NSMakePoint(0, 1+2+1+heightLeft)];
-            else
-                [[self childLeft] setFrameOrigin:NSMakePoint((largerWidth-widthLeft)/2, 1+2+1+heightLeft)];
+                [[self childLeft] setFrameOrigin:NSMakePoint(0, 0)];
+            else{
+                //[[self childRight] setFrameOrigin:NSMakePoint((largerWidth-widthLeft)/2, 0)];
+                [[self childLeft] setFrameOrigin:NSMakePoint((largerWidth-widthLeft)/2, 0)];
+            }
             
             //right child
             [self addSubview:[self childRight]];
             
             // center left child
             if (widthRight > widthLeft)
-                [[self childRight] setFrameOrigin:NSMakePoint(0, 0)];
-            else
-                [[self childLeft] setFrameOrigin:NSMakePoint((largerWidth-widthLeft)/2, 0)];
+                [[self childRight] setFrameOrigin:NSMakePoint(0, 1+2+1+heightLeft)];
+            else{
+                //[[self childLeft] setFrameOrigin:NSMakePoint((largerWidth-widthLeft)/2, 1+2+1+heightLeft)];
+                [[self childRight] setFrameOrigin:NSMakePoint(0, 1+2+1+heightLeft)];
+            }
             
             // reset frame size
             [self setFrameSize:NSMakeSize(largerWidth, height)];
+            //NSLog(@"divide op: height left:%f self:%f right:%f", [[self childLeft] frame].size.height, 4.0, [[self childRight] frame].size.height);
         }
     }
 }

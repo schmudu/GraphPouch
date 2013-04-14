@@ -128,7 +128,7 @@
     [newExpression setElementHeight:EDWorksheetLineSelectionHeight];
     
     // enter default text
-    [newExpression setExpression:@"x+4"];
+    [newExpression setExpression:@"1+2/(3+4)"];
     
     // select this graph and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newExpression];
