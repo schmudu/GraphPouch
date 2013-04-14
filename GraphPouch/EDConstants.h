@@ -118,6 +118,7 @@ typedef enum{
 } EDExpressionType;
 
 extern NSString *const EDExpressionAttributeExpression;
+extern NSString *const EDExpressionAttributeFontSize;
 extern NSString *const EDKeyExpressionFirst;
 extern NSString *const EDKeyExpressionSecond;
 extern NSString *const EDKeyExpressionType;

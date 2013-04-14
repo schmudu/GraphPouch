@@ -9,12 +9,52 @@
 #import "EDConstants.h"
 #import "EDExpressionNodeView.h"
 
+@interface EDExpressionNodeView()
+- (EDExpression *)expression;
+- (float)fontSize;
+@end
+
 @implementation EDExpressionNodeView
 
-@synthesize treeHeight,fontSize, token, childLeft, childRight, parent;
+@synthesize treeHeight, token, childLeft, childRight, parent;
+
++ (EDExpressionNodeView *)createExpressionNodeTree:(NSArray *)stack frame:(NSRect)frame expression:(EDExpression *)expression{
+    int i = 0;
+    BOOL firstNodeInserted = FALSE;
+    EDExpressionNodeView *newNode=nil, *rootNode=nil;
+    EDToken *token;
+    NSMutableArray *treeArray = [NSMutableArray array];
+    
+    while (i<[stack count]){
+        // create node from token
+        token = (EDToken *)[stack objectAtIndex:([stack count]-i-1)];
+        newNode = [[EDExpressionNodeView alloc] initWithFrame:frame expression:expression token:token];
+        
+        if (!firstNodeInserted){
+            rootNode = newNode;
+            firstNodeInserted = TRUE;
+        }
+        else
+            [rootNode insertNodeIntoRightMostChild:newNode];
+        
+        // push node onto array
+        [treeArray addObject:newNode];
+        i++;
+    }
+    
+    return rootNode;
+}
 
 - (BOOL)isFlipped{
     return TRUE;
+}
+
+- (EDExpression *)expression{
+    return _expression;
+}
+
+- (float)fontSize{
+    return [_expression fontSize];
 }
 
 - (float)fontModifier{
@@ -28,16 +68,15 @@
     [self setFrameSize:[EDExpressionNodeView getTokenSize:[self token] fontSize:(12*_fontModifier)]];
 }
 
-- (id)initWithFrame:(NSRect)frame token:(EDToken *)newToken
-{
-    self = [super initWithFrame:frame];
+- (id)initWithFrame:(NSRect)frameRect expression:(EDExpression *)expression token:(EDToken *)newToken{
+    self = [super initWithFrame:frameRect];
     if (self) {
+        _expression = expression;
         [self setToken:newToken];
         [self setChildLeft:nil];
         [self setChildRight:nil];
         [self setFontModifier:1.0];
         [self setTreeHeight:0];
-        [self setFontSize:12.0];
         
         // set default text size
         [self setFrameSize:[EDExpressionNodeView getTokenSize:[self token] fontSize:12]];

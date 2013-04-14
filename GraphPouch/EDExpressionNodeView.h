@@ -6,26 +6,25 @@
 //  Copyright (c) 2013 Patrick Lee. All rights reserved.
 //
 
+#import "EDExpression.h"
 #import "EDToken.h"
 #import "EDWorksheetElementView.h"
 
 @interface EDExpressionNodeView : EDWorksheetElementView{
-    //EDExpressionNodeView *_childLeft, *_childRight, *_parent;
-    //float _fontModifier, _fontSize;
-    //int _treeHeight;
     float _fontModifier;
+    EDExpression *_expression;
 }
 @property int treeHeight;
-@property float fontSize;
 @property (nonatomic, retain) NSImage *image;
 @property (nonatomic, retain) EDToken *token;
 @property (nonatomic, retain) EDExpressionNodeView *childLeft, *childRight;
 @property (nonatomic, weak) EDExpressionNodeView *parent;
 
++ (EDExpressionNodeView *)createExpressionNodeTree:(NSArray *)stack frame:(NSRect)frame expression:(EDExpression *)expression;
 + (NSSize)getTokenSize:(EDToken *)token fontSize:(float)fontSize;
 + (NSImage *)getTokenImage:(EDToken *)token fontSize:(float)fontSize;
 + (NSTextField *)generateTextField:(NSRect)rect;
-- (id)initWithFrame:(NSRect)frameRect token:(EDToken *)token;
+- (id)initWithFrame:(NSRect)frameRect expression:(EDExpression *)expression token:(EDToken *)token;
 - (EDToken *)token;
 - (void)traverseTreeAndCreateImage;
 - (BOOL)insertNodeIntoRightMostChild:(EDExpressionNodeView *)node;

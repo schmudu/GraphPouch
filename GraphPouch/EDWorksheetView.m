@@ -294,7 +294,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     else{
         // valid equation/expression
         // create tree
-        EDExpressionNodeView *rootNode = [EDExpression createExpressionNodeTree:[expressionDict objectForKey:EDKeyExpressionFirst] frame:[self bounds]];
+        EDExpressionNodeView *rootNode = [EDExpressionNodeView createExpressionNodeTree:[expressionDict objectForKey:EDKeyExpressionFirst] frame:[self bounds] expression:expression];
         
         // generate images
         [rootNode traverseTreeAndCreateImage];

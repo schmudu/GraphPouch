@@ -14,6 +14,7 @@
 
 @implementation EDExpression
 
+@dynamic fontSize;
 @dynamic expression;
 @dynamic page;
 
@@ -29,13 +30,14 @@
     [super copyAttributes:source];
     
     [self setExpression:[(EDExpression *)source expression]];
+    [self setFontSize:[(EDExpression *)source fontSize]];
 }
 
 - (EDExpression *)copy:(NSManagedObjectContext *)context{
-    EDExpression *line = [[EDExpression alloc] initWithContext:context];
-    [line copyAttributes:self];
+    EDExpression *expression = [[EDExpression alloc] initWithContext:context];
+    [expression copyAttributes:self];
     
-    return line;
+    return expression;
 }
 
 #pragma mark encoding, decoding this object
@@ -49,12 +51,14 @@
         [self setElementWidth:[aDecoder decodeFloatForKey:EDElementAttributeWidth]];
         [self setElementHeight:[aDecoder decodeFloatForKey:EDElementAttributeHeight]];
         [self setExpression:[aDecoder decodeObjectForKey:EDExpressionAttributeExpression]];
+        [self setFontSize:[aDecoder decodeFloatForKey:EDExpressionAttributeFontSize]];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:[self expression] forKey:EDExpressionAttributeExpression];
+    [aCoder encodeFloat:[self fontSize] forKey:EDExpressionAttributeFontSize];
     [aCoder encodeBool:[self selected] forKey:EDElementAttributeSelected];
     [aCoder encodeFloat:[self locationX] forKey:EDElementAttributeLocationX];
     [aCoder encodeFloat:[self locationY] forKey:EDElementAttributeLocationY];
@@ -240,31 +244,5 @@
     return results;
 }
 
-+ (EDExpressionNodeView *)createExpressionNodeTree:(NSArray *)stack frame:(NSRect)frame{
-    int i = 0;
-    BOOL firstNodeInserted = FALSE;
-    EDExpressionNodeView *newNode=nil, *rootNode=nil;
-    EDToken *token;
-    NSMutableArray *treeArray = [NSMutableArray array];
-    
-    while (i<[stack count]){
-        // create node from token
-        token = (EDToken *)[stack objectAtIndex:([stack count]-i-1)];
-        newNode = [[EDExpressionNodeView alloc] initWithFrame:frame token:token];
-        
-        if (!firstNodeInserted){
-            rootNode = newNode;
-            firstNodeInserted = TRUE;
-        }
-        else
-            [rootNode insertNodeIntoRightMostChild:newNode];
-        
-        // push node onto array
-        [treeArray addObject:newNode];
-        i++;
-    }
-    
-    return rootNode;
-}
 
 @end

@@ -16,6 +16,7 @@
     </entity>
     <entity name="EDExpression" representedClassName="EDExpression" parentEntity="EDElement" syncable="YES">
         <attribute name="expression" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fontSize" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="expressions" inverseEntity="EDPage" syncable="YES"/>
     </entity>
     <entity name="EDGraph" representedClassName="EDGraph" parentEntity="EDElement" syncable="YES">
@@ -70,7 +71,7 @@
     <elements>
         <element name="EDElement" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDEquation" positionX="160" positionY="192" width="128" height="120"/>
-        <element name="EDExpression" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="EDExpression" positionX="160" positionY="192" width="128" height="90"/>
         <element name="EDGraph" positionX="160" positionY="192" width="128" height="270"/>
         <element name="EDLine" positionX="160" positionY="192" width="128" height="75"/>
         <element name="EDPage" positionX="160" positionY="192" width="128" height="150"/>

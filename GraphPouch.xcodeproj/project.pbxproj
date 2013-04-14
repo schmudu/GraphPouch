@@ -285,6 +285,7 @@
 		CD4FF07D1716251A00DEBF29 /* EDExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDExpression.m; sourceTree = "<group>"; };
 		CD4FF08017175ECF00DEBF29 /* EDExpressionNodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDExpressionNodeView.h; sourceTree = "<group>"; };
 		CD4FF08117175ECF00DEBF29 /* EDExpressionNodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDExpressionNodeView.m; sourceTree = "<group>"; };
+		CD4FF083171B6C3F00DEBF29 /* v3.expression_font_size.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = v3.expression_font_size.xcdatamodel; sourceTree = "<group>"; };
 		CD5312A416ECE94100F670FD /* INAppStoreWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INAppStoreWindow.h; sourceTree = "<group>"; };
 		CD5312A516ECE94100F670FD /* INAppStoreWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = INAppStoreWindow.m; sourceTree = "<group>"; };
 		CD5312A616ECE94100F670FD /* INWindowButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INWindowButton.h; sourceTree = "<group>"; };
@@ -1589,11 +1590,12 @@
 		CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CD4FF083171B6C3F00DEBF29 /* v3.expression_font_size.xcdatamodel */,
 				CD4FF07B1714C21800DEBF29 /* v2.xcdatamodeld.xcdatamodel */,
 				CD7EAA5716F49A5800EBE2B1 /* v1.xcdatamodeld.xcdatamodel */,
 				CD47113D15BA1647008AACC3 /* EDDocument.xcdatamodel */,
 			);
-			currentVersion = CD4FF07B1714C21800DEBF29 /* v2.xcdatamodeld.xcdatamodel */;
+			currentVersion = CD4FF083171B6C3F00DEBF29 /* v3.expression_font_size.xcdatamodel */;
 			path = EDDocument.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
