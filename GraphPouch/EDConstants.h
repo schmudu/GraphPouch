@@ -112,7 +112,14 @@ extern NSString *const EDErrorDomain;
 extern int const EDErrorTokenizer;
 
 #pragma mark expression
+typedef enum{
+    EDTypeExpression,
+    EDTypeEquation
+} EDExpressionType;
+
 extern NSString *const EDExpressionAttributeExpression;
+extern NSString *const EDKeyExpressionFirst;
+extern NSString *const EDKeyExpressionSecond;
 
 #pragma mark general
 extern NSString *const EDKey;

@@ -288,7 +288,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         NSLog(@"error:%@", [[error userInfo] objectForKey:NSLocalizedDescriptionKey]);
     }
     else{
-        NSLog(@"this is a valid equation/expression.");
+        NSLog(@"this is a valid equation/expression: first expression stack:%@ second stack:%@", [expressionDict objectForKey:EDKeyExpressionFirst], [expressionDict objectForKey:EDKeyExpressionSecond]);
         /*
         if (validEquation) {
             NSLog(@"this is a valid equation.");

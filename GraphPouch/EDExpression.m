@@ -98,7 +98,25 @@
     NSLog(@"expressions:%@", expressions);
     
     if (([expressions count] == 2) || ([expressions count] == 1)){
-        NSLog(@"valid expression or equation.");
+        // validate both expressions
+        NSDictionary *dictExpressionFirst = [EDExpression validExpression:[expressions objectAtIndex:0] context:context error:error];
+        
+        // error with first expression
+        if(*error != nil) return resultDict;
+        
+        // set dictionary
+        [resultDict setObject:[dictExpressionFirst objectForKey:EDKeyParsedTokens] forKey:EDKeyExpressionFirst];
+        
+        // if there was an equal sign then validate the right hand expression
+        if ([expressions count] == 2){
+            NSDictionary *dictExpressionSecond = [EDExpression validExpression:[expressions objectAtIndex:1] context:context error:error];
+            
+            // error with first expression
+            if(*error != nil) return resultDict;
+            
+            // set dictionary
+            [resultDict setObject:[dictExpressionSecond objectForKey:EDKeyParsedTokens] forKey:EDKeyExpressionSecond];
+        }
     }
     else{
         // too many equal signs
@@ -120,7 +138,7 @@
     NSMutableArray *parsedTokens;
     NSMutableArray *tokens = [EDTokenizer tokenize:potentialExpression error:error context:context];
     
-    if (error) {
+    if (*error != nil) {
         [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
         return results;
     }
@@ -136,7 +154,7 @@
         
         // validate expression
         [EDTokenizer isValidExpression:tokens withError:error context:context];
-        if (error) {
+        if (*error != nil) {
             [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
             return results;
         }
@@ -180,7 +198,7 @@
         
         // parse expression
         parsedTokens = [EDParser parse:tokens error:error];
-        if (error) {
+        if (*error != nil) {
             [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
             return results;
         }
@@ -209,7 +227,7 @@
     // pass in value, other tests exist within calculate
     [EDParser calculate:parsedTokens error:error context:context varValue:5.0];
     
-    if (error) {
+    if (*error != nil) {
         NSLog(@"error by calculating results.");
         [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
         return results;
