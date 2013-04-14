@@ -120,6 +120,7 @@ typedef enum{
 extern NSString *const EDExpressionAttributeExpression;
 extern NSString *const EDKeyExpressionFirst;
 extern NSString *const EDKeyExpressionSecond;
+extern NSString *const EDKeyExpressionType;
 
 #pragma mark general
 extern NSString *const EDKey;

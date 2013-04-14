@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "EDElement.h"
+#import "EDExpressionNodeView.h"
 
 @class EDPage;
 
@@ -21,4 +22,5 @@
 - (EDExpression *)copy:(NSManagedObjectContext *)context;
 + (NSMutableDictionary *)isValidEquationOrExpression:(NSString *)potentialEquation context:(NSManagedObjectContext *)context error:(NSError **)error;
 + (NSMutableDictionary *)validExpression:(NSString *)potentialExpression context:(NSManagedObjectContext *)context error:(NSError **)error;
++ (EDExpressionNodeView *)createExpressionNodeTree:(NSArray *)stack frame:(NSRect)frame;
 @end

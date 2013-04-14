@@ -12,6 +12,7 @@
 #import "EDCoreDataUtility.h"
 #import "EDDocument.h"
 #import "EDExpression.h"
+#import "EDExpressionNodeView.h"
 #import "EDGraph.h"
 #import "EDGraphView.h"
 #import "EDLine.h"
@@ -82,6 +83,9 @@
 - (void)onMenuCommandPaste:(NSNotification *)note;
 - (void)onMenuCommandSelect:(NSNotification *)note;
 - (void)onMenuCommandTextbox:(NSNotification *)note;
+
+// expressions
+- (void)createExpressionNodeTree:(NSArray *)stack;
 @end
 
 @implementation EDWorksheetView
@@ -278,28 +282,28 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     }
 }
 
+#pragma mark expressions
 - (void)drawExpression:(EDExpression *)expression{
-    //NSLog(@"need to draw an expression:%@", [expression expression]);
-    // need to validate if this is an expression or equations
     NSError *error;
-    //BOOL validEquation = [EDExpression isValidEquation:[expression expression] context:_context error:&error];
+    
+    // need to validate if this is an expression or equations
     NSDictionary *expressionDict = [EDExpression isValidEquationOrExpression:[expression expression] context:_context error:&error];
     if (error){
         NSLog(@"error:%@", [[error userInfo] objectForKey:NSLocalizedDescriptionKey]);
     }
     else{
-        NSLog(@"this is a valid equation/expression: first expression stack:%@ second stack:%@", [expressionDict objectForKey:EDKeyExpressionFirst], [expressionDict objectForKey:EDKeyExpressionSecond]);
-        /*
-        if (validEquation) {
-            NSLog(@"this is a valid equation.");
-        }
-        else {
-            NSLog(@"this is a valid expression.");
-        }
-         */
+        // valid equation/expression
+        NSLog(@"this is a valid equation/expression: first expression stack:%@ second stack:%@ type:%d", [expressionDict objectForKey:EDKeyExpressionFirst], [expressionDict objectForKey:EDKeyExpressionSecond], [[expressionDict objectForKey:EDKeyExpressionType] intValue]);
+        // create tree
+        EDExpressionNodeView *rootNode = [EDExpression createExpressionNodeTree:[expressionDict objectForKey:EDKeyExpressionFirst] frame:[self bounds]];
+        
+        // generate images
+        [rootNode traverseTreeAndCreateImage];
+        
+        // add image to worksheet
+        [self addSubview:rootNode];
     }
 }
-
 
 - (void)drawGraph:(EDGraph *)graph{
     EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph];

@@ -42,11 +42,11 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     if ([[self token] typeRaw] == EDTokenTypeOperator){
-        if (([[[self token] value] isEqualToString:@"+"]) || ([[[self token] value] isEqualToString:@"-"])){
+        if (([[[self token] tokenValue] isEqualToString:@"+"]) || ([[[self token] tokenValue] isEqualToString:@"-"])){
             NSPoint point = NSMakePoint([[self childLeft] frame].size.width, 0);
             [[self image] drawAtPoint:point fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0];
         }
-        else if ([[[self token] value] isEqualToString:@"/"]){
+        else if ([[[self token] tokenValue] isEqualToString:@"/"]){
             float largerWidth;
             largerWidth = MAX([[self childLeft] frame].size.width, [[self childRight] frame].size.width);
             
@@ -58,9 +58,13 @@
             [path stroke];
         }
     }
-    else if ([[self token] typeRaw] == EDTokenTypeIdentifier){
+    else if (([[self token] typeRaw] == EDTokenTypeIdentifier) || ([[self token] typeRaw] == EDTokenTypeNumber)){
+        /*
         NSPoint point = NSMakePoint([[self childLeft] frame].size.width, 0);
         [[self image] drawAtPoint:point fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0];
+         */
+        NSRect rect = NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height);
+        [[self image] drawInRect:rect fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:TRUE hints:nil];
     }
 }
 
@@ -73,7 +77,7 @@
     
     NSSize size = [EDExpressionNodeView getTokenSize:token fontSize:fontSize];
     field = [EDExpressionNodeView generateTextField:NSMakeRect(0, 0, size.width, size.height)];
-    string = [[NSMutableAttributedString alloc] initWithString:[token value]];
+    string = [[NSMutableAttributedString alloc] initWithString:[token tokenValue]];
     [field setFont:[NSFont fontWithName:@"Lucida Console" size:fontSize]];
     [field setAttributedStringValue:string];
     imageData = [field dataWithPDFInsideRect:NSMakeRect(0, 0, size.width, size.height)];
@@ -85,7 +89,7 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSFont *font = [NSFont fontWithName:@"Lucida Console" size:fontSize];
     [dict setObject:font forKey:NSFontAttributeName];
-    NSSize size = [[token value] sizeWithAttributes:dict];
+    NSSize size = [[token tokenValue] sizeWithAttributes:dict];
     return NSMakeSize(size.width + 3, size.height);
 }
 
@@ -167,7 +171,7 @@
         float widthRight = [[self childRight] frame].size.width;
         float largerWidth = MAX(widthLeft, widthRight);
         
-        if (([[[self token] value] isEqualToString:@"+"]) || ([[[self token] value] isEqualToString:@"-"])){
+        if (([[[self token] tokenValue] isEqualToString:@"+"]) || ([[[self token] tokenValue] isEqualToString:@"-"])){
             // left child
             [self addSubview:[self childLeft]];
             
@@ -178,10 +182,11 @@
             [self addSubview:[self childRight]];
             [[self childRight] setFrameOrigin:NSMakePoint([[self childLeft] frame].size.width + [[self image] size].width, 0)];
             
-            
+            NSLog(@"token:%@ width left:%f self:%f right:%f", [[self token] tokenValue], [[self childLeft] frame].size.width, [self frame].size.width, [[self childRight] frame].size.width);
             [self setFrameSize:NSMakeSize([[self childLeft] frame].size.width + [[self image] size].width + [[self childRight] frame].size.width, largerHeight)];
+            NSLog(@"new frame size:%f", [self frame].size.width);
         }
-        else if([[[self token] value] isEqualToString:@"/"]){
+        else if([[[self token] tokenValue] isEqualToString:@"/"]){
             float height = heightLeft + 1 + 2 + 1 + heightRight;
             [self addSubview:[self childLeft]];
             

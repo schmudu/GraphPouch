@@ -94,6 +94,7 @@ int const EDErrorTokenizer                                      = 1;
 NSString * const EDExpressionAttributeExpression                = @"expression";
 NSString * const EDKeyExpressionFirst                           = @"EDKeyExpressionFirst";
 NSString * const EDKeyExpressionSecond                          = @"EDKeyExpressionSecond";
+NSString * const EDKeyExpressionType                            = @"EDKeyExpressionType";
 
 #pragma mark general
 NSString * const EDKey                                          = @"EDKey";

@@ -106,6 +106,7 @@
         
         // set dictionary
         [resultDict setObject:[dictExpressionFirst objectForKey:EDKeyParsedTokens] forKey:EDKeyExpressionFirst];
+        [resultDict setObject:[NSNumber numberWithInt:EDTypeExpression] forKey:EDKeyExpressionType];
         
         // if there was an equal sign then validate the right hand expression
         if ([expressions count] == 2){
@@ -116,6 +117,7 @@
             
             // set dictionary
             [resultDict setObject:[dictExpressionSecond objectForKey:EDKeyParsedTokens] forKey:EDKeyExpressionSecond];
+            [resultDict setObject:[NSNumber numberWithInt:EDTypeEquation] forKey:EDKeyExpressionType];
         }
     }
     else{
@@ -236,6 +238,33 @@
     [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyValidEquation];
     [results setObject:parsedTokens forKey:EDKeyParsedTokens];
     return results;
+}
+
++ (EDExpressionNodeView *)createExpressionNodeTree:(NSArray *)stack frame:(NSRect)frame{
+    int i = 0;
+    BOOL firstNodeInserted = FALSE;
+    EDExpressionNodeView *newNode=nil, *rootNode=nil;
+    EDToken *token;
+    NSMutableArray *treeArray = [NSMutableArray array];
+    
+    while (i<[stack count]){
+        // create node from token
+        token = (EDToken *)[stack objectAtIndex:([stack count]-i-1)];
+        newNode = [[EDExpressionNodeView alloc] initWithFrame:frame token:token];
+        
+        if (!firstNodeInserted){
+            rootNode = newNode;
+            firstNodeInserted = TRUE;
+        }
+        else
+            [rootNode insertNodeIntoRightMostChild:newNode];
+        
+        // push node onto array
+        [treeArray addObject:newNode];
+        i++;
+    }
+    
+    return rootNode;
 }
 
 @end
