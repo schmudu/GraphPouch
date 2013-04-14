@@ -11,10 +11,21 @@
 
 @implementation EDExpressionNodeView
 
-@synthesize treeHeight,fontModifier, fontSize, token, childLeft, childRight, parent;
+@synthesize treeHeight,fontSize, token, childLeft, childRight, parent;
 
 - (BOOL)isFlipped{
     return TRUE;
+}
+
+- (float)fontModifier{
+    return _fontModifier;
+}
+
+- (void)setFontModifier:(float)fontModifier{
+    _fontModifier = fontModifier;
+    
+    // reset frame size
+    [self setFrameSize:[EDExpressionNodeView getTokenSize:[self token] fontSize:(12*_fontModifier)]];
 }
 
 - (id)initWithFrame:(NSRect)frame token:(EDToken *)newToken
@@ -64,10 +75,6 @@
         }
     }
     else if (([[self token] typeRaw] == EDTokenTypeIdentifier) || ([[self token] typeRaw] == EDTokenTypeNumber)){
-        /*
-        NSPoint point = NSMakePoint([[self childLeft] frame].size.width, 0);
-        [[self image] drawAtPoint:point fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0];
-         */
         NSRect rect = NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height);
         [[self image] drawInRect:rect fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:TRUE hints:nil];
     }
@@ -110,8 +117,10 @@
                 [node setTreeHeight:[self treeHeight]+1];
             
             // if parent is a divide op then cut font modifier in half
-            if ([[[self token] tokenValue] isEqualToString:@"/"])
+            if ([[[self token] tokenValue] isEqualToString:@"/"]){
                 [node setFontModifier:[self fontModifier] *.833];
+                //NSLog(@"setting font of token:%@ to modifier:%f", [[node token] tokenValue], [node fontModifier]);
+            }
             else if ([[[self token] tokenValue] isEqualToString:@"^"])
                 [node setFontModifier:[self fontModifier] *.75];
             else
@@ -166,7 +175,7 @@
     
     // create image
     if (([[self token] typeRaw] == EDTokenTypeNumber) || ([[self token] typeRaw] == EDTokenTypeIdentifier)){
-        [self setImage:[EDExpressionNodeView getTokenImage:[self token] fontSize:[self fontSize]]];
+        [self setImage:[EDExpressionNodeView getTokenImage:[self token] fontSize:([self fontSize]*[self fontModifier])]];
     }
     else if ([[self token] typeRaw] == EDTokenTypeOperator){
         // height and width
@@ -182,7 +191,7 @@
             [self addSubview:[self childLeft]];
             
             // image of operator
-            [self setImage:[EDExpressionNodeView getTokenImage:[self token] fontSize:[self fontSize]]];
+            [self setImage:[EDExpressionNodeView getTokenImage:[self token] fontSize:([self fontSize]*[self fontModifier])]];
             
             // right child
             [self addSubview:[self childRight]];

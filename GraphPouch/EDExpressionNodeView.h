@@ -10,12 +10,13 @@
 #import "EDWorksheetElementView.h"
 
 @interface EDExpressionNodeView : EDWorksheetElementView{
-    EDExpressionNodeView *_childLeft, *_childRight, *_parent;
-    float _fontModifier, _fontSize;
-    int _treeHeight;
+    //EDExpressionNodeView *_childLeft, *_childRight, *_parent;
+    //float _fontModifier, _fontSize;
+    //int _treeHeight;
+    float _fontModifier;
 }
 @property int treeHeight;
-@property float fontModifier, fontSize;
+@property float fontSize;
 @property (nonatomic, retain) NSImage *image;
 @property (nonatomic, retain) EDToken *token;
 @property (nonatomic, retain) EDExpressionNodeView *childLeft, *childRight;
