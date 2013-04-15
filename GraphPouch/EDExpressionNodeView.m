@@ -65,7 +65,7 @@
     _fontModifier = fontModifier;
     
     // reset frame size
-    [self setFrameSize:[EDExpressionNodeView getTokenSize:[self token] fontSize:(12*_fontModifier)]];
+    [self setFrameSize:[EDExpressionNodeView getTokenSize:[self token] fontSize:([self fontSize]*_fontModifier)]];
 }
 
 - (id)initWithFrame:(NSRect)frameRect expression:(EDExpression *)expression token:(EDToken *)newToken{
@@ -79,7 +79,6 @@
         [self setTreeHeight:0];
         
         // set default text size
-        [self setFrameSize:[EDExpressionNodeView getTokenSize:[self token] fontSize:12]];
     }
     
     return self;
@@ -157,11 +156,11 @@
             
             // if parent is a divide op then cut font modifier in half
             if ([[[self token] tokenValue] isEqualToString:@"/"]){
-                [node setFontModifier:[self fontModifier] *.833];
+                [node setFontModifier:[self fontModifier] * EDExpressionFontModifierDenominator];
                 //NSLog(@"setting font of token:%@ to modifier:%f", [[node token] tokenValue], [node fontModifier]);
             }
             else if ([[[self token] tokenValue] isEqualToString:@"^"])
-                [node setFontModifier:[self fontModifier] *.75];
+                [node setFontModifier:[self fontModifier] * EDExpressionFontModifierExponentialPower];
             else
                 [node setFontModifier:[self fontModifier]];
             
@@ -181,9 +180,9 @@
             
             // if parent is a divide op then cut font modifier in half
             if ([[[self token] tokenValue] isEqualToString:@"/"])
-                [node setFontModifier:[self fontModifier] *.833];
+                [node setFontModifier:[self fontModifier] * EDExpressionFontModifierNumerator];
             else if ([[[self token] tokenValue] isEqualToString:@"^"])
-                [node setFontModifier:[self fontModifier] *.833];
+                [node setFontModifier:[self fontModifier] * EDExpressionFontModifierExponentialBase];
             else
                 [node setFontModifier:[self fontModifier]];
             

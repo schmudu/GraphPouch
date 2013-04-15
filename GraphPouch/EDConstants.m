@@ -96,6 +96,11 @@ NSString * const EDExpressionAttributeFontSize                  = @"fontSize";
 NSString * const EDKeyExpressionFirst                           = @"EDKeyExpressionFirst";
 NSString * const EDKeyExpressionSecond                          = @"EDKeyExpressionSecond";
 NSString * const EDKeyExpressionType                            = @"EDKeyExpressionType";
+float const EDExpressionFontModifierNumerator                   = .7;
+float const EDExpressionFontModifierDenominator                 = .7;
+float const EDExpressionFontModifierExponentialBase             = .7;
+float const EDExpressionFontModifierExponentialPower            = .5;
+float const EDExpressionDefaultFontSize                         = 14.0;
 
 #pragma mark general
 NSString * const EDKey                                          = @"EDKey";

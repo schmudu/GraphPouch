@@ -126,6 +126,7 @@
     [newExpression setLocationY:150];
     [newExpression setElementWidth:EDWorksheetLineSelectionWidth];
     [newExpression setElementHeight:EDWorksheetLineSelectionHeight];
+    [newExpression setFontSize:EDExpressionDefaultFontSize];
     
     // enter default text
     [newExpression setExpression:@"1+2/(3+4)"];

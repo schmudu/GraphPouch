@@ -122,6 +122,11 @@ extern NSString *const EDExpressionAttributeFontSize;
 extern NSString *const EDKeyExpressionFirst;
 extern NSString *const EDKeyExpressionSecond;
 extern NSString *const EDKeyExpressionType;
+extern float const EDExpressionFontModifierNumerator;
+extern float const EDExpressionFontModifierDenominator;
+extern float const EDExpressionFontModifierExponentialBase;
+extern float const EDExpressionFontModifierExponentialPower;
+extern float const EDExpressionDefaultFontSize;
 
 #pragma mark general
 extern NSString *const EDKey;
