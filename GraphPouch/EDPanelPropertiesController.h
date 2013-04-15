@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "EDPanelPropertiesDocumentController.h"
+#import "EDPanelPropertiesExpressionController.h"
 #import "EDPanelPropertiesGraphController.h"
 #import "EDPanelPropertiesGraphTextboxController.h"
 #import "EDPanelPropertiesGraphLineController.h"
@@ -23,6 +24,7 @@
     BOOL _panelEnabled;
     IBOutlet NSMenuItem *menuItemProperties;
     EDPanelPropertiesDocumentController *documentController;
+    EDPanelPropertiesExpressionController *expressionController;
     EDPanelPropertiesGraphController *graphController;
     EDPanelPropertiesGraphTextboxController *graphTextboxController;
     EDPanelPropertiesGraphLineController *graphLineController;

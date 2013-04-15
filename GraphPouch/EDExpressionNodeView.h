@@ -27,5 +27,6 @@
 - (void)traverseTreeAndCreateImage;
 - (BOOL)insertNodeIntoRightMostChild:(EDExpressionNodeView *)node;
 - (BOOL)isLeafNode;
+- (void)clearViews;
 
 @end

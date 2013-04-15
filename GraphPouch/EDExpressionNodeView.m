@@ -236,4 +236,24 @@
         }
     }
 }
+
+- (void)clearViews{
+    // traverse right
+    if([self childRight]){
+        [[self childRight] clearViews];
+        [[self childRight] removeFromSuperview];
+    }
+    
+    // traverse left
+    if([self childLeft]){
+        [[self childLeft] clearViews];
+        [[self childRight] removeFromSuperview];
+    }
+    
+    // remove any other subviews
+    for (NSView *view in [self subviews]){
+        [view removeFromSuperview];
+    }
+}
+
 @end

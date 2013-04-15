@@ -15,9 +15,11 @@
 }
 
 - (void)initWindowAfterLoaded:(NSManagedObjectContext *)context;
+- (void)setElementLabel:(NSTextField *)label withStringAttribute:(NSString *)attribute;
 - (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute;
 - (void)setElementCheckbox:(NSButton *)checkbox attribute:(NSString *)attribute;
 - (void)setLabelState:(NSTextField *)label hasChange:(BOOL)diff value:(float)labelValue;
+- (void)setLabelState:(NSTextField *)label hasChange:(BOOL)diff stringValue:(NSString *)labelValue;
 - (void)viewDidLoad;
 - (void)viewWillLoad;
 - (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key;

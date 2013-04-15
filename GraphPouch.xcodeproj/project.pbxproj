@@ -74,6 +74,8 @@
 		CD4FF07E1716251A00DEBF29 /* EDExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4FF07D1716251A00DEBF29 /* EDExpression.m */; };
 		CD4FF08217175ECF00DEBF29 /* EDExpressionNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4FF08117175ECF00DEBF29 /* EDExpressionNodeView.m */; };
 		CD4FF086171C9F0600DEBF29 /* EDExpressionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4FF085171C9F0600DEBF29 /* EDExpressionView.m */; };
+		CD4FF08B171CAE5500DEBF29 /* EDPanelPropertiesExpressionController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4FF089171CAE5500DEBF29 /* EDPanelPropertiesExpressionController.m */; };
+		CD4FF08C171CAE5500DEBF29 /* EDPanelPropertiesExpression.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD4FF08A171CAE5500DEBF29 /* EDPanelPropertiesExpression.xib */; };
 		CD5312AA16ECEC0F00F670FD /* INAppStoreWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312A516ECE94100F670FD /* INAppStoreWindow.m */; };
 		CD5312AB16ECEC3D00F670FD /* INWindowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312A716ECE94100F670FD /* INWindowButton.m */; };
 		CD5312AC16ECEC4100F670FD /* NSColor+INAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312A916ECE94100F670FD /* NSColor+INAdditions.m */; };
@@ -289,6 +291,9 @@
 		CD4FF083171B6C3F00DEBF29 /* v3.expression_font_size.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v3.expression_font_size.xcdatamodel; sourceTree = "<group>"; };
 		CD4FF084171C9F0600DEBF29 /* EDExpressionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDExpressionView.h; sourceTree = "<group>"; };
 		CD4FF085171C9F0600DEBF29 /* EDExpressionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDExpressionView.m; sourceTree = "<group>"; };
+		CD4FF088171CAE5500DEBF29 /* EDPanelPropertiesExpressionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesExpressionController.h; sourceTree = "<group>"; };
+		CD4FF089171CAE5500DEBF29 /* EDPanelPropertiesExpressionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesExpressionController.m; sourceTree = "<group>"; };
+		CD4FF08A171CAE5500DEBF29 /* EDPanelPropertiesExpression.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesExpression.xib; sourceTree = "<group>"; };
 		CD5312A416ECE94100F670FD /* INAppStoreWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INAppStoreWindow.h; sourceTree = "<group>"; };
 		CD5312A516ECE94100F670FD /* INAppStoreWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = INAppStoreWindow.m; sourceTree = "<group>"; };
 		CD5312A616ECE94100F670FD /* INWindowButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INWindowButton.h; sourceTree = "<group>"; };
@@ -593,6 +598,7 @@
 				CD1EBD5915FED4B800BEEA4D /* EDPanelPropertiesController.h */,
 				CD1EBD5A15FED4B800BEEA4D /* EDPanelPropertiesController.m */,
 				CD2DD5D116474108006557FC /* Document */,
+				CD4FF087171CAE1B00DEBF29 /* Expression */,
 				CD2DD5D0164740F9006557FC /* Graph */,
 				CDF3E18616BC348C00AB78AF /* GraphLine */,
 				CD75A43416D07C7200CD775C /* GraphTextbox */,
@@ -891,6 +897,16 @@
 				CD4FF085171C9F0600DEBF29 /* EDExpressionView.m */,
 				CD4FF08017175ECF00DEBF29 /* EDExpressionNodeView.h */,
 				CD4FF08117175ECF00DEBF29 /* EDExpressionNodeView.m */,
+			);
+			name = Expression;
+			sourceTree = "<group>";
+		};
+		CD4FF087171CAE1B00DEBF29 /* Expression */ = {
+			isa = PBXGroup;
+			children = (
+				CD4FF088171CAE5500DEBF29 /* EDPanelPropertiesExpressionController.h */,
+				CD4FF089171CAE5500DEBF29 /* EDPanelPropertiesExpressionController.m */,
+				CD4FF08A171CAE5500DEBF29 /* EDPanelPropertiesExpression.xib */,
 			);
 			name = Expression;
 			sourceTree = "<group>";
@@ -1309,6 +1325,7 @@
 				CD20AA7416E43FE50027F985 /* EDWindowAbout.xib in Resources */,
 				CD20AA7616E447B30027F985 /* about_logo.png in Resources */,
 				CD5312B116ECEF7400F670FD /* EDToolbarView.xib in Resources */,
+				CD4FF08C171CAE5500DEBF29 /* EDPanelPropertiesExpression.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1436,6 +1453,7 @@
 				CD4FF07E1716251A00DEBF29 /* EDExpression.m in Sources */,
 				CD4FF08217175ECF00DEBF29 /* EDExpressionNodeView.m in Sources */,
 				CD4FF086171C9F0600DEBF29 /* EDExpressionView.m in Sources */,
+				CD4FF08B171CAE5500DEBF29 /* EDPanelPropertiesExpressionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

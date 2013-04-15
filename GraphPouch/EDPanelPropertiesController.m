@@ -176,6 +176,15 @@
             
         _viewController = textboxController;
     }
+    else if([selectedTypes valueForKey:EDKeyExpression]){
+        if(!expressionController){
+            expressionController = [[EDPanelPropertiesExpressionController alloc] initWithNibName:@"EDPanelPropertiesExpression" bundle:nil];
+        }
+        // set window title
+        [[self window] setTitle:@"Expression Properties"];
+            
+        _viewController = expressionController;
+    }
     else if(_currentTextView){
         // set controller to text view
         if(!textViewController){
@@ -244,6 +253,11 @@
         return;
     }
     else if ((_viewController == documentController) && ([[self window] contentView] == [documentController view])) {
+        // still need to update panel properties
+        [_viewController initWindowAfterLoaded:_context];
+        return;
+    }
+    else if ((_viewController == expressionController) && ([[self window] contentView] == [expressionController view])) {
         // still need to update panel properties
         [_viewController initWindowAfterLoaded:_context];
         return;

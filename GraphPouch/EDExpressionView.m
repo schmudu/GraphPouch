@@ -7,6 +7,7 @@
 //
 
 #import "EDExpressionView.h"
+#import "NSColor+Utilities.h"
 
 @interface EDExpressionView()
 - (void)validateAndDisplayExpression;
@@ -58,6 +59,21 @@
     return self;
 }
 
+- (void)clearViews{
+    // if there is a root node then destroy it and all of its subviews
+    if (_rootNode){
+        [_rootNode clearViews];
+        
+        // remove root node from view 
+        [_rootNode removeFromSuperview];
+    }
+    
+    // clear any other subviews
+    for (NSView *view in [self subviews]){
+        [view removeFromSuperview];
+    }
+}
+
 - (void) dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
 }
@@ -68,6 +84,22 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    // color background
+    if ([(EDExpression *)[self dataObj] selected]){
+        [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
+        [NSBezierPath fillRect:[self bounds]];
+    }
+}
+
+- (void)updateDisplayBasedOnContext{
+    // this is called whenever the context for this object changes
+    [super updateDisplayBasedOnContext];
+ 
+    // clear views
+    [self clearViews];
+    
+    // redraw expression
+    [self validateAndDisplayExpression];
 }
 
 - (void)validateAndDisplayExpression{
@@ -85,6 +117,9 @@
         
         // generate images
         [rootNode traverseTreeAndCreateImage];
+        
+        // save so we can remove it later
+        _rootNode = rootNode;
         
         // add image to worksheet
         [self addSubview:rootNode];

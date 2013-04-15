@@ -63,6 +63,16 @@
     [self setLabelState:label hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
 }
 
+- (void)setElementLabel:(NSTextField *)label withStringAttribute:(NSString *)attribute{
+    // find if there are differences in values of selected objects
+    //NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:attribute];
+    NSMutableDictionary *results = [self checkForSameStringValueInLabelsForKey:attribute];
+#error in this method or method called
+    NSLog(@"going to change attribute to:%@", attribute);
+    // set label state
+    [self setLabelState:label hasChange:[[results valueForKey:EDKeyDiff] boolValue] stringValue:[results valueForKey:EDKeyValue]];
+}
+
 - (void)setElementCheckbox:(NSButton *)checkbox attribute:(NSString *)attribute{
     // find if there are differences in values of selected objects
     NSMutableDictionary *results = [self checkForSameBoolValueInLabelsForKey:attribute];
@@ -88,6 +98,18 @@
     }
     else {
         [label setStringValue:[NSString stringWithFormat:@"%.2f", labelValue]];
+        [label setTextColor:[NSColor blackColor]];
+    }
+}
+
+- (void)setLabelState:(NSTextField *)label hasChange:(BOOL)diff stringValue:(NSString *)labelValue{
+    // if there is a diff then label shows nothing, otherwise show width
+    if (diff) {
+        [label setStringValue:@""];
+        [label setTextColor:[NSColor colorWithHexColorString:@"dddddd"]];
+    }
+    else {
+        [label setStringValue:labelValue];
         [label setTextColor:[NSColor blackColor]];
     }
 }
@@ -182,6 +204,34 @@
     return results;
 }
 
+- (NSMutableDictionary *)checkForSameStringValueInLabelsForKey:(NSString *)key{
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    NSMutableArray *elements = [[NSMutableArray alloc] init];
+    NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
+    BOOL diff = FALSE;
+    int i = 0;
+    NSString *value;
+    EDElement *currentElement;
+    
+    [elements addObjectsFromArray:graphs];
+    while ((i < [elements count]) && (!diff)) {
+        currentElement = [elements objectAtIndex:i];
+        // if not the first and current width is not the same as previous width
+        if((i != 0) && (![value isEqualToString:[currentElement valueForKey:key]])){
+            diff = TRUE;
+        }
+        else {
+            value = [currentElement valueForKey:key];
+        }
+        i++;
+    }
+    
+    // set results
+    [results setValue:[NSString stringWithString:value] forKey:EDKeyValue];
+    [results setValue:[[NSNumber alloc] initWithBool:diff] forKey:EDKeyDiff];
+    return results;
+}
+
 - (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue{
     EDElement *newElement, *currentElement;
     int i = 0;
@@ -190,6 +240,7 @@
      currentElement = [elements objectAtIndex:i];
         
         newElement = currentElement;
+        NSLog(@"changing value:%@ for key:%@", newValue, key);
         [newElement setValue:newValue forKey:key];
         
         [elements replaceObjectAtIndex:i withObject:newElement];
