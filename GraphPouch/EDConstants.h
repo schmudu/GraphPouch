@@ -127,6 +127,7 @@ extern float const EDExpressionFontModifierDenominator;
 extern float const EDExpressionFontModifierExponentialBase;
 extern float const EDExpressionFontModifierExponentialPower;
 extern float const EDExpressionDefaultFontSize;
+extern NSString *const EDExpressionDefaultFontName;
 
 #pragma mark general
 extern NSString *const EDKey;

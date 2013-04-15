@@ -12,7 +12,7 @@
 #import "EDCoreDataUtility.h"
 #import "EDDocument.h"
 #import "EDExpression.h"
-#import "EDExpressionNodeView.h"
+#import "EDExpressionView.h"
 #import "EDGraph.h"
 #import "EDGraphView.h"
 #import "EDLine.h"
@@ -284,7 +284,8 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 #pragma mark expressions
 - (void)drawExpression:(EDExpression *)expression{
-    NSError *error;
+    /*
+     NSError *error;
     
     // need to validate if this is an expression or equations
     NSDictionary *expressionDict = [EDExpression isValidEquationOrExpression:[expression expression] context:_context error:&error];
@@ -302,6 +303,26 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         // add image to worksheet
         [self addSubview:rootNode];
         [rootNode setFrameOrigin:NSMakePoint(100, 100)];
+    }*/
+    EDExpressionView *expressionView = [[EDExpressionView alloc] initWithFrame:NSMakeRect(0, 0, [expression elementWidth], [expression elementHeight]) expression:expression];
+    
+    // listen to expression
+    // NOTE: any listeners you add here, remove them in method 'removeElementView'
+    [_nc addObserver:self selector:@selector(onElementSelectedDeselectOtherElements:) name:EDEventUnselectedElementClickedWithoutModifier object:expressionView];
+    [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:expressionView];
+    [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:expressionView];
+    [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:expressionView];
+    [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:expressionView];
+    
+    // set location
+    [expressionView setFrameOrigin:NSMakePoint([[expression valueForKey:EDElementAttributeLocationX] floatValue], [[expression valueForKey:EDElementAttributeLocationY] floatValue])];
+    
+    [self addSubview:expressionView];
+    [expressionView setNeedsDisplay:TRUE];
+    
+    // draw transform rect if selected
+    if ([[[expressionView dataObj] valueForKey:EDElementAttributeSelected] boolValue]){
+        [self drawTransformRect:(EDElement *)[expressionView dataObj]];
     }
 }
 

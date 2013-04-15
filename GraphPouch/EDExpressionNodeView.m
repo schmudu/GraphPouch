@@ -10,7 +10,6 @@
 #import "EDExpressionNodeView.h"
 
 @interface EDExpressionNodeView()
-- (EDExpression *)expression;
 - (float)fontSize;
 @end
 
@@ -18,39 +17,8 @@
 
 @synthesize treeHeight, token, childLeft, childRight, parent;
 
-+ (EDExpressionNodeView *)createExpressionNodeTree:(NSArray *)stack frame:(NSRect)frame expression:(EDExpression *)expression{
-    int i = 0;
-    BOOL firstNodeInserted = FALSE;
-    EDExpressionNodeView *newNode=nil, *rootNode=nil;
-    EDToken *token;
-    NSMutableArray *treeArray = [NSMutableArray array];
-    
-    while (i<[stack count]){
-        // create node from token
-        token = (EDToken *)[stack objectAtIndex:([stack count]-i-1)];
-        newNode = [[EDExpressionNodeView alloc] initWithFrame:frame expression:expression token:token];
-        
-        if (!firstNodeInserted){
-            rootNode = newNode;
-            firstNodeInserted = TRUE;
-        }
-        else
-            [rootNode insertNodeIntoRightMostChild:newNode];
-        
-        // push node onto array
-        [treeArray addObject:newNode];
-        i++;
-    }
-    
-    return rootNode;
-}
-
 - (BOOL)isFlipped{
     return TRUE;
-}
-
-- (EDExpression *)expression{
-    return _expression;
 }
 
 - (float)fontSize{
@@ -68,7 +36,7 @@
     [self setFrameSize:[EDExpressionNodeView getTokenSize:[self token] fontSize:([self fontSize]*_fontModifier)]];
 }
 
-- (id)initWithFrame:(NSRect)frameRect expression:(EDExpression *)expression token:(EDToken *)newToken{
+- (id)initWithFrame:(NSRect)frameRect token:(EDToken *)newToken expression:(EDExpression *)expression{
     self = [super initWithFrame:frameRect];
     if (self) {
         _expression = expression;
@@ -128,7 +96,7 @@
     NSSize size = [EDExpressionNodeView getTokenSize:token fontSize:fontSize];
     field = [EDExpressionNodeView generateTextField:NSMakeRect(0, 0, size.width, size.height)];
     string = [[NSMutableAttributedString alloc] initWithString:[token tokenValue]];
-    [field setFont:[NSFont fontWithName:@"Lucida Console" size:fontSize]];
+    [field setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:fontSize]];
     [field setAttributedStringValue:string];
     imageData = [field dataWithPDFInsideRect:NSMakeRect(0, 0, size.width, size.height)];
     image = [[NSImage alloc] initWithData:imageData];
@@ -138,7 +106,7 @@
 
 + (NSSize)getTokenSize:(EDToken *)token fontSize:(float)fontSize{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    NSFont *font = [NSFont fontWithName:@"Lucida Console" size:fontSize];
+    NSFont *font = [NSFont fontWithName:EDExpressionDefaultFontName size:fontSize];
     [dict setObject:font forKey:NSFontAttributeName];
     NSSize size = [[token tokenValue] sizeWithAttributes:dict];
     return NSMakeSize(size.width + 3, size.height);

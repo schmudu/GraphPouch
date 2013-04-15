@@ -101,6 +101,7 @@ float const EDExpressionFontModifierDenominator                 = .7;
 float const EDExpressionFontModifierExponentialBase             = .7;
 float const EDExpressionFontModifierExponentialPower            = .5;
 float const EDExpressionDefaultFontSize                         = 14.0;
+NSString * const EDExpressionDefaultFontName                    = @"Lucida Console";
 
 #pragma mark general
 NSString * const EDKey                                          = @"EDKey";

@@ -8,9 +8,8 @@
 
 #import "EDExpression.h"
 #import "EDToken.h"
-#import "EDWorksheetElementView.h"
 
-@interface EDExpressionNodeView : EDWorksheetElementView{
+@interface EDExpressionNodeView : NSView{
     float _fontModifier;
     EDExpression *_expression;
 }
@@ -20,11 +19,10 @@
 @property (nonatomic, retain) EDExpressionNodeView *childLeft, *childRight;
 @property (nonatomic, weak) EDExpressionNodeView *parent;
 
-+ (EDExpressionNodeView *)createExpressionNodeTree:(NSArray *)stack frame:(NSRect)frame expression:(EDExpression *)expression;
 + (NSSize)getTokenSize:(EDToken *)token fontSize:(float)fontSize;
 + (NSImage *)getTokenImage:(EDToken *)token fontSize:(float)fontSize;
 + (NSTextField *)generateTextField:(NSRect)rect;
-- (id)initWithFrame:(NSRect)frameRect expression:(EDExpression *)expression token:(EDToken *)token;
+- (id)initWithFrame:(NSRect)frameRect token:(EDToken *)newToken expression:(EDExpression *)expression;
 - (EDToken *)token;
 - (void)traverseTreeAndCreateImage;
 - (BOOL)insertNodeIntoRightMostChild:(EDExpressionNodeView *)node;
