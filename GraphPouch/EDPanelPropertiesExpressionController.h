@@ -8,13 +8,16 @@
 
 #import "EDPanelViewController.h"
 
-@interface EDPanelPropertiesExpressionController : EDPanelViewController{
+@interface EDPanelPropertiesExpressionController : EDPanelViewController <NSTextFieldDelegate>{
     IBOutlet NSTextField *labelX;
     IBOutlet NSTextField *labelY;
     IBOutlet NSTextField *labelWidth;
     IBOutlet NSTextField *labelHeight;
-    IBOutlet NSTextField *labelSize;
     IBOutlet NSTextField *labelExpression;
+    IBOutlet NSTextField *labelFontSize;
+    IBOutlet NSSlider *sliderFontSize;
 }
+
+@property (nonatomic) float fontSize;
 
 @end

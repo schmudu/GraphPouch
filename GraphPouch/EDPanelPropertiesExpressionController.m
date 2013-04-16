@@ -15,6 +15,14 @@
 
 @implementation EDPanelPropertiesExpressionController
 
+#pragma mark font size
+- (void)setFontSize:(float)fontSize{
+    _fontSize = fontSize;
+    
+    // set the text field
+    [self changeSelectedElementsAttribute:EDExpressionAttributeFontSize newValue:[[NSNumber alloc] initWithFloat:[sliderFontSize floatValue]]];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,9 +40,11 @@
     [self setElementLabel:labelWidth attribute:EDElementAttributeWidth];
     [self setElementLabel:labelHeight attribute:EDElementAttributeHeight];
     [self setElementLabel:labelExpression withStringAttribute:EDExpressionAttributeExpression];
+    [self setElementLabel:labelFontSize attribute:EDExpressionAttributeFontSize];
+    [self setSlider:sliderFontSize attribute:EDExpressionAttributeFontSize];
 }
 
-
+#pragma mark text field delegate
 - (void)controlTextDidEndEditing:(NSNotification *)obj{
     if (!_fieldChanged)
         return;
@@ -55,5 +65,9 @@
     else if ([obj object] == labelExpression) {
         [self changeSelectedElementsAttribute:EDExpressionAttributeExpression newValue:[labelExpression stringValue]];
     }
+    else if ([obj object] == labelFontSize) {
+        [self changeSelectedElementsAttribute:EDExpressionAttributeFontSize newValue:[[NSNumber alloc] initWithFloat:[[labelFontSize stringValue] floatValue]]];
+    }
 }
+
 @end

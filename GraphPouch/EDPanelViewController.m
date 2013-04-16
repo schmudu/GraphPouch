@@ -63,6 +63,23 @@
     [self setLabelState:label hasChange:[[results valueForKey:EDKeyDiff] boolValue] value:[[results valueForKey:EDKeyValue] floatValue]];
 }
 
+- (void)setSlider:(NSSlider *)slider attribute:(NSString *)attribute{
+    // find if there are differences in values of selected objects
+    NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:attribute];
+    
+    NSLog(@"going to set slider to value:%@", results);
+    
+    // set label state
+    if ([[results valueForKey:EDKeyDiff] boolValue]){
+        // if there is a difference then set to default value
+        [slider setDoubleValue:14.0];
+    }
+    else{
+        // no diff set to value
+        [slider setFloatValue:[[results valueForKey:EDKeyValue] floatValue]];
+    }
+}
+
 - (void)setElementLabel:(NSTextField *)label withStringAttribute:(NSString *)attribute{
     // find if there are differences in values of selected objects
     //NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:attribute];
@@ -114,13 +131,6 @@
 
 - (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    /*
-    NSMutableArray *elements = [[NSMutableArray alloc] init];
-    NSArray *expressions = [EDExpression getAllSelectedObjects:_context];
-    NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
-    NSArray *lines = [EDLine getAllSelectedObjects:_context];
-    NSArray *textboxes = [EDTextbox getAllSelectedObjects:_context];
-    */
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
     NSArray *elements = [currentPage getAllSelectedWorksheetObjects];
     BOOL diff = FALSE;
@@ -128,13 +138,6 @@
     float value = 0;
     EDElement *currentElement;
     
-#warning worksheet elements
-    /*
-    [elements addObjectsFromArray:expressions];
-    [elements addObjectsFromArray:graphs];
-    [elements addObjectsFromArray:lines];
-    [elements addObjectsFromArray:textboxes];
-     */
     while ((i < [elements count]) && (!diff)) {
         currentElement = [elements objectAtIndex:i];
         // if not the first and current width is not the same as previous width

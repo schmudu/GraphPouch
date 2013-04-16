@@ -16,6 +16,7 @@
 
 - (void)initWindowAfterLoaded:(NSManagedObjectContext *)context;
 - (void)setElementLabel:(NSTextField *)label withStringAttribute:(NSString *)attribute;
+- (void)setSlider:(NSSlider *)slider attribute:(NSString *)attribute;
 - (void)setElementLabel:(NSTextField *)label attribute:(NSString *)attribute;
 - (void)setElementCheckbox:(NSButton *)checkbox attribute:(NSString *)attribute;
 - (void)setLabelState:(NSTextField *)label hasChange:(BOOL)diff value:(float)labelValue;
