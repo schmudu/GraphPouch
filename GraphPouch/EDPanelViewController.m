@@ -67,8 +67,6 @@
     // find if there are differences in values of selected objects
     //NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:attribute];
     NSMutableDictionary *results = [self checkForSameStringValueInLabelsForKey:attribute];
-#error in this method or method called
-    NSLog(@"going to change attribute to:%@", attribute);
     // set label state
     [self setLabelState:label hasChange:[[results valueForKey:EDKeyDiff] boolValue] stringValue:[results valueForKey:EDKeyValue]];
 }
@@ -116,21 +114,27 @@
 
 - (NSMutableDictionary *)checkForSameFloatValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    /*
     NSMutableArray *elements = [[NSMutableArray alloc] init];
     NSArray *expressions = [EDExpression getAllSelectedObjects:_context];
     NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
     NSArray *lines = [EDLine getAllSelectedObjects:_context];
     NSArray *textboxes = [EDTextbox getAllSelectedObjects:_context];
+    */
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    NSArray *elements = [currentPage getAllSelectedWorksheetObjects];
     BOOL diff = FALSE;
     int i = 0;
     float value = 0;
     EDElement *currentElement;
     
 #warning worksheet elements
+    /*
     [elements addObjectsFromArray:expressions];
     [elements addObjectsFromArray:graphs];
     [elements addObjectsFromArray:lines];
     [elements addObjectsFromArray:textboxes];
+     */
     while ((i < [elements count]) && (!diff)) {
         currentElement = [elements objectAtIndex:i];
         // if not the first and current width is not the same as previous width
@@ -178,14 +182,16 @@
 
 - (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    NSMutableArray *elements = [[NSMutableArray alloc] init];
-    NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
+    //NSMutableArray *elements = [[NSMutableArray alloc] init];
+    //NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    NSArray *elements = [currentPage getAllSelectedWorksheetObjects];
     BOOL diff = FALSE;
     int i = 0;
     float value = 0;
     EDElement *currentElement;
     
-    [elements addObjectsFromArray:graphs];
+    //[elements addObjectsFromArray:graphs];
     while ((i < [elements count]) && (!diff)) {
         currentElement = [elements objectAtIndex:i];
         // if not the first and current width is not the same as previous width
@@ -206,14 +212,16 @@
 
 - (NSMutableDictionary *)checkForSameStringValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    NSMutableArray *elements = [[NSMutableArray alloc] init];
-    NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
+    //NSMutableArray *elements = [[NSMutableArray alloc] init];
+    //NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    NSArray *elements = [currentPage getAllSelectedWorksheetObjects];
     BOOL diff = FALSE;
     int i = 0;
     NSString *value;
     EDElement *currentElement;
     
-    [elements addObjectsFromArray:graphs];
+    //[elements addObjectsFromArray:graphs];
     while ((i < [elements count]) && (!diff)) {
         currentElement = [elements objectAtIndex:i];
         // if not the first and current width is not the same as previous width
