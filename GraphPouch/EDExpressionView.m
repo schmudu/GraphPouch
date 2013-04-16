@@ -108,6 +108,17 @@
     // need to validate if this is an expression or equations
     NSDictionary *expressionDict = [EDExpression isValidEquationOrExpression:[(EDExpression *)[self dataObj] expression] context:_context error:&error];
     if (error){
+        // create error message in view
+        NSTextField *errorField = [[NSTextField alloc] initWithFrame:[self bounds]];
+        [errorField setEditable:FALSE];
+        [errorField setSelectable:FALSE];
+        [errorField setBordered:FALSE];
+        [errorField setDrawsBackground:FALSE];
+        NSString *errorString = [NSString stringWithFormat:@"Error:%@", [[error userInfo] objectForKey:NSLocalizedDescriptionKey]];
+        NSMutableAttributedString *errorAttributedString = [[NSMutableAttributedString alloc] initWithString:errorString];
+        [errorField setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:[(EDExpression *)[self dataObj] fontSize]]];
+        [errorField setAttributedStringValue:errorAttributedString];
+        [self addSubview:errorField];
         NSLog(@"error:%@", [[error userInfo] objectForKey:NSLocalizedDescriptionKey]);
     }
     else{
