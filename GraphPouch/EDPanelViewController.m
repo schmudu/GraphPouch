@@ -67,8 +67,6 @@
     // find if there are differences in values of selected objects
     NSMutableDictionary *results = [self checkForSameFloatValueInLabelsForKey:attribute];
     
-    NSLog(@"going to set slider to value:%@", results);
-    
     // set label state
     if ([[results valueForKey:EDKeyDiff] boolValue]){
         // if there is a difference then set to default value
@@ -251,7 +249,6 @@
      currentElement = [elements objectAtIndex:i];
         
         newElement = currentElement;
-        NSLog(@"changing value:%@ for key:%@", newValue, key);
         [newElement setValue:newValue forKey:key];
         
         [elements replaceObjectAtIndex:i withObject:newElement];

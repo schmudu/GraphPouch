@@ -63,15 +63,22 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    // height and width
+    float heightLeft = [[self childLeft] frame].size.height;
+    float heightRight = [[self childRight] frame].size.height;
+    float largerHeight = MAX(heightLeft, heightRight);
+    float widthLeft = [[self childLeft] frame].size.width;
+    float widthRight = [[self childRight] frame].size.width;
+    float largerWidth = MAX(widthLeft, widthRight);
+    
     if ([[self token] typeRaw] == EDTokenTypeOperator){
         if (([[[self token] tokenValue] isEqualToString:@"+"]) || ([[[self token] tokenValue] isEqualToString:@"-"])){
-            NSPoint point = NSMakePoint([[self childLeft] frame].size.width, 0);
+            //NSLog(@"drawing plus symbol: y:%f image height:%f right child y:%f height:%f", (largerHeight - [self image].size.height)/2, [self image].size.height, [[self childRight] frame].origin.y, [[self childRight] frame].size.height);
+            NSPoint point = NSMakePoint([[self childLeft] frame].size.width, (largerHeight - [self image].size.height)/2+(EDExpressionAddSubtractVerticalModifier*[self fontModifier]));
             [[self image] drawAtPoint:point fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0];
+            
         }
         else if ([[[self token] tokenValue] isEqualToString:@"/"]){
-            float largerWidth;
-            largerWidth = MAX([[self childLeft] frame].size.width, [[self childRight] frame].size.width);
-            
             // draw division line
             NSBezierPath *path = [NSBezierPath bezierPath];
             [[NSColor blackColor] setStroke];
@@ -100,7 +107,6 @@
     [field setAttributedStringValue:string];
     imageData = [field dataWithPDFInsideRect:NSMakeRect(0, 0, size.width, size.height)];
     image = [[NSImage alloc] initWithData:imageData];
-    NSLog(@"token image:%@ size:%f", [token tokenValue], fontSize);
     return image;
 }
 
@@ -195,27 +201,25 @@
         if (([[[self token] tokenValue] isEqualToString:@"+"]) || ([[[self token] tokenValue] isEqualToString:@"-"])){
             // left child
             [self addSubview:[self childLeft]];
+            [[self childLeft] setFrameOrigin:NSMakePoint(0, (largerHeight-heightLeft)/2)];
             
             // image of operator
             [self setImage:[EDExpressionNodeView getTokenImage:[self token] fontSize:([self fontSize]*[self fontModifier])]];
             
             // right child
             [self addSubview:[self childRight]];
-            [[self childRight] setFrameOrigin:NSMakePoint([[self childLeft] frame].size.width + [[self image] size].width, 0)];
+            [[self childRight] setFrameOrigin:NSMakePoint([[self childLeft] frame].size.width + [[self image] size].width + (EDExpressionBufferHorizontalAddSubtract * [self fontModifier]), (largerHeight-heightRight)/2)];
             
-            //NSLog(@"token:%@ width left:%f self:%f right:%f", [[self token] tokenValue], [[self childLeft] frame].size.width, [self frame].size.width, [[self childRight] frame].size.width);
-            [self setFrameSize:NSMakeSize([[self childLeft] frame].size.width + [[self image] size].width + [[self childRight] frame].size.width, largerHeight)];
-            //NSLog(@"new frame size:%f", [self frame].size.width);
+            [self setFrameSize:NSMakeSize([[self childLeft] frame].size.width + [[self image] size].width + (EDExpressionBufferHorizontalAddSubtract * [self fontModifier]) + [[self childRight] frame].size.width, largerHeight)];
         }
         else if([[[self token] tokenValue] isEqualToString:@"/"]){
-            float height = heightLeft + 1 + 2 + 1 + heightRight;
+            float height = heightLeft + 1 + 1 + 1 + heightRight;
             [self addSubview:[self childLeft]];
             
             // center left child
             if (widthLeft > widthRight)
                 [[self childLeft] setFrameOrigin:NSMakePoint(0, 0)];
             else{
-                //[[self childRight] setFrameOrigin:NSMakePoint((largerWidth-widthLeft)/2, 0)];
                 [[self childLeft] setFrameOrigin:NSMakePoint((largerWidth-widthLeft)/2, 0)];
             }
             
@@ -224,10 +228,9 @@
             
             // center left child
             if (widthRight > widthLeft)
-                [[self childRight] setFrameOrigin:NSMakePoint(0, 1+2+1+heightLeft)];
+                [[self childRight] setFrameOrigin:NSMakePoint(0, 1+1+1+heightLeft)];
             else{
-                //[[self childLeft] setFrameOrigin:NSMakePoint((largerWidth-widthLeft)/2, 1+2+1+heightLeft)];
-                [[self childRight] setFrameOrigin:NSMakePoint(0, 1+2+1+heightLeft)];
+                [[self childRight] setFrameOrigin:NSMakePoint((largerWidth-widthRight)/2, 1+1+1+heightLeft)];
             }
             
             // reset frame size

@@ -99,8 +99,6 @@
     NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
     NSArray *expressions = [potentialEquation componentsSeparatedByString:@"="];
     
-    NSLog(@"expressions:%@", expressions);
-    
     if (([expressions count] == 2) || ([expressions count] == 1)){
         // validate both expressions
         NSDictionary *dictExpressionFirst = [EDExpression validExpression:[expressions objectAtIndex:0] context:context error:error];
