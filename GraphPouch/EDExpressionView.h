@@ -11,7 +11,7 @@
 #import "EDWorksheetElementView.h"
 
 @interface EDExpressionView : EDWorksheetElementView{
-    EDExpressionNodeView *_rootNode;
+    EDExpressionNodeView *_rootNodeFirst, *_rootNodeSecond;
 }
 
 + (EDExpressionNodeView *)createExpressionNodeTree:(NSArray *)stack frame:(NSRect)frame expression:(EDExpression *)expression;

@@ -61,11 +61,18 @@
 
 - (void)clearViews{
     // if there is a root node then destroy it and all of its subviews
-    if (_rootNode){
-        [_rootNode clearViews];
+    if (_rootNodeFirst){
+        [_rootNodeFirst clearViews];
         
         // remove root node from view 
-        [_rootNode removeFromSuperview];
+        [_rootNodeFirst removeFromSuperview];
+    }
+    
+    if (_rootNodeSecond){
+        [_rootNodeSecond clearViews];
+        
+        // remove root node from view 
+        [_rootNodeSecond removeFromSuperview];
     }
     
     // clear any other subviews
@@ -124,17 +131,57 @@
     else{
         // valid equation/expression
         // create tree
-        EDExpressionNodeView *rootNode = [EDExpressionView createExpressionNodeTree:[expressionDict objectForKey:EDKeyExpressionFirst] frame:[self bounds] expression:(EDExpression *)[self dataObj]];
+        EDExpressionNodeView *rootNodeFirst = [EDExpressionView createExpressionNodeTree:[expressionDict objectForKey:EDKeyExpressionFirst] frame:[self bounds] expression:(EDExpression *)[self dataObj]];
         
         // generate images
-        [rootNode traverseTreeAndCreateImage];
+        [rootNodeFirst traverseTreeAndCreateImage];
         
         // save so we can remove it later
-        _rootNode = rootNode;
+        _rootNodeFirst = rootNodeFirst;
         
         // add image to worksheet
-        [self addSubview:rootNode];
-        [rootNode setFrameOrigin:NSMakePoint(0, 0)];
+        [self addSubview:rootNodeFirst];
+        [rootNodeFirst setFrameOrigin:NSMakePoint(0, 0)];
+        
+        // if an equation then display the equal sign and the other part of the equation
+        if ([[expressionDict objectForKey:EDKeyExpressionType] intValue] == EDTypeEquation){
+            // create tree
+            EDExpressionNodeView *rootNodeSecond = [EDExpressionView createExpressionNodeTree:[expressionDict objectForKey:EDKeyExpressionSecond] frame:[self bounds] expression:(EDExpression *)[self dataObj]];
+            
+            // generate images
+            [rootNodeSecond traverseTreeAndCreateImage];
+            
+            // save so we can remove it later
+            _rootNodeSecond = rootNodeSecond;
+            
+            // add equal sign
+            NSSize equalSize = [EDExpressionNodeView getStringSize:@"=" fontSize:[(EDExpression *)[self dataObj] fontSize]];
+            NSTextField *equalField = [EDExpressionNodeView generateTextField:NSMakeRect(0, 0, equalSize.width, equalSize.height)];
+            NSMutableAttributedString *equalString = [[NSMutableAttributedString alloc] initWithString:@"="];
+            [equalField setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:[(EDExpression *)[self dataObj] fontSize]]];
+            [equalField setAttributedStringValue:equalString];
+            
+            // get larger height
+            float heightFirst = [rootNodeFirst frame].size.height;
+            float heightSecond = [rootNodeSecond frame].size.height;
+            float largerHeight = MAX(heightFirst, heightSecond);
+            
+            [self addSubview:equalField];
+            [equalField setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width, (largerHeight-equalSize.height)/2)];
+            
+            // add image to worksheet
+            [self addSubview:rootNodeSecond];
+            if (heightSecond > heightFirst)
+                [rootNodeSecond setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width + equalSize.width, 0)];
+            else
+                [rootNodeSecond setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width + equalSize.width, (largerHeight-[rootNodeSecond frame].size.height)/2)];
+            
+            // adjust first height
+            if (heightFirst > heightSecond)
+                [rootNodeFirst setFrameOrigin:NSMakePoint(0, 0)];
+            else
+                [rootNodeFirst setFrameOrigin:NSMakePoint(0, (largerHeight-[rootNodeFirst frame].size.height)/2)];
+        }
     }
 }
 @end

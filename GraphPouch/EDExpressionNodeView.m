@@ -33,7 +33,7 @@
     _fontModifier = fontModifier;
     
     // reset frame size
-    [self setFrameSize:[EDExpressionNodeView getTokenSize:[self token] fontSize:([self fontSize]*_fontModifier)]];
+    [self setFrameSize:[EDExpressionNodeView getStringSize:[[self token] tokenValue] fontSize:([self fontSize]*_fontModifier)]];
 }
 
 - (id)initWithFrame:(NSRect)frameRect token:(EDToken *)newToken expression:(EDExpression *)expression{
@@ -100,7 +100,7 @@
     NSData *imageData;
     NSImage *image;
     
-    NSSize size = [EDExpressionNodeView getTokenSize:token fontSize:fontSize];
+    NSSize size = [EDExpressionNodeView getStringSize:[token tokenValue] fontSize:fontSize];
     field = [EDExpressionNodeView generateTextField:NSMakeRect(0, 0, size.width, size.height)];
     string = [[NSMutableAttributedString alloc] initWithString:[token tokenValue]];
     [field setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:fontSize]];
@@ -110,11 +110,11 @@
     return image;
 }
 
-+ (NSSize)getTokenSize:(EDToken *)token fontSize:(float)fontSize{
++ (NSSize)getStringSize:(NSString *)string fontSize:(float)fontSize{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSFont *font = [NSFont fontWithName:EDExpressionDefaultFontName size:fontSize];
     [dict setObject:font forKey:NSFontAttributeName];
-    NSSize size = [[token tokenValue] sizeWithAttributes:dict];
+    NSSize size = [string sizeWithAttributes:dict];
     return NSMakeSize(size.width + 3, size.height);
 }
 

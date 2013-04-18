@@ -129,7 +129,7 @@
     // identifiers
     // free memory for next comparison
     regfree(&regex);
-    reti = regcomp(&regex, "^(x)$", REG_EXTENDED);
+    reti = regcomp(&regex, "^(x|y)$", REG_EXTENDED);
     if (reti) {
         regfree(&regex);
         return FALSE;
@@ -306,7 +306,7 @@
     }
     
     // free memory
-    regfree(&regex);
+    //regfree(&regex);
     //free((char *)cStr);
 
     return TRUE;

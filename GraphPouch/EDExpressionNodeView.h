@@ -19,7 +19,7 @@
 @property (nonatomic, retain) EDExpressionNodeView *childLeft, *childRight;
 @property (nonatomic, weak) EDExpressionNodeView *parent;
 
-+ (NSSize)getTokenSize:(EDToken *)token fontSize:(float)fontSize;
++ (NSSize)getStringSize:(NSString *)string fontSize:(float)fontSize;
 + (NSImage *)getTokenImage:(EDToken *)token fontSize:(float)fontSize;
 + (NSTextField *)generateTextField:(NSRect)rect;
 - (id)initWithFrame:(NSRect)frameRect token:(EDToken *)newToken expression:(EDExpression *)expression;
