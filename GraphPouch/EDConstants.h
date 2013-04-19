@@ -133,6 +133,7 @@ extern NSString *const EDExpressionDefaultFontName;
 extern float const EDExpressionAddSubtractVerticalModifier;
 extern float const EDExpressionFontSizeMinimum;
 extern float const EDExpressionFontSizeMaximum;
+extern float const EDExpressionLeftDenominatorRootModifierSize;
 
 #pragma mark general
 extern NSString *const EDKey;

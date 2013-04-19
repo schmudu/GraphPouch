@@ -107,6 +107,7 @@ NSString * const EDExpressionDefaultFontName                    = @"Lucida Conso
 float const EDExpressionAddSubtractVerticalModifier             = 3.5;
 float const EDExpressionFontSizeMinimum                         = 6.0;
 float const EDExpressionFontSizeMaximum                         = 30.0;
+float const EDExpressionLeftDenominatorRootModifierSize         = 2.0;
 
 #pragma mark general
 NSString * const EDKey                                          = @"EDKey";
