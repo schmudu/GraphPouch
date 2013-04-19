@@ -12,6 +12,7 @@
 @interface EDExpressionNodeView : NSView{
     float _fontModifier;
     EDExpression *_expression;
+    NSMutableArray *_addedSubviewsOtherThanRightAndLeftChildren;
 }
 @property int treeHeight;
 @property (nonatomic, retain) NSImage *image;
@@ -22,11 +23,14 @@
 + (NSSize)getStringSize:(NSString *)string fontSize:(float)fontSize;
 + (NSImage *)getTokenImage:(EDToken *)token fontSize:(float)fontSize;
 + (NSTextField *)generateTextField:(NSRect)rect;
++ (float)fontSizeForString:(NSString *)string height:(float)height;
 - (id)initWithFrame:(NSRect)frameRect token:(EDToken *)newToken expression:(EDExpression *)expression;
 - (EDToken *)token;
 - (void)traverseTreeAndCreateImage;
 - (BOOL)insertNodeIntoRightMostChild:(EDExpressionNodeView *)node;
 - (BOOL)isLeafNode;
 - (void)clearViews;
+- (EDExpression *)expression;
+- (float)fontModifier;
 
 @end
