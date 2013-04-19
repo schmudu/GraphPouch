@@ -193,12 +193,11 @@
         // print out all tokens
         /*
         NSLog(@"====after insert implied multiplication");
-        i =0;
+        int i =0;
         for (EDToken *token in tokens){
-            NSLog(@"i:%d token:%@", i, token);
+            NSLog(@"i:%d token:%@", i, [token tokenValue]);
             i++;
-        }
-         */
+        }*/
         
         // parse expression
         parsedTokens = [EDParser parse:tokens error:error];

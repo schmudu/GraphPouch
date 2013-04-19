@@ -298,7 +298,7 @@
                 sizeRightParen = [EDExpressionNodeView getStringSize:@")" fontSize:fontSize];
                 NSTextField *fieldRightParen = [EDExpressionNodeView generateTextField:NSMakeRect(0, 0, sizeRightParen.width, sizeRightParen.height)];
                 NSMutableAttributedString *stringRightParen = [[NSMutableAttributedString alloc] initWithString:@")"];
-                [fieldRightParen setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:([[self expression] fontSize]*[[self childLeft] fontModifier])]];
+                [fieldRightParen setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:fontSize]];
                 [fieldRightParen setAttributedStringValue:stringRightParen];
                 [self addSubview:fieldRightParen];
                 [fieldRightParen setFrameOrigin:NSMakePoint(parenWidthLeft + childWidthLeft, (largerHeight-heightLeft)/2)];
@@ -336,6 +336,72 @@
                 
                 
                 [self setFrameSize:NSMakeSize(parenWidthLeft + childWidthLeft + parenWidthLeft + parenWidthRight + childWidthRight + parenWidthRight, largerHeight)];
+            }
+            else if (([[[self childLeft] token] typeRaw] == EDTokenTypeOperator) || ([[[self childRight] token] typeRaw] == EDTokenTypeOperator)){
+                // one of the children is an operator and the other one is an identifier/number
+                // need to surround the operator with parenthesis
+                float parenWidthLeft, parenWidthRight, childWidthLeft, childWidthRight, fontSize;
+                EDExpressionNodeView *childOperator, *childIdentifierNumber;
+                NSSize sizeLeftParen, sizeRightParen;
+                
+                if ([[[self childLeft] token] typeRaw] == EDTokenTypeOperator){
+                    childOperator = [self childLeft];
+                    childIdentifierNumber = [self childRight];
+                }
+                else{
+                    childOperator = [self childRight];
+                    childIdentifierNumber = [self childLeft];
+                }
+                
+                // determine larger height
+                float heightOperator = [childOperator frame].size.height;
+                float heightIdentifierNumber = [childIdentifierNumber frame].size.height;
+                float largerHeight = MAX(heightOperator, heightIdentifierNumber);
+                NSLog(@"height operator:%f number:%f", heightOperator, heightIdentifierNumber);
+                
+                // determine font size if it's a divide operation
+                if ([[[childOperator token] tokenValue] isEqualToString:@"/"])
+                    fontSize = [EDExpressionNodeView fontSizeForString:@"(" height:[childOperator frame].size.height];
+                else
+                    fontSize = [[self expression] fontSize]*[childOperator fontModifier];
+                
+                // child identifier/number
+                [self addSubview:childIdentifierNumber];
+                [childIdentifierNumber setFrameOrigin:NSMakePoint(0, (largerHeight-heightIdentifierNumber)/2)];
+                childWidthLeft = [childIdentifierNumber frame].size.width;
+                
+                // add left paren
+                sizeLeftParen = [EDExpressionNodeView getStringSize:@"(" fontSize:fontSize];
+                NSTextField *fieldLeftParen = [EDExpressionNodeView generateTextField:NSMakeRect(0, 0, sizeLeftParen.width, sizeLeftParen.height)];
+                NSMutableAttributedString *stringLeftParen = [[NSMutableAttributedString alloc] initWithString:@"("];
+                [fieldLeftParen setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:fontSize]];
+                [fieldLeftParen setAttributedStringValue:stringLeftParen];
+                [self addSubview:fieldLeftParen];
+                [fieldLeftParen setFrameOrigin:NSMakePoint(childWidthLeft, (largerHeight-sizeLeftParen.height)/2)];
+                [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldLeftParen];
+                parenWidthLeft = [fieldLeftParen frame].size.width;
+                
+                // child operator
+                [self addSubview:childOperator];
+                [childOperator setFrameOrigin:NSMakePoint(childWidthLeft + parenWidthLeft, (largerHeight-heightOperator)/2)];
+                childWidthRight = [childOperator frame].size.width;
+                
+                // right paren
+                //NSLog(@"font modifier left:%f right:%f", [[self childLeft] fontModifier], [[self childRight] fontModifier]);
+                //NSLog(@"frame size child height left:%f right%f right token:%@ font size old:%f new:%f", [[self childLeft] frame].size.height, [[self childRight] frame].size.height, [[[self childRight] token] tokenValue], [[self childRight] fontModifier] * [_expression fontSize],fontSize);
+                
+                // add right paren
+                sizeRightParen = [EDExpressionNodeView getStringSize:@")" fontSize:fontSize];
+                NSTextField *fieldRightParen = [EDExpressionNodeView generateTextField:NSMakeRect(0, 0, sizeRightParen.width, sizeRightParen.height)];
+                NSMutableAttributedString *stringRightParen = [[NSMutableAttributedString alloc] initWithString:@")"];
+                [fieldRightParen setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:fontSize]];
+                [fieldRightParen setAttributedStringValue:stringRightParen];
+                [self addSubview:fieldRightParen];
+                [fieldRightParen setFrameOrigin:NSMakePoint(childWidthLeft + parenWidthLeft + childWidthRight, (largerHeight-sizeLeftParen.height)/2)];
+                [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldRightParen];
+                parenWidthRight = [fieldRightParen frame].size.width;
+                
+                [self setFrameSize:NSMakeSize(childWidthLeft + parenWidthLeft + childWidthRight + parenWidthRight, largerHeight)];
             }
         }
     }

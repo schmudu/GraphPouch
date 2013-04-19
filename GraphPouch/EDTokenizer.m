@@ -345,6 +345,13 @@
                 addedToken = TRUE;
             }
             
+            // insert token between identifier and left paren
+            if(([previousToken typeRaw] == EDTokenTypeIdentifier) && ([currentToken typeRaw] == EDTokenTypeParenthesis) && ([[currentToken tokenValue] isEqualToString:@"("])){
+                multiplyToken = [EDToken multiplierToken:context];
+                [tokens insertObject:multiplyToken atIndex:i];
+                addedToken = TRUE;
+            }
+            
             // insert token between identifier and identifier
             if(([previousToken typeRaw] == EDTokenTypeIdentifier) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
                 multiplyToken = [EDToken multiplierToken:context];
@@ -375,20 +382,6 @@
             
             // insert token between right paren and left paren
             if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeParenthesis) && ([[currentToken tokenValue] isEqualToString:@"("])){
-                multiplyToken = [EDToken multiplierToken:context];
-                [tokens insertObject:multiplyToken atIndex:i];
-                addedToken = TRUE;
-            }
-            
-            // insert token between identifier and left paren
-            if(([previousToken typeRaw] == EDTokenTypeIdentifier) && ([currentToken typeRaw] == EDTokenTypeParenthesis) && ([[currentToken tokenValue] isEqualToString:@"("])){
-                multiplyToken = [EDToken multiplierToken:context];
-                [tokens insertObject:multiplyToken atIndex:i];
-                addedToken = TRUE;
-            }
-            
-            // insert token between number and left paren
-            if(([previousToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeParenthesis) && ([[currentToken tokenValue] isEqualToString:@"("])){
                 multiplyToken = [EDToken multiplierToken:context];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
