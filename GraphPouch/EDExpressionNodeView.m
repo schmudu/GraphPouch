@@ -28,7 +28,6 @@
         [self setFontModifier:1.0];
         [self setTreeHeight:0];
         _addedSubviewsOtherThanRightAndLeftChildren = [NSMutableArray array];
-        // set default text size
     }
     
     return self;
@@ -97,7 +96,6 @@
     
     if ([[self token] typeRaw] == EDTokenTypeOperator){
         if (([[[self token] tokenValue] isEqualToString:@"+"]) || ([[[self token] tokenValue] isEqualToString:@"-"])){
-            //NSLog(@"drawing plus symbol: y:%f image height:%f right child y:%f height:%f", (largerHeight - [self image].size.height)/2, [self image].size.height, [[self childRight] frame].origin.y, [[self childRight] frame].size.height);
             NSPoint point = NSMakePoint([[self childLeft] frame].size.width, (largerHeight - [self image].size.height)/2+(EDExpressionAddSubtractVerticalModifier*[self fontModifier]));
             [[self image] drawAtPoint:point fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0];
             
@@ -110,10 +108,12 @@
             [path lineToPoint:NSMakePoint(largerWidth, [[self childLeft] frame].size.height + 1)];
             [path stroke];
         }
+        else if ([[[self token] tokenValue] isEqualToString:@"/"]){
+            // do nothing for multiplication, all of it is done in traverse tree
+        }
     }
     else if (([[self token] typeRaw] == EDTokenTypeIdentifier) || ([[self token] typeRaw] == EDTokenTypeNumber)){
-        NSRect rect = NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height);
-        [[self image] drawInRect:rect fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:TRUE hints:nil];
+        // traverseTree method will add the identifier
     }
 }
 
@@ -211,7 +211,17 @@
     
     // create image
     if (([[self token] typeRaw] == EDTokenTypeNumber) || ([[self token] typeRaw] == EDTokenTypeIdentifier)){
-        [self setImage:[EDExpressionNodeView getTokenImage:[self token] fontSize:([self fontSize]*[self fontModifier])]];
+        NSSize size = [EDExpressionNodeView getStringSize:[token tokenValue] fontSize:[[self expression] fontSize]];
+        
+        // add a buffer to size otherwise textfield will wrap and the last character will not show
+        size.width = size.width + 1.4;
+        
+        NSTextField *field = [EDExpressionNodeView generateTextField:NSMakeRect(0, 0, size.width, size.height)];
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[token tokenValue]];
+        [field setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:[[self expression] fontSize]]];
+        [field setAttributedStringValue:string];
+        [self addSubview:field];
+        [self setFrameSize:NSMakeSize([field frame].size.width, [field frame].size.height)];
     }
     else if ([[self token] typeRaw] == EDTokenTypeOperator){
         // height and width
@@ -260,7 +270,7 @@
             // reset frame size
             [self setFrameSize:NSMakeSize(largerWidth, height)];
             //NSLog(@"divide op: height left:%f self:%f right:%f", [[self childLeft] frame].size.height, 4.0, [[self childRight] frame].size.height);
-            NSLog(@"divide op: setting height to:%f right token:%@", height, [[[self childRight] token] tokenValue]);
+            //NSLog(@"divide op: setting height to:%f right token:%@", height, [[[self childRight] token] tokenValue]);
         }
         else if([[[self token] tokenValue] isEqualToString:@"*"]){
             if (([[[self childLeft] token] typeRaw] == EDTokenTypeOperator) && ([[[self childRight] token] typeRaw] == EDTokenTypeOperator)){
@@ -293,7 +303,7 @@
                 // right paren
                 //NSLog(@"font modifier left:%f right:%f", [[self childLeft] fontModifier], [[self childRight] fontModifier]);
                 
-                NSLog(@"frame size child height left:%f right%f right token:%@ font size old:%f new:%f", [[self childLeft] frame].size.height, [[self childRight] frame].size.height, [[[self childRight] token] tokenValue], [[self childRight] fontModifier] * [_expression fontSize],fontSize);
+                //NSLog(@"frame size child height left:%f right%f right token:%@ font size old:%f new:%f", [[self childLeft] frame].size.height, [[self childRight] frame].size.height, [[[self childRight] token] tokenValue], [[self childRight] fontModifier] * [_expression fontSize],fontSize);
                 
                 sizeRightParen = [EDExpressionNodeView getStringSize:@")" fontSize:fontSize];
                 NSTextField *fieldRightParen = [EDExpressionNodeView generateTextField:NSMakeRect(0, 0, sizeRightParen.width, sizeRightParen.height)];
@@ -419,6 +429,35 @@
                     
                     [self setFrameSize:NSMakeSize(childWidthLeft + parenWidthLeft + childWidthRight + parenWidthRight, largerHeight)];
                 }
+            }
+            else if ((([[[self childLeft] token] typeRaw] == EDTokenTypeNumber) && ([[[self childRight] token] typeRaw] == EDTokenTypeNumber)) ||
+                     (([[[self childLeft] token] typeRaw] == EDTokenTypeIdentifier) && ([[[self childRight] token] typeRaw] == EDTokenTypeIdentifier))){
+                // two identifiers/numbers, place multiplication symbol in between
+                float childWidthLeft, childWidthRight;
+                float fontSize = [self fontSize] * .8;
+                NSSize sizeOperator;
+                
+                // left child
+                [self addSubview:[self childLeft]];
+                [[self childLeft] setFrameOrigin:NSMakePoint(0, 0)];
+                childWidthLeft = [[self childLeft] frame].size.width;
+                
+                // add multiply symbol
+                sizeOperator = [EDExpressionNodeView getStringSize:@"x" fontSize:fontSize];
+                NSTextField *fieldMultiply = [EDExpressionNodeView generateTextField:NSMakeRect(0, 0, sizeOperator.width, sizeOperator.height)];
+                NSMutableAttributedString *stringMultiply = [[NSMutableAttributedString alloc] initWithString:@"x"];
+                [fieldMultiply setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:fontSize]];
+                [fieldMultiply setAttributedStringValue:stringMultiply];
+                [self addSubview:fieldMultiply];
+                [fieldMultiply setFrameOrigin:NSMakePoint(childWidthLeft, 0)];
+                [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
+                
+                // right child
+                [self addSubview:[self childRight]];
+                [[self childRight] setFrameOrigin:NSMakePoint(childWidthLeft + sizeOperator.width, 0)];
+                childWidthRight = [[self childRight] frame].size.width;
+                
+                [self setFrameSize:NSMakeSize(childWidthLeft + sizeOperator.width + childWidthRight, largerHeight)];
             }
         }
     }
