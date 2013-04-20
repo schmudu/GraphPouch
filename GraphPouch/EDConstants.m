@@ -99,7 +99,7 @@ NSString * const EDKeyExpressionType                            = @"EDKeyExpress
 float const EDExpressionFontModifierNumerator                   = .7;
 float const EDExpressionFontModifierDenominator                 = .7;
 float const EDExpressionFontModifierExponentialBase             = .7;
-float const EDExpressionFontModifierExponentialPower            = .5;
+float const EDExpressionFontModifierExponentialPower            = .7;
 float const EDExpressionDefaultFontSize                         = 14.0;
 float const EDExpressionBufferHorizontalAddSubtract             = 2.0;
 float const EDExpressionAdditionLeftVerticalOffset              = 2.0;
@@ -108,6 +108,10 @@ float const EDExpressionAddSubtractVerticalModifier             = 3.5;
 float const EDExpressionFontSizeMinimum                         = 6.0;
 float const EDExpressionFontSizeMaximum                         = 30.0;
 float const EDExpressionLeftDenominatorRootModifierSize         = 2.0;
+float const EDExpressionRadicalLineWidthPrimary                 = 0.5;
+float const EDExpressionRadicalLineWidthSecondary               = 0.3;
+float const EDExpressionRadicalLineWidthTertiary                = 0.2;
+float const EDExpressionRadicalRootUpperLeftOriginOffset        = 4.0;
 
 #pragma mark general
 NSString * const EDKey                                          = @"EDKey";
