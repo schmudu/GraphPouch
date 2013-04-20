@@ -122,9 +122,8 @@
                     
                     // line above the base, left to right
                     [path moveToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth, _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
-                    [path lineToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth + [[self childLeft] frame].size.width + _radicalBaseWidth, _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
-                    //NSLog(@"radical base paren width:%f base width:%f", _radicalBaseLeftParenWidth, _radicalBaseWidth);
-                    
+                    [path lineToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth + _radicalBaseWidth, _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
+                
                     // line from origin of line over base to bottom, right to left
                     [path moveToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth, _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
                     [path lineToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth - [self fontSize]*[self fontModifier]*EDExpressionRadicalLineWidthTertiary, [[self childLeft] frame].size.height*EDExpressionRadicalLineHeightTertiary + _radicalRootHeight)];
@@ -565,11 +564,13 @@
                     [fieldLeftParen setFrameOrigin:NSMakePoint(_radicalRootWidth, _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
                     [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldLeftParen];
                     parenWidthLeft = [fieldLeftParen frame].size.width;
+                    _radicalBaseWidth += parenWidthLeft;
                     _radicalBaseLeftParenWidth = parenWidthLeft;
                     
                     // radical base
                     [self addSubview:childLeft];
                     childWidthLeft = [childLeft frame].size.width;
+                    _radicalBaseWidth += childWidthLeft;
                     [childLeft setFrameOrigin:NSMakePoint(_radicalRootWidth + parenWidthLeft, _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
                     
                     // add right paren
@@ -631,6 +632,7 @@
                     // radical base
                     [self addSubview:childLeft];
                     childWidthLeft = [childLeft frame].size.width;
+                    _radicalBaseWidth += childWidthLeft;
 #warning this doesn't display correctly if the power of the base is a fraction
                     [childLeft setFrameOrigin:NSMakePoint(_radicalRootWidth, _radicalRootHeight+5)];
                     
@@ -649,7 +651,7 @@
                     }
                     
                     // set frame size
-                    [self setFrameSize:NSMakeSize(_radicalRootWidth + childWidthLeft + widthRadicalPower, largerHeight + _radicalRootHeight)];
+                    [self setFrameSize:NSMakeSize(_radicalRootWidth  + _radicalBaseWidth, largerHeight + _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical - EDExpressionTextFieldEndBuffer)];
                 }
             }
             else if ([[[self childLeft] token] typeRaw] == EDTokenTypeOperator){

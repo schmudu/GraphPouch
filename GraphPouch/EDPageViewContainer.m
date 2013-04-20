@@ -10,6 +10,7 @@
 #import "EDCoreDataUtility+Graphs.h"
 #import "EDCoreDataUtility+Lines.h"
 #import "EDCoreDataUtility+Pages.h"
+#import "EDPageViewContainerExpressionView.h"
 #import "EDGraphView.h"
 #import "EDGraph.h"
 #import "EDLine.h"
@@ -185,11 +186,36 @@
 
 #pragma mark expressions
 - (void)drawExpressions{
+    NSArray *expressions = [[_page expressions] allObjects];
+    EDPageViewContainerExpressionView *expressionView;
+    NSImage *expressionImage;
+    
+    // for each graph create a graph view
+    for (EDExpression *expression in expressions){
+        NSLog(@"adding expression to page.");
+        expressionView = [[EDPageViewContainerExpressionView alloc] initWithFrame:[self bounds] expression:expression context:_context];
+        
+        // create image
+        /*
+        lineImage = [[NSImage alloc] initWithData:[lineView dataWithPDFInsideRect:[lineView bounds]]];
+        
+        // create cache image that only needs to draw on update
+        lineCacheView = [[EDPageViewContainerLineCacheView alloc] initWithFrame:[self bounds] lineImage:lineImage];
+        
+        //[lineCacheView setFrameOrigin:NSMakePoint(xRatio * [line locationX], yRatio * [line locationY])];
+         */
+        [self addSubview:expressionView];
+        
+        // save view so it can be erased later
+        [_expressionCacheViews addObject:expressionView];
+    }
     
 }
 
 - (void)removeExpressions{
-    
+    for (NSView *expressionCacheView in _expressionCacheViews){
+        [expressionCacheView removeFromSuperview];
+    }
 }
 
 #pragma mark lines
@@ -280,11 +306,13 @@
     [self removeTextboxes];
     [self removeGraphs];
     [self removeLines];
+    [self removeExpressions];
     
     // draw
     [self drawTextboxes];
     [self drawGraphs];
     [self drawLines];
+    [self drawExpressions];
 }
 
 #pragma mark textboxes
