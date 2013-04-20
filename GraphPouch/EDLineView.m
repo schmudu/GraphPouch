@@ -18,9 +18,10 @@
 
 @implementation EDLineView
 
-- (id)initWithFrame:(NSRect)frame lineModel:(EDLine *)myLine{
+- (id)initWithFrame:(NSRect)frame lineModel:(EDLine *)myLine drawSelection:(BOOL)drawSelection{
     self = [super initWithFrame:frame];
     if (self){
+        _drawSelection = drawSelection;
         _context = [myLine managedObjectContext];
         
         // set model info
@@ -73,7 +74,7 @@
     [path stroke];
     
     // color background
-    if ([(EDLine *)[self dataObj] selected]){
+    if ((_drawSelection) && ([(EDLine *)[self dataObj] selected])){
         [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
         [NSBezierPath fillRect:[self bounds]];
     }

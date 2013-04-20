@@ -13,9 +13,9 @@
     EDPage *_page;
     NSManagedObjectContext *_context;
     NSMutableArray *_textboxViews;
-    NSMutableArray *_expressionCacheViews;
-    NSMutableArray *_graphCacheViews;
-    NSMutableArray *_lineCacheViews;
+    NSMutableArray *_expressionViews;
+    NSMutableArray *_graphViews;
+    NSMutableArray *_lineViews;
 }
 
 + (NSRect)containerFrame;

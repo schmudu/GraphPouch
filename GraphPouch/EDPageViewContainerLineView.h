@@ -11,7 +11,8 @@
 
 @interface EDPageViewContainerLineView : NSView{
     EDLine *_line;
+    NSManagedObjectContext *_context;
 }
 
-- (id)initWithFrame:(NSRect)frame line:(EDLine *)line;
+- (id)initWithFrame:(NSRect)frame line:(EDLine *)line context:(NSManagedObjectContext *)context;
 @end

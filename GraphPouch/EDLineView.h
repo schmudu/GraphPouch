@@ -10,7 +10,9 @@
 #import "EDWorksheetElementView.h"
 @class EDLine;
 
-@interface EDLineView : EDWorksheetElementView
+@interface EDLineView : EDWorksheetElementView{
+    BOOL _drawSelection;
+}
 
-- (id)initWithFrame:(NSRect)frame lineModel:(EDLine *)myLine;
+- (id)initWithFrame:(NSRect)frame lineModel:(EDLine *)myLine drawSelection:(BOOL)drawSelection;
 @end

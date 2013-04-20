@@ -260,7 +260,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)drawLine:(EDLine *)line{
-    EDLineView *lineView = [[EDLineView alloc] initWithFrame:NSMakeRect(0, 0, [line elementWidth], [line elementHeight]) lineModel:(EDLine *)line];
+    EDLineView *lineView = [[EDLineView alloc] initWithFrame:NSMakeRect(0, 0, [line elementWidth], [line elementHeight]) lineModel:(EDLine *)line drawSelection:TRUE];
     
     // listen to graph
     // NOTE: any listeners you add here, remove them in method 'removeElementView'

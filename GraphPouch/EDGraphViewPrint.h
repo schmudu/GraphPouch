@@ -10,4 +10,5 @@
 
 @interface EDGraphViewPrint : EDGraphView
 
+- (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph;
 @end

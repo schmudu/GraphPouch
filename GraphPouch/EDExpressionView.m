@@ -10,7 +10,6 @@
 #import "NSColor+Utilities.h"
 
 @interface EDExpressionView()
-- (void)validateAndDisplayExpression;
 @end
 
 @implementation EDExpressionView
@@ -49,7 +48,7 @@
         [self setDataObj:expression];
         _context = [expression managedObjectContext];
         
-        _drawSeleection = drawSelection;
+        _drawSelection = drawSelection;
         
         // display expression
         [self validateAndDisplayExpression];
@@ -94,7 +93,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // color background
-    if ((_drawSeleection) && ([(EDExpression *)[self dataObj] selected])){
+    if ((_drawSelection) && ([(EDExpression *)[self dataObj] selected])){
         [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
         [NSBezierPath fillRect:[self bounds]];
     }

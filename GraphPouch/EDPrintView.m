@@ -7,6 +7,7 @@
 //
 
 #import "EDConstants.h"
+#import "EDExpressionView.h"
 #import "EDGraph.h"
 #import "EDGraphView.h"
 #import "EDGraphViewPrint.h"
@@ -31,23 +32,12 @@
     if (self) {
         _context = context;
         _elements = [[NSMutableArray alloc] init];
-    }
-    
-    return self;
-}
-
-- (BOOL)isFlipped{
-    return TRUE;
-}
-
-- (void)removeAllSubviews{
-    // iterate through views and remove them
-    for (NSView *view in _elements){
-        [view removeFromSuperview];
-    }
-}
-- (void)drawRect:(NSRect)dirtyRect
-{
+        
+        
+        
+        
+        
+        
     // remove all subviews
     [self removeAllSubviews];
     
@@ -57,6 +47,8 @@
     EDGraphViewPrint *graphView;
     EDLineView *lineView;
     EDTextboxView *textboxView;
+    EDExpressionView *expressionView;
+    
     int pageIndex = 0;
     // for each page draw worksheet elements
     for (EDPage *page in pages){
@@ -65,15 +57,12 @@
         expressions = [[page expressions] allObjects];
         
         for (EDExpression *expression in expressions){
-            NSLog(@"need to draw expression in print view.");
-            /*
-            // create graphViewPrint and add it to the view
-            graphView = [[EDGraphViewPrint alloc] initWithFrame:NSMakeRect([graph locationX], pageIndex * EDWorksheetViewHeight + [graph locationY], [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph];
+            // create expressionView and add it to the view
+            expressionView = [[EDExpressionView alloc] initWithFrame:NSMakeRect([expression locationX], pageIndex * EDWorksheetViewHeight + [expression locationY], [expression elementWidth], [expression elementHeight]) expression:expression drawSelection:FALSE];
             
             // add it to view
-            [self addSubview:graphView];
-            [_elements addObject:graphView];
-             */
+            [self addSubview:expressionView];
+            [_elements addObject:expressionView];
         }
         
         // DRAW GRAPHS
@@ -81,7 +70,8 @@
         
         for (EDGraph *graph in graphs){
             // create graphViewPrint and add it to the view
-            graphView = [[EDGraphViewPrint alloc] initWithFrame:NSMakeRect([graph locationX], pageIndex * EDWorksheetViewHeight + [graph locationY], [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph drawSelection:FALSE];
+            //graphView = [[EDGraphViewPrint alloc] initWithFrame:NSMakeRect([graph locationX], pageIndex * EDWorksheetViewHeight + [graph locationY], [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph drawSelection:FALSE];
+            graphView = [[EDGraphViewPrint alloc] initWithFrame:NSMakeRect([graph locationX], pageIndex * EDWorksheetViewHeight + [graph locationY], [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph];
             
             // add it to view
             [self addSubview:graphView];
@@ -93,7 +83,7 @@
         
         for (EDLine *line in lines){
             // create lineViewPrint and add it to the view
-            lineView = [[EDLineViewPrint alloc] initWithFrame:NSMakeRect([line locationX], pageIndex * EDWorksheetViewHeight + [line locationY], [line elementWidth], [line elementHeight]) lineModel:line];
+            lineView = [[EDLineViewPrint alloc] initWithFrame:NSMakeRect([line locationX], pageIndex * EDWorksheetViewHeight + [line locationY], [line elementWidth], [line elementHeight]) lineModel:line drawSelection:FALSE];
             
             // add it to view
             [self addSubview:lineView];
@@ -114,6 +104,94 @@
         
         pageIndex++;
     }
+     
+        
+        
+    }
+    
+    return self;
+}
+
+- (BOOL)isFlipped{
+    return TRUE;
+}
+
+- (void)removeAllSubviews{
+    // iterate through views and remove them
+    for (NSView *view in _elements){
+        [view removeFromSuperview];
+    }
+}
+- (void)drawRect:(NSRect)dirtyRect
+{
+    /*
+    // remove all subviews
+    [self removeAllSubviews];
+    
+    // get all pages
+    NSArray *pages = [EDPage getAllObjectsOrderedByPageNumber:_context];
+    NSArray *expressions, *graphs, *textboxes, *lines;
+    EDGraphViewPrint *graphView;
+    EDLineView *lineView;
+    EDTextboxView *textboxView;
+    EDExpressionView *expressionView;
+    
+    int pageIndex = 0;
+    // for each page draw worksheet elements
+    for (EDPage *page in pages){
+#warning worksheet elements
+        // DRAW EXPRESSION
+        expressions = [[page expressions] allObjects];
+        
+        for (EDExpression *expression in expressions){
+            // create expressionView and add it to the view
+            //expressionView = [[EDExpressionView alloc] initWithFrame:NSMakeRect([expression locationX], pageIndex * EDWorksheetViewHeight + [expression locationY], [expression elementWidth], [expression elementHeight]) expression:expression drawSelection:FALSE];
+            
+            // add it to view
+            //[self addSubview:expressionView];
+            //[_elements addObject:expressionView];
+        }
+        
+        // DRAW GRAPHS
+        graphs = [[page graphs] allObjects];
+        
+        for (EDGraph *graph in graphs){
+            // create graphViewPrint and add it to the view
+            //graphView = [[EDGraphViewPrint alloc] initWithFrame:NSMakeRect([graph locationX], pageIndex * EDWorksheetViewHeight + [graph locationY], [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph drawSelection:FALSE];
+            //graphView = [[EDGraphViewPrint alloc] initWithFrame:NSMakeRect([graph locationX], pageIndex * EDWorksheetViewHeight + [graph locationY], [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph];
+            
+            // add it to view
+            //[self addSubview:graphView];
+            //[_elements addObject:graphView];
+        }
+        
+        // DRAW LINES
+        lines = [[page lines] allObjects];
+        
+        for (EDLine *line in lines){
+            // create lineViewPrint and add it to the view
+            lineView = [[EDLineViewPrint alloc] initWithFrame:NSMakeRect([line locationX], pageIndex * EDWorksheetViewHeight + [line locationY], [line elementWidth], [line elementHeight]) lineModel:line drawSelection:FALSE];
+            
+            // add it to view
+            [self addSubview:lineView];
+            [_elements addObject:lineView];
+        }
+        
+        // DRAW TEXTBOXES
+        textboxes = [[page textboxes] allObjects];
+        
+        for (EDTextbox *textbox in textboxes){
+            // create lineViewPrint and add it to the view
+            textboxView = [[EDTextboxView alloc] initWithFrame:NSMakeRect([textbox locationX], pageIndex * EDWorksheetViewHeight + [textbox locationY], [textbox elementWidth], [textbox elementHeight]) textboxModel:textbox drawSelection:FALSE];
+            
+            // add it to view
+            [self addSubview:textboxView];
+            [_elements addObject:textboxView];
+        }
+        
+        pageIndex++;
+    }
+    */
 }
 
 

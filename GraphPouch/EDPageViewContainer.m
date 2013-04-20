@@ -16,9 +16,7 @@
 #import "EDLine.h"
 #import "EDPageViewContainer.h"
 #import "EDPageViewContainerGraphView.h"
-#import "EDPageViewContainerGraphCacheView.h"
 #import "EDPageViewContainerLineView.h"
-#import "EDPageViewContainerLineCacheView.h"
 #import "EDPageViewContainerTextView.h"
 #import "EDPage.h"
 #import "EDTextbox.h"
@@ -70,9 +68,9 @@
         _page = page;
         _context = [page managedObjectContext];
         _textboxViews = [[NSMutableArray alloc] init];
-        _graphCacheViews = [[NSMutableArray alloc] init];
-        _lineCacheViews = [[NSMutableArray alloc] init];
-        _expressionCacheViews = [[NSMutableArray alloc] init];
+        _graphViews = [[NSMutableArray alloc] init];
+        _lineViews = [[NSMutableArray alloc] init];
+        _expressionViews = [[NSMutableArray alloc] init];
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -208,31 +206,31 @@
         [self addSubview:expressionView];
         
         // save view so it can be erased later
-        [_expressionCacheViews addObject:expressionView];
+        [_expressionViews addObject:expressionView];
     }
     
 }
 
 - (void)removeExpressions{
-    for (NSView *expressionCacheView in _expressionCacheViews){
+    for (NSView *expressionCacheView in _expressionViews){
         [expressionCacheView removeFromSuperview];
     }
     
     // remove all objects
-    [_expressionCacheViews removeAllObjects];
+    [_expressionViews removeAllObjects];
 }
 
 #pragma mark lines
 - (void)drawLines{
     NSArray *lines = [[_page lines] allObjects];
     EDPageViewContainerLineView *lineView;
-    EDPageViewContainerLineCacheView *lineCacheView;
     NSImage *lineImage;
     
     // for each graph create a graph view
     for (EDLine *line in lines){
-        lineView = [[EDPageViewContainerLineView alloc] initWithFrame:[self bounds] line:line];
+        lineView = [[EDPageViewContainerLineView alloc] initWithFrame:[self bounds] line:line context:_context];
         
+        /*
         // create image
         lineImage = [[NSImage alloc] initWithData:[lineView dataWithPDFInsideRect:[lineView bounds]]];
         
@@ -240,20 +238,21 @@
         lineCacheView = [[EDPageViewContainerLineCacheView alloc] initWithFrame:[self bounds] lineImage:lineImage];
         
         //[lineCacheView setFrameOrigin:NSMakePoint(xRatio * [line locationX], yRatio * [line locationY])];
-        [self addSubview:lineCacheView];
+         */
+        [self addSubview:lineView];
         
         // save view so it can be erased later
-        [_lineCacheViews addObject:lineCacheView];
+        [_lineViews addObject:lineView];
     }
 }
 
 - (void)removeLines{
-    for (NSView *lineCacheView in _lineCacheViews){
+    for (NSView *lineCacheView in _lineViews){
         [lineCacheView removeFromSuperview];
     }
     
     // remove all objects
-    [_lineCacheViews removeAllObjects];
+    [_lineViews removeAllObjects];
 }
 
 #pragma mark graphs
@@ -268,17 +267,17 @@
         [self addSubview:graphView];
         
         // save view so it can be erased later
-        [_graphCacheViews addObject:graphView];
+        [_graphViews addObject:graphView];
     }
 }
 
 - (void)removeGraphs{
-    for (NSView *graphCacheView in _graphCacheViews){
+    for (NSView *graphCacheView in _graphViews){
         [graphCacheView removeFromSuperview];
     }
     
     // remove all objects
-    [_graphCacheViews removeAllObjects];
+    [_graphViews removeAllObjects];
 }
 - (void)onContextChanged:(NSNotification *)note{
     // update if needed
