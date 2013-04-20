@@ -13,7 +13,7 @@
     float _fontModifier;
     EDExpression *_expression;
     NSMutableArray *_addedSubviewsOtherThanRightAndLeftChildren;
-    float _radicalBaseWidth, _radicalBaseLeftParenWidth, _radicalRootWidth;
+    float _radicalPowerHeight, _radicalBaseWidth, _radicalBaseLeftParenWidth, _radicalRootWidth, _radicalRootHeight;
 }
 @property int treeHeight;
 @property (nonatomic, retain) NSImage *image;

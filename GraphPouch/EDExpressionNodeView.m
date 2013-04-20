@@ -114,28 +114,24 @@
         else if ([[[self token] tokenValue] isEqualToString:@"^"]){
             // do nothing for multiplication, all of it is done in traverse tree
             if ([[[[self childRight] token] tokenValue] isEqualToString:@"/"]){
-                if ([[[self childLeft] token] typeRaw] == EDTokenTypeOperator){
+                //if ([[[self childLeft] token] typeRaw] == EDTokenTypeOperator){
                     // get the size of the right child's right child (aka grandchild)
-                    //float fontSizeLeftDenominatorRoot = [[[self childLeft] expression] fontSize]*EDExpressionLeftDenominatorRootFontModifier;
-                    //NSSize sizeRadicalRoot = [EDExpressionNodeView getStringSize:[[[[self childRight] childRight] token] tokenValue] fontSize:fontSizeLeftDenominatorRoot];
-                    NSSize sizeRadicalRoot = [[[self childRight] childRight] frame].size;
                     // draw division line
                     NSBezierPath *path = [NSBezierPath bezierPath];
                     [[NSColor blackColor] setStroke];
                     
                     // line above the base, left to right
-                    [path moveToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth, 0)];
-                    [path lineToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth + [[self childLeft] frame].size.width + _radicalBaseWidth, 0)];
-                    NSLog(@"radical base paren width:%f base width:%f", _radicalBaseLeftParenWidth, _radicalBaseWidth);
+                    [path moveToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth, _radicalRootHeight)];
+                    [path lineToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth + [[self childLeft] frame].size.width + _radicalBaseWidth, _radicalRootHeight)];
+                    //NSLog(@"radical base paren width:%f base width:%f", _radicalBaseLeftParenWidth, _radicalBaseWidth);
                     
                     // line from origin of line over base to bottom, right to left
-                    [path moveToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth, 0)];
-                    [path lineToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth - [self fontSize]*[self fontModifier]*EDExpressionRadicalLineWidthTertiary, [[self childLeft] frame].size.height)];
-                    [path lineToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth - [self fontSize]*[self fontModifier]*EDExpressionRadicalLineWidthSecondary, [[self childLeft] frame].size.height * .7)];
-                    [path lineToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth - [self fontSize]*[self fontModifier]*EDExpressionRadicalLineWidthPrimary, [[self childLeft] frame].size.height * .7)];
+                    [path moveToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth, _radicalRootHeight)];
+                    [path lineToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth - [self fontSize]*[self fontModifier]*EDExpressionRadicalLineWidthTertiary, [[self childLeft] frame].size.height*EDExpressionRadicalLineHeightTertiary + _radicalRootHeight)];
+                    [path lineToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth - [self fontSize]*[self fontModifier]*EDExpressionRadicalLineWidthSecondary, [[self childLeft] frame].size.height * .7 + _radicalRootHeight)];
+                    [path lineToPoint:NSMakePoint([[self childLeft] frame].origin.x - _radicalBaseLeftParenWidth - [self fontSize]*[self fontModifier]*EDExpressionRadicalLineWidthPrimary, [[self childLeft] frame].size.height * .7 + _radicalRootHeight)];
                     [path stroke];
-                    
-                }
+                //}
             }
         }
     }
@@ -529,13 +525,14 @@
                     else
                         fontSize = [self fontSize]*[[self childLeft] fontModifier];
                     
-                    // radical base
+                    // radical root
                     EDExpressionNodeView *radicalRoot = [[self childRight] childRight];
                     sizeRadicalRoot = [radicalRoot frame].size;
                     [self addSubview:radicalRoot];
                     [_addedSubviewsOtherThanRightAndLeftChildren addObject:radicalRoot];
                     widthRadicalRoot = sizeRadicalRoot.width;
                     _radicalBaseWidth += widthRadicalRoot;
+                    _radicalRootHeight = sizeRadicalRoot.height-EDExpressionRadicalRootLowerLeftOriginOffset;
                     
                     // this is where the radical sign and the rest of the elements start drawing, so give it a bit of a buffer/offset
                     _radicalRootWidth = sizeRadicalRoot.width+EDExpressionRadicalRootUpperLeftOriginOffset;
@@ -548,15 +545,15 @@
                     [fieldLeftParen setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:fontSize]];
                     [fieldLeftParen setAttributedStringValue:stringLeftParen];
                     [self addSubview:fieldLeftParen];
-                    [fieldLeftParen setFrameOrigin:NSMakePoint(_radicalRootWidth, (heightLeft - sizeParenLeft.height)/2)];
+                    [fieldLeftParen setFrameOrigin:NSMakePoint(_radicalRootWidth, _radicalRootHeight)];
                     [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldLeftParen];
                     parenWidthLeft = [fieldLeftParen frame].size.width;
                     _radicalBaseLeftParenWidth = parenWidthLeft;
                     
-                    // left child
+                    // radical root
                     [self addSubview:childLeft];
                     childWidthLeft = [childLeft frame].size.width;
-                    [childLeft setFrameOrigin:NSMakePoint(_radicalRootWidth + parenWidthLeft, 0)];
+                    [childLeft setFrameOrigin:NSMakePoint(_radicalRootWidth + parenWidthLeft, _radicalRootHeight)];
                     
                     // add right paren
                     sizeParenRight = [EDExpressionNodeView getStringSize:@")" fontSize:fontSize];
@@ -565,7 +562,7 @@
                     [fieldRightParen setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:fontSize]];
                     [fieldRightParen setAttributedStringValue:stringRightParen];
                     [self addSubview:fieldRightParen];
-                    [fieldRightParen setFrameOrigin:NSMakePoint(_radicalRootWidth + parenWidthLeft + childWidthLeft, (heightLeft - sizeParenLeft.height)/2)];
+                    [fieldRightParen setFrameOrigin:NSMakePoint(_radicalRootWidth + parenWidthLeft + childWidthLeft, _radicalRootHeight)];
                     [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldRightParen];
                     parenWidthRight = [fieldRightParen frame].size.width;
                     _radicalBaseWidth += parenWidthRight;
@@ -577,10 +574,50 @@
                     [_addedSubviewsOtherThanRightAndLeftChildren addObject:radicalPower];
                     widthRadicalPower = sizeRadicalPower.width;
                     _radicalBaseWidth += widthRadicalPower;
-                    [radicalPower setFrameOrigin:NSMakePoint(_radicalRootWidth + parenWidthLeft + childWidthLeft + parenWidthRight, (heightLeft - sizeParenLeft.height)/3)];
+                    _radicalPowerHeight = sizeRadicalPower.height;
+                    [radicalPower setFrameOrigin:NSMakePoint(_radicalRootWidth + parenWidthLeft + childWidthLeft + parenWidthRight, _radicalRootHeight-EDExpressionRadicalPowerOffsetVertical)];
                     
                     // set frame size
-                    [self setFrameSize:NSMakeSize(_radicalRootWidth + parenWidthLeft + childWidthLeft + parenWidthRight + widthRadicalPower, largerHeight)];
+                    [self setFrameSize:NSMakeSize(_radicalRootWidth + parenWidthLeft + childWidthLeft + parenWidthRight + widthRadicalPower, largerHeight + _radicalRootHeight)];
+                }
+                else{
+                    // draw the base surrounded by parenthesis with the numerator exponent and a root symbol
+                    // two operators, need to surround right and left child with parenthesis
+                    float childWidthLeft, widthRadicalRoot, widthRadicalPower;
+                    NSSize sizeRadicalRoot, sizeRadicalPower;
+                    _radicalBaseWidth = 0;
+                    _radicalBaseLeftParenWidth = 0;
+                    
+                    // radical root
+                    EDExpressionNodeView *radicalRoot = [[self childRight] childRight];
+                    sizeRadicalRoot = [radicalRoot frame].size;
+                    [self addSubview:radicalRoot];
+                    [_addedSubviewsOtherThanRightAndLeftChildren addObject:radicalRoot];
+                    widthRadicalRoot = sizeRadicalRoot.width;
+                    _radicalBaseWidth += widthRadicalRoot;
+                    _radicalRootHeight = sizeRadicalRoot.height-EDExpressionRadicalRootLowerLeftOriginOffset;
+                    
+                    // this is where the radical sign and the rest of the elements start drawing, so give it a bit of a buffer/offset
+                    _radicalRootWidth = sizeRadicalRoot.width+EDExpressionRadicalRootUpperLeftOriginOffset;
+                    [radicalRoot setFrameOrigin:NSMakePoint(0, 0)];
+                    
+                    // radical root
+                    [self addSubview:childLeft];
+                    childWidthLeft = [childLeft frame].size.width;
+                    [childLeft setFrameOrigin:NSMakePoint(_radicalRootWidth, _radicalRootHeight)];
+                    
+                    // radical power
+                    EDExpressionNodeView *radicalPower = [[self childRight] childLeft];
+                    sizeRadicalPower = [radicalPower frame].size;
+                    [self addSubview:radicalPower];
+                    [_addedSubviewsOtherThanRightAndLeftChildren addObject:radicalPower];
+                    widthRadicalPower = sizeRadicalPower.width;
+                    _radicalBaseWidth += widthRadicalPower;
+                    _radicalPowerHeight = sizeRadicalPower.height;
+                    [radicalPower setFrameOrigin:NSMakePoint(_radicalRootWidth + childWidthLeft , _radicalRootHeight-EDExpressionRadicalPowerOffsetVertical)];
+                    
+                    // set frame size
+                    [self setFrameSize:NSMakeSize(_radicalRootWidth + childWidthLeft + widthRadicalPower, largerHeight + _radicalRootHeight)];
                 }
             }
         }

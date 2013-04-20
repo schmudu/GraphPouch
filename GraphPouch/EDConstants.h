@@ -137,7 +137,11 @@ extern float const EDExpressionLeftDenominatorRootModifierSize;
 extern float const EDExpressionRadicalLineWidthPrimary;
 extern float const EDExpressionRadicalLineWidthSecondary;
 extern float const EDExpressionRadicalLineWidthTertiary;
+extern float const EDExpressionRadicalLineHeightTertiary;
 extern float const EDExpressionRadicalRootUpperLeftOriginOffset;
+extern float const EDExpressionRadicalRootLowerLeftOriginOffset;
+extern float const EDExpressionRadicalBaseUpperLeftOriginOffset;
+extern float const EDExpressionRadicalPowerOffsetVertical;
 
 #pragma mark general
 extern NSString *const EDKey;

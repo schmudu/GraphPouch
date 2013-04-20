@@ -111,7 +111,11 @@ float const EDExpressionLeftDenominatorRootModifierSize         = 2.0;
 float const EDExpressionRadicalLineWidthPrimary                 = 0.5;
 float const EDExpressionRadicalLineWidthSecondary               = 0.3;
 float const EDExpressionRadicalLineWidthTertiary                = 0.2;
+float const EDExpressionRadicalLineHeightTertiary               = 0.9;
 float const EDExpressionRadicalRootUpperLeftOriginOffset        = 4.0;
+float const EDExpressionRadicalPowerOffsetVertical              = 1.0;
+float const EDExpressionRadicalRootLowerLeftOriginOffset        = 15.0;
+float const EDExpressionRadicalBaseUpperLeftOriginOffset        = 0.0;
 
 #pragma mark general
 NSString * const EDKey                                          = @"EDKey";
