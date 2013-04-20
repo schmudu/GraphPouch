@@ -42,12 +42,14 @@
     return rootNode;
 }
 
-- (id)initWithFrame:(NSRect)frameRect expression:(EDExpression *)expression{
+- (id)initWithFrame:(NSRect)frameRect expression:(EDExpression *)expression drawSelection:(BOOL)drawSelection{
     self = [super initWithFrame:frameRect];
     if (self) {
         // set model info
         [self setDataObj:expression];
         _context = [expression managedObjectContext];
+        
+        _drawSeleection = drawSelection;
         
         // display expression
         [self validateAndDisplayExpression];
@@ -92,7 +94,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // color background
-    if ([(EDExpression *)[self dataObj] selected]){
+    if ((_drawSeleection) && ([(EDExpression *)[self dataObj] selected])){
         [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
         [NSBezierPath fillRect:[self bounds]];
     }

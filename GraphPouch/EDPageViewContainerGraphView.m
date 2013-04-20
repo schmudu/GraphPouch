@@ -30,6 +30,8 @@
     if (self) {
         _graph = graph;
         _context = context;
+        
+        
     }
     
     return self;

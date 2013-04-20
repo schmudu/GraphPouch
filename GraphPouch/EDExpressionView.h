@@ -12,9 +12,10 @@
 
 @interface EDExpressionView : EDWorksheetElementView{
     EDExpressionNodeView *_rootNodeFirst, *_rootNodeSecond;
+    BOOL _drawSeleection;
 }
 
 + (EDExpressionNodeView *)createExpressionNodeTree:(NSArray *)stack frame:(NSRect)frame expression:(EDExpression *)expression;
-- (id)initWithFrame:(NSRect)frameRect expression:(EDExpression *)expression;
+- (id)initWithFrame:(NSRect)frameRect expression:(EDExpression *)expression drawSelection:(BOOL)drawSelection;
 - (void)clearViews;
 @end

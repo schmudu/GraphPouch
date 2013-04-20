@@ -11,7 +11,6 @@
 #import "EDExpressionView.h"
 
 @interface EDPageViewContainerExpressionView()
-- (void)drawExpression;
 @end
 
 @implementation EDPageViewContainerExpressionView
@@ -26,7 +25,7 @@
         float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
         float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
         
-        EDExpressionView *expressionView = [[EDExpressionView alloc] initWithFrame:NSMakeRect(0, 0, [_expression elementWidth], [_expression elementHeight]) expression:_expression];
+        EDExpressionView *expressionView = [[EDExpressionView alloc] initWithFrame:NSMakeRect(0, 0, [_expression elementWidth], [_expression elementHeight]) expression:_expression drawSelection:FALSE];
         
         // scale image to page view container
         NSRect thumbnailRect = NSMakeRect(0, 0, [_expression elementWidth] * xRatio, [_expression elementHeight] * yRatio);
@@ -48,10 +47,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    [self drawExpression];
-}
-
-- (void)drawExpression{
 }
 
 @end

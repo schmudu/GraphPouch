@@ -284,27 +284,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 #pragma mark expressions
 - (void)drawExpression:(EDExpression *)expression{
-    /*
-     NSError *error;
-    
-    // need to validate if this is an expression or equations
-    NSDictionary *expressionDict = [EDExpression isValidEquationOrExpression:[expression expression] context:_context error:&error];
-    if (error){
-        NSLog(@"error:%@", [[error userInfo] objectForKey:NSLocalizedDescriptionKey]);
-    }
-    else{
-        // valid equation/expression
-        // create tree
-        EDExpressionNodeView *rootNode = [EDExpressionNodeView createExpressionNodeTree:[expressionDict objectForKey:EDKeyExpressionFirst] frame:[self bounds] expression:expression];
-        
-        // generate images
-        [rootNode traverseTreeAndCreateImage];
-        
-        // add image to worksheet
-        [self addSubview:rootNode];
-        [rootNode setFrameOrigin:NSMakePoint(100, 100)];
-    }*/
-    EDExpressionView *expressionView = [[EDExpressionView alloc] initWithFrame:NSMakeRect(0, 0, [expression elementWidth], [expression elementHeight]) expression:expression];
+    EDExpressionView *expressionView = [[EDExpressionView alloc] initWithFrame:NSMakeRect(0, 0, [expression elementWidth], [expression elementHeight]) expression:expression drawSelection:TRUE];
     
     // listen to expression
     // NOTE: any listeners you add here, remove them in method 'removeElementView'
