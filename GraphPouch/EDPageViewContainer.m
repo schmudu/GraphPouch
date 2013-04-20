@@ -71,6 +71,7 @@
         _textboxViews = [[NSMutableArray alloc] init];
         _graphCacheViews = [[NSMutableArray alloc] init];
         _lineCacheViews = [[NSMutableArray alloc] init];
+        _expressionCacheViews = [[NSMutableArray alloc] init];
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];

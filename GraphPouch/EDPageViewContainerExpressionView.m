@@ -28,8 +28,15 @@
         
         EDExpressionView *expressionView = [[EDExpressionView alloc] initWithFrame:NSMakeRect(0, 0, [_expression elementWidth], [_expression elementHeight]) expression:_expression];
         
+        // scale image to page view container
+        NSRect thumbnailRect = NSMakeRect(0, 0, [_expression elementWidth] * xRatio, [_expression elementHeight] * yRatio);
+        NSImage *expressionImage = [[NSImage alloc] initWithData:[expressionView dataWithPDFInsideRect:[expressionView frame]]];
+        NSImageView *imageViewExpression = [[NSImageView alloc] initWithFrame:thumbnailRect];
+        [imageViewExpression setImageScaling:NSScaleProportionally];
+        [imageViewExpression setImage:expressionImage];
+        
         // add expression view to stage
-        [self addSubview:expressionView];
+        [self addSubview:imageViewExpression];
     }
     
     return self;
