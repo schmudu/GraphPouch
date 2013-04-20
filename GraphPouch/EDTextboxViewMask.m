@@ -18,11 +18,10 @@
 
 @implementation EDTextboxViewMask
 
-- (id)initWithFrame:(NSRect)frame
-{
+- (id)initWithFrame:(NSRect)frame drawSelection:(BOOL)drawSelection{
     self = [super initWithFrame:frame];
     if (self) {
-        // listen
+        _drawSelection = drawSelection;
     }
     
     return self;
@@ -40,7 +39,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // draw selection is selected
-    if ([(EDTextbox *)[(EDTextboxView *)[self superview] dataObj] selected]){
+    if ((_drawSelection) && ([(EDTextbox *)[(EDTextboxView *)[self superview] dataObj] selected])){
         [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
         [NSBezierPath fillRect:[self bounds]];
     }

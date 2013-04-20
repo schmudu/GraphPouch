@@ -7,12 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDTextbox.h"
 
 @interface EDPageViewContainerTextView : NSView{
-    NSImage *_textImage;
-    float _xRatio;
-    float _yRatio;
+    EDTextbox *_textbox;
+    NSManagedObjectContext *_context;
 }
 
-- (id)initWithFrame:(NSRect)frame textImage:(NSImage *)textImage xRatio:(float)xRatio yRatio:(float)yRatio;
+- (id)initWithFrame:(NSRect)frame textbox:(EDTextbox *)textbox context:(NSManagedObjectContext *)context;
 @end

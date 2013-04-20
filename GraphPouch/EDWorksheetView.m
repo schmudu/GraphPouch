@@ -233,7 +233,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)drawTextbox:(EDTextbox *)textbox{
-    EDTextboxView *textboxView = [[EDTextboxView alloc] initWithFrame:NSMakeRect(0, 0, [textbox elementWidth], [textbox elementHeight]) textboxModel:(EDTextbox *)textbox];
+    EDTextboxView *textboxView = [[EDTextboxView alloc] initWithFrame:NSMakeRect(0, 0, [textbox elementWidth], [textbox elementHeight]) textboxModel:(EDTextbox *)textbox drawSelection:TRUE];
     
     // listen to graph
     // NOTE: any listeners you add here, remove them in method 'removeElementView'
@@ -307,7 +307,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)drawGraph:(EDGraph *)graph{
-    EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph];
+    EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph drawSelection:TRUE];
     
     // listen to graph
     // NOTE: any listeners you add here, remove them in method 'removeElementView'

@@ -8,7 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface EDTextboxViewMask : NSView
+@interface EDTextboxViewMask : NSView{
+    BOOL _drawSelection;
+}
 
+- (id)initWithFrame:(NSRect)frame drawSelection:(BOOL)drawSelection;
 - (void)postInit;
 @end

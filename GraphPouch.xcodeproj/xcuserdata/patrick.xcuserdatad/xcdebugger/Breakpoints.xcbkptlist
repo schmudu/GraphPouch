@@ -219,8 +219,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "394"
          endingLineNumber = "394"
-         landmarkName = "@implementation EDWorksheetView"
-         landmarkType = "3">
+         landmarkName = "-onContextChanged:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -232,7 +232,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "395"
          endingLineNumber = "395"
-         landmarkName = "-selectAll:"
+         landmarkName = "-onContextChanged:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -336,7 +336,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1041"
          endingLineNumber = "1041"
-         landmarkName = "-getAllUnselectedWorksheetElementsViews"
+         landmarkName = "-drawTransformRect:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint

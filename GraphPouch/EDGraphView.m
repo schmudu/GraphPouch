@@ -46,9 +46,11 @@
     return TRUE;
 }
 
-- (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph{
+//- (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph{
+- (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph drawSelection:(BOOL)drawSelection{
     self = [super initWithFrame:frame];
     if (self){
+        _drawSelection = drawSelection;
         _equationsAlreadyDrawn = FALSE;
         _context = [myGraph managedObjectContext];
         _labels = [[NSMutableArray alloc] init];
@@ -149,7 +151,7 @@
     }
     
     // color background
-    if ([[self dataObj] isSelectedElement]){
+    if ((_drawSelection) && ([[self dataObj] isSelectedElement])){
         [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
         [NSBezierPath fillRect:[self bounds]];
     }

@@ -18,7 +18,7 @@
     BOOL _enabled;
 }
 
-- (id)initWithFrame:(NSRect)frame textboxModel:(EDTextbox *)myTextbox;
+- (id)initWithFrame:(NSRect)frame textboxModel:(EDTextbox *)myTextbox drawSelection:(BOOL)drawSelection;
 - (BOOL)enabled;
 - (void)postInit;
 - (void)disable;

@@ -22,12 +22,12 @@
 @end
 
 @implementation EDTextboxView
-- (id)initWithFrame:(NSRect)frame textboxModel:(EDTextbox *)myTextbox{
+- (id)initWithFrame:(NSRect)frame textboxModel:(EDTextbox *)myTextbox drawSelection:(BOOL)drawSelection{
     self = [super initWithFrame:frame];
     if (self){
         _context = [myTextbox managedObjectContext];
         _textView = [[EDTextView alloc] initWithFrame:[self bounds]];
-        _mask = [[EDTextboxViewMask alloc] initWithFrame:[self bounds]];
+        _mask = [[EDTextboxViewMask alloc] initWithFrame:[self bounds] drawSelection:drawSelection];
         
         // set model info
         [self setDataObj:myTextbox];

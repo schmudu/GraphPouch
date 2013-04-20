@@ -81,7 +81,7 @@
         
         for (EDGraph *graph in graphs){
             // create graphViewPrint and add it to the view
-            graphView = [[EDGraphViewPrint alloc] initWithFrame:NSMakeRect([graph locationX], pageIndex * EDWorksheetViewHeight + [graph locationY], [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph];
+            graphView = [[EDGraphViewPrint alloc] initWithFrame:NSMakeRect([graph locationX], pageIndex * EDWorksheetViewHeight + [graph locationY], [graph elementWidth], [graph elementHeight]) graphModel:(EDGraph *)graph drawSelection:FALSE];
             
             // add it to view
             [self addSubview:graphView];
@@ -105,7 +105,7 @@
         
         for (EDTextbox *textbox in textboxes){
             // create lineViewPrint and add it to the view
-            textboxView = [[EDTextboxView alloc] initWithFrame:NSMakeRect([textbox locationX], pageIndex * EDWorksheetViewHeight + [textbox locationY], [textbox elementWidth], [textbox elementHeight]) textboxModel:textbox];
+            textboxView = [[EDTextboxView alloc] initWithFrame:NSMakeRect([textbox locationX], pageIndex * EDWorksheetViewHeight + [textbox locationY], [textbox elementWidth], [textbox elementHeight]) textboxModel:textbox drawSelection:FALSE];
             
             // add it to view
             [self addSubview:textboxView];

@@ -25,7 +25,7 @@
         float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
         float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
         
-        EDExpressionView *expressionView = [[EDExpressionView alloc] initWithFrame:NSMakeRect(0, 0, [_expression elementWidth], [_expression elementHeight]) expression:_expression drawSelection:FALSE];
+        EDExpressionView *expressionView = [[EDExpressionView alloc] initWithFrame:NSMakeRect(0, 0, [_expression elementWidth], [_expression elementHeight]) expression:_expression drawSelection:TRUE];
         
         // scale image to page view container
         NSRect thumbnailRect = NSMakeRect(0, 0, [_expression elementWidth] * xRatio, [_expression elementHeight] * yRatio);
@@ -36,6 +36,9 @@
         
         // add expression view to stage
         [self addSubview:imageViewExpression];
+        
+        // position it
+        [self setFrameOrigin:NSMakePoint([_expression locationX] * xRatio, [_expression locationY] * yRatio)];
     }
     
     return self;

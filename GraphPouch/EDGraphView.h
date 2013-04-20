@@ -15,6 +15,7 @@
     NSMutableArray *_labels;
     NSMutableArray *_equations;
     NSMutableArray *_points;
+    BOOL _drawSelection;
 }
 
 - (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length scale:(int)scale;
@@ -25,7 +26,7 @@
 - (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (float)graphHeight;
 - (float)graphWidth;
-- (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph;
+- (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph drawSelection:(BOOL)drawSelection;
 + (float)graphMargin;
 + (float)margin;
 

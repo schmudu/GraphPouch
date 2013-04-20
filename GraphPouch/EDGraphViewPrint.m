@@ -14,7 +14,7 @@
 @implementation EDGraphViewPrint
 
 - (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph{
-    self = [super initWithFrame:frame graphModel:myGraph];
+    self = [super initWithFrame:frame graphModel:myGraph drawSelection:FALSE];
     
     if (self){
         // do some other printing stuff
