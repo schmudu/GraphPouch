@@ -78,6 +78,8 @@
 		CD4FF08C171CAE5500DEBF29 /* EDPanelPropertiesExpression.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD4FF08A171CAE5500DEBF29 /* EDPanelPropertiesExpression.xib */; };
 		CD4FF08F1722D61500DEBF29 /* EDPageViewContainerExpressionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4FF08E1722D61500DEBF29 /* EDPageViewContainerExpressionView.m */; };
 		CD4FF0921723419100DEBF29 /* EDExpressionViewPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4FF0911723418F00DEBF29 /* EDExpressionViewPrint.m */; };
+		CD4FF095172390B600DEBF29 /* icon_expression_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CD4FF093172390B600DEBF29 /* icon_expression_over.png */; };
+		CD4FF096172390B600DEBF29 /* icon_expression.png in Resources */ = {isa = PBXBuildFile; fileRef = CD4FF094172390B600DEBF29 /* icon_expression.png */; };
 		CD5312AA16ECEC0F00F670FD /* INAppStoreWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312A516ECE94100F670FD /* INAppStoreWindow.m */; };
 		CD5312AB16ECEC3D00F670FD /* INWindowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312A716ECE94100F670FD /* INWindowButton.m */; };
 		CD5312AC16ECEC4100F670FD /* NSColor+INAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312A916ECE94100F670FD /* NSColor+INAdditions.m */; };
@@ -298,6 +300,8 @@
 		CD4FF08E1722D61500DEBF29 /* EDPageViewContainerExpressionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainerExpressionView.m; sourceTree = "<group>"; };
 		CD4FF0901723418E00DEBF29 /* EDExpressionViewPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDExpressionViewPrint.h; sourceTree = "<group>"; };
 		CD4FF0911723418F00DEBF29 /* EDExpressionViewPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDExpressionViewPrint.m; sourceTree = "<group>"; };
+		CD4FF093172390B600DEBF29 /* icon_expression_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_expression_over.png; sourceTree = "<group>"; };
+		CD4FF094172390B600DEBF29 /* icon_expression.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_expression.png; sourceTree = "<group>"; };
 		CD5312A416ECE94100F670FD /* INAppStoreWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INAppStoreWindow.h; sourceTree = "<group>"; };
 		CD5312A516ECE94100F670FD /* INAppStoreWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = INAppStoreWindow.m; sourceTree = "<group>"; };
 		CD5312A616ECE94100F670FD /* INWindowButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INWindowButton.h; sourceTree = "<group>"; };
@@ -1107,6 +1111,8 @@
 		CDD05DF716BF4DBA001279FB /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				CD4FF093172390B600DEBF29 /* icon_expression_over.png */,
+				CD4FF094172390B600DEBF29 /* icon_expression.png */,
 				CD1DA3EE16D09C4B00198084 /* icon_graph_over.png */,
 				CD1DA3E816D097C900198084 /* icon_properties_over.png */,
 				CDD05E1016C1C019001279FB /* icon_worksheet.png */,
@@ -1319,6 +1325,8 @@
 				CD20AA7616E447B30027F985 /* about_logo.png in Resources */,
 				CD5312B116ECEF7400F670FD /* EDToolbarView.xib in Resources */,
 				CD4FF08C171CAE5500DEBF29 /* EDPanelPropertiesExpression.xib in Resources */,
+				CD4FF095172390B600DEBF29 /* icon_expression_over.png in Resources */,
+				CD4FF096172390B600DEBF29 /* icon_expression.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
