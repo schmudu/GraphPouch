@@ -642,8 +642,8 @@
         [newExpression setSelected:TRUE];
         [newExpression setLocationX:50+i*20];
         [newExpression setLocationY:150+i*20];
-        [newExpression setElementWidth:EDWorksheetLineSelectionWidth];
-        [newExpression setElementHeight:EDWorksheetLineSelectionHeight];
+        [newExpression setElementWidth:EDExpressionDefaultWidth];
+        [newExpression setElementHeight:EDExpressionDefaultHeight];
         [newExpression setFontSize:EDExpressionDefaultFontSize];
         
         // enter default text

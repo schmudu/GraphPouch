@@ -127,8 +127,8 @@
     [newExpression setSelected:FALSE];
     [newExpression setLocationX:50];
     [newExpression setLocationY:150];
-    [newExpression setElementWidth:EDWorksheetLineSelectionWidth];
-    [newExpression setElementHeight:EDWorksheetLineSelectionHeight];
+    [newExpression setElementWidth:EDExpressionDefaultWidth];
+    [newExpression setElementHeight:EDExpressionDefaultHeight];
     [newExpression setFontSize:EDExpressionDefaultFontSize];
     
     // enter default text

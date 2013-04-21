@@ -121,6 +121,8 @@ float const EDExpressionTextFieldEndBuffer                      = 1.7;
 float const EDExpressionTextFieldEndBufferModifier              = 0.1;
 float const EDExpressionExponentPowerBaseOffsetVertical         = 11.0;
 float const EDExpressionSymbolMultiplicationSymbolFontModifier  = 0.8;
+float const EDExpressionDefaultWidth                            = 150;
+float const EDExpressionDefaultHeight                           = 50;
 
 #pragma mark general
 NSString * const EDKey                                          = @"EDKey";

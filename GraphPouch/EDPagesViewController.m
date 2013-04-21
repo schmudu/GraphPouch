@@ -20,6 +20,7 @@
 #import "NSManagedObject+EasyFetching.h"
 #import "NSManagedObjectContext+Objects.h"
 #import "EDCoreDataUtility+Pages.h"
+#import "EDCoreDataUtility+Worksheet.h"
 
 @interface EDPagesViewController ()
 - (void)onContextChanged:(NSNotification *)note;
@@ -526,6 +527,9 @@
 }
 
 - (void)pastePagesFromPasteboard{
+    // deselect all elements when pasting
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context];
+    
     // get last selected object
     NSArray *selectedPages = [EDPage getAllSelectedObjectsOrderedByPageNumber:_context];
     EDPage *lastSelectedPage = (EDPage *)[selectedPages lastObject];
