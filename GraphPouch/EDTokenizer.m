@@ -18,7 +18,7 @@
 + (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error context:(NSManagedObjectContext *)context{
     int i = 0;
     NSString *currentChar;
-    EDToken *currentToken, *potentialToken;
+    EDToken *currentToken, *potentialToken, *previousToken=nil;
     NSMutableArray *tokenStack = [[NSMutableArray alloc] init];
     currentToken = [[EDToken alloc] initWithContext:context];
     
@@ -35,7 +35,7 @@
         // append chracter
         [currentToken appendChar:currentChar];
         
-        if ([EDTokenizer isValidToken:currentToken error:error]) {
+        if ([EDTokenizer isValidToken:currentToken previousToken:previousToken error:error]) {
             // save token
             potentialToken = [[EDToken alloc] initWithContext:context];
             [potentialToken copy:currentToken];
@@ -47,13 +47,15 @@
         else {
             if (potentialToken) {
                 // push last valid token
-                //EDToken *newToken = [potentialToken copy:context];
                 EDToken *newToken = [[EDToken alloc] initWithContext:context];
                 [newToken copy:potentialToken];
                 [tokenStack addObject:newToken];
                 
                 // release potential token
                 potentialToken = nil;
+                
+                // save token
+                previousToken = newToken;
                 
                 // create new token
                 currentToken = [[EDToken alloc] initWithContext:context];
@@ -90,14 +92,20 @@
     return nil;
 }
 
-+ (BOOL)isValidToken:(EDToken *)token error:(NSError **)error{
+//+ (BOOL)isValidToken:(EDToken *)token error:(NSError **)error{
++ (BOOL)isValidToken:(EDToken *)token previousToken:(EDToken *)previousToken error:(NSError **)error{
     regex_t regex;
     int reti;
     NSString *str = [[NSString alloc] initWithString:[token tokenValue]];
     const char *cStr = [str cStringUsingEncoding:NSASCIIStringEncoding];
     
     // numbers
-    reti = regcomp(&regex, "^([0-9]+|\\.|\\.[0-9]+|[0-9]+\\.|[0-9]+\\.[0-9]+)$", REG_EXTENDED);
+    // if previous token is a left paren or nil then minus sign is acceptable as part of the number
+    if ((previousToken == nil) || ([[previousToken tokenValue] isEqualToString:@"("]))
+        reti = regcomp(&regex, "^(\\-|\\-[0-9]+|\\-\\.|\\-\\.[0-9]+|\\-[0-9]+\\.|\\-[0-9]+\\.[0-9]+|[0-9]+|\\.|\\.[0-9]+|[0-9]+\\.|[0-9]+\\.[0-9]+)$", REG_EXTENDED);
+    else
+        reti = regcomp(&regex, "^([0-9]+|\\.|\\.[0-9]+|[0-9]+\\.|[0-9]+\\.[0-9]+)$", REG_EXTENDED);
+    
     if (reti) {
         regfree(&regex);
         return FALSE;
@@ -129,7 +137,11 @@
     // identifiers
     // free memory for next comparison
     regfree(&regex);
-    reti = regcomp(&regex, "^(x|y)$", REG_EXTENDED);
+    if ((previousToken == nil) || ([[previousToken tokenValue] isEqualToString:@"("]))
+        reti = regcomp(&regex, "^(\\-|\\-x|\\-y|x|y)$", REG_EXTENDED);
+    else
+        reti = regcomp(&regex, "^(x|y)$", REG_EXTENDED);
+    
     if (reti) {
         regfree(&regex);
         return FALSE;

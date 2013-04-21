@@ -15,6 +15,7 @@
 + (NSMutableArray *)insertImpliedMultiplication:(NSMutableArray *)tokens context:(NSManagedObjectContext *)context;
 + (NSMutableArray *)insertImpliedParenthesis:(NSMutableArray *)tokens context:(NSManagedObjectContext *)context;
 + (NSMutableArray *)substituteMinusSign:(NSMutableArray *)tokens context:(NSManagedObjectContext *)context;
-+ (BOOL)isValidToken:(EDToken *)token error:(NSError **)error;
+//+ (BOOL)isValidToken:(EDToken *)token error:(NSError **)error;
++ (BOOL)isValidToken:(EDToken *)token previousToken:(EDToken *)previousToken error:(NSError **)error;
 + (BOOL)isValidExpression:(NSMutableArray *)tokens withError:(NSError **)error context:(NSManagedObjectContext *)context;
 @end
