@@ -249,9 +249,12 @@
      currentElement = [elements objectAtIndex:i];
         
         newElement = currentElement;
-        [newElement setValue:newValue forKey:key];
         
-        [elements replaceObjectAtIndex:i withObject:newElement];
+        // check if value exists
+        if ([newElement respondsToSelector:NSSelectorFromString(key)]){
+            [newElement setValue:newValue forKey:key];
+            [elements replaceObjectAtIndex:i withObject:newElement];
+        }
         i++;
     }
 }

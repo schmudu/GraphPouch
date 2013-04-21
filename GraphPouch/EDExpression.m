@@ -148,13 +148,12 @@
     }
     else{
         // print out all tokens
-        /*
         NSLog(@"====after tokenize");
-        i =0;
+        int i =0;
         for (EDToken *token in tokens){
-            NSLog(@"i:%d token:%@", i, token);
+            NSLog(@"i:%d token:%@", i, [token tokenValue]);
             i++;
-        }*/
+        }
         
         // validate expression
         [EDTokenizer isValidExpression:tokens withError:error context:context];
