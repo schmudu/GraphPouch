@@ -491,6 +491,21 @@
                     [self setFrameSize:NSMakeSize(childWidthLeft + parenWidthLeft + childWidthRight + parenWidthRight, largerHeight)];
                 }
             }
+            else if ((([[[self childLeft] token] typeRaw] == EDTokenTypeNumber) && ([[[[self childLeft] token] tokenValue] isEqualToString:@"-1"]))&&
+                     (([[[self childRight] token] typeRaw] == EDTokenTypeIdentifier) || ([[[self childRight] token] typeRaw] == EDTokenTypeNumber))){
+                // a negative one token multiplied by an identifier/number
+                // combine into a negative identifier/number
+                float fontSize = [self fontSize] * [self fontModifier] * EDExpressionSymbolMultiplicationSymbolFontModifier;
+                
+                // right child
+                // show right child as negative
+                NSTextField *newRightChild = [EDExpressionNodeView generateTextField:fontSize string:[NSString stringWithFormat:@"-%@", [[[self childRight] token] tokenValue]]];
+                
+                [self addSubview:newRightChild];
+                [_addedSubviewsOtherThanRightAndLeftChildren addObject:newRightChild];
+                
+                [self setFrameSize:NSMakeSize([newRightChild frame].size.width, [newRightChild frame].size.height)];
+            }
             else if ((([[[self childLeft] token] typeRaw] == EDTokenTypeNumber) && ([[[self childRight] token] typeRaw] == EDTokenTypeNumber)) ||
                      (([[[self childLeft] token] typeRaw] == EDTokenTypeIdentifier) && ([[[self childRight] token] typeRaw] == EDTokenTypeIdentifier))){
                 // two identifiers/numbers, place multiplication symbol in between
