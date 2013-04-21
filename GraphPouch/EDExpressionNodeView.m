@@ -277,7 +277,6 @@
             [self addSubview:[self childRight]];
             [[self childRight] setFrameOrigin:NSMakePoint([[self childLeft] frame].size.width + [[self image] size].width, (largerHeight-heightRight)/2)];
             
-            //[self setFrameSize:NSMakeSize([[self childLeft] frame].size.width + [[self image] size].width + (EDExpressionBufferHorizontalAddSubtract * [self fontModifier]) + [[self childRight] frame].size.width, largerHeight)];
             [self setFrameSize:NSMakeSize([[self childLeft] frame].size.width + [[self image] size].width + [[self childRight] frame].size.width, largerHeight)];
         }
         else if([[[self token] tokenValue] isEqualToString:@"/"]){
@@ -469,14 +468,12 @@
                     sizeParenLeft = [EDExpressionNodeView getStringSize:@"(" fontSize:fontSize];
                     NSTextField *fieldLeftParen = [EDExpressionNodeView generateTextField:fontSize string:@"("];
                     [self addSubview:fieldLeftParen];
-                    //[fieldLeftParen setFrameOrigin:NSMakePoint(childWidthLeft - EDExpressionTextFieldEndBuffer, (largerHeight-sizeParenLeft.height)/2)];
                     [fieldLeftParen setFrameOrigin:NSMakePoint(childWidthLeft, (largerHeight-sizeParenLeft.height)/2)];
                     [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldLeftParen];
                     parenWidthLeft = [fieldLeftParen frame].size.width;
                     
                     // child operator
                     [self addSubview:childOperator];
-                    //[childOperator setFrameOrigin:NSMakePoint(childWidthLeft + parenWidthLeft - EDExpressionTextFieldEndBuffer, (largerHeight-heightOperator)/2)];
                     [childOperator setFrameOrigin:NSMakePoint(childWidthLeft + parenWidthLeft, (largerHeight-heightOperator)/2)];
                     childWidthRight = [childOperator frame].size.width;
                     
@@ -573,12 +570,6 @@
                     _radicalBaseLeftParenWidth = 0;
                     
                     // determine font size if it's a divide operation
-                    /*
-                    if ([[[[self childLeft] token] tokenValue] isEqualToString:@"/"])
-                        fontSize = [EDExpressionNodeView fontSizeForString:@"(" height:[[self childLeft] frame].size.height];
-                    else
-                        fontSize = [self fontSize]*[[self childLeft] fontModifier];
-                     */
                     fontSize = [EDExpressionNodeView fontSizeForString:@"(" height:[[self childLeft] frame].size.height];
                     
                     // radical root
@@ -641,7 +632,6 @@
                         widthRadicalPower = sizeRadicalPower.width;
                         _radicalBaseWidth += widthRadicalPower;
                         _radicalPowerHeight = sizeRadicalPower.height;
-                        //[radicalPower setFrameOrigin:NSMakePoint(_radicalRootWidth + parenWidthLeft + childWidthLeft + parenWidthRight - EDExpressionTextFieldEndBuffer, _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
                         [radicalPower setFrameOrigin:NSMakePoint(_radicalRootWidth + parenWidthLeft + childWidthLeft + parenWidthRight, _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
                     }
                     
@@ -678,7 +668,7 @@
                     [self addSubview:childLeft];
                     childWidthLeft = [childLeft frame].size.width;
                     _radicalBaseWidth += childWidthLeft;
-#warning this doesn't display correctly if the power of the base is a fraction
+#warning this doesn't display correctly if the power of the base is a fraction or negative
                     [childLeft setFrameOrigin:NSMakePoint(_radicalRootWidth, _radicalRootHeight+5)];
                     
                     // radical power
@@ -696,7 +686,6 @@
                     }
                     
                     // set frame size
-                    //[self setFrameSize:NSMakeSize(_radicalRootWidth  + _radicalBaseWidth, largerHeight + _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical - EDExpressionTextFieldEndBuffer)];
                     [self setFrameSize:NSMakeSize(_radicalRootWidth  + _radicalBaseWidth, largerHeight + _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
                 }
             }
@@ -731,19 +720,16 @@
                 sizeParenRight = [EDExpressionNodeView getStringSize:@")" fontSize:fontSize];
                 NSTextField *fieldRightParen = [EDExpressionNodeView generateTextField:fontSize string:@")"];
                 [self addSubview:fieldRightParen];
-                //[fieldRightParen setFrameOrigin:NSMakePoint(parenWidthLeft + childWidthLeft - EDExpressionTextFieldEndBuffer, sizeChildRight.height - EDExpressionExponentPowerBaseOffsetVertical)];
                 [fieldRightParen setFrameOrigin:NSMakePoint(parenWidthLeft + childWidthLeft, sizeChildRight.height - EDExpressionExponentPowerBaseOffsetVertical)];
                 [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldRightParen];
                 parenWidthRight = [fieldRightParen frame].size.width;
             
                 // right child
                 [self addSubview:[self childRight]];
-                //[childRight setFrameOrigin:NSMakePoint(parenWidthLeft + childWidthLeft + parenWidthRight - EDExpressionTextFieldEndBuffer, 0)];
                 [childRight setFrameOrigin:NSMakePoint(parenWidthLeft + childWidthLeft + parenWidthRight, 0)];
                 childWidthRight = [[self childRight] frame].size.width;
             
                 // set frame size
-                //[self setFrameSize:NSMakeSize(parenWidthLeft + childWidthLeft + parenWidthRight - EDExpressionTextFieldEndBuffer + childWidthRight, sizeChildRight.height - EDExpressionExponentPowerBaseOffsetVertical + sizeChildLeft.height)];
                 [self setFrameSize:NSMakeSize(parenWidthLeft + childWidthLeft + parenWidthRight + childWidthRight, sizeChildRight.height - EDExpressionExponentPowerBaseOffsetVertical + sizeChildLeft.height)];
             }
             else {
@@ -757,19 +743,15 @@
                 // left child
                 [self addSubview:childLeft];
                 childWidthLeft = [childLeft frame].size.width;
-                [childLeft setFrameOrigin:NSMakePoint(0, 0)];
+                [childLeft setFrameOrigin:NSMakePoint(0, sizeChildRight.height-EDExpressionExponentPowerBaseOffsetVertical)];
                 
                 // right child
                 [self addSubview:[self childRight]];
-                //[childRight setFrameOrigin:NSMakePoint(childWidthLeft - EDExpressionTextFieldEndBuffer, 0)];
                 [childRight setFrameOrigin:NSMakePoint(childWidthLeft, 0)];
                 childWidthRight = [[self childRight] frame].size.width;
             
                 // set frame size
-                //[self setFrameSize:NSMakeSize(childWidthLeft - EDExpressionTextFieldEndBuffer + childWidthRight, sizeChildRight.height - EDExpressionExponentPowerBaseOffsetVertical + sizeChildLeft.height)];
                 [self setFrameSize:NSMakeSize(childWidthLeft + childWidthRight, sizeChildRight.height - EDExpressionExponentPowerBaseOffsetVertical + sizeChildLeft.height)];
-                //[self setFrameSize:NSMakeSize(childWidthLeft - EDExpressionTextFieldEndBuffer + childWidthRight, sizeChildLeft.height)];
-                [self setFrameSize:NSMakeSize(childWidthLeft - EDExpressionTextFieldEndBuffer + childWidthRight, sizeChildLeft.height)];
             }
         }
     }

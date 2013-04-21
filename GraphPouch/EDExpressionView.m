@@ -158,6 +158,9 @@
             // add equal sign
             NSSize equalSize = [EDExpressionNodeView getStringSize:@"=" fontSize:[(EDExpression *)[self dataObj] fontSize]];
             
+            // add buffer to equal size
+            equalSize.width += 5;
+            
             NSTextField *equalField = [EDExpressionNodeView generateTextField:[(EDExpression *)[self dataObj] fontSize] string:@"="];
             
             // get larger height
