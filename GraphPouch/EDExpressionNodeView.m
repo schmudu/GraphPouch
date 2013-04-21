@@ -550,20 +550,24 @@
                     // draw the base surrounded by parenthesis with the numerator exponent and a root symbol
                     float parenWidthLeft=0, parenWidthRight=0, childWidthLeft=0, widthRadicalRoot=0, widthRadicalPower=0, fontSize=0;
                     NSSize sizeParenLeft, sizeParenRight, sizeRadicalRoot, sizeRadicalPower;
+                    EDExpressionNodeView *radicalPower = [[self childRight] childLeft];
+                    EDExpressionNodeView *radicalRoot = [[self childRight] childRight];
                     sizeRadicalPower = [[[self childRight] childLeft] frame].size;
                     sizeRadicalRoot = [[[self childRight] childRight] frame].size;
                     _radicalBaseWidth = 0;
                     _radicalBaseLeftParenWidth = 0;
                     
                     // determine font size if it's a divide operation
+                    /*
                     if ([[[[self childLeft] token] tokenValue] isEqualToString:@"/"])
                         fontSize = [EDExpressionNodeView fontSizeForString:@"(" height:[[self childLeft] frame].size.height];
                     else
                         fontSize = [self fontSize]*[[self childLeft] fontModifier];
+                     */
+                    fontSize = [EDExpressionNodeView fontSizeForString:@"(" height:[[self childLeft] frame].size.height];
                     
                     // radical root
                     // if radical root is 2, then don't show it
-                    EDExpressionNodeView *radicalRoot = [[self childRight] childRight];
                     if ([[[radicalRoot token] tokenValue] isEqualToString:@"2"]){
                     }
                     else{
@@ -579,14 +583,19 @@
                     [radicalRoot setFrameOrigin:NSMakePoint(0, 0)];
                     
                     // left paren
-                    sizeParenLeft = [EDExpressionNodeView getStringSize:@"(" fontSize:fontSize];
-                    NSTextField *fieldLeftParen = [EDExpressionNodeView generateTextField:fontSize string:@"("];
-                    [self addSubview:fieldLeftParen];
-                    [fieldLeftParen setFrameOrigin:NSMakePoint(_radicalRootWidth, _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
-                    [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldLeftParen];
-                    parenWidthLeft = [fieldLeftParen frame].size.width;
-                    _radicalBaseWidth += parenWidthLeft;
-                    _radicalBaseLeftParenWidth = parenWidthLeft;
+                    if ([[[radicalPower token] tokenValue] isEqualToString:@"1"]){
+                        // dont surround with parenthesis if power is 1
+                    }
+                    else{
+                        sizeParenLeft = [EDExpressionNodeView getStringSize:@"(" fontSize:fontSize];
+                        NSTextField *fieldLeftParen = [EDExpressionNodeView generateTextField:fontSize string:@"("];
+                        [self addSubview:fieldLeftParen];
+                        [fieldLeftParen setFrameOrigin:NSMakePoint(_radicalRootWidth, (_radicalRootHeight + EDExpressionRadicalPowerOffsetVertical))];
+                        [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldLeftParen];
+                        parenWidthLeft = [fieldLeftParen frame].size.width;
+                        _radicalBaseWidth += parenWidthLeft;
+                        _radicalBaseLeftParenWidth = parenWidthLeft;
+                    }
                     
                     // radical base
                     [self addSubview:childLeft];
@@ -595,16 +604,18 @@
                     [childLeft setFrameOrigin:NSMakePoint(_radicalRootWidth + parenWidthLeft, _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
                     
                     // add right paren
-                    sizeParenRight = [EDExpressionNodeView getStringSize:@")" fontSize:fontSize];
-                    NSTextField *fieldRightParen = [EDExpressionNodeView generateTextField:fontSize string:@")"];
-                    [self addSubview:fieldRightParen];
-                    [fieldRightParen setFrameOrigin:NSMakePoint(_radicalRootWidth + parenWidthLeft + childWidthLeft, _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
-                    [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldRightParen];
-                    parenWidthRight = [fieldRightParen frame].size.width;
-                    _radicalBaseWidth += parenWidthRight;
-                    
-                    // radical power
-                    EDExpressionNodeView *radicalPower = [[self childRight] childLeft];
+                    if ([[[radicalPower token] tokenValue] isEqualToString:@"1"]){
+                        // dont surround with parenthesis if power is 1
+                    }
+                    else{
+                        sizeParenRight = [EDExpressionNodeView getStringSize:@")" fontSize:fontSize];
+                        NSTextField *fieldRightParen = [EDExpressionNodeView generateTextField:fontSize string:@")"];
+                        [self addSubview:fieldRightParen];
+                        [fieldRightParen setFrameOrigin:NSMakePoint(_radicalRootWidth + parenWidthLeft + childWidthLeft, _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
+                        [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldRightParen];
+                        parenWidthRight = [fieldRightParen frame].size.width;
+                        _radicalBaseWidth += parenWidthRight;
+                    }
                     
                     // if radical power is 1 then don't show it
                     if ([[[radicalPower token] tokenValue] isEqualToString:@"1"]){
@@ -620,7 +631,6 @@
                     }
                     
                     // set frame size
-                    //[self setFrameSize:NSMakeSize(_radicalRootWidth + parenWidthLeft + childWidthLeft + parenWidthRight + widthRadicalPower, largerHeight + _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical - EDExpressionTextFieldEndBuffer)];
                     [self setFrameSize:NSMakeSize(_radicalRootWidth + parenWidthLeft + childWidthLeft + parenWidthRight + widthRadicalPower, largerHeight + _radicalRootHeight + EDExpressionRadicalPowerOffsetVertical)];
                 }
                 else{
