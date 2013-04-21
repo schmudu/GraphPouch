@@ -144,8 +144,6 @@
         [self addSubview:rootNodeFirst];
         [rootNodeFirst setFrameOrigin:NSMakePoint(0, 0)];
         
-        //NSLog(@"expression:%@", [expressionDict objectForKey:EDKeyExpressionFirst]);
-        
         // if an equation then display the equal sign and the other part of the equation
         if ([[expressionDict objectForKey:EDKeyExpressionType] intValue] == EDTypeEquation){
             // create tree
@@ -160,13 +158,7 @@
             // add equal sign
             NSSize equalSize = [EDExpressionNodeView getStringSize:@"=" fontSize:[(EDExpression *)[self dataObj] fontSize]];
             
-            // add a small buffer to the equal sign
-            equalSize.width += 0.5;
-            
-            NSTextField *equalField = [EDExpressionNodeView generateTextField:NSMakeRect(0, 0, equalSize.width, equalSize.height)];
-            NSMutableAttributedString *equalString = [[NSMutableAttributedString alloc] initWithString:@"="];
-            [equalField setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:[(EDExpression *)[self dataObj] fontSize]]];
-            [equalField setAttributedStringValue:equalString];
+            NSTextField *equalField = [EDExpressionNodeView generateTextField:[(EDExpression *)[self dataObj] fontSize] string:@"="];
             
             // get larger height
             float heightFirst = [rootNodeFirst frame].size.height;

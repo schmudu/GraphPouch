@@ -23,7 +23,7 @@
 
 + (NSSize)getStringSize:(NSString *)string fontSize:(float)fontSize;
 + (NSImage *)getTokenImage:(EDToken *)token fontSize:(float)fontSize;
-+ (NSTextField *)generateTextField:(NSRect)rect;
++ (NSTextField *)generateTextField:(float)fontSize string:(NSString *)string;
 + (float)fontSizeForString:(NSString *)string height:(float)height;
 - (id)initWithFrame:(NSRect)frameRect token:(EDToken *)newToken expression:(EDExpression *)expression;
 - (EDToken *)token;

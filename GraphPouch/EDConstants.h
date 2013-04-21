@@ -143,7 +143,9 @@ extern float const EDExpressionRadicalRootLowerLeftOriginOffset;
 extern float const EDExpressionRadicalBaseUpperLeftOriginOffset;
 extern float const EDExpressionRadicalPowerOffsetVertical;
 extern float const EDExpressionTextFieldEndBuffer;
+extern float const EDExpressionTextFieldEndBufferModifier;
 extern float const EDExpressionExponentPowerBaseOffsetVertical;
+extern float const EDExpressionSymbolMultiplicationSymbolFontModifier;
 
 #pragma mark general
 extern NSString *const EDKey;

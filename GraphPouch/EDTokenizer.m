@@ -366,6 +366,13 @@
                 addedToken = TRUE;
             }
             
+            // insert token between identifier and number
+            if(([previousToken typeRaw] == EDTokenTypeIdentifier) && ([currentToken typeRaw] == EDTokenTypeNumber)){
+                multiplyToken = [EDToken multiplierToken:context];
+                [tokens insertObject:multiplyToken atIndex:i];
+                addedToken = TRUE;
+            }
+            
             // insert token between number and function
             if(([previousToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeFunction)){
                 multiplyToken = [EDToken multiplierToken:context];

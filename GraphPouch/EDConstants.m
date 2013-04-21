@@ -105,7 +105,7 @@ float const EDExpressionDefaultFontSize                         = 14.0;
 float const EDExpressionBufferHorizontalAddSubtract             = 2.0;
 float const EDExpressionAdditionLeftVerticalOffset              = 2.0;
 NSString * const EDExpressionDefaultFontName                    = @"Lucida Console";
-float const EDExpressionAddSubtractVerticalModifier             = 3.5;
+float const EDExpressionAddSubtractVerticalModifier             = 0.1;
 float const EDExpressionFontSizeMinimum                         = 6.0;
 float const EDExpressionFontSizeMaximum                         = 30.0;
 float const EDExpressionLeftDenominatorRootModifierSize         = 2.0;
@@ -117,8 +117,10 @@ float const EDExpressionRadicalRootUpperLeftOriginOffset        = 4.0;
 float const EDExpressionRadicalPowerOffsetVertical              = 4.0;
 float const EDExpressionRadicalRootLowerLeftOriginOffset        = 15.0;
 float const EDExpressionRadicalBaseUpperLeftOriginOffset        = 0.0;
-float const EDExpressionTextFieldEndBuffer                      = 1.45;
-float const EDExpressionExponentPowerBaseOffsetVertical         = 14.0;
+float const EDExpressionTextFieldEndBuffer                      = 1.7;
+float const EDExpressionTextFieldEndBufferModifier              = 0.1;
+float const EDExpressionExponentPowerBaseOffsetVertical         = 11.0;
+float const EDExpressionSymbolMultiplicationSymbolFontModifier  = 0.8;
 
 #pragma mark general
 NSString * const EDKey                                          = @"EDKey";
