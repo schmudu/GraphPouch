@@ -112,7 +112,6 @@
     NSMutableDictionary *selectedTypes = [EDCoreDataUtility getAllTypesOfSelectedWorksheetElements:_context];
     
 #warning worksheet elements
-#warning need to create panel for EDExpression
     if([selectedTypes valueForKey:EDKeyGraph]){
         if(!graphController){
             graphController = [[EDPanelPropertiesGraphController alloc] initWithNibName:@"EDPanelPropertiesGraph" bundle:nil];
@@ -131,7 +130,11 @@
             
         _viewController = graphLineController;
     }
-    else if([selectedTypes valueForKey:EDKeyGraphTextbox]){
+    else if(([selectedTypes valueForKey:EDKeyGraphTextbox]) ||
+            ([selectedTypes valueForKey:EDKeyExpressionGraph]) ||
+            ([selectedTypes valueForKey:EDKeyExpressionGraphTextbox]) ||
+            ([selectedTypes valueForKey:EDKeyExpressionTextbox]) ||
+            ([selectedTypes valueForKey:EDKeyGraphTextbox])){
         if(!graphTextboxController){
             graphTextboxController = [[EDPanelPropertiesGraphTextboxController alloc] initWithNibName:@"EDPanelPropertiesGraphTextbox" bundle:nil];
         }
@@ -139,15 +142,6 @@
         [[self window] setTitle:@"Properties"];
             
         _viewController = graphTextboxController;
-    }
-    else if([selectedTypes valueForKey:EDKeyGraphLineTextbox]){
-        if(!graphLineTextboxController){
-            graphLineTextboxController = [[EDPanelPropertiesGraphLineTextboxController alloc] initWithNibName:@"EDPanelPropertiesGraphLineTextbox" bundle:nil];
-        }
-        // set window title
-        [[self window] setTitle:@"Properties"];
-            
-        _viewController = graphLineTextboxController;
     }
     else if([selectedTypes valueForKey:EDKeyLine]){
         if(!lineController){
@@ -158,7 +152,13 @@
             
         _viewController = lineController;
     }
-    else if([selectedTypes valueForKey:EDKeyLineTextbox]){
+    else if(([selectedTypes valueForKey:EDKeyExpressionLine]) ||
+            ([selectedTypes valueForKey:EDKeyExpressionGraphLine]) ||
+            ([selectedTypes valueForKey:EDKeyExpressionGraphLineTextbox]) ||
+            ([selectedTypes valueForKey:EDKeyExpressionLineTextbox]) ||
+            ([selectedTypes valueForKey:EDKeyGraphLine]) ||
+            ([selectedTypes valueForKey:EDKeyGraphLineTextbox]) ||
+            ([selectedTypes valueForKey:EDKeyLineTextbox])){
         if(!lineTextboxController){
             lineTextboxController = [[EDPanelPropertiesLineTextboxController alloc] initWithNibName:@"EDPanelPropertiesLineTextbox" bundle:nil];
         }
@@ -223,11 +223,6 @@
         return;
     }
     else if ((_viewController == graphTextboxController) && ([[self window] contentView] == [graphTextboxController view])) {
-        // still need to update panel properties
-        [_viewController initWindowAfterLoaded:_context];
-        return;
-    }
-    else if ((_viewController == graphLineTextboxController) && ([[self window] contentView] == [graphLineTextboxController view])) {
         // still need to update panel properties
         [_viewController initWindowAfterLoaded:_context];
         return;

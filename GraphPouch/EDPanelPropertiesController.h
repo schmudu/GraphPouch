@@ -12,7 +12,6 @@
 #import "EDPanelPropertiesGraphController.h"
 #import "EDPanelPropertiesGraphTextboxController.h"
 #import "EDPanelPropertiesGraphLineController.h"
-#import "EDPanelPropertiesGraphLineTextboxController.h"
 #import "EDPanelPropertiesLineController.h"
 #import "EDPanelPropertiesLineTextboxController.h"
 #import "EDPanelPropertiesTextboxController.h"
@@ -28,7 +27,6 @@
     EDPanelPropertiesGraphController *graphController;
     EDPanelPropertiesGraphTextboxController *graphTextboxController;
     EDPanelPropertiesGraphLineController *graphLineController;
-    EDPanelPropertiesGraphLineTextboxController *graphLineTextboxController;
     EDPanelPropertiesLineController *lineController;
     EDPanelPropertiesLineTextboxController *lineTextboxController;
     EDPanelPropertiesTextboxController *textboxController;
