@@ -123,8 +123,15 @@
             [result push:token];
         }
         else if ([token typeRaw] == EDTokenTypeIdentifier) {
+            NSRange foundRange = [[token tokenValue] rangeOfString:@"-"];
+            //NSLog(@"found token: value:%@ range:%@", [token tokenValue], NSStringFromRange(foundRange));
+            
             idToken = [[EDToken alloc] initWithContext:context];
-            [idToken setTokenValue:[NSString stringWithFormat:@"%f", idValue]];
+            if (foundRange.length == 0)
+                [idToken setTokenValue:[NSString stringWithFormat:@"%f", idValue]];
+            else
+                [idToken setTokenValue:[NSString stringWithFormat:@"%f", -1*idValue]];
+            
             [result push:idToken];
         }
         else if ([token typeRaw] == EDTokenTypeConstant) {

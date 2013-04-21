@@ -147,8 +147,8 @@
         return results;
     }
     else{
-        // print out all tokens
         /*
+        // print out all tokens
         NSLog(@"====after tokenize");
         int i =0;
         for (EDToken *token in tokens){
