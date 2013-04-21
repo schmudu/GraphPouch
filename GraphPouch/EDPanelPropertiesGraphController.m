@@ -12,6 +12,7 @@
 #import "EDCoreDataUtility+Points.h"
 #import "EDCoreDataUtility+Worksheet.h"
 #import "EDElement.h"
+#import "EDExpression.h"
 #import "EDGraph.h"
 #import "EDPanelPropertiesGraphController.h"
 #import "EDPoint.h"
@@ -22,6 +23,7 @@
 
 @interface EDPanelPropertiesGraphController ()
 //- (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue;
+- (void)addNewExpressions:(NSArray *)expressions;
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorMinX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)didEndSheetGraphErrorMaxX:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
@@ -83,7 +85,7 @@
     
     // initialize table equation datasource and delegate
     if (!tableEquationController){
-        tableEquationController = [[EDPanelPropertiesGraphTableEquation alloc] initWithContext:_context table:tableEquation removeButton:buttonRemoveEquation];
+        tableEquationController = [[EDPanelPropertiesGraphTableEquation alloc] initWithContext:_context table:tableEquation removeButton:buttonRemoveEquation exportButton:buttonExportEquation];
         [tableEquation setDelegate:tableEquationController];
         [tableEquation setDataSource:tableEquationController];
     }
@@ -96,6 +98,7 @@
     // set button state
     if ([tableEquation numberOfSelectedRows] == 0) {
         [buttonRemoveEquation setEnabled:FALSE];
+        [buttonExportEquation setEnabled:FALSE];
     }
     
     //listen
@@ -583,6 +586,27 @@
     [EDCoreDataUtility removeCommonEquationsforSelectedGraphsMatchingEquations:selectedEquations context:_context];
 }
 
+- (IBAction)exportEquation:(id)sender{
+    // get all selected points and their attributes
+    NSMutableArray *selectedIndices = [[NSMutableArray alloc] init];
+    NSIndexSet *selectedIndexSet = [tableEquation selectedRowIndexes];
+    
+    [selectedIndexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [selectedIndices addObject:[[NSNumber alloc] initWithInt:(int)idx]];
+    }];
+    
+    NSArray *commonEquations = [EDCoreDataUtility getCommonEquationsforSelectedGraphs:_context];
+    NSMutableArray *selectedEquations = [[NSMutableArray alloc] init];
+    NSString *newEquation;
+    
+    // pull the indexed objects from the common points and place into an array
+    for (NSNumber *index in selectedIndices){
+        newEquation = [NSString stringWithFormat:@"y=%@",[(EDEquation *)[commonEquations objectAtIndex:[index intValue]] equation]];
+        [selectedEquations addObject:newEquation];
+    }
+    [self addNewExpressions:selectedEquations];
+}
+
 - (void)onDoubleClickEquation:(id)sender{
     // only allow double click on equation
     if ([(NSTableView *)sender clickedColumn] != 0) {
@@ -596,6 +620,42 @@
     NSString *equation = [[commonEquations objectAtIndex:[(NSTableView *)sender clickedRow]] equation];
     [equationController initializeSheet:equation index:(int)[(NSTableView *)sender clickedRow]];
 }
+
+#pragma mark equation
+- (void)addNewExpressions:(NSArray *)expressions{
+    // create new expression
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    EDExpression *newExpression;
+    int i=0;
+    
+    // deselect everything
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context];
+    
+    for (NSString *expression in expressions){
+        newExpression = [[EDExpression alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameExpression inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+        
+        // add expression to page
+        [currentPage addExpressionsObject:newExpression];
+        
+        // set expression attributes
+        [newExpression setPage:currentPage];
+        [newExpression setSelected:TRUE];
+        [newExpression setLocationX:50+i*20];
+        [newExpression setLocationY:150+i*20];
+        [newExpression setElementWidth:EDWorksheetLineSelectionWidth];
+        [newExpression setElementHeight:EDWorksheetLineSelectionHeight];
+        [newExpression setFontSize:EDExpressionDefaultFontSize];
+        
+        // enter default text
+        [newExpression setExpression:expression];
+        i++;
+    }
+    
+    // select this graph and deselect everything else
+    //[EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newExpression];
+    
+}
+
 
 #pragma mark graph points
 

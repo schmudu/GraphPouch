@@ -26,6 +26,7 @@
     IBOutlet NSTableView *tableEquation;
     IBOutlet NSButton *buttonRemovePoints;
     IBOutlet NSButton *buttonRemoveEquation;
+    IBOutlet NSButton *buttonExportEquation;
     
     IBOutlet NSTextField *labelMinX;
     IBOutlet NSTextField *labelMinY;
@@ -51,4 +52,5 @@
 - (IBAction)removeEquation:(id)sender;
 - (IBAction)addNewPoint:(id)sender;
 - (IBAction)removePoints:(id)sender;
+- (IBAction)exportEquation:(id)sender;
 @end

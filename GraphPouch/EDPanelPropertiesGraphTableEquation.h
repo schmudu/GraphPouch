@@ -12,7 +12,8 @@
     NSManagedObjectContext *_context;
     NSTableView *equationTable;
     NSButton *buttonEquationRemove;
+    NSButton *buttonEquationExport;
 }
 
-- (id)initWithContext:(NSManagedObjectContext *)context table:(NSTableView *)table removeButton:(NSButton *)button;
+- (id)initWithContext:(NSManagedObjectContext *)context table:(NSTableView *)table removeButton:(NSButton *)removeButton exportButton:(NSButton *)exportButton;
 @end

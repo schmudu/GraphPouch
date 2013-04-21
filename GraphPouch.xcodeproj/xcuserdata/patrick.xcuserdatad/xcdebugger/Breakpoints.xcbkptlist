@@ -490,8 +490,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "777"
          endingLineNumber = "777"
-         landmarkName = "-clearViews"
-         landmarkType = "5">
+         landmarkName = "@implementation EDExpressionNodeView"
+         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

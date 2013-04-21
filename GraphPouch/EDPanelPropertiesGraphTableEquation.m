@@ -17,13 +17,14 @@
 @end
 
 @implementation EDPanelPropertiesGraphTableEquation
-- (id)initWithContext:(NSManagedObjectContext *)context table:(NSTableView *)table removeButton:(NSButton *)button{
+- (id)initWithContext:(NSManagedObjectContext *)context table:(NSTableView *)table removeButton:(NSButton *)removeButton exportButton:(NSButton *)exportButton{
     self = [super init];
     if (self){
         // init
         _context = context;
         equationTable = table;
-        buttonEquationRemove = button;
+        buttonEquationRemove = removeButton;
+        buttonEquationExport = exportButton;
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -113,9 +114,11 @@
     // if nothing selected
     if ([equationTable numberOfSelectedRows] == 0) {
         [buttonEquationRemove setEnabled:FALSE];
+        [buttonEquationExport setEnabled:FALSE];
     }
     else{
         [buttonEquationRemove setEnabled:TRUE];
+        [buttonEquationExport setEnabled:TRUE];
     }
 }
 
