@@ -23,6 +23,7 @@
 - (void)cutSelectedElements:(NSNotification *)note;
 - (void)deselectAllElements:(NSNotification *)note;
 - (void)deleteSelectedElements:(NSNotification *)note;
+- (void)onCommandExpression:(NSNotification *)note;
 - (void)onCommandGraph:(NSNotification *)note;
 - (void)onCommandLine:(NSNotification *)note;
 - (void)onCommandTextbox:(NSNotification *)note;
@@ -66,6 +67,7 @@
     [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:[self view]];
     [_nc addObserver:self selector:@selector(onKeyPressedArrow:) name:EDEventArrowKeyPressed object:[self view]];
     [_nc addObserver:self selector:@selector(onSelectedRectangleDragged:) name:EDEventMouseDragged object:[self view]];
+    [_nc addObserver:self selector:@selector(onCommandExpression:) name:EDEventCommandExpression object:[self view]];
     [_nc addObserver:self selector:@selector(onCommandGraph:) name:EDEventCommandGraph object:[self view]];
     [_nc addObserver:self selector:@selector(onCommandLine:) name:EDEventCommandLine object:[self view]];
     [_nc addObserver:self selector:@selector(onCommandTextbox:) name:EDEventCommandTextbox object:[self view]];
@@ -100,6 +102,7 @@
     [_nc removeObserver:self name:EDEventTextboxDidChange object:[self view]];
     [_nc removeObserver:self name:EDEventArrowKeyPressed object:[self view]];
     [_nc removeObserver:self name:EDEventMouseDragged object:[self view]];
+    [_nc removeObserver:self name:EDEventCommandExpression object:[self view]];
     [_nc removeObserver:self name:EDEventCommandGraph object:[self view]];
     [_nc removeObserver:self name:EDEventCommandLine object:[self view]];
     [_nc removeObserver:self name:EDEventCommandTextbox object:[self view]];
@@ -129,7 +132,7 @@
     [newExpression setFontSize:EDExpressionDefaultFontSize];
     
     // enter default text
-    [newExpression setExpression:@"1+2/(3+4)"];
+    [newExpression setExpression:@"y=2x+4"];
     
     // select this graph and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newExpression];
@@ -294,6 +297,10 @@
 }
 
 #pragma mark menu
+- (void)onCommandExpression:(NSNotification *)note{
+    [self addNewExpression];
+}
+
 - (void)onCommandGraph:(NSNotification *)note{
     [self addNewGraph];
 }
