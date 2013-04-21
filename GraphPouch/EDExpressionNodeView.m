@@ -405,17 +405,42 @@
                     float heightIdentifierNumber = [childIdentifierNumber frame].size.height;
                     float largerHeight = MAX(heightOperator, heightIdentifierNumber);
                     
-                    
-                    // child operator
-                    [self addSubview:childOperator];
-                    [childOperator setFrameOrigin:NSMakePoint(0, (largerHeight-heightOperator)/2)];
-                    childWidthLeft = [childOperator frame].size.width;
-                    
-                    // child identifier/number
-                    [self addSubview:childIdentifierNumber];
-                    [childIdentifierNumber setFrameOrigin:NSMakePoint(childWidthLeft, (largerHeight-heightIdentifierNumber)/2)];
-                    childWidthRight = [childIdentifierNumber frame].size.width;
-                    [self setFrameSize:NSMakeSize(childWidthLeft + childWidthRight, largerHeight)];
+                    if ([[childIdentifierNumber token] typeRaw] == EDTokenTypeIdentifier){
+                        // child operator
+                        [self addSubview:childOperator];
+                        [childOperator setFrameOrigin:NSMakePoint(0, (largerHeight-heightOperator)/2)];
+                        childWidthLeft = [childOperator frame].size.width;
+                        
+                        // child identifier/number
+                        [self addSubview:childIdentifierNumber];
+                        [childIdentifierNumber setFrameOrigin:NSMakePoint(childWidthLeft, (largerHeight-heightIdentifierNumber)/2)];
+                        childWidthRight = [childIdentifierNumber frame].size.width;
+                        [self setFrameSize:NSMakeSize(childWidthLeft + childWidthRight, largerHeight)];
+                    }
+                    else{
+                        // child operator
+                        [self addSubview:childOperator];
+                        [childOperator setFrameOrigin:NSMakePoint(0, (largerHeight-heightOperator)/2)];
+                        childWidthLeft = [childOperator frame].size.width;
+                        
+                        // add multiply symbol
+                        float fontSize = [self fontSize] * [self fontModifier] * .8;
+                        NSSize sizeOperator = [EDExpressionNodeView getStringSize:@"x" fontSize:fontSize];
+                        NSTextField *fieldMultiply = [EDExpressionNodeView generateTextField:NSMakeRect(0, 0, sizeOperator.width, sizeOperator.height)];
+                        NSMutableAttributedString *stringMultiply = [[NSMutableAttributedString alloc] initWithString:@"x"];
+                        [fieldMultiply setFont:[NSFont fontWithName:EDExpressionDefaultFontName size:fontSize]];
+                        [fieldMultiply setAttributedStringValue:stringMultiply];
+                        [self addSubview:fieldMultiply];
+                        [fieldMultiply setFrameOrigin:NSMakePoint(childWidthLeft, (largerHeight - sizeOperator.height)/2)];
+                        float widthOperator = [fieldMultiply frame].size.width;
+                        [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
+                            
+                        // child identifier/number
+                        [self addSubview:childIdentifierNumber];
+                        [childIdentifierNumber setFrameOrigin:NSMakePoint(childWidthLeft + widthOperator, (largerHeight-heightIdentifierNumber)/2)];
+                        childWidthRight = [childIdentifierNumber frame].size.width;
+                        [self setFrameSize:NSMakeSize(childWidthLeft + widthOperator + childWidthRight, largerHeight)];
+                    }
                 }
                 else{
                     // determine larger height

@@ -386,6 +386,20 @@
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
             }
+            
+            // insert token between right paren and identifier
+            if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
+                multiplyToken = [EDToken multiplierToken:context];
+                [tokens insertObject:multiplyToken atIndex:i];
+                addedToken = TRUE;
+            }
+            
+            // insert token between right paren and number
+            if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeNumber)){
+                multiplyToken = [EDToken multiplierToken:context];
+                [tokens insertObject:multiplyToken atIndex:i];
+                addedToken = TRUE;
+            }
         }
         // only set previous token if did not add a token
         if (!addedToken) {

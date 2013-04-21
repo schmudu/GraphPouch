@@ -143,6 +143,9 @@
         // add image to worksheet
         [self addSubview:rootNodeFirst];
         [rootNodeFirst setFrameOrigin:NSMakePoint(0, 0)];
+        
+        //NSLog(@"expression:%@", [expressionDict objectForKey:EDKeyExpressionFirst]);
+        
         // if an equation then display the equal sign and the other part of the equation
         if ([[expressionDict objectForKey:EDKeyExpressionType] intValue] == EDTypeEquation){
             // create tree
