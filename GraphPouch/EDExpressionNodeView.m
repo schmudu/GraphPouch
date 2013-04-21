@@ -83,7 +83,7 @@
     if ([string length] > 1)
         returnField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, size.width+EDExpressionTextFieldEndBuffer, size.height)];
     else
-        returnField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, size.width-size.width*.1, size.height)];
+        returnField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, size.width-size.width*.05, size.height)];
     
     [returnField setEditable:FALSE];
     [returnField setSelectable:FALSE];

@@ -147,8 +147,8 @@
         return results;
     }
     else{
-        /*
         // print out all tokens
+        /*
         NSLog(@"====after tokenize");
         int i =0;
         for (EDToken *token in tokens){
@@ -183,7 +183,7 @@
         NSLog(@"====after substitute");
         i =0;
         for (EDToken *token in tokens){
-            NSLog(@"i:%d token:%@", i, token);
+            NSLog(@"i:%d token:%@", i, [token tokenValue]);
             i++;
         }*/
         
@@ -211,17 +211,18 @@
         NSLog(@"====after parsed");
         i =0;
         for (EDToken *token in parsedTokens){
-            NSLog(@"i:%d token:%@", i, token);
+            NSLog(@"i:%d token:%@", i, [token tokenValue]);
             i++;
         }*/
         
         // calculate expression
-        /*
-        float result = [EDParser calculate:parsedTokens error:&error context:context];
-        if (error) {
+        //float result = [EDParser calculate:parsedTokens error:&error context:context];
+        // pass in value to test for other errors
+        float result = [EDParser calculate:parsedTokens error:error context:context varValue:2.0];
+        if (*error) {
             [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
             return results;
-        }*/
+        }
         
         // print result
         //NSLog(@"====after parsed: result:%f", result);

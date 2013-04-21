@@ -137,10 +137,13 @@
     // identifiers
     // free memory for next comparison
     regfree(&regex);
+    /*
     if ((previousToken == nil) || ([[previousToken tokenValue] isEqualToString:@"("]))
         reti = regcomp(&regex, "^(\\-|\\-x|\\-y|x|y)$", REG_EXTENDED);
     else
         reti = regcomp(&regex, "^(x|y)$", REG_EXTENDED);
+     */
+    reti = regcomp(&regex, "^(x|y)$", REG_EXTENDED);
     
     if (reti) {
         regfree(&regex);
@@ -325,6 +328,7 @@
 }
 
 + (NSMutableArray *)substituteMinusSign:(NSMutableArray *)tokens context:(NSManagedObjectContext *)context{
+    /*
     // if a minus sign is the first object then replace is with a -1 and a multiplier token
     EDToken *firstToken = [tokens objectAtIndex:0];
     if (([firstToken typeRaw] == EDTokenTypeOperator) && ([[firstToken tokenValue] isEqualToString:@"-"])){
@@ -340,6 +344,43 @@
         [tokens insertObject:negativeOneToken atIndex:0];
     }
     
+    return tokens;
+     */
+    //substitute any minus sign that doesn't have a token before it and is right of a left parent as a '-1' and '*' token
+    BOOL addedToken = FALSE;
+    EDToken *multiplierToken, *currentToken, *previousToken=nil, *negativeOneToken;
+    int i=0;
+    while (i<[tokens count]){
+        currentToken = [tokens objectAtIndex:i];
+        if([[currentToken tokenValue] isEqualToString:@"-"]){
+            if((previousToken == nil) || ([[previousToken tokenValue] isEqualToString:@"("])){
+                // replace minus sign with negative one and multiplier token
+                // remove object
+                [tokens removeObjectAtIndex:i];
+                
+                // insert number -1 token and multipler token
+                multiplierToken = [EDToken multiplierToken:context];
+                negativeOneToken = [[EDToken alloc] initWithContext:context];
+                [negativeOneToken setTokenValue:[NSString stringWithFormat:@"-1"]];
+            
+                [tokens insertObject:multiplierToken atIndex:i];
+                [tokens insertObject:negativeOneToken atIndex:i];
+                addedToken = TRUE;
+            }
+        }
+        // only set previous token if did not add a token
+        if (!addedToken) {
+            previousToken = currentToken;
+        }
+        else{
+            previousToken = multiplierToken;
+            
+            // reset
+            addedToken = FALSE;
+        }
+        
+        i++;
+    }
     return tokens;
 }
 
