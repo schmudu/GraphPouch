@@ -80,6 +80,7 @@
 		CD4FF0921723419100DEBF29 /* EDExpressionViewPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4FF0911723418F00DEBF29 /* EDExpressionViewPrint.m */; };
 		CD4FF095172390B600DEBF29 /* icon_expression_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CD4FF093172390B600DEBF29 /* icon_expression_over.png */; };
 		CD4FF096172390B600DEBF29 /* icon_expression.png in Resources */ = {isa = PBXBuildFile; fileRef = CD4FF094172390B600DEBF29 /* icon_expression.png */; };
+		CD4FF0991723FD5F00DEBF29 /* EDFormatterExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4FF0981723FD5F00DEBF29 /* EDFormatterExpression.m */; };
 		CD5312AA16ECEC0F00F670FD /* INAppStoreWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312A516ECE94100F670FD /* INAppStoreWindow.m */; };
 		CD5312AB16ECEC3D00F670FD /* INWindowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312A716ECE94100F670FD /* INWindowButton.m */; };
 		CD5312AC16ECEC4100F670FD /* NSColor+INAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5312A916ECE94100F670FD /* NSColor+INAdditions.m */; };
@@ -302,6 +303,8 @@
 		CD4FF0911723418F00DEBF29 /* EDExpressionViewPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDExpressionViewPrint.m; sourceTree = "<group>"; };
 		CD4FF093172390B600DEBF29 /* icon_expression_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_expression_over.png; sourceTree = "<group>"; };
 		CD4FF094172390B600DEBF29 /* icon_expression.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_expression.png; sourceTree = "<group>"; };
+		CD4FF0971723FD5F00DEBF29 /* EDFormatterExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDFormatterExpression.h; sourceTree = "<group>"; };
+		CD4FF0981723FD5F00DEBF29 /* EDFormatterExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDFormatterExpression.m; sourceTree = "<group>"; };
 		CD5312A416ECE94100F670FD /* INAppStoreWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INAppStoreWindow.h; sourceTree = "<group>"; };
 		CD5312A516ECE94100F670FD /* INAppStoreWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = INAppStoreWindow.m; sourceTree = "<group>"; };
 		CD5312A616ECE94100F670FD /* INWindowButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INWindowButton.h; sourceTree = "<group>"; };
@@ -912,6 +915,8 @@
 		CD4FF087171CAE1B00DEBF29 /* Expression */ = {
 			isa = PBXGroup;
 			children = (
+				CD4FF0971723FD5F00DEBF29 /* EDFormatterExpression.h */,
+				CD4FF0981723FD5F00DEBF29 /* EDFormatterExpression.m */,
 				CD4FF088171CAE5500DEBF29 /* EDPanelPropertiesExpressionController.h */,
 				CD4FF089171CAE5500DEBF29 /* EDPanelPropertiesExpressionController.m */,
 				CD4FF08A171CAE5500DEBF29 /* EDPanelPropertiesExpression.xib */,
@@ -1456,6 +1461,7 @@
 				CD4FF08B171CAE5500DEBF29 /* EDPanelPropertiesExpressionController.m in Sources */,
 				CD4FF08F1722D61500DEBF29 /* EDPageViewContainerExpressionView.m in Sources */,
 				CD4FF0921723419100DEBF29 /* EDExpressionViewPrint.m in Sources */,
+				CD4FF0991723FD5F00DEBF29 /* EDFormatterExpression.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
