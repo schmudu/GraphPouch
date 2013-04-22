@@ -225,7 +225,8 @@
     
     // set file types
     NSArray *fileTypes = [NSArray arrayWithObjects:@"bmp", @"BMP", @"jpeg", @"JPEG", @"jpg", @"JPG", @"png", @"PNG", @"tif", @"TIF", @"tiff", @"TIFF", nil];
-    [openDlg setAllowedFileTypes:fileTypes];
+    //[openDlg setAllowedFileTypes:fileTypes];
+    [openDlg setAllowedFileTypes:[NSImage imageFileTypes]];
     
     // Display the dialog.  If the OK button was pressed,
     // process the files.
@@ -329,9 +330,14 @@
 }
 
 - (IBAction)paste:(id)sender{
-    NSArray *classes = [EDPage allWorksheetClasses];
-    NSArray *newObjects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
-    if ([newObjects count] > 0){
+    NSArray *graphPouchClasses = [EDPage allWorksheetClasses];
+    NSArray *newModelObjects = [[NSPasteboard generalPasteboard] readObjectsForClasses:graphPouchClasses options:nil];
+    NSArray *pageClasses = [NSArray arrayWithObject:[EDPage class]];
+    NSArray *pageObjects = [[NSPasteboard generalPasteboard] readObjectsForClasses:pageClasses options:nil];
+    NSArray *imageClasses = [NSArray arrayWithObjects:[NSImage class], nil];
+    NSArray *imageObjects = [[NSPasteboard generalPasteboard] readObjectsForClasses:imageClasses options:nil];
+    
+    if ([newModelObjects count] > 0){
         // deselect all previously selected elements
         [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context];
         
@@ -339,11 +345,11 @@
         NSArray *oldObjects = [EDCoreDataUtility getAllWorksheetElementsOnPage:currentPage context:_context];
         
         // retrieve new objects
-        NSArray *newElements = [EDCoreDataUtility insertWorksheetElements:newObjects intoContext:_context];
+        NSArray *newElements = [EDCoreDataUtility insertWorksheetElements:newModelObjects intoContext:_context];
         
         // if there are elements at the exact the same position then offset these elements so the user can see them
         // try matching just one object
-        EDElement *newObject = (EDElement *)[newObjects objectAtIndex:0];
+        EDElement *newObject = (EDElement *)[newModelObjects objectAtIndex:0];
         EDElement *testObject;
         int counter = 0;
         BOOL samePositionMatch = FALSE;
@@ -366,9 +372,13 @@
             }
         }
     }
-    else {
+    else if([pageObjects count]>0){
         // paste in pages
         [pagesController pastePagesFromPasteboard];
+    }
+    else if([imageObjects count]>0){
+        // for each image object, create EDImage entity
+        [worksheetController insertImages:imageObjects];
     }
 }
 
@@ -386,9 +396,9 @@
     // CRUD
     if ([[menuItem title] isEqualToString:@"Paste"]){
         
-        NSArray *pageClasses = [EDPage allWorksheetClasses];
-        NSMutableArray *classes = [NSMutableArray arrayWithArray:pageClasses];
+        NSMutableArray *classes = [NSMutableArray arrayWithArray:[EDPage allWorksheetClasses]];
         [classes addObject:[EDPage class]];
+        [classes addObject:[NSImage class]];
         
         NSArray *objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:classes options:nil];
         

@@ -198,9 +198,40 @@
     //[EDCoreDataUtility save:_context];
 }
 
-#pragma mark graphs
+#pragma mark images
+- (void)insertImages:(NSArray *)images{
+    NSData *imageData;
+    
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    EDImage *newImage;
+    int i=0;
+    
+    // select this image and deselect everything else
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context];
+    
+    // cycle through images and create an entity for each one
+    for (NSImage *image in images){
+        imageData = [image TIFFRepresentation];
+        
+        newImage = [[EDImage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameImage inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+        
+        // add image to page
+        [currentPage addImagesObject:newImage];
+        
+        // set graph attributes
+        [newImage setPage:currentPage];
+        [newImage setSelected:TRUE];
+        [newImage setLocationX:50 + 20*i];
+        [newImage setLocationY:150 + 20*i];
+        [newImage setElementWidth:500];
+        [newImage setElementHeight:500];
+        [newImage setImageData:imageData];
+        i++;
+    }
+}
+
 - (void)addNewImage:(NSURL *)url{
-    // create new graph
+    // create new image
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
     
     EDImage *newImage = [[EDImage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameImage inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
@@ -220,10 +251,11 @@
     [newImage setElementHeight:500];
     [newImage setImageData:imageData];
     
-    // select this graph and deselect everything else
+    // select this image and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newImage];
 }
 
+#pragma mark images
 - (void)addNewGraph{
     // create new graph
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];

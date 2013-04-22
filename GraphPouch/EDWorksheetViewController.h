@@ -26,4 +26,5 @@
 - (void)addNewTextbox;
 - (void)addLabelName;
 - (void)addLabelDate;
+- (void)insertImages:(NSArray *)images;
 @end
