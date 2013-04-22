@@ -6,10 +6,11 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
-#import "EDLine.h"
-#import "EDPage.h"
 #import "EDExpression.h"
 #import "EDGraph.h"
+#import "EDImage.h"
+#import "EDLine.h"
+#import "EDPage.h"
 #import "EDPoint.h"
 #import "EDEquation.h"
 #import "EDConstants.h"
@@ -22,6 +23,7 @@
 @dynamic currentPage;
 @dynamic expressions;
 @dynamic graphs;
+@dynamic images;
 @dynamic lines;
 @dynamic pageNumber;
 @dynamic textboxes;
@@ -48,6 +50,12 @@
         for (EDGraph *graph in graphs){
             // set relationship
             [self addGraphsObject:graph];
+        }
+        
+        NSSet *images = [aDecoder decodeObjectForKey:EDPageAttributeImages];
+        for (EDImage *image in images){
+            // set relationship
+            [self addImagesObject:image];
         }
         
         NSSet *lines = [aDecoder decodeObjectForKey:EDPageAttributeLines];
@@ -78,6 +86,7 @@
 #warning worksheet elements
     [aCoder encodeObject:[self expressions] forKey:EDPageAttributeExpressions];
     [aCoder encodeObject:[self graphs] forKey:EDPageAttributeGraphs];
+    [aCoder encodeObject:[self images] forKey:EDPageAttributeImages];
     [aCoder encodeObject:[self lines] forKey:EDPageAttributeLines];
     [aCoder encodeObject:[self textboxes] forKey:EDPageAttributeTextboxes];
 }
@@ -120,6 +129,12 @@
         }
     }
     
+    for (EDImage *image in [self images]){
+        if (image == object){
+            return TRUE;
+        }
+    }
+    
     // search through lines
     for (EDLine *line in [self lines]){
         if (line == object){
@@ -145,7 +160,7 @@
 
 + (NSArray *)allWorksheetClasses{
 #warning worksheet elements
-    return [NSArray arrayWithObjects:[EDExpression class], [EDGraph class], [EDLine class], [EDTextbox class], nil];
+    return [NSArray arrayWithObjects:[EDExpression class], [EDGraph class], [EDImage class], [EDLine class], [EDTextbox class], nil];
 }
 - (NSArray *)getAllWorksheetObjects{
     NSMutableArray *elements = [NSMutableArray array];
@@ -153,6 +168,7 @@
 #warning worksheet elements
     [elements addObjectsFromArray:[[self expressions] allObjects]];
     [elements addObjectsFromArray:[[self graphs] allObjects]];
+    [elements addObjectsFromArray:[[self images] allObjects]];
     [elements addObjectsFromArray:[[self lines] allObjects]];
     [elements addObjectsFromArray:[[self textboxes] allObjects]];
     return elements;

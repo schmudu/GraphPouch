@@ -13,6 +13,7 @@
 #import "EDEquation.h"
 #import "EDExpression.h"
 #import "EDGraph.h"
+#import "EDImage.h"
 #import "EDLine.h"
 #import "EDPage.h"
 #import "EDTextbox.h"
@@ -148,11 +149,13 @@
 #warning worksheet elements
     NSArray *fetcheExpressions = [EDExpression getAllSelectedObjects:context];
     NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
+    NSArray *fetchedImages = [EDImage getAllSelectedObjects:context];
     NSArray *fetchedLines = [EDLine getAllSelectedObjects:context];
     NSArray *fetchedTextboxes = [EDTextbox getAllSelectedObjects:context];
     NSMutableArray *fetchedObjects = [[NSMutableArray alloc] init];
     [fetchedObjects addObjectsFromArray:fetcheExpressions];
     [fetchedObjects addObjectsFromArray:fetchedGraphs];
+    [fetchedObjects addObjectsFromArray:fetchedImages];
     [fetchedObjects addObjectsFromArray:fetchedLines];
     [fetchedObjects addObjectsFromArray:fetchedTextboxes];
     
@@ -173,12 +176,14 @@
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *fetchedExpressions = [EDExpression getAllSelectedObjects:context];
     NSArray *fetchedGraphs = [EDGraph getAllSelectedObjects:context];
+    NSArray *fetchedImages = [EDImage getAllSelectedObjects:context];
     NSArray *fetchedLines = [EDLine getAllSelectedObjects:context];
     NSArray *fetchedTextboxes = [EDTextbox getAllSelectedObjects:context];
     
 #warning worksheet elements
     [allObjects addObjectsFromArray:fetchedExpressions];
     [allObjects addObjectsFromArray:fetchedGraphs];
+    [allObjects addObjectsFromArray:fetchedImages];
     [allObjects addObjectsFromArray:fetchedLines];
     [allObjects addObjectsFromArray:fetchedTextboxes];
     
@@ -203,6 +208,11 @@
             [newGraph setPage:currentPage];
             [insertedObjects addObject:newGraph];
         }
+        else if ([element isKindOfClass:[EDImage class]]){
+            EDImage *newImage = (EDImage *)[context copyObject:element toContext:context parent:EDEntityNamePage];
+            [newImage setPage:currentPage];
+            [insertedObjects addObject:newImage];
+        }
         else if ([element isKindOfClass:[EDLine class]]){
             // copying from copy context to document child context
             EDLine *newLine = (EDLine *)[context copyObject:element toContext:context parent:EDEntityNamePage];
@@ -226,6 +236,7 @@
     NSMutableArray *allObjects = [[NSMutableArray alloc] init];
     NSArray *fetchedExpressions = [EDExpression getAllObjectsOnPage:currentPage context:context];
     NSArray *fetchedGraphs = [EDGraph getAllObjectsOnPage:currentPage context:context];
+    NSArray *fetchedImages = [EDImage getAllObjectsOnPage:currentPage context:context];
     NSArray *fetchedLines = [EDLine getAllObjectsOnPage:currentPage context:context];
     NSArray *fetchedTextboxes = [EDTextbox getAllObjectsOnPage:currentPage context:context];
     
@@ -234,6 +245,9 @@
     
     if (fetchedGraphs)
         [allObjects addObjectsFromArray:fetchedGraphs];
+    
+    if (fetchedImages)
+        [allObjects addObjectsFromArray:fetchedImages];
     
     if (fetchedLines)
         [allObjects addObjectsFromArray:fetchedLines];
@@ -247,12 +261,13 @@
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
     // this method returns a dictionary of the types of selected objects
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    NSArray *expressionObjects, *graphObjects, *lineObjects, *textboxObjects;
+    NSArray *expressionObjects, *graphObjects, *imageObjects, *lineObjects, *textboxObjects;
     
 #warning worksheet elements
     // get all selected graphs
     expressionObjects = [EDExpression getAllSelectedObjects:context];
     graphObjects = [EDGraph getAllSelectedObjects:context];
+    imageObjects = [EDGraph getAllSelectedObjects:context];
     lineObjects = [EDLine getAllSelectedObjects:context];
     textboxObjects = [EDTextbox getAllSelectedObjects:context];
     
@@ -344,6 +359,9 @@
     else if ([element isKindOfClass:[EDGraph class]]) {
         [currentPage removeGraphsObject:(EDGraph *)element];
     }
+    else if ([element isKindOfClass:[EDImage class]]) {
+        [currentPage removeImagesObject:(EDImage *)element];
+    }
     else if ([element isKindOfClass:[EDLine class]]) {
         [currentPage removeLinesObject:(EDLine *)element];
     }
@@ -364,6 +382,9 @@
         }
         else if ([element isKindOfClass:[EDGraph class]]) {
             [currentPage removeGraphsObject:(EDGraph *)element];
+        }
+        else if ([element isKindOfClass:[EDImage class]]) {
+            [currentPage removeImagesObject:(EDImage *)element];
         }
         else if ([element isKindOfClass:[EDLine class]]) {
             [currentPage removeLinesObject:(EDLine *)element];

@@ -13,13 +13,13 @@
 @implementation EDParser
 
 + (NSMutableArray *)parse:(NSMutableArray *)tokens error:(NSError **)error{
+    // use Shunting-Yard algorithm
     NSMutableArray *output;
     EDStack *operator;
     int i=0;
     EDToken *currentToken, *operatorToken;
     output = [NSMutableArray array];
     operator = [[EDStack alloc] init];
-    
     while(i<[tokens count]){
         currentToken = [tokens objectAtIndex:i];
         if([currentToken typeRaw] == EDTokenTypeNumber)
@@ -31,24 +31,20 @@
         else if ([currentToken typeRaw] == EDTokenTypeOperator){
             // get precedence of operator
             operatorToken = (EDToken *)[operator getLastObject];
-            if (operatorToken){
-                if ((([currentToken precedence] <= [operatorToken precedence]) && ([currentToken associationRaw] == EDAssociationLeft)) || ([currentToken precedence] < [operatorToken precedence])) {
-                    // pop operator off stack
-                    [operator pop];
-                    
-                    // add to output
-                    [output addObject:operatorToken];
-                    
-                    // push currentToken to stack
-                    [operator push:currentToken];
-                }
-                else {
-                    [operator push:currentToken];
-                }
+            while (([operator count] > 0) && ((([currentToken precedence] <= [operatorToken precedence]) && ([currentToken associationRaw] == EDAssociationLeft)) || ([currentToken precedence] < [operatorToken precedence]))) {
+                // pop operator off stack
+                [operator pop];
+                
+                // add to output
+                [output addObject:operatorToken];
+                
+                // push currentToken to stack
+                //[operator push:currentToken];
+                
+                // get the last object
+                operatorToken = (EDToken *)[operator getLastObject];
             }
-            else {
-                [operator push:currentToken];
-            }
+            [operator push:currentToken];
         }
         else if ([currentToken typeRaw] == EDTokenTypeParenthesis) {
             if([[currentToken tokenValue] isEqualToString:@"("]){

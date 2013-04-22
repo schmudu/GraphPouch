@@ -45,10 +45,12 @@ NSString *const EDContextMenuWorksheetDelete                    = @"Delete";
 NSString *const EDContextMenuWorksheetPaste                     = @"Paste";
 NSString *const EDContextMenuWorksheetExpression                = @"Insert Expression";
 NSString *const EDContextMenuWorksheetGraph                     = @"Insert Graph";
+NSString *const EDContextMenuWorksheetImage                     = @"Insert Image";
 NSString *const EDContextMenuWorksheetTextbox                   = @"Insert Textbox";
 NSString *const EDContextMenuWorksheetLine                      = @"Insert Line";
 NSString *const EDEventCommandExpression                        = @"EDEventCommandExpression";
 NSString *const EDEventCommandGraph                             = @"EDEventCommandGraph";
+NSString *const EDEventCommandImage                             = @"EDEventCommandImage";
 NSString *const EDEventCommandLine                              = @"EDEventCommandLine";
 NSString *const EDEventCommandTextbox                           = @"EDEventCommandTextbox";
 
@@ -69,6 +71,7 @@ NSString * const EDElementAttributeHeight                       = @"elementHeigh
 #pragma mark entity names
 NSString * const EDEntityNameExpression                         = @"EDExpression";
 NSString * const EDEntityNameGraph                              = @"EDGraph";
+NSString * const EDEntityNameImage                              = @"EDImage";
 NSString * const EDEntityNamePage                               = @"EDPage";
 NSString * const EDEntityNamePoint                              = @"EDPoint";
 NSString * const EDEntityNameEquation                           = @"EDEquation";
@@ -220,6 +223,9 @@ float const EDGuideThreshold                                    = 2.0;
 float const EDGuideWidth                                        = 2.0;
 float const EDGuideShowThreshold                                = 10.0;  // diff must be less then this to show guide
 
+#pragma mark image
+NSString * const EDImageAttributeImageData                      =  @"imageData";
+
 #pragma mark keyboard
 int const EDKeycodeSave                                         = 1;
 int const EDKeycodeTab                                          = 48;
@@ -272,6 +278,7 @@ NSString * const EDPageAttributeSelected                        = @"selected";
 NSString * const EDPageAttributeCurrent                         = @"currentPage";
 NSString * const EDPageAttributeExpressions                     = @"expressions";
 NSString * const EDPageAttributeGraphs                          = @"graphs";
+NSString * const EDPageAttributeImages                          = @"images";
 NSString * const EDPageAttributeLines                           = @"lines";
 NSString * const EDPageAttributeTextboxes                       = @"textboxes";
 NSString * const EDGraphAttributePage                           = @"page";
@@ -394,6 +401,8 @@ NSString * const EDUTIPage                                      = @"com.edcodia.
 NSString * const EDUTIPageView                                  = @"com.edcodia.graphpouch.pageview";
 NSString * const EDUTIGraph                                     = @"com.edcodia.graphpouch.graph";
 NSString * const EDUTIGraphView                                 = @"com.edcodia.graphpouch.graphView";
+NSString * const EDUTIImage                                     = @"com.edcodia.graphpouch.image";
+NSString * const EDUTIImageView                                 = @"com.edcodia.graphpouch.imageView";
 NSString * const EDUTIToken                                     = @"com.edcodia.graphpouch.token";
 NSString * const EDUTIEquation                                  = @"com.edcodia.graphpouch.equation";
 NSString * const EDUTILine                                      = @"com.edcodia.graphpouch.line";

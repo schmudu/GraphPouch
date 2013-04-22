@@ -11,6 +11,7 @@
 #import "EDEquation.h"
 #import "EDExpression.h"
 #import "EDGraph.h"
+#import "EDImage.h"
 #import "EDLine.h"
 #import "EDPage.h"
 #import "EDPoint.h"
@@ -76,6 +77,7 @@
     NSArray *equations = [EDEquation getAllObjects:context];
     NSArray *expressions = [EDExpression getAllObjects:context];
     NSArray *graphs = [EDGraph getAllObjects:context];
+    NSArray *images = [EDImage getAllObjects:context];
     NSArray *lines = [EDLine getAllObjects:context];
     NSArray *pages = [EDPage getAllObjects:context];
     NSArray *points = [EDPoint getAllObjects:context];
@@ -86,6 +88,7 @@
     [allObjects addObjectsFromArray:equations];
     [allObjects addObjectsFromArray:expressions];
     [allObjects addObjectsFromArray:graphs];
+    [allObjects addObjectsFromArray:images];
     [allObjects addObjectsFromArray:lines];
     [allObjects addObjectsFromArray:pages];
     [allObjects addObjectsFromArray:points];

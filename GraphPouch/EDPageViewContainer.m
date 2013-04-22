@@ -46,6 +46,10 @@
 - (void)drawGraphs;
 - (void)removeGraphs;
 
+// images
+- (void)drawImages;
+- (void)removeImages;
+
 // lines
 - (void)drawLines;
 - (void)removeLines;
@@ -188,21 +192,11 @@
 - (void)drawExpressions{
     NSArray *expressions = [[_page expressions] allObjects];
     EDPageViewContainerExpressionView *expressionView;
-    NSImage *expressionImage;
     
     // for each graph create a graph view
     for (EDExpression *expression in expressions){
         expressionView = [[EDPageViewContainerExpressionView alloc] initWithFrame:[self bounds] expression:expression context:_context];
         
-        // create image
-        /*
-        lineImage = [[NSImage alloc] initWithData:[lineView dataWithPDFInsideRect:[lineView bounds]]];
-        
-        // create cache image that only needs to draw on update
-        lineCacheView = [[EDPageViewContainerLineCacheView alloc] initWithFrame:[self bounds] lineImage:lineImage];
-        
-        //[lineCacheView setFrameOrigin:NSMakePoint(xRatio * [line locationX], yRatio * [line locationY])];
-         */
         [self addSubview:expressionView];
         
         // save view so it can be erased later
@@ -220,25 +214,24 @@
     [_expressionViews removeAllObjects];
 }
 
+#pragma mark images
+- (void)drawImages{
+    //NSLog(@"need to draw images on container.");
+}
+
+- (void)removeImages{
+    //NSLog(@"need to remove images.");
+}
+
 #pragma mark lines
 - (void)drawLines{
     NSArray *lines = [[_page lines] allObjects];
     EDPageViewContainerLineView *lineView;
-    NSImage *lineImage;
     
     // for each graph create a graph view
     for (EDLine *line in lines){
         lineView = [[EDPageViewContainerLineView alloc] initWithFrame:[self bounds] line:line context:_context];
         
-        /*
-        // create image
-        lineImage = [[NSImage alloc] initWithData:[lineView dataWithPDFInsideRect:[lineView bounds]]];
-        
-        // create cache image that only needs to draw on update
-        lineCacheView = [[EDPageViewContainerLineCacheView alloc] initWithFrame:[self bounds] lineImage:lineImage];
-        
-        //[lineCacheView setFrameOrigin:NSMakePoint(xRatio * [line locationX], yRatio * [line locationY])];
-         */
         [self addSubview:lineView];
         
         // save view so it can be erased later
@@ -305,12 +298,14 @@
     // remove
     [self removeTextboxes];
     [self removeGraphs];
+    [self removeImages];
     [self removeLines];
     [self removeExpressions];
     
     // draw
     [self drawTextboxes];
     [self drawGraphs];
+    [self drawImages];
     [self drawLines];
     [self drawExpressions];
 }

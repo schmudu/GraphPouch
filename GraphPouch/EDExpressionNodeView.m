@@ -250,6 +250,8 @@
     // traverse left
     if([self childLeft]) [[self childLeft] traverseTreeAndCreateImage];
     
+    // print out token
+    NSLog(@"traverse tree: token:%@ height:%d left token:%@ right token:%@", [token tokenValue], [self treeHeight], [[childLeft token] tokenValue], [[childRight token] tokenValue]);
     // create image
     if (([[self token] typeRaw] == EDTokenTypeNumber) || ([[self token] typeRaw] == EDTokenTypeIdentifier)){
         NSTextField *field = [EDExpressionNodeView generateTextField:[[self expression] fontSize]*[self fontModifier] string:[token tokenValue]];

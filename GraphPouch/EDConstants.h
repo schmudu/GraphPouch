@@ -67,6 +67,7 @@ extern NSString *const EDContextMenuWorksheetDeselect;
 extern NSString *const EDContextMenuWorksheetSelect;
 extern NSString *const EDContextMenuWorksheetExpression;
 extern NSString *const EDContextMenuWorksheetGraph;
+extern NSString *const EDContextMenuWorksheetImage;
 extern NSString *const EDContextMenuWorksheetTextbox;
 extern NSString *const EDContextMenuWorksheetLine;
 extern NSString *const EDContextMenuWorksheetCopy;
@@ -75,6 +76,7 @@ extern NSString *const EDContextMenuWorksheetPaste;
 extern NSString *const EDContextMenuWorksheetDelete;
 extern NSString *const EDEventCommandExpression;
 extern NSString *const EDEventCommandGraph;
+extern NSString *const EDEventCommandImage;
 extern NSString *const EDEventCommandLine;
 extern NSString *const EDEventCommandTextbox;
 
@@ -89,6 +91,7 @@ typedef enum{
 
 #pragma mark entity name
 extern NSString *const EDEntityNameGraph;
+extern NSString *const EDEntityNameImage;
 extern NSString *const EDEntityNamePage;
 extern NSString *const EDEntityNamePoint;
 extern NSString *const EDEntityNameEquation;
@@ -269,6 +272,9 @@ extern NSString *const EDEventShortcutSelectAll;
 extern NSString *const EDEventShortcutDeselectAll;
 extern float const EDMenuToolbarShadowWidth;
 
+#pragma mark image
+extern NSString *const EDImageAttributeImageData;
+
 #pragma mark num
 extern float const EDNumberMax;
 
@@ -311,6 +317,7 @@ extern NSString *const EDPageAttributeSelected;
 extern NSString *const EDPageAttributeCurrent;
 extern NSString *const EDPageAttributeExpressions;
 extern NSString *const EDPageAttributeGraphs;
+extern NSString *const EDPageAttributeImages;
 extern NSString *const EDPageAttributeLines;
 extern NSString *const EDPageAttributeTextboxes;
 extern NSString *const EDGraphAttributePage;
@@ -420,6 +427,8 @@ extern NSString *const EDUTIPage;
 extern NSString *const EDUTIPageView;
 extern NSString *const EDUTIGraph;
 extern NSString *const EDUTIGraphView;
+extern NSString *const EDUTIImage;
+extern NSString *const EDUTIImageView;
 extern NSString *const EDUTIToken;
 extern NSString *const EDUTIEquation;
 extern NSString *const EDUTILine;

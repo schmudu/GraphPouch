@@ -9,7 +9,6 @@
 #import "EDExpression.h"
 #import "EDConstants.h"
 #import "EDParser.h"
-#import "EDPage.h"
 #import "EDTokenizer.h"
 
 @implementation EDExpression
@@ -209,11 +208,12 @@
         // print out all tokens
         /*
         NSLog(@"====after parsed");
-        i =0;
+        int i =0;
         for (EDToken *token in parsedTokens){
             NSLog(@"i:%d token:%@", i, [token tokenValue]);
             i++;
-        }*/
+        }
+        */
         
         // calculate expression
         //float result = [EDParser calculate:parsedTokens error:&error context:context];

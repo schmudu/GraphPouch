@@ -211,6 +211,40 @@
     [worksheetController addNewExpression];
 }
 
+#pragma mark image
+- (IBAction)imageAdd:(id)sender{
+    // Create the File Open Dialog class.
+    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+    
+    // Enable the selection of files in the dialog.
+    [openDlg setCanChooseFiles:YES];
+    
+    // Enable the selection of directories in the dialog.
+    [openDlg setCanChooseDirectories:NO];
+    
+    [openDlg setAllowsMultipleSelection:FALSE];
+    
+    // Display the dialog.  If the OK button was pressed,
+    // process the files.
+    //if ( [openDlg runModalForDirectory:nil file:nil] == NSOKButton )
+    if ( [openDlg runModal] == NSFileHandlingPanelOKButton){
+        // Get an array containing the full filenames of all
+        // files and directories selected.
+        NSURL* fileURL = [openDlg URL];
+        
+        /*
+        // Loop through all the files and process them.
+        for( i = 0; i < [files count]; i++ )
+        {
+            NSString* fileName = [files objectAtIndex:i];
+            // Do something with the filename
+            [customButtonImg setImage:[NSImage imageNamed:fileName]];
+            
+        }*/
+        NSLog(@"url:%@", fileURL);
+    }
+}
+
 #pragma mark page
 - (void)onPagesWillBeRemoved:(NSNotification *)note{
     [worksheetController onPagesWillBeRemoved:[[note userInfo] objectForKey:EDKeyPagesToRemove]];

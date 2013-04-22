@@ -64,7 +64,7 @@
 }
 
 - (EDAssociation)associationRaw{
-    return (EDTokenType)[[self association] intValue];
+    return (EDAssociation)[[self association] intValue];
 }
 
 + (EDToken *)multiplierToken:(NSManagedObjectContext *)context{

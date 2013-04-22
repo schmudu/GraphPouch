@@ -971,6 +971,15 @@
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
 								</object>
+								<object class="NSMenuItem" id="919370110">
+									<reference key="NSMenu" ref="862844726"/>
+									<string key="NSTitle">New Image</string>
+									<string key="NSKeyEquiv">i</string>
+									<int key="NSKeyEquivModMask">262144</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1033313550"/>
+									<reference key="NSMixedImage" ref="310636482"/>
+								</object>
 								<object class="NSMenuItem" id="961701776">
 									<reference key="NSMenu" ref="862844726"/>
 									<string key="NSTitle">New Line</string>
@@ -1730,6 +1739,14 @@
 						<reference key="destination" ref="498538158"/>
 					</object>
 					<int key="connectionID">713</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">imageAdd:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="919370110"/>
+					</object>
+					<int key="connectionID">715</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2651,6 +2668,7 @@
 							<reference ref="939328116"/>
 							<reference ref="419132393"/>
 							<reference ref="498538158"/>
+							<reference ref="919370110"/>
 						</array>
 						<reference key="parent" ref="169439842"/>
 					</object>
@@ -2746,6 +2764,11 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">712</int>
 						<reference key="object" ref="498538158"/>
+						<reference key="parent" ref="862844726"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">714</int>
+						<reference key="object" ref="919370110"/>
 						<reference key="parent" ref="862844726"/>
 					</object>
 				</array>
@@ -2880,6 +2903,7 @@
 				<string key="698.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="699.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="712.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="714.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="74.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2896,7 +2920,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">713</int>
+			<int key="maxID">715</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2925,6 +2949,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="expressionAdd:">id</string>
 						<string key="graphAdd:">id</string>
+						<string key="imageAdd:">id</string>
 						<string key="lineAdd:">id</string>
 						<string key="pageAdd:">id</string>
 						<string key="pageNext:">id</string>
@@ -2944,6 +2969,10 @@
 						</object>
 						<object class="IBActionInfo" key="graphAdd:">
 							<string key="name">graphAdd:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="imageAdd:">
+							<string key="name">imageAdd:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="lineAdd:">

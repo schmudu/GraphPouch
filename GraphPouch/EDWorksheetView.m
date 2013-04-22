@@ -15,6 +15,7 @@
 #import "EDExpressionView.h"
 #import "EDGraph.h"
 #import "EDGraphView.h"
+#import "EDImage.h"
 #import "EDLine.h"
 #import "EDLineView.h"
 #import "EDPage.h"
@@ -32,6 +33,7 @@
 @interface EDWorksheetView()
 - (void)drawExpression:(EDExpression *)expression;
 - (void)drawGraph:(EDGraph *)graph;
+- (void)drawImage:(EDImage *)image;
 - (void)drawLine:(EDLine *)line;
 - (void)drawGuide:(NSPoint)startPoint endPoint:(NSPoint)endPoint;
 - (void)drawTextbox:(EDTextbox *)textbox;
@@ -79,13 +81,14 @@
 - (void)onMenuCommandDeselect:(NSNotification *)note;
 - (void)onMenuCommandExpression:(NSNotification *)note;
 - (void)onMenuCommandGraph:(NSNotification *)note;
+- (void)onMenuCommandImage:(NSNotification *)note;
 - (void)onMenuCommandLine:(NSNotification *)note;
 - (void)onMenuCommandPaste:(NSNotification *)note;
 - (void)onMenuCommandSelect:(NSNotification *)note;
 - (void)onMenuCommandTextbox:(NSNotification *)note;
 
 // expressions
-- (void)createExpressionNodeTree:(NSArray *)stack;
+//- (void)createExpressionNodeTree:(NSArray *)stack;
 @end
 
 @implementation EDWorksheetView
@@ -230,6 +233,10 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [aPath moveToPoint:startPoint];
     [aPath lineToPoint:endPoint];
     [aPath stroke];
+}
+
+- (void)drawImage:(EDImage *)image{
+    NSLog(@"need to draw image.");
 }
 
 - (void)drawTextbox:(EDTextbox *)textbox{
@@ -401,6 +408,12 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
                 [self drawLine:(EDLine *)myElement];
             }
             
+            // draw line if it's located on this page
+            if (([[myElement className] isEqualToString:EDEntityNameImage]) && (newPage == [(EDImage *)myElement page])) {
+                [self disableAllTextBoxesFromEditing];
+                [self drawImage:(EDImage *)myElement];
+            }
+            
             // draw textbox
             if (([[myElement className] isEqualToString:EDEntityNameTextbox]) && (newPage == [(EDLine *)myElement page])) {
                 [self disableAllTextBoxesFromEditing];
@@ -567,6 +580,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 #warning worksheet elements
     if (([[menuItem title] isEqualToString:EDContextMenuWorksheetExpression]) ||
         ([[menuItem title] isEqualToString:EDContextMenuWorksheetGraph]) ||
+        ([[menuItem title] isEqualToString:EDContextMenuWorksheetImage]) ||
         ([[menuItem title] isEqualToString:EDContextMenuWorksheetLine]) ||
         ([[menuItem title] isEqualToString:EDContextMenuWorksheetTextbox])){
         return TRUE;
@@ -594,6 +608,10 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     NSMenuItem *menuAddGraph = [[NSMenuItem alloc] initWithTitle:EDContextMenuWorksheetGraph action:@selector(onMenuCommandGraph:) keyEquivalent:@"g"];
     [menuAddGraph setKeyEquivalentModifierMask:NSControlKeyMask];
     [returnMenu addItem:menuAddGraph];
+    
+    NSMenuItem *menuAddImage = [[NSMenuItem alloc] initWithTitle:EDContextMenuWorksheetImage action:@selector(onMenuCommandImage:) keyEquivalent:@"i"];
+    [menuAddImage setKeyEquivalentModifierMask:NSControlKeyMask];
+    [returnMenu addItem:menuAddImage];
     
     NSMenuItem *menuAddLine = [[NSMenuItem alloc] initWithTitle:EDContextMenuWorksheetLine action:@selector(onMenuCommandLine:) keyEquivalent:@"l"];
     [menuAddLine setKeyEquivalentModifierMask:NSControlKeyMask];
@@ -636,6 +654,10 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 
 - (void)onMenuCommandGraph:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCommandGraph object:self];
+}
+
+- (void)onMenuCommandImage:(NSNotification *)note{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCommandLine object:self];
 }
 
 - (void)onMenuCommandLine:(NSNotification *)note{
@@ -971,6 +993,11 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     // draw all graphs
     for (EDGraph *graph in [currentPage graphs]){
         [self drawGraph:graph];
+    }
+    
+    // draw all images
+    for (EDImage *image in [currentPage images]){
+        [self drawImage:image];
     }
     
     // draw all lines
