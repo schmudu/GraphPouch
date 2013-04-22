@@ -7,7 +7,10 @@
 //
 
 #import "EDConstants.h"
+#import "EDCoreDataUtility+Pages.h"
+#import "EDImage.h"
 #import "EDPanelPropertiesImageController.h"
+#import "NSManagedObject+EasyFetching.h"
 
 @interface EDPanelPropertiesImageController ()
 
@@ -26,7 +29,17 @@
 }
 
 - (IBAction)onMatchDimensions:(id)sender{
-    NSLog(@"need to match dimensions of image.");
+    NSArray *images = [EDImage getAllSelectedObjects:_context];
+    NSImage *tempImage;
+    
+    for (EDImage *image in images){
+        // get the original size of the image
+        tempImage = [[NSImage alloc] initWithData:[image imageData]];
+        
+        // set new size
+        [image setElementWidth:tempImage.size.width];
+        [image setElementHeight:tempImage.size.height];
+    }
 }
 
 

@@ -337,5 +337,5 @@
     [_nc postNotificationName:EDEventPanelDocumentPressedName object:self];
 }
 
-
+#pragma image panel
 @end

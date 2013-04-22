@@ -183,8 +183,6 @@
 
 - (NSMutableDictionary *)checkForSameBoolValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    //NSMutableArray *elements = [[NSMutableArray alloc] init];
-    //NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
     NSArray *elements = [currentPage getAllSelectedWorksheetObjects];
     BOOL diff = FALSE;
@@ -213,8 +211,6 @@
 
 - (NSMutableDictionary *)checkForSameStringValueInLabelsForKey:(NSString *)key{
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
-    //NSMutableArray *elements = [[NSMutableArray alloc] init];
-    //NSArray *graphs = [EDGraph getAllSelectedObjects:_context];
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
     NSArray *elements = [currentPage getAllSelectedWorksheetObjects];
     BOOL diff = FALSE;

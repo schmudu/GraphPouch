@@ -225,6 +225,7 @@ float const EDGuideShowThreshold                                = 10.0;  // diff
 
 #pragma mark image
 NSString * const EDImageAttributeImageData                      =  @"imageData";
+NSString * const EDEventImageMatchDimensions                    =  @"EDEventImageMatchDimensions";
 
 #pragma mark keyboard
 int const EDKeycodeSave                                         = 1;

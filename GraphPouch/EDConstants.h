@@ -274,6 +274,7 @@ extern float const EDMenuToolbarShadowWidth;
 
 #pragma mark image
 extern NSString *const EDImageAttributeImageData;
+extern NSString *const EDEventImageMatchDimensions;
 
 #pragma mark num
 extern float const EDNumberMax;
