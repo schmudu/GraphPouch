@@ -21,6 +21,7 @@
 - (void)onPagesWillBeRemoved:(NSArray *)pagesToDelete;
 - (void)addNewExpression;
 - (void)addNewGraph;
+- (void)addNewImage:(NSURL *)url;
 - (void)addNewLine;
 - (void)addNewTextbox;
 - (void)addLabelName;

@@ -110,6 +110,7 @@
 		CD97257816F2721600A39E2D /* EDPageViewContainerTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD97257716F2721600A39E2D /* EDPageViewContainerTextView.m */; };
 		CD980DDF16FD0FC700209E02 /* EDPagesViewSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD980DDE16FD0FC700209E02 /* EDPagesViewSelectionView.m */; };
 		CD9D4C881725484400F1697A /* EDImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9D4C871725484400F1697A /* EDImage.m */; };
+		CD9D4C8C17256EB800F1697A /* EDImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9D4C8B17256EB800F1697A /* EDImageView.m */; };
 		CDA299BE16F667D80021729F /* EDPageViewContainerGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA299BD16F667D80021729F /* EDPageViewContainerGraphView.m */; };
 		CDA299C116F66F490021729F /* EDPageViewContainerGraphCacheView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA299C016F66F490021729F /* EDPageViewContainerGraphCacheView.m */; };
 		CDA299C416F7A9890021729F /* EDPageViewContainerLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA299C316F7A9890021729F /* EDPageViewContainerLineView.m */; };
@@ -355,9 +356,11 @@
 		CD97257716F2721600A39E2D /* EDPageViewContainerTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainerTextView.m; sourceTree = "<group>"; };
 		CD980DDD16FD0FC700209E02 /* EDPagesViewSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPagesViewSelectionView.h; sourceTree = "<group>"; };
 		CD980DDE16FD0FC700209E02 /* EDPagesViewSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPagesViewSelectionView.m; sourceTree = "<group>"; };
-		CD9D4C85172546F400F1697A /* v4.image.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = v4.image.xcdatamodel; sourceTree = "<group>"; };
+		CD9D4C85172546F400F1697A /* v4.image.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v4.image.xcdatamodel; sourceTree = "<group>"; };
 		CD9D4C861725484400F1697A /* EDImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDImage.h; sourceTree = "<group>"; };
 		CD9D4C871725484400F1697A /* EDImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDImage.m; sourceTree = "<group>"; };
+		CD9D4C8A17256EB800F1697A /* EDImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDImageView.h; sourceTree = "<group>"; };
+		CD9D4C8B17256EB800F1697A /* EDImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDImageView.m; sourceTree = "<group>"; };
 		CDA299BC16F667D80021729F /* EDPageViewContainerGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewContainerGraphView.h; sourceTree = "<group>"; };
 		CDA299BD16F667D80021729F /* EDPageViewContainerGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainerGraphView.m; sourceTree = "<group>"; };
 		CDA299BF16F66F490021729F /* EDPageViewContainerGraphCacheView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPageViewContainerGraphCacheView.h; sourceTree = "<group>"; };
@@ -755,6 +758,7 @@
 				CD4FF07F17175E7B00DEBF29 /* Expression */,
 				CDD46E581604358F00EDD75C /* Element */,
 				CD3F0AFF15C4784000AB7567 /* Graph */,
+				CD9D4C8917256E9900F1697A /* Image */,
 				CD3F0B0115C4784A00AB7567 /* Line */,
 				CDD46E5A160435A900EDD75C /* Transform */,
 				CD3F0B0215C4785600AB7567 /* Table */,
@@ -1004,6 +1008,15 @@
 				CD90B62316CEACB6000637FF /* NSAttributedString+Utilities.m */,
 			);
 			name = NSAttributedString;
+			sourceTree = "<group>";
+		};
+		CD9D4C8917256E9900F1697A /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				CD9D4C8A17256EB800F1697A /* EDImageView.h */,
+				CD9D4C8B17256EB800F1697A /* EDImageView.m */,
+			);
+			name = Image;
 			sourceTree = "<group>";
 		};
 		CD9DA575169A761D0072242F /* images */ = {
@@ -1469,6 +1482,7 @@
 				CD4FF0921723419100DEBF29 /* EDExpressionViewPrint.m in Sources */,
 				CD4FF0991723FD5F00DEBF29 /* EDFormatterExpression.m in Sources */,
 				CD9D4C881725484400F1697A /* EDImage.m in Sources */,
+				CD9D4C8C17256EB800F1697A /* EDImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

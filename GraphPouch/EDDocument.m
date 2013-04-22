@@ -221,8 +221,11 @@
     
     // Enable the selection of directories in the dialog.
     [openDlg setCanChooseDirectories:NO];
-    
     [openDlg setAllowsMultipleSelection:FALSE];
+    
+    // set file types
+    NSArray *fileTypes = [NSArray arrayWithObjects:@"jpg", @"JPG", @"png", @"PNG", nil];
+    [openDlg setAllowedFileTypes:fileTypes];
     
     // Display the dialog.  If the OK button was pressed,
     // process the files.
@@ -242,6 +245,7 @@
             
         }*/
         NSLog(@"url:%@", fileURL);
+        [worksheetController addNewImage:fileURL];
     }
 }
 

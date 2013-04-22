@@ -11,6 +11,7 @@
 #import "EDCoreDataUtility+Worksheet.h"
 #import "EDExpression.h"
 #import "EDGraph.h"
+#import "EDImage.h"
 #import "EDLine.h"
 #import "EDPoint.h"
 #import "EDTextbox.h"
@@ -25,6 +26,7 @@
 - (void)deleteSelectedElements:(NSNotification *)note;
 - (void)onCommandExpression:(NSNotification *)note;
 - (void)onCommandGraph:(NSNotification *)note;
+- (void)onCommandImage:(NSNotification *)note;
 - (void)onCommandLine:(NSNotification *)note;
 - (void)onCommandTextbox:(NSNotification *)note;
 - (void)onKeyPressedArrow:(NSNotification *)note;
@@ -69,6 +71,7 @@
     [_nc addObserver:self selector:@selector(onSelectedRectangleDragged:) name:EDEventMouseDragged object:[self view]];
     [_nc addObserver:self selector:@selector(onCommandExpression:) name:EDEventCommandExpression object:[self view]];
     [_nc addObserver:self selector:@selector(onCommandGraph:) name:EDEventCommandGraph object:[self view]];
+    [_nc addObserver:self selector:@selector(onCommandImage:) name:EDEventCommandImage object:[self view]];
     [_nc addObserver:self selector:@selector(onCommandLine:) name:EDEventCommandLine object:[self view]];
     [_nc addObserver:self selector:@selector(onCommandTextbox:) name:EDEventCommandTextbox object:[self view]];
     
@@ -104,6 +107,7 @@
     [_nc removeObserver:self name:EDEventMouseDragged object:[self view]];
     [_nc removeObserver:self name:EDEventCommandExpression object:[self view]];
     [_nc removeObserver:self name:EDEventCommandGraph object:[self view]];
+    [_nc removeObserver:self name:EDEventCommandImage object:[self view]];
     [_nc removeObserver:self name:EDEventCommandLine object:[self view]];
     [_nc removeObserver:self name:EDEventCommandTextbox object:[self view]];
 }
@@ -195,6 +199,31 @@
 }
 
 #pragma mark graphs
+- (void)addNewImage:(NSURL *)url{
+    // create new graph
+    EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    
+    EDImage *newImage = [[EDImage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameImage inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+    
+    // add graph to page
+    [currentPage addImagesObject:newImage];
+    
+    // get image data
+    NSData *imageData = [NSData dataWithContentsOfURL:url];
+    
+    // set graph attributes
+    [newImage setPage:currentPage];
+    [newImage setSelected:FALSE];
+    [newImage setLocationX:50];
+    [newImage setLocationY:150];
+    [newImage setElementWidth:500];
+    [newImage setElementHeight:500];
+    [newImage setImageData:imageData];
+    
+    // select this graph and deselect everything else
+    [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newImage];
+}
+
 - (void)addNewGraph{
     // create new graph
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
@@ -303,6 +332,10 @@
 
 - (void)onCommandGraph:(NSNotification *)note{
     [self addNewGraph];
+}
+
+- (void)onCommandImage:(NSNotification *)note{
+    [[[[self view] window] firstResponder] doCommandBySelector:@selector(imageAdd:)];
 }
 
 - (void)onCommandLine:(NSNotification *)note{

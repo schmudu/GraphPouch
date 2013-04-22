@@ -16,6 +16,7 @@
 #import "EDGraph.h"
 #import "EDGraphView.h"
 #import "EDImage.h"
+#import "EDImageView.h"
 #import "EDLine.h"
 #import "EDLineView.h"
 #import "EDPage.h"
@@ -236,7 +237,27 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)drawImage:(EDImage *)image{
-    NSLog(@"need to draw image.");
+    NSLog(@"worksheet drawing image.");
+    EDImageView *imageView = [[EDImageView alloc] initWithFrame:NSMakeRect(0, 0, [image elementWidth], [image elementHeight]) imageModel:(EDImage *)image drawSelection:TRUE];
+    
+    // listen to graph
+    // NOTE: any listeners you add here, remove them in method 'removeElementView'
+    [_nc addObserver:self selector:@selector(onElementSelectedDeselectOtherElements:) name:EDEventUnselectedElementClickedWithoutModifier object:imageView];
+    [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:imageView];
+    [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:imageView];
+    [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:imageView];
+    [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:imageView];
+    
+    // set location
+    [imageView setFrameOrigin:NSMakePoint([[image valueForKey:EDElementAttributeLocationX] floatValue], [[image valueForKey:EDElementAttributeLocationY] floatValue])];
+    
+    [self addSubview:imageView];
+    [imageView setNeedsDisplay:TRUE];
+    
+    // draw transform rect if selected
+    if ([[[imageView dataObj] valueForKey:EDElementAttributeSelected] boolValue]){
+        [self drawTransformRect:(EDElement *)[imageView dataObj]];
+    }
 }
 
 - (void)drawTextbox:(EDTextbox *)textbox{
@@ -657,7 +678,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)onMenuCommandImage:(NSNotification *)note{
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCommandLine object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCommandImage object:self];
 }
 
 - (void)onMenuCommandLine:(NSNotification *)note{
