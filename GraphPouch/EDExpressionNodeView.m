@@ -15,7 +15,7 @@
 
 @implementation EDExpressionNodeView
 
-@synthesize treeHeight, token, childLeft, childRight, parent;
+@synthesize treeHeight, token, childLeft, childRight, parent, baseline;
 
 
 - (id)initWithFrame:(NSRect)frameRect token:(EDToken *)newToken expression:(EDExpression *)expression{
@@ -107,9 +107,7 @@
     
     if ([[self token] typeRaw] == EDTokenTypeOperator){
         if (([[[self token] tokenValue] isEqualToString:@"+"]) || ([[[self token] tokenValue] isEqualToString:@"-"])){
-            NSPoint point = NSMakePoint([[self childLeft] frame].size.width, (largerHeight - [self image].size.height)/2+(EDExpressionAddSubtractVerticalModifier*[self image].size.height));
-            [[self image] drawAtPoint:point fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0];
-            
+            // do nothing, all of it is done in traverse tree
         }
         else if ([[[self token] tokenValue] isEqualToString:@"/"]){
             // draw division line
@@ -254,8 +252,10 @@
     //NSLog(@"traverse tree: token:%@ height:%d left token:%@ right token:%@", [token tokenValue], [self treeHeight], [[childLeft token] tokenValue], [[childRight token] tokenValue]);
     // create image
     if (([[self token] typeRaw] == EDTokenTypeNumber) || ([[self token] typeRaw] == EDTokenTypeIdentifier)){
+        // every node view has a baseline, see x-height article on wikipedia.org for more info
         NSTextField *field = [EDExpressionNodeView generateTextField:[[self expression] fontSize]*[self fontModifier] string:[token tokenValue]];
         [self addSubview:field];
+        [self setBaseline:[field frame].size.height];
         [self setFrameSize:NSMakeSize([field frame].size.width, [field frame].size.height)];
     }
     else if ([[self token] typeRaw] == EDTokenTypeOperator){
@@ -266,20 +266,37 @@
         float widthLeft = [[self childLeft] frame].size.width;
         float widthRight = [[self childRight] frame].size.width;
         float largerWidth = MAX(widthLeft, widthRight);
-        
+        NSSize sizeChildLeft = [[self childLeft] frame].size, sizeChildRight = [[self childRight] frame].size;
         if (([[[self token] tokenValue] isEqualToString:@"+"]) || ([[[self token] tokenValue] isEqualToString:@"-"])){
+            // set baseline
+            if (([[childLeft token] typeRaw] == EDTokenTypeIdentifier) || ([[childLeft token] typeRaw] == EDTokenTypeNumber))
+                [self setBaseline:[childLeft baseline]];
+            else if(([[childRight token] typeRaw] == EDTokenTypeIdentifier) || ([[childRight token] typeRaw] == EDTokenTypeNumber))
+                [self setBaseline:[childRight baseline]];
+            else
+                [self setBaseline:[childLeft baseline]];
+            
             // left child
             [self addSubview:[self childLeft]];
-            [[self childLeft] setFrameOrigin:NSMakePoint(0, (largerHeight-heightLeft)/2)];
+            //[[self childLeft] setFrameOrigin:NSMakePoint(0, (largerHeight-heightLeft)/2)];
+            [[self childLeft] setFrameOrigin:NSMakePoint(0, [self baseline] - sizeChildLeft.height)];
             
-            // image of operator
-            [self setImage:[EDExpressionNodeView getTokenImage:[self token] fontSize:([self fontSize]*[self fontModifier])]];
-            
+            // add addition/subtraction oeprator
+            float fontSize = [self fontModifier] * [self fontSize];
+            NSSize sizeOperator = [EDExpressionNodeView getStringSize:@"x" fontSize:fontSize];
+            NSTextField *fieldOperator = [EDExpressionNodeView generateTextField:fontSize string:[[self token] tokenValue]];
+            [self addSubview:fieldOperator];
+            //[fieldOperator setFrameOrigin:NSMakePoint(widthLeft, (largerHeight - sizeOperator.height)/2)];
+            [fieldOperator setFrameOrigin:NSMakePoint(widthLeft, ([self baseline] - sizeOperator.height)/2)];
+            [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldOperator];
+        
             // right child
             [self addSubview:[self childRight]];
-            [[self childRight] setFrameOrigin:NSMakePoint([[self childLeft] frame].size.width + [[self image] size].width, (largerHeight-heightRight)/2)];
+            //[[self childRight] setFrameOrigin:NSMakePoint([[self childLeft] frame].size.width + sizeOperator.width, (largerHeight-heightRight)/2)];
+            [[self childRight] setFrameOrigin:NSMakePoint([[self childLeft] frame].size.width + sizeOperator.width, [self baseline] - sizeChildRight.height)];
             
-            [self setFrameSize:NSMakeSize([[self childLeft] frame].size.width + [[self image] size].width + [[self childRight] frame].size.width, largerHeight)];
+            [self setFrameSize:NSMakeSize([[self childLeft] frame].size.width + sizeOperator.width + [[self childRight] frame].size.width, largerHeight)];
+            
         }
         else if([[[self token] tokenValue] isEqualToString:@"/"]){
             float height = heightLeft + 1 + 1 + 1 + heightRight;

@@ -170,6 +170,7 @@
             
             [self addSubview:equalField];
             [equalField setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width, (largerHeight-equalSize.height)/2)];
+            //[equalField setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width, 0)];
             
             // add image to worksheet
             [self addSubview:rootNodeSecond];
