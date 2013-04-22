@@ -10,16 +10,22 @@
 #import "EDCoreDataUtility+Pages.h"
 #import "EDCoreDataUtility+Worksheet.h"
 #import "EDExpression.h"
+#import "EDExpressionView.h"
 #import "EDGraph.h"
+#import "EDGraphViewPrint.h"
 #import "EDImage.h"
+#import "EDImageView.h"
 #import "EDLine.h"
+#import "EDLineView.h"
 #import "EDPoint.h"
 #import "EDTextbox.h"
+#import "EDTextboxView.h"
 #import "EDWorksheetView.h"
 #import "EDWorksheetViewController.h"
 #import "NSManagedObject+EasyFetching.h"
 
 @interface EDWorksheetViewController ()
+- (NSArray *)createImagesOfModelObjects:(NSArray *)elements;
 - (void)copyElements:(NSNotification *)note;
 - (void)cutSelectedElements:(NSNotification *)note;
 - (void)deselectAllElements:(NSNotification *)note;
@@ -393,6 +399,10 @@
     // copy elements to pasteboard
     NSMutableArray *copiedElements = [EDCoreDataUtility copySelectedWorksheetElementsFromContext:_context toContext:_copyContext];
     
+    // add image objects also
+    NSArray *imageObjects = [self createImagesOfModelObjects:copiedElements];
+    [copiedElements addObjectsFromArray:imageObjects];
+    
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] writeObjects:copiedElements];
     
@@ -407,8 +417,54 @@
 - (void)copyElements:(NSNotification *)note{
     // copy elements to pasteboard
     NSMutableArray *copiedElements = [EDCoreDataUtility copySelectedWorksheetElementsFromContext:_context toContext:_copyContext];
+    
+    // add image objects also
+    NSArray *imageObjects = [self createImagesOfModelObjects:copiedElements];
+    [copiedElements addObjectsFromArray:imageObjects];
+    
+    // copy to pasteboard
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] writeObjects:copiedElements];
+}
+
+- (NSArray *)createImagesOfModelObjects:(NSArray *)elements{
+    NSMutableArray *returnImages = [NSMutableArray array];
+    NSImage *newImage;
+    EDExpressionView *expressionView;
+    EDGraphViewPrint *graphView;
+    EDImageView *imageView;
+    EDLineView *lineView;
+    EDTextboxView *textboxView;
+    NSRect elementRect;
+    
+    for (EDElement *element in elements){
+        // make default rect
+        elementRect = NSMakeRect(0, 0, [element elementWidth], [element elementHeight]);
+        
+#warning worksheet elements
+        if ([element isKindOfClass:[EDExpression class]]){
+            expressionView = [[EDExpressionView alloc] initWithFrame:NSMakeRect(0, 0, [element elementWidth], [element elementHeight]) expression:(EDExpression *)element drawSelection:FALSE];
+            newImage = [[NSImage alloc] initWithData:[expressionView dataWithPDFInsideRect:NSMakeRect(0, 0, [element elementWidth], [element elementHeight])]];
+        }
+        else if ([element isKindOfClass:[EDGraph class]]){
+            graphView = [[EDGraphViewPrint alloc] initWithFrame:NSMakeRect(0, 0, [element elementWidth], [element elementHeight]) graphModel:(EDGraph *)element];
+            newImage = [[NSImage alloc] initWithData:[graphView dataWithPDFInsideRect:NSMakeRect(0, 0, [element elementWidth], [element elementHeight])]];
+        }
+        else if ([element isKindOfClass:[EDImage class]]){
+            imageView = [[EDImageView alloc] initWithFrame:NSMakeRect(0, 0, [element elementWidth], [element elementHeight]) imageModel:(EDImage *)element];
+            newImage = [[NSImage alloc] initWithData:[imageView dataWithPDFInsideRect:NSMakeRect(0, 0, [element elementWidth], [element elementHeight])]];
+        }
+        else if ([element isKindOfClass:[EDTextbox class]]){
+            textboxView = [[EDTextboxView alloc] initWithFrame:NSMakeRect(0, 0, [element elementWidth], [element elementHeight]) textboxModel:(EDTextbox *)element drawSelection:FALSE];
+            newImage = [[NSImage alloc] initWithData:[textboxView dataWithPDFInsideRect:NSMakeRect(0, 0, [element elementWidth], [element elementHeight])]];
+        }
+        else if ([element isKindOfClass:[EDLine class]]){
+            lineView = [[EDLineView alloc] initWithFrame:NSMakeRect(0, 0, [element elementWidth], [element elementHeight]) lineModel:(EDLine *)element drawSelection:FALSE];
+            newImage = [[NSImage alloc] initWithData:[lineView dataWithPDFInsideRect:NSMakeRect(0, 0, [element elementWidth], [element elementHeight])]];
+        }
+        [returnImages addObject:newImage];
+    }
+    return returnImages;
 }
 
 #pragma textbox
