@@ -258,6 +258,130 @@
     return allObjects;
 }
 
++ (NSMutableDictionary *)getPanelType:(NSManagedObjectContext *)context{
+    // this method returns the type of panel that needs to be shown
+    // this method returns a dictionary of the types of selected objects
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+    NSArray *expressionObjects, *graphObjects, *imageObjects, *lineObjects, *textboxObjects;
+    
+#warning worksheet elements
+    // get all selected graphs
+    expressionObjects = [EDExpression getAllSelectedObjects:context];
+    graphObjects = [EDGraph getAllSelectedObjects:context];
+    imageObjects = [EDImage getAllSelectedObjects:context];
+    lineObjects = [EDLine getAllSelectedObjects:context];
+    textboxObjects = [EDTextbox getAllSelectedObjects:context];
+    
+    /*
+    if (([expressionObjects count] > 0) && ([textboxObjects count] > 0) && ([lineObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionGraphLineTextbox];
+    }
+    else if (([expressionObjects count] > 0) && ([textboxObjects count] > 0) && ([lineObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionLineTextbox];
+    }
+    else if (([expressionObjects count] > 0) && ([textboxObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionGraphTextbox];
+    }
+    else if (([expressionObjects count] > 0) && ([lineObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionGraphLine];
+    }
+    else if (([expressionObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionGraph];
+    }
+    else if (([expressionObjects count] > 0) && ([lineObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionLine];
+    }
+    else if (([expressionObjects count] > 0) && ([textboxObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpressionTextbox];
+    }
+    else if ([expressionObjects count] > 0) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyExpression];
+    }
+    else if (([textboxObjects count] > 0) && ([lineObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyGraphLineTextbox];
+    }
+    else if (([lineObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyGraphLine];
+    }
+    else if (([textboxObjects count] > 0) && ([graphObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyGraphTextbox];
+    }
+    else if (([textboxObjects count] > 0) && ([lineObjects count] > 0)) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyLineTextbox];
+    }
+    else if ([graphObjects count] > 0) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyGraph];
+    }
+    else if ([lineObjects count] > 0) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyLine];
+    }
+    else if ([textboxObjects count] > 0) {
+        [results setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDKeyTextbox];
+    }
+     */
+    if ([lineObjects count]>0){
+        if(([expressionObjects count]>0) ||
+           ([graphObjects count]>0) ||
+           ([imageObjects count]>0) ||
+           ([textboxObjects count]>0)){
+            [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyBasicWithoutHeight];
+        }
+        else{
+            // only lines
+            [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyLine];
+        }
+    }
+    else{
+        // check for expressions
+        if ([expressionObjects count]>0){
+            if (([graphObjects count] > 0) ||
+                ([imageObjects count] > 0) ||
+                ([textboxObjects count] > 0)){
+                [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyBasic];
+            }
+            else{
+                // only expressions
+                [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyExpression];
+            }
+        }
+        else{
+            // check for graphs
+            if ([graphObjects count]>0){
+                if (([imageObjects count]>0) ||
+                    ([textboxObjects count]>0)){
+                    [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyBasic];
+                }
+                else{
+                    // only graphs
+                    [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyGraph];
+                }
+            }
+            else{
+                if ([imageObjects count]>0){
+                    if ([textboxObjects count]>0){
+                        [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyBasic];
+                    }
+                    else{
+                        // only textboxes
+                        [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyImage];
+                    }
+                }
+                else{
+                    if ([textboxObjects count]>0){
+                        [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyBasic];
+                    }
+                    else{
+                        // nothing, add worksheets here
+                    }
+                }
+            }
+        }
+    }
+    
+return results;
+}
+
+/*
 + (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context{
     // this method returns a dictionary of the types of selected objects
     NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
@@ -319,7 +443,7 @@
     
     
     return results;
-}
+}*/
 
 + (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context selectElement:(EDElement *)element{
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:context];

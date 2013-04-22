@@ -109,72 +109,26 @@
         return;
     
     // get all the selected objects
-    NSMutableDictionary *selectedTypes = [EDCoreDataUtility getAllTypesOfSelectedWorksheetElements:_context];
-    
+    //NSMutableDictionary *selectedTypes = [EDCoreDataUtility getAllTypesOfSelectedWorksheetElements:_context];
+    NSMutableDictionary *selectedTypes = [EDCoreDataUtility getPanelType:_context];
 #warning worksheet elements
-    if([selectedTypes valueForKey:EDKeyGraph]){
-        if(!graphController){
-            graphController = [[EDPanelPropertiesGraphController alloc] initWithNibName:@"EDPanelPropertiesGraph" bundle:nil];
-        }
-        // set window title
-        [[self window] setTitle:@"Graph Properties"];
-            
-        _viewController = graphController;
-    }
-    else if([selectedTypes valueForKey:EDKeyGraphLine]){
-        if(!graphLineController){
-            graphLineController = [[EDPanelPropertiesGraphLineController alloc] initWithNibName:@"EDPanelPropertiesGraphLine" bundle:nil];
+    if([selectedTypes valueForKey:EDKeyBasic]){
+        if(!basicController){
+            basicController = [[EDPanelPropertiesBasicController alloc] initWithNibName:@"EDPanelPropertiesBasic" bundle:nil];
         }
         // set window title
         [[self window] setTitle:@"Properties"];
             
-        _viewController = graphLineController;
+        _viewController = basicController;
     }
-    else if(([selectedTypes valueForKey:EDKeyGraphTextbox]) ||
-            ([selectedTypes valueForKey:EDKeyExpressionGraph]) ||
-            ([selectedTypes valueForKey:EDKeyExpressionGraphTextbox]) ||
-            ([selectedTypes valueForKey:EDKeyExpressionTextbox]) ||
-            ([selectedTypes valueForKey:EDKeyGraphTextbox])){
-        if(!graphTextboxController){
-            graphTextboxController = [[EDPanelPropertiesGraphTextboxController alloc] initWithNibName:@"EDPanelPropertiesGraphTextbox" bundle:nil];
+    else if([selectedTypes valueForKey:EDKeyBasicWithoutHeight]){
+        if(!basicWithoutHeightController){
+            basicWithoutHeightController = [[EDPanelPropertiesBasicWithoutHeightController alloc] initWithNibName:@"EDPanelPropertiesBasicWithoutHeight" bundle:nil];
         }
         // set window title
         [[self window] setTitle:@"Properties"];
             
-        _viewController = graphTextboxController;
-    }
-    else if([selectedTypes valueForKey:EDKeyLine]){
-        if(!lineController){
-            lineController = [[EDPanelPropertiesLineController alloc] initWithNibName:@"EDPanelPropertiesLine" bundle:nil];
-        }
-        // set window title
-        [[self window] setTitle:@"Line Properties"];
-            
-        _viewController = lineController;
-    }
-    else if(([selectedTypes valueForKey:EDKeyExpressionLine]) ||
-            ([selectedTypes valueForKey:EDKeyExpressionGraphLine]) ||
-            ([selectedTypes valueForKey:EDKeyExpressionGraphLineTextbox]) ||
-            ([selectedTypes valueForKey:EDKeyExpressionLineTextbox]) ||
-            ([selectedTypes valueForKey:EDKeyGraphLine]) ||
-            ([selectedTypes valueForKey:EDKeyGraphLineTextbox]) ||
-            ([selectedTypes valueForKey:EDKeyLineTextbox])){
-        if(!lineTextboxController){
-            lineTextboxController = [[EDPanelPropertiesLineTextboxController alloc] initWithNibName:@"EDPanelPropertiesLineTextbox" bundle:nil];
-        }
-        // set window title
-        [[self window] setTitle:@"Properties"];
-            
-        _viewController = lineTextboxController;
-    }
-    else if([selectedTypes valueForKey:EDKeyTextbox]){
-        if(!textboxController){
-            textboxController = [[EDPanelPropertiesTextboxController alloc] initWithNibName:@"EDPanelPropertiesTextbox" bundle:nil];
-        }
-        // set window title
-        [[self window] setTitle:@"Textbox Properties"];
-            
-        _viewController = textboxController;
+        _viewController = basicWithoutHeightController;
     }
     else if([selectedTypes valueForKey:EDKeyExpression]){
         if(!expressionController){
@@ -184,6 +138,33 @@
         [[self window] setTitle:@"Expression Properties"];
             
         _viewController = expressionController;
+    }
+    else if([selectedTypes valueForKey:EDKeyGraph]){
+        if(!graphController){
+            graphController = [[EDPanelPropertiesGraphController alloc] initWithNibName:@"EDPanelPropertiesGraph" bundle:nil];
+        }
+        // set window title
+        [[self window] setTitle:@"Graph Properties"];
+            
+        _viewController = graphController;
+    }
+    else if([selectedTypes valueForKey:EDKeyImage]){
+        if(!imageController){
+            imageController = [[EDPanelPropertiesImageController alloc] initWithNibName:@"EDPanelPropertiesImage" bundle:nil];
+        }
+        // set window title
+        [[self window] setTitle:@"Image Properties"];
+            
+        _viewController = imageController;
+    }
+    else if([selectedTypes valueForKey:EDKeyLine]){
+        if(!lineController){
+            lineController = [[EDPanelPropertiesLineController alloc] initWithNibName:@"EDPanelPropertiesLine" bundle:nil];
+        }
+        // set window title
+        [[self window] setTitle:@"Line Properties"];
+            
+        _viewController = lineController;
     }
     else if(_currentTextView){
         // set controller to text view
@@ -212,32 +193,27 @@
 #warning worksheet elements
     // check to see if view is already being shown
     // if so then do nothing except update panel
-    if ((_viewController == graphController) && ([[self window] contentView] == [graphController view])) {
+    if ((_viewController == basicController) && ([[self window] contentView] == [basicController view])) {
         // still need to update panel properties
         [_viewController initWindowAfterLoaded:_context];
         return;
     }
-    else if ((_viewController == graphLineController) && ([[self window] contentView] == [graphLineController view])) {
+    else if ((_viewController == basicWithoutHeightController) && ([[self window] contentView] == [basicWithoutHeightController view])) {
         // still need to update panel properties
         [_viewController initWindowAfterLoaded:_context];
         return;
     }
-    else if ((_viewController == graphTextboxController) && ([[self window] contentView] == [graphTextboxController view])) {
+    else if ((_viewController == graphController) && ([[self window] contentView] == [graphController view])) {
+        // still need to update panel properties
+        [_viewController initWindowAfterLoaded:_context];
+        return;
+    }
+    else if ((_viewController == imageController) && ([[self window] contentView] == [imageController view])) {
         // still need to update panel properties
         [_viewController initWindowAfterLoaded:_context];
         return;
     }
     else if ((_viewController == lineController) && ([[self window] contentView] == [lineController view])) {
-        // still need to update panel properties
-        [_viewController initWindowAfterLoaded:_context];
-        return;
-    }
-    else if ((_viewController == lineTextboxController) && ([[self window] contentView] == [lineTextboxController view])) {
-        // still need to update panel properties
-        [_viewController initWindowAfterLoaded:_context];
-        return;
-    }
-    else if ((_viewController == textboxController) && ([[self window] contentView] == [textboxController view])) {
         // still need to update panel properties
         [_viewController initWindowAfterLoaded:_context];
         return;

@@ -1,19 +1,20 @@
 //
-//  EDPanelPropertiesLineTextboxController.m
+//  EDPanelPropertiesGraphLineController.m
 //  GraphPouch
 //
-//  Created by PATRICK LEE on 2/16/13.
+//  Created by PATRICK LEE on 2/1/13.
 //  Copyright (c) 2013 Patrick Lee. All rights reserved.
 //
 
-#import "EDPanelPropertiesLineTextboxController.h"
+#import "EDPanelPropertiesBasicWithoutHeightController.h"
 #import "EDConstants.h"
+#import "NSColor+Utilities.h"
 
-@interface EDPanelPropertiesLineTextboxController ()
+@interface EDPanelPropertiesBasicWithoutHeightController ()
 
 @end
 
-@implementation EDPanelPropertiesLineTextboxController
+@implementation EDPanelPropertiesBasicWithoutHeightController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,7 +45,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelY];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelWidth];
 }
+
 - (void)controlTextDidEndEditing:(NSNotification *)obj{
+    // if field did not change then do nothing
     if (!_fieldChanged)
         return;
     
@@ -59,5 +62,4 @@
         [self changeSelectedElementsAttribute:EDElementAttributeWidth newValue:[[NSNumber alloc] initWithFloat:[[labelWidth stringValue] floatValue]]];
     }
 }
-
 @end

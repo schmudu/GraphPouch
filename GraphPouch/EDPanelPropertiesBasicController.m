@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Patrick Lee. All rights reserved.
 //
 
-#import "EDPanelPropertiesGraphTextboxController.h"
+#import "EDPanelPropertiesBasicController.h"
 #import "EDConstants.h"
 
-@interface EDPanelPropertiesGraphTextboxController ()
+@interface EDPanelPropertiesBasicController ()
 
 @end
 
-@implementation EDPanelPropertiesGraphTextboxController
+@implementation EDPanelPropertiesBasicController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

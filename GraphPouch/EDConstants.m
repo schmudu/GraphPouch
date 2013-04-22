@@ -325,6 +325,14 @@ int const EDPageViewGraphBorderDrawMultiplier                   = 2;
 
 #pragma mark panels
 NSString * const EDKeyExpression                                = @"EDKeyExpression";
+NSString * const EDKeyGraph                                     = @"EDKeyGraph";
+NSString * const EDKeyImage                                     = @"EDKeyImage";
+NSString * const EDKeyLine                                      = @"EDKeyLine";
+NSString * const EDKeyTextbox                                   = @"EDKeyTextbox";
+NSString * const EDKeyBasic                                     = @"EDKeyBasic";
+NSString * const EDKeyBasicWithoutHeight                        = @"EDKeyBasicWithoutHeight";
+/*
+NSString * const EDKeyExpression                                = @"EDKeyExpression";
 NSString * const EDKeyExpressionGraph                           = @"EDKeyExpressionGraph";
 NSString * const EDKeyExpressionGraphLine                       = @"EDKeyExpressionGraphLine";
 NSString * const EDKeyExpressionGraphLineTextbox                = @"EDKeyExpressionGraphLineTextbox";
@@ -339,6 +347,7 @@ NSString * const EDKeyGraphTextbox                              = @"EDKeyGraphTe
 NSString * const EDKeyLine                                      = @"EDKeyLine";
 NSString * const EDKeyLineTextbox                               = @"EDKeyLineTextbox";
 NSString * const EDKeyTextbox                                   = @"EDTextbox";
+*/
 NSString * const EDEventPanelDocumentPressedDate                = @"EDEventPanelDocumentPressedDate";
 NSString * const EDEventPanelDocumentPressedName                = @"EDEventPanelDocumentPressedName";
 

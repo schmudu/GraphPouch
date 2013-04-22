@@ -1,19 +1,19 @@
 //
-//  EDPanelPropertiesTextboxController.m
+//  EDPanelPropertiesImageController.m
 //  GraphPouch
 //
-//  Created by PATRICK LEE on 2/16/13.
+//  Created by PATRICK LEE on 4/22/13.
 //  Copyright (c) 2013 Patrick Lee. All rights reserved.
 //
 
-#import "EDPanelPropertiesTextboxController.h"
 #import "EDConstants.h"
+#import "EDPanelPropertiesImageController.h"
 
-@interface EDPanelPropertiesTextboxController ()
+@interface EDPanelPropertiesImageController ()
 
 @end
 
-@implementation EDPanelPropertiesTextboxController
+@implementation EDPanelPropertiesImageController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -24,6 +24,12 @@
     
     return self;
 }
+
+- (IBAction)onMatchDimensions:(id)sender{
+    NSLog(@"need to match dimensions of image.");
+}
+
+
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventControlReceivedFocus object:labelX];
@@ -47,6 +53,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelWidth];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControlReceivedFocus:) name:EDEventControlReceivedFocus object:labelHeight];
 }
+
 - (void)controlTextDidEndEditing:(NSNotification *)obj{
     // if field did not change then do nothing
     if (!_fieldChanged)
@@ -66,4 +73,5 @@
         [self changeSelectedElementsAttribute:EDElementAttributeHeight newValue:[[NSNumber alloc] initWithFloat:[[labelHeight stringValue] floatValue]]];
     }
 }
+
 @end

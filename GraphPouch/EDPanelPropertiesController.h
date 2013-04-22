@@ -7,14 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "EDPanelPropertiesBasicController.h"
 #import "EDPanelPropertiesDocumentController.h"
 #import "EDPanelPropertiesExpressionController.h"
 #import "EDPanelPropertiesGraphController.h"
-#import "EDPanelPropertiesGraphTextboxController.h"
-#import "EDPanelPropertiesGraphLineController.h"
+#import "EDPanelPropertiesImageController.h"
 #import "EDPanelPropertiesLineController.h"
-#import "EDPanelPropertiesLineTextboxController.h"
-#import "EDPanelPropertiesTextboxController.h"
+#import "EDPanelPropertiesBasicWithoutHeightController.h"
 #import "EDPanelPropertiesTextViewController.h"
 #import "EDTextView.h"
 #import "EDTextbox.h"
@@ -22,14 +21,13 @@
 @interface EDPanelPropertiesController : NSWindowController <NSWindowDelegate>{
     BOOL _panelEnabled;
     IBOutlet NSMenuItem *menuItemProperties;
+    EDPanelPropertiesBasicController *basicController;
     EDPanelPropertiesDocumentController *documentController;
     EDPanelPropertiesExpressionController *expressionController;
     EDPanelPropertiesGraphController *graphController;
-    EDPanelPropertiesGraphTextboxController *graphTextboxController;
-    EDPanelPropertiesGraphLineController *graphLineController;
+    EDPanelPropertiesImageController *imageController;
+    EDPanelPropertiesBasicWithoutHeightController *basicWithoutHeightController;
     EDPanelPropertiesLineController *lineController;
-    EDPanelPropertiesLineTextboxController *lineTextboxController;
-    EDPanelPropertiesTextboxController *textboxController;
     EDPanelPropertiesTextViewController *textViewController;
     NSNotificationCenter *_nc;
     NSManagedObjectContext *_context;

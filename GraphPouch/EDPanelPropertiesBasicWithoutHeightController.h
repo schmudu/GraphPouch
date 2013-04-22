@@ -8,7 +8,7 @@
 
 #import "EDPanelViewController.h"
 
-@interface EDPanelPropertiesGraphLineController : EDPanelViewController{
+@interface EDPanelPropertiesBasicWithoutHeightController : EDPanelViewController{
     IBOutlet NSTextField *labelX;
     IBOutlet NSTextField *labelY;
     IBOutlet NSTextField *labelWidth;

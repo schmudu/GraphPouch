@@ -238,7 +238,7 @@
     }
     
     // remove all objects
-    [_lineViews removeAllObjects];
+    [_imageViews removeAllObjects];
 }
 
 #pragma mark lines

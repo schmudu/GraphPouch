@@ -8,7 +8,7 @@
 
 #import "EDPanelViewController.h"
 
-@interface EDPanelPropertiesGraphTextboxController : EDPanelViewController{
+@interface EDPanelPropertiesBasicController : EDPanelViewController{
     IBOutlet NSTextField *labelX;
     IBOutlet NSTextField *labelY;
     IBOutlet NSTextField *labelWidth;
