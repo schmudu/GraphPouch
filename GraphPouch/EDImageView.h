@@ -11,10 +11,9 @@
 @class EDImage;
 
 @interface EDImageView : EDWorksheetElementView{
-    BOOL _drawSelection;
     NSView *_image;
 }
 
-- (id)initWithFrame:(NSRect)frame imageModel:(EDImage *)myImage drawSelection:(BOOL)drawSelection;
+- (id)initWithFrame:(NSRect)frame imageModel:(EDImage *)myImage;
 
 @end

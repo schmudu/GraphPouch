@@ -16,6 +16,7 @@
 #import "EDLine.h"
 #import "EDPageViewContainer.h"
 #import "EDPageViewContainerGraphView.h"
+#import "EDPageViewContainerImageView.h"
 #import "EDPageViewContainerLineView.h"
 #import "EDPageViewContainerTextView.h"
 #import "EDPage.h"
@@ -71,10 +72,11 @@
     if (self) {
         _page = page;
         _context = [page managedObjectContext];
-        _textboxViews = [[NSMutableArray alloc] init];
-        _graphViews = [[NSMutableArray alloc] init];
-        _lineViews = [[NSMutableArray alloc] init];
         _expressionViews = [[NSMutableArray alloc] init];
+        _graphViews = [[NSMutableArray alloc] init];
+        _imageViews = [[NSMutableArray alloc] init];
+        _lineViews = [[NSMutableArray alloc] init];
+        _textboxViews = [[NSMutableArray alloc] init];
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -206,8 +208,8 @@
 }
 
 - (void)removeExpressions{
-    for (NSView *expressionCacheView in _expressionViews){
-        [expressionCacheView removeFromSuperview];
+    for (NSView *expressionView in _expressionViews){
+        [expressionView removeFromSuperview];
     }
     
     // remove all objects
@@ -216,11 +218,27 @@
 
 #pragma mark images
 - (void)drawImages{
-    //NSLog(@"need to draw images on container.");
+    NSArray *images = [[_page images] allObjects];
+    EDPageViewContainerImageView *imageView;
+    
+    // for each graph create a graph view
+    for (EDImage *image in images){
+        imageView = [[EDPageViewContainerImageView alloc] initWithFrame:[self bounds] image:image context:_context];
+        
+        [self addSubview:imageView];
+        
+        // save view so it can be erased later
+        [_imageViews addObject:imageView];
+    }
 }
 
 - (void)removeImages{
-    //NSLog(@"need to remove images.");
+    for (NSView *imageView in _imageViews){
+        [imageView removeFromSuperview];
+    }
+    
+    // remove all objects
+    [_lineViews removeAllObjects];
 }
 
 #pragma mark lines
@@ -240,8 +258,8 @@
 }
 
 - (void)removeLines{
-    for (NSView *lineCacheView in _lineViews){
-        [lineCacheView removeFromSuperview];
+    for (NSView *lineView in _lineViews){
+        [lineView removeFromSuperview];
     }
     
     // remove all objects
@@ -265,8 +283,8 @@
 }
 
 - (void)removeGraphs{
-    for (NSView *graphCacheView in _graphViews){
-        [graphCacheView removeFromSuperview];
+    for (NSView *graphView in _graphViews){
+        [graphView removeFromSuperview];
     }
     
     // remove all objects

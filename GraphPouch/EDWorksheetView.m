@@ -24,6 +24,7 @@
 #import "EDTextboxView.h"
 #import "EDTransformRect.h"
 #import "EDTransformRectOnlyHorizontal.h"
+#import "EDTransformRectSelection.h"
 #import "EDWorksheetView.h"
 #import "EDWorksheetElementView.h"
 #import "NSColor+Utilities.h"
@@ -237,8 +238,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
 }
 
 - (void)drawImage:(EDImage *)image{
-    NSLog(@"worksheet drawing image.");
-    EDImageView *imageView = [[EDImageView alloc] initWithFrame:NSMakeRect(0, 0, [image elementWidth], [image elementHeight]) imageModel:(EDImage *)image drawSelection:TRUE];
+    EDImageView *imageView = [[EDImageView alloc] initWithFrame:NSMakeRect(0, 0, [image elementWidth], [image elementHeight]) imageModel:(EDImage *)image];
     
     // listen to graph
     // NOTE: any listeners you add here, remove them in method 'removeElementView'
@@ -1083,7 +1083,9 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     EDTransformRect *newTransformRect;
     
     // set transform rect based on type of element that we're drawing
-    if (![element isKindOfClass:[EDLine class]])
+    if ([element isKindOfClass:[EDImage class]])
+        newTransformRect = [[EDTransformRectSelection alloc] initWithFrame:[self bounds] element:element];
+    else if (![element isKindOfClass:[EDLine class]])
         newTransformRect = [[EDTransformRect alloc] initWithFrame:[self bounds] element:element];
     else
         newTransformRect = [[EDTransformRectOnlyHorizontal alloc] initWithFrame:[self bounds] element:element];

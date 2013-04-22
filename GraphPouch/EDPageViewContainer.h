@@ -12,10 +12,11 @@
 @interface EDPageViewContainer : NSView{
     EDPage *_page;
     NSManagedObjectContext *_context;
-    NSMutableArray *_textboxViews;
     NSMutableArray *_expressionViews;
     NSMutableArray *_graphViews;
+    NSMutableArray *_imageViews;
     NSMutableArray *_lineViews;
+    NSMutableArray *_textboxViews;
 }
 
 + (NSRect)containerFrame;

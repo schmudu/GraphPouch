@@ -20,10 +20,9 @@
 
 @implementation EDImageView
 
-- (id)initWithFrame:(NSRect)frame imageModel:(EDImage *)myImage drawSelection:(BOOL)drawSelection{
+- (id)initWithFrame:(NSRect)frame imageModel:(EDImage *)myImage{
     self = [super initWithFrame:frame];
     if (self){
-        _drawSelection = drawSelection;
         _context = [myImage managedObjectContext];
         
         // set model info
@@ -69,11 +68,9 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // color background
-    if ((_drawSelection) && ([(EDImage *)[self dataObj] selected])){
-        [[NSColor colorWithHexColorString:EDGraphSelectedBackgroundColor alpha:EDGraphSelectedBackgroundAlpha] set];
-        [NSBezierPath fillRect:[self bounds]];
-    }
+    // do this for real time re-sizing
+    //[self removeImage];
+    //[self drawImage];
 }
 
 - (void)updateDisplayBasedOnContext{
@@ -97,14 +94,7 @@
     [imageView setImage:image];
     [self addSubview:imageView];
     
-    // scale image to page view container
-    /*
-    NSRect thumbnailRect = NSMakeRect(0, 0, [_line elementWidth] * xRatio, [_line elementHeight] * yRatio);
-    NSImage *lineImage = [[NSImage alloc] initWithData:[graphView dataWithPDFInsideRect:[graphView frame]]];
-    NSImageView *imageViewLine = [[NSImageView alloc] initWithFrame:thumbnailRect];
-    [imageViewLine setImageScaling:NSScaleProportionally];
-    [imageViewLine setImage:lineImage];
-     */
+    //NSLog(@"origin width:%f height:%f", image.size.width, image.size.height);
     
     // save image to remove later
     _image = imageView;
