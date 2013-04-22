@@ -251,7 +251,7 @@
     if([self childLeft]) [[self childLeft] traverseTreeAndCreateImage];
     
     // print out token
-    NSLog(@"traverse tree: token:%@ height:%d left token:%@ right token:%@", [token tokenValue], [self treeHeight], [[childLeft token] tokenValue], [[childRight token] tokenValue]);
+    //NSLog(@"traverse tree: token:%@ height:%d left token:%@ right token:%@", [token tokenValue], [self treeHeight], [[childLeft token] tokenValue], [[childRight token] tokenValue]);
     // create image
     if (([[self token] typeRaw] == EDTokenTypeNumber) || ([[self token] typeRaw] == EDTokenTypeIdentifier)){
         NSTextField *field = [EDExpressionNodeView generateTextField:[[self expression] fontSize]*[self fontModifier] string:[token tokenValue]];
@@ -424,6 +424,21 @@
                         childWidthRight = [childIdentifierNumber frame].size.width;
                         [self setFrameSize:NSMakeSize(childWidthLeft + widthOperator + childWidthRight, largerHeight)];
                     }
+                }
+                else if ([[[childOperator token] tokenValue] isEqualToString:@"^"]){
+                    // multiply an identifier/number with an exponent
+                    NSSize sizeOperator = [childOperator frame].size;
+                    NSSize sizeIdentifierNumber = [childIdentifierNumber frame].size;
+                    float largerHeight = MAX(sizeOperator.height, sizeIdentifierNumber.height);
+                    
+                    // left child identifier/number
+                    [self addSubview:childIdentifierNumber];
+                    [childIdentifierNumber setFrameOrigin:NSMakePoint(0, (largerHeight-sizeIdentifierNumber.height)/2)];
+                    
+                    // right child
+                    [self addSubview:childOperator];
+                    [childOperator setFrameOrigin:NSMakePoint(sizeIdentifierNumber.width, (largerHeight-sizeOperator.height)/2)];
+                    [self setFrameSize:NSMakeSize(sizeOperator.width + sizeIdentifierNumber.width, largerHeight)];
                 }
                 else if ([[[childOperator token] tokenValue] isEqualToString:@"*"]){
                     // determine larger height
