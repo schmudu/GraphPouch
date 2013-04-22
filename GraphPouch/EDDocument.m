@@ -224,27 +224,13 @@
     [openDlg setAllowsMultipleSelection:FALSE];
     
     // set file types
-    NSArray *fileTypes = [NSArray arrayWithObjects:@"jpg", @"JPG", @"png", @"PNG", nil];
+    NSArray *fileTypes = [NSArray arrayWithObjects:@"bmp", @"BMP", @"jpeg", @"JPEG", @"jpg", @"JPG", @"png", @"PNG", @"tif", @"TIF", @"tiff", @"TIFF", nil];
     [openDlg setAllowedFileTypes:fileTypes];
     
     // Display the dialog.  If the OK button was pressed,
     // process the files.
-    //if ( [openDlg runModalForDirectory:nil file:nil] == NSOKButton )
     if ( [openDlg runModal] == NSFileHandlingPanelOKButton){
-        // Get an array containing the full filenames of all
-        // files and directories selected.
         NSURL* fileURL = [openDlg URL];
-        
-        /*
-        // Loop through all the files and process them.
-        for( i = 0; i < [files count]; i++ )
-        {
-            NSString* fileName = [files objectAtIndex:i];
-            // Do something with the filename
-            [customButtonImg setImage:[NSImage imageNamed:fileName]];
-            
-        }*/
-        NSLog(@"url:%@", fileURL);
         [worksheetController addNewImage:fileURL];
     }
 }
