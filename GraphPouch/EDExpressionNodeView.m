@@ -45,7 +45,8 @@
     
     // if no field operator then create one, this is a dummy
     //NSSize size = [EDExpressionNodeView getStringSize:@"x" fontSize:fontSize];
-    fieldOperator = [EDExpressionNodeView generateTextField:fontSize string:@"x"];
+    if (fieldOperator == nil)
+        fieldOperator = [EDExpressionNodeView generateTextField:fontSize string:@"x"];
     
     if (([[[[self childLeft] token] tokenValue] isEqualToString:@"/"]) && ([[[[self childRight] token] tokenValue] isEqualToString:@"/"])){
         // both children are division so we have to inspect both children to figure out the baseline
@@ -79,17 +80,21 @@
         }
         else{
             [nodeDivisor setFrameOrigin:NSMakePoint([nodeDivisor frame].origin.x, 0)];
-            [fieldOperator setFrameOrigin:NSMakePoint([fieldOperator frame].origin.x, [nodeDivisorNumerator frame].size.height-EDExpressionXHeightRatio*[fieldOperator frame].size.height)];
-            [nodeOther setFrameOrigin:NSMakePoint([nodeOther frame].origin.x, [nodeDivisorNumerator frame].size.height-[nodeOther frame].size.height)];
+            //[fieldOperator setFrameOrigin:NSMakePoint([fieldOperator frame].origin.x, [nodeDivisorNumerator frame].size.height-EDExpressionXHeightRatio*[fieldOperator frame].size.height)];
+            [fieldOperator setFrameOrigin:NSMakePoint([fieldOperator frame].origin.x, [nodeDivisorNumerator frame].size.height+(EDExpressionXHeightRatio)*[fieldOperator frame].size.height-[fieldOperator frame].size.height)];
+            //[nodeOther setFrameOrigin:NSMakePoint([nodeOther frame].origin.x, [nodeDivisorNumerator frame].size.height-[nodeOther frame].size.height+(1-EDExpressionXHeightRatio)*[fieldOperator frame].size.height)];
+            [nodeOther setFrameOrigin:NSMakePoint([nodeOther frame].origin.x, [nodeDivisorNumerator frame].size.height+(EDExpressionXHeightRatio)*[fieldOperator frame].size.height-[nodeOther frame].size.height)];
             NSLog(@"else case num height:%f op height:%f other height:%f", [nodeDivisorNumerator frame].size.height, [fieldOperator frame].size.height, [nodeOther frame].size.height);
             
             // set baseline
-            [self setBaseline:[nodeDivisorNumerator frame].size.height];
+            NSLog(@"setting baseline: token:%@ baseline:%f", [token tokenValue], [nodeDivisorNumerator frame].size.height+EDExpressionXHeightRatio*[fieldOperator frame].size.height);
+            [self setBaseline:[nodeDivisorNumerator frame].size.height+EDExpressionXHeightRatio*[fieldOperator frame].size.height];
         }
         
     }
     else{
         // no other combination changes the baseline, so just copy from one of the children
+        NSLog(@"setting baseline: token:%@ baseline:%f", [token tokenValue], [childRight baseline]);
         [self setBaseline:[childRight baseline]];
     }
 }

@@ -126,8 +126,9 @@ float const EDExpressionExponentPowerBaseOffsetVertical         = 11.0;
 float const EDExpressionSymbolMultiplicationSymbolFontModifier  = 0.8;
 float const EDExpressionDefaultWidth                            = 150;
 float const EDExpressionDefaultHeight                           = 50;
-float const EDExpressionXHeightRatio                            = 0.594;
-//float const EDExpressionXHeightRatio                            = 0.75;
+//float const EDExpressionXHeightRatio                            = 0.594;
+float const EDExpressionXHeightRatio                            = 0.475;
+//float const EDExpressionXHeightRatio                            = 0.8;
 
 #pragma mark general
 NSString * const EDKey                                          = @"EDKey";
