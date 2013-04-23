@@ -151,6 +151,7 @@ extern float const EDExpressionExponentPowerBaseOffsetVertical;
 extern float const EDExpressionSymbolMultiplicationSymbolFontModifier;
 extern float const EDExpressionDefaultWidth;
 extern float const EDExpressionDefaultHeight;
+extern float const EDExpressionXHeightRatio;
 
 #pragma mark general
 extern NSString *const EDKey;

@@ -169,21 +169,20 @@
             float largerHeight = MAX(heightFirst, heightSecond);
             
             [self addSubview:equalField];
-            [equalField setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width, (largerHeight-equalSize.height)/2)];
-            //[equalField setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width, 0)];
+            [equalField setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width, largerHeight-equalSize.height)];
             
             // add image to worksheet
             [self addSubview:rootNodeSecond];
             if (heightSecond > heightFirst)
                 [rootNodeSecond setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width + equalSize.width, 0)];
             else
-                [rootNodeSecond setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width + equalSize.width, (largerHeight-[rootNodeSecond frame].size.height)/2)];
+                [rootNodeSecond setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width + equalSize.width, largerHeight-[rootNodeSecond frame].size.height)];
             
             // adjust first height
             if (heightFirst > heightSecond)
                 [rootNodeFirst setFrameOrigin:NSMakePoint(0, 0)];
             else
-                [rootNodeFirst setFrameOrigin:NSMakePoint(0, (largerHeight-[rootNodeFirst frame].size.height)/2)];
+                [rootNodeFirst setFrameOrigin:NSMakePoint(0, largerHeight-[rootNodeFirst frame].size.height)];
         }
     }
 }
