@@ -69,11 +69,11 @@
         }
         
         // calculate baseline
-        NSLog(@"if stmt:%f versus:%f op height:%f", [nodeOther frame].size.height, [nodeDivisorNumerator frame].size.height + [fieldOperator frame].size.height * (1-EDExpressionXHeightRatio), [fieldOperator frame].size.height);
-        if ([nodeOther frame].size.height > [nodeDivisorNumerator frame].size.height + [fieldOperator frame].size.height * (1-EDExpressionXHeightRatio)){
+        NSLog(@"if stmt:%f versus:%f numerator:%f op height:%f constant:%f constant * field op:%f", [nodeOther frame].size.height, [nodeDivisorNumerator frame].size.height + [fieldOperator frame].size.height * (EDExpressionXHeightRatio), [nodeDivisorNumerator frame].size.height, [fieldOperator frame].size.height, EDExpressionXHeightRatio, [fieldOperator frame].size.height * EDExpressionXHeightRatio);
+        if ([nodeOther frame].size.height > [nodeDivisorNumerator frame].size.height + [fieldOperator frame].size.height * (EDExpressionXHeightRatio)){
             [nodeOther setFrameOrigin:NSMakePoint([nodeOther frame].origin.x, 0)];
             [fieldOperator setFrameOrigin:NSMakePoint([fieldOperator frame].origin.x, [nodeOther frame].size.height - [fieldOperator frame].size.height)];
-            [nodeDivisor setFrameOrigin:NSMakePoint([nodeDivisor frame].origin.x, [nodeOther frame].size.height - [nodeOther frame].size.height*(1-EDExpressionXHeightRatio)-[nodeDivisorNumerator frame].size.height)];
+            [nodeDivisor setFrameOrigin:NSMakePoint([nodeDivisor frame].origin.x, [nodeOther frame].size.height - [fieldOperator frame].size.height*(EDExpressionXHeightRatio)-[nodeDivisorNumerator frame].size.height)];
             
             // set baseline
             [self setBaseline:[nodeOther frame].size.height];
