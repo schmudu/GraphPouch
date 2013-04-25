@@ -154,6 +154,7 @@ extern float const EDExpressionDefaultHeight;
 extern float const EDExpressionXHeightRatio;
 extern float const EDExpressionDivisionLineWidth;
 extern float const EDExpressionDivisionGapVertical;
+extern float const EDExpressionMultiplierModifierVertical;
 
 #pragma mark general
 extern NSString *const EDKey;
