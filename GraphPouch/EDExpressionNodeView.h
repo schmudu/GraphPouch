@@ -15,7 +15,7 @@
     NSMutableArray *_addedSubviewsOtherThanRightAndLeftChildren;
     float _radicalPowerHeight, _radicalBaseWidth, _radicalBaseLeftParenWidth, _radicalRootWidth, _radicalRootHeight;
 }
-@property float baseline;
+@property (nonatomic, retain) NSNumber *baseline;
 @property int treeHeight;
 @property (nonatomic, retain) NSImage *image;
 @property (nonatomic, retain) EDToken *token;

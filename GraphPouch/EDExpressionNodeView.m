@@ -11,7 +11,10 @@
 
 @interface EDExpressionNodeView()
 - (float)fontSize;
-- (void)checkBaseline:(NSTextField *)fieldOperator fontSize:(float)fontSize;
+//- (void)checkBaseline:(NSTextField *)fieldOperator fontSize:(float)fontSize;
+- (void)setBaseline:(NSMutableArray *)textfields fontSize:(float)fontSize;
+- (NSTextField *)textfields:(NSMutableArray *)textfields largerThanHeight:(float)height;
+- (void)adjustTextFields:(NSMutableArray *)textfields baseline:(float)currentBaseline totalHeight:(float)height;
 @end
 
 @implementation EDExpressionNodeView
@@ -22,6 +25,7 @@
 - (id)initWithFrame:(NSRect)frameRect token:(EDToken *)newToken expression:(EDExpression *)expression{
     self = [super initWithFrame:frameRect];
     if (self) {
+        [self setBaseline:nil];
         _expression = expression;
         [self setToken:newToken];
         [self setChildLeft:nil];
@@ -39,6 +43,7 @@
 }
 
 #pragma mark getters/setters
+/*
 - (void)checkBaseline:(NSTextField *)fieldOperator fontSize:(float)fontSize{
     // set baseline based on children and tokens
     // if number or identifier set baseline on frame height
@@ -97,7 +102,7 @@
         NSLog(@"setting baseline: token:%@ baseline:%f", [token tokenValue], [childRight baseline]);
         [self setBaseline:[childRight baseline]];
     }
-}
+}*/
 - (EDExpression *)expression{
     return _expression;
 }
@@ -305,7 +310,119 @@
     return FALSE;
 }
 
+#pragma mark adjust position
+- (NSTextField *)textfields:(NSMutableArray *)textfields largerThanHeight:(float)height{
+    float largestHeight = -1;
+    NSTextField *returnField;
+    for (NSTextField *textfield in textfields){
+        if (([textfield frame].size.height>height) && ([textfield frame].size.height>largestHeight)){
+            returnField = textfield;
+            largestHeight = [textfield frame].size.height;
+        }
+    }
+    return returnField;
+}
+
+- (void)adjustTextFields:(NSMutableArray *)textfields baseline:(float)currentBaseline totalHeight:(float)height{
+    for (NSTextField *textfield in textfields){
+        if ([textfield frame].size.height == height)
+            [textfield setFrameOrigin:NSMakePoint([textfield frame].origin.x, 0)];
+        else
+            [textfield setFrameOrigin:NSMakePoint([textfield frame].origin.x, currentBaseline - [textfield frame].size.height)];
+        
+        // adjust individual characters
+        if (([[[textfield attributedStringValue] string] isEqualToString:@"("]) || ([[[textfield attributedStringValue] string] isEqualToString:@")"]))
+            [textfield setFrameOrigin:NSMakePoint([textfield frame].origin.x, [textfield frame].origin.y + [[textfield font] pointSize] * -.1)];
+        
+    }
+}
+
+- (void)setBaseline:(NSMutableArray *)textfields fontSize:(float)fontSize{
+    //NSSize size = [EDExpressionNodeView getStringSize:@"x" fontSize:fontSize];
+    NSTextField *fieldOperator = [EDExpressionNodeView generateTextField:fontSize string:@"x"];
+    
+    // check for division to determine position
+    if ([[[self token] tokenValue] isEqualToString:@"/"]){
+        // this is a division token
+        EDExpressionNodeView *nodeNumerator, *nodeDenominator;
+        nodeNumerator = [self childLeft];
+        nodeDenominator = [self childRight];
+        
+        [self setBaseline:[NSNumber numberWithFloat:[nodeNumerator frame].size.height + EDExpressionXHeightRatio*[fieldOperator frame].size.height]];
+        [self adjustTextFields:textfields baseline:[[self baseline] floatValue] totalHeight:[self frame].size.height];
+    }
+    else if ([[[self token] tokenValue] isEqualToString:@"^"]){
+        // need to set the baseline to the left child
+    }
+    else if (([[self childLeft] baseline] != nil) && ([[self childRight] baseline] != nil)){
+        // both children have baselines
+        EDExpressionNodeView *nodeLarger, *nodeSmaller;
+        if ([[[self childLeft] baseline] floatValue] > [[[self childRight] baseline] floatValue]){
+            nodeLarger = [self childLeft];
+            nodeSmaller = [self childRight];
+        }
+        else{
+            nodeSmaller = [self childLeft];
+            nodeLarger = [self childRight];
+        }
+        
+        // modify positions so baselines match
+        [nodeLarger setFrameOrigin:NSMakePoint([nodeLarger frame].origin.x, 0)];
+        [nodeSmaller setFrameOrigin:NSMakePoint([nodeSmaller frame].origin.x, [[nodeLarger baseline] floatValue] - [[nodeSmaller baseline] floatValue])];
+        
+        [self adjustTextFields:textfields baseline:[[nodeLarger baseline] floatValue] totalHeight:[self frame].size.height];
+    }
+    else if (([[self childLeft] baseline] != nil) || ([[self childRight] baseline] != nil)){
+        EDExpressionNodeView *nodeBaseline, *nodeNil;
+        if ([[self childLeft] baseline] != nil){
+            nodeBaseline = [self childLeft];
+            nodeNil = [self childRight];
+        }
+        else{
+            nodeNil = [self childLeft];
+            nodeBaseline = [self childRight];
+        }
+        
+        // find largest value other than baseline
+        NSTextField *largerTextField = [self textfields:textfields largerThanHeight:[[nodeBaseline baseline] floatValue]];
+        float newBaseline;
+        if ([nodeNil frame].size.height > [[nodeBaseline baseline] floatValue]){
+            // node nil is larger than baseline
+            newBaseline = [nodeNil frame].size.height;
+            [nodeNil setFrameOrigin:NSMakePoint([nodeNil frame].origin.x, 0)];
+            [nodeBaseline setFrameOrigin:NSMakePoint([nodeBaseline frame].origin.x, [nodeNil frame].size.height - [[nodeBaseline baseline] floatValue])];
+            
+            [self setBaseline:[NSNumber numberWithFloat:newBaseline]];
+            [self setFrameSize:NSMakeSize([self frame].size.width, [nodeNil frame].size.height+[nodeBaseline frame].size.height-[[nodeBaseline baseline] floatValue])];
+        }
+        else if (largerTextField == nil){
+            // the baseline node is the tallest element in the expression
+            newBaseline = [[nodeBaseline baseline] floatValue];
+            [nodeBaseline setFrameOrigin:NSMakePoint([nodeBaseline frame].origin.x, 0)];
+            [nodeNil setFrameOrigin:NSMakePoint([nodeNil frame].origin.x, [[nodeBaseline baseline] floatValue]-[nodeNil frame].size.height)];
+            
+            [self setBaseline:[NSNumber numberWithFloat:newBaseline]];
+            [self setFrameSize:NSMakeSize([self frame].size.width, [nodeBaseline frame].size.height)];
+            [self adjustTextFields:textfields baseline:newBaseline totalHeight:[self frame].size.height];
+        }
+        else{
+            // one of the text fields (i.e. parenthesis token) is taller than the other nodes
+            float nodeOffsetBaseline = ([largerTextField frame].size.height-[nodeBaseline frame].size.height)/2;
+            float nodeOffsetNil = nodeOffsetBaseline+[[nodeBaseline baseline] floatValue]-[nodeNil frame].size.height;
+            newBaseline = nodeOffsetBaseline+[[nodeBaseline baseline] floatValue];
+            [nodeNil setFrameOrigin:NSMakePoint([nodeNil frame].origin.x, nodeOffsetNil)];
+            [nodeBaseline setFrameOrigin:NSMakePoint([nodeBaseline frame].origin.x, nodeOffsetBaseline)];
+            
+            [self setBaseline:[NSNumber numberWithFloat:newBaseline]];
+            [self setFrameSize:NSMakeSize([self frame].size.width, [largerTextField frame].size.height)];
+            [self adjustTextFields:textfields baseline:newBaseline totalHeight:[largerTextField frame].size.height];
+        }
+    }
+}
+
 - (void)traverseTreeAndCreateImage{
+    NSMutableArray *otherFields = [NSMutableArray array];
+    
     // traverse right
     if([self childRight]) [[self childRight] traverseTreeAndCreateImage];
     
@@ -320,7 +437,7 @@
         NSTextField *field = [EDExpressionNodeView generateTextField:[[self expression] fontSize]*[self fontModifier] string:[token tokenValue]];
         [self addSubview:field];
         NSLog(@"setting baseline for token:%@ height:%f", [token tokenValue], [field frame].size.height);
-        [self setBaseline:[field frame].size.height];
+        [self setBaseline:[NSNumber numberWithFloat:[field frame].size.height]];
         [self setFrameSize:NSMakeSize([field frame].size.width, [field frame].size.height)];
     }
     else if ([[self token] typeRaw] == EDTokenTypeOperator){
@@ -338,6 +455,7 @@
             [self addSubview:fieldOperator];
             [fieldOperator setFrameOrigin:NSMakePoint(sizeChildLeft.width, largerHeight - sizeOperator.height)];
             [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldOperator];
+            [otherFields addObject:fieldOperator];
             
             // left child
             [self addSubview:[self childLeft]];
@@ -349,10 +467,10 @@
             // right child
             [self addSubview:[self childRight]];
             [[self childRight] setFrameOrigin:NSMakePoint(sizeChildLeft.width + sizeOperator.width, largerHeight-sizeChildRight.height)];
-            NSLog(@"baseline of token:%@ left:%f right:%f right token:%@", [[self token] tokenValue], [childLeft baseline], [[self childRight] baseline], [[childRight token] tokenValue]);
-            [self checkBaseline:fieldOperator fontSize:fontSize];
+            //NSLog(@"baseline of token:%@ left:%f right:%f right token:%@", [[self token] tokenValue], [childLeft baseline], [[[self childRight] baseline] floatValue], [[childRight token] tokenValue]);
+            //[self checkBaseline:fieldOperator fontSize:fontSize];
             [self setFrameSize:NSMakeSize(sizeChildLeft.width + sizeOperator.width + sizeChildRight.width, largerHeight)];
-            
+            [self setBaseline:otherFields fontSize:fontSize];
         }
         else if([[[self token] tokenValue] isEqualToString:@"/"]){
             float height = sizeChildLeft.height + 1 + 1 + 1 + sizeChildRight.height;
@@ -377,6 +495,7 @@
             
             // reset frame size
             [self setFrameSize:NSMakeSize(largerWidth, height)];
+            [self setBaseline:otherFields fontSize:[self fontSize] *[self fontModifier]];
             //NSLog(@"divide op: height left:%f self:%f right:%f", [[self childLeft] frame].size.height, 4.0, [[self childRight] frame].size.height);
             //NSLog(@"divide op: setting height to:%f right token:%@", height, [[[self childRight] token] tokenValue]);
         }
