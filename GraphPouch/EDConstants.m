@@ -128,6 +128,8 @@ float const EDExpressionDefaultWidth                            = 150;
 float const EDExpressionDefaultHeight                           = 50;
 //float const EDExpressionXHeightRatio                            = 0.405;
 float const EDExpressionXHeightRatio                            = 0.47;
+float const EDExpressionDivisionLineWidth                       = 1.0;
+float const EDExpressionDivisionGapVertical                     = 1.0;
 
 #pragma mark general
 NSString * const EDKey                                          = @"EDKey";
