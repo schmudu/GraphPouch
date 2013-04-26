@@ -147,7 +147,7 @@ extern float const EDExpressionRadicalBaseUpperLeftOriginOffset;
 extern float const EDExpressionRadicalPowerOffsetVertical;
 extern float const EDExpressionTextFieldEndBuffer;
 extern float const EDExpressionTextFieldEndBufferModifier;
-extern float const EDExpressionExponentPowerBaseOffsetVertical;
+extern float const EDExpressionExponentPowerExponentModifierVertical;
 extern float const EDExpressionSymbolMultiplicationSymbolFontModifier;
 extern float const EDExpressionDefaultWidth;
 extern float const EDExpressionDefaultHeight;

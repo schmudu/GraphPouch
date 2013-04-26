@@ -319,9 +319,9 @@
         
         // need to set the baseline to the left child
         if ([nodeBase baseline] != nil) 
-            [self setBaseline:[NSNumber numberWithFloat:[nodeExponent frame].size.height + [[nodeBase baseline] floatValue] - EDExpressionExponentPowerBaseOffsetVertical]];
+            [self setBaseline:[NSNumber numberWithFloat:[nodeExponent frame].size.height + [[nodeBase baseline] floatValue] + EDExpressionExponentPowerExponentModifierVertical*[self fontModifier]*[self fontSize]]];
         else
-            [self setBaseline:[NSNumber numberWithFloat:[nodeExponent frame].size.height + [nodeBase frame].size.height - EDExpressionExponentPowerBaseOffsetVertical]];
+            [self setBaseline:[NSNumber numberWithFloat:[nodeExponent frame].size.height + [nodeBase frame].size.height + EDExpressionExponentPowerExponentModifierVertical*[self fontModifier]*[self fontSize]]];
     }
     else if (([[self childLeft] baseline] != nil) && ([[self childRight] baseline] != nil)){
         // both children have baselines
@@ -1104,7 +1104,7 @@
                 sizeParenLeft = [EDExpressionNodeView getStringSize:@"(" fontSize:fontSize];
                 NSTextField *fieldLeftParen = [EDExpressionNodeView generateTextField:fontSize string:@"("];
                 [self addSubview:fieldLeftParen];
-                [fieldLeftParen setFrameOrigin:NSMakePoint(0, sizeChildRight.height - EDExpressionExponentPowerBaseOffsetVertical)];
+                [fieldLeftParen setFrameOrigin:NSMakePoint(0, sizeChildRight.height + EDExpressionExponentPowerExponentModifierVertical*[self fontModifier]*[self fontSize])];
                 [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldLeftParen];
                 [otherFields addObject:fieldLeftParen];
                 parenWidthLeft = [fieldLeftParen frame].size.width;
@@ -1112,13 +1112,13 @@
                 // left child
                 [self addSubview:childLeft];
                 childWidthLeft = [childLeft frame].size.width;
-                [childLeft setFrameOrigin:NSMakePoint(parenWidthLeft, sizeChildRight.height - EDExpressionExponentPowerBaseOffsetVertical)];
+                [childLeft setFrameOrigin:NSMakePoint(parenWidthLeft, sizeChildRight.height + EDExpressionExponentPowerExponentModifierVertical*[self fontModifier]*[self fontSize])];
                 
                 // add right paren
                 sizeParenRight = [EDExpressionNodeView getStringSize:@")" fontSize:fontSize];
                 NSTextField *fieldRightParen = [EDExpressionNodeView generateTextField:fontSize string:@")"];
                 [self addSubview:fieldRightParen];
-                [fieldRightParen setFrameOrigin:NSMakePoint(parenWidthLeft + childWidthLeft, sizeChildRight.height - EDExpressionExponentPowerBaseOffsetVertical)];
+                [fieldRightParen setFrameOrigin:NSMakePoint(parenWidthLeft + childWidthLeft, sizeChildRight.height + EDExpressionExponentPowerExponentModifierVertical*[self fontModifier]*[self fontSize])];
                 [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldRightParen];
                 [otherFields addObject:fieldRightParen];
                 parenWidthRight = [fieldRightParen frame].size.width;
@@ -1129,7 +1129,7 @@
                 childWidthRight = [[self childRight] frame].size.width;
             
                 // set frame size
-                [self setFrameSize:NSMakeSize(parenWidthLeft + childWidthLeft + parenWidthRight + childWidthRight, sizeChildRight.height - EDExpressionExponentPowerBaseOffsetVertical + sizeChildLeft.height)];
+                [self setFrameSize:NSMakeSize(parenWidthLeft + childWidthLeft + parenWidthRight + childWidthRight, sizeChildRight.height + EDExpressionExponentPowerExponentModifierVertical*[self fontModifier]*[self fontSize] + sizeChildLeft.height)];
                 [self setVerticalPositions:otherFields multiplyFields:nil fontSize:[self fontSize] *[self fontModifier]];
             }
             else {
@@ -1143,7 +1143,7 @@
                 // left child
                 [self addSubview:childLeft];
                 childWidthLeft = [childLeft frame].size.width;
-                [childLeft setFrameOrigin:NSMakePoint(0, sizeChildRight.height-EDExpressionExponentPowerBaseOffsetVertical)];
+                [childLeft setFrameOrigin:NSMakePoint(0, sizeChildRight.height+EDExpressionExponentPowerExponentModifierVertical*[self fontModifier]*[self fontSize])];
                 
                 // right child
                 [self addSubview:[self childRight]];
@@ -1151,7 +1151,7 @@
                 childWidthRight = [[self childRight] frame].size.width;
             
                 // set frame size
-                [self setFrameSize:NSMakeSize(childWidthLeft + childWidthRight, sizeChildRight.height - EDExpressionExponentPowerBaseOffsetVertical + sizeChildLeft.height)];
+                [self setFrameSize:NSMakeSize(childWidthLeft + childWidthRight, sizeChildRight.height + EDExpressionExponentPowerExponentModifierVertical*[self fontModifier]*[self fontSize] + sizeChildLeft.height)];
                 [self setVerticalPositions:nil multiplyFields:nil fontSize:[self fontSize]*[self fontModifier]];
             }
         }
