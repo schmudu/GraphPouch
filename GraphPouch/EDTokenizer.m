@@ -384,6 +384,8 @@
                 
                 // insert number -1 token and multipler token
                 multiplierToken = [EDToken multiplierToken:context];
+                [multiplierToken setIsImplicit:TRUE];
+                
                 negativeOneToken = [[EDToken alloc] initWithContext:context];
                 [negativeOneToken setTokenValue:[NSString stringWithFormat:@"-1"]];
             

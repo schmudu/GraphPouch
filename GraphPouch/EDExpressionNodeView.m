@@ -782,23 +782,41 @@
                         [self setFrameSize:NSMakeSize(childWidthLeft + sizeOperator.width + childWidthRight, largerHeight)];
                         [self setVerticalPositions:otherFields multiplyFields:multiplyFields fontSize:[self fontSize]*[self fontModifier]];
                     }
-                }*/
-                //else if ([[[childOperator token] tokenValue] isEqualToString:@"^"]){
-                if ([[[childOperator token] tokenValue] isEqualToString:@"^"]){
+                }
+                 */
+                if (([[childLeft token] typeRaw] == EDTokenTypeNumber) && (childOperator == childRight) && ([[[childOperator token] tokenValue] isEqualToString:@"^"])){
                     // multiply an identifier/number with an exponent
+                    // exponent is on the right side
                     NSSize sizeOperator = [childOperator frame].size;
                     NSSize sizeIdentifierNumber = [childIdentifierNumber frame].size;
                     float largerHeight = MAX(sizeOperator.height, sizeIdentifierNumber.height);
+                    NSSize sizeMultiply;
+                    NSTextField *fieldMultiply;
                     
                     // left child identifier/number
                     [self addSubview:childIdentifierNumber];
                     [childIdentifierNumber setFrameOrigin:NSMakePoint(0, largerHeight-sizeIdentifierNumber.height)];
                     
+                    // add multiply symbol
+                    if (![token isImplicit]){
+                        float fontSizeMultiply = [self fontSize] * [self fontModifier] * EDExpressionSymbolMultiplicationSymbolFontModifier;
+                        fieldMultiply = [EDExpressionNodeView generateTextField:fontSizeMultiply string:@"∙"];
+                        sizeMultiply = [fieldMultiply frame].size;
+                        [self addSubview:fieldMultiply];
+                        [fieldMultiply setFrameOrigin:NSMakePoint(sizeChildLeft.width, 0)];
+                        [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
+                        [otherFields addObject:fieldMultiply];
+                        [multiplyFields addObject:fieldMultiply];
+                    }
+                    else{
+                        sizeMultiply = NSMakeSize(0, 0);
+                    }
+                    
                     // right child
                     [self addSubview:childOperator];
-                    [childOperator setFrameOrigin:NSMakePoint(sizeIdentifierNumber.width, largerHeight-sizeOperator.height)];
-                    [self setFrameSize:NSMakeSize(sizeOperator.width + sizeIdentifierNumber.width, largerHeight)];
-                    [self setVerticalPositions:nil multiplyFields:nil fontSize:[self fontSize]*[self fontModifier]];
+                    [childOperator setFrameOrigin:NSMakePoint(sizeIdentifierNumber.width + sizeMultiply.width, largerHeight-sizeOperator.height)];
+                    [self setFrameSize:NSMakeSize(sizeOperator.width + sizeMultiply.width + sizeIdentifierNumber.width, largerHeight)];
+                    [self setVerticalPositions:otherFields multiplyFields:multiplyFields fontSize:[self fontSize]*[self fontModifier]];
                 }
                 else if ([[[childOperator token] tokenValue] isEqualToString:@"*"]){
                     //NSLog(@"one is operator and another is a child. token:%@", [token tokenValue]);
@@ -960,8 +978,7 @@
                     }
                 }
             }
-            /*
-            else if ((([[[self childLeft] token] typeRaw] == EDTokenTypeNumber) && ([[[[self childLeft] token] tokenValue] isEqualToString:@"-1"]))&&
+            else if (([token isImplicit]) &&(([[[self childLeft] token] typeRaw] == EDTokenTypeNumber) && ([[[[self childLeft] token] tokenValue] isEqualToString:@"-1"]))&&
                      (([[[self childRight] token] typeRaw] == EDTokenTypeIdentifier) || ([[[self childRight] token] typeRaw] == EDTokenTypeNumber))){
                 // a negative one token multiplied by an identifier/number
                 // combine into a negative identifier/number
@@ -976,7 +993,8 @@
                 [self setFrameSize:NSMakeSize([newRightChild frame].size.width, [newRightChild frame].size.height)];
                 [self setVerticalPositions:nil multiplyFields:nil fontSize:[self fontSize]*[self fontModifier]];
             }
-            else if ((([[[self childLeft] token] typeRaw] == EDTokenTypeNumber) && ([[[[self childLeft] token] tokenValue] isEqualToString:@"1"]))&&
+            /*
+             else if ((([[[self childLeft] token] typeRaw] == EDTokenTypeNumber) && ([[[[self childLeft] token] tokenValue] isEqualToString:@"1"]))&&
                      (([[[self childRight] token] typeRaw] == EDTokenTypeIdentifier) || ([[[self childRight] token] typeRaw] == EDTokenTypeNumber))){
                 // a positive one token multiplied by an identifier/number
                 // combine into a positive identifier/number
