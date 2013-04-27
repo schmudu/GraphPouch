@@ -15,6 +15,7 @@
 @interface EDToken : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * association;
+@property BOOL isImplicit;
 @property BOOL isValid;
 @property (nonatomic, retain) NSNumber * precedence;
 @property (nonatomic, retain) NSNumber * type;
@@ -27,9 +28,6 @@
 + (EDToken *)rightParentToken:(NSManagedObjectContext *)context;
 - (void)appendChar:(NSString *)c;
 - (int)length;
-//- (EDToken *)copy:(NSManagedObjectContext *)context;
-//- (EDToken *)copyTo:(EDToken *)destToken context:(NSManagedObjectContext *)context;
-//- (void)copyToken:(EDToken *)sourceToken;
 - (void)copy:(EDToken *)sourceToken;
 - (void)setTypeRaw:(EDTokenType)type;
 - (EDTokenType)typeRaw;

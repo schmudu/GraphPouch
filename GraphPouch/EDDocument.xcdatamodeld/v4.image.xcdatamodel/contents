@@ -67,6 +67,7 @@
     </entity>
     <entity name="EDToken" representedClassName="EDToken" syncable="YES">
         <attribute name="association" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="isImplicit" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="isValid" attributeType="Boolean" syncable="YES"/>
         <attribute name="precedence" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="tokenValue" attributeType="String" syncable="YES"/>
@@ -78,11 +79,11 @@
         <element name="EDEquation" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDExpression" positionX="160" positionY="192" width="128" height="90"/>
         <element name="EDGraph" positionX="160" positionY="192" width="128" height="270"/>
+        <element name="EDImage" positionX="160" positionY="192" width="128" height="75"/>
         <element name="EDLine" positionX="160" positionY="192" width="128" height="75"/>
         <element name="EDPage" positionX="160" positionY="192" width="128" height="165"/>
         <element name="EDPoint" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDTextbox" positionX="160" positionY="192" width="128" height="75"/>
-        <element name="EDToken" positionX="160" positionY="192" width="128" height="135"/>
-        <element name="EDImage" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="EDToken" positionX="160" positionY="192" width="128" height="150"/>
     </elements>
 </model>

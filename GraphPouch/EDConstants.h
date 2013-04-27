@@ -414,6 +414,7 @@ extern NSString *const EDKeyValidEquation;
 extern NSString *const EDKeyParsedTokens;
 extern NSString *const EDKeyEquation;
 extern NSString *const EDTokenAttributeIsValid;
+extern NSString *const EDTokenAttributeIsImplicit;
 extern NSString *const EDTokenAttributePrecedence;
 extern NSString *const EDTokenAttributeValue;
 extern NSString *const EDTokenAttributeType;

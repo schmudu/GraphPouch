@@ -389,6 +389,7 @@ NSString * const EDKeyValidEquation                             = @"EDKeyValidEq
 NSString * const EDKeyParsedTokens                              = @"EDKeyParsedTokens";
 NSString * const EDKeyEquation                                  = @"EDKeyEquation";
 NSString *const EDTokenAttributeIsValid                         = @"isValid";
+NSString *const EDTokenAttributeIsImplicit                      = @"isImplicit";
 NSString *const EDTokenAttributePrecedence                      = @"precedence";
 NSString *const EDTokenAttributeValue                           = @"tokenValue";
 NSString *const EDTokenAttributeType                            = @"type";

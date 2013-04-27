@@ -14,6 +14,7 @@
 @implementation EDToken
 
 @dynamic association;
+@dynamic isImplicit;
 @dynamic isValid;
 @dynamic precedence;
 @dynamic type;
@@ -22,9 +23,9 @@
 
 #pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
-    //self = [[EDToken alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameToken inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:nil];
     self = [[EDToken alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameToken inManagedObjectContext:[[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]] insertIntoManagedObjectContext:nil];
     if(self){
+        [self setIsImplicit:[aDecoder decodeBoolForKey:EDTokenAttributeIsImplicit]];
         [self setIsValid:[aDecoder decodeBoolForKey:EDTokenAttributeIsValid]];
         [self setPrecedence:[aDecoder decodeObjectForKey:EDTokenAttributePrecedence]];
         [self setTokenValue:[aDecoder decodeObjectForKey:EDTokenAttributeValue]];
@@ -35,6 +36,7 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeBool:[self isImplicit] forKey:EDTokenAttributeIsImplicit];
     [aCoder encodeBool:[self isValid] forKey:EDTokenAttributeIsValid];
     [aCoder encodeObject:[self precedence] forKey:EDTokenAttributePrecedence];
     [aCoder encodeObject:[self tokenValue] forKey:EDTokenAttributeValue];
@@ -71,6 +73,7 @@
     EDToken *token = [[EDToken alloc]initWithContext:context];
     [token setTypeRaw:EDTokenTypeOperator];
     [token setIsValid:TRUE];
+    [token setIsImplicit:FALSE];
     [token setPrecedence:[NSNumber numberWithInt:3]];
     [token setAssociationRaw:EDAssociationLeft];
     [token setTokenValue:[[NSMutableString alloc] initWithString:@"*"]];
@@ -104,22 +107,12 @@
 
 - (void)copy:(EDToken *)sourceToken{
     [self setTypeRaw:[sourceToken typeRaw]];
+    [self setIsImplicit:[sourceToken isImplicit]];
     [self setIsValid:[sourceToken isValid]];
     [self setPrecedence:[sourceToken precedence]];
     [self setAssociationRaw:[sourceToken associationRaw]];
     [self setTokenValue:[sourceToken tokenValue]];
 }
-
-/*
-- (EDToken *)copyTo:(EDToken *)destToken context:(NSManagedObjectContext *)context{
-    //EDToken *token = [[EDToken alloc] initWithContext:context];
-    [destToken setTypeRaw:[self typeRaw]];
-    [destToken setIsValid:[self isValid]];
-    [destToken setPrecedence:[self precedence]];
-    [destToken setAssociationRaw:[self associationRaw]];
-    [destToken setTokenValue:[self tokenValue]];
-    return destToken;
-}*/
 
 #pragma mark pasteboard writing protocol
 - (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard{

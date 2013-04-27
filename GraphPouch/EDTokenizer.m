@@ -394,6 +394,7 @@
             // insert token between number and left paren
             if(([previousToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeParenthesis) && ([[currentToken tokenValue] isEqualToString:@"("])){
                 multiplyToken = [EDToken multiplierToken:context];
+                [multiplyToken setIsImplicit:TRUE];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
             }
@@ -401,6 +402,7 @@
             // insert token between identifier and left paren
             if(([previousToken typeRaw] == EDTokenTypeIdentifier) && ([currentToken typeRaw] == EDTokenTypeParenthesis) && ([[currentToken tokenValue] isEqualToString:@"("])){
                 multiplyToken = [EDToken multiplierToken:context];
+                [multiplyToken setIsImplicit:TRUE];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
             }
@@ -408,6 +410,7 @@
             // insert token between identifier and identifier
             if(([previousToken typeRaw] == EDTokenTypeIdentifier) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
                 multiplyToken = [EDToken multiplierToken:context];
+                [multiplyToken setIsImplicit:TRUE];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
             }
@@ -415,6 +418,7 @@
             // insert token between number and identifier
             if(([previousToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
                 multiplyToken = [EDToken multiplierToken:context];
+                [multiplyToken setIsImplicit:TRUE];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
             }
@@ -422,6 +426,7 @@
             // insert token between identifier and number
             if(([previousToken typeRaw] == EDTokenTypeIdentifier) && ([currentToken typeRaw] == EDTokenTypeNumber)){
                 multiplyToken = [EDToken multiplierToken:context];
+                [multiplyToken setIsImplicit:TRUE];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
             }
@@ -429,6 +434,7 @@
             // insert token between number and function
             if(([previousToken typeRaw] == EDTokenTypeNumber) && ([currentToken typeRaw] == EDTokenTypeFunction)){
                 multiplyToken = [EDToken multiplierToken:context];
+                [multiplyToken setIsImplicit:TRUE];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
             }
@@ -436,6 +442,7 @@
             // insert token between right paren and function
             if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeFunction)){
                 multiplyToken = [EDToken multiplierToken:context];
+                [multiplyToken setIsImplicit:TRUE];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
             }
@@ -443,6 +450,7 @@
             // insert token between right paren and left paren
             if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeParenthesis) && ([[currentToken tokenValue] isEqualToString:@"("])){
                 multiplyToken = [EDToken multiplierToken:context];
+                [multiplyToken setIsImplicit:TRUE];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
             }
@@ -450,6 +458,7 @@
             // insert token between right paren and identifier
             if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
                 multiplyToken = [EDToken multiplierToken:context];
+                [multiplyToken setIsImplicit:TRUE];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
             }
@@ -457,6 +466,7 @@
             // insert token between right paren and number
             if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeNumber)){
                 multiplyToken = [EDToken multiplierToken:context];
+                [multiplyToken setIsImplicit:TRUE];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
             }
