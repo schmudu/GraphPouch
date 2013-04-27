@@ -484,14 +484,20 @@
                     [[self childLeft] setFrameOrigin:NSMakePoint(0, 0)];
                     childWidthLeft = [[self childLeft] frame].size.width;
                     
-                    // add multiply symbol
-                    sizeOperator = [EDExpressionNodeView getStringSize:@"∙" fontSize:fontSize];
-                    NSTextField *fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"∙"];
-                    [self addSubview:fieldMultiply];
-                    [fieldMultiply setFrameOrigin:NSMakePoint(childWidthLeft, 0)];
-                    [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
-                    [otherFields addObject:fieldMultiply];
-                    [multiplyFields addObject:fieldMultiply];
+                    if ([token isImplicit]){
+                        // if implicit then don't add size
+                        sizeOperator = NSMakeSize(0, 0);
+                    }
+                    else{
+                        // add multiply symbol
+                        sizeOperator = [EDExpressionNodeView getStringSize:@"∙" fontSize:fontSize];
+                        NSTextField *fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"∙"];
+                        [self addSubview:fieldMultiply];
+                        [fieldMultiply setFrameOrigin:NSMakePoint(childWidthLeft, 0)];
+                        [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
+                        [otherFields addObject:fieldMultiply];
+                        [multiplyFields addObject:fieldMultiply];
+                    }
                     
                     // right child
                     [self addSubview:[self childRight]];
@@ -709,27 +715,36 @@
                         [self setVerticalPositions:nil multiplyFields:nil fontSize:[self fontSize]*[self fontModifier]];
                     }
                     else{
+                        float fontSize;
+                        NSSize sizeOperator;
+                        NSTextField *fieldMultiply;
+                        
                         // left child operator
                         [self addSubview:childOperator];
                         [childOperator setFrameOrigin:NSMakePoint(0, largerHeight-heightOperator)];
                         childWidthLeft = [childOperator frame].size.width;
                         
                         // add multiply symbol
-                        float fontSize = [self fontSize] * [self fontModifier] * EDExpressionSymbolMultiplicationSymbolFontModifier;
-                        NSSize sizeOperator = [EDExpressionNodeView getStringSize:@"∙" fontSize:fontSize];
-                        NSTextField *fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"∙"];
-                        [self addSubview:fieldMultiply];
-                        [fieldMultiply setFrameOrigin:NSMakePoint(childWidthLeft, largerHeight - sizeOperator.height)];
-                        float widthOperator = [fieldMultiply frame].size.width;
-                        [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
-                        [otherFields addObject:fieldMultiply];
-                        [multiplyFields addObject:fieldMultiply];
-                            
+                        if ([token isImplicit]){
+                            fontSize = [self fontSize] * [self fontModifier] * EDExpressionSymbolMultiplicationSymbolFontModifier;
+                            sizeOperator = [EDExpressionNodeView getStringSize:@"∙" fontSize:fontSize];
+                            fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"∙"];
+                            [self addSubview:fieldMultiply];
+                            [fieldMultiply setFrameOrigin:NSMakePoint(childWidthLeft, largerHeight - sizeOperator.height)];
+                            //float widthOperator = [fieldMultiply frame].size.width;
+                            [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
+                            [otherFields addObject:fieldMultiply];
+                            [multiplyFields addObject:fieldMultiply];
+                        }
+                        else{
+                            sizeOperator = NSMakeSize(0, 0);
+                        }
+                    
                         // right child
                         [self addSubview:childIdentifierNumber];
-                        [childIdentifierNumber setFrameOrigin:NSMakePoint(childWidthLeft + widthOperator, (largerHeight-heightIdentifierNumber)/2)];
+                        [childIdentifierNumber setFrameOrigin:NSMakePoint(childWidthLeft + sizeOperator.width, (largerHeight-heightIdentifierNumber)/2)];
                         childWidthRight = [childIdentifierNumber frame].size.width;
-                        [self setFrameSize:NSMakeSize(childWidthLeft + widthOperator + childWidthRight, largerHeight)];
+                        [self setFrameSize:NSMakeSize(childWidthLeft + sizeOperator.width + childWidthRight, largerHeight)];
                         [self setVerticalPositions:otherFields multiplyFields:multiplyFields fontSize:[self fontSize]*[self fontModifier]];
                     }
                 }
@@ -755,6 +770,8 @@
                     NSSize sizeOperator = [childOperator frame].size;
                     NSSize sizeIdentifierNumber = [childIdentifierNumber frame].size;
                     float largerHeight = MAX(sizeOperator.height, sizeIdentifierNumber.height);
+                    NSSize sizeMultiply;
+                    NSTextField *fieldMultiply;
                     
                     // just multiply tokens together
                     // left child
@@ -762,15 +779,20 @@
                     [childLeft setFrameOrigin:NSMakePoint(0, largerHeight-sizeChildLeft.height)];
                                                           
                     // add multiply symbol
-                    float fontSize = [self fontSize] * [self fontModifier] * EDExpressionSymbolMultiplicationSymbolFontModifier;
-                    NSSize sizeMultiply = [EDExpressionNodeView getStringSize:@"∙" fontSize:fontSize];
-                    NSTextField *fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"∙"];
-                    [self addSubview:fieldMultiply];
-                    [fieldMultiply setFrameOrigin:NSMakePoint(sizeChildLeft.width, 0)];
-                    [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
-                    [otherFields addObject:fieldMultiply];
-                    [multiplyFields addObject:fieldMultiply];
-                        
+                    if (![token isImplicit]){
+                        float fontSize = [self fontSize] * [self fontModifier] * EDExpressionSymbolMultiplicationSymbolFontModifier;
+                        sizeMultiply = [EDExpressionNodeView getStringSize:@"∙" fontSize:fontSize];
+                        fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"∙"];
+                        [self addSubview:fieldMultiply];
+                        [fieldMultiply setFrameOrigin:NSMakePoint(sizeChildLeft.width, 0)];
+                        [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
+                        [otherFields addObject:fieldMultiply];
+                        [multiplyFields addObject:fieldMultiply];
+                    }
+                    else{
+                        sizeMultiply = NSMakeSize(0, 0);
+                    }
+                    
                     // right child
                     [self addSubview:childRight];
                     [childRight setFrameOrigin:NSMakePoint(sizeChildLeft.width + sizeMultiply.width, largerHeight-sizeChildRight.height)];
@@ -853,8 +875,11 @@
                         parenWidthRight = [fieldRightParen frame].size.width;
                         
                         // multiplication operator
-                        NSSize sizeOperator = [EDExpressionNodeView getStringSize:@"x" fontSize:fontSize];
-                        NSTextField *fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"x"];
+                        NSSize sizeOperator;
+                        NSTextField *fieldMultiply;
+                        
+                        sizeOperator = [EDExpressionNodeView getStringSize:@"x" fontSize:fontSize];
+                        fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"x"];
                         [self addSubview:fieldMultiply];
                         [fieldMultiply setFrameOrigin:NSMakePoint(sizeParenLeft.width + childWidthLeft + sizeParenRight.width, 0)];
                         [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
@@ -916,13 +941,18 @@
                 childWidthLeft = [[self childLeft] frame].size.width;
                 
                 // add multiply symbol
-                sizeOperator = [EDExpressionNodeView getStringSize:@"∙" fontSize:fontSize];
-                NSTextField *fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"∙"];
-                [self addSubview:fieldMultiply];
-                [fieldMultiply setFrameOrigin:NSMakePoint(childWidthLeft, 0)];
-                [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
-                [otherFields addObject:fieldMultiply];
-                [multiplyFields addObject:fieldMultiply];
+                if (![token isImplicit]){
+                    sizeOperator = [EDExpressionNodeView getStringSize:@"∙" fontSize:fontSize];
+                    NSTextField *fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"∙"];
+                    [self addSubview:fieldMultiply];
+                    [fieldMultiply setFrameOrigin:NSMakePoint(childWidthLeft, 0)];
+                    [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
+                    [otherFields addObject:fieldMultiply];
+                    [multiplyFields addObject:fieldMultiply];
+                }
+                else{
+                    sizeOperator = NSMakeSize(0, 0);
+                }
                 
                 // right child
                 [self addSubview:[self childRight]];
@@ -937,6 +967,8 @@
                 // put the number in front
                 float childWidthLeft, childWidthRight;
                 EDExpressionNodeView *childNumber, *childIdentifier;
+                NSSize sizeOperator;
+                float fontSize = [self fontSize] * [self fontModifier] * EDExpressionSymbolMultiplicationSymbolFontModifier;
                 
                 if ([[[self childLeft] token] typeRaw] == EDTokenTypeNumber){
                     childNumber = [self childLeft];
@@ -951,13 +983,24 @@
                 [self addSubview:childNumber];
                 childWidthLeft = [childNumber frame].size.width;
                 
+                // add multiply symbol
+                if (![token isImplicit]){
+                    sizeOperator = [EDExpressionNodeView getStringSize:@"∙" fontSize:fontSize];
+                    NSTextField *fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"∙"];
+                    [self addSubview:fieldMultiply];
+                    [fieldMultiply setFrameOrigin:NSMakePoint(childWidthLeft, 0)];
+                    [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];
+                    [otherFields addObject:fieldMultiply];
+                    [multiplyFields addObject:fieldMultiply];
+                }
+                
                 // right child
                 [self addSubview:childIdentifier];
-                [childIdentifier setFrameOrigin:NSMakePoint(childWidthLeft, 0)];
+                [childIdentifier setFrameOrigin:NSMakePoint(childWidthLeft + sizeOperator.width, 0)];
                 childWidthRight = [[self childRight] frame].size.width;
                 
-                [self setFrameSize:NSMakeSize(childWidthLeft + childWidthRight, [childNumber frame].size.height)];
-                [self setVerticalPositions:nil multiplyFields:nil fontSize:[self fontSize]*[self fontModifier]];
+                [self setFrameSize:NSMakeSize(childWidthLeft + sizeOperator.width + childWidthRight, [childNumber frame].size.height)];
+                [self setVerticalPositions:otherFields multiplyFields:multiplyFields fontSize:[self fontSize]*[self fontModifier]];
             }
         }
         else if([[[self token] tokenValue] isEqualToString:@"^"]){
