@@ -275,23 +275,29 @@
 }
 
 - (void)adjustTextFields:(NSMutableArray *)textfields multiplyFields:(NSMutableArray *)multiplyFields baseline:(float)currentBaseline totalHeight:(float)height fontSize:(float)fontSize{
-    for (NSTextField *textfield in textfields){
-        if ([textfield frame].size.height == height)
-            [textfield setFrameOrigin:NSMakePoint([textfield frame].origin.x, 0)];
-        else
-            [textfield setFrameOrigin:NSMakePoint([textfield frame].origin.x, currentBaseline - [textfield frame].size.height)];
-        
-        // adjust individual characters
-        if (([[[textfield attributedStringValue] string] isEqualToString:@"("]) || ([[[textfield attributedStringValue] string] isEqualToString:@")"]))
-            [textfield setFrameOrigin:NSMakePoint([textfield frame].origin.x, [textfield frame].origin.y + [[textfield font] pointSize] * -.1)];
-        
-        if (([[[textfield attributedStringValue] string] isEqualToString:@"+"]) || ([[[textfield attributedStringValue] string] isEqualToString:@"-"]))
-            [textfield setFrameOrigin:NSMakePoint([textfield frame].origin.x, [textfield frame].origin.y + [[textfield font] pointSize] * EDExpressionAddSubtractVerticalModifier)];
-    }
+    
+    // only modify position if baseline is set
+    //if (currentBaseline != 0){
+        for (NSTextField *textfield in textfields){
+            if ([textfield frame].size.height == height)
+                [textfield setFrameOrigin:NSMakePoint([textfield frame].origin.x, 0)];
+            else
+                [textfield setFrameOrigin:NSMakePoint([textfield frame].origin.x, currentBaseline - [textfield frame].size.height)];
+            
+            // adjust individual characters
+            if (([[[textfield attributedStringValue] string] isEqualToString:@"("]) || ([[[textfield attributedStringValue] string] isEqualToString:@")"]))
+                [textfield setFrameOrigin:NSMakePoint([textfield frame].origin.x, [textfield frame].origin.y + [[textfield font] pointSize] * -.1)];
+            
+            /*
+            if (([[[textfield attributedStringValue] string] isEqualToString:@"+"]) || ([[[textfield attributedStringValue] string] isEqualToString:@"-"]))
+                [textfield setFrameOrigin:NSMakePoint([textfield frame].origin.x, [textfield frame].origin.y + [[textfield font] pointSize] * EDExpressionAddSubtractVerticalModifier)];
+             */
+        }
+    //}
     
     for (NSTextField *multiplyField in multiplyFields){
         // adjust each character based on baseline
-        [multiplyField setFrameOrigin:NSMakePoint([multiplyField frame].origin.x, currentBaseline - [multiplyField frame].size.height - fontSize * EDExpressionMultiplierModifierVertical)];
+        [multiplyField setFrameOrigin:NSMakePoint([multiplyField frame].origin.x, currentBaseline - [multiplyField frame].size.height + fontSize * EDExpressionMultiplierModifierVertical)];
     }
 }
 
@@ -299,7 +305,7 @@
     //NSSize size = [EDExpressionNodeView getStringSize:@"x" fontSize:fontSize];
     NSTextField *fieldOperator = [EDExpressionNodeView generateTextField:fontSize string:@"x"];
     
-    //NSLog(@"setVerticalPosition: setting baseline for token:%@ left child:%@ baseline:%f right child:%@ baseline:%f", [token tokenValue], [[childLeft token] tokenValue], [[childLeft baseline] floatValue], [[childRight token] tokenValue], [[childRight baseline] floatValue]);
+    NSLog(@"setVerticalPosition: setting baseline for token:%@ left child:%@ baseline:%f right child:%@ baseline:%f", [token tokenValue], [[childLeft token] tokenValue], [[childLeft baseline] floatValue], [[childRight token] tokenValue], [[childRight baseline] floatValue]);
     // check for division to determine position
     if (([[self token] typeRaw] == EDTokenTypeIdentifier) || ([[self token] typeRaw] == EDTokenTypeNumber)){
         // if a number or identifier then do nothing
@@ -390,6 +396,9 @@
             [self setFrameSize:NSMakeSize([self frame].size.width, [largerTextField frame].size.height)];
             [self adjustTextFields:textfields multiplyFields:multiplyFields baseline:newBaseline totalHeight:[largerTextField frame].size.height fontSize:fontSize];
         }
+    }
+    else{
+        //[self adjustTextFields:textfields multiplyFields:multiplyFields baseline:0 totalHeight:0 fontSize:fontSize];
     }
 }
 
@@ -615,11 +624,14 @@
                     NSSize sizeParenLeft, sizeParenRight;
                     NSLog(@"two operators: left:%@", [[childLeft token] tokenValue]);
                     // determine font size if it's a divide operation
+                    /*
                     if ([[[[self childLeft] token] tokenValue] isEqualToString:@"/"])
                         fontSize = [EDExpressionNodeView fontSizeForString:@"(" height:[[self childLeft] frame].size.height];
                     else
                         fontSize = [[self expression] fontSize]*[[self childLeft] fontModifier];
-                        
+                     */
+                    fontSize = [EDExpressionNodeView fontSizeForString:@"(" height:largerHeight];
+                    
                     // add left paren
                     sizeParenLeft = [EDExpressionNodeView getStringSize:@"(" fontSize:fontSize];
                     NSTextField *fieldLeftParen = [EDExpressionNodeView generateTextField:fontSize string:@"("];
@@ -641,13 +653,15 @@
                     [fieldRightParen setFrameOrigin:NSMakePoint(parenWidthLeft + childWidthLeft, largerHeight-sizeChildLeft.height)];
                     [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldRightParen];
                     [otherFields addObject:fieldRightParen];
-                    NSLog(@"setting first right parent to origin y:%f largerHeight:%f size child left:%f child right:%f", [fieldRightParen frame].origin.y, largerHeight, sizeChildLeft.height, sizeChildRight.height);
+                    //NSLog(@"setting first right parent to origin y:%f largerHeight:%f size child left:%f child right:%f", [fieldRightParen frame].origin.y, largerHeight, sizeChildLeft.height, sizeChildRight.height);
                     
                     // determine font size if it's a divide operation
+                    /*
                     if ([[[[self childRight] token] tokenValue] isEqualToString:@"/"])
                         fontSize = [EDExpressionNodeView fontSizeForString:@"(" height:[[self childRight] frame].size.height];
                     else
                         fontSize = [[self expression] fontSize]*[[self childRight] fontModifier];
+                     */
                         
                     // add left paren
                     sizeParenLeft = [EDExpressionNodeView getStringSize:@"(" fontSize:fontSize];
@@ -765,7 +779,7 @@
                     [self setVerticalPositions:nil multiplyFields:nil fontSize:[self fontSize]*[self fontModifier]];
                 }
                 else if ([[[childOperator token] tokenValue] isEqualToString:@"*"]){
-                    NSLog(@"one is operator and another is a child. token:%@", [token tokenValue]);
+                    //NSLog(@"one is operator and another is a child. token:%@", [token tokenValue]);
                     // determine larger height
                     NSSize sizeOperator = [childOperator frame].size;
                     NSSize sizeIdentifierNumber = [childIdentifierNumber frame].size;
@@ -878,8 +892,8 @@
                         NSSize sizeOperator;
                         NSTextField *fieldMultiply;
                         
-                        sizeOperator = [EDExpressionNodeView getStringSize:@"x" fontSize:fontSize];
-                        fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"x"];
+                        sizeOperator = [EDExpressionNodeView getStringSize:@"∙" fontSize:fontSize];
+                        fieldMultiply = [EDExpressionNodeView generateTextField:fontSize string:@"∙"];
                         [self addSubview:fieldMultiply];
                         [fieldMultiply setFrameOrigin:NSMakePoint(sizeParenLeft.width + childWidthLeft + sizeParenRight.width, 0)];
                         [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldMultiply];

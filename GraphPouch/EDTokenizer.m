@@ -312,7 +312,30 @@
                 [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate two consecutive operators: '%@' and '%@'", [previousToken tokenValue], [currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
                 if(error != NULL)
                     *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
-                //regfree(&regex);
+                return FALSE;
+            }
+            
+            if(([previousToken typeRaw] == EDTokenTypeIdentifier) && ([currentToken typeRaw] == EDTokenTypeNumber)){
+                NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+                [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate an identifier followed by a number: '%@' and '%@'", [previousToken tokenValue], [currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
+                if(error != NULL)
+                    *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                return FALSE;
+            }
+            
+            if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeNumber)){
+                NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+                [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate a right parenthesis followed by a number: '%@' and '%@'", [previousToken tokenValue], [currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
+                if(error != NULL)
+                    *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
+                return FALSE;
+            }
+            
+            if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
+                NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+                [errorDetail setValue:[NSString stringWithFormat:@"Cannot evaluate a right parenthesis followed by an identifier: '%@' and '%@'", [previousToken tokenValue], [currentToken tokenValue]] forKey:NSLocalizedDescriptionKey];
+                if(error != NULL)
+                    *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                 return FALSE;
             }
         }
@@ -455,6 +478,7 @@
                 addedToken = TRUE;
             }
             
+            /*
             // insert token between right paren and identifier
             if(([previousToken typeRaw] == EDTokenTypeParenthesis) && ([[previousToken tokenValue] isEqualToString:@")"]) && ([currentToken typeRaw] == EDTokenTypeIdentifier)){
                 multiplyToken = [EDToken multiplierToken:context];
@@ -469,7 +493,7 @@
                 [multiplyToken setIsImplicit:TRUE];
                 [tokens insertObject:multiplyToken atIndex:i];
                 addedToken = TRUE;
-            }
+            }*/
         }
         // only set previous token if did not add a token
         if (!addedToken) {
