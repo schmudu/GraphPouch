@@ -159,7 +159,7 @@
             NSSize equalSize = [EDExpressionNodeView getStringSize:@"=" fontSize:[(EDExpression *)[self dataObj] fontSize]];
             
             // add buffer to equal size
-            equalSize.width += 5;
+            float horizontalBuffer = .2*[(EDExpression *)[self dataObj] fontSize];
             
             NSTextField *equalField = [EDExpressionNodeView generateTextField:[(EDExpression *)[self dataObj] fontSize] string:@"="];
             
@@ -169,21 +169,80 @@
             float largerHeight = MAX(heightFirst, heightSecond);
             
             [self addSubview:equalField];
-            [equalField setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width, largerHeight-equalSize.height)];
             
             // add image to worksheet
             [self addSubview:rootNodeSecond];
-            if (heightSecond > heightFirst)
-                [rootNodeSecond setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width + equalSize.width, 0)];
-            else
-                [rootNodeSecond setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width + equalSize.width, largerHeight-[rootNodeSecond frame].size.height)];
             
-            // adjust first height
-            if (heightFirst > heightSecond)
-                [rootNodeFirst setFrameOrigin:NSMakePoint(0, 0)];
-            else
-                [rootNodeFirst setFrameOrigin:NSMakePoint(0, largerHeight-[rootNodeFirst frame].size.height)];
-        }
+            // set horizontal positions
+            [rootNodeFirst setFrameOrigin:NSMakePoint(0, largerHeight-[rootNodeFirst frame].size.height)];
+            [equalField setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width + horizontalBuffer, largerHeight-equalSize.height)];
+            [rootNodeSecond setFrameOrigin:NSMakePoint([rootNodeFirst frame].size.width + horizontalBuffer + equalSize.width + horizontalBuffer, 0)];
+            
+            if (([rootNodeFirst baseline]) && ([rootNodeSecond baseline])){
+                // both nodes have a baseline
+                // find larger baseline
+                // both children have baselines
+                EDExpressionNodeView *nodeLarger, *nodeSmaller;
+                if ([[rootNodeFirst baseline] floatValue] > [[rootNodeSecond baseline] floatValue]){
+                    nodeLarger = rootNodeFirst;
+                    nodeSmaller = rootNodeSecond;
+                }
+                else{
+                    nodeSmaller = rootNodeFirst;
+                    nodeLarger = rootNodeSecond;
+                }
+                
+                // modify positions so baselines match
+                [nodeLarger setFrameOrigin:NSMakePoint([nodeLarger frame].origin.x, 0)];
+                [equalField setFrameOrigin:NSMakePoint([equalField frame].size.width, [[nodeLarger baseline] floatValue] - [equalField frame].size.height)];
+                [nodeSmaller setFrameOrigin:NSMakePoint([nodeSmaller frame].origin.x, [[nodeLarger baseline] floatValue] - [[nodeSmaller baseline] floatValue])];
+            }
+            else if (([rootNodeFirst baseline]) || ([rootNodeSecond baseline])){
+                // one of the nodes has a baseline
+                EDExpressionNodeView *nodeBaseline, *nodeNil;
+                if ([rootNodeFirst baseline] != nil){
+                    nodeBaseline = rootNodeFirst;
+                    nodeNil = rootNodeSecond;
+                }
+                else{
+                    nodeNil = rootNodeFirst;
+                    nodeBaseline = rootNodeSecond;
+                }
+                
+                // find largest value other than baseline
+                if ([nodeNil frame].size.height > [[nodeBaseline baseline] floatValue]){
+                    // node nil is larger than baseline
+                    [nodeNil setFrameOrigin:NSMakePoint([nodeNil frame].origin.x, 0)];
+                    [equalField setFrameOrigin:NSMakePoint([equalField frame].origin.x, [nodeNil frame].size.height - [equalField frame].size.height)];
+                    [nodeBaseline setFrameOrigin:NSMakePoint([nodeBaseline frame].origin.x, [nodeNil frame].size.height - [[nodeBaseline baseline] floatValue])];
+                }
+                else{
+                    // node baseline is larger
+                    [nodeNil setFrameOrigin:NSMakePoint([nodeNil frame].origin.x, [[nodeBaseline baseline] floatValue] - [nodeNil frame].size.height)];
+                    [equalField setFrameOrigin:NSMakePoint([equalField frame].origin.x, [[nodeBaseline baseline] floatValue] - [equalField frame].size.height)];
+                    [nodeBaseline setFrameOrigin:NSMakePoint([nodeBaseline frame].origin.x, 0)];
+                }
+            }
+            else{
+                // no one has a baseline, just line up the larger one
+                // find larger one
+                EDExpressionNodeView *nodeLarger, *nodeSmaller;
+                if ([rootNodeFirst frame].size.height > [rootNodeSecond frame].size.height){
+                    nodeLarger = rootNodeFirst;
+                    nodeSmaller = rootNodeSecond;
+                }
+                else{
+                    nodeSmaller = rootNodeFirst;
+                    nodeLarger = rootNodeSecond;
+                }
+                
+                // modify positions so baselines match
+                //NSLog(@"baseline larger:%f smaller:%f", [[nodeLarger baseline] floatValue], [[nodeSmaller baseline] floatValue]);
+                [nodeLarger setFrameOrigin:NSMakePoint([nodeLarger frame].origin.x, 0)];
+                [equalField setFrameOrigin:NSMakePoint([equalField frame].origin.x, [nodeLarger frame].size.height - [equalField frame].size.height)];
+                [nodeSmaller setFrameOrigin:NSMakePoint([nodeSmaller frame].origin.x, [nodeLarger frame].size.height - [nodeSmaller frame].size.height)];
+            }
+         }
     }
 }
 @end
