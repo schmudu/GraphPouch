@@ -134,11 +134,11 @@
 
 #pragma mark validate
 - (NSMutableDictionary *)validEquation:(NSString *)potentialEquation{
-#warning same code EDExpression, eventually need to consolidate this.  I changed the method signature and the way errors are tested
+#warning same code EDExpression, eventually need to consolidate this.  I changed the method signature and the way errors are tested. However there is a difference in the way '-' and 'x' (identifiers) are consolidated in tokens between this method and EDExpression.m
     NSMutableDictionary *results = [NSMutableDictionary dictionary];
     NSError *error;
     NSMutableArray *parsedTokens;
-    NSMutableArray *tokens = [EDTokenizer tokenize:potentialEquation error:&error context:_context];
+    NSMutableArray *tokens = [EDTokenizer tokenize:potentialEquation error:&error context:_context compactNegativeOne:FALSE];
     
     if (error) {
         [self showError:error];

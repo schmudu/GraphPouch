@@ -15,7 +15,8 @@
 
 @implementation EDTokenizer
 
-+ (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error context:(NSManagedObjectContext *)context{
+//+ (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error context:(NSManagedObjectContext *)context{
++ (NSMutableArray *)tokenize:(NSString *)str error:(NSError **)error context:(NSManagedObjectContext *)context compactNegativeOne:(BOOL)compactNegativeOne{
     int i = 0;
     NSString *currentChar;
     EDToken *currentToken, *potentialToken, *previousToken=nil;
@@ -35,7 +36,7 @@
         // append chracter
         [currentToken appendChar:currentChar];
         
-        if ([EDTokenizer isValidToken:currentToken previousToken:previousToken error:error]) {
+        if ([EDTokenizer isValidToken:currentToken previousToken:previousToken error:error compactNegativeOne:compactNegativeOne]) {
             // save token
             potentialToken = [[EDToken alloc] initWithContext:context];
             [potentialToken copy:currentToken];
@@ -93,7 +94,8 @@
 }
 
 //+ (BOOL)isValidToken:(EDToken *)token error:(NSError **)error{
-+ (BOOL)isValidToken:(EDToken *)token previousToken:(EDToken *)previousToken error:(NSError **)error{
+//+ (BOOL)isValidToken:(EDToken *)token previousToken:(EDToken *)previousToken error:(NSError **)error{
++ (BOOL)isValidToken:(EDToken *)token previousToken:(EDToken *)previousToken error:(NSError **)error compactNegativeOne:(BOOL)compactNegativeOne{
     regex_t regex;
     int reti;
     NSString *str = [[NSString alloc] initWithString:[token tokenValue]];
@@ -137,13 +139,16 @@
     // identifiers
     // free memory for next comparison
     regfree(&regex);
-    reti = regcomp(&regex, "^(x|y)$", REG_EXTENDED);
-    /*
-    if ((previousToken == nil) || ([[previousToken tokenValue] isEqualToString:@"("]))
-        reti = regcomp(&regex, "^(\\-|\\-x|\\-y|x|y)$", REG_EXTENDED);
-    else
+    if (compactNegativeOne){
+        // should we place '-' and 'x' characters into the same token?  This is done for the ExpressionNodeView
+        if ((previousToken == nil) || ([[previousToken tokenValue] isEqualToString:@"("]))
+            reti = regcomp(&regex, "^(\\-|\\-x|\\-y|x|y)$", REG_EXTENDED);
+        else
+            reti = regcomp(&regex, "^(x|y)$", REG_EXTENDED);
+    }
+    else{
         reti = regcomp(&regex, "^(x|y)$", REG_EXTENDED);
-     */
+    }
     
     if (reti) {
         regfree(&regex);

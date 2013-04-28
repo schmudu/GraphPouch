@@ -139,7 +139,7 @@
     NSMutableDictionary *results = [NSMutableDictionary dictionary];
     //NSError *error;
     NSMutableArray *parsedTokens;
-    NSMutableArray *tokens = [EDTokenizer tokenize:potentialExpression error:error context:context];
+    NSMutableArray *tokens = [EDTokenizer tokenize:potentialExpression error:error context:context compactNegativeOne:TRUE];
     
     if (*error != nil) {
         [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
