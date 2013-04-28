@@ -207,12 +207,13 @@
         }
         
         // print out all tokens
+        /*
         NSLog(@"====after parsed");
         int i =0;
         for (EDToken *token in parsedTokens){
             NSLog(@"i:%d token:%@", i, [token tokenValue]);
             i++;
-        }
+        }*/
         
         // calculate expression
         //float result = [EDParser calculate:parsedTokens error:&error context:context];

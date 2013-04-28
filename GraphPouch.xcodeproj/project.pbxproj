@@ -97,6 +97,8 @@
 		CD7A9F4F17258F8300BA522E /* EDPanelPropertiesBasicWithoutHeightController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7A9F4E17258F8300BA522E /* EDPanelPropertiesBasicWithoutHeightController.m */; };
 		CD7A9F54172595CD00BA522E /* EDPanelPropertiesImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7A9F52172595CD00BA522E /* EDPanelPropertiesImageController.m */; };
 		CD7A9F55172595CD00BA522E /* EDPanelPropertiesImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD7A9F53172595CD00BA522E /* EDPanelPropertiesImage.xib */; };
+		CD7C9CA6172DB5870022A475 /* icon_image_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CD7C9CA4172DB5870022A475 /* icon_image_over.png */; };
+		CD7C9CA7172DB5870022A475 /* icon_image.png in Resources */ = {isa = PBXBuildFile; fileRef = CD7C9CA5172DB5870022A475 /* icon_image.png */; };
 		CD80CC8F16C6B880001C3375 /* EDPanelPropertiesTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */; };
 		CD80CC9016C6B880001C3375 /* EDPanelPropertiesTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD80CC8E16C6B880001C3375 /* EDPanelPropertiesTextView.xib */; };
 		CD80CCA816C887C3001C3375 /* EDPanelPropertiesTextViewFontSizeText.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80CCA716C887C2001C3375 /* EDPanelPropertiesTextViewFontSizeText.m */; };
@@ -334,6 +336,8 @@
 		CD7A9F51172595CD00BA522E /* EDPanelPropertiesImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesImageController.h; sourceTree = "<group>"; };
 		CD7A9F52172595CD00BA522E /* EDPanelPropertiesImageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesImageController.m; sourceTree = "<group>"; };
 		CD7A9F53172595CD00BA522E /* EDPanelPropertiesImage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesImage.xib; sourceTree = "<group>"; };
+		CD7C9CA4172DB5870022A475 /* icon_image_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_image_over.png; sourceTree = "<group>"; };
+		CD7C9CA5172DB5870022A475 /* icon_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_image.png; sourceTree = "<group>"; };
 		CD7EAA5716F49A5800EBE2B1 /* v1.xcdatamodeld.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v1.xcdatamodeld.xcdatamodel; sourceTree = "<group>"; };
 		CD80CC8C16C6B880001C3375 /* EDPanelPropertiesTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesTextViewController.h; sourceTree = "<group>"; };
 		CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesTextViewController.m; sourceTree = "<group>"; };
@@ -1127,6 +1131,8 @@
 		CDD05DF716BF4DBA001279FB /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				CD7C9CA4172DB5870022A475 /* icon_image_over.png */,
+				CD7C9CA5172DB5870022A475 /* icon_image.png */,
 				CD4FF093172390B600DEBF29 /* icon_expression_over.png */,
 				CD4FF094172390B600DEBF29 /* icon_expression.png */,
 				CD1DA3EE16D09C4B00198084 /* icon_graph_over.png */,
@@ -1344,6 +1350,8 @@
 				CD7A9F4717258ECE00BA522E /* EDPanelPropertiesBasicWithoutHeight.xib in Resources */,
 				CD7A9F4B17258F3300BA522E /* EDPanelPropertiesBasic.xib in Resources */,
 				CD7A9F55172595CD00BA522E /* EDPanelPropertiesImage.xib in Resources */,
+				CD7C9CA6172DB5870022A475 /* icon_image_over.png in Resources */,
+				CD7C9CA7172DB5870022A475 /* icon_image.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

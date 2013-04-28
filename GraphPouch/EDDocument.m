@@ -216,6 +216,9 @@
     // Create the File Open Dialog class.
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     
+    // title
+    [openDlg setTitle:@"Select Image to Insert"];
+    
     // Enable the selection of files in the dialog.
     [openDlg setCanChooseFiles:YES];
     
@@ -224,7 +227,7 @@
     [openDlg setAllowsMultipleSelection:FALSE];
     
     // set file types
-    NSArray *fileTypes = [NSArray arrayWithObjects:@"bmp", @"BMP", @"jpeg", @"JPEG", @"jpg", @"JPG", @"png", @"PNG", @"tif", @"TIF", @"tiff", @"TIFF", nil];
+    //NSArray *fileTypes = [NSArray arrayWithObjects:@"bmp", @"BMP", @"jpeg", @"JPEG", @"jpg", @"JPG", @"png", @"PNG", @"tif", @"TIF", @"tiff", @"TIFF", nil];
     //[openDlg setAllowedFileTypes:fileTypes];
     [openDlg setAllowedFileTypes:[NSImage imageFileTypes]];
     
