@@ -16,6 +16,7 @@
 - (void)adjustTextFields:(NSMutableArray *)textfields multiplyFields:(NSMutableArray *)multiplyFields baseline:(float)currentBaseline totalHeight:(float)height fontSize:(float)fontSize;
 - (BOOL)hasOneNumberChildAndOneIdentifierChild;
 - (BOOL)hasTwoNumberChildren;
+- (NSDictionary *)addParenthesis:(NSString *)parenthesis largerHeight:(float)largerHeight sizeChild:(NSSize)sizeChild positionX:(float)positionX;
 @end
 
 @implementation EDExpressionNodeView
@@ -77,6 +78,18 @@
             return TRUE;
         
     return FALSE;
+}
+
+- (NSDictionary *)addParenthesis:(NSString *)parenthesis largerHeight:(float)largerHeight sizeChild:(NSSize)sizeChild positionX:(float)positionX{
+    float fontSizeParenthesis = [EDExpressionNodeView fontSizeForString:parenthesis height:largerHeight];
+    NSMutableDictionary *resultsDict = [NSMutableDictionary dictionary];
+    NSTextField *fieldParen = [EDExpressionNodeView generateTextField:fontSizeParenthesis string:parenthesis];
+    [resultsDict setObject:[NSNumber numberWithFloat:[fieldParen frame].size.width] forKey:EDKeyParenthesisWidth];
+    [self addSubview:fieldParen];
+    [fieldParen setFrameOrigin:NSMakePoint(positionX, largerHeight-sizeChild.height)];
+    [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldParen];
+    [resultsDict setObject:fieldParen forKey:EDKeyParenthesisTextField];
+    return resultsDict;
 }
 
 #pragma mark generators
@@ -301,10 +314,8 @@
 }
 
 - (void)setVerticalPositions:(NSMutableArray *)textfields multiplyFields:(NSMutableArray *)multiplyFields fontSize:(float)fontSize{
-    //NSSize size = [EDExpressionNodeView getStringSize:@"x" fontSize:fontSize];
     NSTextField *fieldOperator = [EDExpressionNodeView generateTextField:fontSize string:@"x"];
     
-    //NSLog(@"setVerticalPosition: setting baseline for token:%@ left child:%@ baseline:%f right child:%@ baseline:%f", [token tokenValue], [[childLeft token] tokenValue], [[childLeft baseline] floatValue], [[childRight token] tokenValue], [[childRight baseline] floatValue]);
     // check for division to determine position
     if (([[self token] typeRaw] == EDTokenTypeIdentifier) || ([[self token] typeRaw] == EDTokenTypeNumber)){
         // if a number or identifier then do nothing
@@ -315,9 +326,7 @@
         nodeNumerator = [self childLeft];
         nodeDenominator = [self childRight];
         
-        //NSLog(@"division: setting baseline for token:%@", [token tokenValue]);
         [self setBaseline:[NSNumber numberWithFloat:[nodeNumerator frame].size.height + EDExpressionXHeightRatio*[fieldOperator frame].size.height]];
-        //NSLog(@"division: baseline:%@", [self baseline]);
         [self adjustTextFields:textfields multiplyFields:multiplyFields baseline:[[self baseline] floatValue] totalHeight:[self frame].size.height fontSize:fontSize];
     }
     else if ([[[self token] tokenValue] isEqualToString:@"^"]){
@@ -452,25 +461,46 @@
         float largerHeight = MAX(sizeChildLeft.height, sizeChildRight.height);
         float largerWidth = MAX(sizeChildLeft.width, sizeChildRight.width);
         if (([[[self token] tokenValue] isEqualToString:@"+"]) || ([[[self token] tokenValue] isEqualToString:@"-"])){
-            // add addition/subtraction oeprator
+            // add addition/subtraction operator
             NSSize sizeOperator = [EDExpressionNodeView getStringSize:@"x" fontSize:currentTokenFontSize];
+            
+            // add parenthesis before operator, if it exists
+            NSDictionary *parenDict;
+            float parenWidth=0;
+            for (int i=0; i<[[token parenthesisCount] intValue]; i++){
+                parenDict = [self addParenthesis:@"(" largerHeight:largerHeight sizeChild:sizeChildLeft positionX:0];
+                if ([parenDict objectForKey:EDKeyParenthesisTextField]){
+                    [otherFields addObject:[parenDict objectForKey:EDKeyParenthesisTextField]];
+                    parenWidth += [[parenDict objectForKey:EDKeyParenthesisWidth] floatValue];
+                }
+            }
             
             // modify width of + and - sign
             sizeOperator = NSMakeSize(sizeOperator.width + currentTokenFontSize * EDExpressionAddSubtractHorizontalModifier, sizeOperator.height);
             NSTextField *fieldOperator = [EDExpressionNodeView generateTextField:currentTokenFontSize string:[[self token] tokenValue]];
             [self addSubview:fieldOperator];
-            [fieldOperator setFrameOrigin:NSMakePoint(sizeChildLeft.width + currentTokenFontSize * EDExpressionAddSubtractHorizontalModifier, largerHeight - sizeOperator.height)];
+            [fieldOperator setFrameOrigin:NSMakePoint(parenWidth + sizeChildLeft.width + currentTokenFontSize * EDExpressionAddSubtractHorizontalModifier, largerHeight - sizeOperator.height)];
             [_addedSubviewsOtherThanRightAndLeftChildren addObject:fieldOperator];
             [otherFields addObject:fieldOperator];
             
             // left child
             [self addSubview:[self childLeft]];
-            [[self childLeft] setFrameOrigin:NSMakePoint(0, largerHeight-sizeChildLeft.height)];
+            [[self childLeft] setFrameOrigin:NSMakePoint(0 + parenWidth, largerHeight-sizeChildLeft.height)];
         
             // right child
             [self addSubview:[self childRight]];
-            [[self childRight] setFrameOrigin:NSMakePoint(sizeChildLeft.width + sizeOperator.width + currentTokenFontSize * EDExpressionAddSubtractHorizontalModifier, largerHeight-sizeChildRight.height)];
-            [self setFrameSize:NSMakeSize(sizeChildLeft.width + currentTokenFontSize * EDExpressionAddSubtractHorizontalModifier + sizeOperator.width + sizeChildRight.width, largerHeight)];
+            [[self childRight] setFrameOrigin:NSMakePoint(parenWidth + sizeChildLeft.width + sizeOperator.width + currentTokenFontSize * EDExpressionAddSubtractHorizontalModifier, largerHeight-sizeChildRight.height)];
+            
+            // add parenthesis after right child
+            for (int i=0; i<[[token parenthesisCount] intValue]; i++){
+                parenDict = [self addParenthesis:@")" largerHeight:largerHeight sizeChild:sizeChildLeft positionX:parenWidth + sizeChildLeft.width + sizeOperator.width + currentTokenFontSize * EDExpressionAddSubtractHorizontalModifier + sizeChildRight.width];
+                if ([parenDict objectForKey:EDKeyParenthesisTextField]){
+                    [otherFields addObject:[parenDict objectForKey:EDKeyParenthesisTextField]];
+                    parenWidth += [[parenDict objectForKey:EDKeyParenthesisWidth] floatValue];
+                }
+            }
+            
+            [self setFrameSize:NSMakeSize(parenWidth + sizeChildLeft.width + currentTokenFontSize * EDExpressionAddSubtractHorizontalModifier + sizeOperator.width + sizeChildRight.width, largerHeight)];
             [self setVerticalPositions:otherFields multiplyFields:nil fontSize:currentTokenFontSize];
         }
         else if([[[self token] tokenValue] isEqualToString:@"/"]){

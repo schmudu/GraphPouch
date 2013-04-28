@@ -54,6 +54,7 @@
             else {
                 // we matched a right paren, get top token
                 BOOL match = false;
+                EDToken *lastOperatorToken;
                 operatorToken = (EDToken *)[operator getLastObject];
                 while (([operator count]>0) && (!match)){
                     operatorToken = (EDToken *)[operator pop];
@@ -61,9 +62,14 @@
                     // if not open paren then push to output
                     if(![[operatorToken tokenValue] isEqualToString:@"("]){
                         [output addObject:operatorToken];
+                        lastOperatorToken = operatorToken;
                     }
-                    else 
+                    else{
                         match = true;
+                        // increment parenthesis for this operator
+                        [lastOperatorToken incrementParenthesisCount];
+                        NSLog(@"add paren to token:%@", [lastOperatorToken tokenValue]);
+                    }
                 }
                 
                 // if operator stack is empty and no match then mismatching parenthesis

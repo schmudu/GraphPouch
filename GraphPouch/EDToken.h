@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSNumber * association;
 @property BOOL isImplicit;
 @property BOOL isValid;
+@property (nonatomic, retain) NSNumber * parenthesisCount;
 @property (nonatomic, retain) NSNumber * precedence;
 @property (nonatomic, retain) NSNumber * type;
 @property (nonatomic, retain) NSString * tokenValue;
@@ -26,6 +27,7 @@
 + (EDToken *)multiplierToken:(NSManagedObjectContext *)context;
 + (EDToken *)leftParenToken:(NSManagedObjectContext *)context;
 + (EDToken *)rightParentToken:(NSManagedObjectContext *)context;
+- (void)incrementParenthesisCount;
 - (void)appendChar:(NSString *)c;
 - (int)length;
 - (void)copy:(EDToken *)sourceToken;

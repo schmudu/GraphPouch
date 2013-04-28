@@ -16,6 +16,7 @@
 @dynamic association;
 @dynamic isImplicit;
 @dynamic isValid;
+@dynamic parenthesisCount;
 @dynamic precedence;
 @dynamic type;
 @dynamic tokenValue;
@@ -27,6 +28,7 @@
     if(self){
         [self setIsImplicit:[aDecoder decodeBoolForKey:EDTokenAttributeIsImplicit]];
         [self setIsValid:[aDecoder decodeBoolForKey:EDTokenAttributeIsValid]];
+        [self setParenthesisCount:[aDecoder decodeObjectForKey:EDTokenAttributeParenthesisCount]];
         [self setPrecedence:[aDecoder decodeObjectForKey:EDTokenAttributePrecedence]];
         [self setTokenValue:[aDecoder decodeObjectForKey:EDTokenAttributeValue]];
         [self setType:[aDecoder decodeObjectForKey:EDTokenAttributeType]];
@@ -38,6 +40,7 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeBool:[self isImplicit] forKey:EDTokenAttributeIsImplicit];
     [aCoder encodeBool:[self isValid] forKey:EDTokenAttributeIsValid];
+    [aCoder encodeObject:[self precedence] forKey:EDTokenAttributeParenthesisCount];
     [aCoder encodeObject:[self precedence] forKey:EDTokenAttributePrecedence];
     [aCoder encodeObject:[self tokenValue] forKey:EDTokenAttributeValue];
     [aCoder encodeObject:[self type] forKey:EDTokenAttributeType];
@@ -74,6 +77,7 @@
     [token setTypeRaw:EDTokenTypeOperator];
     [token setIsValid:TRUE];
     [token setIsImplicit:FALSE];
+    [token setParenthesisCount:[NSNumber numberWithInt:0]];
     [token setPrecedence:[NSNumber numberWithInt:3]];
     [token setAssociationRaw:EDAssociationLeft];
     [token setTokenValue:[[NSMutableString alloc] initWithString:@"*"]];
@@ -100,6 +104,10 @@
     [self setTokenValue:[[NSString alloc] initWithFormat:@"%@%@", [self tokenValue], c]];
 }
 
+- (void)incrementParenthesisCount{
+    [self setParenthesisCount:[NSNumber numberWithInt:([[self parenthesisCount] intValue]+1)]];
+}
+
 - (int)length{
     return (int)[[self tokenValue] length];
 }
@@ -109,6 +117,7 @@
     [self setTypeRaw:[sourceToken typeRaw]];
     [self setIsImplicit:[sourceToken isImplicit]];
     [self setIsValid:[sourceToken isValid]];
+    [self setParenthesisCount:[sourceToken parenthesisCount]];
     [self setPrecedence:[sourceToken precedence]];
     [self setAssociationRaw:[sourceToken associationRaw]];
     [self setTokenValue:[sourceToken tokenValue]];

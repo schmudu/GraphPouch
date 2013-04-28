@@ -125,6 +125,9 @@ extern NSString *const EDExpressionAttributeFontSize;
 extern NSString *const EDKeyExpressionFirst;
 extern NSString *const EDKeyExpressionSecond;
 extern NSString *const EDKeyExpressionType;
+extern NSString *const EDKeyParenthesisWidth;
+extern NSString *const EDKeyParenthesisTextField;
+
 extern float const EDExpressionFontModifierNumerator;
 extern float const EDExpressionFontModifierDenominator;
 extern float const EDExpressionFontModifierExponentialBase;
@@ -415,6 +418,7 @@ extern NSString *const EDKeyParsedTokens;
 extern NSString *const EDKeyEquation;
 extern NSString *const EDTokenAttributeIsValid;
 extern NSString *const EDTokenAttributeIsImplicit;
+extern NSString *const EDTokenAttributeParenthesisCount;
 extern NSString *const EDTokenAttributePrecedence;
 extern NSString *const EDTokenAttributeValue;
 extern NSString *const EDTokenAttributeType;

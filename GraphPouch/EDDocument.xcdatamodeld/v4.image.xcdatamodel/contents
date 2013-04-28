@@ -67,9 +67,9 @@
     </entity>
     <entity name="EDToken" representedClassName="EDToken" syncable="YES">
         <attribute name="association" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="hasParenthesis" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="isImplicit" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="isValid" attributeType="Boolean" syncable="YES"/>
+        <attribute name="parenthesisCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="precedence" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="tokenValue" attributeType="String" syncable="YES"/>
         <attribute name="type" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
