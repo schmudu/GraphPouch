@@ -84,7 +84,7 @@
     }
         
     NSMutableDictionary *errorDictionary = [[NSMutableDictionary alloc] init];
-    [errorDictionary setValue:@"some error" forKey:NSLocalizedDescriptionKey];
+    [errorDictionary setValue:@"Error: error received calculating equation/expression." forKey:NSLocalizedDescriptionKey];
     
     if(error != NULL)
         *error = [[NSError alloc] initWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDictionary];
@@ -137,13 +137,13 @@
     // identifiers
     // free memory for next comparison
     regfree(&regex);
+    reti = regcomp(&regex, "^(x|y)$", REG_EXTENDED);
     /*
     if ((previousToken == nil) || ([[previousToken tokenValue] isEqualToString:@"("]))
         reti = regcomp(&regex, "^(\\-|\\-x|\\-y|x|y)$", REG_EXTENDED);
     else
         reti = regcomp(&regex, "^(x|y)$", REG_EXTENDED);
      */
-    reti = regcomp(&regex, "^(x|y)$", REG_EXTENDED);
     
     if (reti) {
         regfree(&regex);
