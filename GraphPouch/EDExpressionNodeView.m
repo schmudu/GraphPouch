@@ -28,6 +28,7 @@
     self = [super initWithFrame:frameRect];
     if (self) {
         [self setBaseline:nil];
+        _parenLeftWidth = 0;
         _expression = expression;
         [self setToken:newToken];
         [self setChildLeft:nil];
@@ -147,8 +148,8 @@
             // draw division line
             NSBezierPath *path = [NSBezierPath bezierPath];
             [[NSColor blackColor] setStroke];
-            [path moveToPoint:NSMakePoint(0, [[self childLeft] frame].size.height + 1)];
-            [path lineToPoint:NSMakePoint(largerWidth, [[self childLeft] frame].size.height + 1)];
+            [path moveToPoint:NSMakePoint(_parenLeftWidth, [[self childLeft] frame].size.height + 1)];
+            [path lineToPoint:NSMakePoint(_parenLeftWidth + largerWidth, [[self childLeft] frame].size.height + 1)];
             [path stroke];
         }
         else if ([[[self token] tokenValue] isEqualToString:@"*"]){
@@ -327,7 +328,28 @@
         nodeDenominator = [self childRight];
         
         [self setBaseline:[NSNumber numberWithFloat:[nodeNumerator frame].size.height + EDExpressionXHeightRatio*[fieldOperator frame].size.height]];
-        [self adjustTextFields:textfields multiplyFields:multiplyFields baseline:[[self baseline] floatValue] totalHeight:[self frame].size.height fontSize:fontSize];
+        NSTextField *largerTextField = [self textfields:textfields largerThanHeight:[[self baseline] floatValue]];
+        if (largerTextField != nil){
+            // there is a larger text field
+            // one of the text fields (i.e. parenthesis token) is taller
+            // move text fields to new height
+            for (NSTextField *textfield in textfields){
+                [textfield setFrameOrigin:NSMakePoint([textfield frame].origin.x, [largerTextField frame].size.height - [textfield frame].size.height)];
+            }
+            
+            // find new origin for self
+            float nodeOffset= ([largerTextField frame].size.height-([[self baseline] floatValue]))/2;
+            float nodeOppositeBaseline = [self frame].size.height - [[self baseline] floatValue];
+            float newBaseline;
+            newBaseline = nodeOffset+[[self baseline] floatValue];
+            [self setFrameOrigin:NSMakePoint([self frame].origin.x, nodeOffset)];
+            
+            [self setFrameSize:NSMakeSize([self frame].size.width, [largerTextField frame].size.height + nodeOppositeBaseline)];
+            //[self adjustTextFields:textfields multiplyFields:multiplyFields baseline:newBaseline totalHeight:[largerTextField frame].size.height+nodeOppositeBaseline fontSize:fontSize];
+        }
+        else{
+            [self adjustTextFields:textfields multiplyFields:multiplyFields baseline:[[self baseline] floatValue] totalHeight:[self frame].size.height fontSize:fontSize];
+        }
     }
     else if ([[[self token] tokenValue] isEqualToString:@"^"]){
         EDExpressionNodeView *nodeExponent, *nodeBase;
@@ -472,6 +494,7 @@
                 if ([parenDict objectForKey:EDKeyParenthesisTextField]){
                     [otherFields addObject:[parenDict objectForKey:EDKeyParenthesisTextField]];
                     parenWidth += [[parenDict objectForKey:EDKeyParenthesisWidth] floatValue];
+                    _parenLeftWidth += parenWidth;
                 }
             }
             
@@ -507,11 +530,25 @@
             float height = sizeChildLeft.height + EDExpressionDivisionGapVertical + EDExpressionDivisionLineWidth + EDExpressionDivisionGapVertical + sizeChildRight.height;
             [self addSubview:[self childLeft]];
             
+            NSSize termSize = NSMakeSize(sizeChildLeft.width, height);
+            
+            // add parenthesis before operator, if it exists
+            NSDictionary *parenDict;
+            float parenWidth=0;
+            for (int i=0; i<[[token parenthesisCount] intValue]; i++){
+                parenDict = [self addParenthesis:@"(" largerHeight:height sizeChild:termSize positionX:0];
+                if ([parenDict objectForKey:EDKeyParenthesisTextField]){
+                    [otherFields addObject:[parenDict objectForKey:EDKeyParenthesisTextField]];
+                    parenWidth += [[parenDict objectForKey:EDKeyParenthesisWidth] floatValue];
+                    _parenLeftWidth += parenWidth;
+                }
+            }
+            
             // center left child
             if (sizeChildLeft.width > sizeChildRight.width)
-                [[self childLeft] setFrameOrigin:NSMakePoint(0, 0)];
+                [[self childLeft] setFrameOrigin:NSMakePoint(parenWidth, 0)];
             else{
-                [[self childLeft] setFrameOrigin:NSMakePoint((largerWidth-sizeChildLeft.width)/2, 0)];
+                [[self childLeft] setFrameOrigin:NSMakePoint(parenWidth + (largerWidth-sizeChildLeft.width)/2, 0)];
             }
             
             //right child
@@ -519,13 +556,22 @@
             
             // center left child
             if (sizeChildRight.width > sizeChildLeft.width)
-                [[self childRight] setFrameOrigin:NSMakePoint(0, EDExpressionDivisionGapVertical+EDExpressionDivisionLineWidth+EDExpressionDivisionGapVertical+sizeChildLeft.height)];
+                [[self childRight] setFrameOrigin:NSMakePoint(parenWidth, EDExpressionDivisionGapVertical+EDExpressionDivisionLineWidth+EDExpressionDivisionGapVertical+sizeChildLeft.height)];
             else{
-                [[self childRight] setFrameOrigin:NSMakePoint((largerWidth-sizeChildRight.width)/2, EDExpressionDivisionGapVertical+EDExpressionDivisionLineWidth+EDExpressionDivisionGapVertical+sizeChildLeft.height)];
+                [[self childRight] setFrameOrigin:NSMakePoint(parenWidth + (largerWidth-sizeChildRight.width)/2, EDExpressionDivisionGapVertical+EDExpressionDivisionLineWidth+EDExpressionDivisionGapVertical+sizeChildLeft.height)];
+            }
+            
+            // add parenthesis after right child
+            for (int i=0; i<[[token parenthesisCount] intValue]; i++){
+                parenDict = [self addParenthesis:@")" largerHeight:height sizeChild:termSize positionX:parenWidth + largerWidth];
+                if ([parenDict objectForKey:EDKeyParenthesisTextField]){
+                    [otherFields addObject:[parenDict objectForKey:EDKeyParenthesisTextField]];
+                    parenWidth += [[parenDict objectForKey:EDKeyParenthesisWidth] floatValue];
+                }
             }
             
             // reset frame size
-            [self setFrameSize:NSMakeSize(largerWidth, height)];
+            [self setFrameSize:NSMakeSize(parenWidth + largerWidth, height)];
             [self setVerticalPositions:otherFields multiplyFields:multiplyFields fontSize:currentTokenFontSize];
         }
         else if([[[self token] tokenValue] isEqualToString:@"*"]){
