@@ -349,13 +349,16 @@
             // one of the text fields (i.e. parenthesis token) is taller than both nodes
             float nodeOffsetLarger = ([largerTextField frame].size.height-[nodeLarger frame].size.height)/2;
             float nodeOffsetSmaller = nodeOffsetLarger+[[nodeLarger baseline] floatValue]-[[nodeSmaller baseline] floatValue];
+            float nodeHeightOppositeBaselineLarger = [nodeLarger frame].size.height - [[nodeLarger baseline] floatValue];
+            float nodeHeightOppositeBaselineSmaller = [nodeSmaller frame].size.height - [[nodeSmaller baseline] floatValue];
+            float nodeHeightOppositeLarger = MAX(nodeHeightOppositeBaselineLarger, nodeHeightOppositeBaselineSmaller);
             float newBaseline;
             newBaseline = nodeOffsetLarger+[[nodeLarger baseline] floatValue];
             [nodeSmaller setFrameOrigin:NSMakePoint([nodeSmaller frame].origin.x, nodeOffsetSmaller)];
             [nodeLarger setFrameOrigin:NSMakePoint([nodeLarger frame].origin.x, nodeOffsetLarger)];
             
             [self setBaseline:[NSNumber numberWithFloat:newBaseline]];
-            [self setFrameSize:NSMakeSize([self frame].size.width, [largerTextField frame].size.height)];
+            [self setFrameSize:NSMakeSize([self frame].size.width, [largerTextField frame].size.height + nodeHeightOppositeLarger)];
             [self adjustTextFields:textfields multiplyFields:multiplyFields baseline:newBaseline totalHeight:[largerTextField frame].size.height fontSize:fontSize];
         }
         else{
@@ -378,9 +381,22 @@
         }
         
         // find largest value other than baseline
-        NSTextField *largerTextField = [self textfields:textfields largerThanHeight:[[nodeBaseline baseline] floatValue]];
+        float largerHeight = MAX([nodeNil frame].size.height, [[nodeBaseline baseline] floatValue]);
+        NSTextField *largerTextField = [self textfields:textfields largerThanHeight:largerHeight];
         float newBaseline;
-        if ([nodeNil frame].size.height > [[nodeBaseline baseline] floatValue]){
+        if (largerTextField != nil){
+            // one of the text fields (i.e. parenthesis token) is taller than the other nodes
+            float nodeOffsetBaseline = ([largerTextField frame].size.height-[nodeBaseline frame].size.height)/2;
+            float nodeOffsetNil = nodeOffsetBaseline+[[nodeBaseline baseline] floatValue]-[nodeNil frame].size.height;
+            newBaseline = nodeOffsetBaseline+[[nodeBaseline baseline] floatValue];
+            [nodeNil setFrameOrigin:NSMakePoint([nodeNil frame].origin.x, nodeOffsetNil)];
+            [nodeBaseline setFrameOrigin:NSMakePoint([nodeBaseline frame].origin.x, nodeOffsetBaseline)];
+            
+            [self setBaseline:[NSNumber numberWithFloat:newBaseline]];
+            [self setFrameSize:NSMakeSize([self frame].size.width, [largerTextField frame].size.height)];
+            [self adjustTextFields:textfields multiplyFields:multiplyFields baseline:newBaseline totalHeight:[largerTextField frame].size.height fontSize:fontSize];
+        }
+        else if ([nodeNil frame].size.height > [[nodeBaseline baseline] floatValue]){
             // node nil is larger than baseline
             newBaseline = [nodeNil frame].size.height;
             [nodeNil setFrameOrigin:NSMakePoint([nodeNil frame].origin.x, 0)];
@@ -399,18 +415,6 @@
             [self setBaseline:[NSNumber numberWithFloat:newBaseline]];
             [self setFrameSize:NSMakeSize([self frame].size.width, [nodeBaseline frame].size.height)];
             [self adjustTextFields:textfields multiplyFields:multiplyFields baseline:newBaseline totalHeight:[self frame].size.height fontSize:fontSize];
-        }
-        else{
-            // one of the text fields (i.e. parenthesis token) is taller than the other nodes
-            float nodeOffsetBaseline = ([largerTextField frame].size.height-[nodeBaseline frame].size.height)/2;
-            float nodeOffsetNil = nodeOffsetBaseline+[[nodeBaseline baseline] floatValue]-[nodeNil frame].size.height;
-            newBaseline = nodeOffsetBaseline+[[nodeBaseline baseline] floatValue];
-            [nodeNil setFrameOrigin:NSMakePoint([nodeNil frame].origin.x, nodeOffsetNil)];
-            [nodeBaseline setFrameOrigin:NSMakePoint([nodeBaseline frame].origin.x, nodeOffsetBaseline)];
-            
-            [self setBaseline:[NSNumber numberWithFloat:newBaseline]];
-            [self setFrameSize:NSMakeSize([self frame].size.width, [largerTextField frame].size.height)];
-            [self adjustTextFields:textfields multiplyFields:multiplyFields baseline:newBaseline totalHeight:[largerTextField frame].size.height fontSize:fontSize];
         }
     }
     else{
