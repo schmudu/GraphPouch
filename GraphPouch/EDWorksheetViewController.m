@@ -435,11 +435,11 @@
     EDImageView *imageView;
     EDLineView *lineView;
     EDTextboxView *textboxView;
-    NSRect elementRect;
+    //NSRect elementRect;
     
     for (EDElement *element in elements){
         // make default rect
-        elementRect = NSMakeRect(0, 0, [element elementWidth], [element elementHeight]);
+        //elementRect = NSMakeRect(0, 0, [element elementWidth], [element elementHeight]);
         
 #warning worksheet elements
         if ([element isKindOfClass:[EDExpression class]]){

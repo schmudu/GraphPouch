@@ -496,6 +496,7 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
     [self _layoutTrafficLightsAndContent];
     [self _displayWindowAndTitlebar];
     
+    /*
     NSString *pattern = @".*\(.*)*(\\(.*\\))";
     
     NSRegularExpression *regex = [NSRegularExpression
@@ -511,6 +512,7 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
     //NSLog(@"aString:%@ Found string '%@' second:'%@'", aString, matchFirst, matchSecond);
     if ([matchSecond isEqualToString:@""])
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWindowSettingTitle object:self];
+     */
 }
 
 #pragma mark -
