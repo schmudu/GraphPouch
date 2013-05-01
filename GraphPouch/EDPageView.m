@@ -67,10 +67,6 @@
         [path fill];
     }
     
-    // page view
-    [[NSColor whiteColor] setFill];
-    [NSBezierPath fillRect:bounds];
-    
     // page drop shadow
     [[NSColor colorWithHexColorString:@"bbbbbb" alpha:0.3] setStroke];
     [NSBezierPath strokeRect:bounds];
@@ -109,10 +105,25 @@
     NSSize s = NSMakeSize(200, 100);
     
     // create the image
-    NSData *imageData = [self dataWithPDFInsideRect:[self bounds]];
+    NSData *imageData = [_container dataWithPDFInsideRect:[_container bounds]];
     NSImage *image = [[NSImage alloc] initWithData:imageData];
     
-    // create a rect in which you will draw the letter in the image
+    // create a rect in which you will draw number of pages being dragged in image
+    /*
+    [image lockFocus];
+    NSRect bounds = NSMakeRect(30, 50, 30, 30);
+    NSGradient* aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor orangeColor] endingColor:[NSColor cyanColor]];
+    
+    NSPoint centerPoint = NSMakePoint(NSMidX(bounds), NSMidY(bounds));
+    NSPoint otherPoint = NSMakePoint(centerPoint.x, centerPoint.y);
+    CGFloat firstRadius = MIN( ((bounds.size.width/2.0) - 2.0),
+                              ((bounds.size.height/2.0) -2.0) );
+    [aGradient drawFromCenter:centerPoint radius:firstRadius
+                     toCenter:otherPoint radius:0.0
+                      options:0];
+    [image unlockFocus];
+     */
+    
     NSRect imageBounds;
     imageBounds.origin = NSZeroPoint;
     imageBounds.size = s;

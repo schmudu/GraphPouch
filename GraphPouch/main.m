@@ -11,7 +11,6 @@
 
 int main(int argc, char *argv[])
 {
-    NSLog(@"in main.");
     // direct distribution/dev mode
     return NSApplicationMain(argc, (const char **)argv);
     

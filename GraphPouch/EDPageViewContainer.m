@@ -187,7 +187,8 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
+    [[NSColor whiteColor] setFill];
+    [NSBezierPath fillRect:[self bounds]];
 }
 
 #pragma mark expressions
