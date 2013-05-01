@@ -62,6 +62,7 @@ NSString *const EDContextMenuElementCopy                        = @"Copy";
 NSString *const EDContextMenuElementCut                         = @"Cut";
 
 #pragma mark element attributes
+NSString * const EDElementAttributeZIndex                       = @"zIndex";
 NSString * const EDElementAttributeSelected                     = @"selected";
 NSString * const EDElementAttributeLocationX                    = @"locationX";
 NSString * const EDElementAttributeLocationY                    = @"locationY";
@@ -387,7 +388,6 @@ NSString * const EDFontAttributeSuperscript                     = @"EDFontAttrib
 NSString * const EDTextViewDefaultString                        = @"Double click here to add your text";
 
 #pragma mark tokenize
-NSString * const EDKeyCalculatingRoot                           = @"EDKeyCalculatingRoot";
 NSString * const EDKeyValidEquation                             = @"EDKeyValidEquation";
 NSString * const EDKeyParsedTokens                              = @"EDKeyParsedTokens";
 NSString * const EDKeyEquation                                  = @"EDKeyEquation";

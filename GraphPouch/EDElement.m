@@ -11,6 +11,7 @@
 
 @implementation EDElement
 
+@dynamic zIndex;
 @dynamic selected;
 @dynamic locationX;
 @dynamic locationY;
@@ -18,6 +19,7 @@
 @dynamic elementHeight;
 
 - (void)copyAttributes:(EDElement *)source{
+    [self setZIndex:[source zIndex]];
     [self setSelected:[source selected]];
     [self setLocationX:[source locationX]];
     [self setLocationY:[source locationY]];

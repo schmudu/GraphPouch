@@ -97,6 +97,7 @@
         [self setMinValueX:[aDecoder decodeObjectForKey:EDGraphAttributeMinValueX]];
         [self setMaxValueY:[aDecoder decodeObjectForKey:EDGraphAttributeMaxValueY]];
         [self setMinValueY:[aDecoder decodeObjectForKey:EDGraphAttributeMinValueY]];
+        [self setZIndex:[aDecoder decodeObjectForKey:EDElementAttributeZIndex]];
         
         //EDPoint *newPoint;
         NSSet *points = [aDecoder decodeObjectForKey:EDGraphAttributePoints];
@@ -145,6 +146,7 @@
     [aCoder encodeObject:[self minValueX] forKey:EDGraphAttributeMinValueX];
     [aCoder encodeObject:[self maxValueY] forKey:EDGraphAttributeMaxValueY];
     [aCoder encodeObject:[self minValueY] forKey:EDGraphAttributeMinValueY];
+    [aCoder encodeObject:[self zIndex] forKey:EDElementAttributeZIndex];
 }
 
 

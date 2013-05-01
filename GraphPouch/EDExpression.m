@@ -51,6 +51,7 @@
         [self setElementHeight:[aDecoder decodeFloatForKey:EDElementAttributeHeight]];
         [self setExpression:[aDecoder decodeObjectForKey:EDExpressionAttributeExpression]];
         [self setFontSize:[aDecoder decodeFloatForKey:EDExpressionAttributeFontSize]];
+        [self setZIndex:[aDecoder decodeObjectForKey:EDElementAttributeZIndex]];
     }
     return self;
 }
@@ -63,6 +64,7 @@
     [aCoder encodeFloat:[self locationY] forKey:EDElementAttributeLocationY];
     [aCoder encodeFloat:[self elementWidth] forKey:EDElementAttributeWidth];
     [aCoder encodeFloat:[self elementHeight] forKey:EDElementAttributeHeight];
+    [aCoder encodeObject:[self zIndex] forKey:EDElementAttributeZIndex];
 }
 
 

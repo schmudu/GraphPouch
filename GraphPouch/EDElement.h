@@ -12,6 +12,7 @@
 
 @interface EDElement : NSManagedObject
 
+@property (nonatomic, retain) NSNumber *zIndex;
 @property float locationX, locationY, elementWidth, elementHeight;
 @property BOOL selected;
 

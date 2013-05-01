@@ -68,7 +68,6 @@
 		CD47113515BA1647008AACC3 /* EDDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47113415BA1647008AACC3 /* EDDocument.m */; };
 		CD47113815BA1647008AACC3 /* EDDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD47113615BA1647008AACC3 /* EDDocument.xib */; };
 		CD47113B15BA1647008AACC3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD47113915BA1647008AACC3 /* MainMenu.xib */; };
-		CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */; };
 		CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */; };
 		CD4E680D16E78E78002397C0 /* EDMenuWorksheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4E680C16E78E78002397C0 /* EDMenuWorksheetController.m */; };
 		CD4FF07E1716251A00DEBF29 /* EDExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4FF07D1716251A00DEBF29 /* EDExpression.m */; };
@@ -151,6 +150,7 @@
 		CDE6D66E15E4413100E5695F /* EDAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D66D15E4413100E5695F /* EDAppController.m */; };
 		CDE6D67015E4429800E5695F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDE6D66F15E4429800E5695F /* Preferences.xib */; };
 		CDE6D67715E4454B00E5695F /* EDPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE6D67615E4454B00E5695F /* EDPreferenceController.m */; };
+		CDE7459C1730CB29001EC4DC /* EDDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CDE745951730CB29001EC4DC /* EDDocument.xcdatamodeld */; };
 		CDF3E14816B9CC2A00AB78AF /* EDLine.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E14716B9CC2A00AB78AF /* EDLine.m */; };
 		CDF3E15416BB1F3400AB78AF /* EDLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E15316BB1F3400AB78AF /* EDLineView.m */; };
 		CDF3E16016BBF79700AB78AF /* EDTransformRectOnlyHorizontal.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF3E15F16BBF79700AB78AF /* EDTransformRectOnlyHorizontal.m */; };
@@ -285,17 +285,14 @@
 		CD47113415BA1647008AACC3 /* EDDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EDDocument.m; sourceTree = "<group>"; };
 		CD47113715BA1647008AACC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/EDDocument.xib; sourceTree = "<group>"; };
 		CD47113A15BA1647008AACC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		CD47113D15BA1647008AACC3 /* EDDocument.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EDDocument.xcdatamodel; sourceTree = "<group>"; };
 		CD47114415BA1C0C008AACC3 /* EDGraphArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDGraphArrayController.h; sourceTree = "<group>"; };
 		CD47114515BA1C0C008AACC3 /* EDGraphArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraphArrayController.m; sourceTree = "<group>"; };
 		CD4E680B16E78E78002397C0 /* EDMenuWorksheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDMenuWorksheetController.h; sourceTree = "<group>"; };
 		CD4E680C16E78E78002397C0 /* EDMenuWorksheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDMenuWorksheetController.m; sourceTree = "<group>"; };
-		CD4FF07B1714C21800DEBF29 /* v2.xcdatamodeld.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.xcdatamodeld.xcdatamodel; sourceTree = "<group>"; };
 		CD4FF07C1716251A00DEBF29 /* EDExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDExpression.h; sourceTree = "<group>"; };
 		CD4FF07D1716251A00DEBF29 /* EDExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDExpression.m; sourceTree = "<group>"; };
 		CD4FF08017175ECF00DEBF29 /* EDExpressionNodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDExpressionNodeView.h; sourceTree = "<group>"; };
 		CD4FF08117175ECF00DEBF29 /* EDExpressionNodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDExpressionNodeView.m; sourceTree = "<group>"; };
-		CD4FF083171B6C3F00DEBF29 /* v3.expression_font_size.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v3.expression_font_size.xcdatamodel; sourceTree = "<group>"; };
 		CD4FF084171C9F0600DEBF29 /* EDExpressionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDExpressionView.h; sourceTree = "<group>"; };
 		CD4FF085171C9F0600DEBF29 /* EDExpressionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDExpressionView.m; sourceTree = "<group>"; };
 		CD4FF088171CAE5500DEBF29 /* EDPanelPropertiesExpressionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesExpressionController.h; sourceTree = "<group>"; };
@@ -338,7 +335,6 @@
 		CD7A9F53172595CD00BA522E /* EDPanelPropertiesImage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesImage.xib; sourceTree = "<group>"; };
 		CD7C9CA4172DB5870022A475 /* icon_image_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_image_over.png; sourceTree = "<group>"; };
 		CD7C9CA5172DB5870022A475 /* icon_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_image.png; sourceTree = "<group>"; };
-		CD7EAA5716F49A5800EBE2B1 /* v1.xcdatamodeld.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v1.xcdatamodeld.xcdatamodel; sourceTree = "<group>"; };
 		CD80CC8C16C6B880001C3375 /* EDPanelPropertiesTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPanelPropertiesTextViewController.h; sourceTree = "<group>"; };
 		CD80CC8D16C6B880001C3375 /* EDPanelPropertiesTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPanelPropertiesTextViewController.m; sourceTree = "<group>"; };
 		CD80CC8E16C6B880001C3375 /* EDPanelPropertiesTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDPanelPropertiesTextView.xib; sourceTree = "<group>"; };
@@ -364,7 +360,6 @@
 		CD97257716F2721600A39E2D /* EDPageViewContainerTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPageViewContainerTextView.m; sourceTree = "<group>"; };
 		CD980DDD16FD0FC700209E02 /* EDPagesViewSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPagesViewSelectionView.h; sourceTree = "<group>"; };
 		CD980DDE16FD0FC700209E02 /* EDPagesViewSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPagesViewSelectionView.m; sourceTree = "<group>"; };
-		CD9D4C85172546F400F1697A /* v4.image.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v4.image.xcdatamodel; sourceTree = "<group>"; };
 		CD9D4C861725484400F1697A /* EDImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDImage.h; sourceTree = "<group>"; };
 		CD9D4C871725484400F1697A /* EDImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDImage.m; sourceTree = "<group>"; };
 		CD9D4C8A17256EB800F1697A /* EDImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDImageView.h; sourceTree = "<group>"; };
@@ -432,6 +427,12 @@
 		CDE6D66F15E4429800E5695F /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		CDE6D67515E4454B00E5695F /* EDPreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDPreferenceController.h; sourceTree = "<group>"; };
 		CDE6D67615E4454B00E5695F /* EDPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDPreferenceController.m; sourceTree = "<group>"; };
+		CDE745961730CB29001EC4DC /* EDDocument.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EDDocument.xcdatamodel; sourceTree = "<group>"; };
+		CDE745971730CB29001EC4DC /* v1.xcdatamodeld.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v1.xcdatamodeld.xcdatamodel; sourceTree = "<group>"; };
+		CDE745981730CB29001EC4DC /* v2.xcdatamodeld.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.xcdatamodeld.xcdatamodel; sourceTree = "<group>"; };
+		CDE745991730CB29001EC4DC /* v3.expression_font_size.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v3.expression_font_size.xcdatamodel; sourceTree = "<group>"; };
+		CDE7459A1730CB29001EC4DC /* v4.image.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v4.image.xcdatamodel; sourceTree = "<group>"; };
+		CDE7459B1730CB29001EC4DC /* v5.element_z_index.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v5.element_z_index.xcdatamodel; sourceTree = "<group>"; };
 		CDF3E14616B9CC2A00AB78AF /* EDLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDLine.h; sourceTree = "<group>"; };
 		CDF3E14716B9CC2A00AB78AF /* EDLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDLine.m; sourceTree = "<group>"; };
 		CDF3E15216BB1F3400AB78AF /* EDLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDLineView.h; sourceTree = "<group>"; };
@@ -717,7 +718,9 @@
 				CDF3E17316BC135B00AB78AF /* NSManagedObject */,
 				CDAA91121669B15A009B75A2 /* NSMutableDictionary */,
 				CDAA91131669B186009B75A2 /* NSObject */,
-				CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */,
+				CDE745951730CB29001EC4DC /* EDDocument.xcdatamodeld */,
+				CDE6D62E15DE774000E5695F /* EDElement.h */,
+				CDE6D62F15DE774000E5695F /* EDElement.m */,
 				CD4FF07C1716251A00DEBF29 /* EDExpression.h */,
 				CD4FF07D1716251A00DEBF29 /* EDExpression.m */,
 				CD9D4C861725484400F1697A /* EDImage.h */,
@@ -730,8 +733,6 @@
 				CD3A4FE416359FC90042B6DD /* EDPage.m */,
 				CD2DD5CD16470906006557FC /* EDPoint.h */,
 				CD2DD5CE16470906006557FC /* EDPoint.m */,
-				CDE6D62E15DE774000E5695F /* EDElement.h */,
-				CDE6D62F15DE774000E5695F /* EDElement.m */,
 				CDB682981684D1A900702EAA /* EDGraph.h */,
 				CDB682991684D1A900702EAA /* EDGraph.m */,
 				CDAA912B166B9767009B75A2 /* EDStack.h */,
@@ -1364,7 +1365,6 @@
 			files = (
 				CD47112E15BA1647008AACC3 /* main.m in Sources */,
 				CD47113515BA1647008AACC3 /* EDDocument.m in Sources */,
-				CD47113E15BA1647008AACC3 /* EDDocument.xcdatamodeld in Sources */,
 				CD47114615BA1C0C008AACC3 /* EDGraphArrayController.m in Sources */,
 				CD015FCE15BA66CA0096CDF9 /* EDConstants.m in Sources */,
 				CD41B54D15BB024C00640E73 /* EDWorksheetView.m in Sources */,
@@ -1485,6 +1485,7 @@
 				CD7A9F4C17258F3300BA522E /* EDPanelPropertiesBasicController.m in Sources */,
 				CD7A9F4F17258F8300BA522E /* EDPanelPropertiesBasicWithoutHeightController.m in Sources */,
 				CD7A9F54172595CD00BA522E /* EDPanelPropertiesImageController.m in Sources */,
+				CDE7459C1730CB29001EC4DC /* EDDocument.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1642,16 +1643,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		CD47113C15BA1647008AACC3 /* EDDocument.xcdatamodeld */ = {
+		CDE745951730CB29001EC4DC /* EDDocument.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				CD9D4C85172546F400F1697A /* v4.image.xcdatamodel */,
-				CD4FF083171B6C3F00DEBF29 /* v3.expression_font_size.xcdatamodel */,
-				CD4FF07B1714C21800DEBF29 /* v2.xcdatamodeld.xcdatamodel */,
-				CD7EAA5716F49A5800EBE2B1 /* v1.xcdatamodeld.xcdatamodel */,
-				CD47113D15BA1647008AACC3 /* EDDocument.xcdatamodel */,
+				CDE745961730CB29001EC4DC /* EDDocument.xcdatamodel */,
+				CDE745971730CB29001EC4DC /* v1.xcdatamodeld.xcdatamodel */,
+				CDE745981730CB29001EC4DC /* v2.xcdatamodeld.xcdatamodel */,
+				CDE745991730CB29001EC4DC /* v3.expression_font_size.xcdatamodel */,
+				CDE7459A1730CB29001EC4DC /* v4.image.xcdatamodel */,
+				CDE7459B1730CB29001EC4DC /* v5.element_z_index.xcdatamodel */,
 			);
-			currentVersion = CD9D4C85172546F400F1697A /* v4.image.xcdatamodel */;
+			currentVersion = CDE7459B1730CB29001EC4DC /* v5.element_z_index.xcdatamodel */;
 			path = EDDocument.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

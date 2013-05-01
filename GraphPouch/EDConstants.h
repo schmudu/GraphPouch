@@ -17,6 +17,7 @@ extern NSString *const EDGraphAttributeLabels;
 extern NSString *const EDGraphBorderColor;
 extern float const EDPageViewGraphBorderLineWidth;
 extern NSString *const EDGraphAttributeGridLines;
+extern NSString *const EDElementAttributeZIndex;
 extern NSString *const EDElementAttributeSelected;
 extern NSString *const EDGraphAttributeTickMarks;
 extern NSString *const EDGraphAttributeCoordinateAxes;
@@ -413,7 +414,6 @@ typedef enum{
     EDAssociationLeft
 } EDAssociation;
 
-extern NSString *const EDKeyCalculatingRoot;
 extern NSString *const EDKeyValidEquation;
 extern NSString *const EDKeyParsedTokens;
 extern NSString *const EDKeyEquation;

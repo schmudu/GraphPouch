@@ -206,7 +206,6 @@
                     if ((!findingRoot) && ((isnan(answer) || isinf(answer)))){
                         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                         [errorDetail setValue:[NSString stringWithFormat:@"Got infinity/divide_by_zero answer"] forKey:NSLocalizedDescriptionKey];
-                        [errorDetail setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyCalculatingRoot];
                         if(error != NULL)
                             *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                         return 0;

@@ -47,6 +47,7 @@
         [self setElementWidth:[aDecoder decodeFloatForKey:EDElementAttributeWidth]];
         [self setElementHeight:[aDecoder decodeFloatForKey:EDElementAttributeHeight]];
         [self setTextValue:[aDecoder decodeObjectForKey:EDTextboxAttributeTextValue]];
+        [self setZIndex:[aDecoder decodeObjectForKey:EDElementAttributeZIndex]];
     }
     return self;
 }
@@ -58,6 +59,7 @@
     [aCoder encodeFloat:[self locationY] forKey:EDElementAttributeLocationY];
     [aCoder encodeFloat:[self elementWidth] forKey:EDElementAttributeWidth];
     [aCoder encodeFloat:[self elementHeight] forKey:EDElementAttributeHeight];
+    [aCoder encodeObject:[self zIndex] forKey:EDElementAttributeZIndex];
 }
 
 
