@@ -104,34 +104,18 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventPageViewStartDrag object:self];
     
     NSPoint down = [_mouseDownEvent locationInWindow];
-    /*
-     NSPoint drag = [theEvent locationInWindow];
-     float distance = hypotf(down.x - drag.x, down.y - drag.y);
-    
-    if (distance < 3){
-        NSLog(@"returning: distance:%f", distance);
-        return;
-    }*/
-    
-    // validation
     
     // more validations
     NSSize s = NSMakeSize(200, 100);
     
     // create the image
-    NSImage *anImage = [[NSImage alloc] initWithSize:s];
-    //NSString *thePath = [[NSBundle mainBundle] pathForResource:@"about_logo" ofType:@"png"];
-    //NSImage *anImage = [[NSImage alloc] initWithContentsOfFile:thePath];
+    NSData *imageData = [self dataWithPDFInsideRect:[self bounds]];
+    NSImage *image = [[NSImage alloc] initWithData:imageData];
     
     // create a rect in which you will draw the letter in the image
     NSRect imageBounds;
     imageBounds.origin = NSZeroPoint;
     imageBounds.size = s;
-    
-    // draw the letter on the image
-    [anImage lockFocus];
-    [self drawStringCenteredIn:imageBounds];
-    [anImage unlockFocus];
     
     // Get the location of the mouseDown event
     NSPoint p = [[[self window] contentView] convertPoint:down toView:self];
@@ -141,7 +125,7 @@
     p.y = p.y + EDPageImageViewHeight/2;
     
     // Start the drag
-    [self dragImage:anImage at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:_pb source:self slideBack:YES];
+    [self dragImage:image at:p offset:NSZeroSize event:_mouseDownEvent pasteboard:_pb source:self slideBack:YES];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent{
@@ -188,11 +172,6 @@
     if ([nextEvent type] == NSLeftMouseDragged){
         [self mouseDragged:nextEvent];
      }
-}
-
-- (void)drawStringCenteredIn:(NSRect)rect{
-    [[NSColor whiteColor] setFill];
-    [NSBezierPath fillRect:NSMakeRect(0, 0, EDPageImageViewWidth, EDPageImageViewHeight)];
 }
 
 - (void)deselectPage{
