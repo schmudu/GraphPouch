@@ -10,6 +10,10 @@
 #import "EDToken.h"
 #import "EDStack.h"
 
+@interface EDParser()
++ (BOOL)numberIsFraction:(NSNumber *)number;
+@end
+
 @implementation EDParser
 
 + (NSMutableArray *)parse:(NSMutableArray *)tokens error:(NSError **)error{
@@ -68,7 +72,6 @@
                         match = true;
                         // increment parenthesis for this operator
                         [lastOperatorToken incrementParenthesisCount];
-                        NSLog(@"add paren to token:%@", [lastOperatorToken tokenValue]);
                     }
                 }
                 
@@ -174,6 +177,7 @@
                     return 0;
                 }
                 else {
+                    BOOL findingRoot = FALSE;
                     secondNum = [[secondNumToken tokenValue] doubleValue];
                     firstNum = [[firstNumToken tokenValue] doubleValue];
                     
@@ -185,8 +189,13 @@
                         answer = firstNum * secondNum;
                     else if ([[token tokenValue] isEqualToString:@"/"])
                         answer = firstNum / secondNum;
-                    else if ([[token tokenValue] isEqualToString:@"^"])
+                    else if ([[token tokenValue] isEqualToString:@"^"]){
                         answer = pow(firstNum,secondNum);
+                        
+                        // root numbers are okay, otherwise the expressions will not show
+                        if ([EDParser numberIsFraction:[NSNumber numberWithDouble:secondNum]])
+                            findingRoot = TRUE;
+                    }
                     
                     resultToken = [[EDToken alloc]initWithContext:context];
                     
@@ -194,9 +203,10 @@
                     if ((value < 4.1) && ( value > 3.9)){
                         NSLog(@"value:%f answer:%f", value, answer);
                     }*/
-                    if (isnan(answer) || isinf(answer)){
+                    if ((!findingRoot) && ((isnan(answer) || isinf(answer)))){
                         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                         [errorDetail setValue:[NSString stringWithFormat:@"Got infinity/divide_by_zero answer"] forKey:NSLocalizedDescriptionKey];
+                        [errorDetail setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyCalculatingRoot];
                         if(error != NULL)
                             *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];
                         return 0;
@@ -208,5 +218,13 @@
         }
     }
     return [[(EDToken *)[result getLastObject] tokenValue] floatValue];
+}
+
++ (BOOL)numberIsFraction:(NSNumber *)number{
+    double dValue = [number doubleValue];
+    if (dValue < 0.0)
+        return (dValue != ceil(dValue));
+    else
+        return (dValue != floor(dValue));
 }
 @end

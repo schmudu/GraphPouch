@@ -387,6 +387,7 @@ NSString * const EDFontAttributeSuperscript                     = @"EDFontAttrib
 NSString * const EDTextViewDefaultString                        = @"Double click here to add your text";
 
 #pragma mark tokenize
+NSString * const EDKeyCalculatingRoot                           = @"EDKeyCalculatingRoot";
 NSString * const EDKeyValidEquation                             = @"EDKeyValidEquation";
 NSString * const EDKeyParsedTokens                              = @"EDKeyParsedTokens";
 NSString * const EDKeyEquation                                  = @"EDKeyEquation";

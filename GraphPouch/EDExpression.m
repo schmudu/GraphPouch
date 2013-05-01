@@ -218,7 +218,7 @@
         // calculate expression
         //float result = [EDParser calculate:parsedTokens error:&error context:context];
         // pass in value to test for other errors
-        float result = [EDParser calculate:parsedTokens error:error context:context varValue:2.0];
+        [EDParser calculate:parsedTokens error:error context:context varValue:2.0];
         if (*error) {
             [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
             return results;
@@ -229,13 +229,14 @@
     }
     
     // pass in value, other tests exist within calculate
+    /*
     [EDParser calculate:parsedTokens error:error context:context varValue:5.0];
     
     if (*error != nil) {
         NSLog(@"error by calculating results.");
         [results setValue:[NSNumber numberWithBool:FALSE] forKey:EDKeyValidEquation];
         return results;
-    }
+    }*/
     
     [results setValue:[NSNumber numberWithBool:TRUE] forKey:EDKeyValidEquation];
     [results setObject:parsedTokens forKey:EDKeyParsedTokens];
