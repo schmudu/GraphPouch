@@ -680,4 +680,16 @@ return results;
     }
     return matchingElements;
 }
+
++ (EDElement *)getElementOnPage:(EDPage *)page context:(NSManagedObjectContext *)context withZIndex:(int)zIndex{
+    NSArray *allElements = [EDCoreDataUtility getAllWorksheetElementsOnPage:page context:context];
+    
+    // get all elements on page
+    for (EDElement *currentElement in allElements){
+        if ([[currentElement zIndex] intValue] == zIndex){
+            return currentElement;
+        }
+    }
+    return nil;
+}
 @end
