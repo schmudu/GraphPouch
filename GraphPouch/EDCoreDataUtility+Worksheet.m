@@ -201,33 +201,94 @@
         if ([element isKindOfClass:[EDExpression class]]){
             EDExpression *newExpression = (EDExpression *)[context copyObject:element toContext:context parent:EDEntityNameExpression];
             [newExpression setPage:currentPage];
+            [newExpression setZIndexAfterInsert:currentPage];
             [insertedObjects addObject:newExpression];
         }
         else if ([element isKindOfClass:[EDGraph class]]){
             EDGraph *newGraph = (EDGraph *)[context copyObject:element toContext:context parent:EDEntityNamePage];
             [newGraph setPage:currentPage];
+            [newGraph setZIndexAfterInsert:currentPage];
             [insertedObjects addObject:newGraph];
         }
         else if ([element isKindOfClass:[EDImage class]]){
             EDImage *newImage = (EDImage *)[context copyObject:element toContext:context parent:EDEntityNamePage];
             [newImage setPage:currentPage];
+            [newImage setZIndexAfterInsert:currentPage];
             [insertedObjects addObject:newImage];
         }
         else if ([element isKindOfClass:[EDLine class]]){
             // copying from copy context to document child context
             EDLine *newLine = (EDLine *)[context copyObject:element toContext:context parent:EDEntityNamePage];
             [newLine setPage:currentPage];
+            [newLine setZIndexAfterInsert:currentPage];
             [insertedObjects addObject:newLine];
         }
         else if ([element isKindOfClass:[EDTextbox class]]){
             // copying from copy context to document child context
             EDTextbox *newTextbox = (EDTextbox *)[context copyObject:element toContext:context parent:EDEntityNamePage];
             [newTextbox setPage:currentPage];
+            [newTextbox setZIndexAfterInsert:currentPage];
             [insertedObjects addObject:newTextbox];
         }
     }
     
     return insertedObjects;
+}
+
++ (NSMutableArray *)getAllSelectedWorksheetElementsOnPage:(EDPage *)currentPage context:(NSManagedObjectContext *)context{
+    // gets all selected objects
+#warning worksheet elements
+    NSMutableArray *allObjects = [[NSMutableArray alloc] init];
+    NSArray *fetchedExpressions = [EDExpression getAllSelectedObjectsOnPage:currentPage context:context];
+    NSArray *fetchedGraphs = [EDGraph getAllSelectedObjectsOnPage:currentPage context:context];
+    NSArray *fetchedImages = [EDImage getAllSelectedObjectsOnPage:currentPage context:context];
+    NSArray *fetchedLines = [EDLine getAllSelectedObjectsOnPage:currentPage context:context];
+    NSArray *fetchedTextboxes = [EDTextbox getAllSelectedObjectsOnPage:currentPage context:context];
+    
+    if (fetchedExpressions)
+        [allObjects addObjectsFromArray:fetchedExpressions];
+    
+    if (fetchedGraphs)
+        [allObjects addObjectsFromArray:fetchedGraphs];
+    
+    if (fetchedImages)
+        [allObjects addObjectsFromArray:fetchedImages];
+    
+    if (fetchedLines)
+        [allObjects addObjectsFromArray:fetchedLines];
+    
+    if (fetchedTextboxes)
+        [allObjects addObjectsFromArray:fetchedTextboxes];
+    
+    return allObjects;
+}
+
++ (NSMutableArray *)getAllUnselectedWorksheetElementsOnPage:(EDPage *)currentPage context:(NSManagedObjectContext *)context{
+    // gets all selected objects
+#warning worksheet elements
+    NSMutableArray *allObjects = [[NSMutableArray alloc] init];
+    NSArray *fetchedExpressions = [EDExpression getAllUnselectedObjectsOnPage:currentPage context:context];
+    NSArray *fetchedGraphs = [EDGraph getAllUnselectedObjectsOnPage:currentPage context:context];
+    NSArray *fetchedImages = [EDImage getAllUnselectedObjectsOnPage:currentPage context:context];
+    NSArray *fetchedLines = [EDLine getAllUnselectedObjectsOnPage:currentPage context:context];
+    NSArray *fetchedTextboxes = [EDTextbox getAllUnselectedObjectsOnPage:currentPage context:context];
+    
+    if (fetchedExpressions)
+        [allObjects addObjectsFromArray:fetchedExpressions];
+    
+    if (fetchedGraphs)
+        [allObjects addObjectsFromArray:fetchedGraphs];
+    
+    if (fetchedImages)
+        [allObjects addObjectsFromArray:fetchedImages];
+    
+    if (fetchedLines)
+        [allObjects addObjectsFromArray:fetchedLines];
+    
+    if (fetchedTextboxes)
+        [allObjects addObjectsFromArray:fetchedTextboxes];
+    
+    return allObjects;
 }
 
 + (NSMutableArray *)getAllWorksheetElementsOnPage:(EDPage *)currentPage context:(NSManagedObjectContext *)context{
@@ -579,5 +640,44 @@ return results;
     //if there was a change then save
     if (changed)
         [EDCoreDataUtility saveContext:context];
+}
+
+#pragma mark z-index
++ (int)getMaxZIndexOnPage:(EDPage *)page context:(NSManagedObjectContext *)context doesNotMatch:(EDElement *)element{
+    int maxZ = 0;
+    // get all elements on page
+    NSArray *allElements = [EDCoreDataUtility getAllWorksheetElementsOnPage:page context:context];
+    
+    for (EDElement *currenElement in allElements){
+        if (([[currenElement zIndex] intValue] > maxZ) && (currenElement != element))
+            maxZ = [[currenElement zIndex] intValue];
+    }
+    return maxZ;
+}
+
++ (NSArray *)getWorksheetElementsWithZIndexLessThan:(int)zIndex page:(EDPage *)page context:(NSManagedObjectContext *)context doesNotMatch:(EDElement *)element{
+    NSMutableArray *matchingElements = [NSMutableArray array];
+    NSArray *allElements = [EDCoreDataUtility getAllWorksheetElementsOnPage:page context:context];
+    // get all elements on page
+    for (EDElement *currentElement in allElements){
+        // if element is less than zIndex then insert into array
+        if (([[currentElement zIndex] intValue] < zIndex) && (element != currentElement)){
+            [matchingElements addObject:currentElement];
+        }
+    }
+    return matchingElements;
+}
+
++ (NSArray *)getWorksheetElementsWithZIndexGreaterThan:(int)zIndex page:(EDPage *)page context:(NSManagedObjectContext *)context doesNotMatch:(EDElement *)element{
+    NSMutableArray *matchingElements = [NSMutableArray array];
+    NSArray *allElements = [EDCoreDataUtility getAllWorksheetElementsOnPage:page context:context];
+    // get all elements on page
+    for (EDElement *currentElement in allElements){
+        // if currentElement is less than zIndex then insert into array
+        if (([[currentElement zIndex] intValue] > zIndex) && (element != currentElement)){
+            [matchingElements addObject:currentElement];
+        }
+    }
+    return matchingElements;
 }
 @end

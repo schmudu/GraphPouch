@@ -83,7 +83,9 @@
     [request setEntity:entity];
     
     // grab relationships
-    [request setRelationshipKeyPathsForPrefetching:[NSArray arrayWithObject:@"graphs"]];
+#warning worksheet elements
+    //[request setRelationshipKeyPathsForPrefetching:[NSArray arrayWithObject:@"graphs"]];
+    [request setRelationshipKeyPathsForPrefetching:[NSArray arrayWithObjects:@"expressions", @"graphs", @"images", @"lines", @"textboxes", nil]];
     
     NSError *error = nil;
     NSArray *objects = [context executeFetchRequest:request error:&error];
@@ -95,6 +97,73 @@
     }
     
     NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"page = %@", page];
+    NSArray *filteredResults = [objects filteredArrayUsingPredicate:searchFilter];;
+    
+    //NSArray *results = [[context executeFetchRequest:request error:&error] filteredArrayUsingPredicate:searchFilter];
+    if (error != nil)
+    {
+        //handle errors
+    }
+    return filteredResults;
+}
+
++ (NSArray *)getAllSelectedObjectsOnPage:(EDPage *)page context:(NSManagedObjectContext *)context{
+    NSEntityDescription *entity;
+    
+    entity = [self entityDescriptionInContext:context];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
+    
+    // grab relationships
+#warning worksheet elements
+    //[request setRelationshipKeyPathsForPrefetching:[NSArray arrayWithObject:@"graphs"]];
+    [request setRelationshipKeyPathsForPrefetching:[NSArray arrayWithObjects:@"expressions", @"graphs", @"images", @"lines", @"textboxes", nil]];
+    
+    NSError *error = nil;
+    NSArray *objects = [context executeFetchRequest:request error:&error];
+    
+    // verify that objects actually exist
+    if ([objects count] == 0) {
+        // if no objects then return empty
+        return nil;
+    }
+    
+    //NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"page = %@", page];
+    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"page = %@ AND selected = %d", page, TRUE];
+    NSArray *filteredResults = [objects filteredArrayUsingPredicate:searchFilter];;
+    
+    //NSArray *results = [[context executeFetchRequest:request error:&error] filteredArrayUsingPredicate:searchFilter];
+    if (error != nil)
+    {
+        //handle errors
+    }
+    return filteredResults;
+}
+
++ (NSArray *)getAllUnselectedObjectsOnPage:(EDPage *)page context:(NSManagedObjectContext *)context{
+    NSEntityDescription *entity;
+    
+    entity = [self entityDescriptionInContext:context];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
+    
+    // grab relationships
+#warning worksheet elements
+    //[request setRelationshipKeyPathsForPrefetching:[NSArray arrayWithObject:@"graphs"]];
+    [request setRelationshipKeyPathsForPrefetching:[NSArray arrayWithObjects:@"expressions", @"graphs", @"images", @"lines", @"textboxes", nil]];
+    
+    NSError *error = nil;
+    NSArray *objects = [context executeFetchRequest:request error:&error];
+    
+    // verify that objects actually exist
+    if ([objects count] == 0) {
+        // if no objects then return empty
+        return nil;
+    }
+    
+    NSPredicate *searchFilter = [NSPredicate predicateWithFormat:@"page = %@ AND selected = %d", page, FALSE];
     NSArray *filteredResults = [objects filteredArrayUsingPredicate:searchFilter];;
     
     //NSArray *results = [[context executeFetchRequest:request error:&error] filteredArrayUsingPredicate:searchFilter];

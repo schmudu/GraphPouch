@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
+#import "EDPage.h"
 
 @interface EDElement : NSManagedObject
 
@@ -17,4 +17,9 @@
 @property BOOL selected;
 
 - (void)copyAttributes:(EDElement *)source;
+- (void)moveZIndexBack:(EDPage *)page;
+- (void)moveZIndexBackward:(EDPage *)page;
+- (void)moveZIndexForward:(EDPage *)page;
+- (void)moveZIndexFront:(EDPage *)page;
+- (void)setZIndexAfterInsert:(EDPage *)page;
 @end

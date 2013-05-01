@@ -19,6 +19,11 @@
 + (void)deselectAllSelectedWorksheetElementsOnCurrentPage:(NSManagedObjectContext *)context selectElement:(EDElement *)element;
 + (NSMutableArray *)getAllSelectedWorksheetElements:(NSManagedObjectContext *)context;
 + (NSMutableArray *)getAllWorksheetElementsOnPage:(EDPage *)currentPage context:(NSManagedObjectContext *)context;
++ (NSMutableArray *)getAllSelectedWorksheetElementsOnPage:(EDPage *)currentPage context:(NSManagedObjectContext *)context;
++ (NSMutableArray *)getAllUnselectedWorksheetElementsOnPage:(EDPage *)currentPage context:(NSManagedObjectContext *)context;
++ (int)getMaxZIndexOnPage:(EDPage *)page context:(NSManagedObjectContext *)context doesNotMatch:(EDElement *)element;
++ (NSArray *)getWorksheetElementsWithZIndexGreaterThan:(int)zIndex page:(EDPage *)page context:(NSManagedObjectContext *)context doesNotMatch:(EDElement *)element;
++ (NSArray *)getWorksheetElementsWithZIndexLessThan:(int)zIndex page:(EDPage *)page context:(NSManagedObjectContext *)context doesNotMatch:(EDElement *)element;
 //+ (NSMutableDictionary *)getAllTypesOfSelectedWorksheetElements:(NSManagedObjectContext *)context;
 + (NSMutableDictionary *)getPanelType:(NSManagedObjectContext *)context;
 + (NSArray *)insertWorksheetElements:(NSArray *)elements intoContext:(NSManagedObjectContext *)context;

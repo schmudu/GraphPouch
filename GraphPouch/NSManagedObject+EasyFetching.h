@@ -16,8 +16,10 @@
 + (NSArray *)getAllObjectsOnPage:(EDPage *)page context:(NSManagedObjectContext *)context;
 + (NSArray *)getAllObjectsOrderedByPageNumber:(NSManagedObjectContext *)context;
 + (NSArray *)getAllSelectedObjects:(NSManagedObjectContext *)context;
++ (NSArray *)getAllSelectedObjectsOnPage:(EDPage *)page context:(NSManagedObjectContext *)context;
 + (NSArray *)getAllUnselectedObjects:(NSManagedObjectContext *)context;
 + (NSArray *)getAllUnselectedObjectsOrderedByPageNumber:(NSManagedObjectContext *)context;
++ (NSArray *)getAllUnselectedObjectsOnPage:(EDPage *)page context:(NSManagedObjectContext *)context;
 + (NSManagedObject *)getCurrentPage:(NSManagedObjectContext *)context;
 + (NSArray *)getAllSelectedObjectsOrderedByPageNumber:(NSManagedObjectContext *)context;
 + (void)printAll:(NSManagedObjectContext *)context;

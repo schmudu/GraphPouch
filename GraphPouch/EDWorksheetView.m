@@ -132,7 +132,7 @@
 }
 
 #pragma mark drawing
-NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView, void *context) {
+NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *context) {
     // order view by isSelected
     EDWorksheetElementView *firstElement;
     EDWorksheetElementView *secondElement;
@@ -142,7 +142,8 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
         if ([secondView isKindOfClass:[EDWorksheetElementView class]]) {
             secondElement = (EDWorksheetElementView *)secondView;
             // set ordering
-            if ([[firstElement dataObj] selected] && (![[secondElement dataObj] selected])){
+            //if ([[firstElement dataObj] selected] && (![[secondElement dataObj] selected])){
+            if ([[[firstElement dataObj] zIndex] intValue] > [[[secondElement dataObj] zIndex] intValue]){
                 return NSOrderedDescending;
             }
         }
@@ -695,7 +696,6 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     NSUInteger flags = [theEvent modifierFlags];
     if(flags & NSControlKeyMask){
         // do nothing
-//#error menu not showing up for control click
         [self rightMouseDown:theEvent];
     }
     else{
@@ -774,7 +774,7 @@ NSComparisonResult viewCompareBySelection(NSView *firstView, NSView *secondView,
     [self disableAllTextBoxesFromEditing];
     
     // order views
-    [self sortSubviewsUsingFunction:&viewCompareBySelection context:nil];
+    [self sortSubviewsUsingFunction:&viewCompare context:nil];
     
     // enables movement via multiple selection
     // notify all selectd subviews that mouse down was pressed

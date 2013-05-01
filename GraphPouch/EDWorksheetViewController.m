@@ -140,6 +140,7 @@
     [newExpression setElementWidth:EDExpressionDefaultWidth];
     [newExpression setElementHeight:EDExpressionDefaultHeight];
     [newExpression setFontSize:EDExpressionDefaultFontSize];
+    [newExpression setZIndexAfterInsert:currentPage];
     
     // enter default text
     [newExpression setExpression:@"y=2x+4"];
@@ -166,6 +167,7 @@
     [newTextbox setLocationY:150];
     [newTextbox setElementWidth:EDWorksheetLineSelectionWidth];
     [newTextbox setElementHeight:EDWorksheetLineSelectionHeight];
+    [newTextbox setZIndexAfterInsert:currentPage];
     
     // enter default text
     NSFont *defaultFont;
@@ -196,6 +198,7 @@
     [newLine setElementWidth:EDWorksheetLineSelectionWidth];
     [newLine setElementHeight:EDWorksheetLineSelectionHeight];
     [newLine setThickness:1.0];
+    [newLine setZIndexAfterInsert:currentPage];
     
     // select this graph and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newLine];
@@ -232,6 +235,7 @@
         [newImage setElementWidth:500];
         [newImage setElementHeight:500];
         [newImage setImageData:imageData];
+        [newImage setZIndexAfterInsert:currentPage];
         i++;
     }
 }
@@ -256,6 +260,7 @@
     [newImage setElementWidth:500];
     [newImage setElementHeight:500];
     [newImage setImageData:imageData];
+    [newImage setZIndexAfterInsert:currentPage];
     
     // select this image and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newImage];
@@ -284,6 +289,7 @@
     [newGraph setScaleY:[NSNumber numberWithInt:2]];
     [newGraph setLabelIntervalX:[NSNumber numberWithInt:1]];
     [newGraph setLabelIntervalY:[NSNumber numberWithInt:1]];
+    [newGraph setZIndexAfterInsert:currentPage];
     
     // select this graph and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newGraph];
@@ -306,6 +312,7 @@
     [newTextbox setElementWidth:100];
     [newTextbox setElementHeight:30];
     [newTextbox setTextValue:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Name"]]];
+    [newTextbox setZIndexAfterInsert:currentPage];
     
     // add line
     EDLine *newLine = [[EDLine alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameLine inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
@@ -321,9 +328,7 @@
     [newLine setElementWidth:200];
     [newLine setElementHeight:EDWorksheetLineSelectionHeight];
     [newLine setThickness:1.0];
-    
-    // save
-    //[EDCoreDataUtility save:_context];
+    [newLine setZIndexAfterInsert:currentPage];
 }
 
 - (void)addLabelDate{
@@ -343,6 +348,7 @@
     [newTextbox setElementWidth:100];
     [newTextbox setElementHeight:30];
     [newTextbox setTextValue:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Date"]]];
+    [newTextbox setZIndexAfterInsert:currentPage];
     
     // add line
     EDLine *newLine = [[EDLine alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameLine inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
@@ -358,9 +364,7 @@
     [newLine setElementWidth:200];
     [newLine setElementHeight:EDWorksheetLineSelectionHeight];
     [newLine setThickness:1.0];
-    
-    // save
-    //[EDCoreDataUtility save:_context];
+    [newLine setZIndexAfterInsert:currentPage];
 }
 
 #pragma mark menu

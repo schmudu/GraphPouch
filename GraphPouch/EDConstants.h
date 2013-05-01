@@ -62,6 +62,11 @@ extern NSString *const EDContextMenuElementDeselect;
 extern NSString *const EDContextMenuElementDelete;
 extern NSString *const EDContextMenuElementCopy;
 extern NSString *const EDContextMenuElementCut;
+extern NSString *const EDContextMenuElementMoveBack;
+extern NSString *const EDContextMenuElementMoveBackward;
+extern NSString *const EDContextMenuElementMoveForward;
+extern NSString *const EDContextMenuElementMoveFront;
+extern NSString *const EDContextMenuOrderTitle;
 
 #pragma mark context menu worksheet
 extern NSString *const EDContextMenuWorksheetDeselect;

@@ -14,6 +14,7 @@
 #import "NSManagedObject+EasyFetching.h"
 #import "NSManagedObject+Attributes.h"
 #import "EDCoreDataUtility+Worksheet.h"
+#import "EDCoreDataUtility+Pages.h"
 #import "NSObject+Document.h"
 
 @interface EDWorksheetElementView()
@@ -27,6 +28,10 @@
 - (void)onMenuCommandDelete:(NSNotification *)note;
 - (void)onMenuCommandDeselect:(NSNotification *)note;
 - (void)onMenuCommandSelect:(NSNotification *)note;
+- (void)onMenuCommandMoveBack:(NSNotification *)note;
+- (void)onMenuCommandMoveBackward:(NSNotification *)note;
+- (void)onMenuCommandMoveForward:(NSNotification *)note;
+- (void)onMenuCommandMoveFront:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetElementView
@@ -104,7 +109,12 @@
     
     if (([[menuItem title] isEqualToString:EDContextMenuElementCopy]) ||
         ([[menuItem title] isEqualToString:EDContextMenuElementCut]) ||
-        ([[menuItem title] isEqualToString:EDContextMenuElementDelete])){
+        ([[menuItem title] isEqualToString:EDContextMenuElementDelete]) ||
+        ([[menuItem title] isEqualToString:EDContextMenuElementMoveBack]) ||
+        ([[menuItem title] isEqualToString:EDContextMenuElementMoveBackward]) ||
+        ([[menuItem title] isEqualToString:EDContextMenuElementMoveForward]) ||
+        ([[menuItem title] isEqualToString:EDContextMenuOrderTitle]) ||
+        ([[menuItem title] isEqualToString:EDContextMenuElementMoveFront])){
         return TRUE;
     }
     
@@ -119,7 +129,41 @@
     [returnMenu addItemWithTitle:EDContextMenuElementCopy action:@selector(onMenuCommandCopy:) keyEquivalent:@""];
     [returnMenu addItemWithTitle:EDContextMenuElementCut action:@selector(onMenuCommandCut:) keyEquivalent:@""];
     [returnMenu addItemWithTitle:EDContextMenuElementDelete action:@selector(onMenuCommandDelete:) keyEquivalent:@""];
+    [returnMenu addItem:[NSMenuItem separatorItem]];
+    
+    // reorder element
+    NSMenu *arrangeMenu = [[NSMenu alloc] initWithTitle:@"arrange menu"];
+    NSMenuItem *arrangeMenuItem = [[NSMenuItem alloc] initWithTitle:EDContextMenuOrderTitle action:nil keyEquivalent:@""];
+    [arrangeMenu addItemWithTitle:EDContextMenuElementMoveFront action:@selector(onMenuCommandMoveFront:) keyEquivalent:@""];
+    [arrangeMenu addItemWithTitle:EDContextMenuElementMoveForward action:@selector(onMenuCommandMoveForward:) keyEquivalent:@""];
+    [arrangeMenu addItemWithTitle:EDContextMenuElementMoveBackward action:@selector(onMenuCommandMoveBackward:) keyEquivalent:@""];
+    [arrangeMenu addItemWithTitle:EDContextMenuElementMoveBack action:@selector(onMenuCommandMoveBack:) keyEquivalent:@""];
+    [arrangeMenuItem setSubmenu:arrangeMenu];
+    
+    [returnMenu addItem:arrangeMenuItem];
+    
     return returnMenu;
+}
+
+#pragma mark reorder
+- (void)onMenuCommandMoveBack:(NSNotification *)note{
+    EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+    [(EDElement *)[self dataObj] moveZIndexBack:page];
+}
+
+- (void)onMenuCommandMoveBackward:(NSNotification *)note{
+    EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+    [(EDElement *)[self dataObj] moveZIndexBackward:page];
+}
+
+- (void)onMenuCommandMoveForward:(NSNotification *)note{
+    EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+    [(EDElement *)[self dataObj] moveZIndexForward:page];
+}
+
+- (void)onMenuCommandMoveFront:(NSNotification *)note{
+    EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
+    [(EDElement *)[self dataObj] moveZIndexFront:page];
 }
 
 - (void)onMenuCommandCut:(NSNotification *)note{
@@ -153,10 +197,14 @@
 #pragma mark mouse events
 - (void)mouseDown:(NSEvent *)theEvent{
 #warning CAREFUL: SOME code you change here needs to change in the "mouseDownBySelection" method
-     // set worksheet view as getAllSelectedWorksheetElements
-    [[self window] makeFirstResponder:[self superview]];
-    
     NSUInteger flags = [theEvent modifierFlags];
+    if(flags & NSControlKeyMask){
+        // do nothing so menu can show up
+        [self rightMouseDown:theEvent];
+    }
+    
+    // set worksheet view as getAllSelectedWorksheetElements
+    [[self window] makeFirstResponder:[self superview]];
  
     //save mouse location
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];

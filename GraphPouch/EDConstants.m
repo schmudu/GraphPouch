@@ -60,6 +60,11 @@ NSString *const EDContextMenuElementDeselect                    = @"Deselect";
 NSString *const EDContextMenuElementDelete                      = @"Delete";
 NSString *const EDContextMenuElementCopy                        = @"Copy";
 NSString *const EDContextMenuElementCut                         = @"Cut";
+NSString *const EDContextMenuElementMoveBack                    = @"Move Back";
+NSString *const EDContextMenuElementMoveBackward                = @"Move Backward";
+NSString *const EDContextMenuElementMoveForward                 = @"Move Forward";
+NSString *const EDContextMenuElementMoveFront                   = @"Move Front";
+NSString *const EDContextMenuOrderTitle                         = @"Reorder";
 
 #pragma mark element attributes
 NSString * const EDElementAttributeZIndex                       = @"zIndex";
