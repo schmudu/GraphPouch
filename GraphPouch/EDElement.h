@@ -15,6 +15,7 @@
 @property (nonatomic, retain) NSNumber *zIndex;
 @property float locationX, locationY, elementWidth, elementHeight;
 @property BOOL selected;
+@property (nonatomic, retain) EDPage *page;
 
 - (void)copyAttributes:(EDElement *)source;
 - (void)moveZIndexBack:(EDPage *)page;

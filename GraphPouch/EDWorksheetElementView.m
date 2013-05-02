@@ -201,25 +201,27 @@
 
 #pragma mark mouse events
 - (void)setZIndexToDragLayer{
-    // save z-index, do not save if max value
-    if ([[(EDElement *)[self dataObj] zIndex] intValue] != EDLayerZIndexMax) {
+    // save z-index, do not save if max value or greater
+    if ([[(EDElement *)[self dataObj] zIndex] intValue] < EDLayerZIndexMax) {
         _savedZIndex = [[(EDElement *)[self dataObj] zIndex] intValue];
+        NSLog(@"saving z index as:%d for class:%@", _savedZIndex, [(EDElement *)[self dataObj] class]);
     }
     
     // set z-index so that element is in front
     [(EDElement *)[self dataObj] setZIndex:[NSNumber numberWithInt:EDLayerZIndexMax]];
     
     // set layers to their new positions
-    [_nc postNotificationName:EDEventCheckElementLayers object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCheckElementLayers object:self];
 }
 
 - (void)unsetZIndexFromDragLayer{
     // reset z-index to its original value
-    if (_savedZIndex != -1){
+    if ((_savedZIndex != -1) && (_savedZIndex < EDLayerZIndexMax)){
+        NSLog(@"restoring z index as:%d for class:%@", _savedZIndex, [(EDElement *)[self dataObj] class]);
         [(EDElement *)[self dataObj] setZIndex:[NSNumber numberWithInt:_savedZIndex]];
         
         // set layers to their original positions
-        [_nc postNotificationName:EDEventCheckElementLayers object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCheckElementLayers object:self];
     }
     
     // reset to bogus value

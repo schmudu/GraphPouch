@@ -553,6 +553,7 @@ return results;
     else if ([element isKindOfClass:[EDTextbox class]]) {
         [currentPage removeTextboxesObject:(EDTextbox *)element];
     }
+    [currentPage updateZIndexAfterDeletion:element];
     [context deleteObject:element];
 }
 
@@ -578,6 +579,7 @@ return results;
             [currentPage removeTextboxesObject:(EDTextbox *)element];
         }
         [context deleteObject:element];
+        [currentPage updateZIndexAfterDeletion:element];
     }
 }
 

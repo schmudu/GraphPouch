@@ -146,6 +146,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
             secondElement = (EDWorksheetElementView *)secondView;
             // set ordering
             //if ([[firstElement dataObj] selected] && (![[secondElement dataObj] selected])){
+            NSLog(@"first element z:%d second:%d", [[[firstElement dataObj] zIndex] intValue], [[[firstElement dataObj] zIndex] intValue]);
             if ([[[firstElement dataObj] zIndex] intValue] > [[[secondElement dataObj] zIndex] intValue]){
                 return NSOrderedDescending;
             }
@@ -418,7 +419,6 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
 
 #pragma mark layers
 - (void)compareLayers:(NSNotification *)note{
-    NSLog(@"comparing layers.");
     [self sortSubviewsUsingFunction:&viewCompare context:nil];
 }
 

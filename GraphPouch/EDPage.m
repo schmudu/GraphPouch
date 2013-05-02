@@ -15,6 +15,7 @@
 #import "EDEquation.h"
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
+#import "EDCoreDataUtility+Worksheet.h"
 #import "EDTextbox.h"
 
 @implementation EDPage
@@ -181,5 +182,18 @@
     NSArray *selectedObjects = [allObjects filteredArrayUsingPredicate:searchFilter];;
     
     return selectedObjects;
+}
+
+#pragma mark z-index
+- (void)updateZIndexAfterDeletion:(EDElement *)element{
+    // get all elements for page
+    NSArray *elementsOnPage = [EDCoreDataUtility getAllWorksheetElementsOnPage:self context:[element managedObjectContext]];
+    // iterate through elements
+    for (EDElement *currentElement in elementsOnPage){
+        if ([[currentElement zIndex] intValue] > [[element zIndex] intValue]){
+            // decrement by 1
+            [currentElement setZIndex:[NSNumber numberWithInt:[[currentElement zIndex] intValue]-1]];
+        }
+    }
 }
 @end

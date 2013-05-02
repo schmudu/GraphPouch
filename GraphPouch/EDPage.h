@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class EDElement;
 @class EDExpression;
 @class EDGraph;
 @class EDImage;
@@ -58,5 +59,7 @@
 - (void)addTextboxes:(NSSet *)values;
 - (void)removeTextboxes:(NSSet *)values;
 
+// z-index
+- (void)updateZIndexAfterDeletion:(EDElement *)element;
 
 @end
