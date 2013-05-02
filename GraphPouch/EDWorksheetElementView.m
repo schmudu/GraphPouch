@@ -32,6 +32,10 @@
 - (void)onMenuCommandMoveBackward:(NSNotification *)note;
 - (void)onMenuCommandMoveForward:(NSNotification *)note;
 - (void)onMenuCommandMoveFront:(NSNotification *)note;
+
+// mouse drag
+- (void)setZIndexToDragLayer;
+- (void)unsetZIndexFromDragLayer;
 @end
 
 @implementation EDWorksheetElementView
@@ -45,6 +49,7 @@
         _didSnapToSourceX = FALSE;
         _didSnapToSourceY = FALSE;
         _mouseUpEventSource = FALSE;
+        _savedZIndex = -1;
     }
     
     return self;
@@ -195,7 +200,36 @@
 }
 
 #pragma mark mouse events
+- (void)setZIndexToDragLayer{
+    // save z-index, do not save if max value
+    if ([[(EDElement *)[self dataObj] zIndex] intValue] != EDLayerZIndexMax) {
+        _savedZIndex = [[(EDElement *)[self dataObj] zIndex] intValue];
+    }
+    
+    // set z-index so that element is in front
+    [(EDElement *)[self dataObj] setZIndex:[NSNumber numberWithInt:EDLayerZIndexMax]];
+    
+    // set layers to their new positions
+    [_nc postNotificationName:EDEventCheckElementLayers object:self];
+}
+
+- (void)unsetZIndexFromDragLayer{
+    // reset z-index to its original value
+    if (_savedZIndex != -1){
+        [(EDElement *)[self dataObj] setZIndex:[NSNumber numberWithInt:_savedZIndex]];
+        
+        // set layers to their original positions
+        [_nc postNotificationName:EDEventCheckElementLayers object:self];
+    }
+    
+    // reset to bogus value
+    _savedZIndex = -1;
+}
+
 - (void)mouseDown:(NSEvent *)theEvent{
+    // reset z-index
+    [self setZIndexToDragLayer];
+    
 #warning CAREFUL: SOME code you change here needs to change in the "mouseDownBySelection" method
     NSUInteger flags = [theEvent modifierFlags];
     if(flags & NSControlKeyMask){
@@ -246,6 +280,9 @@
     // if mouse up already then we need to catch it and call it's behavior
     NSEvent *nextEvent = [[self window] nextEventMatchingMask:NSLeftMouseUpMask untilDate:[[NSDate date] dateByAddingTimeInterval:0.1] inMode:NSDefaultRunLoopMode dequeue:NO];
     if ([nextEvent type] == NSLeftMouseUp){
+        // unset z-index
+        [self unsetZIndexFromDragLayer];
+        
         // special case because mouseUp is not called
         [self removeFeatures];
         //[self mouseUp:theEvent];
@@ -296,10 +333,12 @@
 
 #pragma mark mouse dragged
 - (void)mouseDragged:(NSEvent *)theEvent{
+    // on mouse drag elements that are above interfere with the dragging
+    // so we are going to send this element to the font and then return it to its origin z-index
     // do not drag if it is not selected
     if (![(EDGraph *)[self dataObj] isSelectedElement]) 
         return;
-        
+    
     BOOL didSnapX = FALSE, didSnapY = FALSE, didSnapBack = FALSE;
     
     // remove performance heavy elements
@@ -462,6 +501,9 @@
 
 #pragma mark mouse up
 - (void)mouseUp:(NSEvent *)theEvent{
+    // unset z-index
+    [self unsetZIndexFromDragLayer];
+    
     [self mouseUpBehavior:theEvent];
     
     // add performance heavy elements that were removed during dragging

@@ -474,6 +474,8 @@ extern NSString *const EDKeyPointDrag;
 extern NSString *const EDKeyPointDown;
 extern NSString *const EDEventDraggingMouseStart;
 extern NSString *const EDEventDraggingMouseFinish;
+extern NSString *const EDEventCheckElementLayers;
+extern int const EDLayerZIndexMax;
 
 #pragma mark worksheet events
 extern NSString *const EDEventWorksheetClicked;

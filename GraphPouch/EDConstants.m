@@ -447,6 +447,8 @@ NSString * const EDKeyPointDown                                 = @"EDKeyPointDo
 NSString * const EDKeyPointDrag                                 = @"EDKeyPointDrag";
 NSString * const EDEventDraggingMouseStart                      = @"EDEventDraggingMouseStart";
 NSString * const EDEventDraggingMouseFinish                     = @"EDEventDraggingMouseFinish";
+NSString * const EDEventCheckElementLayers                      = @"EDEventCheckElementLayers";
+int const EDLayerZIndexMax                                      = 9999;
 
 #pragma mark worksheet elements
 NSString * const EDEventMouseDoubleClick                        = @"EDEventMouseDoubleClick";

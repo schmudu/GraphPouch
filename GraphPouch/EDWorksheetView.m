@@ -91,6 +91,9 @@
 
 // expressions
 //- (void)createExpressionNodeTree:(NSArray *)stack;
+
+// z-index
+- (void)compareLayers:(NSNotification *)note;
 @end
 
 @implementation EDWorksheetView
@@ -248,6 +251,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:imageView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:imageView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:imageView];
+    [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:imageView];
     
     // set location
     [imageView setFrameOrigin:NSMakePoint([[image valueForKey:EDElementAttributeLocationX] floatValue], [[image valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -274,6 +278,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onTextboxEndEditing:) name:EDEventTextboxEndEditing object:textboxView];
     [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:textboxView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:textboxView];
+    [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:textboxView];
     
     // set location
     [textboxView setFrameOrigin:NSMakePoint([[textbox valueForKey:EDElementAttributeLocationX] floatValue], [[textbox valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -298,6 +303,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:lineView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:lineView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:lineView];
+    [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:lineView];
     
     // set location
     [lineView setFrameOrigin:NSMakePoint([[line valueForKey:EDElementAttributeLocationX] floatValue], [[line valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -345,6 +351,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:graphView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:graphView];
+    [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:graphView];
     
     // set location
     [graphView setFrameOrigin:NSMakePoint([[graph valueForKey:EDElementAttributeLocationX] floatValue], [[graph valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -407,6 +414,12 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
 
 - (IBAction)deselectAll:(id)sender{
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context];
+}
+
+#pragma mark layers
+- (void)compareLayers:(NSNotification *)note{
+    NSLog(@"comparing layers.");
+    [self sortSubviewsUsingFunction:&viewCompare context:nil];
 }
 
 #pragma mark listeners
@@ -498,6 +511,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
             [_nc removeObserver:self name:EDEventMouseDragged object:currentElement];
             [_nc removeObserver:self name:EDEventMouseUp object:currentElement];
             [_nc removeObserver:self name:EDEventWorksheetElementRedrawingItself object:currentElement];
+            [_nc removeObserver:self name:EDEventCheckElementLayers object:currentElement];
             
             // special listener for textbox
             if ([currentElement isKindOfClass:[EDTextboxView class]]){
