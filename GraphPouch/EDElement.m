@@ -72,7 +72,6 @@
 }
 
 - (void)moveZIndexBackward:(EDPage *)page{
-    int increment = 0;
     // get selected elements
     NSMutableArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElementsOnPage:page context:[self managedObjectContext]];
     
@@ -87,7 +86,6 @@
     if ([unselectedElements containsObject:self])
         [unselectedElements removeObject:self];
     
-    //NSLog(@"==before unselected elements:%@ selected:%@", unselectedElements, selectedElements);
     EDElement *neighborElement;
     for (EDElement *selectedElement in selectedElements){
         neighborElement = [EDCoreDataUtility getElementOnPage:page context:[self managedObjectContext] withZIndex:[[selectedElement zIndex] intValue]-1];
@@ -97,11 +95,32 @@
             [neighborElement setZIndex:[NSNumber numberWithInt:[[neighborElement zIndex] intValue]+1]];
         }
     }
-    //NSLog(@"==after unselected elements:%@ selected:%@ increment:%d", unselectedElements, selectedElements, increment);
 }
 
 - (void)moveZIndexForward:(EDPage *)page{
+    // get selected elements
+    NSMutableArray *selectedElements = [EDCoreDataUtility getAllSelectedWorksheetElementsOnPage:page context:[self managedObjectContext]];
     
+    // add self too, even if not selected
+    if (![self selected])
+        [selectedElements addObject:self];
+    
+    // get all elements on page
+    NSMutableArray *unselectedElements = [EDCoreDataUtility getAllUnselectedWorksheetElementsOnPage:page context:[self managedObjectContext]];
+    
+    // remove self if in the unselected array
+    if ([unselectedElements containsObject:self])
+        [unselectedElements removeObject:self];
+    
+    EDElement *neighborElement;
+    for (EDElement *selectedElement in selectedElements){
+        neighborElement = [EDCoreDataUtility getElementOnPage:page context:[self managedObjectContext] withZIndex:[[selectedElement zIndex] intValue]+1];
+        // if neighbor element is not in the selected elements, and is not nil then we can increment the selected element and decrement the neighbor
+        if ((![selectedElements containsObject:neighborElement]) && (neighborElement != nil)){
+            [selectedElement setZIndex:[NSNumber numberWithInt:[[selectedElement zIndex] intValue]+1]];
+            [neighborElement setZIndex:[NSNumber numberWithInt:[[neighborElement zIndex] intValue]-1]];
+        }
+    }
 }
 
 - (void)moveZIndexFront:(EDPage *)page{
@@ -121,7 +140,6 @@
         [unselectedElements removeObject:self];
     }
     
-    //NSLog(@"==before unselected elements:%@ selected:%@", unselectedElements, selectedElements);
     for (EDElement *unselectedElement in unselectedElements){
         // find out how many selected elements are lower than this element, then decrement the value
         decrement = 0;
@@ -143,7 +161,6 @@
         [selectedElement setZIndex:[NSNumber numberWithInt:increment]];
         increment++;
     }
-    //NSLog(@"==after unselected elements:%@ selected:%@ increment:%d", unselectedElements, selectedElements, increment);
 }
 
 - (void)setZIndexAfterInsert:(EDPage *)page{
