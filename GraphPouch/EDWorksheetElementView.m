@@ -154,21 +154,25 @@
 - (void)onMenuCommandMoveBack:(NSNotification *)note{
     EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
     [(EDElement *)[self dataObj] moveZIndexBack:page];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCheckElementLayers object:self];
 }
 
 - (void)onMenuCommandMoveBackward:(NSNotification *)note{
     EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
     [(EDElement *)[self dataObj] moveZIndexBackward:page];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCheckElementLayers object:self];
 }
 
 - (void)onMenuCommandMoveForward:(NSNotification *)note{
     EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
     [(EDElement *)[self dataObj] moveZIndexForward:page];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCheckElementLayers object:self];
 }
 
 - (void)onMenuCommandMoveFront:(NSNotification *)note{
     EDPage *page = [EDCoreDataUtility getCurrentPage:_context];
     [(EDElement *)[self dataObj] moveZIndexFront:page];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCheckElementLayers object:self];
 }
 
 - (void)onMenuCommandCut:(NSNotification *)note{
@@ -204,7 +208,7 @@
     // save z-index, do not save if max value or greater
     if ([[(EDElement *)[self dataObj] zIndex] intValue] < EDLayerZIndexMax) {
         _savedZIndex = [[(EDElement *)[self dataObj] zIndex] intValue];
-        NSLog(@"saving z index as:%d for class:%@", _savedZIndex, [(EDElement *)[self dataObj] class]);
+        NSLog(@"goint to save z index as:%d for class:%@", [[(EDElement *)[self dataObj] zIndex] intValue], [(EDElement *)[self dataObj] class]);
     }
     
     // set z-index so that element is in front
@@ -217,14 +221,14 @@
 - (void)unsetZIndexFromDragLayer{
     // reset z-index to its original value
     if ((_savedZIndex != -1) && (_savedZIndex < EDLayerZIndexMax)){
-        NSLog(@"restoring z index as:%d for class:%@", _savedZIndex, [(EDElement *)[self dataObj] class]);
+        NSLog(@"restoring z index as:%d from index:%d for class:%@", _savedZIndex, [[(EDElement *)[self dataObj] zIndex] intValue], [(EDElement *)[self dataObj] class]);
         [(EDElement *)[self dataObj] setZIndex:[NSNumber numberWithInt:_savedZIndex]];
         
         // set layers to their original positions
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventCheckElementLayers object:self];
     }
     
-    // reset to bogus value
+    // reset to original value
     _savedZIndex = -1;
 }
 
@@ -282,6 +286,7 @@
     // if mouse up already then we need to catch it and call it's behavior
     NSEvent *nextEvent = [[self window] nextEventMatchingMask:NSLeftMouseUpMask untilDate:[[NSDate date] dateByAddingTimeInterval:0.1] inMode:NSDefaultRunLoopMode dequeue:NO];
     if ([nextEvent type] == NSLeftMouseUp){
+        NSLog(@"mouse up in mouse down.");
         // unset z-index
         [self unsetZIndexFromDragLayer];
         
@@ -335,6 +340,7 @@
 
 #pragma mark mouse dragged
 - (void)mouseDragged:(NSEvent *)theEvent{
+    NSLog(@"mouse dragged class:%@ z-index:%d", [[self dataObj] class], [[(EDElement *)[self dataObj] zIndex] intValue]);
     // on mouse drag elements that are above interfere with the dragging
     // so we are going to send this element to the font and then return it to its origin z-index
     // do not drag if it is not selected
@@ -468,6 +474,7 @@
     BOOL originalSourceSnapX = [[snapInfo valueForKey:EDKeyDidSnapX] boolValue];
     BOOL originalSourceSnapY = [[snapInfo valueForKey:EDKeyDidSnapY] boolValue];
     BOOL originalSourceDidSnapBack = [[snapInfo valueForKey:EDKeyDidSnapBack] boolValue];
+    NSLog(@"mouse dragged by selection.");
     // if not drag source then maybe we don't need to move this!
     // check 
     NSPoint newDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];

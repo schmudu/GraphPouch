@@ -145,8 +145,6 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
         if ([secondView isKindOfClass:[EDWorksheetElementView class]]) {
             secondElement = (EDWorksheetElementView *)secondView;
             // set ordering
-            //if ([[firstElement dataObj] selected] && (![[secondElement dataObj] selected])){
-            NSLog(@"first element z:%d second:%d", [[[firstElement dataObj] zIndex] intValue], [[[firstElement dataObj] zIndex] intValue]);
             if ([[[firstElement dataObj] zIndex] intValue] > [[[secondElement dataObj] zIndex] intValue]){
                 return NSOrderedDescending;
             }
