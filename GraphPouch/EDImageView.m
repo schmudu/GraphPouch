@@ -13,8 +13,6 @@
 
 @interface EDImageView()
 - (void)onContextChanged:(NSNotification *)note;
-- (void)removeImage;
-- (void)drawImage;
 @end
 
 
@@ -27,10 +25,6 @@
         
         // set model info
         [self setDataObj:myImage];
-        
-        // draw image on startup
-        [self removeImage];
-        [self drawImage];
         
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
@@ -69,34 +63,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // do this for real time re-sizing
-    //[self removeImage];
-    //[self drawImage];
-}
-
-- (void)updateDisplayBasedOnContext{
-    [super updateDisplayBasedOnContext];
- 
-    [self removeImage];
-    [self drawImage];
-}
-
-#pragma mark image
-- (void)removeImage{
-    if (_image) {
-        [_image removeFromSuperview];
-    }
-}
-
-- (void)drawImage{
     NSImage *image = [[NSImage alloc] initWithData:[(EDImage *)[self dataObj] imageData]];
-    NSImageView *imageView = [[NSImageView alloc] initWithFrame:[self bounds]];
-    [imageView setImageScaling:NSScaleProportionally];
-    [imageView setImage:image];
-    [self addSubview:imageView];
-    
-    //NSLog(@"origin width:%f height:%f", image.size.width, image.size.height);
-    
-    // save image to remove later
-    _image = imageView;
+    [image drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:TRUE hints:nil];
 }
 @end

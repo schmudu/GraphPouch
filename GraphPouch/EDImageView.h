@@ -11,7 +11,6 @@
 @class EDImage;
 
 @interface EDImageView : EDWorksheetElementView{
-    NSView *_image;
 }
 
 - (id)initWithFrame:(NSRect)frame imageModel:(EDImage *)myImage;
