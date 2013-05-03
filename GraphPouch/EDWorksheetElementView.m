@@ -286,7 +286,6 @@
     // if mouse up already then we need to catch it and call it's behavior
     NSEvent *nextEvent = [[self window] nextEventMatchingMask:NSLeftMouseUpMask untilDate:[[NSDate date] dateByAddingTimeInterval:0.1] inMode:NSDefaultRunLoopMode dequeue:NO];
     if ([nextEvent type] == NSLeftMouseUp){
-        NSLog(@"mouse up in mouse down.");
         // unset z-index
         [self unsetZIndexFromDragLayer];
         
@@ -340,7 +339,7 @@
 
 #pragma mark mouse dragged
 - (void)mouseDragged:(NSEvent *)theEvent{
-    NSLog(@"mouse dragged class:%@ z-index:%d", [[self dataObj] class], [[(EDElement *)[self dataObj] zIndex] intValue]);
+    //NSLog(@"mouse dragged class:%@ z-index:%d", [[self dataObj] class], [[(EDElement *)[self dataObj] zIndex] intValue]);
     // on mouse drag elements that are above interfere with the dragging
     // so we are going to send this element to the font and then return it to its origin z-index
     // do not drag if it is not selected

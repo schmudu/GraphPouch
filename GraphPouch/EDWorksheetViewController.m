@@ -246,19 +246,22 @@
     
     EDImage *newImage = [[EDImage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameImage inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
     
-    // add graph to page
+    // add image to page
     [currentPage addImagesObject:newImage];
     
     // get image data
     NSData *imageData = [NSData dataWithContentsOfURL:url];
+    
+    // get image info to set size
+    NSImage *testImage = [[NSImage alloc] initWithData:imageData];
     
     // set graph attributes
     [newImage setPage:currentPage];
     [newImage setSelected:FALSE];
     [newImage setLocationX:50];
     [newImage setLocationY:150];
-    [newImage setElementWidth:500];
-    [newImage setElementHeight:500];
+    [newImage setElementWidth:[testImage size].width];
+    [newImage setElementHeight:[testImage size].height];
     [newImage setImageData:imageData];
     [newImage setZIndexAfterInsert:currentPage];
     
