@@ -10,12 +10,9 @@
 #import <CoreData/CoreData.h>
 #import "EDElement.h"
 
-@class EDPage;
-
 @interface EDTextbox : EDElement<NSPasteboardReading, NSPasteboardWriting, NSCoding>
 
 @property (nonatomic, retain) id textValue;
-@property (nonatomic, retain) EDPage *page;
 
 - (EDTextbox *)initWithContext:(NSManagedObjectContext *)context;
 - (EDTextbox *)copy:(NSManagedObjectContext *)context;

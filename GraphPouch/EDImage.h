@@ -10,12 +10,9 @@
 #import <CoreData/CoreData.h>
 #import "EDElement.h"
 
-@class EDPage;
-
 @interface EDImage : EDElement<NSPasteboardReading, NSPasteboardWriting, NSCoding>
 
 @property (nonatomic, retain) id imageData;
-@property (nonatomic, retain) EDPage *page;
 
 - (EDImage *)initWithContext:(NSManagedObjectContext *)context;
 - (EDImage *)copy:(NSManagedObjectContext *)context;

@@ -10,7 +10,6 @@
 #import <CoreData/CoreData.h>
 #import "EDElement.h"
 
-@class EDPage;
 @class EDPoint;
 @class EDEquation;
 
@@ -20,7 +19,6 @@
 @property BOOL hasGridLines;
 @property BOOL hasTickMarks;
 @property BOOL hasLabels;
-@property (nonatomic, retain) EDPage *page;
 @property (nonatomic, retain) NSNumber *minValueX;
 @property (nonatomic, retain) NSNumber *minValueY;
 @property (nonatomic, retain) NSNumber *maxValueX;
