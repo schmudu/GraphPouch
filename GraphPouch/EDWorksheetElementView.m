@@ -208,7 +208,7 @@
     // save z-index, do not save if max value or greater
     if ([[(EDElement *)[self dataObj] zIndex] intValue] < EDLayerZIndexMax) {
         _savedZIndex = [[(EDElement *)[self dataObj] zIndex] intValue];
-        NSLog(@"goint to save z index as:%d for class:%@", [[(EDElement *)[self dataObj] zIndex] intValue], [(EDElement *)[self dataObj] class]);
+        //NSLog(@"goint to save z index as:%d for class:%@", [[(EDElement *)[self dataObj] zIndex] intValue], [(EDElement *)[self dataObj] class]);
     }
     
     // set z-index so that element is in front
@@ -221,7 +221,7 @@
 - (void)unsetZIndexFromDragLayer{
     // reset z-index to its original value
     if ((_savedZIndex != -1) && (_savedZIndex < EDLayerZIndexMax)){
-        NSLog(@"restoring z index as:%d from index:%d for class:%@", _savedZIndex, [[(EDElement *)[self dataObj] zIndex] intValue], [(EDElement *)[self dataObj] class]);
+        //NSLog(@"restoring z index as:%d from index:%d for class:%@", _savedZIndex, [[(EDElement *)[self dataObj] zIndex] intValue], [(EDElement *)[self dataObj] class]);
         [(EDElement *)[self dataObj] setZIndex:[NSNumber numberWithInt:_savedZIndex]];
         
         // set layers to their original positions

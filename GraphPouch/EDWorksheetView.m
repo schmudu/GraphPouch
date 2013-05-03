@@ -145,6 +145,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
         if ([secondView isKindOfClass:[EDWorksheetElementView class]]) {
             secondElement = (EDWorksheetElementView *)secondView;
             // set ordering
+            //NSLog(@"first z-index:%d second z-index:%d", [[[firstElement dataObj] zIndex] intValue], [[[secondElement dataObj] zIndex] intValue]);
             if ([[[firstElement dataObj] zIndex] intValue] > [[[secondElement dataObj] zIndex] intValue]){
                 return NSOrderedDescending;
             }
@@ -327,6 +328,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:expressionView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:expressionView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:expressionView];
+    [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:expressionView];
     
     // set location
     [expressionView setFrameOrigin:NSMakePoint([[expression valueForKey:EDElementAttributeLocationX] floatValue], [[expression valueForKey:EDElementAttributeLocationY] floatValue])];
