@@ -29,7 +29,6 @@
     [self setElementHeight:[source elementHeight]];
 }
 
-#warning need to move 'page' relationships to EDElement instead of individual worksheet elements
 - (void)moveZIndexBack:(EDPage *)page{
     int increment = 0;
     // get selected elements

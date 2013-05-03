@@ -106,30 +106,31 @@
     
     // create the image
     NSData *pageImageData = [_container dataWithPDFInsideRect:[_container bounds]];
-    NSImage *pageImage = [[NSImage alloc] initWithData:pageImageData];
-    NSImage *dragImage;
+    NSImage *dragImage, *numberImage, *circleImage;
+    dragImage = [[NSImage alloc] initWithSize:[_container bounds].size];
     
     // number of pages that will be dragged
     NSArray *pagesSelected = [EDCoreDataUtility getAllSelectedPages:_context];
-    NSLog(@"pages to be dragged:%ld", [pagesSelected count]);
     
     // if more than one page then draw number of pages on image
     // create a rect in which you will draw number of pages being dragged in image
     if ([pagesSelected count] > 1){
         NSRect rect;
-        float circleDiameter;
+        float circleDiameter, offsetY;
         // double digits then it needs to be larger
         if ([pagesSelected count]>9){
-            circleDiameter = 30;
-            rect = NSMakeRect(40, 55, circleDiameter, circleDiameter);
+            circleDiameter = 25;
+            offsetY = -1;
+            rect = NSMakeRect(35, 50, circleDiameter, circleDiameter);
         }
         else{
             circleDiameter = 20;
-            rect = NSMakeRect(30, 45, circleDiameter, circleDiameter);
+            offsetY = 1;
+            rect = NSMakeRect(40, 55, circleDiameter, circleDiameter);
         }
+        circleImage = [[NSImage alloc] initWithSize:NSMakeSize(circleDiameter, circleDiameter)];
         
         // text field with number of pages
-        //NSTextField *numberField = [[NSTextField alloc] initWithFrame:rect];
         NSTextField *numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(rect.origin.x+circleDiameter/2, rect.origin.y, rect.size.width, rect.size.height)];
         [numberField setStringValue:[NSString stringWithFormat:@"%ld", [pagesSelected count]]];
         [numberField setSelectable:FALSE];
@@ -138,24 +139,17 @@
         [numberField setBordered:FALSE];
         [numberField setAlignment:NSCenterTextAlignment];
         
-        // create a drag view
-        NSView *dragView = [[NSView alloc] initWithFrame:[_container bounds]];
-        NSLog(@"container bounds:%@", NSStringFromRect([_container bounds]));
+        // create field image
+        numberImage = [[NSImage alloc] initWithData:[numberField dataWithPDFInsideRect:[numberField bounds]]];
         
-        // add subviews to drag view
-        [dragView addSubview:numberField];
+        // create drag image with page on it
+        dragImage = [[NSImage alloc] initWithData:[_container dataWithPDFInsideRect:[_container bounds]]];
         
-        // create image of drag view
-        dragImage = [[NSImage alloc] initWithData:[dragView dataWithPDFInsideRect:[dragView bounds]]];
-        
-        //[pageImage lockFocus];
-        [dragImage lockFocus];
-        
-        // draw page data
-        [pageImage drawInRect:[_container bounds] fromRect:NSZeroRect operation:NSCompositeDestinationOver fraction:1.0 respectFlipped:TRUE hints:nil];
+        // circle image
+        [circleImage lockFocus];
         
         // define size
-        NSRect ellipseRect = NSMakeRect(40, 55, circleDiameter, circleDiameter);
+        NSRect ellipseRect = NSMakeRect(0, 0, circleDiameter, circleDiameter);
         
         // shadow
         NSShadow *shadow=[[NSShadow alloc] init];
@@ -168,9 +162,14 @@
         
         // ellipse
         NSBezierPath *ellipse = [NSBezierPath bezierPathWithOvalInRect:ellipseRect];
-        NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedRed:0.9 green:0.9 blue:0.9 alpha:1.0] endingColor:[NSColor colorWithCalibratedRed:0.8 green:0.8 blue:0.8 alpha:1.0]];
+        NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedRed:0.196 green:0.486 blue:0.796 alpha:1.0] endingColor:[NSColor colorWithCalibratedRed:0.164 green:0.411 blue:0.674 alpha:1.0]];
         [gradient drawInBezierPath:ellipse angle:-90];
-        //[pageImage unlockFocus];
+        [circleImage unlockFocus];
+        
+        // draw circle and number image in drag image
+        [dragImage lockFocus];
+        [circleImage drawInRect:NSMakeRect(rect.origin.x, rect.origin.y+2, circleDiameter, circleDiameter) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:TRUE hints:nil];
+        [numberImage drawInRect:NSMakeRect(rect.origin.x, rect.origin.y+offsetY, circleDiameter, circleDiameter) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:TRUE hints:nil];
         [dragImage unlockFocus];
     }
     else{
