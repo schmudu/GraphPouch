@@ -167,6 +167,6 @@
     // get current max
     int currentMax = [EDCoreDataUtility getMaxZIndexOnPage:page context:[self managedObjectContext] doesNotMatch:self];
     [self setZIndex:[NSNumber numberWithInt:currentMax+1]];
-    NSLog(@"setting z index for new element to:%d", [[self zIndex] intValue]);
+    //NSLog(@"setting z index for new element to:%d", [[self zIndex] intValue]);
 }
 @end

@@ -473,7 +473,6 @@
     BOOL originalSourceSnapX = [[snapInfo valueForKey:EDKeyDidSnapX] boolValue];
     BOOL originalSourceSnapY = [[snapInfo valueForKey:EDKeyDidSnapY] boolValue];
     BOOL originalSourceDidSnapBack = [[snapInfo valueForKey:EDKeyDidSnapBack] boolValue];
-    NSLog(@"mouse dragged by selection.");
     // if not drag source then maybe we don't need to move this!
     // check 
     NSPoint newDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];

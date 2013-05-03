@@ -224,6 +224,9 @@
         
         newImage = [[EDImage alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameImage inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
         
+        // get image info to set size
+        NSImage *testImage = [[NSImage alloc] initWithData:imageData];
+    
         // add image to page
         [currentPage addImagesObject:newImage];
         
@@ -232,8 +235,8 @@
         [newImage setSelected:TRUE];
         [newImage setLocationX:50 + 20*i];
         [newImage setLocationY:150 + 20*i];
-        [newImage setElementWidth:500];
-        [newImage setElementHeight:500];
+        [newImage setElementWidth:[testImage size].width];
+        [newImage setElementHeight:[testImage size].height];
         [newImage setImageData:imageData];
         [newImage setZIndexAfterInsert:currentPage];
         i++;
