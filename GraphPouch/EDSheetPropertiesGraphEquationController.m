@@ -334,7 +334,7 @@
 }
 
 - (IBAction)onButtonPressedHelp:(id)sender{
-    NSString *locBookName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleHelpBookName"];
+    NSString *locBookName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"com.edcodia.graphpouch.help"];
     [[NSHelpManager sharedHelpManager] openHelpAnchor:@"equation_types"  inBook:locBookName];
 }
 @end

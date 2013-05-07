@@ -7,12 +7,25 @@
     <meta name="AppleIcon" content="../shrd/icon.png" />
     <link rel="stylesheet" type="text/css" href="../sty/main.css" />
     <link rel="stylesheet" type="text/css" href="../sty/cheatsheet.css" />
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-39822541-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
   </head>
   <body>
     <div id="container">
       <div id="title_bar">
         <img src="../gfx/logo.png" alt="GraphPouch Logo" />
-        &nbsp;&nbsp;&nbsp;
+        <a name="cheatsheet"></a>
         <span id="page_title">Cheatsheet</span>
       </div>
       <ul class="table_contents">
@@ -54,8 +67,16 @@
             <br/>
             <table class="keyboard_shortcuts">
               <tr>
+                <td class="command">Create Expression</td>
+                <td class="key_shortcut">Control-E (<span style="font-family: 'Lucida Grande';">^</span>E)</td>
+              </tr>
+              <tr>
                 <td class="command">Create Graph</td>
                 <td class="key_shortcut">Control-G (<span style="font-family: 'Lucida Grande';">^</span>G)</td>
+              </tr>
+              <tr>
+                <td class="command">Create Image</td>
+                <td class="key_shortcut">Control-I (<span style="font-family: 'Lucida Grande';">^</span>I)</td>
               </tr>
               <tr>
                 <td class="command">Create Line</td>

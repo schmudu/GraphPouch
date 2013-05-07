@@ -497,12 +497,12 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
     [self _displayWindowAndTitlebar];
     
     /*
-    NSString *pattern = @".*\(.*)*(\\(.*\\))";
-    
+    NSError *error;
     NSRegularExpression *regex = [NSRegularExpression
                                   regularExpressionWithPattern:pattern
                                   options:NSRegularExpressionCaseInsensitive
-                                  error:nil];
+                                  error:&error];
+    //NSLog(@"setting title: string param:%@ error:%@", aString, error);
     NSTextCheckingResult *textCheckingResult = [regex firstMatchInString:aString options:0 range:NSMakeRange(0, aString.length)];
     
     //NSRange matchRangeFirst = [textCheckingResult rangeAtIndex:1];
