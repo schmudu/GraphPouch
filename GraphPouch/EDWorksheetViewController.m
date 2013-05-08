@@ -38,8 +38,6 @@
 - (void)onKeyPressedArrow:(NSNotification *)note;
 - (void)onSelectedRectangleDragged:(NSNotification *)note;
 - (void)onTextboxDidBeginEditing:(NSNotification *)note;
-- (void)onTextboxDidEndEditing:(NSNotification *)note;
-- (void)onTextboxDidChange:(NSNotification *)note;
 - (void)onWindowResized:(NSNotification *)note;
 - (void)pasteElements:(NSNotification *)note;
 @end
@@ -71,8 +69,6 @@
     [_nc addObserver:self selector:@selector(copyElements:) name:EDEventShortcutCopy object:[self view]];
     [_nc addObserver:self selector:@selector(pasteElements:) name:EDEventShortcutPaste object:[self view]];
     [_nc addObserver:self selector:@selector(onTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:[self view]];
-    [_nc addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:[self view]];
-    [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:[self view]];
     [_nc addObserver:self selector:@selector(onKeyPressedArrow:) name:EDEventArrowKeyPressed object:[self view]];
     [_nc addObserver:self selector:@selector(onSelectedRectangleDragged:) name:EDEventMouseDragged object:[self view]];
     [_nc addObserver:self selector:@selector(onCommandExpression:) name:EDEventCommandExpression object:[self view]];
@@ -107,8 +103,6 @@
     [_nc removeObserver:self name:EDEventShortcutCut object:[self view]];
     [_nc removeObserver:self name:EDEventShortcutPaste object:[self view]];
     [_nc removeObserver:self name:EDEventTextboxBeginEditing object:[self view]];
-    [_nc removeObserver:self name:EDEventTextboxEndEditing object:[self view]];
-    [_nc removeObserver:self name:EDEventTextboxDidChange object:[self view]];
     [_nc removeObserver:self name:EDEventArrowKeyPressed object:[self view]];
     [_nc removeObserver:self name:EDEventMouseDragged object:[self view]];
     [_nc removeObserver:self name:EDEventCommandExpression object:[self view]];
@@ -482,13 +476,17 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxBeginEditing object:self userInfo:[note userInfo]];
 }
 
-- (void)onTextboxDidEndEditing:(NSNotification *)note{
+/*
+ - (void)onTextboxDidEndEditing:(NSNotification *)note{
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxEndEditing object:self];
 }
 
 - (void)onTextboxDidChange:(NSNotification *)note{
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
+    NSLog(@"textbox did change.");
+    //[[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
+    [[[[self view] window] firstResponder] doCommandBySelector:@selector(onWorksheetTextboxDidChange:)];
 }
+*/
 
 - (void)onKeyPressedArrow:(NSNotification *)note{
     // move elements around the worksheet

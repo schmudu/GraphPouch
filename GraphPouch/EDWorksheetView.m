@@ -1239,11 +1239,11 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     // save text view for editing
     _currentTextView = nil;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxEndEditing object:self];
+    [[[self window]firstResponder] doCommandBySelector:@selector(onWorksheetTextboxDidEndEditing:)];
 }
 
 - (void)onTextboxDidChange:(NSNotification *)note{
-    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventTextboxDidChange object:self];
+    [[[self window]firstResponder] doCommandBySelector:@selector(onWorksheetTextboxDidChange:)];
 }
 
 - (void)disableAllTextBoxesFromEditing{

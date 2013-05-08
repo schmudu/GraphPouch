@@ -993,7 +993,7 @@
                     // for root symbols the baseline is not used and vertical positions are not adjusted
                     // draw the base surrounded by parenthesis with the numerator exponent and a root symbol
                     float parenWidthLeft=0, parenWidthRight=0, widthRadicalRoot=0, widthRadicalPower=0, fontSizeParenthesis=0;
-                    NSSize sizeParenLeft, sizeParenRight, sizeRadicalRoot, sizeRadicalPower;
+                    NSSize sizeRadicalRoot, sizeRadicalPower;
                     EDExpressionNodeView *radicalPower = [[self childRight] childLeft];
                     EDExpressionNodeView *radicalRoot = [[self childRight] childRight];
                     sizeRadicalPower = [[[self childRight] childLeft] frame].size;

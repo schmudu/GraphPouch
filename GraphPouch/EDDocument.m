@@ -19,7 +19,6 @@
 #import "EDPanelPropertiesController.h"
 #import "EDPrintView.h"
 #import "EDToken.h"
-//#import "EDWindow.h"
 #import "EDWindowControllerAbout.h"
 #import "EDWorksheetView.h"
 #import "EDWorksheetViewController.h"
@@ -34,9 +33,9 @@
 - (void)onPanelDocumentPressedDate:(NSNotification *)note;
 - (void)onPanelDocumentPressedName:(NSNotification *)note;
 - (void)onShortcutSavePressed:(NSNotification *)note;
-- (void)onTextboxDidBeginEditing:(NSNotification *)note;
-- (void)onTextboxDidEndEditing:(NSNotification *)note;
-- (void)onTextboxDidChange:(NSNotification *)note;
+- (void)onWorksheetTextboxDidBeginEditing:(NSNotification *)note;
+- (void)onWorksheetTextboxDidEndEditing:(NSNotification *)note;
+- (void)onWorksheetTextboxDidChange:(NSNotification *)note;
 - (void)onWindowSettingTitle:(NSNotification *)note;
 - (void)onWorksheetTabKeyPressed:(NSNotification *)note;
 - (void)updatePageNumberInWindowTitle;
@@ -98,15 +97,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventWindowWillClose object:[self windowForSheet]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutSave object:mainWindow];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventShortcutSave object:propertyController];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPanelDocumentPressedName object:propertyController];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPanelDocumentPressedDate object:propertyController];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPanelDocumentPressedName object:propertyController];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventPanelDocumentPressedDate object:propertyController];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextWillSaveNotification object:_rootContext];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTabPressedWithoutModifiers object:worksheetView];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTabPressedWithoutModifiers object:pagesView];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxBeginEditing object:worksheetController];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxEndEditing object:worksheetController];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventTextboxDidChange object:worksheetController];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventWindowSettingTitle object:mainWindow];
 }
 
@@ -140,9 +137,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onShortcutSavePressed:) name:EDEventShortcutSave object:propertyController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPanelDocumentPressedName:) name:EDEventPanelDocumentPressedName object:propertyController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPanelDocumentPressedDate:) name:EDEventPanelDocumentPressedDate object:propertyController];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:worksheetController];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidEndEditing:) name:EDEventTextboxEndEditing object:worksheetController];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:worksheetController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWorksheetTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPagesWillBeRemoved:) name:EDEventPagesWillBeRemoved object:pagesController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWindowSettingTitle:) name:EDEventWindowSettingTitle object:mainWindow];
 }
@@ -438,15 +433,15 @@
 }
 
 #pragma mark textbox
-- (void)onTextboxDidBeginEditing:(NSNotification *)note{
+- (void)onWorksheetTextboxDidBeginEditing:(NSNotification *)note{
     [propertyController onTextboxDidBeginEditing:(EDTextView *)[[note userInfo] objectForKey:EDKeyTextView] currentTextbox:(EDTextbox *)[[note userInfo] objectForKey:EDKeyTextbox]];
 }
 
-- (void)onTextboxDidEndEditing:(NSNotification *)note{
+- (void)onWorksheetTextboxDidEndEditing:(NSNotification *)note{
     [propertyController onTextboxDidEndEditing];
 }
 
-- (void)onTextboxDidChange:(NSNotification *)note{
+- (void)onWorksheetTextboxDidChange:(NSNotification *)note{
     [propertyController onTextboxDidChange];
 }
 
