@@ -17,7 +17,6 @@
 - (void)onMaskDoubleClicked:(NSNotification *)note;
 - (void)onWindowDidResignKey:(NSNotification *)note;
 - (void)onWorksheetClicked:(NSNotification *)note;
-- (void)disableTrackingAreas;
 - (void)enable;
 @end
 
@@ -129,23 +128,6 @@
     [_textView setEditable:TRUE];
     [_textView setSelectable:TRUE];
     
-    // enable all tracking areas
-    [_textView addTrackingRect:[_textView frame] owner:self userData:nil assumeInside:NO];
-    
-    // set cursor position to end of text view
-    //[_textView moveToEndOfLine:nil];
-    
-    // need to change cursor rects
-    [[self window] invalidateCursorRectsForView:self];
-}
-
-- (void)disableTrackingAreas{
-    // remove all tracking areas
-    NSArray *trackingAreas = [_textView trackingAreas];
-    for (NSTrackingArea *area in trackingAreas){
-        [_textView removeTrackingArea:area];
-    }
-    
     // need to change cursor rects
     [[self window] invalidateCursorRectsForView:self];
 }
@@ -163,9 +145,6 @@
     // switch order to that mask is in front of text
     [_mask removeFromSuperview];
     [self addSubview:_mask];
-    
-    // disable tracking areas
-    [self disableTrackingAreas];
     
     // need to change cursor rects
     [[self window] invalidateCursorRectsForView:self];

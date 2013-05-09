@@ -208,14 +208,14 @@
 
 #pragma mark mouse events
 - (void)setZIndexToDragLayer{
-    NSLog(@"setting z-index: current:%d", [[(EDElement *)[self dataObj] zIndex] intValue]);
+    //NSLog(@"setting z-index: current:%d", [[(EDElement *)[self dataObj] zIndex] intValue]);
     // save z-index, do not save if max value or greater
     if ([[(EDElement *)[self dataObj] zIndex] intValue] < EDLayerZIndexMax) {
         // reset z-indices
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventResetZIndices object:self];
         
         _savedZIndex = [[(EDElement *)[self dataObj] zIndex] intValue];
-        NSLog(@"going to save z index as:%d for class:%@", [[(EDElement *)[self dataObj] zIndex] intValue], [(EDElement *)[self dataObj] class]);
+        //NSLog(@"going to save z index as:%d for class:%@", [[(EDElement *)[self dataObj] zIndex] intValue], [(EDElement *)[self dataObj] class]);
     }
     
     // set z-index so that element is in front
@@ -229,7 +229,7 @@
 - (void)unsetZIndexFromDragLayer:(BOOL)updateStage{
     // reset z-index to its original value
     if ((_savedZIndex != -1) && (_savedZIndex < EDLayerZIndexMax)){
-        NSLog(@"restoring z index as:%d from index:%d for class:%@", _savedZIndex, [[(EDElement *)[self dataObj] zIndex] intValue], [(EDElement *)[self dataObj] class]);
+        //NSLog(@"restoring z index as:%d from index:%d for class:%@", _savedZIndex, [[(EDElement *)[self dataObj] zIndex] intValue], [(EDElement *)[self dataObj] class]);
         [(EDElement *)[self dataObj] setZIndex:[NSNumber numberWithInt:_savedZIndex]];
         
         // set layers to their original positions
@@ -289,7 +289,7 @@
     // set variable for dragging
     lastCursorLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
     
-    // set variable for draggin
+    // set variable for dragging
     lastDragLocation = [[[self window] contentView]convertPoint:[theEvent locationInWindow] toView:[self superview]];
     
     // if mouse up already then we need to catch it and call it's behavior
