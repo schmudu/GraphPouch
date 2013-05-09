@@ -27,4 +27,5 @@
 - (void)addLabelName;
 - (void)addLabelDate;
 - (void)insertImages:(NSArray *)images;
+- (void)resetElementsZIndices;
 @end

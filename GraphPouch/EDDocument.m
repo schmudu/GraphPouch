@@ -32,6 +32,7 @@
 - (void)onPagesWillBeRemoved:(NSNotification *)note;
 - (void)onPanelDocumentPressedDate:(NSNotification *)note;
 - (void)onPanelDocumentPressedName:(NSNotification *)note;
+- (void)onResetElementsZIndices:(NSNotification *)note;
 - (void)onShortcutSavePressed:(NSNotification *)note;
 - (void)onWorksheetTextboxDidBeginEditing:(NSNotification *)note;
 - (void)onWorksheetTextboxDidEndEditing:(NSNotification *)note;
@@ -122,6 +123,12 @@
     [worksheetController postInitialize:_context copyContext:_copyContext];
     [pagesController postInitialize:_context copyContext:_copyContext];
     [mainWindow postInitialize:_context];
+    
+    // set app delegate
+    appController = [[EDAppController alloc] init];
+    [NSApp setDelegate:appController];
+    
+    
     // post init property panel
     [propertyController postInitialize:_context];
     
@@ -140,6 +147,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWorksheetTextboxDidBeginEditing:) name:EDEventTextboxBeginEditing object:worksheetController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPagesWillBeRemoved:) name:EDEventPagesWillBeRemoved object:pagesController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWindowSettingTitle:) name:EDEventWindowSettingTitle object:mainWindow];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onResetElementsZIndices:) name:EDEventResetZIndices object:appController];
 }
 
 - (void)awakeFromNib{
@@ -157,6 +165,10 @@
 }
 
 #pragma mark document
+- (void)canCloseDocumentWithDelegate:(id)delegate shouldCloseSelector:(SEL)shouldCloseSelector contextInfo:(void *)contextInfo{
+    [worksheetController resetElementsZIndices];
+    [super canCloseDocumentWithDelegate:delegate shouldCloseSelector:shouldCloseSelector contextInfo:contextInfo];
+}
 - (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url ofType:(NSString *)fileType modelConfiguration:(NSString *)configuration storeOptions:(NSDictionary *)storeOptions error:(NSError **)error
 {
     NSMutableDictionary *newStoreOptions;
@@ -467,5 +479,10 @@
 #pragma mark about
 - (IBAction)toggleAboutWindow:(id)sender{
     [aboutController toggleAboutWindow:sender];
+}
+
+#pragma mark z-index
+- (void)onResetElementsZIndices:(NSNotification *)note{
+    [worksheetController resetElementsZIndices];
 }
 @end

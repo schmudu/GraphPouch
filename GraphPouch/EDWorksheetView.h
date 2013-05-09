@@ -38,4 +38,5 @@
 - (IBAction)selectAll:(id)sender;
 - (IBAction)deselectAll:(id)sender;
 - (void)onPagesWillBeDeleted:(NSArray *)pages;
+- (void)resetElementsZIndices:(NSNotification *)note;
 @end

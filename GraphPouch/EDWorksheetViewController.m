@@ -536,4 +536,9 @@
     NSRect selectionRect = NSMakeRect(xStart, yStart, fabsf(downPoint.x - dragPoint.x), fabsf(downPoint.y - dragPoint.y));
     [EDCoreDataUtility selectElementsInRect:selectionRect context:_context];
 }
+
+#pragma mark z-index
+- (void)resetElementsZIndices{
+    [(EDWorksheetView *)[self view] resetElementsZIndices:nil];
+}
 @end

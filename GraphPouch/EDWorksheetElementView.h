@@ -33,4 +33,5 @@
 - (void)drawElementAttributes;
 - (void)removeFeatures;
 - (void)addFeatures;
+- (void)unsetZIndexFromDragLayer:(BOOL)updateStage;
 @end

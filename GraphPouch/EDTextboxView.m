@@ -145,6 +145,9 @@
     for (NSTrackingArea *area in trackingAreas){
         [_textView removeTrackingArea:area];
     }
+    
+    // need to change cursor rects
+    [[self window] invalidateCursorRectsForView:self];
 }
 
 - (void)disable{

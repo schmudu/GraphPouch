@@ -46,7 +46,7 @@
         [unselectedElements removeObject:self];
     }
     
-    //NSLog(@"==before unselected elements:%@ selected:%@", unselectedElements, selectedElements);
+    NSLog(@"==before unselected elements:%@ selected:%@", unselectedElements, selectedElements);
     for (EDElement *unselectedElement in unselectedElements){
         // find out how many selected elements are greater than this element, then increment the value
         increment = 0;
@@ -68,7 +68,7 @@
         [selectedElement setZIndex:[NSNumber numberWithInt:newZIndex]];
         newZIndex++;
     }
-    //NSLog(@"==after unselected elements:%@ selected:%@ increment:%d", unselectedElements, selectedElements, increment);
+    NSLog(@"==after unselected elements:%@ selected:%@ increment:%d", unselectedElements, selectedElements, increment);
 }
 
 - (void)moveZIndexBackward:(EDPage *)page{

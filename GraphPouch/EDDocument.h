@@ -7,11 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EDPanelPropertiesController.h"
-#import "INAppStoreWindow.h"
+#import "EDAppController.h"
 #import "EDMainContentView.h"
 #import "EDPagesView.h"
+#import "EDPanelPropertiesController.h"
 #import "EDWindowControllerAbout.h"
+#import "INAppStoreWindow.h"
 
 @class EDWorksheetView;
 @class EDWorksheetViewController;
@@ -26,6 +27,7 @@
     //IBOutlet EDWindow *mainWindow;
     IBOutlet INAppStoreWindow *mainWindow;
     IBOutlet EDPagesView *pagesView;
+    EDAppController *appController;
     EDPanelPropertiesController *propertyController;
     EDWindowControllerAbout *aboutController;
     NSManagedObjectContext *_context;

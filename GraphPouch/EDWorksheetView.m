@@ -252,6 +252,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:imageView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:imageView];
     [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:imageView];
+    [_nc addObserver:self selector:@selector(resetElementsZIndices:) name:EDEventResetZIndices object:imageView];
     
     // set location
     [imageView setFrameOrigin:NSMakePoint([[image valueForKey:EDElementAttributeLocationX] floatValue], [[image valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -279,6 +280,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:textboxView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:textboxView];
     [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:textboxView];
+    [_nc addObserver:self selector:@selector(resetElementsZIndices:) name:EDEventResetZIndices object:textboxView];
     
     // set location
     [textboxView setFrameOrigin:NSMakePoint([[textbox valueForKey:EDElementAttributeLocationX] floatValue], [[textbox valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -304,6 +306,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:lineView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:lineView];
     [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:lineView];
+    [_nc addObserver:self selector:@selector(resetElementsZIndices:) name:EDEventResetZIndices object:lineView];
     
     // set location
     [lineView setFrameOrigin:NSMakePoint([[line valueForKey:EDElementAttributeLocationX] floatValue], [[line valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -329,6 +332,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:expressionView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:expressionView];
     [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:expressionView];
+    [_nc addObserver:self selector:@selector(resetElementsZIndices:) name:EDEventResetZIndices object:expressionView];
     
     // set location
     [expressionView setFrameOrigin:NSMakePoint([[expression valueForKey:EDElementAttributeLocationX] floatValue], [[expression valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -353,6 +357,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:graphView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:graphView];
     [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:graphView];
+    [_nc addObserver:self selector:@selector(resetElementsZIndices:) name:EDEventResetZIndices object:graphView];
     
     // set location
     [graphView setFrameOrigin:NSMakePoint([[graph valueForKey:EDElementAttributeLocationX] floatValue], [[graph valueForKey:EDElementAttributeLocationY] floatValue])];
@@ -419,6 +424,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
 
 #pragma mark layers
 - (void)compareLayers:(NSNotification *)note{
+    //NSLog(@"comparing layers.");
     [self sortSubviewsUsingFunction:&viewCompare context:nil];
 }
 
@@ -512,6 +518,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
             [_nc removeObserver:self name:EDEventMouseUp object:currentElement];
             [_nc removeObserver:self name:EDEventWorksheetElementRedrawingItself object:currentElement];
             [_nc removeObserver:self name:EDEventCheckElementLayers object:currentElement];
+            [_nc removeObserver:self name:EDEventResetZIndices object:currentElement];
             
             // special listener for textbox
             if ([currentElement isKindOfClass:[EDTextboxView class]]){
@@ -1269,5 +1276,14 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
         }
     }
     
+}
+
+#pragma mark z-index
+- (void)resetElementsZIndices:(NSNotification *)note{
+    for (NSView *view in [self subviews]){
+        if ([view isKindOfClass:[EDWorksheetElementView class]]){
+            [(EDWorksheetElementView *)view unsetZIndexFromDragLayer:FALSE];
+        }
+    }
 }
 @end

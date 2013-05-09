@@ -449,6 +449,8 @@ NSString * const EDEventDraggingMouseStart                      = @"EDEventDragg
 NSString * const EDEventDraggingMouseFinish                     = @"EDEventDraggingMouseFinish";
 NSString * const EDEventCheckElementLayers                      = @"EDEventCheckElementLayers";
 int const EDLayerZIndexMax                                      = 9999;
+NSString * const EDEventResetZIndices                           = @"EDEventResetZIndices";
+
 
 #pragma mark worksheet elements
 NSString * const EDEventMouseDoubleClick                        = @"EDEventMouseDoubleClick";

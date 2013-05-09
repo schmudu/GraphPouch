@@ -27,4 +27,7 @@
 }
 
 #pragma mark application delegate
+- (void)applicationWillTerminate:(NSNotification *)notification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:EDEventResetZIndices object:self];
+}
 @end
