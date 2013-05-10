@@ -113,7 +113,8 @@
 }
 
 - (void)validateAndDisplayExpression{
-     NSError *error;
+    NSError *error;
+    float newWidth = [self frame].size.width, newHeight = [self frame].size.height;
     
     // need to validate if this is an expression or equations
     NSDictionary *expressionDict = [EDExpression isValidEquationOrExpression:[(EDExpression *)[self dataObj] expression] context:_context error:&error];
@@ -130,6 +131,9 @@
         [errorField setAttributedStringValue:errorAttributedString];
         [self addSubview:errorField];
         NSLog(@"error:%@", [[error userInfo] objectForKey:NSLocalizedDescriptionKey]);
+        
+        newWidth = [errorField frame].size.width;
+        newHeight = [errorField frame].size.height;
     }
     else{
         // valid equation/expression
@@ -198,6 +202,9 @@
                 [nodeLarger setFrameOrigin:NSMakePoint([nodeLarger frame].origin.x, 0)];
                 [equalField setFrameOrigin:NSMakePoint([equalField frame].size.width, [[nodeLarger baseline] floatValue] - [equalField frame].size.height)];
                 [nodeSmaller setFrameOrigin:NSMakePoint([nodeSmaller frame].origin.x, [[nodeLarger baseline] floatValue] - [[nodeSmaller baseline] floatValue])];
+                
+                newWidth = [nodeLarger frame].size.width + horizontalBuffer + [equalField frame].size.width + horizontalBuffer + [nodeSmaller frame].size.width;
+                newHeight = [nodeLarger frame].size.height;
             }
             else if (([rootNodeFirst baseline]) || ([rootNodeSecond baseline])){
                 // one of the nodes has a baseline
@@ -217,12 +224,18 @@
                     [nodeNil setFrameOrigin:NSMakePoint([nodeNil frame].origin.x, 0)];
                     [equalField setFrameOrigin:NSMakePoint([equalField frame].origin.x, [nodeNil frame].size.height - [equalField frame].size.height)];
                     [nodeBaseline setFrameOrigin:NSMakePoint([nodeBaseline frame].origin.x, [nodeNil frame].size.height - [[nodeBaseline baseline] floatValue])];
+                    
+                    newWidth = [nodeNil frame].size.width + horizontalBuffer + [equalField frame].size.width + horizontalBuffer + [nodeBaseline frame].size.width;
+                    newHeight = [nodeNil frame].size.height;
                 }
                 else{
                     // node baseline is larger
                     [nodeNil setFrameOrigin:NSMakePoint([nodeNil frame].origin.x, [[nodeBaseline baseline] floatValue] - [nodeNil frame].size.height)];
                     [equalField setFrameOrigin:NSMakePoint([equalField frame].origin.x, [[nodeBaseline baseline] floatValue] - [equalField frame].size.height)];
                     [nodeBaseline setFrameOrigin:NSMakePoint([nodeBaseline frame].origin.x, 0)];
+                    
+                    newWidth = [nodeNil frame].size.width + horizontalBuffer + [equalField frame].size.width + horizontalBuffer + [nodeBaseline frame].size.width;
+                    newHeight = [nodeBaseline frame].size.height;
                 }
             }
             else{
@@ -244,35 +257,37 @@
                 [equalField setFrameOrigin:NSMakePoint([equalField frame].origin.x, [nodeLarger frame].size.height - [equalField frame].size.height)];
                 [nodeSmaller setFrameOrigin:NSMakePoint([nodeSmaller frame].origin.x, [nodeLarger frame].size.height - [nodeSmaller frame].size.height)];
                 
-                // if autoresize then set elementWidth and height
-                if ([(EDExpression *)[self dataObj] autoresize]){
-                    // disable resize when editing width and height otherwise, infinite loop
-                    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
-                    //float newWidth = [nodeLarger frame].size.width + [equalField frame].size.width + [nodeSmaller frame].size.width;
-                    float newWidth = [rootNodeSecond frame].origin.x + [rootNodeSecond frame].size.width;
-                    float newHeight = [nodeLarger frame].size.height;
-                    NSLog(@"autoresize: new width:%f old width:%f", newWidth, [(EDExpression *)[self dataObj] elementWidth]);
-                    // only change if not equal to new value
-                    BOOL changed = FALSE;
-                    if ([(EDExpression *)[self dataObj] elementWidth] != newWidth){
-                        [(EDExpression *)[self dataObj] setElementWidth:newWidth];
-                        changed = TRUE;
-                    }
-                    
-                    if ([(EDExpression *)[self dataObj] elementHeight] != newHeight){
-                        [(EDExpression *)[self dataObj] setElementHeight:newHeight];
-                        changed = TRUE;
-                    }
-                    
-                    // if there was a change then save
-                    if (changed)
-                        [EDCoreDataUtility saveContext:_context];
-                    
-                    // re-enable listener
-                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
-                }
+                newWidth = [rootNodeSecond frame].origin.x + [rootNodeSecond frame].size.width;
+                newHeight = [nodeLarger frame].size.height;
             }
-         }
+        }
+        else{
+            // just an expression, match first node
+            newWidth = [rootNodeFirst frame].size.width;
+            newHeight = [rootNodeFirst frame].size.height;
+        }
     }
+    
+            
+            
+    //NSLog(@"baseline: autoresize: new width:%f old width:%f width second:%f", newWidth, [(EDExpression *)[self dataObj] elementWidth], [rootNodeSecond frame].size.width);
+    // change if autoresize is set
+    if ([(EDExpression *)[self dataObj] autoresize]){
+        BOOL changed = FALSE;
+        if ([(EDExpression *)[self dataObj] elementWidth] != newWidth){
+            [(EDExpression *)[self dataObj] setElementWidth:newWidth];
+            changed = TRUE;
+        }
+        
+        if ([(EDExpression *)[self dataObj] elementHeight] != newHeight){
+            [(EDExpression *)[self dataObj] setElementHeight:newHeight];
+            changed = TRUE;
+        }
+        
+        // if there was a change then save
+        if (changed)
+            [EDCoreDataUtility saveContext:_context];
+    }
+
 }
 @end

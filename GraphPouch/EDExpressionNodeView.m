@@ -417,7 +417,6 @@
         // every node view has a baseline, see x-height article on wikipedia.org for more info
         NSTextField *field = [EDExpressionNodeView generateTextField:currentTokenFontSize string:[token tokenValue]];
         [self addSubview:field];
-        
         [self setFrameSize:NSMakeSize([field frame].size.width, [field frame].size.height)];
         [self setVerticalPositions:nil multiplyFields:nil fontSize:currentTokenFontSize];
     }
@@ -1167,7 +1166,7 @@
                 
                 // set frame size
                 [self setFrameSize:NSMakeSize(parenWidth + sizeChildLeft.width + sizeChildRight.width, sizeChildRight.height + EDExpressionExponentPowerExponentModifierVertical*currentTokenFontSize + sizeChildLeft.height)];
-                NSLog(@"width child left:%f child right:%f", sizeChildLeft.width, sizeChildRight.width);
+                //NSLog(@"width child left:%f child right:%f total width:%f", sizeChildLeft.width, sizeChildRight.width, [self frame].size.width);
                 [self setVerticalPositions:nil multiplyFields:nil fontSize:currentTokenFontSize];
             }
         }
