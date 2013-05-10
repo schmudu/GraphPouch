@@ -1167,6 +1167,7 @@
                 
                 // set frame size
                 [self setFrameSize:NSMakeSize(parenWidth + sizeChildLeft.width + sizeChildRight.width, sizeChildRight.height + EDExpressionExponentPowerExponentModifierVertical*currentTokenFontSize + sizeChildLeft.height)];
+                NSLog(@"width child left:%f child right:%f", sizeChildLeft.width, sizeChildRight.width);
                 [self setVerticalPositions:nil multiplyFields:nil fontSize:currentTokenFontSize];
             }
         }

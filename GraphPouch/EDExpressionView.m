@@ -45,6 +45,7 @@
 - (id)initWithFrame:(NSRect)frameRect expression:(EDExpression *)expression drawSelection:(BOOL)drawSelection{
     self = [super initWithFrame:frameRect];
     if (self) {
+        NSLog(@"init with frame.");
         // set model info
         [self setDataObj:expression];
         _context = [expression managedObjectContext];
@@ -244,16 +245,28 @@
                 [nodeSmaller setFrameOrigin:NSMakePoint([nodeSmaller frame].origin.x, [nodeLarger frame].size.height - [nodeSmaller frame].size.height)];
                 
                 // if autoresize then set elementWidth and height
-#error infinite loop with setting element width and height
                 if ([(EDExpression *)[self dataObj] autoresize]){
                     // disable resize when editing width and height otherwise, infinite loop
                     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
-                    float newWidth = [nodeLarger frame].size.width + [equalField frame].size.width + [nodeSmaller frame].size.width;
+                    //float newWidth = [nodeLarger frame].size.width + [equalField frame].size.width + [nodeSmaller frame].size.width;
+                    float newWidth = [rootNodeSecond frame].origin.x + [rootNodeSecond frame].size.width;
                     float newHeight = [nodeLarger frame].size.height;
-                    NSLog(@"autoresize: new width:%f", newWidth);
-                    [(EDExpression *)[self dataObj] setElementWidth:newWidth];
-                    [(EDExpression *)[self dataObj] setElementHeight:newHeight];
-                    [EDCoreDataUtility saveContext:_context];
+                    NSLog(@"autoresize: new width:%f old width:%f", newWidth, [(EDExpression *)[self dataObj] elementWidth]);
+                    // only change if not equal to new value
+                    BOOL changed = FALSE;
+                    if ([(EDExpression *)[self dataObj] elementWidth] != newWidth){
+                        [(EDExpression *)[self dataObj] setElementWidth:newWidth];
+                        changed = TRUE;
+                    }
+                    
+                    if ([(EDExpression *)[self dataObj] elementHeight] != newHeight){
+                        [(EDExpression *)[self dataObj] setElementHeight:newHeight];
+                        changed = TRUE;
+                    }
+                    
+                    // if there was a change then save
+                    if (changed)
+                        [EDCoreDataUtility saveContext:_context];
                     
                     // re-enable listener
                     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
