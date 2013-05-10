@@ -16,8 +16,10 @@
     IBOutlet NSTextField *labelExpression;
     IBOutlet NSTextField *labelFontSize;
     IBOutlet NSSlider *sliderFontSize;
+    IBOutlet NSButton *checkboxAutoresize;
 }
 
 @property (nonatomic) float fontSize;
 
+- (IBAction)toggleAutoresize:(id)sender;
 @end

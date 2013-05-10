@@ -42,6 +42,15 @@
     [self setElementLabel:labelExpression withStringAttribute:EDExpressionAttributeExpression];
     [self setElementLabel:labelFontSize attribute:EDExpressionAttributeFontSize];
     [self setSlider:sliderFontSize attribute:EDExpressionAttributeFontSize];
+    [self setElementCheckbox:checkboxAutoresize attribute:EDExpressionAttributeAutoresize];
+}
+
+- (IBAction)toggleAutoresize:(id)sender{
+    // if toggle then set state to on
+    if([checkboxAutoresize state] == NSMixedState)
+        [checkboxAutoresize setState:NSOnState];
+    
+    [self changeSelectedElementsAttribute:EDExpressionAttributeAutoresize newValue:[[NSNumber alloc] initWithBool:[checkboxAutoresize state]]];
 }
 
 #pragma mark text field delegate

@@ -126,6 +126,7 @@ typedef enum{
     EDTypeEquation
 } EDExpressionType;
 
+extern NSString *const EDExpressionAttributeAutoresize;
 extern NSString *const EDExpressionAttributeExpression;
 extern NSString *const EDExpressionAttributeFontSize;
 extern NSString *const EDKeyExpressionFirst;

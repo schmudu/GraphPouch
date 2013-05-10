@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Patrick Lee. All rights reserved.
 //
 
+#import "EDCoreDataUtility.h"
 #import "EDExpressionView.h"
 #import "NSColor+Utilities.h"
 
@@ -241,6 +242,22 @@
                 [nodeLarger setFrameOrigin:NSMakePoint([nodeLarger frame].origin.x, 0)];
                 [equalField setFrameOrigin:NSMakePoint([equalField frame].origin.x, [nodeLarger frame].size.height - [equalField frame].size.height)];
                 [nodeSmaller setFrameOrigin:NSMakePoint([nodeSmaller frame].origin.x, [nodeLarger frame].size.height - [nodeSmaller frame].size.height)];
+                
+                // if autoresize then set elementWidth and height
+#error infinite loop with setting element width and height
+                if ([(EDExpression *)[self dataObj] autoresize]){
+                    // disable resize when editing width and height otherwise, infinite loop
+                    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+                    float newWidth = [nodeLarger frame].size.width + [equalField frame].size.width + [nodeSmaller frame].size.width;
+                    float newHeight = [nodeLarger frame].size.height;
+                    NSLog(@"autoresize: new width:%f", newWidth);
+                    [(EDExpression *)[self dataObj] setElementWidth:newWidth];
+                    [(EDExpression *)[self dataObj] setElementHeight:newHeight];
+                    [EDCoreDataUtility saveContext:_context];
+                    
+                    // re-enable listener
+                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
+                }
             }
          }
     }

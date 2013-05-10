@@ -13,6 +13,7 @@
 
 @implementation EDExpression
 
+@dynamic autoresize;
 @dynamic fontSize;
 @dynamic expression;
 @dynamic page;
@@ -28,6 +29,7 @@
 - (void)copyAttributes:(EDElement *)source{
     [super copyAttributes:source];
     
+    [self setAutoresize:[(EDExpression *)source autoresize]];
     [self setExpression:[(EDExpression *)source expression]];
     [self setFontSize:[(EDExpression *)source fontSize]];
 }
@@ -44,6 +46,7 @@
     // create entity but don't insert it anywhere
     self = [[EDExpression alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameExpression inManagedObjectContext:[[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]] insertIntoManagedObjectContext:nil];
     if(self){
+        [self setAutoresize:[aDecoder decodeBoolForKey:EDExpressionAttributeAutoresize]];
         [self setSelected:[aDecoder decodeBoolForKey:EDElementAttributeSelected]];
         [self setLocationX:[aDecoder decodeFloatForKey:EDElementAttributeLocationX]];
         [self setLocationY:[aDecoder decodeFloatForKey:EDElementAttributeLocationY]];
@@ -60,6 +63,7 @@
     [aCoder encodeObject:[self expression] forKey:EDExpressionAttributeExpression];
     [aCoder encodeFloat:[self fontSize] forKey:EDExpressionAttributeFontSize];
     [aCoder encodeBool:[self selected] forKey:EDElementAttributeSelected];
+    [aCoder encodeBool:[self autoresize] forKey:EDExpressionAttributeAutoresize];
     [aCoder encodeFloat:[self locationX] forKey:EDElementAttributeLocationX];
     [aCoder encodeFloat:[self locationY] forKey:EDElementAttributeLocationY];
     [aCoder encodeFloat:[self elementWidth] forKey:EDElementAttributeWidth];

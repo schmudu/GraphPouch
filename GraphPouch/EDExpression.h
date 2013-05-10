@@ -12,6 +12,7 @@
 
 @interface EDExpression : EDElement <NSPasteboardReading, NSPasteboardWriting, NSCoding>
 
+@property BOOL autoresize;
 @property float fontSize;
 @property (nonatomic, retain) NSString * expression;
 
