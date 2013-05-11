@@ -265,7 +265,6 @@
             [[self dataObj] setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDElementAttributeSelected];
         }
         else{
-            [self notifyMouseDownListeners:theEvent];
         }
     } else {
         // graph is not selected
@@ -278,13 +277,10 @@
             
             // post notification
             [[NSNotificationCenter defaultCenter] postNotificationName:EDEventUnselectedElementClickedWithoutModifier object:self userInfo:clickInfo];
-            
-            //need to deselect all the other graphs
-            //[[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
-            
-            [self notifyMouseDownListeners:theEvent];
         }
     }
+    
+    [self notifyMouseDownListeners:theEvent];
     
     // set variable for dragging
     lastCursorLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
@@ -310,27 +306,7 @@
 }
 
 - (void)mouseDownBySelection:(NSEvent *)theEvent{
-    NSUInteger flags = [theEvent modifierFlags];
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
-    
-    if ([[self dataObj] isSelectedElement]){
-        // graph is already selected
-        if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
-            [[self dataObj] setValue:[[NSNumber alloc] initWithBool:FALSE] forKey:EDElementAttributeSelected];
-        }
-    } else {
-        // graph is not selected
-        if((flags & NSCommandKeyMask) || (flags & NSShiftKeyMask)){
-            [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
-        }
-        else {
-            // post notification
-            [[NSNotificationCenter defaultCenter] postNotificationName:EDEventUnselectedElementClickedWithoutModifier object:self];
-            
-            //need to deselect all the other graphs
-            [[self dataObj] setValue:[[NSNumber alloc] initWithBool:TRUE] forKey:EDElementAttributeSelected];
-        }
-    }
     
     // set variable for dragging
     lastCursorLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];

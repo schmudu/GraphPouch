@@ -45,7 +45,6 @@
 - (id)initWithFrame:(NSRect)frameRect expression:(EDExpression *)expression drawSelection:(BOOL)drawSelection{
     self = [super initWithFrame:frameRect];
     if (self) {
-        NSLog(@"init with frame.");
         // set model info
         [self setDataObj:expression];
         _context = [expression managedObjectContext];
