@@ -24,6 +24,7 @@
 
 @interface EDPrintView()
 - (void)removeAllSubviews;
+- (void)compareLayers;
 @end
 
 @implementation EDPrintView
@@ -114,6 +115,9 @@
             
             pageIndex++;
         }
+        
+        // layer elements
+        [self compareLayers];
     }
     
     return self;
@@ -131,7 +135,9 @@
 }
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // drawing 
+    // drawing
+    // layers
+    //[self compareLayers:nil];
 }
 
 
@@ -146,5 +152,30 @@
 - (NSRect)rectForPage:(NSInteger)i{
     // start at 0 instead of 1
     return NSMakeRect(0, (i-1) * EDWorksheetViewHeight, EDWorksheetViewWidth, EDWorksheetViewHeight);
+}
+
+#pragma mark layering
+NSComparisonResult viewComparePrintElements(NSView *firstView, NSView *secondView, void *context) {
+    // order view by isSelected
+    EDWorksheetElementView *firstElement;
+    EDWorksheetElementView *secondElement;
+    
+    if ([firstView isKindOfClass:[EDWorksheetElementView class]]) {
+        firstElement = (EDWorksheetElementView *)firstView;
+        if ([secondView isKindOfClass:[EDWorksheetElementView class]]) {
+            secondElement = (EDWorksheetElementView *)secondView;
+            // set ordering
+            //NSLog(@"first z-index:%d second z-index:%d", [[[firstElement dataObj] zIndex] intValue], [[[secondElement dataObj] zIndex] intValue]);
+            if ([[[firstElement dataObj] zIndex] intValue] > [[[secondElement dataObj] zIndex] intValue]){
+                return NSOrderedDescending;
+            }
+        }
+    }
+    return NSOrderedAscending;
+}
+
+- (void)compareLayers{
+    //NSLog(@"comparing layers.");
+    [self sortSubviewsUsingFunction:&viewComparePrintElements context:nil];
 }
 @end
