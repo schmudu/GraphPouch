@@ -433,7 +433,7 @@
 		CDE745991730CB29001EC4DC /* v3.expression_font_size.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v3.expression_font_size.xcdatamodel; sourceTree = "<group>"; };
 		CDE7459A1730CB29001EC4DC /* v4.image.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v4.image.xcdatamodel; sourceTree = "<group>"; };
 		CDE7459B1730CB29001EC4DC /* v5.element_z_index.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v5.element_z_index.xcdatamodel; sourceTree = "<group>"; };
-		CDEEDACB173C6000000FC916 /* v6.autosize_expression.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = v6.autosize_expression.xcdatamodel; sourceTree = "<group>"; };
+		CDEEDACB173C6000000FC916 /* v6.autosize_expression.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v6.autosize_expression.xcdatamodel; sourceTree = "<group>"; };
 		CDF3E14616B9CC2A00AB78AF /* EDLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDLine.h; sourceTree = "<group>"; };
 		CDF3E14716B9CC2A00AB78AF /* EDLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDLine.m; sourceTree = "<group>"; };
 		CDF3E15216BB1F3400AB78AF /* EDLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDLineView.h; sourceTree = "<group>"; };
