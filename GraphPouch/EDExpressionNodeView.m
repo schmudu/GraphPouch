@@ -84,7 +84,8 @@
 - (NSDictionary *)addParenthesis:(NSString *)parenthesis largerHeight:(float)largerHeight sizeChild:(NSSize)sizeChild positionX:(float)positionX{
     //float fontSizeParenthesis = [EDExpressionNodeView fontSizeForString:parenthesis height:largerHeight];
     NSMutableDictionary *resultsDict = [NSMutableDictionary dictionary];
-    NSTextField *fieldParen = [EDExpressionNodeView generateTextField:[self fontSize] string:parenthesis];
+    //NSTextField *fieldParen = [EDExpressionNodeView generateTextField:[self fontSize] string:parenthesis];
+    NSTextField *fieldParen = [EDExpressionNodeView generateTextField:[self fontSize]*[self fontModifier] string:parenthesis];
     [resultsDict setObject:[NSNumber numberWithFloat:[fieldParen frame].size.width] forKey:EDKeyParenthesisWidth];
     [self addSubview:fieldParen];
     [fieldParen setFrameOrigin:NSMakePoint(positionX, largerHeight-[fieldParen frame].size.height)];
@@ -400,6 +401,10 @@
 }
 
 - (void)traverseTreeAndCreateImage{
+    // traverseTreeAndCreateImage is responsible for setting the horizontal position and
+    // by default sets all vertical elements aligned to the farthest edge of the tallest element.
+    // setVerticalPositions:multiplyFields:fontSize set the custom vertical position, for example if there is a baseline
+    // then the elements needs to be customized
     NSMutableArray *otherFields = [NSMutableArray array];
     NSMutableArray *multiplyFields = [NSMutableArray array];
     float currentTokenFontSize = [self fontSize] * [self fontModifier];
