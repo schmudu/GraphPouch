@@ -473,6 +473,6 @@ NSString * const EDEventArrowKeyPressed                         = @"EDEventArrow
 #pragma mark window
 NSString * const EDEventWindowDidResize                         = @"EDEventWindowDidResize";
 NSString * const EDEventWindowWillClose                         = @"EDEventWindowWillClose";
-float const EDMainWindowTitleBarHeight                          = 60.0;
+float const EDMainWindowTitleBarHeight                          = 70.0;
 NSString * const EDEventWindowSettingTitle                      = @"EDEventWindowSettingTitle";
 @end
