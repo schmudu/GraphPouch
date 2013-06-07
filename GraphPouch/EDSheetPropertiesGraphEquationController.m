@@ -20,7 +20,7 @@
 - (void)updateTokensInEquationInSelectedGraphs:(NSMutableDictionary *)dict equations:(NSArray *)equations;
 - (void)addTokensToNewEquationInSelectedGraphs:(NSMutableDictionary *)dict;
 - (void)setEquationButtonState;
-- (void)setTypeButtonState:(EDEquationType)equationType;
+- (void)setTypeButtonState:(NSString *)equationType;
 - (void)onQuitShortcutPressed:(NSNotification *)note;
 - (NSMutableDictionary *)validEquation:(NSString *)potentialEquation;
 - (void)showError:(NSError *)error;
@@ -54,8 +54,7 @@
     }
     
     NSString *equationType = [EDSheetPropertiesGraphEquationController equationTypeFromInt:[[equation equationType] intValue]];
-    NSLog(@"equation type: %@", equationType);
-    //[self setTypeButtonState:[equation equationType]];
+    [self setTypeButtonState:equationType];
     
     _equationIndex = index;
     _equationOriginalString = [equation equation];
@@ -139,21 +138,21 @@
     }
 }
 
-- (void)setTypeButtonState:(EDEquationType)equationType{
+- (void)setTypeButtonState:(NSString *)equationType{
     // set up button
     [buttonType removeAllItems];
-    [buttonType addItemsWithTitles:[NSArray arrayWithObjects:@"y=",@"y<", nil]];
+    [buttonType addItemsWithTitles:[NSArray arrayWithObjects:@"y =",@"y <", nil]];
     
-    if (equationType == EDEquationTypeEqual)
-        NSLog(@"button state should be 0.");
+    // select appropriate title
+    [buttonType selectItemWithTitle:equationType];
 }
 
 + (NSString *)equationTypeFromInt:(int)typeInt{
     switch (typeInt) {
         case EDEquationTypeEqual:
-            return [NSString stringWithFormat:@"y="];
+            return [NSString stringWithFormat:@"y ="];
         default:
-            return [NSString stringWithFormat:@"y="];
+            return [NSString stringWithFormat:@"y ="];
     }
     return nil;
 }
