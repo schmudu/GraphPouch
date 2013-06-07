@@ -28,5 +28,6 @@
 - (void)initializeSheet:(EDEquation *)equation index:(int)index;
 - (IBAction)onButtonPressedHelp:(id)sender;
 + (NSString *)equationTypeFromInt:(int)typeInt;
+- (IBAction)onButtonEquationTypeSelected:(id)sender;
     
 @end

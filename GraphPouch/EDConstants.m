@@ -101,6 +101,11 @@ NSString * const EDErrorDomain                                  = @"com.edcodia.
 int const EDErrorTokenizer                                      = 1;
 
 #pragma mark expression
+NSString * const EDEquationTypeStringEqual                      = @"y=";
+NSString * const EDEquationTypeStringLessThan                   = @"y<";
+NSString * const EDEquationTypeStringLessThanOrEqual            = @"y≤";
+NSString * const EDEquationTypeStringGreaterThan                = @"y>";
+NSString * const EDEquationTypeStringGreaterThanOrEqual         = @"y≥";
 NSString * const EDExpressionAttributeAutoresize                = @"autoresize";
 NSString * const EDExpressionAttributeExpression                = @"expression";
 NSString * const EDExpressionAttributeFontSize                  = @"fontSize";
@@ -398,6 +403,7 @@ NSString * const EDTextViewDefaultString                        = @"Double click
 NSString * const EDKeyValidEquation                             = @"EDKeyValidEquation";
 NSString * const EDKeyParsedTokens                              = @"EDKeyParsedTokens";
 NSString * const EDKeyEquation                                  = @"EDKeyEquation";
+NSString * const EDKeyEquationType                              = @"EDKeyEquationType";
 NSString *const EDTokenAttributeIsValid                         = @"isValid";
 NSString *const EDTokenAttributeIsImplicit                      = @"isImplicit";
 NSString *const EDTokenAttributeParenthesisCount                = @"parenthesisCount";

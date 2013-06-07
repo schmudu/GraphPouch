@@ -130,7 +130,6 @@
 							<string key="NSFrame">{{141, 18}, {78, 25}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:22</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="867878946">
@@ -214,7 +213,7 @@
 						<object class="NSPopUpButton" id="808184598">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{13, 121}, {55, 26}}</string>
+							<string key="NSFrame">{{13, 121}, {50, 26}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="264083735"/>
@@ -392,6 +391,14 @@
 						<reference key="destination" ref="808184598"/>
 					</object>
 					<int key="connectionID">190</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onButtonEquationTypeSelected:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="808184598"/>
+					</object>
+					<int key="connectionID">210</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -888,7 +895,7 @@
 						<reference key="object" ref="808184598"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="419487425"/>
-							<object class="IBNSLayoutConstraint" id="777381442">
+							<object class="IBNSLayoutConstraint" id="608816857">
 								<reference key="firstItem" ref="808184598"/>
 								<int key="firstAttribute">7</int>
 								<int key="relation">0</int>
@@ -896,7 +903,7 @@
 								<int key="secondAttribute">0</int>
 								<float key="multiplier">1</float>
 								<object class="IBLayoutConstant" key="constant">
-									<double key="value">50</double>
+									<double key="value">45</double>
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="808184598"/>
@@ -966,8 +973,8 @@
 						<reference key="parent" ref="1006"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">208</int>
-						<reference key="object" ref="777381442"/>
+						<int key="objectID">209</int>
+						<reference key="object" ref="608816857"/>
 						<reference key="parent" ref="808184598"/>
 					</object>
 				</array>
@@ -991,7 +998,7 @@
 				<string key="169.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="174.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array class="NSMutableArray" key="175.IBNSViewMetadataConstraints">
-					<reference ref="777381442"/>
+					<reference ref="608816857"/>
 				</array>
 				<boolean value="NO" key="175.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="175.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1021,7 +1028,7 @@
 				</array>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="207.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="208.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="209.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array class="NSMutableArray" key="22.IBNSViewMetadataConstraints">
 					<reference ref="704500716"/>
 				</array>
@@ -1054,7 +1061,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">208</int>
+			<int key="maxID">210</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1078,11 +1085,16 @@
 					<string key="className">EDSheetPropertiesGraphEquationController</string>
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="onButtonEquationTypeSelected:">id</string>
 						<string key="onButtonPressedCancel:">id</string>
 						<string key="onButtonPressedHelp:">id</string>
 						<string key="onButtonPressedSubmit:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="onButtonEquationTypeSelected:">
+							<string key="name">onButtonEquationTypeSelected:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="onButtonPressedCancel:">
 							<string key="name">onButtonPressedCancel:</string>
 							<string key="candidateClassName">id</string>

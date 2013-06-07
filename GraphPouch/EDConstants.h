@@ -109,7 +109,6 @@ extern NSString *const EDEntityNameExpression;
 #pragma mark directions
 typedef enum{
     EDEquationTypeEqual,
-    EDEquationTypeNotEqual,
     EDEquationTypeLessThan,
     EDEquationTypeLessThanOrEqual,
     EDEquationTypeGreaterThan,
@@ -117,6 +116,11 @@ typedef enum{
 } EDEquationType;
 
 #pragma mark equations
+extern NSString *const EDEquationTypeStringEqual;
+extern NSString *const EDEquationTypeStringLessThan;
+extern NSString *const EDEquationTypeStringLessThanOrEqual;
+extern NSString *const EDEquationTypeStringGreaterThan;
+extern NSString *const EDEquationTypeStringGreaterThanOrEqual;
 extern NSString *const EDEquationAttributeType;
 extern NSString *const EDEquationAttributeIsVisible;
 extern NSString *const EDEquationAttributeShowLabel;
@@ -434,6 +438,7 @@ typedef enum{
 extern NSString *const EDKeyValidEquation;
 extern NSString *const EDKeyParsedTokens;
 extern NSString *const EDKeyEquation;
+extern NSString *const EDKeyEquationType;
 extern NSString *const EDTokenAttributeIsValid;
 extern NSString *const EDTokenAttributeIsImplicit;
 extern NSString *const EDTokenAttributeParenthesisCount;

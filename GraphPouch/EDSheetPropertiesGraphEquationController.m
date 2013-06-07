@@ -53,6 +53,7 @@
         [fieldEquation setStringValue:[equation equation]];
     }
     
+    //NSLog(@"equation type on init:%d", [[equation equationType] intValue]);
     NSString *equationType = [EDSheetPropertiesGraphEquationController equationTypeFromInt:[[equation equationType] intValue]];
     [self setTypeButtonState:equationType];
     
@@ -89,6 +90,7 @@
     if ([[result valueForKey:EDKeyValidEquation] boolValue]){
         // set equation string
         [result setObject:equationStr forKey:EDKeyEquation];
+        [result setObject:[NSNumber numberWithInteger:[buttonType indexOfItem:[buttonType selectedItem]]] forKey:EDKeyEquationType];
         
         // if new equation then add to selected graphs
         if (_equationIndex == EDEquationSheetIndexInvalid) {
@@ -108,6 +110,11 @@
         
         [NSApp endSheet:[self window]];
     }
+}
+
+#pragma mark type
+- (IBAction)onButtonEquationTypeSelected:(id)sender{
+    [self setEquationButtonState];
 }
 
 #pragma mark textfield
@@ -141,7 +148,12 @@
 - (void)setTypeButtonState:(NSString *)equationType{
     // set up button
     [buttonType removeAllItems];
-    [buttonType addItemsWithTitles:[NSArray arrayWithObjects:@"y =",@"y <", nil]];
+    [buttonType addItemsWithTitles:
+        [NSArray arrayWithObjects:EDEquationTypeStringEqual,
+            EDEquationTypeStringLessThan,
+            EDEquationTypeStringLessThanOrEqual,
+            EDEquationTypeStringGreaterThan,
+            EDEquationTypeStringGreaterThanOrEqual, nil]];
     
     // select appropriate title
     [buttonType selectItemWithTitle:equationType];
@@ -150,9 +162,17 @@
 + (NSString *)equationTypeFromInt:(int)typeInt{
     switch (typeInt) {
         case EDEquationTypeEqual:
-            return [NSString stringWithFormat:@"y ="];
+            return EDEquationTypeStringEqual;
+        case EDEquationTypeGreaterThan:
+            return EDEquationTypeStringGreaterThan;
+        case EDEquationTypeGreaterThanOrEqual:
+            return EDEquationTypeStringGreaterThanOrEqual;
+        case EDEquationTypeLessThan:
+            return EDEquationTypeStringLessThan;
+        case EDEquationTypeLessThanOrEqual:
+            return EDEquationTypeStringLessThanOrEqual;
         default:
-            return [NSString stringWithFormat:@"y ="];
+            return EDEquationTypeStringEqual;
     }
     return nil;
 }
@@ -329,6 +349,7 @@
 - (void)updateTokensInEquationInSelectedGraphs:(NSMutableDictionary *)dict equations:(NSArray *)equationsToUpdate{
     NSMutableArray *parsedTokens = [dict objectForKey:EDKeyParsedTokens];
     NSString *equationStr = [dict objectForKey:EDKeyEquation];
+    NSNumber *equationType = [dict objectForKey:EDKeyEquationType];
     EDToken *newToken;
     
     for (EDEquation *equation in equationsToUpdate){
@@ -352,6 +373,7 @@
         
         // set string
         [equation setEquation:equationStr];
+        [equation setEquationType:equationType];
         
         // test print all tokens
         //[equation printAllTokens];
