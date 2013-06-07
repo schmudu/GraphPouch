@@ -6,20 +6,21 @@
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
 
+#import "EDCoreDataUtility+Equations.h"
+#import "EDEquation.h"
+#import "EDGraph.h"
+#import "EDParser.h"
 #import "EDSheetPropertiesGraphEquationController.h"
 #import "EDScanner.h"
 #import "EDTokenizer.h"
-#import "EDParser.h"
-#import "EDEquation.h"
 #import "EDToken.h"
-#import "EDGraph.h"
 #import "NSManagedObject+EasyFetching.m"
-#import "EDCoreDataUtility+Equations.h"
 
 @interface EDSheetPropertiesGraphEquationController ()
 - (void)updateTokensInEquationInSelectedGraphs:(NSMutableDictionary *)dict equations:(NSArray *)equations;
 - (void)addTokensToNewEquationInSelectedGraphs:(NSMutableDictionary *)dict;
 - (void)setEquationButtonState;
+- (void)setTypeButtonState:(EDEquationType)equationType;
 - (void)onQuitShortcutPressed:(NSNotification *)note;
 - (NSMutableDictionary *)validEquation:(NSString *)potentialEquation;
 - (void)showError:(NSError *)error;
@@ -43,15 +44,21 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:EDEventQuitDuringEquationSheet object:[self window]];
 }
 
-- (void)initializeSheet:(NSString *)equation index:(int)index{
+//- (void)initializeSheet:(NSString *)equation index:(int)index{
+- (void)initializeSheet:(EDEquation *)equation index:(int)index{
     if (equation == nil) {
         [fieldEquation setStringValue:[[NSString alloc] initWithFormat:@"Enter equation"]];
     }
     else{
-        [fieldEquation setStringValue:equation];
+        [fieldEquation setStringValue:[equation equation]];
     }
+    
+    NSString *equationType = [EDSheetPropertiesGraphEquationController equationTypeFromInt:[[equation equationType] intValue]];
+    NSLog(@"equation type: %@", equationType);
+    //[self setTypeButtonState:[equation equationType]];
+    
     _equationIndex = index;
-    _equationOriginalString = equation;
+    _equationOriginalString = [equation equation];
 }
 
 - (void)windowDidLoad
@@ -130,6 +137,25 @@
     else {
         [buttonSubmit setEnabled:TRUE];
     }
+}
+
+- (void)setTypeButtonState:(EDEquationType)equationType{
+    // set up button
+    [buttonType removeAllItems];
+    [buttonType addItemsWithTitles:[NSArray arrayWithObjects:@"y=",@"y<", nil]];
+    
+    if (equationType == EDEquationTypeEqual)
+        NSLog(@"button state should be 0.");
+}
+
++ (NSString *)equationTypeFromInt:(int)typeInt{
+    switch (typeInt) {
+        case EDEquationTypeEqual:
+            return [NSString stringWithFormat:@"y="];
+        default:
+            return [NSString stringWithFormat:@"y="];
+    }
+    return nil;
 }
 
 #pragma mark validate
@@ -338,3 +364,4 @@
     [[NSHelpManager sharedHelpManager] openHelpAnchor:@"equation_types"  inBook:locBookName];
 }
 @end
+

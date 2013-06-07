@@ -18,15 +18,17 @@
 @synthesize matchesHaveSameLabel;
 
 @dynamic equation;
+@dynamic graph;
 @dynamic isVisible;
 @dynamic showLabel;
-@dynamic graph;
 @dynamic tokens;
+@dynamic equationType;
 
 #pragma mark encoding, decoding this object
 - (id)initWithCoder:(NSCoder *)aDecoder{
     self = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:[[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]] insertIntoManagedObjectContext:nil];
     if(self){
+        [self setEquationType:[aDecoder decodeObjectForKey:EDEquationAttributeType]];
         [self setEquation:[aDecoder decodeObjectForKey:EDEquationAttributeEquation]];
         [self setShowLabel:[aDecoder decodeBoolForKey:EDEquationAttributeShowLabel]];
         [self setIsVisible:[aDecoder decodeBoolForKey:EDEquationAttributeIsVisible]];
@@ -52,6 +54,7 @@
 
 - (EDEquation *)copy:(NSManagedObjectContext *)context{
     EDEquation *equation = [[EDEquation alloc] initWithContext:context];
+    [equation setEquationType:[self equationType]];
     [equation setEquation:[self equation]];
     [equation setIsVisible:[self isVisible]];
     [equation setShowLabel:[self showLabel]];
@@ -72,12 +75,14 @@
     [aCoder encodeBool:[self showLabel] forKey:EDEquationAttributeShowLabel];
     [aCoder encodeObject:[self equation] forKey:EDEquationAttributeEquation];
     [aCoder encodeObject:[self tokens] forKey:EDEquationAttributeTokens];
+    [aCoder encodeObject:[self equationType] forKey:EDEquationAttributeType];
 }
 
 - (void)copyAttributes:(EDEquation *)otherEquation{
     [self setEquation:[otherEquation equation]];
     [self setIsVisible:[otherEquation isVisible]];
     [self setShowLabel:[otherEquation showLabel]];
+    [self setEquationType:[otherEquation equationType]];
 }
 
 - (void)printAllTokens{
@@ -94,13 +99,6 @@
     
     return FALSE;
 }
-
-/*
-- (void)addTokensObject:(EDToken *)value{
-    NSMutableOrderedSet* tempSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self tokens]];
-    [tempSet addObject:value];
-    [self setTokens:tempSet];
-}*/
 
 #pragma mark stackoverflow
 static NSString *const kItemsKey = @"tokens";

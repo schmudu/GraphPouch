@@ -321,6 +321,7 @@
 		CD5312AF16ECEF7400F670FD /* EDToolbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDToolbarView.xib; sourceTree = "<group>"; };
 		CD5EE20016012A690027EFC6 /* NSObject+Document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Document.h"; sourceTree = "<group>"; };
 		CD5EE20116012A690027EFC6 /* NSObject+Document.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Document.m"; sourceTree = "<group>"; };
+		CD659618176223AF00DA564F /* v7.equation_inequalities.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = v7.equation_inequalities.xcdatamodel; sourceTree = "<group>"; };
 		CD6DF2FF160D181900935BF2 /* EDTransformCornerPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformCornerPoint.h; sourceTree = "<group>"; };
 		CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformCornerPoint.m; sourceTree = "<group>"; };
 		CD74501116B3342A004B813E /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = icon.iconset; sourceTree = "<group>"; };
@@ -1659,6 +1660,7 @@
 			isa = XCVersionGroup;
 			children = (
 				CDEEDACB173C6000000FC916 /* v6.autosize_expression.xcdatamodel */,
+				CD659618176223AF00DA564F /* v7.equation_inequalities.xcdatamodel */,
 				CDE745961730CB29001EC4DC /* EDDocument.xcdatamodel */,
 				CDE745971730CB29001EC4DC /* v1.xcdatamodeld.xcdatamodel */,
 				CDE745981730CB29001EC4DC /* v2.xcdatamodeld.xcdatamodel */,
@@ -1666,7 +1668,7 @@
 				CDE7459A1730CB29001EC4DC /* v4.image.xcdatamodel */,
 				CDE7459B1730CB29001EC4DC /* v5.element_z_index.xcdatamodel */,
 			);
-			currentVersion = CDEEDACB173C6000000FC916 /* v6.autosize_expression.xcdatamodel */;
+			currentVersion = CD659618176223AF00DA564F /* v7.equation_inequalities.xcdatamodel */;
 			path = EDDocument.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

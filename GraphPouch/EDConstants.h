@@ -106,7 +106,18 @@ extern NSString *const EDEntityNameLine;
 extern NSString *const EDEntityNameTextbox;
 extern NSString *const EDEntityNameExpression;
 
+#pragma mark directions
+typedef enum{
+    EDEquationTypeEqual,
+    EDEquationTypeNotEqual,
+    EDEquationTypeLessThan,
+    EDEquationTypeLessThanOrEqual,
+    EDEquationTypeGreaterThan,
+    EDEquationTypeGreaterThanOrEqual
+} EDEquationType;
+
 #pragma mark equations
+extern NSString *const EDEquationAttributeType;
 extern NSString *const EDEquationAttributeIsVisible;
 extern NSString *const EDEquationAttributeShowLabel;
 extern NSString *const EDEquationAttributeEquation;

@@ -86,6 +86,7 @@ NSString * const EDEntityNameLine                               = @"EDLine";
 NSString * const EDEntityNameTextbox                            = @"EDTextbox";
 
 #pragma mark equations
+NSString * const EDEquationAttributeType                        = @"equationType";
 NSString * const EDEquationAttributeEquation                    = @"equation";
 NSString * const EDEquationAttributeShowLabel                   = @"showLabel";
 NSString * const EDEquationAttributeIsVisible                   = @"isVisible";

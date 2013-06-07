@@ -617,7 +617,8 @@
     // return value based on column identifier
     [NSApp beginSheet:[equationController window] modalForWindow:[[self view] window] modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
     _currentSheet = [equationController window];
-    NSString *equation = [[commonEquations objectAtIndex:[(NSTableView *)sender clickedRow]] equation];
+    //NSString *equation = [[commonEquations objectAtIndex:[(NSTableView *)sender clickedRow]] equation];
+    EDEquation *equation = [commonEquations objectAtIndex:[(NSTableView *)sender clickedRow]];
     [equationController initializeSheet:equation index:(int)[(NSTableView *)sender clickedRow]];
 }
 

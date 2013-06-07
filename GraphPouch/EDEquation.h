@@ -13,7 +13,8 @@
 
 @interface EDEquation : NSManagedObject <NSCoding, NSPasteboardReading, NSPasteboardReading>
 
-@property (nonatomic, retain) NSString * equation;
+@property (nonatomic, retain) NSString *equation;
+@property (nonatomic, retain) NSNumber *equationType;
 @property BOOL isVisible;
 @property BOOL showLabel;
 @property BOOL matchesHaveSameVisibility;
