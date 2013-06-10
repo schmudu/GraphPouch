@@ -57,7 +57,26 @@
     
     // return value based on column identifier
     if ([columnIdentifier isEqualToString:@"equation"]) {
-        returnValue = [NSString stringWithFormat:@"y=%@",[(EDEquation *)[commonEquations objectAtIndex:row] equation]];
+        switch ([[(EDEquation *)[commonEquations objectAtIndex:row] equationType] intValue]) {
+            case EDEquationTypeEqual:
+                returnValue = [NSString stringWithFormat:@"%@%@",EDEquationTypeStringEqual, [(EDEquation *)[commonEquations objectAtIndex:row] equation]];
+                break;
+            case EDEquationTypeLessThan:
+                returnValue = [NSString stringWithFormat:@"%@%@",EDEquationTypeStringLessThan, [(EDEquation *)[commonEquations objectAtIndex:row] equation]];
+                break;
+            case EDEquationTypeLessThanOrEqual:
+                returnValue = [NSString stringWithFormat:@"%@%@",EDEquationTypeStringLessThanOrEqual, [(EDEquation *)[commonEquations objectAtIndex:row] equation]];
+                break;
+            case EDEquationTypeGreaterThan:
+                returnValue = [NSString stringWithFormat:@"%@%@",EDEquationTypeStringGreaterThan, [(EDEquation *)[commonEquations objectAtIndex:row] equation]];
+                break;
+            case EDEquationTypeGreaterThanOrEqual:
+                returnValue = [NSString stringWithFormat:@"%@%@",EDEquationTypeStringGreaterThanOrEqual, [(EDEquation *)[commonEquations objectAtIndex:row] equation]];
+                break;
+            default:
+                returnValue = [NSString stringWithFormat:@"%@%@",EDEquationTypeStringEqual, [(EDEquation *)[commonEquations objectAtIndex:row] equation]];
+                break;
+        }
     }
     else if ([columnIdentifier isEqualToString:@"visible"]) {
         if (![(EDEquation *)[commonEquations objectAtIndex:row] matchesHaveSameVisibility]) {
