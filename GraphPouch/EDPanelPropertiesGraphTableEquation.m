@@ -11,6 +11,7 @@
 #import "EDConstants.h"
 #import "EDCoreDataUtility+Equations.h"
 #import "EDEquation.h"
+#import "NSColor+Utilities.h"
 
 @interface EDPanelPropertiesGraphTableEquation()
 - (void)onContextChanged:(NSNotification *)note;
@@ -54,10 +55,11 @@
     
     // Get common equations
     NSArray *commonEquations = [EDCoreDataUtility getCommonEquationsforSelectedGraphs:_context];
+    EDEquation *equation = (EDEquation *)[commonEquations objectAtIndex:row];
     
     // return value based on column identifier
     if ([columnIdentifier isEqualToString:@"equation"]) {
-        switch ([[(EDEquation *)[commonEquations objectAtIndex:row] equationType] intValue]) {
+        switch ([[equation equationType] intValue]) {
             case EDEquationTypeEqual:
                 returnValue = [NSString stringWithFormat:@"%@%@",EDEquationTypeStringEqual, [(EDEquation *)[commonEquations objectAtIndex:row] equation]];
                 break;
@@ -84,19 +86,23 @@
             returnValue = [[NSNumber alloc] initWithInt:NSMixedState];
         }
         else {
-            returnValue = [[NSNumber alloc] initWithBool:[(EDEquation *)[commonEquations objectAtIndex:row] isVisible]];
+            returnValue = [[NSNumber alloc] initWithBool:[equation isVisible]];
         }
     }
-    /*
-    else if ([columnIdentifier isEqualToString:@"label"]) {
-        if (![(EDEquation *)[commonEquations objectAtIndex:row] matchesHaveSameLabel]) {
-            // if all graphs don't have same property then show mixed state
-            returnValue = [[NSNumber alloc] initWithInt:NSMixedState];
-        }
-        else {
-            returnValue = [[NSNumber alloc] initWithBool:[(EDEquation *)[commonEquations objectAtIndex:row] showLabel]];
-        }
-    }*/
+    else if ([columnIdentifier isEqualToString:@"color"]) {
+        NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(20, 20)];
+        
+        // draw color box
+        [image lockFocus];
+        [[NSColor colorWithSRGBRed:[(NSColor *)[equation inequalityColor] redComponent] green:[(NSColor *)[equation inequalityColor] greenComponent] blue:[(NSColor *)[equation inequalityColor] blueComponent] alpha:1.0] setFill];
+        [NSBezierPath fillRect:NSMakeRect(0, 0, 15, 15)];
+        [image unlockFocus];
+        
+        returnValue = image;
+    }
+    else if ([columnIdentifier isEqualToString:@"alpha"]) {
+        returnValue = [NSString stringWithFormat:@"%f", [equation inequalityAlpha]];
+    }
     
     
     return returnValue; 

@@ -318,7 +318,9 @@
     
     for (EDGraph *graph in selectedGraphs){
         // create an equation
-        newEquation = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+        //newEquation = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
+        newEquation = [[EDEquation alloc] initWithContext:_context];
+        [_context insertObject:newEquation];
         
         int i=0;
         for (EDToken *token in parsedTokens){

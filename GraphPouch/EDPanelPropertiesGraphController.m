@@ -608,6 +608,7 @@
 }
 
 - (void)onDoubleClickEquation:(id)sender{
+    NSLog(@"double click equation.");
     // only allow double click on equation
     if ([(NSTableView *)sender clickedColumn] != 0) {
         return;

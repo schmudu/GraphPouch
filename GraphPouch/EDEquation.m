@@ -10,6 +10,7 @@
 #import "EDGraph.h"
 #import "EDToken.h"
 #import "EDConstants.h"
+#import "NSColor+Utilities.h"
 
 
 @implementation EDEquation
@@ -28,6 +29,8 @@
 - (id)initWithCoder:(NSCoder *)aDecoder{
     self = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:[[[NSDocumentController sharedDocumentController] currentDocument] managedObjectContext]] insertIntoManagedObjectContext:nil];
     if(self){
+        [self setInequalityAlpha:[aDecoder decodeFloatForKey:EDEquationAttributeInequalityAlpha]];
+        [self setInequalityColor:[aDecoder decodeObjectForKey:EDEquationAttributeInequalityColor]];
         [self setEquationType:[aDecoder decodeObjectForKey:EDEquationAttributeType]];
         [self setEquation:[aDecoder decodeObjectForKey:EDEquationAttributeEquation]];
         [self setShowLabel:[aDecoder decodeBoolForKey:EDEquationAttributeShowLabel]];
@@ -48,12 +51,16 @@
     self = [[EDEquation alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameEquation inManagedObjectContext:context] insertIntoManagedObjectContext:nil];
     if (self){
         // init code
+        [self setInequalityColor:[NSColor colorWithHexColorString:EDEquationAttributeInequalityColorDefault]];
+        [self setInequalityAlpha:EDEquationAttributeInequalityAlphaDefault];
     }
     return self;
 }
 
 - (EDEquation *)copy:(NSManagedObjectContext *)context{
     EDEquation *equation = [[EDEquation alloc] initWithContext:context];
+    [equation setInequalityAlpha:[self inequalityAlpha]];
+    [equation setInequalityColor:[self inequalityColor]];
     [equation setEquationType:[self equationType]];
     [equation setEquation:[self equation]];
     [equation setIsVisible:[self isVisible]];
@@ -76,6 +83,8 @@
     [aCoder encodeObject:[self equation] forKey:EDEquationAttributeEquation];
     [aCoder encodeObject:[self tokens] forKey:EDEquationAttributeTokens];
     [aCoder encodeObject:[self equationType] forKey:EDEquationAttributeType];
+    [aCoder encodeFloat:[self inequalityAlpha] forKey:EDEquationAttributeInequalityAlpha];
+    [aCoder encodeObject:[self inequalityColor] forKey:EDEquationAttributeInequalityColor];
 }
 
 - (void)copyAttributes:(EDEquation *)otherEquation{
@@ -83,6 +92,8 @@
     [self setIsVisible:[otherEquation isVisible]];
     [self setShowLabel:[otherEquation showLabel]];
     [self setEquationType:[otherEquation equationType]];
+    [self setInequalityAlpha:[otherEquation inequalityAlpha]];
+    [self setInequalityColor:[otherEquation inequalityColor]];
 }
 
 - (void)printAllTokens{

@@ -13,6 +13,8 @@
 
 @interface EDEquation : NSManagedObject <NSCoding, NSPasteboardReading, NSPasteboardReading>
 
+@property (nonatomic, retain) id inequalityColor;
+@property float inequalityAlpha;
 @property (nonatomic, retain) NSString *equation;
 @property (nonatomic, retain) NSNumber *equationType;
 @property BOOL isVisible;
