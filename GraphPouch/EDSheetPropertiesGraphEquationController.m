@@ -25,6 +25,7 @@
 - (NSMutableDictionary *)validEquation:(NSString *)potentialEquation;
 - (void)showError:(NSError *)error;
 - (void)clearError;
+- (void)addEquationTypeControls;
 @end
 
 @implementation EDSheetPropertiesGraphEquationController
@@ -115,6 +116,17 @@
 #pragma mark type
 - (IBAction)onButtonEquationTypeSelected:(id)sender{
     [self setEquationButtonState];
+    NSLog(@"type set:%@", [[buttonType selectedItem] title]);
+    [self addEquationTypeControls];
+}
+
+- (void)addEquationTypeControls{
+    if (!inequalityColorWell){
+        inequalityColorWell = [[NSColorWell alloc] initWithFrame:NSMakeRect(0, 0, 50, 50)];
+    }
+    
+    // add color well
+    [view addSubview:inequalityColorWell];
 }
 
 #pragma mark textfield

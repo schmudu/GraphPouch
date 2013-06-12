@@ -12,6 +12,7 @@
 @interface EDSheetPropertiesGraphEquationController : NSWindowController <NSTextFieldDelegate, NSWindowDelegate>{
     IBOutlet NSButton *buttonCancel;
     IBOutlet NSButton *buttonSubmit;
+    IBOutlet NSView *view;
     IBOutlet NSTextField *fieldEquation;
     IBOutlet NSTextField *errorField;
     IBOutlet NSPopUpButton *buttonType;
@@ -19,6 +20,7 @@
     NSString *_newEquation;
     int _equationIndex;
     NSString *_equationOriginalString;
+    NSColorWell *inequalityColorWell;
 }
 
 - (IBAction)onButtonPressedCancel:(id)sender;
