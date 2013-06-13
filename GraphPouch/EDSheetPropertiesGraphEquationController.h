@@ -24,6 +24,11 @@
     // EquationType Controls
     NSColorWell *inequalityColorWell;
     NSBox *inequalityLine;
+    BOOL _sheetExpandedForInequality;
+    NSTextField *inequalityRegionColorLabel;
+    NSTextField *inequalityRegionAlphaLabel;
+    NSSlider *inequalityAlphaSlider;
+    NSTextField *inequalityAlphaLabel;
 }
 
 - (IBAction)onButtonPressedCancel:(id)sender;

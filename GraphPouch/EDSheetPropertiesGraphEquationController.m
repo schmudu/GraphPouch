@@ -26,6 +26,7 @@
 - (void)showError:(NSError *)error;
 - (void)clearError;
 - (void)addEquationTypeControls;
+- (void)onInequalityAlphaSliderChanged:(id)sender;
 @end
 
 @implementation EDSheetPropertiesGraphEquationController
@@ -36,6 +37,7 @@
     if (self) {
         _context = context;
         _newEquation = [[NSString alloc] init];
+        _sheetExpandedForInequality = false;
     }
     
     return self;
@@ -121,20 +123,69 @@
 }
 
 - (void)addEquationTypeControls{
+    // if already expanded then do nothing
+    if (_sheetExpandedForInequality)
+        return;
+    
+    _sheetExpandedForInequality = true;
+    // make window taller
+    [[self window] setFrame:NSMakeRect(0, 0, [[self window] frame].size.width, [[self window] frame].size.height+EDEquationSheetExpansionVertical) display:TRUE animate:TRUE];
+    
     if (!inequalityColorWell){
-        inequalityColorWell = [[NSColorWell alloc] initWithFrame:NSMakeRect(0, 0, 50, 50)];
+        inequalityColorWell = [[NSColorWell alloc] initWithFrame:NSMakeRect(90 + 20, [fieldEquation frame].origin.y - [fieldEquation frame].size.height - 13, EDEquationSheetColorWellLength, EDEquationSheetColorWellLength)];
     }
     
+    /*
     if (!inequalityLine){
-        inequalityLine = [[NSBox alloc] initWithFrame:NSMakeRect(40, 30, 50, 1)];
+        inequalityLine = [[NSBox alloc] initWithFrame:NSMakeRect(40, [fieldEquation frame].origin.y - 20, 50, 1)];
         [inequalityLine setBorderType:NSLineBorder];
         [inequalityLine setTitle:@""];
         [inequalityLine setBorderColor:[NSColor blackColor]];
         [inequalityLine setBoxType:NSBoxCustom];
+    }*/
+    
+    if (!inequalityRegionColorLabel){
+        inequalityRegionColorLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(10, [fieldEquation frame].origin.y - 35, 90, 20)];
+        [inequalityRegionColorLabel setEditable:FALSE];
+        [inequalityRegionColorLabel setSelectable:FALSE];
+        [inequalityRegionColorLabel setBordered:FALSE];
+        [inequalityRegionColorLabel setDrawsBackground:FALSE];
+        [inequalityRegionColorLabel setStringValue:@"Region Color"];
     }
+    
+    if (!inequalityRegionAlphaLabel){
+        inequalityRegionAlphaLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(10, [fieldEquation frame].origin.y - [fieldEquation frame].size.height - 45, 90, 20)];
+        [inequalityRegionAlphaLabel setEditable:FALSE];
+        [inequalityRegionAlphaLabel setSelectable:FALSE];
+        [inequalityRegionAlphaLabel setBordered:FALSE];
+        [inequalityRegionAlphaLabel setDrawsBackground:FALSE];
+        [inequalityRegionAlphaLabel setStringValue:@"Region Alpha"];
+    }
+    
+    if (!inequalityAlphaSlider){
+        inequalityAlphaSlider = [[NSSlider alloc] initWithFrame:NSMakeRect(90 + 20, [fieldEquation frame].origin.y - [fieldEquation frame].size.height - 45, 70, 20)];
+        [inequalityAlphaSlider setMinValue:0.0];
+        [inequalityAlphaSlider setMaxValue:1.0];
+        [inequalityAlphaSlider setAltIncrementValue:0.05];
+        [inequalityAlphaSlider setContinuous:TRUE];
+        [inequalityAlphaSlider setTarget:self];
+        [inequalityAlphaSlider setAction:@selector(onInequalityAlphaSliderChanged:)];
+    }
+    
+    if (!inequalityAlphaLabel){
+        inequalityAlphaLabel = [[NSTextField alloc] initWithFrame:NSMakeRect([inequalityAlphaSlider frame].origin.x + [inequalityAlphaSlider frame].size.width + 10, [fieldEquation frame].origin.y - [fieldEquation frame].size.height - 45, 25, 20)];
+        [inequalityAlphaLabel setBordered:TRUE];
+        [inequalityAlphaLabel setDrawsBackground:TRUE];
+        [inequalityAlphaLabel setStringValue:@"1.0"];
+    }
+    
     // add color well
     [view addSubview:inequalityColorWell];
-    [view addSubview:inequalityLine];
+    //[view addSubview:inequalityLine];
+    [view addSubview:inequalityRegionColorLabel];
+    [view addSubview:inequalityRegionAlphaLabel];
+    [view addSubview:inequalityAlphaSlider];
+    [view addSubview:inequalityAlphaLabel];
 }
 
 #pragma mark textfield
@@ -405,6 +456,11 @@
 - (IBAction)onButtonPressedHelp:(id)sender{
     NSString *locBookName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"com.edcodia.graphpouch.help"];
     [[NSHelpManager sharedHelpManager] openHelpAnchor:@"equation_types"  inBook:locBookName];
+}
+
+#pragma mark inequality controls
+- (void)onInequalityAlphaSliderChanged:(id)sender{
+    [inequalityAlphaLabel setStringValue:[NSString stringWithFormat:@"%f", [inequalityAlphaSlider floatValue]]];
 }
 @end
 

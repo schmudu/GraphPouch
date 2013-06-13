@@ -97,6 +97,8 @@ NSString * const EDEquationAttributeIsVisible                   = @"isVisible";
 NSString * const EDEquationAttributeTokens                      = @"tokens";
 NSString * const EDEventQuitDuringEquationSheet                 = @"EDEventQuitDuringEquationSheet";
 int const EDEquationSheetIndexInvalid                           = -1;
+float const EDEquationSheetColorWellLength                      = 25;
+float const EDEquationSheetExpansionVertical                    = 50;
 float const EDEquationMaxThresholdDrawingValue                  = 1.5;
 float const EDEquationLineWidth                                 = 1.0;
 

@@ -132,6 +132,8 @@ extern NSString *const EDEquationAttributeEquation;
 extern NSString *const EDEquationAttributeTokens;
 extern NSString *const EDEventQuitDuringEquationSheet;
 extern int const EDEquationSheetIndexInvalid;
+extern float const EDEquationSheetColorWellLength;
+extern float const EDEquationSheetExpansionVertical;
 extern float const EDEquationMaxThresholdDrawingValue;
 extern float const EDEquationLineWidth;
 
