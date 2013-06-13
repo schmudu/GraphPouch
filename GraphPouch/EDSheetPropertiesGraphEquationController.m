@@ -125,8 +125,16 @@
         inequalityColorWell = [[NSColorWell alloc] initWithFrame:NSMakeRect(0, 0, 50, 50)];
     }
     
+    if (!inequalityLine){
+        inequalityLine = [[NSBox alloc] initWithFrame:NSMakeRect(40, 30, 50, 1)];
+        [inequalityLine setBorderType:NSLineBorder];
+        [inequalityLine setTitle:@""];
+        [inequalityLine setBorderColor:[NSColor blackColor]];
+        [inequalityLine setBoxType:NSBoxCustom];
+    }
     // add color well
     [view addSubview:inequalityColorWell];
+    [view addSubview:inequalityLine];
 }
 
 #pragma mark textfield

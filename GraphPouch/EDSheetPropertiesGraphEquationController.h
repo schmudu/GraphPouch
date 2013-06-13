@@ -20,7 +20,10 @@
     NSString *_newEquation;
     int _equationIndex;
     NSString *_equationOriginalString;
+    
+    // EquationType Controls
     NSColorWell *inequalityColorWell;
+    NSBox *inequalityLine;
 }
 
 - (IBAction)onButtonPressedCancel:(id)sender;
