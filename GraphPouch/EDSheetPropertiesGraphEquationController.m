@@ -26,6 +26,7 @@
 - (void)showError:(NSError *)error;
 - (void)clearError;
 - (void)addEquationTypeControls;
+- (void)removeEquationTypeControls;
 - (void)onInequalityAlphaSliderChanged:(id)sender;
 @end
 
@@ -117,9 +118,47 @@
 
 #pragma mark type
 - (IBAction)onButtonEquationTypeSelected:(id)sender{
+    if (([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringGreaterThan]) ||
+        ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringGreaterThanOrEqual]) ||
+        ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringLessThan]) ||
+        ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringLessThanOrEqual])){
+        [self addEquationTypeControls];
+    }
+    else if([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringEqual]){
+        [self removeEquationTypeControls];
+    }
     [self setEquationButtonState];
-    NSLog(@"type set:%@", [[buttonType selectedItem] title]);
-    [self addEquationTypeControls];
+}
+
+- (void)removeEquationTypeControls{
+    if (!_sheetExpandedForInequality)
+        return;
+    
+    _sheetExpandedForInequality = false;
+    
+    // due to timing, shrink window after buttons have been removed
+    [NSTimer scheduledTimerWithTimeInterval:.2 target:self selector:@selector(resizeWindowToSmallerDimensions:) userInfo:nil repeats:NO];
+    // add remove controls
+    if (inequalityAlphaLabel)
+        [inequalityAlphaLabel removeFromSuperview];
+    
+    if (inequalityColorWell)
+        [inequalityColorWell removeFromSuperview];
+    
+    if (inequalityAlphaSlider)
+        [inequalityAlphaSlider removeFromSuperview];
+    
+    if (inequalityRegionAlphaLabel)
+        [inequalityRegionAlphaLabel removeFromSuperview];
+    
+    if (inequalityRegionColorLabel)
+        [inequalityRegionColorLabel removeFromSuperview];
+}
+
+- (void)resizeWindowToSmallerDimensions:(id)sender{
+    // make window taller
+    [[self window] setFrame:NSMakeRect(0, 0, [[self window] frame].size.width, [[self window] frame].size.height-EDEquationSheetExpansionVertical) display:TRUE animate:TRUE];
+    
 }
 
 - (void)addEquationTypeControls{
@@ -166,22 +205,23 @@
         inequalityAlphaSlider = [[NSSlider alloc] initWithFrame:NSMakeRect(90 + 20, [fieldEquation frame].origin.y - [fieldEquation frame].size.height - 45, 70, 20)];
         [inequalityAlphaSlider setMinValue:0.0];
         [inequalityAlphaSlider setMaxValue:1.0];
-        [inequalityAlphaSlider setAltIncrementValue:0.05];
+        //[inequalityAlphaSlider setAltIncrementValue:0.05];
         [inequalityAlphaSlider setContinuous:TRUE];
         [inequalityAlphaSlider setTarget:self];
         [inequalityAlphaSlider setAction:@selector(onInequalityAlphaSliderChanged:)];
     }
     
     if (!inequalityAlphaLabel){
-        inequalityAlphaLabel = [[NSTextField alloc] initWithFrame:NSMakeRect([inequalityAlphaSlider frame].origin.x + [inequalityAlphaSlider frame].size.width + 10, [fieldEquation frame].origin.y - [fieldEquation frame].size.height - 45, 25, 20)];
-        [inequalityAlphaLabel setBordered:TRUE];
-        [inequalityAlphaLabel setDrawsBackground:TRUE];
+        inequalityAlphaLabel = [[NSTextField alloc] initWithFrame:NSMakeRect([inequalityAlphaSlider frame].origin.x + [inequalityAlphaSlider frame].size.width + 10, [fieldEquation frame].origin.y - [fieldEquation frame].size.height - 45, 35, 20)];
+        [inequalityAlphaLabel setBordered:FALSE];
+        [inequalityAlphaLabel setDrawsBackground:FALSE];
+        [inequalityAlphaLabel setBezeled:TRUE];
         [inequalityAlphaLabel setStringValue:@"1.0"];
+        [inequalityAlphaLabel setDelegate:self];
     }
     
     // add color well
     [view addSubview:inequalityColorWell];
-    //[view addSubview:inequalityLine];
     [view addSubview:inequalityRegionColorLabel];
     [view addSubview:inequalityRegionAlphaLabel];
     [view addSubview:inequalityAlphaSlider];
@@ -190,8 +230,13 @@
 
 #pragma mark textfield
 - (void)controlTextDidChange:(NSNotification *)obj{
-    [self setEquationButtonState];
-    [self clearError];
+    if ([obj object] == fieldEquation){
+        [self setEquationButtonState];
+        [self clearError];
+    }
+    else if([obj object] == inequalityAlphaLabel){
+        [inequalityAlphaSlider setDoubleValue:[[NSNumber numberWithDouble:[[inequalityAlphaLabel stringValue] doubleValue]] doubleValue]];
+    }
 }
 
 -(void)controlTextDidEndEditing:(NSNotification *)notification

@@ -39,5 +39,6 @@
 - (IBAction)onButtonPressedHelp:(id)sender;
 + (NSString *)equationTypeFromInt:(int)typeInt;
 - (IBAction)onButtonEquationTypeSelected:(id)sender;
+- (void)resizeWindowToSmallerDimensions:(id)sender;
     
 @end
