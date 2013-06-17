@@ -134,6 +134,7 @@ extern NSString *const EDEventQuitDuringEquationSheet;
 extern int const EDEquationSheetIndexInvalid;
 extern float const EDEquationSheetColorWellLength;
 extern float const EDEquationSheetExpansionVertical;
+extern float const EDEquationSheetExpansionVerticalFieldError;
 extern float const EDEquationMaxThresholdDrawingValue;
 extern float const EDEquationLineWidth;
 
@@ -445,6 +446,8 @@ extern NSString *const EDKeyValidEquation;
 extern NSString *const EDKeyParsedTokens;
 extern NSString *const EDKeyEquation;
 extern NSString *const EDKeyEquationType;
+extern NSString *const EDKeyEquationInequalityColor;
+extern NSString *const EDKeyEquationInequalityAlpha;
 extern NSString *const EDTokenAttributeIsValid;
 extern NSString *const EDTokenAttributeIsImplicit;
 extern NSString *const EDTokenAttributeParenthesisCount;

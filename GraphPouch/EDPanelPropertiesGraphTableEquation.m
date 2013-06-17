@@ -90,18 +90,31 @@
         }
     }
     else if ([columnIdentifier isEqualToString:@"color"]) {
-        NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(20, 20)];
+        if(([[equation equationType] intValue] == EDEquationTypeGreaterThan) ||
+            ([[equation equationType] intValue] == EDEquationTypeGreaterThanOrEqual) ||
+            ([[equation equationType] intValue] == EDEquationTypeLessThan) ||
+            ([[equation equationType] intValue] == EDEquationTypeLessThanOrEqual)){
+            NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(19, 19)];
         
-        // draw color box
-        [image lockFocus];
-        [[NSColor colorWithSRGBRed:[(NSColor *)[equation inequalityColor] redComponent] green:[(NSColor *)[equation inequalityColor] greenComponent] blue:[(NSColor *)[equation inequalityColor] blueComponent] alpha:1.0] setFill];
-        [NSBezierPath fillRect:NSMakeRect(0, 0, 15, 15)];
-        [image unlockFocus];
-        
-        returnValue = image;
+            // draw color box
+            [image lockFocus];
+            [[NSColor colorWithSRGBRed:[(NSColor *)[equation inequalityColor] redComponent] green:[(NSColor *)[equation inequalityColor] greenComponent] blue:[(NSColor *)[equation inequalityColor] blueComponent] alpha:1.0] setFill];
+            [NSBezierPath fillRect:NSMakeRect(2, 2, 15, 15)];
+            [image unlockFocus];
+            
+            returnValue = image;
+        }
     }
     else if ([columnIdentifier isEqualToString:@"alpha"]) {
-        returnValue = [NSString stringWithFormat:@"%f", [equation inequalityAlpha]];
+        if(([[equation equationType] intValue] == EDEquationTypeGreaterThan) ||
+            ([[equation equationType] intValue] == EDEquationTypeGreaterThanOrEqual) ||
+            ([[equation equationType] intValue] == EDEquationTypeLessThan) ||
+            ([[equation equationType] intValue] == EDEquationTypeLessThanOrEqual)){
+            returnValue = [NSString stringWithFormat:@"%f", [equation inequalityAlpha]];
+        }
+        else{
+            returnValue = [NSString stringWithFormat:@""];
+        }
     }
     
     

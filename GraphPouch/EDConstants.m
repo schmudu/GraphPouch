@@ -99,6 +99,7 @@ NSString * const EDEventQuitDuringEquationSheet                 = @"EDEventQuitD
 int const EDEquationSheetIndexInvalid                           = -1;
 float const EDEquationSheetColorWellLength                      = 25;
 float const EDEquationSheetExpansionVertical                    = 50;
+float const EDEquationSheetExpansionVerticalFieldError          = 150;
 float const EDEquationMaxThresholdDrawingValue                  = 1.5;
 float const EDEquationLineWidth                                 = 1.0;
 
@@ -410,6 +411,9 @@ NSString * const EDKeyValidEquation                             = @"EDKeyValidEq
 NSString * const EDKeyParsedTokens                              = @"EDKeyParsedTokens";
 NSString * const EDKeyEquation                                  = @"EDKeyEquation";
 NSString * const EDKeyEquationType                              = @"EDKeyEquationType";
+NSString * const EDKeyEquationInequalityColor                   = @"EDKeyEquationInequalityColor";
+NSString * const EDKeyEquationInequalityAlpha                   = @"EDKeyEquationInequalityAlpha";
+
 NSString *const EDTokenAttributeIsValid                         = @"isValid";
 NSString *const EDTokenAttributeIsImplicit                      = @"isImplicit";
 NSString *const EDTokenAttributeParenthesisCount                = @"parenthesisCount";

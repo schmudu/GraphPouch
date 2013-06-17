@@ -28,6 +28,7 @@
 - (void)addEquationTypeControls;
 - (void)removeEquationTypeControls;
 - (void)onInequalityAlphaSliderChanged:(id)sender;
+- (void)onInequalityColorWellChanged:(id)sender;
 @end
 
 @implementation EDSheetPropertiesGraphEquationController
@@ -57,9 +58,19 @@
         [fieldEquation setStringValue:[equation equation]];
     }
     
-    //NSLog(@"equation type on init:%d", [[equation equationType] intValue]);
     NSString *equationType = [EDSheetPropertiesGraphEquationController equationTypeFromInt:[[equation equationType] intValue]];
     [self setTypeButtonState:equationType];
+    
+    
+    if (([equationType isEqualToString:EDEquationTypeStringGreaterThan]) ||
+        ([equationType isEqualToString:EDEquationTypeStringGreaterThanOrEqual]) ||
+        ([equationType isEqualToString:EDEquationTypeStringLessThan]) ||
+        ([equationType isEqualToString:EDEquationTypeStringLessThanOrEqual])){
+        [self addEquationTypeControls];
+    }
+    else{
+        [self removeEquationTypeControls];
+    }
     
     _equationIndex = index;
     _equationOriginalString = [equation equation];
@@ -95,6 +106,16 @@
         // set equation string
         [result setObject:equationStr forKey:EDKeyEquation];
         [result setObject:[NSNumber numberWithInteger:[buttonType indexOfItem:[buttonType selectedItem]]] forKey:EDKeyEquationType];
+        
+        // if inequality set color and alpha as well
+        if (([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringGreaterThan]) ||
+            ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringGreaterThanOrEqual]) ||
+            ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringLessThan]) ||
+            ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringLessThanOrEqual])){
+            [result setObject:[inequalityColorWell color] forKey:EDKeyEquationInequalityColor];
+            [result setObject:[NSNumber numberWithFloat:[inequalityAlphaSlider floatValue]] forKey:EDKeyEquationInequalityAlpha];
+        }
+        
         
         // if new equation then add to selected graphs
         if (_equationIndex == EDEquationSheetIndexInvalid) {
@@ -153,6 +174,9 @@
     
     if (inequalityRegionColorLabel)
         [inequalityRegionColorLabel removeFromSuperview];
+    
+    // move error field
+    [errorField setFrameOrigin:NSMakePoint([errorField frame].origin.x, [errorField frame].origin.y+EDEquationSheetExpansionVerticalFieldError)];
 }
 
 - (void)resizeWindowToSmallerDimensions:(id)sender{
@@ -172,6 +196,8 @@
     
     if (!inequalityColorWell){
         inequalityColorWell = [[NSColorWell alloc] initWithFrame:NSMakeRect(90 + 20, [fieldEquation frame].origin.y - [fieldEquation frame].size.height - 13, EDEquationSheetColorWellLength, EDEquationSheetColorWellLength)];
+        [inequalityColorWell setTarget:self];
+        [inequalityColorWell setAction:@selector(onInequalityColorWellChanged:)];
     }
     
     /*
@@ -220,6 +246,10 @@
         [inequalityAlphaLabel setDelegate:self];
     }
     
+    // move error message
+    //[errorField setFrameOrigin:NSMakePoint([errorField frame].origin.x, [errorField frame].origin.y-EDEquationSheetExpansionVerticalFieldError)];
+    [errorField setFrameOrigin:NSMakePoint([errorField frame].origin.x, 30)];
+    
     // add color well
     [view addSubview:inequalityColorWell];
     [view addSubview:inequalityRegionColorLabel];
@@ -235,6 +265,7 @@
         [self clearError];
     }
     else if([obj object] == inequalityAlphaLabel){
+        [self setEquationButtonState];
         [inequalityAlphaSlider setDoubleValue:[[NSNumber numberWithDouble:[[inequalityAlphaLabel stringValue] doubleValue]] doubleValue]];
     }
 }
@@ -493,6 +524,13 @@
         [equation setEquation:equationStr];
         [equation setEquationType:equationType];
         
+        if (([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringGreaterThan]) ||
+            ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringGreaterThanOrEqual]) ||
+            ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringLessThan]) ||
+            ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringLessThanOrEqual])){
+            [equation setInequalityColor:[dict objectForKey:EDKeyEquationInequalityColor]];
+            [equation setInequalityAlpha:[(NSNumber *)[dict objectForKey:EDKeyEquationInequalityAlpha] floatValue]];
+        }
         // test print all tokens
         //[equation printAllTokens];
     }
@@ -506,6 +544,11 @@
 #pragma mark inequality controls
 - (void)onInequalityAlphaSliderChanged:(id)sender{
     [inequalityAlphaLabel setStringValue:[NSString stringWithFormat:@"%f", [inequalityAlphaSlider floatValue]]];
+    [self setEquationButtonState];
+}
+
+- (void)onInequalityColorWellChanged:(id)sender{
+    [self setEquationButtonState];
 }
 @end
 
