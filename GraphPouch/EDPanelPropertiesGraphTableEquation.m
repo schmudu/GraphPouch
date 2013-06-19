@@ -110,9 +110,15 @@
             ([[equation equationType] intValue] == EDEquationTypeGreaterThanOrEqual) ||
             ([[equation equationType] intValue] == EDEquationTypeLessThan) ||
             ([[equation equationType] intValue] == EDEquationTypeLessThanOrEqual)){
+            if (!alphaFormatter){
+                alphaFormatter = [[EDFormatterDecimalUnsigned alloc] init];
+            }
+            [[[tableView tableColumnWithIdentifier:@"alpha"] dataCell] setFormatter:alphaFormatter];
+            
             returnValue = [NSString stringWithFormat:@"%f", [equation inequalityAlpha]];
         }
         else{
+            [[[tableView tableColumnWithIdentifier:@"alpha"] dataCell] setFormatter:nil];
             returnValue = [NSString stringWithFormat:@""];
         }
     }

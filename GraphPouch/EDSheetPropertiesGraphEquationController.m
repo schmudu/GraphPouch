@@ -175,13 +175,16 @@
     if (inequalityRegionColorLabel)
         [inequalityRegionColorLabel removeFromSuperview];
     
-    // move error field
-    [errorField setFrameOrigin:NSMakePoint([errorField frame].origin.x, [errorField frame].origin.y+EDEquationSheetExpansionVerticalFieldError)];
 }
 
 - (void)resizeWindowToSmallerDimensions:(id)sender{
     // make window taller
     [[self window] setFrame:NSMakeRect(0, 0, [[self window] frame].size.width, [[self window] frame].size.height-EDEquationSheetExpansionVertical) display:TRUE animate:TRUE];
+    
+    // maintain submit and cancel button y pos
+    [[buttonSubmit animator] setFrameOrigin:NSMakePoint([buttonSubmit frame].origin.x, EDEquationSheetButtonVerticalPosition)];
+    [[buttonCancel animator] setFrameOrigin:NSMakePoint([buttonCancel frame].origin.x, EDEquationSheetButtonVerticalPosition)];
+    [[errorField animator] setFrameOrigin:NSMakePoint([errorField frame].origin.x, EDEquationSheetFieldErrorVerticalPosition)];
     
 }
 
@@ -249,6 +252,12 @@
     // move error message
     //[errorField setFrameOrigin:NSMakePoint([errorField frame].origin.x, [errorField frame].origin.y-EDEquationSheetExpansionVerticalFieldError)];
     [errorField setFrameOrigin:NSMakePoint([errorField frame].origin.x, 30)];
+    
+    // maintain submit and cancel button y pos
+    // maintain submit and cancel button y pos
+    [[buttonSubmit animator] setFrameOrigin:NSMakePoint([buttonSubmit frame].origin.x, EDEquationSheetButtonVerticalPosition)];
+    [[buttonCancel animator] setFrameOrigin:NSMakePoint([buttonCancel frame].origin.x, EDEquationSheetButtonVerticalPosition)];
+    [[errorField animator] setFrameOrigin:NSMakePoint([errorField frame].origin.x, EDEquationSheetFieldErrorVerticalPosition-10)];
     
     // add color well
     [view addSubview:inequalityColorWell];
