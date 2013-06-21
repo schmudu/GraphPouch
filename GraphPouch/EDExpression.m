@@ -10,12 +10,14 @@
 #import "EDConstants.h"
 #import "EDParser.h"
 #import "EDTokenizer.h"
+#import "NSString+Expressions.h"
 
 @implementation EDExpression
 
 @dynamic autoresize;
-@dynamic fontSize;
 @dynamic expression;
+@dynamic expressionEqualityType;
+@dynamic fontSize;
 @dynamic page;
 
 - (EDExpression *)initWithContext:(NSManagedObjectContext *)context{
@@ -31,6 +33,7 @@
     
     [self setAutoresize:[(EDExpression *)source autoresize]];
     [self setExpression:[(EDExpression *)source expression]];
+    [self setExpressionEqualityType:[(EDExpression *)source expressionEqualityType]];
     [self setFontSize:[(EDExpression *)source fontSize]];
 }
 
@@ -53,6 +56,7 @@
         [self setElementWidth:[aDecoder decodeFloatForKey:EDElementAttributeWidth]];
         [self setElementHeight:[aDecoder decodeFloatForKey:EDElementAttributeHeight]];
         [self setExpression:[aDecoder decodeObjectForKey:EDExpressionAttributeExpression]];
+        [self setExpressionEqualityType:[aDecoder decodeObjectForKey:EDExpressionAttributeExpressionEqualityType]];
         [self setFontSize:[aDecoder decodeFloatForKey:EDExpressionAttributeFontSize]];
         [self setZIndex:[aDecoder decodeObjectForKey:EDElementAttributeZIndex]];
     }
@@ -61,6 +65,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:[self expression] forKey:EDExpressionAttributeExpression];
+    [aCoder encodeObject:[self expressionEqualityType] forKey:EDExpressionAttributeExpressionEqualityType];
     [aCoder encodeFloat:[self fontSize] forKey:EDExpressionAttributeFontSize];
     [aCoder encodeBool:[self selected] forKey:EDElementAttributeSelected];
     [aCoder encodeBool:[self autoresize] forKey:EDExpressionAttributeAutoresize];
@@ -102,7 +107,61 @@
 #pragma mark equation/expression
 + (NSMutableDictionary *)isValidEquationOrExpression:(NSString *)potentialEquation context:(NSManagedObjectContext *)context error:(NSError **)error{
     NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
-    NSArray *expressions = [potentialEquation componentsSeparatedByString:@"="];
+    //NSArray *expressions = [potentialEquation componentsSeparatedByString:@"="];
+    NSArray *expressions;
+    NSError *regexError = nil;
+    /*
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"=" options:NSCaseInsensitiveSearch error:&regexError];
+    
+    // go through all signs, there can be only one per expression
+    if ([regex numberOfMatchesInString:potentialEquation options:0 range:NSMakeRange(0, [potentialEquation length])]){
+        expressions = [potentialEquation componentsSeparatedByString:@"="];
+    }
+    else{
+        regex = [NSRegularExpression regularExpressionWithPattern:@">" options:NSCaseInsensitiveSearch error:&regexError];
+        if ([regex numberOfMatchesInString:potentialEquation options:0 range:NSMakeRange(0, [potentialEquation length])]){
+            expressions = [potentialEquation componentsSeparatedByString:@">"];
+        }
+        else{
+            regex = [NSRegularExpression regularExpressionWithPattern:@"≥" options:NSCaseInsensitiveSearch error:&regexError];
+            if ([regex numberOfMatchesInString:potentialEquation options:0 range:NSMakeRange(0, [potentialEquation length])]){
+                expressions = [potentialEquation componentsSeparatedByString:@"≥"];
+            }
+            else{
+                regex = [NSRegularExpression regularExpressionWithPattern:@"<" options:NSCaseInsensitiveSearch error:&regexError];
+                if ([regex numberOfMatchesInString:potentialEquation options:0 range:NSMakeRange(0, [potentialEquation length])]){
+                    expressions = [potentialEquation componentsSeparatedByString:@"<"];
+                }
+                else{
+                    regex = [NSRegularExpression regularExpressionWithPattern:@"≤" options:NSCaseInsensitiveSearch error:&regexError];
+                    if ([regex numberOfMatchesInString:potentialEquation options:0 range:NSMakeRange(0, [potentialEquation length])]){
+                        expressions = [potentialEquation componentsSeparatedByString:@"≤"];
+                    }
+                }
+            }
+        }
+    }*/
+    switch ([potentialEquation expressionEqualityType]) {
+        case EDExpressionEqualityTypeNone:
+            break;
+        case EDExpressionEqualityTypeEqual:
+            expressions = [potentialEquation componentsSeparatedByString:@"="];
+            break;
+        case EDExpressionEqualityTypeGreaterThan:
+            expressions = [potentialEquation componentsSeparatedByString:@">"];
+            break;
+        case EDExpressionEqualityTypeGreaterThanOrEqual:
+            expressions = [potentialEquation componentsSeparatedByString:@"≥"];
+            break;
+        case EDExpressionEqualityTypeLessThan:
+            expressions = [potentialEquation componentsSeparatedByString:@"<"];
+            break;
+        case EDExpressionEqualityTypeLessThanOrEqual:
+            expressions = [potentialEquation componentsSeparatedByString:@"≤"];
+            break;
+        default:
+            break;
+    }
     
     if (([expressions count] == 2) || ([expressions count] == 1)){
         // validate both expressions
@@ -130,7 +189,7 @@
     else{
         // too many equal signs
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-        [errorDetail setValue:[NSString stringWithFormat:@"Too many '=' symbols"] forKey:NSLocalizedDescriptionKey];
+        [errorDetail setValue:[NSString stringWithFormat:@"Too many symbols"] forKey:NSLocalizedDescriptionKey];
         
         if(*error == nil)
             *error = [NSError errorWithDomain:EDErrorDomain code:EDErrorTokenizer userInfo:errorDetail];

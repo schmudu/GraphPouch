@@ -166,7 +166,27 @@
             // add buffer to equal size
             float horizontalBuffer = .2*[(EDExpression *)[self dataObj] fontSize];
             
-            NSTextField *equalField = [EDExpressionNodeView generateTextField:[(EDExpression *)[self dataObj] fontSize] string:@"="];
+            // set field based on expressionType
+            NSTextField *equalField;
+            switch ([[(EDExpression *)[self dataObj] expressionEqualityType] intValue]) {
+                case EDExpressionEqualityTypeEqual:
+                    equalField = [EDExpressionNodeView generateTextField:[(EDExpression *)[self dataObj] fontSize] string:@"="];
+                    break;
+                case EDExpressionEqualityTypeGreaterThan:
+                    equalField = [EDExpressionNodeView generateTextField:[(EDExpression *)[self dataObj] fontSize] string:@">"];
+                    break;
+                case EDExpressionEqualityTypeGreaterThanOrEqual:
+                    equalField = [EDExpressionNodeView generateTextField:[(EDExpression *)[self dataObj] fontSize] string:@"≤"];
+                    break;
+                case EDExpressionEqualityTypeLessThan:
+                    equalField = [EDExpressionNodeView generateTextField:[(EDExpression *)[self dataObj] fontSize] string:@"<"];
+                    break;
+                case EDExpressionEqualityTypeLessThanOrEqual:
+                    equalField = [EDExpressionNodeView generateTextField:[(EDExpression *)[self dataObj] fontSize] string:@"≤"];
+                    break;
+                default:
+                    break;
+            }
             
             // get larger height
             float heightFirst = [rootNodeFirst frame].size.height;

@@ -30,7 +30,7 @@
     /*NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^(|[0-9]|\\.|s|i|n|c|o|s|t|a|\\^|\\+|\\-|\\*|\\/|x|y|\\(|\\))*$"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&regexError];*/
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^(|[0-9]|\\.|\\^|\\+|\\-|\\=|\\*|\\/|x|y|\\(|\\))*$"
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^(|[0-9]|\\.|\\^|\\+|\\-|\\=|\\>|\\≥|\\<|\\≤|\\*|\\/|x|y|\\(|\\))*$"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&regexError];
     NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:*partialStringPtr options:0 range:NSMakeRange(0, [*partialStringPtr length])];

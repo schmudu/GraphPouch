@@ -15,8 +15,10 @@
 #import "EDLine.h"
 #import "EDTextbox.h"
 #import "EDPanelViewController.h"
+#import "EDPanelPropertiesExpressionController.h"
 #import "NSColor+Utilities.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "NSString+Expressions.h"
 
 @interface EDPanelViewController ()
 
@@ -245,10 +247,16 @@
      currentElement = [elements objectAtIndex:i];
         
         newElement = currentElement;
-        
         // check if value exists
         if ([newElement respondsToSelector:NSSelectorFromString(key)]){
             [newElement setValue:newValue forKey:key];
+            
+            // special case, if changing expression in panel properties expression controller
+            // then potentially need to change type of expression as well
+            if (([key isEqualToString:EDExpressionAttributeExpression]) && ([self isKindOfClass:[EDPanelPropertiesExpressionController class]]) && ([newElement isKindOfClass:[EDExpression class]])){
+                [(EDExpression *)newElement setExpressionEqualityType:[NSNumber numberWithInt:[(NSString *)newValue expressionEqualityType]]];
+            }
+            
             [elements replaceObjectAtIndex:i withObject:newElement];
         }
         i++;

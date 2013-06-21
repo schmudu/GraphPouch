@@ -115,6 +115,15 @@ typedef enum{
     EDEquationTypeGreaterThanOrEqual
 } EDEquationType;
 
+typedef enum{
+    EDExpressionEqualityTypeNone,
+    EDExpressionEqualityTypeEqual,
+    EDExpressionEqualityTypeLessThan,
+    EDExpressionEqualityTypeLessThanOrEqual,
+    EDExpressionEqualityTypeGreaterThan,
+    EDExpressionEqualityTypeGreaterThanOrEqual
+} EDExpressionEqualityType;
+
 #pragma mark equations
 extern NSString *const EDEquationTypeStringEqual;
 extern NSString *const EDEquationTypeStringLessThan;
@@ -152,6 +161,7 @@ typedef enum{
 
 extern NSString *const EDExpressionAttributeAutoresize;
 extern NSString *const EDExpressionAttributeExpression;
+extern NSString *const EDExpressionAttributeExpressionEqualityType;
 extern NSString *const EDExpressionAttributeFontSize;
 extern NSString *const EDKeyExpressionFirst;
 extern NSString *const EDKeyExpressionSecond;

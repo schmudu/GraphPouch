@@ -23,6 +23,7 @@
 #import "EDWorksheetView.h"
 #import "EDWorksheetViewController.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "NSString+Expressions.h"
 
 @interface EDWorksheetViewController ()
 - (NSArray *)createImagesOfModelObjects:(NSArray *)elements;
@@ -120,6 +121,7 @@
 - (void)addNewExpression{
     // create new expression
     EDPage *currentPage = [EDCoreDataUtility getCurrentPage:_context];
+    NSString *defaultExpression = [NSString stringWithFormat:@"y=2x+4"];
     
     EDExpression *newExpression = [[EDExpression alloc] initWithEntity:[NSEntityDescription entityForName:EDEntityNameExpression inManagedObjectContext:_context] insertIntoManagedObjectContext:_context];
     
@@ -127,6 +129,7 @@
     [currentPage addExpressionsObject:newExpression];
     
     // set expression attributes
+    [newExpression setExpressionEqualityType:[NSNumber numberWithInt:[defaultExpression expressionEqualityType]]];
     [newExpression setPage:currentPage];
     [newExpression setSelected:FALSE];
     [newExpression setLocationX:50];
@@ -137,7 +140,7 @@
     [newExpression setZIndexAfterInsert:currentPage];
     
     // enter default text
-    [newExpression setExpression:@"y=2x+4"];
+    [newExpression setExpression:defaultExpression];
     
     // select this graph and deselect everything else
     [EDCoreDataUtility deselectAllSelectedWorksheetElementsOnCurrentPage:_context selectElement:newExpression];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12E55" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="EDElement" representedClassName="EDElement" syncable="YES">
         <attribute name="elementHeight" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="elementWidth" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -21,6 +21,7 @@
     <entity name="EDExpression" representedClassName="EDExpression" parentEntity="EDElement" syncable="YES">
         <attribute name="autoresize" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="expression" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="expressionEqualityType" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="5" defaultValueString="0" syncable="YES"/>
         <attribute name="fontSize" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="page" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="EDPage" inverseName="expressions" inverseEntity="EDPage" syncable="YES"/>
     </entity>
@@ -83,7 +84,7 @@
     <elements>
         <element name="EDElement" positionX="160" positionY="192" width="128" height="135"/>
         <element name="EDEquation" positionX="160" positionY="192" width="128" height="165"/>
-        <element name="EDExpression" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="EDExpression" positionX="160" positionY="192" width="128" height="120"/>
         <element name="EDGraph" positionX="160" positionY="192" width="128" height="270"/>
         <element name="EDImage" positionX="160" positionY="192" width="128" height="75"/>
         <element name="EDLine" positionX="160" positionY="192" width="128" height="75"/>

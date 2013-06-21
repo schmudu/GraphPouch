@@ -117,6 +117,7 @@ NSString * const EDEquationTypeStringGreaterThan                = @"y>";
 NSString * const EDEquationTypeStringGreaterThanOrEqual         = @"y≥";
 NSString * const EDExpressionAttributeAutoresize                = @"autoresize";
 NSString * const EDExpressionAttributeExpression                = @"expression";
+NSString * const EDExpressionAttributeExpressionEqualityType    = @"expressionEqualityType";
 NSString * const EDExpressionAttributeFontSize                  = @"fontSize";
 NSString * const EDKeyExpressionFirst                           = @"EDKeyExpressionFirst";
 NSString * const EDKeyExpressionSecond                          = @"EDKeyExpressionSecond";

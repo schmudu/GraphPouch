@@ -15,6 +15,7 @@
 @property BOOL autoresize;
 @property float fontSize;
 @property (nonatomic, retain) NSString * expression;
+@property (nonatomic, retain) NSNumber *expressionEqualityType;
 
 - (EDExpression *)initWithContext:(NSManagedObjectContext *)context;
 - (EDExpression *)copy:(NSManagedObjectContext *)context;

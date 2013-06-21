@@ -20,6 +20,7 @@
 #import "NSColor+Utilities.h"
 #import "NSObject+Document.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "NSString+Expressions.h"
 
 @interface EDPanelPropertiesGraphController ()
 //- (void)changeSelectedElementsAttribute:(NSString *)key newValue:(id)newValue;
@@ -598,10 +599,31 @@
     NSArray *commonEquations = [EDCoreDataUtility getCommonEquationsforSelectedGraphs:_context];
     NSMutableArray *selectedEquations = [[NSMutableArray alloc] init];
     NSString *newEquation;
+    EDEquation *currentEquation;
     
     // pull the indexed objects from the common points and place into an array
     for (NSNumber *index in selectedIndices){
-        newEquation = [NSString stringWithFormat:@"y=%@",[(EDEquation *)[commonEquations objectAtIndex:[index intValue]] equation]];
+        //newEquation = [NSString stringWithFormat:@"y=%@",[(EDEquation *)[commonEquations objectAtIndex:[index intValue]] equation]];
+        currentEquation = (EDEquation *)[commonEquations objectAtIndex:[index intValue]];
+        switch ([[currentEquation equationType] intValue]) {
+            case EDEquationTypeEqual:
+                newEquation = [NSString stringWithFormat:@"y=%@",[(EDEquation *)[commonEquations objectAtIndex:[index intValue]] equation]];
+                break;
+            case EDEquationTypeGreaterThan:
+                newEquation = [NSString stringWithFormat:@"y>%@",[(EDEquation *)[commonEquations objectAtIndex:[index intValue]] equation]];
+                break;
+            case EDEquationTypeGreaterThanOrEqual:
+                newEquation = [NSString stringWithFormat:@"y≥%@",[(EDEquation *)[commonEquations objectAtIndex:[index intValue]] equation]];
+                break;
+            case EDEquationTypeLessThan:
+                newEquation = [NSString stringWithFormat:@"y<%@",[(EDEquation *)[commonEquations objectAtIndex:[index intValue]] equation]];
+                break;
+            case EDEquationTypeLessThanOrEqual:
+                newEquation = [NSString stringWithFormat:@"y≤%@",[(EDEquation *)[commonEquations objectAtIndex:[index intValue]] equation]];
+                break;
+            default:
+                break;
+        }
         [selectedEquations addObject:newEquation];
     }
     [self addNewExpressions:selectedEquations];
@@ -640,6 +662,7 @@
         
         // set expression attributes
         [newExpression setPage:currentPage];
+        [newExpression setExpressionEqualityType:[NSNumber numberWithInt:[expression expressionEqualityType]]];
         [newExpression setSelected:TRUE];
         [newExpression setLocationX:50+i*20];
         [newExpression setLocationY:150+i*20];

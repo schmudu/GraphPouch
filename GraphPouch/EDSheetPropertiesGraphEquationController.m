@@ -234,7 +234,7 @@
         inequalityAlphaSlider = [[NSSlider alloc] initWithFrame:NSMakeRect(90 + 20, [fieldEquation frame].origin.y - [fieldEquation frame].size.height - 45, 70, 20)];
         [inequalityAlphaSlider setMinValue:0.0];
         [inequalityAlphaSlider setMaxValue:1.0];
-        //[inequalityAlphaSlider setAltIncrementValue:0.05];
+        [inequalityAlphaSlider setFloatValue:1.0];
         [inequalityAlphaSlider setContinuous:TRUE];
         [inequalityAlphaSlider setTarget:self];
         [inequalityAlphaSlider setAction:@selector(onInequalityAlphaSliderChanged:)];

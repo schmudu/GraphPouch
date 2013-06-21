@@ -49,6 +49,7 @@
 		CD263672167EBCA200424487 /* NSSet+Equations.m in Sources */ = {isa = PBXBuildFile; fileRef = CD263671167EBCA100424487 /* NSSet+Equations.m */; };
 		CD29A48D17405D4800A93005 /* icon_page_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CD29A48B17405D4800A93005 /* icon_page_over.png */; };
 		CD29A48E17405D4800A93005 /* icon_page.png in Resources */ = {isa = PBXBuildFile; fileRef = CD29A48C17405D4800A93005 /* icon_page.png */; };
+		CD2BA98A17747CCE00ECBF25 /* NSString+Expressions.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA98917747CCE00ECBF25 /* NSString+Expressions.m */; };
 		CD2CA46516670282000ED9FF /* NS(Attributed)String+Geometrics.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2CA46416670282000ED9FF /* NS(Attributed)String+Geometrics.m */; };
 		CD2DD578163ED449006557FC /* EDCoreDataUtility+Pages.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD577163ED449006557FC /* EDCoreDataUtility+Pages.m */; };
 		CD2DD5CF16470906006557FC /* EDPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2DD5CE16470906006557FC /* EDPoint.m */; };
@@ -247,6 +248,8 @@
 		CD263671167EBCA100424487 /* NSSet+Equations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+Equations.m"; sourceTree = "<group>"; };
 		CD29A48B17405D4800A93005 /* icon_page_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_page_over.png; sourceTree = "<group>"; };
 		CD29A48C17405D4800A93005 /* icon_page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_page.png; sourceTree = "<group>"; };
+		CD2BA98817747CCE00ECBF25 /* NSString+Expressions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Expressions.h"; sourceTree = "<group>"; };
+		CD2BA98917747CCE00ECBF25 /* NSString+Expressions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Expressions.m"; sourceTree = "<group>"; };
 		CD2CA46316670282000ED9FF /* NS(Attributed)String+Geometrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NS(Attributed)String+Geometrics.h"; sourceTree = "<group>"; };
 		CD2CA46416670282000ED9FF /* NS(Attributed)String+Geometrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NS(Attributed)String+Geometrics.m"; sourceTree = "<group>"; };
 		CD2DD576163ED449006557FC /* EDCoreDataUtility+Pages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDCoreDataUtility+Pages.h"; sourceTree = "<group>"; };
@@ -321,7 +324,7 @@
 		CD5312AF16ECEF7400F670FD /* EDToolbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EDToolbarView.xib; sourceTree = "<group>"; };
 		CD5EE20016012A690027EFC6 /* NSObject+Document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Document.h"; sourceTree = "<group>"; };
 		CD5EE20116012A690027EFC6 /* NSObject+Document.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Document.m"; sourceTree = "<group>"; };
-		CD659618176223AF00DA564F /* v7.equation_inequalities.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = v7.equation_inequalities.xcdatamodel; sourceTree = "<group>"; };
+		CD659618176223AF00DA564F /* v7.equation_inequalities.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v7.equation_inequalities.xcdatamodel; sourceTree = "<group>"; };
 		CD6DF2FF160D181900935BF2 /* EDTransformCornerPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformCornerPoint.h; sourceTree = "<group>"; };
 		CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformCornerPoint.m; sourceTree = "<group>"; };
 		CD74501116B3342A004B813E /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = icon.iconset; sourceTree = "<group>"; };
@@ -650,6 +653,15 @@
 			name = GraphPouch;
 			sourceTree = "<group>";
 		};
+		CD2BA98717747CA000ECBF25 /* NSString */ = {
+			isa = PBXGroup;
+			children = (
+				CD2BA98817747CCE00ECBF25 /* NSString+Expressions.h */,
+				CD2BA98917747CCE00ECBF25 /* NSString+Expressions.m */,
+			);
+			name = NSString;
+			sourceTree = "<group>";
+		};
 		CD2CA4611667026E000ED9FF /* NSString */ = {
 			isa = PBXGroup;
 			children = (
@@ -715,15 +727,16 @@
 		CD3F0AF715C4775900AB7567 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CDAA910E1669B0E4009B75A2 /* EDCoreData */,
 				CD881D3D16E2497400DB0E94 /* NSManagedObjectContext */,
 				CD90B62116CEAC90000637FF /* NSAttributedString */,
-				CDAA910E1669B0E4009B75A2 /* EDCoreData */,
 				CDAA91101669B128009B75A2 /* NSArrayController */,
 				CDC649D816979114003FADE8 /* NSCoder */,
 				CDAA91111669B153009B75A2 /* NSMutableArray */,
 				CDF3E17316BC135B00AB78AF /* NSManagedObject */,
 				CDAA91121669B15A009B75A2 /* NSMutableDictionary */,
 				CDAA91131669B186009B75A2 /* NSObject */,
+				CD2BA98717747CA000ECBF25 /* NSString */,
 				CDE745951730CB29001EC4DC /* EDDocument.xcdatamodeld */,
 				CDE6D62E15DE774000E5695F /* EDElement.h */,
 				CDE6D62F15DE774000E5695F /* EDElement.m */,
@@ -1497,6 +1510,7 @@
 				CD7A9F4F17258F8300BA522E /* EDPanelPropertiesBasicWithoutHeightController.m in Sources */,
 				CD7A9F54172595CD00BA522E /* EDPanelPropertiesImageController.m in Sources */,
 				CDE7459C1730CB29001EC4DC /* EDDocument.xcdatamodeld in Sources */,
+				CD2BA98A17747CCE00ECBF25 /* NSString+Expressions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
