@@ -465,6 +465,7 @@
 - (void)addTokensToNewEquationInSelectedGraphs:(NSMutableDictionary *)dict{
     NSMutableArray *parsedTokens = [dict objectForKey:EDKeyParsedTokens];
     NSString *equationStr = [dict objectForKey:EDKeyEquation];
+    NSNumber *equationType = [dict objectForKey:EDKeyEquationType];
     EDToken *newToken;
     EDEquation *newEquation;
     
@@ -495,7 +496,15 @@
         
         // set string
         [newEquation setEquation:equationStr];
+        [newEquation setEquationType:equationType];
         
+        if (([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringGreaterThan]) ||
+            ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringGreaterThanOrEqual]) ||
+            ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringLessThan]) ||
+            ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringLessThanOrEqual])){
+            [newEquation setInequalityColor:[dict objectForKey:EDKeyEquationInequalityColor]];
+            [newEquation setInequalityAlpha:[(NSNumber *)[dict objectForKey:EDKeyEquationInequalityAlpha] floatValue]];
+        }
         // test print all tokens
         //[newEquation printAllTokens];
         

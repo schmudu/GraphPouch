@@ -95,10 +95,11 @@
             ([[equation equationType] intValue] == EDEquationTypeLessThan) ||
             ([[equation equationType] intValue] == EDEquationTypeLessThanOrEqual)){
             NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(19, 19)];
-        
+            
             // draw color box
             [image lockFocus];
-            [[NSColor colorWithSRGBRed:[(NSColor *)[equation inequalityColor] redComponent] green:[(NSColor *)[equation inequalityColor] greenComponent] blue:[(NSColor *)[equation inequalityColor] blueComponent] alpha:1.0] setFill];
+            [[NSColor blackColor] setStroke];
+            [(NSColor *)[equation inequalityColor] setFill];
             [NSBezierPath fillRect:NSMakeRect(2, 2, 15, 15)];
             [image unlockFocus];
             

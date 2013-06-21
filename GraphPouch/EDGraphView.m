@@ -607,6 +607,7 @@
         if (![equation isVisible])
             continue;
         
+        NSLog(@"going to draw equation: type:%@", [equation equationType]);
         // create origin equation view
         equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight]) equation:equation];
         [equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
