@@ -25,7 +25,7 @@
 - (NSMutableDictionary *)validEquation:(NSString *)potentialEquation;
 - (void)showError:(NSError *)error;
 - (void)clearError;
-- (void)addEquationTypeControls;
+- (void)addEquationTypeControls:(EDEquation *)equation;
 - (void)removeEquationTypeControls;
 - (void)onInequalityAlphaSliderChanged:(id)sender;
 - (void)onInequalityColorWellChanged:(id)sender;
@@ -66,7 +66,7 @@
         ([equationType isEqualToString:EDEquationTypeStringGreaterThanOrEqual]) ||
         ([equationType isEqualToString:EDEquationTypeStringLessThan]) ||
         ([equationType isEqualToString:EDEquationTypeStringLessThanOrEqual])){
-        [self addEquationTypeControls];
+        [self addEquationTypeControls:equation];
     }
     else{
         [self removeEquationTypeControls];
@@ -143,7 +143,7 @@
         ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringGreaterThanOrEqual]) ||
         ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringLessThan]) ||
         ([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringLessThanOrEqual])){
-        [self addEquationTypeControls];
+        [self addEquationTypeControls:nil];
     }
     else if([[[buttonType selectedItem] title] isEqualToString:EDEquationTypeStringEqual]){
         [self removeEquationTypeControls];
@@ -188,7 +188,7 @@
     
 }
 
-- (void)addEquationTypeControls{
+- (void)addEquationTypeControls:(EDEquation *)equation{
     // if already expanded then do nothing
     if (_sheetExpandedForInequality)
         return;
@@ -258,6 +258,13 @@
     [[buttonSubmit animator] setFrameOrigin:NSMakePoint([buttonSubmit frame].origin.x, EDEquationSheetButtonVerticalPosition)];
     [[buttonCancel animator] setFrameOrigin:NSMakePoint([buttonCancel frame].origin.x, EDEquationSheetButtonVerticalPosition)];
     [[errorField animator] setFrameOrigin:NSMakePoint([errorField frame].origin.x, EDEquationSheetFieldErrorVerticalPosition-10)];
+    
+    // set inequalities
+    if (equation) {
+        [inequalityColorWell setColor:[equation inequalityColor]];
+        [inequalityAlphaSlider setFloatValue:[equation inequalityAlpha]];
+        [inequalityAlphaLabel setStringValue:[NSString stringWithFormat:@"%f", [equation inequalityAlpha]]];
+    }
     
     // add color well
     [view addSubview:inequalityColorWell];

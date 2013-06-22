@@ -56,6 +56,9 @@
     ratioYPositive = [[_graph maxValueY] floatValue]/([[_graph maxValueY] floatValue] + fabsf([[_graph minValueY] floatValue]));
     ratioYNegative = 1 - ratioYPositive;
     
+    // max/min graph positions
+    float graphVerticalPositionMin, graphVerticalPositionMax;
+    
     // set stroke
     [[NSColor blackColor] setStroke];
     [path setLineWidth:EDEquationLineWidth];
@@ -153,6 +156,7 @@
             }
             
             if (firstPointDrawnForEquation) {
+                [inequalityPath moveToPoint:NSMakePoint(i, positionVertical)];
                 [path moveToPoint:NSMakePoint(i, positionVertical)];
                 firstPointDrawnForEquation = false;
             }
@@ -164,14 +168,48 @@
                 firstPointDrawnForEquation = true;
             }
             else {
-                if(fmodf(i, 10)<5)
+                // if includes equal
+                if(([[_equation equationType] intValue] == EDEquationTypeGreaterThanOrEqual) || ([[_equation equationType] intValue] == EDEquationTypeLessThanOrEqual)){
                     [path lineToPoint:NSMakePoint(i, positionVertical)];
-                else
-                    [path moveToPoint:NSMakePoint(i, positionVertical)];
+                }
+                else{
+                    // do not include equal
+                    if(fmodf(i, 10)<5)
+                        [path lineToPoint:NSMakePoint(i, positionVertical)];
+                    else
+                        [path moveToPoint:NSMakePoint(i, positionVertical)];
+                }
+                
+                // inequality fill
+                [inequalityPath moveToPoint:NSMakePoint(i, positionVertical)];
+                
+                // depending on greater than or less than stroke to bottom of graph
+                if(([[_equation equationType] intValue] == EDEquationTypeGreaterThan) || ([[_equation equationType] intValue] == EDEquationTypeGreaterThanOrEqual)){
+                    graphVerticalPositionMax = originVerticalPosition - ([self frame].size.height);
+                    [inequalityPath lineToPoint:NSMakePoint(i, graphVerticalPositionMax)];
+                }
+                else{
+                    graphVerticalPositionMin = originVerticalPosition + ([self frame].size.height);
+                    [inequalityPath lineToPoint:NSMakePoint(i, graphVerticalPositionMin)];
+                }
             }
         }
     }
     [path stroke];
+    
+    // if inequality need to fill path
+    if(([[_equation equationType] intValue] == EDEquationTypeGreaterThan) ||
+       ([[_equation equationType] intValue] == EDEquationTypeGreaterThanOrEqual) ||
+       ([[_equation equationType] intValue] == EDEquationTypeLessThan) ||
+       ([[_equation equationType] intValue] == EDEquationTypeLessThanOrEqual)){
+        NSColor *fillColor;
+        if ([[(NSColor *)[_equation inequalityColor] colorSpaceName] isEqualToString:@"NSCalibratedWhiteColorSpace"])
+            fillColor = [NSColor colorWithCalibratedWhite:[(NSColor *)[_equation inequalityColor] whiteComponent] alpha:[_equation inequalityAlpha]];
+        else
+            fillColor = [NSColor colorWithCalibratedRed:[(NSColor *)[_equation inequalityColor] redComponent] green:[(NSColor *)[_equation inequalityColor] greenComponent] blue:[(NSColor *)[_equation inequalityColor] blueComponent] alpha:[_equation inequalityAlpha]];
+        [fillColor setStroke];
+        [inequalityPath stroke];
+    }
 }
 
 @end
