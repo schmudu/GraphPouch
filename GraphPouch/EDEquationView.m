@@ -44,6 +44,7 @@
     BOOL firstPointDrawnForEquation = true;
     NSError *error;
     NSBezierPath *path = [NSBezierPath bezierPath];
+    NSBezierPath *inequalityPath = [NSBezierPath bezierPath];
     float diffX, marginDiff, ratioHorizontal, ratioVertical, valueX, valueY, positionVertical;
     
     // set origin points
@@ -85,44 +86,89 @@
      
         // if y is greater than max or less than min * threshold modifier than break from loop
         // e.g. if max is 10 and modifier is 1.5, then points greater than 15 will not be drawn
-        //if ((isnan(valueY)) || (valueY > [[_graph maxValueY] floatValue]) || (valueY < [[_graph minValueY] floatValue])){
-        if ((isnan(valueY)) || (valueY > [[_graph maxValueY] floatValue] * EDEquationMaxThresholdDrawingValue) || (valueY < [[_graph minValueY] floatValue]*EDEquationMaxThresholdDrawingValue)){
-            firstPointDrawnForEquation = true;
-            continue;
-        }
-     
-        // based on value find y position
-        if (error){
-            // we received an error an cannot calculate this value
-            // do nothing
-        }
-        if (valueY < 0){
-            // y is negative
-            ratioVertical = valueY/[[_graph minValueY] floatValue];
-            positionVertical = originVerticalPosition + ratioVertical * ([self frame].size.height * ratioYNegative);
-        }
-        else if (valueY == 0){
-            positionVertical = originVerticalPosition;
+        if([[_equation equationType] intValue] == EDEquationTypeEqual){
+            if ((isnan(valueY)) || (valueY > [[_graph maxValueY] floatValue] * EDEquationMaxThresholdDrawingValue) || (valueY < [[_graph minValueY] floatValue]*EDEquationMaxThresholdDrawingValue)){
+                firstPointDrawnForEquation = true;
+                continue;
+            }
+         
+            // based on value find y position
+            if (error){
+                // we received an error an cannot calculate this value
+                // do nothing
+            }
+            if (valueY < 0){
+                // y is negative
+                ratioVertical = valueY/[[_graph minValueY] floatValue];
+                positionVertical = originVerticalPosition + ratioVertical * ([self frame].size.height * ratioYNegative);
+            }
+            else if (valueY == 0){
+                positionVertical = originVerticalPosition;
+            }
+            else{
+                // y is positive
+                ratioVertical = valueY/[[_graph maxValueY] floatValue];
+                positionVertical = originVerticalPosition - ratioVertical * ([self frame].size.height * ratioYPositive);
+            }
+            
+            if (firstPointDrawnForEquation) {
+                [path moveToPoint:NSMakePoint(i, positionVertical)];
+                firstPointDrawnForEquation = false;
+            }
+            else if (error){
+                // reset
+                error = nil;
+                
+                // set variable so that equation will not draw to next point
+                firstPointDrawnForEquation = true;
+            }
+            else {
+                [path lineToPoint:NSMakePoint(i, positionVertical)];
+            }
         }
         else{
-            // y is positive
-            ratioVertical = valueY/[[_graph maxValueY] floatValue];
-            positionVertical = originVerticalPosition - ratioVertical * ([self frame].size.height * ratioYPositive);
-        }
-        
-        if (firstPointDrawnForEquation) {
-            [path moveToPoint:NSMakePoint(i, positionVertical)];
-            firstPointDrawnForEquation = false;
-        }
-        else if (error){
-            // reset
-            error = nil;
+            // equation is inequality
+            if ((isnan(valueY)) || (valueY > [[_graph maxValueY] floatValue] * EDEquationMaxThresholdDrawingValue) || (valueY < [[_graph minValueY] floatValue]*EDEquationMaxThresholdDrawingValue)){
+                firstPointDrawnForEquation = true;
+                continue;
+            }
+         
+            // based on value find y position
+            if (error){
+                // we received an error an cannot calculate this value
+                // do nothing
+            }
+            if (valueY < 0){
+                // y is negative
+                ratioVertical = valueY/[[_graph minValueY] floatValue];
+                positionVertical = originVerticalPosition + ratioVertical * ([self frame].size.height * ratioYNegative);
+            }
+            else if (valueY == 0){
+                positionVertical = originVerticalPosition;
+            }
+            else{
+                // y is positive
+                ratioVertical = valueY/[[_graph maxValueY] floatValue];
+                positionVertical = originVerticalPosition - ratioVertical * ([self frame].size.height * ratioYPositive);
+            }
             
-            // set variable so that equation will not draw to next point
-            firstPointDrawnForEquation = true;
-        }
-        else {
-            [path lineToPoint:NSMakePoint(i, positionVertical)];
+            if (firstPointDrawnForEquation) {
+                [path moveToPoint:NSMakePoint(i, positionVertical)];
+                firstPointDrawnForEquation = false;
+            }
+            else if (error){
+                // reset
+                error = nil;
+                
+                // set variable so that equation will not draw to next point
+                firstPointDrawnForEquation = true;
+            }
+            else {
+                if(fmodf(i, 10)<5)
+                    [path lineToPoint:NSMakePoint(i, positionVertical)];
+                else
+                    [path moveToPoint:NSMakePoint(i, positionVertical)];
+            }
         }
     }
     [path stroke];
