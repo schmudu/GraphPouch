@@ -41,6 +41,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    NSPoint inequalityPoint;
     BOOL firstPointDrawnForEquation = true;
     NSError *error;
     NSBezierPath *path = [NSBezierPath bezierPath];
@@ -172,6 +173,7 @@
             }
             
             if (firstPointDrawnForEquation) {
+                inequalityPoint = NSMakePoint(i, positionVertical);
                 [inequalityPath moveToPoint:NSMakePoint(i, positionVertical)];
                 [path moveToPoint:NSMakePoint(i, positionVertical)];
                 firstPointDrawnForEquation = false;
@@ -189,8 +191,13 @@
                     [path lineToPoint:NSMakePoint(i, positionVertical)];
                 }
                 else{
+                    // if distance is greater than dashed line then calculate new point
+                    if(sqrtf(powf(i-inequalityPoint.x,2)+powf(positionVertical-inequalityPoint.y,2))>10)
+                        inequalityPoint = NSMakePoint(i, positionVertical);
+                        
                     // dashed line for not equal
-                    if(fmodf(i, 10)<5)
+                    //if(fmodf(i, 10)<5)
+                    if(fmodf(sqrtf(powf(i-inequalityPoint.x,2)+powf(positionVertical-inequalityPoint.y,2)), 10)<5)
                         [path lineToPoint:NSMakePoint(i, positionVertical)];
                     else
                         [path moveToPoint:NSMakePoint(i, positionVertical)];
