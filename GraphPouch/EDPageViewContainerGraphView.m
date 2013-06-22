@@ -25,6 +25,9 @@
         
         EDGraphView *graphView = [[EDGraphView alloc] initWithFrame:NSMakeRect(0, 0, [_graph elementWidth], [_graph elementHeight]) graphModel:_graph drawSelection:TRUE];
         
+        // draw graph attributes on thumbnail
+        [graphView drawElementAttributes];
+        
         // scale image to page view container
         NSRect thumbnailRect = NSMakeRect(0, 0, [_graph elementWidth] * xRatio, [_graph elementHeight] * yRatio);
         NSImage *expressionImage = [[NSImage alloc] initWithData:[graphView dataWithPDFInsideRect:[graphView frame]]];

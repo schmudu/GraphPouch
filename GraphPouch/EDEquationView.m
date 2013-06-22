@@ -132,6 +132,22 @@
         else{
             // equation is inequality
             if ((isnan(valueY)) || (valueY > [[_graph maxValueY] floatValue] * EDEquationMaxThresholdDrawingValue) || (valueY < [[_graph minValueY] floatValue]*EDEquationMaxThresholdDrawingValue)){
+                
+                // draw fill in if the user has chosen an inequality
+                if ((valueY > [[_graph maxValueY] floatValue] * EDEquationMaxThresholdDrawingValue) && ((([[_equation equationType] intValue] == EDEquationTypeLessThan)) || ([[_equation equationType] intValue] == EDEquationTypeLessThanOrEqual))){
+                    graphVerticalPositionMax = originVerticalPosition - ([self frame].size.height);
+                    graphVerticalPositionMin = originVerticalPosition + ([self frame].size.height);
+                    [inequalityPath moveToPoint:NSMakePoint(i, graphVerticalPositionMax)];
+                    [inequalityPath lineToPoint:NSMakePoint(i, graphVerticalPositionMin)];
+                    
+                }
+                else if ((valueY < [[_graph minValueY] floatValue] * EDEquationMaxThresholdDrawingValue) && ((([[_equation equationType] intValue] == EDEquationTypeGreaterThan)) || ([[_equation equationType] intValue] == EDEquationTypeGreaterThanOrEqual))){
+                    graphVerticalPositionMax = originVerticalPosition - ([self frame].size.height);
+                    graphVerticalPositionMin = originVerticalPosition + ([self frame].size.height);
+                    [inequalityPath moveToPoint:NSMakePoint(i, graphVerticalPositionMin)];
+                    [inequalityPath lineToPoint:NSMakePoint(i, graphVerticalPositionMax)];
+                    
+                }
                 firstPointDrawnForEquation = true;
                 continue;
             }
@@ -173,7 +189,7 @@
                     [path lineToPoint:NSMakePoint(i, positionVertical)];
                 }
                 else{
-                    // do not include equal
+                    // dashed line for not equal
                     if(fmodf(i, 10)<5)
                         [path lineToPoint:NSMakePoint(i, positionVertical)];
                     else
