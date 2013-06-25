@@ -38,6 +38,8 @@
 - (void)removeEquations;
 - (void)removePoints;
 - (void)removeCoordinateView;
+- (void)removeTickMarksView;
+- (void)removeGrid;
 - (void)onContextChanged:(NSNotification *)note;
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo;
 @end
@@ -126,10 +128,7 @@
     // this is called whenever the context for this object changes
     [super updateDisplayBasedOnContext];
  
-    [self removeLabels];
-    [self removeEquations];
-    [self removePoints];
-    
+    [self removeFeatures];
     [self drawElementAttributes];
 }
     
@@ -138,14 +137,26 @@
     NSDictionary *horizontalResults = [self calculateGridIncrement:[[[self dataObj] maxValueX] floatValue] minValue:[[[self dataObj] minValueX] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] length:[self graphWidth] scale:[[[self dataObj] scaleX] intValue]];
     NSDictionary *verticalResults = [self calculateGridIncrement:[[[self dataObj] maxValueY] floatValue] minValue:[[[self dataObj] minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:[self graphHeight] scale:[[[self dataObj] scaleY] intValue]];
     
-    // stroke grid
+    // draw coordinates
+    if ([(EDGraph *)[self dataObj] hasCoordinateAxes]) {
+        [self drawCoordinateAxes:originInfo];
+    }
+    
+    // tick marks
+    if ([(EDGraph *)[self dataObj] hasTickMarks]) {
+        [self drawTickMarks:verticalResults horizontal:horizontalResults origin:originInfo];
+    }
+    
+    // grid lines
     if ([(EDGraph *)[self dataObj] hasGridLines]) {
         [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults origin:originInfo];
     }
     
-     if ([(EDGraph *)[self dataObj] hasTickMarks]) {
-        [self drawTickMarks:verticalResults horizontal:horizontalResults origin:originInfo];
-    }
+    // stroke grid
+    /*
+    if ([(EDGraph *)[self dataObj] hasGridLines]) {
+        [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults origin:originInfo];
+    }*/
     
     // stroke coordinate axes
     /*
@@ -165,30 +176,43 @@
     NSDictionary *horizontalResults = [self calculateGridIncrement:[[[self dataObj] maxValueX] floatValue] minValue:[[[self dataObj] minValueX] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] length:[self graphWidth] scale:[[[self dataObj] scaleX] intValue]];
     NSDictionary *verticalResults = [self calculateGridIncrement:[[[self dataObj] maxValueY] floatValue] minValue:[[[self dataObj] minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:[self graphHeight] scale:[[[self dataObj] scaleY] intValue]];
     
-    // draw equations
-    if ([[(EDGraph *)[self dataObj] equations] count]) {
-        [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
-    }
-    
     // draw labels
     if ([(EDGraph *)[self dataObj] hasLabels]) {
         [self drawLabels:verticalResults horizontal:horizontalResults origin:originInfo];
+    }
+    
+    // draw equations
+    if ([[(EDGraph *)[self dataObj] equations] count]) {
+        [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
     }
     
     // draw points
     if ([[(EDGraph *)[self dataObj] points] count]) {
         [self drawPointsWithLabels:verticalResults horizontal:horizontalResults origin:originInfo];
     }
-    
+    /*
     // draw coordinates
     if ([(EDGraph *)[self dataObj] hasCoordinateAxes]) {
         [self drawCoordinateAxes:originInfo];
     }
+    
+    // tick marks
+    if ([(EDGraph *)[self dataObj] hasTickMarks]) {
+        [self drawTickMarks:verticalResults horizontal:horizontalResults origin:originInfo];
+    }
+    
+    // grid lines
+    if ([(EDGraph *)[self dataObj] hasGridLines]) {
+        [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults origin:originInfo];
+    }
+     */
 }
 
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo{
+    /*
     NSImage *imageCoordinate = [[NSImage alloc] initWithSize:[self frame].size];
     [imageCoordinate lockFocus];
+     */
     
     NSBezierPath *path = [NSBezierPath bezierPath];
     float originVerticalPosition = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
@@ -256,7 +280,8 @@
     
     [path setLineWidth:EDGraphDefaultCoordinateLineWidth];
     [path stroke];
-    [imageCoordinate unlockFocus];
+    /*
+     [imageCoordinate unlockFocus];
     
     // set image view
     if (_viewCoordinate)
@@ -265,6 +290,7 @@
     _viewCoordinate = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height)];
     [_viewCoordinate setImage:imageCoordinate];
     [self addSubview:_viewCoordinate];
+     */
 }
 
 - (void)removeCoordinateView{
@@ -273,6 +299,11 @@
 }
 
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
+    /*
+    NSImage *imageGrid = [[NSImage alloc] initWithSize:[self frame].size];
+    [imageGrid lockFocus];
+     */
+    
     NSBezierPath *path = [NSBezierPath bezierPath];
     NSBezierPath *outlinePath = [NSBezierPath bezierPath];
     int numGridLines = [[gridInfoVertical objectForKey:EDKeyNumberGridLinesPositive] intValue];
@@ -331,9 +362,30 @@
     }
     
     [path stroke];
+    /*
+    [imageGrid unlockFocus];
+    
+    // set image view
+    if (_viewGrid)
+        _viewGrid = nil;
+    
+    _viewGrid = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height)];
+    [_viewGrid setImage:imageGrid];
+    [self addSubview:_viewGrid];
+     */
+}
+
+- (void)removeGrid{
+    if (_viewGrid)
+        [_viewGrid removeFromSuperview];
 }
 
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
+    /*
+    NSImage *imageTickMarks = [[NSImage alloc] initWithSize:[self frame].size];
+    [imageTickMarks lockFocus];
+     */
+    
     NSBezierPath *path = [NSBezierPath bezierPath];
     
     int numGridLines = [[gridInfoVertical objectForKey:EDKeyNumberGridLinesPositive] intValue];
@@ -377,6 +429,22 @@
     }
     
     [path stroke];
+    /*
+    [imageTickMarks unlockFocus];
+    
+    // set image view
+    if (_viewTickMarks)
+        _viewTickMarks = nil;
+    
+    _viewTickMarks = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height)];
+    [_viewTickMarks setImage:imageTickMarks];
+    [self addSubview:_viewTickMarks];
+     */
+}
+
+- (void)removeTickMarksView{
+    if (_viewTickMarks)
+        [_viewTickMarks removeFromSuperview];
 }
 
 - (NSArray *)getLowestFactors:(int)number{
@@ -724,7 +792,9 @@
     [self removeLabels];
     [self removeEquations];
     [self removePoints];
-    [self removeCoordinateView];
+    //[self removeCoordinateView];
+    //[self removeTickMarksView];
+    //[self removeGrid];
 }
 
 

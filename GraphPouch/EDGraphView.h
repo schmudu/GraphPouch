@@ -17,6 +17,8 @@
     NSMutableArray *_points;
     BOOL _drawSelection;
     NSImageView *_viewCoordinate;
+    NSImageView *_viewTickMarks;
+    NSImageView *_viewGrid;
 }
 
 - (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length scale:(int)scale;
