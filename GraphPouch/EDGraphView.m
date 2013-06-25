@@ -37,7 +37,9 @@
 - (void)removeLabels;
 - (void)removeEquations;
 - (void)removePoints;
+- (void)removeCoordinateView;
 - (void)onContextChanged:(NSNotification *)note;
+- (void)drawCoordinateAxes:(NSDictionary *)originInfo;
 @end
 
 @implementation EDGraphView
@@ -146,9 +148,10 @@
     }
     
     // stroke coordinate axes
+    /*
     if ([(EDGraph *)[self dataObj] hasCoordinateAxes]) {
         [self drawCoordinateAxes:originInfo];
-    }
+    }*/
     
     // color background
     if ((_drawSelection) && ([[self dataObj] isSelectedElement])){
@@ -176,9 +179,17 @@
     if ([[(EDGraph *)[self dataObj] points] count]) {
         [self drawPointsWithLabels:verticalResults horizontal:horizontalResults origin:originInfo];
     }
+    
+    // draw coordinates
+    if ([(EDGraph *)[self dataObj] hasCoordinateAxes]) {
+        [self drawCoordinateAxes:originInfo];
+    }
 }
 
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo{
+    NSImage *imageCoordinate = [[NSImage alloc] initWithSize:[self frame].size];
+    [imageCoordinate lockFocus];
+    
     NSBezierPath *path = [NSBezierPath bezierPath];
     float originVerticalPosition = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
     float originHorizontalPosition = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
@@ -245,6 +256,20 @@
     
     [path setLineWidth:EDGraphDefaultCoordinateLineWidth];
     [path stroke];
+    [imageCoordinate unlockFocus];
+    
+    // set image view
+    if (_viewCoordinate)
+        _viewCoordinate = nil;
+    
+    _viewCoordinate = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, [self frame].size.width, [self frame].size.height)];
+    [_viewCoordinate setImage:imageCoordinate];
+    [self addSubview:_viewCoordinate];
+}
+
+- (void)removeCoordinateView{
+    if (_viewCoordinate)
+        [_viewCoordinate removeFromSuperview];
 }
 
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
@@ -699,6 +724,7 @@
     [self removeLabels];
     [self removeEquations];
     [self removePoints];
+    [self removeCoordinateView];
 }
 
 

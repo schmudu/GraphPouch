@@ -16,11 +16,12 @@
     NSMutableArray *_equations;
     NSMutableArray *_points;
     BOOL _drawSelection;
+    NSImageView *_viewCoordinate;
 }
 
 - (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length scale:(int)scale;
 - (NSMutableDictionary *)calculateGraphOrigin;
-- (void)drawCoordinateAxes:(NSDictionary *)originInfo;
+//- (void)drawCoordinateAxes:(NSDictionary *)originInfo;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;

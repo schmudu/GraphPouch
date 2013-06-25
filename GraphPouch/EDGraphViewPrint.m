@@ -39,8 +39,9 @@
     }
     
     // stroke coordinate axes
+    /*
     if ([(EDGraph *)[self dataObj] hasCoordinateAxes]) {
         [self drawCoordinateAxes:originInfo];
-    }
+    }*/
 }
 @end
