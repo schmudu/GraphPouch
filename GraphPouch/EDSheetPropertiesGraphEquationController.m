@@ -67,6 +67,11 @@
         ([equationType isEqualToString:EDEquationTypeStringLessThan]) ||
         ([equationType isEqualToString:EDEquationTypeStringLessThanOrEqual])){
         [self addEquationTypeControls:equation];
+        
+        // initialize controls
+        [inequalityColorWell setColor:(NSColor *)[equation inequalityColor]];
+        [inequalityAlphaLabel setStringValue:[NSString stringWithFormat:@"%f", [equation inequalityAlpha]]];
+        [inequalityAlphaSlider setFloatValue:[equation inequalityAlpha]];
     }
     else{
         [self removeEquationTypeControls];

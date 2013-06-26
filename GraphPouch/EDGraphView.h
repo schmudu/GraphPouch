@@ -23,10 +23,12 @@
 
 - (NSMutableDictionary *)calculateGridIncrement:(float)maxValue minValue:(float)minValue originRatio:(float)ratio length:(float)length scale:(int)scale;
 - (NSMutableDictionary *)calculateGraphOrigin;
-//- (void)drawCoordinateAxes:(NSDictionary *)originInfo;
+- (void)drawCoordinateAxes:(NSDictionary *)originInfo;
 - (void)drawVerticalGrid:(NSDictionary *)gridInfoVertical horizontalGrid:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (void)drawLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
+- (void)drawEquations:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
+- (void)drawPointsWithLabels:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo;
 - (float)graphHeight;
 - (float)graphWidth;
 - (id)initWithFrame:(NSRect)frame graphModel:(EDGraph *)myGraph drawSelection:(BOOL)drawSelection;

@@ -539,11 +539,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDSheetPropertiesGraphEquationController.m"
-         timestampString = "393197050.300558"
+         timestampString = "393974532.736633"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "143"
-         endingLineNumber = "143"
+         startingLineNumber = "148"
+         endingLineNumber = "148"
          landmarkName = "-onButtonEquationTypeSelected:"
          landmarkType = "5">
       </FileBreakpoint>

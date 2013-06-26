@@ -81,7 +81,7 @@
             images = [[page images] allObjects];
             
             for (EDImage *image in images){
-                // create graphViewPrint and add it to the view
+                // create imageViewPrint and add it to the view
                 imageView = [[EDImageView alloc] initWithFrame:NSMakeRect([image locationX], pageIndex * EDWorksheetViewHeight + [image locationY], [image elementWidth], [image elementHeight]) imageModel:image];
                 
                 // add it to view
