@@ -168,12 +168,14 @@
         [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
     }
     
+    /*
     // draw points
     if ([[(EDGraph *)[self dataObj] points] count]) {
         [self drawPointsWithLabels:verticalResults horizontal:horizontalResults origin:originInfo];
-    }
+    }*/
     
-    // grid lines
+    /*
+     // grid lines
     if ([(EDGraph *)[self dataObj] hasGridLines]) {
         [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults origin:originInfo];
     }
@@ -192,7 +194,7 @@
     if ([(EDGraph *)[self dataObj] hasLabels]) {
         [self drawLabels:verticalResults horizontal:horizontalResults origin:originInfo];
     }
-    
+     */
 }
 
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo{
@@ -685,6 +687,7 @@
         equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight]) equation:equation];
         [equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
         
+        /*
         // create image
         equationImage = [[NSImage alloc] initWithData:[equationView dataWithPDFInsideRect:[equationView bounds]]];
         
@@ -699,6 +702,14 @@
         
         // save view so it can be erased later
         [_equations addObject:equationCacheView];
+         */
+        [self addSubview:equationView];
+        
+        // set origin
+        [equationView setFrameOrigin:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
+        
+        // save view so it can be erased later
+        [_equations addObject:equationView];
     }
     
     _equationsAlreadyDrawn = TRUE;
