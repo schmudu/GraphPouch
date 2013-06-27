@@ -256,6 +256,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     
     // set location
     [imageView setFrameOrigin:NSMakePoint([[image valueForKey:EDElementAttributeLocationX] floatValue], [[image valueForKey:EDElementAttributeLocationY] floatValue])];
+    [imageView drawElementAttributes];
     
     [self addSubview:imageView];
     [imageView setNeedsDisplay:TRUE];

@@ -131,6 +131,7 @@
 		CDAC3748161112E700545F1E /* NSMutableDictionary+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAC3747161112E700545F1E /* NSMutableDictionary+Utilities.m */; };
 		CDB6829A1684D1A900702EAA /* EDGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB682991684D1A900702EAA /* EDGraph.m */; };
 		CDB682ED1694E80700702EAA /* EDEquationView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB682EC1694E80700702EAA /* EDEquationView.m */; };
+		CDC605A0177CE127008A5EB6 /* EDImageViewPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CDC6059F177CE127008A5EB6 /* EDImageViewPrint.m */; };
 		CDD05DEA16BC716E001279FB /* EDTextboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD05DE916BC716E001279FB /* EDTextboxView.m */; };
 		CDD05DF616BD4C43001279FB /* EDTextboxViewMask.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD05DF516BD4C43001279FB /* EDTextboxViewMask.m */; };
 		CDD05DFA16BF4DBA001279FB /* icon_paper.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DF816BF4DBA001279FB /* icon_paper.png */; };
@@ -399,6 +400,8 @@
 		CDB682991684D1A900702EAA /* EDGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDGraph.m; sourceTree = "<group>"; };
 		CDB682EB1694E80700702EAA /* EDEquationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDEquationView.h; sourceTree = "<group>"; };
 		CDB682EC1694E80700702EAA /* EDEquationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDEquationView.m; sourceTree = "<group>"; };
+		CDC6059E177CE127008A5EB6 /* EDImageViewPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDImageViewPrint.h; sourceTree = "<group>"; };
+		CDC6059F177CE127008A5EB6 /* EDImageViewPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDImageViewPrint.m; sourceTree = "<group>"; };
 		CDD05DE816BC716E001279FB /* EDTextboxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTextboxView.h; sourceTree = "<group>"; };
 		CDD05DE916BC716E001279FB /* EDTextboxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTextboxView.m; sourceTree = "<group>"; };
 		CDD05DF416BD4C43001279FB /* EDTextboxViewMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTextboxViewMask.h; sourceTree = "<group>"; };
@@ -1031,6 +1034,8 @@
 			children = (
 				CD9D4C8A17256EB800F1697A /* EDImageView.h */,
 				CD9D4C8B17256EB800F1697A /* EDImageView.m */,
+				CDC6059E177CE127008A5EB6 /* EDImageViewPrint.h */,
+				CDC6059F177CE127008A5EB6 /* EDImageViewPrint.m */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -1511,6 +1516,7 @@
 				CD7A9F54172595CD00BA522E /* EDPanelPropertiesImageController.m in Sources */,
 				CDE7459C1730CB29001EC4DC /* EDDocument.xcdatamodeld in Sources */,
 				CD2BA98A17747CCE00ECBF25 /* NSString+Expressions.m in Sources */,
+				CDC605A0177CE127008A5EB6 /* EDImageViewPrint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

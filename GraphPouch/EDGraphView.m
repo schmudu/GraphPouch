@@ -14,7 +14,7 @@
 #import "EDCoreDataUtility.h"
 #import "EDElement.h"
 #import "EDEquation.h"
-#import "EDEquationCacheView.h"
+//#import "EDEquationCacheView.h"
 #import "EDEquationView.h"
 #import "EDExpression.h"
 #import "EDGraphView.h"
@@ -168,13 +168,11 @@
         [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
     }
     
-    /*
     // draw points
     if ([[(EDGraph *)[self dataObj] points] count]) {
         [self drawPointsWithLabels:verticalResults horizontal:horizontalResults origin:originInfo];
-    }*/
+    }
     
-    /*
      // grid lines
     if ([(EDGraph *)[self dataObj] hasGridLines]) {
         [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults origin:originInfo];
@@ -194,7 +192,6 @@
     if ([(EDGraph *)[self dataObj] hasLabels]) {
         [self drawLabels:verticalResults horizontal:horizontalResults origin:originInfo];
     }
-     */
 }
 
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo{
@@ -674,8 +671,10 @@
         return;
     
     EDEquationView *equationView;
+    /*
     EDEquationCacheView *equationCacheView;
     NSImage *equationImage;
+     */
     
     // for each graph create a graph view
     for (EDEquation *equation in [[self dataObj] equations]){

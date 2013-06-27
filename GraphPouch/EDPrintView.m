@@ -12,7 +12,8 @@
 #import "EDGraphView.h"
 #import "EDGraphViewPrint.h"
 #import "EDImage.h"
-#import "EDImageView.h"
+//#import "EDImageView.h"
+#import "EDImageViewPrint.h"
 #import "EDLine.h"
 #import "EDLineView.h"
 #import "EDLineViewPrint.h"
@@ -43,7 +44,7 @@
         NSArray *pages = [EDPage getAllObjectsOrderedByPageNumber:_context];
         NSArray *expressions, *graphs, *images, *textboxes, *lines;
         EDGraphViewPrint *graphView;
-        EDImageView *imageView;
+        EDImageViewPrint *imageView;
         EDLineView *lineView;
         EDTextboxView *textboxView;
         EDExpressionView *expressionView;
@@ -82,10 +83,11 @@
             
             for (EDImage *image in images){
                 // create imageViewPrint and add it to the view
-                imageView = [[EDImageView alloc] initWithFrame:NSMakeRect([image locationX], pageIndex * EDWorksheetViewHeight + [image locationY], [image elementWidth], [image elementHeight]) imageModel:image];
+                imageView = [[EDImageViewPrint alloc] initWithFrame:NSMakeRect([image locationX], pageIndex * EDWorksheetViewHeight + [image locationY], [image elementWidth], [image elementHeight]) imageModel:image];
                 
                 // add it to view
                 [self addSubview:imageView];
+                
                 [_elements addObject:imageView];
             }
             

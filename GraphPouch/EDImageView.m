@@ -26,6 +26,13 @@
         // set model info
         [self setDataObj:myImage];
         
+        /*
+        // set image
+        NSImage *image = [[NSImage alloc] initWithData:[(EDImage *)[self dataObj] imageData]];
+        _imageView = [[NSImageView alloc] initWithFrame:[self frame]];
+        [_imageView setImage:image];
+         */
+        
         // listen
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onContextChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:_context];
     }
@@ -60,10 +67,32 @@
     }
 }
 
+- (void)drawElementAttributes{
+    /*
+    NSImage *image = [[NSImage alloc] initWithData:[(EDImage *)[self dataObj] imageData]];
+    _imageView = [[NSImageView alloc] initWithFrame:[self frame]];
+    [_imageView setImage:image];
+     */
+    //[self addSubview:_imageView];
+}
+
+- (void)removeFeatures{
+    //[_imageView removeFromSuperview];
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     // do this for real time re-sizing
     NSImage *image = [[NSImage alloc] initWithData:[(EDImage *)[self dataObj] imageData]];
     [image drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:TRUE hints:nil];
 }
+
+/*
+- (void)updateDisplayBasedOnContext{
+    // this is called whenever the context for this object changes
+    [super updateDisplayBasedOnContext];
+ 
+    [self removeFeatures];
+    [self drawElementAttributes];
+}*/
 @end
