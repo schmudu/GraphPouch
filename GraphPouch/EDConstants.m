@@ -189,6 +189,7 @@ float const EDGridDistanceMinimumThreshold                      = 20.0;
 int const EDGridMaximum                                         = 10;
 float const EDGridIncrementalMaximum                            = 70;
 float const EDGridIncrementalMinimum                            = 20;
+float const EDGridAxisYHorizontalOffset                         = -17;
 NSString * const EDGridColor                                    = @"666666";
 float const EDGridAlpha                                         = 0.8;
 NSString * const EDKeyGridFactor                                = @"EDKeyGridFactor";

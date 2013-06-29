@@ -198,6 +198,12 @@
     NSImage *imageCoordinate = [[NSImage alloc] initWithSize:[self frame].size];
     [imageCoordinate lockFocus];
     
+    // flip coordinates
+    NSAffineTransform* t = [NSAffineTransform transform];
+    [t translateXBy:0 yBy:[self frame].size.height];
+    [t scaleXBy:1 yBy:-1];
+    [t concat];
+    
     NSBezierPath *path = [NSBezierPath bezierPath];
     float originVerticalPosition = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
     float originHorizontalPosition = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
@@ -286,14 +292,19 @@
     NSImage *imageGrid = [[NSImage alloc] initWithSize:[self frame].size];
     [imageGrid lockFocus];
     
+    // flip coordinates
+    NSAffineTransform* t = [NSAffineTransform transform];
+    [t translateXBy:0 yBy:[self frame].size.height];
+    [t scaleXBy:1 yBy:-1];
+    [t concat];
+    
     NSBezierPath *path = [NSBezierPath bezierPath];
     NSBezierPath *outlinePath = [NSBezierPath bezierPath];
     int numGridLines = [[gridInfoVertical objectForKey:EDKeyNumberGridLinesPositive] intValue];
     float distanceIncrement = [[gridInfoVertical objectForKey:EDKeyDistanceIncrement] floatValue];
     float originPosVertical = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
     float originPosHorizontal = [[originInfo valueForKey:EDKeyOriginPositionHorizontal] floatValue];
-    //[path setLineWidth:0.5];
-    [[NSColor blackColor] setStroke];
+    [[NSColor colorWithHexColorString:EDGridColor alpha:EDGridAlpha] setStroke];
     
     // draw top/bottom of grid
     [outlinePath moveToPoint:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
@@ -311,7 +322,6 @@
     
     // set stroke
     [[NSColor colorWithHexColorString:EDGridColor alpha:EDGridAlpha] setStroke];
-    //[[NSColor colorWithHexColorString:EDGridColor] setStroke];
     
     // draw positive horizontal lines starting from origin
     for (int i=0; i<=numGridLines; i++) {
@@ -365,6 +375,12 @@
 - (void)drawTickMarks:(NSDictionary *)gridInfoVertical horizontal:(NSDictionary *)gridInfoHorizontal origin:(NSDictionary *)originInfo{
     NSImage *imageTickMarks = [[NSImage alloc] initWithSize:[self frame].size];
     [imageTickMarks lockFocus];
+    
+    // flip coordinates
+    NSAffineTransform* t = [NSAffineTransform transform];
+    [t translateXBy:0 yBy:[self frame].size.height];
+    [t scaleXBy:1 yBy:-1];
+    [t concat];
     
     NSBezierPath *path = [NSBezierPath bezierPath];
     
@@ -537,10 +553,14 @@
     [self addSubview:labelField];
     [_labels addObject:labelField];
     
-    // draw positive x labels
-    for (int i=1; i<=numGridLinesHorizontal; i++) {
+    // draw positive and zero x labels
+    for (int i=0; i<=numGridLinesHorizontal; i++) {
         // only draw labels needed
         if (i % [[[self dataObj] labelIntervalX] intValue] != 0)
+            continue;
+        
+        // only draw zero label if min value x = 0 and min value y = 0
+        if ((i==0) && ([[(EDGraph *)[self dataObj] minValueY] intValue] != 0))
             continue;
         
         numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 40, 20)];
@@ -585,9 +605,13 @@
     }
     
     // draw positive y labels
-    for (int i=1; i<=numGridLinesVertical; i++) {
+    for (int i=0; i<=numGridLinesVertical; i++) {
         // only draw labels needed
         if (i % [[[self dataObj] labelIntervalY] intValue] != 0)
+            continue;
+        
+        // only draw zero label if min value x = 0 and min value y = 0
+        if ((i==0) && ([[(EDGraph *)[self dataObj] minValueX] intValue] != 0))
             continue;
         
         numberField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 40, 20)];
@@ -601,7 +625,7 @@
         [self addSubview:numberField];
         
         // position it
-        [numberField setFrameOrigin:NSMakePoint(originHorizontalPosition + EDGraphVerticalLabelHorizontalOffset, originVerticalPosition - (distanceIncrementVertical * i + EDGraphVerticalLabelVerticalOffset))];
+        [numberField setFrameOrigin:NSMakePoint(originHorizontalPosition + EDGraphVerticalLabelHorizontalOffset + EDGridAxisYHorizontalOffset - [numberField intrinsicContentSize].width, originVerticalPosition - (distanceIncrementVertical * i + EDGraphVerticalLabelVerticalOffset))];
         
         // add to list
         [_labels addObject:numberField];
@@ -625,7 +649,7 @@
         [self addSubview:numberField];
         
         // position it
-        [numberField setFrameOrigin:NSMakePoint(originHorizontalPosition + EDGraphVerticalLabelHorizontalOffset, originVerticalPosition + (distanceIncrementVertical * i - EDGraphVerticalLabelVerticalOffset))];
+        [numberField setFrameOrigin:NSMakePoint(originHorizontalPosition + EDGraphVerticalLabelHorizontalOffset + EDGridAxisYHorizontalOffset - [numberField intrinsicContentSize].width, originVerticalPosition + (distanceIncrementVertical * i - EDGraphVerticalLabelVerticalOffset))];
         
         // add to list
         [_labels addObject:numberField];

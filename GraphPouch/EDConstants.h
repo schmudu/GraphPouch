@@ -219,6 +219,7 @@ extern float const EDGridDistanceMinimumThreshold;
 extern int const EDGridMaximum;
 extern float const EDGridIncrementalMaximum;
 extern float const EDGridIncrementalMinimum;
+extern float const EDGridAxisYHorizontalOffset;
 extern NSString *const EDGridColor;
 extern float const EDGridAlpha;
 extern NSString *const EDKeyDistanceIncrement;
