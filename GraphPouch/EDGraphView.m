@@ -14,7 +14,7 @@
 #import "EDCoreDataUtility.h"
 #import "EDElement.h"
 #import "EDEquation.h"
-//#import "EDEquationCacheView.h"
+#import "EDEquationCacheView.h"
 #import "EDEquationView.h"
 #import "EDExpression.h"
 #import "EDGraphView.h"
@@ -695,10 +695,8 @@
         return;
     
     EDEquationView *equationView;
-    /*
     EDEquationCacheView *equationCacheView;
     NSImage *equationImage;
-     */
     
     // for each graph create a graph view
     for (EDEquation *equation in [[self dataObj] equations]){
@@ -707,10 +705,25 @@
             continue;
         
         // create origin equation view
+        
         equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight]) equation:equation];
-        [equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
+         [equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
         
         /*
+        // VERSION 1
+        [self addSubview:equationView];
+        
+        // set origin
+        [equationView setFrameOrigin:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
+        
+        // save view so it can be erased later
+        [_equations addObject:equationView];
+         */
+        
+        
+        
+        
+        // VERSION 2
         // create image
         equationImage = [[NSImage alloc] initWithData:[equationView dataWithPDFInsideRect:[equationView bounds]]];
         
@@ -725,14 +738,6 @@
         
         // save view so it can be erased later
         [_equations addObject:equationCacheView];
-         */
-        [self addSubview:equationView];
-        
-        // set origin
-        [equationView setFrameOrigin:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
-        
-        // save view so it can be erased later
-        [_equations addObject:equationView];
     }
     
     _equationsAlreadyDrawn = TRUE;

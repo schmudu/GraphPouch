@@ -5,6 +5,8 @@
 //  Created by PATRICK LEE on 7/26/12.
 //  Copyright (c) 2012 Patrick Lee. All rights reserved.
 //
+// testing
+#import "EDGraphView.h"
 
 #import "EDWorksheetView.h"
 #import "EDElement.h"
@@ -79,7 +81,9 @@
                               [[[self dataObj] valueForKey:EDElementAttributeHeight] floatValue])];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWorksheetElementRedrawingItself object:self];
-    [self setNeedsDisplay:TRUE];
+    NSLog(@"calling set needs display from worksheet element view update display based on context.");
+    //[self setNeedsDisplay:TRUE];
+    [self setNeedsDisplayInRect:NSMakeRect(0, 0, [(EDElement *)[self dataObj] elementWidth], [(EDElement *)[self dataObj] elementWidth])];
 }
 
 #pragma mark drawing
@@ -555,6 +559,9 @@
         element = [updatedArray objectAtIndex:i];
             if (element == [self dataObj]) {
                 hasChanged = TRUE;
+                if ([self isKindOfClass:[EDGraphView class]])
+                    NSLog(@"going to updated based on context and i'm a graph.");
+                
                 [self updateDisplayBasedOnContext];
             }
         i++;
@@ -563,11 +570,15 @@
 
 # pragma mark listeners - selection
 - (void)onWorksheetSelectedElementAdded:(NSNotification *)note{
-    [self setNeedsDisplay:TRUE];
+    //[self setNeedsDisplay:TRUE];
+    [self setNeedsDisplayInRect:NSMakeRect(0, 0, [(EDElement *)[self dataObj] elementWidth], [(EDElement *)[self dataObj] elementWidth])];
+    NSLog(@"calling set needs display from worksheet element view.");
 }
 
 - (void)onWorksheetSelectedElementRemoved:(NSNotification *)note{
-    [self setNeedsDisplay:TRUE];
+    //[self setNeedsDisplay:TRUE];
+    [self setNeedsDisplayInRect:NSMakeRect(0, 0, [(EDElement *)[self dataObj] elementWidth], [(EDElement *)[self dataObj] elementWidth])];
+    NSLog(@"calling set needs display from worksheet element view.");
 }
 
 # pragma mark snap

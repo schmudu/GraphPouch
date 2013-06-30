@@ -314,6 +314,7 @@
 #pragma mark elements
 - (void)updateElements{
 #warning worksheet elements
+    /*
     // remove
     [self removeTextboxes];
     [self removeGraphs];
@@ -327,6 +328,7 @@
     [self drawImages];
     [self drawLines];
     [self drawExpressions];
+     */
 }
 
 #pragma mark textboxes

@@ -640,8 +640,9 @@ return results;
     }
     
     //if there was a change then save
-    if (changed)
+    if (changed){
         [EDCoreDataUtility saveContext:context];
+    }
 }
 
 #pragma mark z-index

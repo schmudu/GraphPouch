@@ -201,11 +201,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDWorksheetView.m"
-         timestampString = "394060467.801182"
+         timestampString = "394292072.530969"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "436"
-         endingLineNumber = "436"
+         startingLineNumber = "488"
+         endingLineNumber = "488"
          landmarkName = "-onContextChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -214,11 +214,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDWorksheetView.m"
-         timestampString = "394060467.801182"
+         timestampString = "394292072.530969"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "437"
-         endingLineNumber = "437"
+         startingLineNumber = "489"
+         endingLineNumber = "489"
          landmarkName = "-onContextChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -227,11 +227,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDWorksheetView.m"
-         timestampString = "394060467.801182"
+         timestampString = "394292072.530969"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "483"
-         endingLineNumber = "483"
+         startingLineNumber = "535"
+         endingLineNumber = "535"
          landmarkName = "-onContextChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -292,11 +292,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDWorksheetView.m"
-         timestampString = "394060467.801182"
+         timestampString = "394292072.530969"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1085"
-         endingLineNumber = "1085"
+         startingLineNumber = "1137"
+         endingLineNumber = "1137"
          landmarkName = "-getAllSelectedWorksheetElementsViews"
          landmarkType = "5">
       </FileBreakpoint>
@@ -305,11 +305,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDWorksheetView.m"
-         timestampString = "394060467.801182"
+         timestampString = "394292072.530969"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "479"
-         endingLineNumber = "479"
+         startingLineNumber = "531"
+         endingLineNumber = "531"
          landmarkName = "-onContextChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -318,11 +318,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDWorksheetView.m"
-         timestampString = "394060467.801182"
+         timestampString = "394292072.530969"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1098"
-         endingLineNumber = "1098"
+         startingLineNumber = "1150"
+         endingLineNumber = "1150"
          landmarkName = "-getAllUnselectedWorksheetElementsViews"
          landmarkType = "5">
       </FileBreakpoint>
@@ -545,6 +545,19 @@
          startingLineNumber = "148"
          endingLineNumber = "148"
          landmarkName = "-onButtonEquationTypeSelected:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "GraphPouch/EDWorksheetView.m"
+         timestampString = "394292072.530969"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "342"
+         endingLineNumber = "342"
+         landmarkName = "-drawTextbox:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

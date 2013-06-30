@@ -90,6 +90,7 @@
 		CD5312B116ECEF7400F670FD /* EDToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD5312AF16ECEF7400F670FD /* EDToolbarView.xib */; };
 		CD5EE20216012A690027EFC6 /* NSObject+Document.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5EE20116012A690027EFC6 /* NSObject+Document.m */; };
 		CD6DF301160D181900935BF2 /* EDTransformCornerPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */; };
+		CD731852178067940023FAE8 /* EDTextboxCacheView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD731851178067940023FAE8 /* EDTextboxCacheView.m */; };
 		CD74501216B3342A004B813E /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = CD74501116B3342A004B813E /* icon.iconset */; };
 		CD7A9F3F1725830E00BA522E /* EDTransformRectSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7A9F3E1725830E00BA522E /* EDTransformRectSelection.m */; };
 		CD7A9F421725889600BA522E /* EDPageViewContainerImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7A9F411725889600BA522E /* EDPageViewContainerImageView.m */; };
@@ -328,6 +329,8 @@
 		CD659618176223AF00DA564F /* v7.equation_inequalities.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v7.equation_inequalities.xcdatamodel; sourceTree = "<group>"; };
 		CD6DF2FF160D181900935BF2 /* EDTransformCornerPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformCornerPoint.h; sourceTree = "<group>"; };
 		CD6DF300160D181900935BF2 /* EDTransformCornerPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformCornerPoint.m; sourceTree = "<group>"; };
+		CD731850178067940023FAE8 /* EDTextboxCacheView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTextboxCacheView.h; sourceTree = "<group>"; };
+		CD731851178067940023FAE8 /* EDTextboxCacheView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTextboxCacheView.m; sourceTree = "<group>"; };
 		CD74501116B3342A004B813E /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = icon.iconset; sourceTree = "<group>"; };
 		CD7A9F3D1725830D00BA522E /* EDTransformRectSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTransformRectSelection.h; sourceTree = "<group>"; };
 		CD7A9F3E1725830E00BA522E /* EDTransformRectSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTransformRectSelection.m; sourceTree = "<group>"; };
@@ -838,6 +841,8 @@
 		CD3F0B0015C4784600AB7567 /* Textbox */ = {
 			isa = PBXGroup;
 			children = (
+				CD731850178067940023FAE8 /* EDTextboxCacheView.h */,
+				CD731851178067940023FAE8 /* EDTextboxCacheView.m */,
 				CDD05DE816BC716E001279FB /* EDTextboxView.h */,
 				CDD05DE916BC716E001279FB /* EDTextboxView.m */,
 				CDD05DF416BD4C43001279FB /* EDTextboxViewMask.h */,
@@ -1517,6 +1522,7 @@
 				CDE7459C1730CB29001EC4DC /* EDDocument.xcdatamodeld in Sources */,
 				CD2BA98A17747CCE00ECBF25 /* NSString+Expressions.m in Sources */,
 				CDC605A0177CE127008A5EB6 /* EDImageViewPrint.m in Sources */,
+				CD731852178067940023FAE8 /* EDTextboxCacheView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

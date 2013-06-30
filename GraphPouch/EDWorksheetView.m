@@ -21,6 +21,7 @@
 #import "EDLineView.h"
 #import "EDPage.h"
 #import "EDTextbox.h"
+#import "EDTextboxCacheView.h"
 #import "EDTextboxView.h"
 #import "EDTransformRect.h"
 #import "EDTransformRectOnlyHorizontal.h"
@@ -268,6 +269,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
 }
 
 - (void)drawTextbox:(EDTextbox *)textbox{
+    /*
     EDTextboxView *textboxView = [[EDTextboxView alloc] initWithFrame:NSMakeRect(0, 0, [textbox elementWidth], [textbox elementHeight]) textboxModel:(EDTextbox *)textbox drawSelection:TRUE];
     
     // listen to graph
@@ -293,6 +295,55 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     // draw transform rect if selected
     if ([[[textboxView dataObj] valueForKey:EDElementAttributeSelected] boolValue]){
         [self drawTransformRect:(EDElement *)[textboxView dataObj]];
+    }
+    */
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // NEW VERSION
+    EDTextboxView *textboxView = [[EDTextboxView alloc] initWithFrame:NSMakeRect(0, 0, [textbox elementWidth], [textbox elementHeight]) textboxModel:(EDTextbox *)textbox drawSelection:TRUE];
+    EDTextboxCacheView *cacheView;
+    NSImage *textboxImage = [[NSImage alloc] initWithData:[textboxView dataWithPDFInsideRect:[textboxView bounds]]];;
+    
+    // create cache image that only needs to draw on update
+    //cacheView = [[EDTextboxCacheView alloc] initWithFrame:[self bounds] image:textboxImage];
+    cacheView = [[EDTextboxCacheView alloc] initWithFrame:NSMakeRect(0, 0, [textbox elementWidth], [textbox elementHeight]) textboxModel:(EDTextbox *)textbox drawSelection:TRUE image:textboxImage];
+    
+    // set origin
+    [cacheView setFrameOrigin:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
+    
+    // save view so it can be erased later
+    //[_equations addObject:cacheView];
+    
+    // listen to graph
+    // NOTE: any listeners you add here, remove them in method 'removeElementView'
+    [_nc addObserver:self selector:@selector(onElementSelectedDeselectOtherElements:) name:EDEventUnselectedElementClickedWithoutModifier object:cacheView];
+    [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:cacheView];
+    [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:cacheView];
+    [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:cacheView];
+    [_nc addObserver:self selector:@selector(onTextboxBeginEditing:) name:EDEventTextboxBeginEditing object:cacheView];
+    [_nc addObserver:self selector:@selector(onTextboxEndEditing:) name:EDEventTextboxEndEditing object:cacheView];
+    [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:cacheView];
+    [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:cacheView];
+    [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:cacheView];
+    [_nc addObserver:self selector:@selector(resetElementsZIndices:) name:EDEventResetZIndices object:cacheView];
+    
+    // set location
+    [cacheView setFrameOrigin:NSMakePoint([[textbox valueForKey:EDElementAttributeLocationX] floatValue], [[textbox valueForKey:EDElementAttributeLocationY] floatValue])];
+    
+    [self addSubview:cacheView];
+    [cacheView postInit];
+    [cacheView setNeedsDisplay:TRUE];
+    
+    // draw transform rect if selected
+    if ([[[cacheView dataObj] valueForKey:EDElementAttributeSelected] boolValue]){
+        [self drawTransformRect:(EDElement *)[cacheView dataObj]];
     }
 }
 
@@ -1126,6 +1177,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
 }
 
 - (void)updateTransformRects:(NSArray *)updatedElements{
+    NSLog(@"updating transform rects.");
     // select this graph and deselect everything else
     // need to update transform rects
     EDTransformRect *transformRect;
@@ -1142,7 +1194,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
         transformRect = [_transformRects objectForKey:[NSValue valueWithNonretainedObject:myElement]];
         isSelected = [myElement selected];
         
-        // if obj has a value and that element is not selected the remove the transform rect 
+        // if obj has a value and that element is not selected then remove the transform rect
         if ((!isSelected) && (transformRect)) {
             [self removeTransformRect:transformRect element:myElement];
         }
