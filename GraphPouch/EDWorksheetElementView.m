@@ -81,7 +81,6 @@
                               [[[self dataObj] valueForKey:EDElementAttributeHeight] floatValue])];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventWorksheetElementRedrawingItself object:self];
-    NSLog(@"calling set needs display from worksheet element view update display based on context.");
     //[self setNeedsDisplay:TRUE];
     [self setNeedsDisplayInRect:NSMakeRect(0, 0, [(EDElement *)[self dataObj] elementWidth], [(EDElement *)[self dataObj] elementWidth])];
 }
@@ -559,8 +558,6 @@
         element = [updatedArray objectAtIndex:i];
             if (element == [self dataObj]) {
                 hasChanged = TRUE;
-                if ([self isKindOfClass:[EDGraphView class]])
-                    NSLog(@"going to updated based on context and i'm a graph.");
                 
                 [self updateDisplayBasedOnContext];
             }
@@ -572,13 +569,11 @@
 - (void)onWorksheetSelectedElementAdded:(NSNotification *)note{
     //[self setNeedsDisplay:TRUE];
     [self setNeedsDisplayInRect:NSMakeRect(0, 0, [(EDElement *)[self dataObj] elementWidth], [(EDElement *)[self dataObj] elementWidth])];
-    NSLog(@"calling set needs display from worksheet element view.");
 }
 
 - (void)onWorksheetSelectedElementRemoved:(NSNotification *)note{
     //[self setNeedsDisplay:TRUE];
     [self setNeedsDisplayInRect:NSMakeRect(0, 0, [(EDElement *)[self dataObj] elementWidth], [(EDElement *)[self dataObj] elementWidth])];
-    NSLog(@"calling set needs display from worksheet element view.");
 }
 
 # pragma mark snap

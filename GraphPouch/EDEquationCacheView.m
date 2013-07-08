@@ -11,7 +11,7 @@
 @implementation EDEquationCacheView
 
 
-- (id)initWithFrame:(NSRect)frame equationImage:(NSImage *)equationImage;
+- (id)initWithFrame:(NSRect)frame equationImage:(NSImage *)equationImage
 {
     self = [super initWithFrame:frame];
     if (self) {

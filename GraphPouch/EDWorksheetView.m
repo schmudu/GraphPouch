@@ -1177,7 +1177,6 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
 }
 
 - (void)updateTransformRects:(NSArray *)updatedElements{
-    NSLog(@"updating transform rects.");
     // select this graph and deselect everything else
     // need to update transform rects
     EDTransformRect *transformRect;

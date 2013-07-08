@@ -41,6 +41,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    /*
     NSPoint inequalityPoint;
     BOOL firstPointDrawnForEquation = true;
     NSError *error;
@@ -150,6 +151,7 @@
                     
                 }
                 firstPointDrawnForEquation = true;
+                NSLog(@"continue...not drawing.");
                 continue;
             }
          
@@ -176,6 +178,7 @@
                 inequalityPoint = NSMakePoint(i, positionVertical);
                 [inequalityPath moveToPoint:NSMakePoint(i, positionVertical)];
                 [path moveToPoint:NSMakePoint(i, positionVertical)];
+                //NSLog(@"moving line to point: x:%f y:%f pos x:%f pos y:%f eq:%@", valueX, valueY, i, positionVertical, [_equation equation]);
                 firstPointDrawnForEquation = false;
             }
             else if (error){
@@ -189,6 +192,7 @@
                 // if includes equal
                 if(([[_equation equationType] intValue] == EDEquationTypeGreaterThanOrEqual) || ([[_equation equationType] intValue] == EDEquationTypeLessThanOrEqual)){
                     [path lineToPoint:NSMakePoint(i, positionVertical)];
+                    //NSLog(@"inequality inclusive drawing line to point: x:%f y:%f pos x:%f pos y:%f eq:%@", valueX, valueY, i, positionVertical, [_equation equation]);
                 }
                 else{
                     // if distance is greater than dashed line then calculate new point
@@ -196,7 +200,6 @@
                         inequalityPoint = NSMakePoint(i, positionVertical);
                         
                     // dashed line for not equal
-                    //if(fmodf(i, 10)<5)
                     if(fmodf(sqrtf(powf(i-inequalityPoint.x,2)+powf(positionVertical-inequalityPoint.y,2)), 10)<5)
                         [path lineToPoint:NSMakePoint(i, positionVertical)];
                     else
@@ -233,6 +236,11 @@
         [fillColor setStroke];
         [inequalityPath stroke];
     }
+     */
+    
+     // test red square
+    [[NSColor redColor] setFill];
+    [NSBezierPath fillRect:NSMakeRect(0, 0, 50, 50)];
 }
 
 @end

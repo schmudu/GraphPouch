@@ -9,6 +9,10 @@
 //  [self frame] is the width of the frame of the view
 //  EDGraphMargin defines the space in which labels can be drawn next to the coordinate axes
 //  EDCoordinateArrowWidth defines the width of the arrow that could potentially be drawn on the very edge of the graph
+#import "EDEquationViewTest.h"
+
+
+
 
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
@@ -25,6 +29,7 @@
 #import "EDWorksheetView.h"
 #import "NS(Attributed)String+Geometrics.h"
 #import "NSColor+Utilities.h"
+#import "NSImage+Utilities.h"
 #import "NSManagedObject+Attributes.h"
 #import "NSObject+Document.h"
 
@@ -120,6 +125,11 @@
         }
         i++;
     }
+    
+    /*
+    for (NSView *view in _equations){
+        NSLog(@"context changed view:%@ origin:%@, frame:%@ bounds:%@", view, NSStringFromPoint([view frame].origin), NSStringFromRect([view frame]), NSStringFromRect([view bounds]));
+    }*/
 }
 
 - (void)updateDisplayBasedOnContext{
@@ -128,6 +138,13 @@
  
     [self removeFeatures];
     [self drawElementAttributes];
+    /*
+    NSLog(@"==after drawing features: number of equation views:%ld", [_equations count]);
+    for (NSView *view in _equations){
+        NSLog(@"view:%@ origin:%@, frame:%@ bounds:%@", view, NSStringFromPoint([view frame].origin), NSStringFromRect([view frame]), NSStringFromRect([view bounds]));
+    }
+    NSLog(@"==end");
+     */
 }
     
 - (void)drawRect:(NSRect)dirtyRect{
@@ -192,6 +209,12 @@
     if ([(EDGraph *)[self dataObj] hasLabels]) {
         [self drawLabels:verticalResults horizontal:horizontalResults origin:originInfo];
     }
+    
+    // debug
+    /*
+    for (NSView *view in _equations){
+        NSLog(@"after view:%@ origin:%@, frame:%@ bounds:%@", view, NSStringFromPoint([view frame].origin), NSStringFromRect([view frame]), NSStringFromRect([view bounds]));
+    }*/
 }
 
 - (void)drawCoordinateAxes:(NSDictionary *)originInfo{
@@ -694,9 +717,12 @@
     if (_equationsAlreadyDrawn)
         return;
     
-    EDEquationView *equationView;
+    //EDEquationView *equationView;
     EDEquationCacheView *equationCacheView;
     NSImage *equationImage;
+    
+    // debug - test
+    int i = 0;
     
     // for each graph create a graph view
     for (EDEquation *equation in [[self dataObj] equations]){
@@ -705,12 +731,13 @@
             continue;
         
         // create origin equation view
-        
-        equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight]) equation:equation];
-         [equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
+        //NSLog(@"drawing new equation: frame:%@", NSStringFromRect(NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight])));
+        //equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight]) equation:equation];
+        //[equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
+        EDEquationViewTest *equationView = [[EDEquationViewTest alloc] initWithFrame:NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight])];
         
         /*
-        // VERSION 1
+         // VERSION 1
         [self addSubview:equationView];
         
         // set origin
@@ -725,10 +752,22 @@
         
         // VERSION 2
         // create image
+        //NSLog(@"graph view: equation:%@ view bounds:%@ self bounds:%@", [equation equation], NSStringFromRect([equationView bounds]), NSStringFromRect([self bounds]));
         equationImage = [[NSImage alloc] initWithData:[equationView dataWithPDFInsideRect:[equationView bounds]]];
+        //equationImage = [[NSImage alloc] initWithData:[equationView dataWithPDFInsideRect:NSMakeRect(0, 0, [self graphWidth], [self graphHeight])]];
+        NSLog(@"graph image bounds:%@ frame:%@", NSStringFromRect([equationView bounds]), NSStringFromRect([equationView frame]));
+        
+        // write to disk to see what's being drawn
+        if(i == 0){
+            [equationImage saveAsJpegWithName:@"/Users/patrick/Desktop/test.jpg"];
+            i++;
+        }
+        else
+            [equationImage saveAsJpegWithName:@"/Users/patrick/Desktop/test2.jpg"];
         
         // create cache image that only needs to draw on update
-        equationCacheView = [[EDEquationCacheView alloc] initWithFrame:[self bounds] equationImage:equationImage];
+        //equationCacheView = [[EDEquationCacheView alloc] initWithFrame:[self bounds] equationImage:equationImage];
+        equationCacheView = [[EDEquationCacheView alloc] initWithFrame:NSMakeRect(0, 0, [self graphWidth], [self graphHeight]) equationImage:equationImage];
         
         // add to subview
         [self addSubview:equationCacheView];
@@ -738,6 +777,8 @@
         
         // save view so it can be erased later
         [_equations addObject:equationCacheView];
+        //NSLog(@"graph cache view origin:%@ frame:%@ bounds:%@ self height:%f", NSStringFromRect([self bounds]), NSStringFromRect([equationCacheView frame]), NSStringFromRect([equationCacheView bounds]), [self graphHeight]);
+        //NSLog(@"self frame:%@ cache frame:%@", NSStringFromRect([self bounds]), NSStringFromRect([equationCacheView bounds]));
     }
     
     _equationsAlreadyDrawn = TRUE;
