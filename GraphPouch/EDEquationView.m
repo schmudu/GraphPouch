@@ -41,7 +41,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    /*
     NSPoint inequalityPoint;
     BOOL firstPointDrawnForEquation = true;
     NSError *error;
@@ -151,7 +150,6 @@
                     
                 }
                 firstPointDrawnForEquation = true;
-                NSLog(@"continue...not drawing.");
                 continue;
             }
          
@@ -236,11 +234,6 @@
         [fillColor setStroke];
         [inequalityPath stroke];
     }
-     */
-    
-     // test red square
-    [[NSColor redColor] setFill];
-    [NSBezierPath fillRect:NSMakeRect(0, 0, 50, 50)];
 }
 
 @end

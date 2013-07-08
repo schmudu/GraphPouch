@@ -717,7 +717,7 @@
     if (_equationsAlreadyDrawn)
         return;
     
-    //EDEquationView *equationView;
+    EDEquationView *equationView;
     EDEquationCacheView *equationCacheView;
     NSImage *equationImage;
     
@@ -731,31 +731,11 @@
             continue;
         
         // create origin equation view
-        //NSLog(@"drawing new equation: frame:%@", NSStringFromRect(NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight])));
-        //equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight]) equation:equation];
-        //[equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
-        EDEquationViewTest *equationView = [[EDEquationViewTest alloc] initWithFrame:NSMakeRect([EDGraphView graphMargin], [EDGraphView graphMargin], [self graphWidth], [self graphHeight])];
+        equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect(0, 0, [self graphWidth], [self graphHeight]) equation:equation];
+        [equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
         
-        /*
-         // VERSION 1
-        [self addSubview:equationView];
-        
-        // set origin
-        [equationView setFrameOrigin:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
-        
-        // save view so it can be erased later
-        [_equations addObject:equationView];
-         */
-        
-        
-        
-        
-        // VERSION 2
         // create image
-        //NSLog(@"graph view: equation:%@ view bounds:%@ self bounds:%@", [equation equation], NSStringFromRect([equationView bounds]), NSStringFromRect([self bounds]));
         equationImage = [[NSImage alloc] initWithData:[equationView dataWithPDFInsideRect:[equationView bounds]]];
-        //equationImage = [[NSImage alloc] initWithData:[equationView dataWithPDFInsideRect:NSMakeRect(0, 0, [self graphWidth], [self graphHeight])]];
-        NSLog(@"graph image bounds:%@ frame:%@", NSStringFromRect([equationView bounds]), NSStringFromRect([equationView frame]));
         
         // write to disk to see what's being drawn
         if(i == 0){
@@ -766,7 +746,6 @@
             [equationImage saveAsJpegWithName:@"/Users/patrick/Desktop/test2.jpg"];
         
         // create cache image that only needs to draw on update
-        //equationCacheView = [[EDEquationCacheView alloc] initWithFrame:[self bounds] equationImage:equationImage];
         equationCacheView = [[EDEquationCacheView alloc] initWithFrame:NSMakeRect(0, 0, [self graphWidth], [self graphHeight]) equationImage:equationImage];
         
         // add to subview
@@ -777,8 +756,6 @@
         
         // save view so it can be erased later
         [_equations addObject:equationCacheView];
-        //NSLog(@"graph cache view origin:%@ frame:%@ bounds:%@ self height:%f", NSStringFromRect([self bounds]), NSStringFromRect([equationCacheView frame]), NSStringFromRect([equationCacheView bounds]), [self graphHeight]);
-        //NSLog(@"self frame:%@ cache frame:%@", NSStringFromRect([self bounds]), NSStringFromRect([equationCacheView bounds]));
     }
     
     _equationsAlreadyDrawn = TRUE;
