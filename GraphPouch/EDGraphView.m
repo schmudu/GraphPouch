@@ -9,11 +9,6 @@
 //  [self frame] is the width of the frame of the view
 //  EDGraphMargin defines the space in which labels can be drawn next to the coordinate axes
 //  EDCoordinateArrowWidth defines the width of the arrow that could potentially be drawn on the very edge of the graph
-#import "EDEquationViewTest.h"
-
-
-
-
 #import "EDConstants.h"
 #import "EDCoreDataUtility.h"
 #import "EDElement.h"
@@ -29,7 +24,6 @@
 #import "EDWorksheetView.h"
 #import "NS(Attributed)String+Geometrics.h"
 #import "NSColor+Utilities.h"
-#import "NSImage+Utilities.h"
 #import "NSManagedObject+Attributes.h"
 #import "NSObject+Document.h"
 
@@ -718,11 +712,8 @@
         return;
     
     EDEquationView *equationView;
-    EDEquationCacheView *equationCacheView;
+    NSImageView *imageView;
     NSImage *equationImage;
-    
-    // debug - test
-    int i = 0;
     
     // for each graph create a graph view
     for (EDEquation *equation in [[self dataObj] equations]){
@@ -730,6 +721,7 @@
         if (![equation isVisible])
             continue;
         
+        // THIS CODE IS REALLY SLOW
         // create origin equation view
         equationView = [[EDEquationView alloc] initWithFrame:NSMakeRect(0, 0, [self graphWidth], [self graphHeight]) equation:equation];
         [equationView setGraphOrigin:originInfo verticalInfo:gridInfoVertical horizontalInfo:gridInfoHorizontal graph:(EDGraph *)[self dataObj] context:_context];
@@ -737,25 +729,16 @@
         // create image
         equationImage = [[NSImage alloc] initWithData:[equationView dataWithPDFInsideRect:[equationView bounds]]];
         
-        // write to disk to see what's being drawn
-        if(i == 0){
-            [equationImage saveAsJpegWithName:@"/Users/patrick/Desktop/test.jpg"];
-            i++;
-        }
-        else
-            [equationImage saveAsJpegWithName:@"/Users/patrick/Desktop/test2.jpg"];
-        
-        // create cache image that only needs to draw on update
-        equationCacheView = [[EDEquationCacheView alloc] initWithFrame:NSMakeRect(0, 0, [self graphWidth], [self graphHeight]) equationImage:equationImage];
+        // set image
+        imageView = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, [self graphWidth], [self graphHeight])];
+        [imageView setImage:equationImage];
         
         // add to subview
-        [self addSubview:equationCacheView];
+        [self addSubview:imageView];
         
         // set origin
-        [equationCacheView setFrameOrigin:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
-        
-        // save view so it can be erased later
-        [_equations addObject:equationCacheView];
+        [imageView setFrameOrigin:NSMakePoint([EDGraphView graphMargin], [EDGraphView graphMargin])];
+        [_equations addObject:imageView];
     }
     
     _equationsAlreadyDrawn = TRUE;

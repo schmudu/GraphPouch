@@ -314,7 +314,6 @@
 #pragma mark elements
 - (void)updateElements{
 #warning worksheet elements
-    /*
     // remove
     [self removeTextboxes];
     [self removeGraphs];
@@ -328,7 +327,7 @@
     [self drawImages];
     [self drawLines];
     [self drawExpressions];
-     */
+    //NSLog(@"updating elements in page view container on page:%@", [_page pageNumber]);
 }
 
 #pragma mark textboxes
