@@ -711,6 +711,7 @@
     if (_equationsAlreadyDrawn)
         return;
     
+    NSLog(@"drawing equation.");
     EDEquationView *equationView;
     NSImageView *imageView;
     NSImage *equationImage;

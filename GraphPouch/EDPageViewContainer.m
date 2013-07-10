@@ -24,6 +24,7 @@
 #import "EDTextboxView.h"
 #import "NSColor+Utilities.h"
 #import "NSManagedObject+EasyFetching.h"
+#import "NSMutableArray+EDElements.h"
 
 @interface EDPageViewContainer()
 - (void)onContextChanged:(NSNotification *)note;
@@ -50,6 +51,7 @@
 // images
 - (void)drawImages;
 - (void)removeImages;
+- (void)removeImage:(EDImage *)image;
 
 // lines
 - (void)drawLines;
@@ -242,6 +244,15 @@
     [_imageViews removeAllObjects];
 }
 
+- (void)removeImage:(EDImage *)image{
+    for (EDPageViewContainerImageView *imageView in _imageViews){
+        if ([imageView image] == image){
+            NSLog(@"we found an image to remove!");
+        }
+    }
+    
+}
+
 #pragma mark lines
 - (void)drawLines{
     NSArray *lines = [[_page lines] allObjects];
@@ -292,16 +303,39 @@
     [_graphViews removeAllObjects];
 }
 - (void)onContextChanged:(NSNotification *)note{
-    // update if needed
-    NSArray *updatedArray = [[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects];
-    NSArray *insertedArray = [[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects];
-    NSArray *removedArray = [[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects];
+    NSMutableArray *deletedArray = [NSMutableArray arrayWithArray:[[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects]];
+    NSMutableArray *insertedArray = [NSMutableArray arrayWithArray:[[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects]];
+    NSMutableArray *updatedArray = [NSMutableArray arrayWithArray:[[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects]];
+    
+    // update any objects
+    // if any object was removed then remove its view
+    for (NSManagedObject *object in updatedArray){
+        if ((object == _page) || ([_page containsObject:object])){
+            if ([object isKindOfClass:[EDPage class]]){
+#warning worksheet elements
+                if ([[object changedValues] objectForKey:EDPageAttributeImages]){
+                    // if deleted count is greater than 0 then an image was removed
+                    NSLog(@"something changed for the image attribute for a page: number of deleted object:%ld.", [deletedArray count]);
+                    if ([deletedArray count] > 0){
+                        NSLog(@"before call: deleted count:%ld", [deletedArray count]);
+                        EDImage *objectImage = [deletedArray getAndRemoveObjectImage];
+                        
+                        // remove view from container
+                        [self removeImage:objectImage];
+                        
+                        NSLog(@"after call: deleted count:%ld object:%@", [deletedArray count], objectImage);
+                    }
+                    // get removed image from deleted array
+                }
+            }
+        }
+    }
     NSMutableArray *allObjects = [NSMutableArray arrayWithArray:updatedArray];
     [allObjects addObjectsFromArray:insertedArray];
-    [allObjects addObjectsFromArray:removedArray];
     
-    // if any object was updated, removed or inserted on this page then this page needs to be updated
+    // if any object was updated, inserted on this page then this page needs to be updated
     for (NSManagedObject *object in allObjects){
+        //NSLog(@"updated properties:%@", [object changedValues]);
         if ((object == _page) || ([_page containsObject:object])){
             // update textboxes
             [self updateElements];

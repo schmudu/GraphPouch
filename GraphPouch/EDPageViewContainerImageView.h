@@ -15,5 +15,6 @@
 }
 
 - (id)initWithFrame:(NSRect)frame image:(EDImage *)image context:(NSManagedObjectContext *)context;
+- (EDImage *)image;
 
 @end

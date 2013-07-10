@@ -40,6 +40,9 @@
     
     return self;
 }
+- (EDImage *)image{
+    return _image;
+}
 
 - (BOOL)isFlipped{
     return TRUE;
