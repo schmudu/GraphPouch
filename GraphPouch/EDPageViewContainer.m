@@ -10,11 +10,12 @@
 #import "EDCoreDataUtility+Graphs.h"
 #import "EDCoreDataUtility+Lines.h"
 #import "EDCoreDataUtility+Pages.h"
-#import "EDPageViewContainerExpressionView.h"
+#import "EDEquation.h"
 #import "EDGraphView.h"
 #import "EDGraph.h"
 #import "EDLine.h"
 #import "EDPageViewContainer.h"
+#import "EDPageViewContainerExpressionView.h"
 #import "EDPageViewContainerGraphView.h"
 #import "EDPageViewContainerImageView.h"
 #import "EDPageViewContainerLineView.h"
@@ -22,6 +23,7 @@
 #import "EDPage.h"
 #import "EDTextbox.h"
 #import "EDTextboxView.h"
+#import "EDToken.h"
 #import "NSColor+Utilities.h"
 #import "NSManagedObject+EasyFetching.h"
 #import "NSMutableArray+EDElements.h"
@@ -45,35 +47,37 @@
 - (void)removeExpressions;
 - (void)drawExpression:(EDExpression *)expression;
 - (void)removeExpression:(EDExpression *)expression;
-- (void)updateExpression:(EDExpression *)expression;
+- (void)updateExpression:(EDExpression *)expression changedValues:(NSDictionary *)changedValues;
 
 // graphs
 - (void)drawGraphs;
 - (void)removeGraphs;
 - (void)drawGraph:(EDGraph *)graph;
 - (void)removeGraph:(EDGraph *)graph;
-- (void)updateGraph:(EDGraph *)graph;
+- (void)updateGraph:(EDGraph *)graph changedValues:(NSDictionary *)changedValues;
+- (void)updateEquation:(EDEquation *)equation;
+- (void)updateToken:(EDToken *)token;
 
 // images
 - (void)drawImages;
 - (void)drawImage:(EDImage *)image;
 - (void)removeImages;
 - (void)removeImage:(EDImage *)image;
-- (void)updateImage:(EDImage *)image;
+- (void)updateImage:(EDImage *)image changedValues:(NSDictionary *)changedValues;
 
 // lines
 - (void)drawLines;
 - (void)removeLines;
 - (void)drawLine:(EDLine *)line;
 - (void)removeLine:(EDLine *)line;
-- (void)updateLine:(EDLine *)line;
+- (void)updateLine:(EDLine *)line changedValues:(NSDictionary *)changedValues;
 
 // textboxes
 - (void)drawTextboxes;
 - (void)removeTextboxes;
 - (void)drawTextbox:(EDTextbox *)textbox;
 - (void)removeTextbox:(EDTextbox *)textbox;
-- (void)updateTextbox:(EDTextbox *)textbox;
+- (void)updateTextbox:(EDTextbox *)textbox changedValues:(NSDictionary *)changedValues;
 @end
 
 @implementation EDPageViewContainer
@@ -244,9 +248,42 @@
     }
 }
 
-- (void)updateExpression:(EDExpression *)expression{
-    [self removeExpression:expression];
-    [self drawExpression:expression];
+- (void)updateExpression:(EDExpression *)expression changedValues:(NSDictionary *)changedValues{
+#warning attributes - expression
+    // check if any of the attributes that require the textbox to be redrawn were changed
+    if (([changedValues objectForKey:EDExpressionAttributeAutoresize] == nil) &&
+        ([changedValues objectForKey:EDExpressionAttributeExpression] == nil) &&
+        ([changedValues objectForKey:EDExpressionAttributeExpressionEqualityType] == nil) &&
+        ([changedValues objectForKey:EDExpressionAttributeFontSize] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeHeight] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeSelected] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeWidth] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeZIndex]) == nil){
+        // then only z-index and location could change
+        if (([changedValues objectForKey:EDElementAttributeLocationX] == nil) &&
+            ([changedValues objectForKey:EDElementAttributeLocationY] == nil)){
+            // only z-index changed do nothing
+        }
+        else{
+            // only location changed so reset frame origin
+            for (EDPageViewContainerExpressionView *expressionView in _expressionViews){
+                if ([expressionView expression] == expression){
+                    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
+                    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
+                    
+                    // position it
+                    [expressionView setFrameOrigin:NSMakePoint([expression locationX] * xRatio, [expression locationY] * yRatio)];
+                    
+                    return;
+                }
+            }
+        }
+    }
+    else{
+        // something important changed so redraw graph
+        [self removeExpression:expression];
+        [self drawExpression:expression];
+    }
 }
 
 #pragma mark images
@@ -288,17 +325,46 @@
     }
 }
 
-- (void)updateImage:(EDImage *)image{
-    [self removeImage:image];
-    [self drawImage:image];
+- (void)updateImage:(EDImage *)image changedValues:(NSDictionary *)changedValues{
+#warning attributes - image
+    // check if any of the attributes that require the textbox to be redrawn were changed
+    if (([changedValues objectForKey:EDImageAttributeImageData] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeHeight] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeSelected] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeWidth] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeZIndex]) == nil){
+        // then only z-index and location could change
+        if (([changedValues objectForKey:EDElementAttributeLocationX] == nil) &&
+            ([changedValues objectForKey:EDElementAttributeLocationY] == nil)){
+            // only z-index changed do nothing
+        }
+        else{
+            // only location changed so reset frame origin
+            for (EDPageViewContainerImageView *imageView in _imageViews){
+                if ([imageView image] == image){
+                    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
+                    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
+                    
+                    // position it
+                    [imageView setFrameOrigin:NSMakePoint([image locationX] * xRatio, [image locationY] * yRatio)];
+                    
+                    return;
+                }
+            }
+        }
+    }
+    else{
+        // something important changed so redraw graph
+        [self removeImage:image];
+        [self drawImage:image];
+    }
 }
 
 #pragma mark lines
 - (void)drawLines{
     NSArray *lines = [[_page lines] allObjects];
-    //EDPageViewContainerLineView *lineView;
     
-    // for each graph create a graph view
+    // for each line create a line
     for (EDLine *line in lines)
         [self drawLine:line];
 }
@@ -332,28 +398,48 @@
     }
 }
 
-- (void)updateLine:(EDLine *)line{
-    [self removeLine:line];
-    [self drawLine:line];
+- (void)updateLine:(EDLine *)line changedValues:(NSDictionary *)changedValues{
+#warning attributes - line
+    // check if any of the attributes that require the textbox to be redrawn were changed
+    if (([changedValues objectForKey:EDLineAttributeThickness] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeHeight] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeSelected] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeWidth] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeZIndex]) == nil){
+        // then only z-index and location could change
+        if (([changedValues objectForKey:EDElementAttributeLocationX] == nil) &&
+            ([changedValues objectForKey:EDElementAttributeLocationY] == nil)){
+            // only z-index changed do nothing
+        }
+        else{
+            // only location changed so reset frame origin
+            for (EDPageViewContainerLineView *lineView in _lineViews){
+                if ([lineView line] == line){
+                    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
+                    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
+                
+                    // position it
+                    [lineView setFrameOrigin:NSMakePoint([line locationX] * xRatio, [line locationY] * yRatio)];
+                            
+                    return;
+                }
+            }
+        }
+    }
+    else{
+        // something important changed so redraw line
+        [self removeLine:line];
+        [self drawLine:line];
+    }
 }
 
 #pragma mark graphs
 - (void)drawGraphs{
     NSArray *graphs = [[_page graphs] allObjects];
-    //EDPageViewContainerGraphView *graphView;
     
     // for each graph create a graph view
-    for (EDGraph *graph in graphs){
+    for (EDGraph *graph in graphs)
         [self drawGraph:graph];
-        /*
-        graphView = [[EDPageViewContainerGraphView alloc] initWithFrame:[self bounds] graph:graph context:_context];
-        
-        [self addSubview:graphView];
-        
-        // save view so it can be erased later
-        [_graphViews addObject:graphView];
-         */
-    }
 }
 
 - (void)drawGraph:(EDGraph *)graph{
@@ -384,9 +470,68 @@
     }
 }
 
-- (void)updateGraph:(EDGraph *)graph{
-    [self removeGraph:graph];
-    [self drawGraph:graph];
+- (void)updateGraph:(EDGraph *)graph changedValues:(NSDictionary *)changedValues{
+#warning attributes - graph
+    // check if any of the attributes that require the textbox to be redrawn were changed
+    if (([changedValues objectForKey:EDGraphAttributeCoordinateAxes] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributeEquations] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributeGridLines] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributeLabelIntervalX] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributeLabelIntervalY] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributeLabels] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributeMaxValueX] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributeMaxValueY] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributeMinValueX] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributeMinValueY] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributePage] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributePoints] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributeScaleX] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributeScaleY] == nil) &&
+        ([changedValues objectForKey:EDGraphAttributeTickMarks] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeHeight] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeSelected] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeWidth] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeZIndex]) == nil){
+        // then only z-index and location could change
+        if (([changedValues objectForKey:EDElementAttributeLocationX] == nil) &&
+            ([changedValues objectForKey:EDElementAttributeLocationY] == nil)){
+            // only z-index changed do nothing
+        }
+        else{
+            // only location changed so reset frame origin
+            for (EDPageViewContainerGraphView *graphView in _graphViews){
+                if ([graphView graph] == graph){
+                    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
+                    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
+                
+                    // position it
+                    [graphView setFrameOrigin:NSMakePoint([graph locationX] * xRatio, [graph locationY] * yRatio)];
+                            
+                    return;
+                }
+            }
+        }
+    }
+    else{
+        // something important changed so redraw graph
+        [self removeGraph:graph];
+        [self drawGraph:graph];
+    }
+}
+- (void)updateEquation:(EDEquation *)equation{
+    EDGraph *graph = [equation graph];
+    if (graph){
+        [self removeGraph:graph];
+        [self drawGraph:graph];
+    }
+}
+
+- (void)updateToken:(EDToken *)token{
+    EDGraph *graph = [[token equation] graph];
+    if(graph){
+        [self removeGraph:graph];
+        [self drawGraph:graph];
+    }
 }
 
 - (void)onContextChanged:(NSNotification *)note{
@@ -397,6 +542,7 @@
     
     // if any object was removed then remove its view
     for (NSManagedObject *object in updatedArray){
+    //NSLog(@"updated object:%@", [object changedValues]);
         //if ((object == _page) || ([_page containsObject:object])){
         // if page object was deleted and the array was incremented then objects on that page were deleted
         if ((object == _page) && ([deletedArray count]>0)){
@@ -445,15 +591,19 @@
         else if([_page containsObject:object]){
             // an object on the page was updated
             if ([object isKindOfClass:[EDExpression class]])
-                [self updateExpression:(EDExpression *)object];
+                [self updateExpression:(EDExpression *)object changedValues:[object changedValues]];
             else if ([object isKindOfClass:[EDGraph class]])
-                [self updateGraph:(EDGraph *)object];
+                [self updateGraph:(EDGraph *)object changedValues:[object changedValues]];
             else if ([object isKindOfClass:[EDImage class]])
-                [self updateImage:(EDImage *)object];
+                [self updateImage:(EDImage *)object changedValues:[object changedValues]];
             else if ([object isKindOfClass:[EDLine class]])
-                [self updateLine:(EDLine *)object];
+                [self updateLine:(EDLine *)object changedValues:[object changedValues]];
+            else if ([object isKindOfClass:[EDEquation class]])
+                [self updateEquation:(EDEquation *)object];
+            else if ([object isKindOfClass:[EDToken class]])
+                [self updateToken:(EDToken *)object];
             else if ([object isKindOfClass:[EDTextbox class]])
-                [self updateTextbox:(EDTextbox *)object];
+                [self updateTextbox:(EDTextbox *)object changedValues:[object changedValues]];
         }
     }
     
@@ -530,8 +680,37 @@
     }
 }
 
-- (void)updateTextbox:(EDTextbox *)textbox{
-    [self removeTextbox:textbox];
-    [self drawTextbox:textbox];
+- (void)updateTextbox:(EDTextbox *)textbox changedValues:(NSDictionary *)changedValues{
+#warning attributes - textbox
+    // check if any of the attributes that require the textbox to be redrawn were changed
+    if (([changedValues objectForKey:EDTextboxAttributeTextValue] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeHeight] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeSelected] == nil) &&
+        ([changedValues objectForKey:EDElementAttributeWidth]) == nil){
+        // then only z-index and location could change
+        if (([changedValues objectForKey:EDElementAttributeLocationX] == nil) &&
+            ([changedValues objectForKey:EDElementAttributeLocationY] == nil)){
+            // only z-index changed do nothing
+        }
+        else{
+            // only location changed so reset frame origin
+            for (EDPageViewContainerTextView *textboxView in _textboxViews){
+                if ([textboxView textbox] == textbox){
+                    float xRatio = EDPageImageViewWidth/EDWorksheetViewWidth;
+                    float yRatio = EDPageImageViewHeight/EDWorksheetViewHeight;
+                
+                    // position it
+                    [textboxView setFrameOrigin:NSMakePoint([textbox locationX] * xRatio, [textbox locationY] * yRatio)];
+                            
+                    return;
+                }
+            }
+        }
+    }
+    else{
+        // something important changed so redraw textbox
+        [self removeTextbox:textbox];
+        [self drawTextbox:textbox];
+    }
 }
 @end
