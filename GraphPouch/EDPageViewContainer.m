@@ -45,30 +45,35 @@
 - (void)removeExpressions;
 - (void)drawExpression:(EDExpression *)expression;
 - (void)removeExpression:(EDExpression *)expression;
+- (void)updateExpression:(EDExpression *)expression;
 
 // graphs
 - (void)drawGraphs;
 - (void)removeGraphs;
 - (void)drawGraph:(EDGraph *)graph;
 - (void)removeGraph:(EDGraph *)graph;
+- (void)updateGraph:(EDGraph *)graph;
 
 // images
 - (void)drawImages;
 - (void)drawImage:(EDImage *)image;
 - (void)removeImages;
 - (void)removeImage:(EDImage *)image;
+- (void)updateImage:(EDImage *)image;
 
 // lines
 - (void)drawLines;
 - (void)removeLines;
 - (void)drawLine:(EDLine *)line;
 - (void)removeLine:(EDLine *)line;
+- (void)updateLine:(EDLine *)line;
 
 // textboxes
 - (void)drawTextboxes;
 - (void)removeTextboxes;
 - (void)drawTextbox:(EDTextbox *)textbox;
 - (void)removeTextbox:(EDTextbox *)textbox;
+- (void)updateTextbox:(EDTextbox *)textbox;
 @end
 
 @implementation EDPageViewContainer
@@ -207,17 +212,8 @@
     NSArray *expressions = [[_page expressions] allObjects];
     
     // for each graph create a graph view
-    for (EDExpression *expression in expressions){
+    for (EDExpression *expression in expressions)
         [self drawExpression:expression];
-        /*
-        expressionView = [[EDPageViewContainerExpressionView alloc] initWithFrame:[self bounds] expression:expression context:_context];
-        
-        [self addSubview:expressionView];
-        
-        // save view so it can be erased later
-        [_expressionViews addObject:expressionView];
-        */
-    }
 }
 
 - (void)drawExpression:(EDExpression *)expression{
@@ -248,23 +244,19 @@
     }
 }
 
+- (void)updateExpression:(EDExpression *)expression{
+    [self removeExpression:expression];
+    [self drawExpression:expression];
+}
+
 #pragma mark images
 - (void)drawImages{
     NSArray *images = [[_page images] allObjects];
     //EDPageViewContainerImageView *imageView;
     
     // for each graph create a graph view
-    for (EDImage *image in images){
-        /*
-        imageView = [[EDPageViewContainerImageView alloc] initWithFrame:[self bounds] image:image context:_context];
-        
-        [self addSubview:imageView];
-        
-        // save view so it can be erased later
-        [_imageViews addObject:imageView];
-         */
+    for (EDImage *image in images)
         [self drawImage:image];
-    }
 }
 
 - (void)drawImage:(EDImage *)image{
@@ -296,23 +288,19 @@
     }
 }
 
+- (void)updateImage:(EDImage *)image{
+    [self removeImage:image];
+    [self drawImage:image];
+}
+
 #pragma mark lines
 - (void)drawLines{
     NSArray *lines = [[_page lines] allObjects];
     //EDPageViewContainerLineView *lineView;
     
     // for each graph create a graph view
-    for (EDLine *line in lines){
+    for (EDLine *line in lines)
         [self drawLine:line];
-        /*
-        lineView = [[EDPageViewContainerLineView alloc] initWithFrame:[self bounds] line:line context:_context];
-        
-        [self addSubview:lineView];
-        
-        // save view so it can be erased later
-        [_lineViews addObject:lineView];
-        */
-    }
 }
 
 - (void)drawLine:(EDLine *)line{
@@ -342,6 +330,11 @@
             return;
         }
     }
+}
+
+- (void)updateLine:(EDLine *)line{
+    [self removeLine:line];
+    [self drawLine:line];
 }
 
 #pragma mark graphs
@@ -391,7 +384,13 @@
     }
 }
 
+- (void)updateGraph:(EDGraph *)graph{
+    [self removeGraph:graph];
+    [self drawGraph:graph];
+}
+
 - (void)onContextChanged:(NSNotification *)note{
+    // optimize the updating of drawing on the page view container
     NSMutableArray *deletedArray = [NSMutableArray arrayWithArray:[[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects]];
     NSMutableArray *insertedArray = [NSMutableArray arrayWithArray:[[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects]];
     NSMutableArray *updatedArray = [NSMutableArray arrayWithArray:[[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects]];
@@ -399,35 +398,78 @@
     // if any object was removed then remove its view
     for (NSManagedObject *object in updatedArray){
         //if ((object == _page) || ([_page containsObject:object])){
-        if (object == _page){
+        // if page object was deleted and the array was incremented then objects on that page were deleted
+        if ((object == _page) && ([deletedArray count]>0)){
             // if deleted count is greater than 0 then an image was removed
-            if (([object isKindOfClass:[EDPage class]]) && ([deletedArray count]>0)){
+            //if (([object isKindOfClass:[EDPage class]]) && ([deletedArray count]>0)){
                 // iterate through deleted array and delete all objects
                 for (NSManagedObject *deletedObject in deletedArray){
 #warning worksheet elements
+                    // if expression relationship was changed then an expression was deleted
+                    if ([[object changedValues] objectForKey:EDPageAttributeExpressions]){
+                        EDExpression *objectExpression = [deletedArray getAndRemoveObjectExpression];
+                        if (objectExpression)
+                            [self removeExpression:objectExpression];
+                    }
+                    
+                    // if graph relationship was changed then a graph was deleted
+                    if ([[object changedValues] objectForKey:EDPageAttributeGraphs]){
+                        EDGraph *objectGraph = [deletedArray getAndRemoveObjectGraph];
+                        if (objectGraph)
+                            [self removeGraph:objectGraph];
+                    }
+                    
                     // if image relationship was changed then an image was deleted
                     if ([[object changedValues] objectForKey:EDPageAttributeImages]){
                         EDImage *objectImage = [deletedArray getAndRemoveObjectImage];
                         if (objectImage)
                             [self removeImage:objectImage];
                     }
+                    
+                    // if line relationship was changed then a line was deleted
+                    if ([[object changedValues] objectForKey:EDPageAttributeLines]){
+                        EDLine *objectLine = [deletedArray getAndRemoveObjectLine];
+                        if (objectLine)
+                            [self removeLine:objectLine];
+                    }
+                    
+                    // if textbox relationship was changed then a line was deleted
+                    if ([[object changedValues] objectForKey:EDPageAttributeTextboxes]){
+                        EDTextbox *objectTextbox = [deletedArray getAndRemoveObjectTextbox];
+                        if (objectTextbox)
+                            [self removeTextbox:objectTextbox];
+                    }
                 }
-            }
+            //}
+        }
+        else if([_page containsObject:object]){
+            // an object on the page was updated
+            if ([object isKindOfClass:[EDExpression class]])
+                [self updateExpression:(EDExpression *)object];
+            else if ([object isKindOfClass:[EDGraph class]])
+                [self updateGraph:(EDGraph *)object];
+            else if ([object isKindOfClass:[EDImage class]])
+                [self updateImage:(EDImage *)object];
+            else if ([object isKindOfClass:[EDLine class]])
+                [self updateLine:(EDLine *)object];
+            else if ([object isKindOfClass:[EDTextbox class]])
+                [self updateTextbox:(EDTextbox *)object];
         }
     }
     
-    NSMutableArray *allObjects = [NSMutableArray arrayWithArray:updatedArray];
-    [allObjects addObjectsFromArray:insertedArray];
-    
-    // if any object was updated, inserted on this page then this page needs to be updated
-    for (NSManagedObject *object in allObjects){
-        //NSLog(@"updated properties:%@", [object changedValues]);
-        if ((object == _page) || ([_page containsObject:object])){
-            // update textboxes
-            [self updateElements];
-            
-            [self setNeedsDisplay:TRUE];
-        }
+    // draw inserted objects
+    for (NSManagedObject *object in insertedArray){
+        // an object on the page was updated
+        if ([object isKindOfClass:[EDExpression class]])
+            [self drawExpression:(EDExpression *)object];
+        else if ([object isKindOfClass:[EDGraph class]])
+            [self drawGraph:(EDGraph *)object];
+        else if ([object isKindOfClass:[EDImage class]])
+            [self drawImage:(EDImage *)object];
+        else if ([object isKindOfClass:[EDLine class]])
+            [self drawLine:(EDLine *)object];
+        else if ([object isKindOfClass:[EDTextbox class]])
+            [self drawTextbox:(EDTextbox *)object];
     }
 }
 
@@ -447,24 +489,25 @@
     [self drawImages];
     [self drawLines];
     [self drawExpressions];
-    //NSLog(@"updating elements in page view container on page:%@", [_page pageNumber]);
 }
 
 #pragma mark textboxes
 - (void)drawTextboxes{
     // get all textboxes for current page
     NSArray *textboxes = [[_page textboxes] allObjects];
-    EDPageViewContainerTextView *textView;
     
     // for each graph create a graph view
-    for (EDTextbox *textbox in textboxes){
-        textView = [[EDPageViewContainerTextView alloc] initWithFrame:[self bounds] textbox:textbox context:_context];
-        
-        [self addSubview:textView];
-        
-        // save view so it can be erased later
-        [_textboxViews addObject:textView];
-    }
+    for (EDTextbox *textbox in textboxes)
+        [self drawTextbox:textbox];
+}
+
+- (void)drawTextbox:(EDTextbox *)textbox{
+    EDPageViewContainerTextView *textView = [[EDPageViewContainerTextView alloc] initWithFrame:[self bounds] textbox:textbox context:_context];
+    
+    [self addSubview:textView];
+    
+    // save view so it can be erased later
+    [_textboxViews addObject:textView];
 }
 
 - (void)removeTextboxes{
@@ -477,4 +520,18 @@
     [_textboxViews removeAllObjects];
 }
 
+- (void)removeTextbox:(EDTextbox *)textbox{
+    for (EDPageViewContainerTextView *textboxView in _textboxViews){
+        if ([textboxView textbox] == textbox){
+            [textboxView removeFromSuperview];
+            [_textboxViews removeObject:textboxView];
+            return;
+        }
+    }
+}
+
+- (void)updateTextbox:(EDTextbox *)textbox{
+    [self removeTextbox:textbox];
+    [self drawTextbox:textbox];
+}
 @end
