@@ -43,23 +43,32 @@
 // expressions
 - (void)drawExpressions;
 - (void)removeExpressions;
+- (void)drawExpression:(EDExpression *)expression;
+- (void)removeExpression:(EDExpression *)expression;
 
 // graphs
 - (void)drawGraphs;
 - (void)removeGraphs;
+- (void)drawGraph:(EDGraph *)graph;
+- (void)removeGraph:(EDGraph *)graph;
 
 // images
 - (void)drawImages;
+- (void)drawImage:(EDImage *)image;
 - (void)removeImages;
 - (void)removeImage:(EDImage *)image;
 
 // lines
 - (void)drawLines;
 - (void)removeLines;
+- (void)drawLine:(EDLine *)line;
+- (void)removeLine:(EDLine *)line;
 
 // textboxes
 - (void)drawTextboxes;
 - (void)removeTextboxes;
+- (void)drawTextbox:(EDTextbox *)textbox;
+- (void)removeTextbox:(EDTextbox *)textbox;
 @end
 
 @implementation EDPageViewContainer
@@ -196,18 +205,28 @@
 #pragma mark expressions
 - (void)drawExpressions{
     NSArray *expressions = [[_page expressions] allObjects];
-    EDPageViewContainerExpressionView *expressionView;
     
     // for each graph create a graph view
     for (EDExpression *expression in expressions){
+        [self drawExpression:expression];
+        /*
         expressionView = [[EDPageViewContainerExpressionView alloc] initWithFrame:[self bounds] expression:expression context:_context];
         
         [self addSubview:expressionView];
         
         // save view so it can be erased later
         [_expressionViews addObject:expressionView];
+        */
     }
+}
+
+- (void)drawExpression:(EDExpression *)expression{
+    EDPageViewContainerExpressionView *expressionView = [[EDPageViewContainerExpressionView alloc] initWithFrame:[self bounds] expression:expression context:_context];
     
+    [self addSubview:expressionView];
+    
+    // save view so it can be erased later
+    [_expressionViews addObject:expressionView];
 }
 
 - (void)removeExpressions{
@@ -219,20 +238,43 @@
     [_expressionViews removeAllObjects];
 }
 
+- (void)removeExpression:(EDExpression *)expression{
+    for (EDPageViewContainerExpressionView *expressionView in _expressionViews){
+        if ([expressionView expression] == expression){
+            [expressionView removeFromSuperview];
+            [_expressionViews removeObject:expressionView];
+            return;
+        }
+    }
+}
+
 #pragma mark images
 - (void)drawImages{
     NSArray *images = [[_page images] allObjects];
-    EDPageViewContainerImageView *imageView;
+    //EDPageViewContainerImageView *imageView;
     
     // for each graph create a graph view
     for (EDImage *image in images){
+        /*
         imageView = [[EDPageViewContainerImageView alloc] initWithFrame:[self bounds] image:image context:_context];
         
         [self addSubview:imageView];
         
         // save view so it can be erased later
         [_imageViews addObject:imageView];
+         */
+        [self drawImage:image];
     }
+}
+
+- (void)drawImage:(EDImage *)image{
+        EDPageViewContainerImageView *imageView = [[EDPageViewContainerImageView alloc] initWithFrame:[self bounds] image:image context:_context];
+        
+        [self addSubview:imageView];
+        
+        // save view so it can be erased later
+        [_imageViews addObject:imageView];
+    
 }
 
 - (void)removeImages{
@@ -247,26 +289,40 @@
 - (void)removeImage:(EDImage *)image{
     for (EDPageViewContainerImageView *imageView in _imageViews){
         if ([imageView image] == image){
-            NSLog(@"we found an image to remove!");
+            [imageView removeFromSuperview];
+            [_imageViews removeObject:imageView];
+            return;
         }
     }
-    
 }
 
 #pragma mark lines
 - (void)drawLines{
     NSArray *lines = [[_page lines] allObjects];
-    EDPageViewContainerLineView *lineView;
+    //EDPageViewContainerLineView *lineView;
     
     // for each graph create a graph view
     for (EDLine *line in lines){
+        [self drawLine:line];
+        /*
         lineView = [[EDPageViewContainerLineView alloc] initWithFrame:[self bounds] line:line context:_context];
         
         [self addSubview:lineView];
         
         // save view so it can be erased later
         [_lineViews addObject:lineView];
+        */
     }
+}
+
+- (void)drawLine:(EDLine *)line{
+        EDPageViewContainerLineView *lineView = [[EDPageViewContainerLineView alloc] initWithFrame:[self bounds] line:line context:_context];
+        
+        [self addSubview:lineView];
+        
+        // save view so it can be erased later
+        [_lineViews addObject:lineView];
+    
 }
 
 - (void)removeLines{
@@ -278,20 +334,42 @@
     [_lineViews removeAllObjects];
 }
 
+- (void)removeLine:(EDLine *)line{
+    for (EDPageViewContainerLineView *lineView in _lineViews){
+        if ([lineView line] == line){
+            [lineView removeFromSuperview];
+            [_lineViews removeObject:lineView];
+            return;
+        }
+    }
+}
+
 #pragma mark graphs
 - (void)drawGraphs{
     NSArray *graphs = [[_page graphs] allObjects];
-    EDPageViewContainerGraphView *graphView;
+    //EDPageViewContainerGraphView *graphView;
     
     // for each graph create a graph view
     for (EDGraph *graph in graphs){
+        [self drawGraph:graph];
+        /*
         graphView = [[EDPageViewContainerGraphView alloc] initWithFrame:[self bounds] graph:graph context:_context];
         
         [self addSubview:graphView];
         
         // save view so it can be erased later
         [_graphViews addObject:graphView];
+         */
     }
+}
+
+- (void)drawGraph:(EDGraph *)graph{
+    EDPageViewContainerGraphView *graphView = [[EDPageViewContainerGraphView alloc] initWithFrame:[self bounds] graph:graph context:_context];
+    
+    [self addSubview:graphView];
+    
+    // save view so it can be erased later
+    [_graphViews addObject:graphView];
 }
 
 - (void)removeGraphs{
@@ -302,34 +380,42 @@
     // remove all objects
     [_graphViews removeAllObjects];
 }
+
+- (void)removeGraph:(EDGraph *)graph{
+    for (EDPageViewContainerGraphView *graphView in _graphViews){
+        if ([graphView graph] == graph){
+            [graphView removeFromSuperview];
+            [_graphViews removeObject:graphView];
+            return;
+        }
+    }
+}
+
 - (void)onContextChanged:(NSNotification *)note{
     NSMutableArray *deletedArray = [NSMutableArray arrayWithArray:[[[note userInfo] objectForKey:NSDeletedObjectsKey] allObjects]];
     NSMutableArray *insertedArray = [NSMutableArray arrayWithArray:[[[note userInfo] objectForKey:NSInsertedObjectsKey] allObjects]];
     NSMutableArray *updatedArray = [NSMutableArray arrayWithArray:[[[note userInfo] objectForKey:NSUpdatedObjectsKey] allObjects]];
     
-    // update any objects
     // if any object was removed then remove its view
     for (NSManagedObject *object in updatedArray){
-        if ((object == _page) || ([_page containsObject:object])){
-            if ([object isKindOfClass:[EDPage class]]){
+        //if ((object == _page) || ([_page containsObject:object])){
+        if (object == _page){
+            // if deleted count is greater than 0 then an image was removed
+            if (([object isKindOfClass:[EDPage class]]) && ([deletedArray count]>0)){
+                // iterate through deleted array and delete all objects
+                for (NSManagedObject *deletedObject in deletedArray){
 #warning worksheet elements
-                if ([[object changedValues] objectForKey:EDPageAttributeImages]){
-                    // if deleted count is greater than 0 then an image was removed
-                    NSLog(@"something changed for the image attribute for a page: number of deleted object:%ld.", [deletedArray count]);
-                    if ([deletedArray count] > 0){
-                        NSLog(@"before call: deleted count:%ld", [deletedArray count]);
+                    // if image relationship was changed then an image was deleted
+                    if ([[object changedValues] objectForKey:EDPageAttributeImages]){
                         EDImage *objectImage = [deletedArray getAndRemoveObjectImage];
-                        
-                        // remove view from container
-                        [self removeImage:objectImage];
-                        
-                        NSLog(@"after call: deleted count:%ld object:%@", [deletedArray count], objectImage);
+                        if (objectImage)
+                            [self removeImage:objectImage];
                     }
-                    // get removed image from deleted array
                 }
             }
         }
     }
+    
     NSMutableArray *allObjects = [NSMutableArray arrayWithArray:updatedArray];
     [allObjects addObjectsFromArray:insertedArray];
     

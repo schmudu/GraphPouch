@@ -45,6 +45,10 @@
     return self;
 }
 
+- (EDGraph *)graph{
+    return _graph;
+}
+
 - (BOOL)isFlipped{
     return TRUE;
 }

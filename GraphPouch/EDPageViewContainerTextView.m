@@ -39,6 +39,10 @@
     return self;
 }
 
+- (EDTextbox *)textbox{
+    return _textbox;
+}
+
 - (BOOL)isFlipped{
     return TRUE;
 }

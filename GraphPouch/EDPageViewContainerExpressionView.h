@@ -15,5 +15,6 @@
 }
 
 - (id)initWithFrame:(NSRect)frame expression:(EDExpression *)expression context:(NSManagedObjectContext *)context;
+- (EDExpression *)expression;
 
 @end

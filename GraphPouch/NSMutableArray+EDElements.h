@@ -16,5 +16,9 @@
 @interface NSMutableArray (EDElements)
 
 #warning worksheet elements
+- (EDExpression *)getAndRemoveObjectExpression;
+- (EDGraph *)getAndRemoveObjectGraph;
 - (EDImage *)getAndRemoveObjectImage;
+- (EDLine *)getAndRemoveObjectLine;
+- (EDTextbox *)getAndRemoveObjectTextbox;
 @end

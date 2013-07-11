@@ -15,4 +15,5 @@
 }
 
 - (id)initWithFrame:(NSRect)frame line:(EDLine *)line context:(NSManagedObjectContext *)context;
+- (EDLine *)line;
 @end

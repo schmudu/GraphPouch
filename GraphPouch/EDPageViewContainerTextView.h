@@ -15,4 +15,5 @@
 }
 
 - (id)initWithFrame:(NSRect)frame textbox:(EDTextbox *)textbox context:(NSManagedObjectContext *)context;
+- (EDTextbox *)textbox;
 @end

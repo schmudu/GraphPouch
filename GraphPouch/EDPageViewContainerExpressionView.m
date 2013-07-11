@@ -44,6 +44,10 @@
     return self;
 }
 
+- (EDExpression *)expression{
+    return _expression;
+}
+
 - (BOOL)isFlipped{
     return TRUE;
 }

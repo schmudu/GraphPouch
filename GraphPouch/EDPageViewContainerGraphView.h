@@ -15,4 +15,5 @@
 }
 
 - (id)initWithFrame:(NSRect)frame graph:(EDGraph *)graph context:(NSManagedObjectContext *)context;
+- (EDGraph *)graph;
 @end

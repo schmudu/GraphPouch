@@ -41,6 +41,10 @@
     return self;
 }
 
+- (EDLine *)line{
+    return _line;
+}
+
 - (BOOL)isFlipped{
     return TRUE;
 }
