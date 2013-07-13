@@ -137,8 +137,6 @@
 		CDC605A0177CE127008A5EB6 /* EDImageViewPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = CDC6059F177CE127008A5EB6 /* EDImageViewPrint.m */; };
 		CDD05DEA16BC716E001279FB /* EDTextboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD05DE916BC716E001279FB /* EDTextboxView.m */; };
 		CDD05DF616BD4C43001279FB /* EDTextboxViewMask.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD05DF516BD4C43001279FB /* EDTextboxViewMask.m */; };
-		CDD05DFA16BF4DBA001279FB /* icon_paper.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DF816BF4DBA001279FB /* icon_paper.png */; };
-		CDD05DFB16BF4DBA001279FB /* icon_paper_over.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DF916BF4DBA001279FB /* icon_paper_over.png */; };
 		CDD05DFD16C06811001279FB /* icon_graph.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DFC16C06811001279FB /* icon_graph.png */; };
 		CDD05DFF16C069AA001279FB /* icon_text.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05DFE16C069AA001279FB /* icon_text.png */; };
 		CDD05E0116C06C35001279FB /* icon_line.png in Resources */ = {isa = PBXBuildFile; fileRef = CDD05E0016C06C35001279FB /* icon_line.png */; };
@@ -415,8 +413,6 @@
 		CDD05DE916BC716E001279FB /* EDTextboxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTextboxView.m; sourceTree = "<group>"; };
 		CDD05DF416BD4C43001279FB /* EDTextboxViewMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDTextboxViewMask.h; sourceTree = "<group>"; };
 		CDD05DF516BD4C43001279FB /* EDTextboxViewMask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDTextboxViewMask.m; sourceTree = "<group>"; };
-		CDD05DF816BF4DBA001279FB /* icon_paper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_paper.png; sourceTree = "<group>"; };
-		CDD05DF916BF4DBA001279FB /* icon_paper_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_paper_over.png; sourceTree = "<group>"; };
 		CDD05DFC16C06811001279FB /* icon_graph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_graph.png; sourceTree = "<group>"; };
 		CDD05DFE16C069AA001279FB /* icon_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_text.png; sourceTree = "<group>"; };
 		CDD05E0016C06C35001279FB /* icon_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_line.png; sourceTree = "<group>"; };
@@ -1189,8 +1185,6 @@
 				CD7C9CA4172DB5870022A475 /* icon_image_over.png */,
 				CDD05E0016C06C35001279FB /* icon_line.png */,
 				CD1DA3EA16D0992500198084 /* icon_line_over.png */,
-				CDD05DF816BF4DBA001279FB /* icon_paper.png */,
-				CDD05DF916BF4DBA001279FB /* icon_paper_over.png */,
 				CDD05E0E16C1BC86001279FB /* icon_properties.png */,
 				CD1DA3E816D097C900198084 /* icon_properties_over.png */,
 				CDD05DFE16C069AA001279FB /* icon_text.png */,
@@ -1378,8 +1372,6 @@
 				CD82441D16AC53CF00BAAB0B /* EDSheetPropertiesGraphError.xib in Resources */,
 				CD74501216B3342A004B813E /* icon.iconset in Resources */,
 				CDF3E17C16BC145300AB78AF /* EDPanelPropertiesLine.xib in Resources */,
-				CDD05DFA16BF4DBA001279FB /* icon_paper.png in Resources */,
-				CDD05DFB16BF4DBA001279FB /* icon_paper_over.png in Resources */,
 				CDD05DFD16C06811001279FB /* icon_graph.png in Resources */,
 				CDD05DFF16C069AA001279FB /* icon_text.png in Resources */,
 				CDD05E0116C06C35001279FB /* icon_line.png in Resources */,
