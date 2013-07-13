@@ -609,17 +609,22 @@
     
     // draw inserted objects
     for (NSManagedObject *object in insertedArray){
-        // an object on the page was updated
-        if ([object isKindOfClass:[EDExpression class]])
-            [self drawExpression:(EDExpression *)object];
-        else if ([object isKindOfClass:[EDGraph class]])
-            [self drawGraph:(EDGraph *)object];
-        else if ([object isKindOfClass:[EDImage class]])
-            [self drawImage:(EDImage *)object];
-        else if ([object isKindOfClass:[EDLine class]])
-            [self drawLine:(EDLine *)object];
-        else if ([object isKindOfClass:[EDTextbox class]])
-            [self drawTextbox:(EDTextbox *)object];
+        if ([object isKindOfClass:[EDElement class]]){
+            // make sure inserted object is part of this page
+            if ([(EDElement *)object page] == _page){
+                // an object on the page was updated
+                if ([object isKindOfClass:[EDExpression class]])
+                    [self drawExpression:(EDExpression *)object];
+                else if ([object isKindOfClass:[EDGraph class]])
+                    [self drawGraph:(EDGraph *)object];
+                else if ([object isKindOfClass:[EDImage class]])
+                    [self drawImage:(EDImage *)object];
+                else if ([object isKindOfClass:[EDLine class]])
+                    [self drawLine:(EDLine *)object];
+                else if ([object isKindOfClass:[EDTextbox class]])
+                    [self drawTextbox:(EDTextbox *)object];
+            }
+        }
     }
 }
 
