@@ -109,40 +109,9 @@
     NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
     //NSArray *expressions = [potentialEquation componentsSeparatedByString:@"="];
     NSArray *expressions;
-    NSError *regexError = nil;
-    /*
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"=" options:NSCaseInsensitiveSearch error:&regexError];
-    
-    // go through all signs, there can be only one per expression
-    if ([regex numberOfMatchesInString:potentialEquation options:0 range:NSMakeRange(0, [potentialEquation length])]){
-        expressions = [potentialEquation componentsSeparatedByString:@"="];
-    }
-    else{
-        regex = [NSRegularExpression regularExpressionWithPattern:@">" options:NSCaseInsensitiveSearch error:&regexError];
-        if ([regex numberOfMatchesInString:potentialEquation options:0 range:NSMakeRange(0, [potentialEquation length])]){
-            expressions = [potentialEquation componentsSeparatedByString:@">"];
-        }
-        else{
-            regex = [NSRegularExpression regularExpressionWithPattern:@"≥" options:NSCaseInsensitiveSearch error:&regexError];
-            if ([regex numberOfMatchesInString:potentialEquation options:0 range:NSMakeRange(0, [potentialEquation length])]){
-                expressions = [potentialEquation componentsSeparatedByString:@"≥"];
-            }
-            else{
-                regex = [NSRegularExpression regularExpressionWithPattern:@"<" options:NSCaseInsensitiveSearch error:&regexError];
-                if ([regex numberOfMatchesInString:potentialEquation options:0 range:NSMakeRange(0, [potentialEquation length])]){
-                    expressions = [potentialEquation componentsSeparatedByString:@"<"];
-                }
-                else{
-                    regex = [NSRegularExpression regularExpressionWithPattern:@"≤" options:NSCaseInsensitiveSearch error:&regexError];
-                    if ([regex numberOfMatchesInString:potentialEquation options:0 range:NSMakeRange(0, [potentialEquation length])]){
-                        expressions = [potentialEquation componentsSeparatedByString:@"≤"];
-                    }
-                }
-            }
-        }
-    }*/
     switch ([potentialEquation expressionEqualityType]) {
         case EDExpressionEqualityTypeNone:
+            expressions = [potentialEquation componentsSeparatedByString:@"="];
             break;
         case EDExpressionEqualityTypeEqual:
             expressions = [potentialEquation componentsSeparatedByString:@"="];

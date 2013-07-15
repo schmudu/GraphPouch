@@ -559,6 +559,7 @@
                 for (NSManagedObject *deletedObject in deletedArray){
 #warning worksheet elements
                     // if expression relationship was changed then an expression was deleted
+                    /*
                     if ([[object changedValues] objectForKey:EDPageAttributeExpressions]){
                         EDExpression *objectExpression = [deletedArray getAndRemoveObjectExpression];
                         if (objectExpression)
@@ -591,6 +592,22 @@
                         EDTextbox *objectTextbox = [deletedArray getAndRemoveObjectTextbox];
                         if (objectTextbox)
                             [self removeTextbox:objectTextbox];
+                    }
+                     */
+                    if (([[object changedValues] objectForKey:EDPageAttributeExpressions]) && ([deletedObject isKindOfClass:[EDExpression class]])){
+                        [self removeExpression:(EDExpression *)deletedObject];
+                    }
+                    else if (([[object changedValues] objectForKey:EDPageAttributeGraphs]) && ([deletedObject isKindOfClass:[EDGraph class]])){
+                        [self removeGraph:(EDGraph *)deletedObject];
+                    }
+                    else if (([[object changedValues] objectForKey:EDPageAttributeImages]) && ([deletedObject isKindOfClass:[EDImage class]])){
+                        [self removeImage:(EDImage *)deletedObject];
+                    }
+                    else if (([[object changedValues] objectForKey:EDPageAttributeLines]) && ([deletedObject isKindOfClass:[EDLine class]])){
+                        [self removeLine:(EDLine *)deletedObject];
+                    }
+                    else if (([[object changedValues] objectForKey:EDPageAttributeTextboxes]) && ([deletedObject isKindOfClass:[EDTextbox class]])){
+                        [self removeTextbox:(EDTextbox *)deletedObject];
                     }
                 }
             //}

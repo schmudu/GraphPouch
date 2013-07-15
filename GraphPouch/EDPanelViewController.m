@@ -112,7 +112,11 @@
         [label setTextColor:[NSColor colorWithHexColorString:@"dddddd"]];
     }
     else {
-        [label setStringValue:[NSString stringWithFormat:@"%.2f", labelValue]];
+        if (labelValue)
+            [label setStringValue:[NSString stringWithFormat:@"%.2f", labelValue]];
+        else
+            [label setStringValue:@""];
+        
         [label setTextColor:[NSColor blackColor]];
     }
 }
@@ -234,7 +238,8 @@
     }
     
     // set results
-    [results setValue:[NSString stringWithString:value] forKey:EDKeyValue];
+    if (value)
+        [results setValue:[NSString stringWithString:value] forKey:EDKeyValue];
     [results setValue:[[NSNumber alloc] initWithBool:diff] forKey:EDKeyDiff];
     return results;
 }

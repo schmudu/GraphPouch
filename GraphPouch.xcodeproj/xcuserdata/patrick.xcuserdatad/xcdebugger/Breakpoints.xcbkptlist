@@ -344,33 +344,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDExpression.m"
-         timestampString = "393511458.747693"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "280"
-         endingLineNumber = "280"
-         landmarkName = "+validExpression:context:error:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "GraphPouch/EDExpression.m"
-         timestampString = "393511458.747693"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "283"
-         endingLineNumber = "283"
-         landmarkName = "+validExpression:context:error:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "GraphPouch/EDExpression.m"
-         timestampString = "393511458.747693"
+         timestampString = "395617035.92141"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "281"
@@ -383,11 +357,37 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GraphPouch/EDExpression.m"
-         timestampString = "393511458.747693"
+         timestampString = "395617035.92141"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "287"
-         endingLineNumber = "287"
+         startingLineNumber = "284"
+         endingLineNumber = "284"
+         landmarkName = "+validExpression:context:error:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "GraphPouch/EDExpression.m"
+         timestampString = "395617035.92141"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "282"
+         endingLineNumber = "282"
+         landmarkName = "+validExpression:context:error:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "GraphPouch/EDExpression.m"
+         timestampString = "395617035.92141"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "288"
+         endingLineNumber = "288"
          landmarkName = "+validExpression:context:error:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -532,6 +532,32 @@
          startingLineNumber = "478"
          endingLineNumber = "478"
          landmarkName = "-updateGraph:changedValues:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "GraphPouch/EDPanelViewController.m"
+         timestampString = "395616192.955005"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "110"
+         endingLineNumber = "110"
+         landmarkName = "-setLabelState:hasChange:value:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "GraphPouch/EDExpression.m"
+         timestampString = "395617035.92141"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "167"
+         endingLineNumber = "167"
+         landmarkName = "+isValidEquationOrExpression:context:error:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
