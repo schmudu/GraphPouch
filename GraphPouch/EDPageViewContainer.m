@@ -471,6 +471,8 @@
 }
 
 - (void)updateGraph:(EDGraph *)graph changedValues:(NSDictionary *)changedValues{
+    /*
+    NSLog(@"value for selected class is:%@ selected value:%d changed values:%@",[[changedValues objectForKey:EDElementAttributeSelected] class], [graph selected], changedValues);
 #warning attributes - graph
     // check if any of the attributes that require the textbox to be redrawn were changed
     if (([changedValues objectForKey:EDGraphAttributeCoordinateAxes] == nil) &&
@@ -492,6 +494,7 @@
         ([changedValues objectForKey:EDElementAttributeSelected] == nil) &&
         ([changedValues objectForKey:EDElementAttributeWidth] == nil) &&
         ([changedValues objectForKey:EDElementAttributeZIndex]) == nil){
+        
         // then only z-index and location could change
         if (([changedValues objectForKey:EDElementAttributeLocationX] == nil) &&
             ([changedValues objectForKey:EDElementAttributeLocationY] == nil)){
@@ -517,6 +520,10 @@
         [self removeGraph:graph];
         [self drawGraph:graph];
     }
+     */
+    // something important changed so redraw graph
+    [self removeGraph:graph];
+    [self drawGraph:graph];
 }
 - (void)updateEquation:(EDEquation *)equation{
     EDGraph *graph = [equation graph];

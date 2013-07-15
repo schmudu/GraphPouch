@@ -216,13 +216,13 @@
     if (drawAsImage){
         imageCoordinate = [[NSImage alloc] initWithSize:[self frame].size];
         [imageCoordinate lockFocus];
-    }
     
-    // flip coordinates
-    NSAffineTransform* t = [NSAffineTransform transform];
-    [t translateXBy:0 yBy:[self frame].size.height];
-    [t scaleXBy:1 yBy:-1];
-    [t concat];
+        // flip coordinates
+        NSAffineTransform* t = [NSAffineTransform transform];
+        [t translateXBy:0 yBy:[self frame].size.height];
+        [t scaleXBy:1 yBy:-1];
+        [t concat];
+    }
     
     NSBezierPath *path = [NSBezierPath bezierPath];
     float originVerticalPosition = [[originInfo valueForKey:EDKeyOriginPositionVertical] floatValue];
