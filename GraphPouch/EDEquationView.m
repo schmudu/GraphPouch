@@ -219,6 +219,7 @@
             }
         }
     }
+    
     [path stroke];
     
     // if inequality need to fill path

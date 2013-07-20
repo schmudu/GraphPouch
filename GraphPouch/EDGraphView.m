@@ -173,7 +173,12 @@
     NSDictionary *horizontalResults = [self calculateGridIncrement:[[[self dataObj] maxValueX] floatValue] minValue:[[[self dataObj] minValueX] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioHorizontal] floatValue] length:[self graphWidth] scale:[[[self dataObj] scaleX] intValue]];
     NSDictionary *verticalResults = [self calculateGridIncrement:[[[self dataObj] maxValueY] floatValue] minValue:[[[self dataObj] minValueY] floatValue] originRatio:[[originInfo valueForKey:EDKeyRatioVertical] floatValue] length:[self graphHeight] scale:[[[self dataObj] scaleY] intValue]];
     
-     // grid lines
+    // draw equations
+    if ([[(EDGraph *)[self dataObj] equations] count]) {
+        [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
+    }
+    
+    // grid lines
     if ([(EDGraph *)[self dataObj] hasGridLines]) {
         [self drawVerticalGrid:verticalResults horizontalGrid:horizontalResults origin:originInfo drawAsImage:TRUE];
     }
@@ -191,11 +196,6 @@
     // draw labels
     if ([(EDGraph *)[self dataObj] hasLabels]) {
         [self drawLabels:verticalResults horizontal:horizontalResults origin:originInfo];
-    }
-    
-    // draw equations
-    if ([[(EDGraph *)[self dataObj] equations] count]) {
-        [self drawEquations:verticalResults horizontal:horizontalResults origin:originInfo];
     }
     
     // draw points
