@@ -12,8 +12,8 @@
 int main(int argc, char *argv[])
 {
     // direct distribution/dev mode
-    //return NSApplicationMain(argc, (const char **)argv);
+    return NSApplicationMain(argc, (const char **)argv);
     
     // receipt validation
-    return CheckReceiptAndRun(argc, (const char **)argv);
+    //return CheckReceiptAndRun(argc, (const char **)argv);
 }

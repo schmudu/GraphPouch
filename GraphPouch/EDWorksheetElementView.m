@@ -90,9 +90,24 @@
     // method called to remove performance-heavy elements
     // useful during mouse dragging
     //NSLog(@"remove elements.");
+    
+    /*
+    // TESTING
+    // add drag helper when removing features
+    _dragView = [[NSView alloc] initWithFrame:NSMakeRect(-40, -40, [self bounds].size.width+80, [self bounds].size.height+80)];
+    [self addSubview:_dragView];
+    [_dragView lockFocus];
+    [[NSColor redColor] setFill];
+    [NSBezierPath fillRect:[_dragView bounds]];
+    [_dragView unlockFocus];
+    */
 }
 
 - (void)addFeatures{
+    
+    // TESTING
+    //[_dragView removeFromSuperview];
+    
     // method called to add performance-heavy elements
     // useful after mouse dragging has completed
     //NSLog(@"add elements.");
@@ -327,12 +342,12 @@
 
 #pragma mark mouse dragged
 - (void)mouseDragged:(NSEvent *)theEvent{
-    //NSLog(@"mouse dragged class:%@ z-index:%d", [[self dataObj] class], [[(EDElement *)[self dataObj] zIndex] intValue]);
     // on mouse drag elements that are above interfere with the dragging
     // so we are going to send this element to the font and then return it to its origin z-index
     // do not drag if it is not selected
     if (![(EDGraph *)[self dataObj] isSelectedElement])
         return;
+    NSLog(@"mouse dragged class:%@ z-index:%d", [[self dataObj] class], [[(EDElement *)[self dataObj] zIndex] intValue]);
     
     BOOL didSnapX = FALSE, didSnapY = FALSE, didSnapBack = FALSE;
     

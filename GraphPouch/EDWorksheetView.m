@@ -113,6 +113,14 @@
         // set mouse points
         _mousePointDown = NSMakePoint(-1, -1);
         _mousePointDrag = NSMakePoint(-1, -1);
+        
+        // init for mouse move
+        int opts = (NSTrackingActiveAlways | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved);
+        NSTrackingArea *area = [[NSTrackingArea alloc] initWithRect:[self bounds]
+                                                            options:opts
+                                                              owner:self
+                                                           userInfo:nil];
+        [self addTrackingArea:area];
     }
     
     return self;
@@ -836,6 +844,14 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
         [dragDict setValue:[NSValue valueWithPoint:_mousePointDrag] forKey:EDKeyPointDrag];
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDragged object:self userInfo:dragDict];
         [self setNeedsDisplay:TRUE];
+    }
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent{
+    // this method is called if the user has dragged but is off of the element.  i.e. the element must catch up to the mouse
+    if(_currentDraggedView){
+        NSLog(@"mouse moved.");
+        [_currentDraggedView mouseDragged:theEvent];
     }
 }
 

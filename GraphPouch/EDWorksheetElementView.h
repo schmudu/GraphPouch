@@ -20,7 +20,8 @@
     BOOL                    _didSnapToSourceY;
     BOOL                    _mouseUpEventSource;
     int                     _savedZIndex;
-    NSManagedObjectContext *_context;
+    NSManagedObjectContext  *_context;
+    //NSView                  *_dragView;
 }
 
 @property (nonatomic, strong) id dataObj;
