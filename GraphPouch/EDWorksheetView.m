@@ -98,8 +98,8 @@
 @end
 
 @implementation EDWorksheetView
+
 - (BOOL)acceptsFirstMouse:(NSEvent *)theEvent{
-    NSLog(@"accepts first mouse: event:%@", theEvent);
     return TRUE;
 }
 
@@ -793,7 +793,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
         _currentDraggedView = nil;
         
         // make this the first responder
-        [[self window] makeFirstResponder:self];
+        //[[self window] makeFirstResponder:self];
         
         // disable property panel
         [[[self window] firstResponder] doCommandBySelector:@selector(propertiesPanelDisable:)];
@@ -818,8 +818,10 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
         
         // if mouse was not dragged then continue with normal order to notifying listeners of mouse down
         // otherwise the mouse dragging would take care of the selection/deselection of elements
-        if (!mouseDragged)
+        if (!mouseDragged){
             [_nc postNotificationName:EDEventWorksheetClicked object:self];
+        }
+    
     }
 }
 

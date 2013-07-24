@@ -73,7 +73,6 @@
 }
 
 - (BOOL)acceptsFirstMouse:(NSEvent *)theEvent{
-    NSLog(@"accepts first mouse: event:%@", theEvent);
     return TRUE;
 }
 
@@ -473,6 +472,16 @@
         }
     }
      */
+    NSLog(@"mouse dragged.");
+    NSPoint newDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
+    NSPoint thisOrigin = [self frame].origin;
+    NSPoint savedOrigin = [self frame].origin;
+    
+    thisOrigin.x += (-lastDragLocation.x + newDragLocation.x);
+    thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
+    
+    [self setFrameOrigin:thisOrigin];
+    lastDragLocation = newDragLocation;
 }
 
 - (void)dispatchMouseDragNotification:(NSEvent *)theEvent snapInfo:(NSDictionary *)snapInfo{
