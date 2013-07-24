@@ -98,6 +98,10 @@
 @end
 
 @implementation EDWorksheetView
+- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent{
+    NSLog(@"accepts first mouse: event:%@", theEvent);
+    return TRUE;
+}
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -850,7 +854,6 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
 - (void)mouseMoved:(NSEvent *)theEvent{
     // this method is called if the user has dragged but is off of the element.  i.e. the element must catch up to the mouse
     if(_currentDraggedView){
-        NSLog(@"mouse moved.");
         [_currentDraggedView mouseDragged:theEvent];
     }
 }
