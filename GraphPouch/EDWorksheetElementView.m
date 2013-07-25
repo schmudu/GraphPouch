@@ -305,11 +305,11 @@
     [self notifyMouseDownListeners:theEvent];
     
     // set variable for dragging
-    lastCursorLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
+    _lastCursorLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
     
     // set variable for dragging
-    lastDragLocation = [[[self window] contentView]convertPoint:[theEvent locationInWindow] toView:[self superview]];
-    NSLog(@"last cursor location:%@", NSStringFromPoint(lastDragLocation));
+    _lastDragLocation = [[[self window] contentView]convertPoint:[theEvent locationInWindow] toView:[self superview]];
+    NSLog(@"last cursor location:%@", NSStringFromPoint(_lastDragLocation));
     
     // if mouse up already then we need to catch it and call it's behavior
     NSEvent *nextEvent = [[self window] nextEventMatchingMask:NSLeftMouseUpMask untilDate:[[NSDate date] dateByAddingTimeInterval:0.1] inMode:NSDefaultRunLoopMode dequeue:NO];
@@ -331,18 +331,19 @@
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
     
     // set variable for dragging
-    lastCursorLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
-    NSLog(@"mouse down: location in element:%@ location on sheet:%@", NSStringFromPoint(_savedMouseSnapLocation), NSStringFromPoint(lastCursorLocation));
+    _lastCursorLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
+    _lastDragLocation = [[[self window] contentView]convertPoint:[theEvent locationInWindow] toView:[self superview]];
+    NSLog(@"mouse down: location in element:%@ location on sheet:%@", NSStringFromPoint(_savedMouseSnapLocation), NSStringFromPoint(_lastCursorLocation));
 }
 
 - (void)mouseDownBySelection:(NSEvent *)theEvent{
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
     
     // set variable for dragging
-    lastCursorLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
+    _lastCursorLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
     
     // set variable for draggin
-    lastDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
+    _lastDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
 }
 
 - (void)notifyMouseDownListeners:(NSEvent *)theEvent{
@@ -374,8 +375,8 @@
     NSPoint thisOrigin = [self frame].origin;
     NSPoint savedOrigin = [self frame].origin;
     
-    thisOrigin.x += (-lastDragLocation.x + newDragLocation.x);
-    thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
+    thisOrigin.x += (-_lastDragLocation.x + newDragLocation.x);
+    thisOrigin.y += (-_lastDragLocation.y + newDragLocation.y);
     NSLog(@"dragging object: new drag location:%f: new y origin:%f", newDragLocation.y, thisOrigin.y);
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // only do if we're snapping
@@ -446,7 +447,7 @@
     }
     
     [self setFrameOrigin:thisOrigin];
-    lastDragLocation = newDragLocation;
+    _lastDragLocation = newDragLocation;
     
     // dispatch event if drag source
     if (_didSnap) {
@@ -472,16 +473,16 @@
         }
     }
      */
-    NSLog(@"mouse dragged.");
     NSPoint newDragLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:[self superview]];
     NSPoint thisOrigin = [self frame].origin;
     NSPoint savedOrigin = [self frame].origin;
     
-    thisOrigin.x += (-lastDragLocation.x + newDragLocation.x);
-    thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
+    NSLog(@"mouse dragged: last drag location x:%f new x:%f", _lastDragLocation.x, newDragLocation.x);
+    thisOrigin.x += (-_lastDragLocation.x + newDragLocation.x);
+    thisOrigin.y += (-_lastDragLocation.y + newDragLocation.y);
     
     [self setFrameOrigin:thisOrigin];
-    lastDragLocation = newDragLocation;
+    _lastDragLocation = newDragLocation;
 }
 
 - (void)dispatchMouseDragNotification:(NSEvent *)theEvent snapInfo:(NSDictionary *)snapInfo{
@@ -516,14 +517,14 @@
     }
     else{
         if (!originalSourceSnapX) {
-            thisOrigin.x += (-lastDragLocation.x + newDragLocation.x);
+            thisOrigin.x += (-_lastDragLocation.x + newDragLocation.x);
         }
         else {
             thisOrigin.x -= [[snapInfo valueForKey:EDKeySnapDistanceX] floatValue];
         }
         
         if (!originalSourceSnapY) {
-            thisOrigin.y += (-lastDragLocation.y + newDragLocation.y);
+            thisOrigin.y += (-_lastDragLocation.y + newDragLocation.y);
         }
         else {
             thisOrigin.y -= [[snapInfo valueForKey:EDKeySnapDistanceY] floatValue];
@@ -531,7 +532,7 @@
     }
     
     [self setFrameOrigin:thisOrigin];
-    lastDragLocation = newDragLocation;
+    _lastDragLocation = newDragLocation;
 }
 
 #pragma mark mouse up
@@ -553,6 +554,7 @@
     [notificationDictionary setValue:theEvent forKey:EDEventKey];
     [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseUp object:self userInfo:notificationDictionary];
      */
+    [self mouseUpBehavior:theEvent];
 }
 
 - (void)mouseUpBySelection:(NSEvent *)theEvent{
@@ -569,8 +571,8 @@
 }
 
 - (void)mouseUpBehavior:(NSEvent *)theEvent{
-    float diffY = fabsf(lastCursorLocation.y - lastDragLocation.y);
-    float diffX = fabsf(lastCursorLocation.x - lastDragLocation.x);
+    float diffY = fabsf(_lastCursorLocation.y - _lastDragLocation.y);
+    float diffX = fabsf(_lastCursorLocation.x - _lastDragLocation.x);
     
     //if no diff in location than do not prepare an undo
     if(fabsf(diffX>0.01) && fabsf(diffY>0.01)){

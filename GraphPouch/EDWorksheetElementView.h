@@ -12,8 +12,8 @@
 @interface EDWorksheetElementView : NSView{
     @protected
     NSNotificationCenter    *_nc;
-    NSPoint                 lastDragLocation;
-    NSPoint                 lastCursorLocation;
+    NSPoint                 _lastDragLocation;
+    NSPoint                 _lastCursorLocation;
     NSPoint                 _savedMouseSnapLocation;
     BOOL                    _didSnap;
     BOOL                    _didSnapToSourceX;
