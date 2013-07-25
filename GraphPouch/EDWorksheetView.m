@@ -43,6 +43,7 @@
 - (void)onContextChanged:(NSNotification *)note;
 - (void)onElementMouseDown:(NSNotification *)note;
 - (void)onElementMouseDragged:(NSNotification *)note;
+- (void)onElementMouseDraggedOverUnselectedElement:(NSNotification *)note;
 - (void)onElementMouseUp:(NSNotification *)note;
 - (void)onElementRedrawingItself:(NSNotification *)note;
 
@@ -99,10 +100,6 @@
 
 @implementation EDWorksheetView
 
-- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent{
-    return TRUE;
-}
-
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
@@ -119,7 +116,7 @@
         _mousePointDrag = NSMakePoint(-1, -1);
         
         // init for mouse move
-        int opts = (NSTrackingActiveAlways | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved);
+        int opts = (NSTrackingActiveAlways | NSTrackingInVisibleRect | NSTrackingMouseMoved);
         NSTrackingArea *area = [[NSTrackingArea alloc] initWithRect:[self bounds]
                                                             options:opts
                                                               owner:self
@@ -128,6 +125,10 @@
     }
     
     return self;
+}
+
+- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent{
+    return TRUE;
 }
 
 - (void)postInitialize:(NSManagedObjectContext *)context{
@@ -262,6 +263,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementSelectedDeselectOtherElements:) name:EDEventUnselectedElementClickedWithoutModifier object:imageView];
     [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:imageView];
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:imageView];
+    [_nc addObserver:self selector:@selector(onElementMouseDraggedOverUnselectedElement:) name:EDEventMouseDraggedOverUnselectedElement object:imageView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:imageView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:imageView];
     [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:imageView];
@@ -281,44 +283,6 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
 }
 
 - (void)drawTextbox:(EDTextbox *)textbox{
-    /*
-    EDTextboxView *textboxView = [[EDTextboxView alloc] initWithFrame:NSMakeRect(0, 0, [textbox elementWidth], [textbox elementHeight]) textboxModel:(EDTextbox *)textbox drawSelection:TRUE];
-    
-    // listen to graph
-    // NOTE: any listeners you add here, remove them in method 'removeElementView'
-    [_nc addObserver:self selector:@selector(onElementSelectedDeselectOtherElements:) name:EDEventUnselectedElementClickedWithoutModifier object:textboxView];
-    [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:textboxView];
-    [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:textboxView];
-    [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:textboxView];
-    [_nc addObserver:self selector:@selector(onTextboxBeginEditing:) name:EDEventTextboxBeginEditing object:textboxView];
-    [_nc addObserver:self selector:@selector(onTextboxEndEditing:) name:EDEventTextboxEndEditing object:textboxView];
-    [_nc addObserver:self selector:@selector(onTextboxDidChange:) name:EDEventTextboxDidChange object:textboxView];
-    [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:textboxView];
-    [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:textboxView];
-    [_nc addObserver:self selector:@selector(resetElementsZIndices:) name:EDEventResetZIndices object:textboxView];
-    
-    // set location
-    [textboxView setFrameOrigin:NSMakePoint([[textbox valueForKey:EDElementAttributeLocationX] floatValue], [[textbox valueForKey:EDElementAttributeLocationY] floatValue])];
-    
-    [self addSubview:textboxView];
-    [textboxView postInit];
-    [textboxView setNeedsDisplay:TRUE];
-    
-    // draw transform rect if selected
-    if ([[[textboxView dataObj] valueForKey:EDElementAttributeSelected] boolValue]){
-        [self drawTransformRect:(EDElement *)[textboxView dataObj]];
-    }
-    */
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // NEW VERSION
     EDTextboxView *textboxView = [[EDTextboxView alloc] initWithFrame:NSMakeRect(0, 0, [textbox elementWidth], [textbox elementHeight]) textboxModel:(EDTextbox *)textbox drawSelection:TRUE];
     EDTextboxCacheView *cacheView;
     NSImage *textboxImage = [[NSImage alloc] initWithData:[textboxView dataWithPDFInsideRect:[textboxView bounds]]];;
@@ -338,6 +302,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementSelectedDeselectOtherElements:) name:EDEventUnselectedElementClickedWithoutModifier object:cacheView];
     [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:cacheView];
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:cacheView];
+    [_nc addObserver:self selector:@selector(onElementMouseDraggedOverUnselectedElement:) name:EDEventMouseDraggedOverUnselectedElement object:cacheView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:cacheView];
     [_nc addObserver:self selector:@selector(onTextboxBeginEditing:) name:EDEventTextboxBeginEditing object:cacheView];
     [_nc addObserver:self selector:@selector(onTextboxEndEditing:) name:EDEventTextboxEndEditing object:cacheView];
@@ -367,6 +332,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementSelectedDeselectOtherElements:) name:EDEventUnselectedElementClickedWithoutModifier object:lineView];
     [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:lineView];
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:lineView];
+    [_nc addObserver:self selector:@selector(onElementMouseDraggedOverUnselectedElement:) name:EDEventMouseDraggedOverUnselectedElement object:lineView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:lineView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:lineView];
     [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:lineView];
@@ -393,6 +359,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementSelectedDeselectOtherElements:) name:EDEventUnselectedElementClickedWithoutModifier object:expressionView];
     [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:expressionView];
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:expressionView];
+    [_nc addObserver:self selector:@selector(onElementMouseDraggedOverUnselectedElement:) name:EDEventMouseDraggedOverUnselectedElement object:expressionView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:expressionView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:expressionView];
     [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:expressionView];
@@ -418,6 +385,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     [_nc addObserver:self selector:@selector(onElementSelectedDeselectOtherElements:) name:EDEventUnselectedElementClickedWithoutModifier object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseDown:) name:EDEventMouseDown object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseDragged:) name:EDEventMouseDragged object:graphView];
+    [_nc addObserver:self selector:@selector(onElementMouseDraggedOverUnselectedElement:) name:EDEventMouseDraggedOverUnselectedElement object:graphView];
     [_nc addObserver:self selector:@selector(onElementMouseUp:) name:EDEventMouseUp object:graphView];
     [_nc addObserver:self selector:@selector(onElementRedrawingItself:) name:EDEventWorksheetElementRedrawingItself object:graphView];
     [_nc addObserver:self selector:@selector(compareLayers:) name:EDEventCheckElementLayers object:graphView];
@@ -792,9 +760,6 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
         // clear which element is being dragged
         _currentDraggedView = nil;
         
-        // make this the first responder
-        //[[self window] makeFirstResponder:self];
-        
         // disable property panel
         [[[self window] firstResponder] doCommandBySelector:@selector(propertiesPanelDisable:)];
         
@@ -895,6 +860,13 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
     
     _mouseIsDown = TRUE;   
     _elementIsBeingModified = TRUE;   
+}
+
+- (void)onElementMouseDraggedOverUnselectedElement:(NSNotification *)note{
+    // this method is called if the user has dragged but is off of the element.  i.e. the element must catch up to the mouse
+    if(_currentDraggedView){
+        [_currentDraggedView mouseDragged:(NSEvent *)[[note userInfo] objectForKey:@"EDEvent"]];
+    }
 }
 
 - (void)onElementMouseDragged:(NSNotification *)note{

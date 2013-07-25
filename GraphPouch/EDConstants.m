@@ -479,6 +479,7 @@ NSString * const EDEventMouseDoubleClick                        = @"EDEventMouse
 NSString * const EDEventWorksheetClicked                        = @"EDEventWorksheetClicked";
 NSString * const EDEventMouseDown                               = @"EDEventMouseDown";
 NSString * const EDEventMouseDragged                            = @"EDEventMouseDragged";
+NSString * const EDEventMouseDraggedOverUnselectedElement       = @"EDEventMouseDraggedOverUnselectedElement";
 NSString * const EDEventMouseUp                                 = @"EDEventMouseUp";
 NSString * const EDEventUnselectedElementClickedWithoutModifier   = @"EDEventUnselectedElementClickedWithoutModifier";
 NSString * const EDEventDeleteKeyPressedWithoutModifiers        = @"EDEventDeleteKeyPressedWithoutModifiers";

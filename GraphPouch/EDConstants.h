@@ -522,6 +522,7 @@ extern NSString *const EDEventWorksheetClicked;
 extern NSString *const EDEventMouseDoubleClick;
 extern NSString *const EDEventMouseDown;
 extern NSString *const EDEventMouseDragged;
+extern NSString *const EDEventMouseDraggedOverUnselectedElement;
 extern NSString *const EDEventMouseUp;
 extern NSString *const EDEventTabPressedWithoutModifiers;
 extern NSString *const EDEventUnselectedElementClickedWithoutModifier;
