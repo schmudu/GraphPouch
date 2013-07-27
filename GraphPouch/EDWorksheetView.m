@@ -865,7 +865,7 @@ NSComparisonResult viewCompare(NSView *firstView, NSView *secondView, void *cont
 - (void)onElementMouseDraggedOverUnselectedElement:(NSNotification *)note{
     // this method is called if the user has dragged but is off of the element.  i.e. the element must catch up to the mouse
     if(_currentDraggedView){
-        [_currentDraggedView mouseDragged:(NSEvent *)[[note userInfo] objectForKey:@"EDEvent"]];
+        [_currentDraggedView mouseDragged:(NSEvent *)[[note userInfo] objectForKey:EDKeyEvent]];
     }
 }
 

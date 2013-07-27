@@ -351,7 +351,7 @@
     if (![(EDElement *)[self dataObj] isSelectedElement]){
         // notify listeners of mouse drag over unselected element
         NSMutableDictionary *notificationDictionary = [[NSMutableDictionary alloc] init];
-        [notificationDictionary setObject:theEvent forKey:EDEventKey];
+        [notificationDictionary setObject:theEvent forKey:EDKeyEvent];
         [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseDraggedOverUnselectedElement object:self userInfo:notificationDictionary];
         return;
     }
