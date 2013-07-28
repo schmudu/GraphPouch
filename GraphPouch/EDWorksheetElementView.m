@@ -278,6 +278,7 @@
  
     //save mouse location
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
+    NSLog(@"setting saved mouse snap location to:%f", _savedMouseSnapLocation.y);
     _didSnap = FALSE;
     
     if ([[self dataObj] isSelectedElement]){
@@ -386,7 +387,6 @@
             closestHorizontalPointToOrigin = [self findClosestPoint:thisOrigin.x guides:[guides objectForKey:EDKeyGuideHorizontal]];
             closestHorizontalPointToEdge = [self findClosestPoint:(thisOrigin.x + [[self dataObj] elementWidth]) guides:[guides objectForKey:EDKeyGuideHorizontal]];
             
-            
             // snap if edge of object is close to guide
             if ((fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold) || 
                 (fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold) || 
@@ -396,25 +396,25 @@
                 
                 // check snap to vertical point
                 if (fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold) {
-                    snapDistanceY = savedOrigin.y - closestVerticalPointToOrigin;
+                    snapDistanceY = thisOrigin.y - closestVerticalPointToOrigin;
                     thisOrigin.y = closestVerticalPointToOrigin;
                     didSnapY = TRUE;
                 }
                 else if (fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold) {
                     thisOrigin.y = closestVerticalPointToEdge - [[self dataObj] elementHeight];
-                    snapDistanceY = savedOrigin.y + [[self dataObj] elementHeight] - closestVerticalPointToEdge;
+                    snapDistanceY = thisOrigin.y + [[self dataObj] elementHeight] - closestVerticalPointToEdge;
                     didSnapY = TRUE;
                 }
                 
                 // check snap to horizontal point
                 if (fabsf(thisOrigin.x - closestHorizontalPointToOrigin) < EDGuideThreshold) {
                     thisOrigin.x = closestHorizontalPointToOrigin;
-                    snapDistanceX = savedOrigin.x - closestHorizontalPointToOrigin;
+                    snapDistanceX = thisOrigin.x - closestHorizontalPointToOrigin;
                     didSnapX = TRUE;
                 }
                 else if (fabsf((thisOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge) < EDGuideThreshold) {
                     thisOrigin.x = closestHorizontalPointToEdge - [[self dataObj] elementWidth];
-                    snapDistanceX = (savedOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge;
+                    snapDistanceX = (thisOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge;
                     didSnapX = TRUE;
                 }
             }
@@ -425,9 +425,8 @@
                     didSnapBack = TRUE;
                     
                     // snap back to original location
-                    NSPoint currentLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
-                    thisOrigin.y += (currentLocation.y - _savedMouseSnapLocation.y);
-                    thisOrigin.x += (currentLocation.x - _savedMouseSnapLocation.x);
+                    thisOrigin.y = (newDragLocation.y - _savedMouseSnapLocation.y);
+                    thisOrigin.x = (newDragLocation.x - _savedMouseSnapLocation.x);
                     
                     snapBackDistanceY = (savedOrigin.y - thisOrigin.y);
                     snapBackDistanceX = (savedOrigin.x - thisOrigin.x);
@@ -440,6 +439,7 @@
     }
     
     [self setFrameOrigin:thisOrigin];
+    //NSLog(@"setting frame origin to:%@", NSStringFromPoint(thisOrigin));
     _lastDragLocation = newDragLocation;
     
     // dispatch event if drag source

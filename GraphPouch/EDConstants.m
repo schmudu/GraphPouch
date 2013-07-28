@@ -251,7 +251,8 @@ NSString * const EDKeySnapBackDistanceY                         = @"EDKeySnapBac
 NSString * const EDKeySnapBackDistanceX                         = @"EDKeySnapBackDistanceX";
 NSString * const EDKeyDidSnapBack                               = @"EDKeyDidSnapBack";
 NSString * const EDKeyWorksheetElement                          = @"EDKeyWorksheetElement";
-float const EDGuideThreshold                                    = 2.0;
+//float const EDGuideThreshold                                    = 2.0;
+float const EDGuideThreshold                                    = 5.0;
 float const EDGuideWidth                                        = 2.0;
 float const EDGuideShowThreshold                                = 10.0;  // diff must be less then this to show guide
 
