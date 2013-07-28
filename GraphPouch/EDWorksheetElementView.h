@@ -18,6 +18,10 @@
     BOOL                    _didSnap;
     BOOL                    _didSnapToSourceX;
     BOOL                    _didSnapToSourceY;
+    BOOL                    _didSnapToOriginX;
+    BOOL                    _didSnapToBottomX;
+    BOOL                    _didSnapToOriginY;
+    BOOL                    _didSnapToBottomY;
     BOOL                    _mouseUpEventSource;
     int                     _savedZIndex;
     NSManagedObjectContext  *_context;

@@ -299,6 +299,7 @@ extern NSString *const EDKeyWorksheetElement;
 extern float const EDGuideThreshold;
 extern float const EDGuideWidth;
 extern float const EDGuideShowThreshold;
+extern float const EDGuideUnsnapThreshold;
 
 #pragma mark layout
 extern float const EDMenuToolbarHeight;

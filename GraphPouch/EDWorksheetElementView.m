@@ -51,6 +51,10 @@
         _didSnapToSourceY = FALSE;
         _mouseUpEventSource = FALSE;
         _savedZIndex = -1;
+        _didSnapToOriginX = FALSE;
+        _didSnapToBottomX = FALSE;
+        _didSnapToOriginY = FALSE;
+        _didSnapToBottomY = FALSE;
     }
     
     return self;
@@ -379,6 +383,20 @@
         float closestVerticalPointToOrigin, closestVerticalPointToEdge, closestHorizontalPointToOrigin, closestHorizontalPointToEdge;
         NSMutableDictionary *guides = [(EDWorksheetView *)[self superview] guides];
         
+        // use this control structure.  detects whether there was a snap and verify if we need to unsnap first
+        if (_didSnapToOriginY || _didSnapToBottomY){
+            closestVerticalPointToOrigin = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
+            closestVerticalPointToEdge = [self findClosestPoint:(thisOrigin.y + [[self dataObj] elementHeight]) guides:[guides objectForKey:EDKeyGuideVertical]];
+            // already snapped to guide, need to figure out if we need to unsnap from guide
+            if ((_didSnapToOriginY) && (fabsf(newDragLocation.y - _savedMouseSnapLocation.y - closestVerticalPointToOrigin) > EDGuideThreshold + EDGuideUnsnapThreshold)){
+                NSLog(@"new drag: y:%f saved mouse:%f closest vert:%f threshold:%f", newDragLocation.y, _savedMouseSnapLocation.y, closestVerticalPointToOrigin, EDGuideThreshold);
+                NSLog(@"unsnap from origin y.");
+            }
+            else if((_didSnapToBottomY) && (fabsf(newDragLocation.y + [[self dataObj] elementHeight] - _savedMouseSnapLocation.y - closestVerticalPointToEdge) > EDGuideThreshold + EDGuideUnsnapThreshold)){
+                NSLog(@"unsnap from bottom y.");
+            }
+        }
+        
         // get vertical guide as long as there are guides to close enough
         // only allow the drag source to snap to guides
         if ([[guides objectForKey:EDKeyGuideVertical] count] > 0) {
@@ -399,11 +417,13 @@
                     snapDistanceY = savedOrigin.y - closestVerticalPointToOrigin;
                     thisOrigin.y = closestVerticalPointToOrigin;
                     didSnapY = TRUE;
+                    _didSnapToOriginY = TRUE;
                 }
                 else if (fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold) {
                     thisOrigin.y = closestVerticalPointToEdge - [[self dataObj] elementHeight];
                     snapDistanceY = savedOrigin.y + [[self dataObj] elementHeight] - closestVerticalPointToEdge;
                     didSnapY = TRUE;
+                    _didSnapToBottomY = TRUE;
                 }
                 
                 // check snap to horizontal point
@@ -411,19 +431,26 @@
                     thisOrigin.x = closestHorizontalPointToOrigin;
                     snapDistanceX = savedOrigin.x - closestHorizontalPointToOrigin;
                     didSnapX = TRUE;
+                    _didSnapToOriginX = TRUE;
                 }
                 else if (fabsf((thisOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge) < EDGuideThreshold) {
                     thisOrigin.x = closestHorizontalPointToEdge - [[self dataObj] elementWidth];
                     snapDistanceX = (savedOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge;
                     didSnapX = TRUE;
+                    _didSnapToBottomX = TRUE;
                 }
             }
             else{
+                // snap back
                 if(_didSnap){
                     // reset
                     _didSnap = FALSE;
                     didSnapBack = TRUE;
-                    
+                    _didSnapToOriginX = FALSE;
+                    _didSnapToBottomX = FALSE;
+                    _didSnapToOriginY = FALSE;
+                    _didSnapToBottomY = FALSE;
+                            
                     // snap back to original location
                     thisOrigin.y = (newDragLocation.y - _savedMouseSnapLocation.y);
                     thisOrigin.x = (newDragLocation.x - _savedMouseSnapLocation.x);
