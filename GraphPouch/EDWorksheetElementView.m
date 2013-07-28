@@ -396,25 +396,25 @@
                 
                 // check snap to vertical point
                 if (fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold) {
-                    snapDistanceY = thisOrigin.y - closestVerticalPointToOrigin;
+                    snapDistanceY = savedOrigin.y - closestVerticalPointToOrigin;
                     thisOrigin.y = closestVerticalPointToOrigin;
                     didSnapY = TRUE;
                 }
                 else if (fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold) {
                     thisOrigin.y = closestVerticalPointToEdge - [[self dataObj] elementHeight];
-                    snapDistanceY = thisOrigin.y + [[self dataObj] elementHeight] - closestVerticalPointToEdge;
+                    snapDistanceY = savedOrigin.y + [[self dataObj] elementHeight] - closestVerticalPointToEdge;
                     didSnapY = TRUE;
                 }
                 
                 // check snap to horizontal point
                 if (fabsf(thisOrigin.x - closestHorizontalPointToOrigin) < EDGuideThreshold) {
                     thisOrigin.x = closestHorizontalPointToOrigin;
-                    snapDistanceX = thisOrigin.x - closestHorizontalPointToOrigin;
+                    snapDistanceX = savedOrigin.x - closestHorizontalPointToOrigin;
                     didSnapX = TRUE;
                 }
                 else if (fabsf((thisOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge) < EDGuideThreshold) {
                     thisOrigin.x = closestHorizontalPointToEdge - [[self dataObj] elementWidth];
-                    snapDistanceX = (thisOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge;
+                    snapDistanceX = (savedOrigin.x + [[self dataObj] elementWidth]) - closestHorizontalPointToEdge;
                     didSnapX = TRUE;
                 }
             }
@@ -428,6 +428,7 @@
                     thisOrigin.y = (newDragLocation.y - _savedMouseSnapLocation.y);
                     thisOrigin.x = (newDragLocation.x - _savedMouseSnapLocation.x);
                     
+#warning check out snap by distance with multiple elements selected
                     snapBackDistanceY = (savedOrigin.y - thisOrigin.y);
                     snapBackDistanceX = (savedOrigin.x - thisOrigin.x);
                 }
