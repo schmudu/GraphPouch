@@ -250,6 +250,8 @@
 
 - (void)updateExpression:(EDExpression *)expression changedValues:(NSDictionary *)changedValues{
 #warning attributes - expression
+#warning if 'selected' attributes is set to false, changedValues dictionary does not reflect it
+    /*
     // check if any of the attributes that require the textbox to be redrawn were changed
     if (([changedValues objectForKey:EDExpressionAttributeAutoresize] == nil) &&
         ([changedValues objectForKey:EDExpressionAttributeExpression] == nil) &&
@@ -284,6 +286,9 @@
         [self removeExpression:expression];
         [self drawExpression:expression];
     }
+    */
+    [self removeExpression:expression];
+    [self drawExpression:expression];
 }
 
 #pragma mark images
@@ -327,6 +332,7 @@
 
 - (void)updateImage:(EDImage *)image changedValues:(NSDictionary *)changedValues{
 #warning attributes - image
+    /*
     // check if any of the attributes that require the textbox to be redrawn were changed
     if (([changedValues objectForKey:EDImageAttributeImageData] == nil) &&
         ([changedValues objectForKey:EDElementAttributeHeight] == nil) &&
@@ -358,6 +364,9 @@
         [self removeImage:image];
         [self drawImage:image];
     }
+     */
+    [self removeImage:image];
+    [self drawImage:image];
 }
 
 #pragma mark lines
@@ -400,6 +409,7 @@
 
 - (void)updateLine:(EDLine *)line changedValues:(NSDictionary *)changedValues{
 #warning attributes - line
+    /*
     // check if any of the attributes that require the textbox to be redrawn were changed
     if (([changedValues objectForKey:EDLineAttributeThickness] == nil) &&
         ([changedValues objectForKey:EDElementAttributeHeight] == nil) &&
@@ -431,7 +441,10 @@
         [self removeLine:line];
         [self drawLine:line];
     }
-}
+     */
+    [self removeLine:line];
+    [self drawLine:line];
+ }
 
 #pragma mark graphs
 - (void)drawGraphs{
@@ -711,6 +724,7 @@
 
 - (void)updateTextbox:(EDTextbox *)textbox changedValues:(NSDictionary *)changedValues{
 #warning attributes - textbox
+    /*
     // check if any of the attributes that require the textbox to be redrawn were changed
     if (([changedValues objectForKey:EDTextboxAttributeTextValue] == nil) &&
         ([changedValues objectForKey:EDElementAttributeHeight] == nil) &&
@@ -741,5 +755,8 @@
         [self removeTextbox:textbox];
         [self drawTextbox:textbox];
     }
+    */
+    [self removeTextbox:textbox];
+    [self drawTextbox:textbox];
 }
 @end

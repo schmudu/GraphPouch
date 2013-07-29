@@ -103,7 +103,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="331901414">
 								<int key="NSCellFlags">68157504</int>
 								<int key="NSCellFlags2">138413056</int>
-								<string key="NSContents">Version 1.0.6</string>
+								<string key="NSContents">Version 1.0.8</string>
 								<reference key="NSSupport" ref="477105245"/>
 								<string key="NSCellIdentifier">_NS:1535</string>
 								<reference key="NSControlView" ref="441490118"/>
