@@ -282,7 +282,7 @@
  
     //save mouse location
     _savedMouseSnapLocation = [[[self window] contentView] convertPoint:[theEvent locationInWindow] toView:self];
-    NSLog(@"setting saved mouse snap location to:%f", _savedMouseSnapLocation.y);
+    //NSLog(@"setting saved mouse snap location to:%f", _savedMouseSnapLocation.y);
     _didSnap = FALSE;
     
     if ([[self dataObj] isSelectedElement]){
@@ -388,18 +388,54 @@
             closestVerticalPointToOrigin = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
             closestVerticalPointToEdge = [self findClosestPoint:(thisOrigin.y + [[self dataObj] elementHeight]) guides:[guides objectForKey:EDKeyGuideVertical]];
             // already snapped to guide, need to figure out if we need to unsnap from guide
-            if ((_didSnapToOriginY) && (fabsf(newDragLocation.y - _savedMouseSnapLocation.y - closestVerticalPointToOrigin) > EDGuideThreshold + EDGuideUnsnapThreshold)){
-                NSLog(@"new drag: y:%f saved mouse:%f closest vert:%f threshold:%f", newDragLocation.y, _savedMouseSnapLocation.y, closestVerticalPointToOrigin, EDGuideThreshold);
-                NSLog(@"unsnap from origin y.");
-            }
-            else if((_didSnapToBottomY) && (fabsf(newDragLocation.y + [[self dataObj] elementHeight] - _savedMouseSnapLocation.y - closestVerticalPointToEdge) > EDGuideThreshold + EDGuideUnsnapThreshold)){
-                NSLog(@"unsnap from bottom y.");
+            if (((_didSnapToBottomY) && (fabsf(newDragLocation.y + [[self dataObj] elementHeight] - _savedMouseSnapLocation.y - closestVerticalPointToEdge) > EDGuideThreshold + EDGuideUnsnapThreshold)) ||
+                ((_didSnapToOriginY) && (fabsf(newDragLocation.y - _savedMouseSnapLocation.y - closestVerticalPointToOrigin) > EDGuideThreshold + EDGuideUnsnapThreshold))){
+                // either snapped to top or bottom of y
+                // reset variable
+                if (_didSnapToBottomY)
+                    _didSnapToBottomY = FALSE;
+                else
+                    _didSnapToOriginY = FALSE;
+            
+                // reset variables and positions
+                _didSnap = FALSE;
+                didSnapBack = TRUE;
+                
+                // snap back to original location
+                thisOrigin.y = (newDragLocation.y - _savedMouseSnapLocation.y);
+                
+                snapBackDistanceY = (savedOrigin.y - thisOrigin.y);
             }
         }
         
+        
+        if (_didSnapToOriginX || _didSnapToBottomX){
+            // now check x
+            if (((_didSnapToBottomX) && (fabsf(newDragLocation.x + [[self dataObj] elementHeight] - _savedMouseSnapLocation.x - closestVerticalPointToEdge) > EDGuideThreshold + EDGuideUnsnapThreshold)) ||
+                ((_didSnapToOriginX) && (fabsf(newDragLocation.x - _savedMouseSnapLocation.x - closestVerticalPointToOrigin) > EDGuideThreshold + EDGuideUnsnapThreshold))){
+                // either snapped to top or bottom of x
+                // reset variable
+                if (_didSnapToBottomX)
+                    _didSnapToBottomX = FALSE;
+                else
+                    _didSnapToOriginX = FALSE;
+            
+                // reset variables and positions
+                _didSnap = FALSE;
+                didSnapBack = TRUE;
+                
+                // snap back to original location
+                thisOrigin.x = (newDragLocation.x - _savedMouseSnapLocation.x);
+                
+                snapBackDistanceX = (savedOrigin.x - thisOrigin.x);
+            }
+        }
+        
+        // if element did not snap back then search for new guides
         // get vertical guide as long as there are guides to close enough
         // only allow the drag source to snap to guides
-        if ([[guides objectForKey:EDKeyGuideVertical] count] > 0) {
+        //if ([[guides objectForKey:EDKeyGuideVertical] count] > 0) {
+        if ((!didSnapBack) && ([[guides objectForKey:EDKeyGuideVertical] count] > 0)) {
             closestVerticalPointToOrigin = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
             closestVerticalPointToEdge = [self findClosestPoint:(thisOrigin.y + [[self dataObj] elementHeight]) guides:[guides objectForKey:EDKeyGuideVertical]];
             closestHorizontalPointToOrigin = [self findClosestPoint:thisOrigin.x guides:[guides objectForKey:EDKeyGuideHorizontal]];
@@ -455,7 +491,6 @@
                     thisOrigin.y = (newDragLocation.y - _savedMouseSnapLocation.y);
                     thisOrigin.x = (newDragLocation.x - _savedMouseSnapLocation.x);
                     
-#warning check out snap by distance with multiple elements selected
                     snapBackDistanceY = (savedOrigin.y - thisOrigin.y);
                     snapBackDistanceX = (savedOrigin.x - thisOrigin.x);
                 }
