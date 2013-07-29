@@ -382,11 +382,13 @@
     if ([defaults boolForKey:EDPreferenceSnapToGuides]) {
         float closestVerticalPointToOrigin, closestVerticalPointToEdge, closestHorizontalPointToOrigin, closestHorizontalPointToEdge;
         NSMutableDictionary *guides = [(EDWorksheetView *)[self superview] guides];
+        closestVerticalPointToOrigin = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
+        closestVerticalPointToEdge = [self findClosestPoint:(thisOrigin.y + [[self dataObj] elementHeight]) guides:[guides objectForKey:EDKeyGuideVertical]];
+        closestHorizontalPointToOrigin = [self findClosestPoint:thisOrigin.x guides:[guides objectForKey:EDKeyGuideHorizontal]];
+        closestHorizontalPointToEdge = [self findClosestPoint:(thisOrigin.x + [[self dataObj] elementWidth]) guides:[guides objectForKey:EDKeyGuideHorizontal]];
         
         // use this control structure.  detects whether there was a snap and verify if we need to unsnap first
         if (_didSnapToOriginY || _didSnapToBottomY){
-            closestVerticalPointToOrigin = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
-            closestVerticalPointToEdge = [self findClosestPoint:(thisOrigin.y + [[self dataObj] elementHeight]) guides:[guides objectForKey:EDKeyGuideVertical]];
             // already snapped to guide, need to figure out if we need to unsnap from guide
             if (((_didSnapToBottomY) && (fabsf(newDragLocation.y + [[self dataObj] elementHeight] - _savedMouseSnapLocation.y - closestVerticalPointToEdge) > EDGuideThreshold + EDGuideUnsnapThreshold)) ||
                 ((_didSnapToOriginY) && (fabsf(newDragLocation.y - _savedMouseSnapLocation.y - closestVerticalPointToOrigin) > EDGuideThreshold + EDGuideUnsnapThreshold))){
@@ -411,8 +413,8 @@
         
         if (_didSnapToOriginX || _didSnapToBottomX){
             // now check x
-            if (((_didSnapToBottomX) && (fabsf(newDragLocation.x + [[self dataObj] elementHeight] - _savedMouseSnapLocation.x - closestVerticalPointToEdge) > EDGuideThreshold + EDGuideUnsnapThreshold)) ||
-                ((_didSnapToOriginX) && (fabsf(newDragLocation.x - _savedMouseSnapLocation.x - closestVerticalPointToOrigin) > EDGuideThreshold + EDGuideUnsnapThreshold))){
+            if (((_didSnapToBottomX) && (fabsf(newDragLocation.x + [[self dataObj] elementWidth] - _savedMouseSnapLocation.x - closestHorizontalPointToEdge) > EDGuideThreshold + EDGuideUnsnapThreshold)) ||
+                ((_didSnapToOriginX) && (fabsf(newDragLocation.x - _savedMouseSnapLocation.x - closestHorizontalPointToOrigin) > EDGuideThreshold + EDGuideUnsnapThreshold))){
                 // either snapped to top or bottom of x
                 // reset variable
                 if (_didSnapToBottomX)
@@ -436,11 +438,6 @@
         // only allow the drag source to snap to guides
         //if ([[guides objectForKey:EDKeyGuideVertical] count] > 0) {
         if ((!didSnapBack) && ([[guides objectForKey:EDKeyGuideVertical] count] > 0)) {
-            closestVerticalPointToOrigin = [self findClosestPoint:thisOrigin.y guides:[guides objectForKey:EDKeyGuideVertical]];
-            closestVerticalPointToEdge = [self findClosestPoint:(thisOrigin.y + [[self dataObj] elementHeight]) guides:[guides objectForKey:EDKeyGuideVertical]];
-            closestHorizontalPointToOrigin = [self findClosestPoint:thisOrigin.x guides:[guides objectForKey:EDKeyGuideHorizontal]];
-            closestHorizontalPointToEdge = [self findClosestPoint:(thisOrigin.x + [[self dataObj] elementWidth]) guides:[guides objectForKey:EDKeyGuideHorizontal]];
-            
             // snap if edge of object is close to guide
             if ((fabsf(thisOrigin.y - closestVerticalPointToOrigin) < EDGuideThreshold) || 
                 (fabsf((thisOrigin.y + [[self dataObj] elementHeight]) - closestVerticalPointToEdge) < EDGuideThreshold) || 
@@ -502,7 +499,6 @@
     }
     
     [self setFrameOrigin:thisOrigin];
-    //NSLog(@"setting frame origin to:%@", NSStringFromPoint(thisOrigin));
     _lastDragLocation = newDragLocation;
     
     // dispatch event if drag source
