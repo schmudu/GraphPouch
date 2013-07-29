@@ -578,6 +578,17 @@
 
 #pragma mark mouse up
 - (void)mouseUp:(NSEvent *)theEvent{
+    // on mouse up elements that are above interfere with the dragging
+    // so we are going to send this element to the font and then return it to its origin z-index
+    // do not drag if it is not selected
+    if (![(EDElement *)[self dataObj] isSelectedElement]){
+        // notify listeners of mouse drag over unselected element
+        NSMutableDictionary *notificationDictionary = [[NSMutableDictionary alloc] init];
+        [notificationDictionary setObject:theEvent forKey:EDKeyEvent];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDEventMouseUpOverUnselectedElement object:self userInfo:notificationDictionary];
+        return;
+    }
+    
     // unset z-index
     [self unsetZIndexFromDragLayer:TRUE];
     
