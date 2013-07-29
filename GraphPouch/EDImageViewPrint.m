@@ -27,6 +27,7 @@
 
 - (void)drawElementAttributes{
     NSImage *image = [[NSImage alloc] initWithData:[(EDImage *)[self dataObj] imageData]];
+    [image setSize:NSMakeSize([(EDImage *)[self dataObj] elementWidth], [(EDImage *)[self dataObj] elementHeight])];
     _imageView = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, [(EDImage *)[self dataObj] elementWidth], [(EDImage *)[self dataObj] elementHeight])];
     [_imageView setImage:image];
     [self addSubview:_imageView];
